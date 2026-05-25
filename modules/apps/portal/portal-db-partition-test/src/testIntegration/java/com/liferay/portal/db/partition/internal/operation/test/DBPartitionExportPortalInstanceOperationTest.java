@@ -7,15 +7,29 @@ package com.liferay.portal.db.partition.internal.operation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.module.util.BundleUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
 
+import java.io.Serializable;
+
+import java.lang.reflect.Constructor;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -109,8 +123,65 @@ public class DBPartitionExportPortalInstanceOperationTest
 		}
 	}
 
+	@Test
+	public void testIsApplicableWhenGroupDoesNotExist() throws Exception {
+		Bundle bundle = BundleUtil.getBundle(
+			SystemBundleUtil.getBundleContext(),
+			"com.liferay.portal.instances.service");
+
+		Class<?> exportPortalInstanceOperationClass = bundle.loadClass(
+			"com.liferay.portal.instances.internal.operation." +
+				"ExportPortalInstanceOperation");
+
+		Object exportPortalInstanceOperation =
+			exportPortalInstanceOperationClass.newInstance();
+
+		ReflectionTestUtil.setFieldValue(
+			exportPortalInstanceOperation, "_groupLocalService",
+			_groupLocalService);
+
+		Class<?> scopedConfigurationClass =
+			exportPortalInstanceOperationClass.getDeclaredClasses()[0];
+
+		Constructor<?> scopedConfigurationConstructor =
+			scopedConfigurationClass.getDeclaredConstructor(
+				exportPortalInstanceOperationClass, String.class, String.class,
+				Serializable.class, ExtendedObjectClassDefinition.Scope.class);
+
+		scopedConfigurationConstructor.setAccessible(true);
+
+		Object scopedConfiguration = scopedConfigurationConstructor.newInstance(
+			exportPortalInstanceOperation, _SCOPED_CONFIGURATION_PID, "",
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ExtendedObjectClassDefinition.Scope.GROUP);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				exportPortalInstanceOperationClass.getName(),
+				LoggerTestUtil.WARN)) {
+
+			Assert.assertFalse(
+				ReflectionTestUtil.invoke(
+					exportPortalInstanceOperation, "_isApplicable",
+					new Class<?>[] {long.class, scopedConfigurationClass},
+					PortalInstancePool.getDefaultCompanyId(),
+					scopedConfiguration));
+
+			assertLog(
+				logCapture,
+				"Skipping configuration " + _SCOPED_CONFIGURATION_PID +
+					" because group 0 does not exist");
+		}
+	}
+
 	private static final String _PID =
 		"com.liferay.portal.instances.internal.configuration." +
 			"ExportPortalInstanceConfiguration";
+
+	private static final String _SCOPED_CONFIGURATION_PID =
+		DBPartitionExportPortalInstanceOperationTest.class.getName() +
+			"ScopedConfiguration";
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

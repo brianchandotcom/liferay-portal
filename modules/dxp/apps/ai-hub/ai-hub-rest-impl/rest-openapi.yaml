@@ -129,6 +129,7 @@ components:
                 multiLanguageDetectionEnabled:
                     type: boolean
                 piAndJailbreakConfidenceLevel:
+                    default: mediumAndAbove
                     enum:
                         -   high
                         -   lowAndAbove
@@ -137,6 +138,7 @@ components:
                 piAndJailbreakFilterEnabled:
                     type: boolean
                 raiDangerousLevel:
+                    default: none
                     enum:
                         -   high
                         -   lowAndAbove
@@ -144,6 +146,7 @@ components:
                         -   none
                     type: string
                 raiHarassmentLevel:
+                    default: none
                     enum:
                         -   high
                         -   lowAndAbove
@@ -151,6 +154,7 @@ components:
                         -   none
                     type: string
                 raiHateSpeechLevel:
+                    default: none
                     enum:
                         -   high
                         -   lowAndAbove
@@ -158,6 +162,7 @@ components:
                         -   none
                     type: string
                 raiSexuallyExplicitLevel:
+                    default: none
                     enum:
                         -   high
                         -   lowAndAbove

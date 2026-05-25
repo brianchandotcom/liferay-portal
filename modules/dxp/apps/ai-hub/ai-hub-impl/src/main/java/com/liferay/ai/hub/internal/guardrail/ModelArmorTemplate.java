@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author João Victor Alves
  */
-public class ModelArmorTemplateConfig {
+public class ModelArmorTemplate {
 
 	public static Builder builder(String templateId) {
 		return new Builder(templateId);
@@ -53,8 +53,8 @@ public class ModelArmorTemplateConfig {
 
 	public static class Builder {
 
-		public ModelArmorTemplateConfig build() {
-			return new ModelArmorTemplateConfig(this);
+		public ModelArmorTemplate build() {
+			return new ModelArmorTemplate(this);
 		}
 
 		public Builder guardrailType(String guardrailType) {
@@ -213,7 +213,7 @@ public class ModelArmorTemplateConfig {
 
 	}
 
-	private ModelArmorTemplateConfig(Builder builder) {
+	private ModelArmorTemplate(Builder builder) {
 		_filterConfig = builder._toFilterConfig();
 		_guardrailType = builder._guardrailType;
 		_location = builder._location;

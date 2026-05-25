@@ -80,4 +80,4 @@ Import-Package:\
 -dsannotations-options: inherit
 -fixupmessages:\
 	"Classes found in the wrong directory: ...";is:=ignore,\
-	"Exporting an empty package 'io.grpc.netty.shaded.*'";is:=warning
+	"Exporting an empty package 'io.grpc.netty.shaded.*'";is:=ignore

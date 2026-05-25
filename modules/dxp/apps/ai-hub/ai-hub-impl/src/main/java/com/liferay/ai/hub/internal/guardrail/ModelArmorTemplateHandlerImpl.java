@@ -6,30 +6,36 @@
 package com.liferay.ai.hub.internal.guardrail;
 
 import com.google.cloud.modelarmor.v1.DetectionConfidenceLevel;
+import com.google.cloud.modelarmor.v1.LocationName;
+import com.google.cloud.modelarmor.v1.ModelArmorClient;
+import com.google.cloud.modelarmor.v1.ModelArmorSettings;
 import com.google.cloud.modelarmor.v1.RaiFilterType;
+import com.google.cloud.modelarmor.v1.Template;
+import com.google.cloud.modelarmor.v1.TemplateName;
+import com.google.protobuf.FieldMask;
 
-import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
-import com.liferay.ai.hub.internal.guardrail.util.ModelArmorClientUtil;
-import com.liferay.ai.hub.internal.guardrail.util.ModelArmorTemplateUtil;
+import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Feliphe Marinho
  * @author João Victor Alves
  */
 @Component(service = ModelArmorTemplateHandler.class)
@@ -46,11 +52,18 @@ public class ModelArmorTemplateHandlerImpl
 			_configurationProvider.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		ModelArmorTemplateUtil.createModelArmorTemplate(
-			vertexAIConfiguration.projectId(),
-			ModelArmorClientUtil.getModelArmorClient(
-				companyId, GetterUtil.getString(properties.get("location"))),
-			_getModelArmorTemplateConfig(externalReferenceCode, properties));
+		ModelArmorTemplate modelArmorTemplate = _getModelArmorTemplate(
+			externalReferenceCode, properties);
+
+		ModelArmorClient modelArmorClient = _getModelArmorClient(
+			GetterUtil.getString(properties.get("location")));
+
+		modelArmorClient.createTemplate(
+			LocationName.of(
+				vertexAIConfiguration.projectId(),
+				modelArmorTemplate.getLocation()),
+			modelArmorTemplate.getTemplate(),
+			modelArmorTemplate.getTemplateId());
 	}
 
 	@Override
@@ -62,10 +75,12 @@ public class ModelArmorTemplateHandlerImpl
 			_configurationProvider.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		ModelArmorTemplateUtil.deleteModelArmorTemplate(
-			vertexAIConfiguration.projectId(),
-			ModelArmorClientUtil.getModelArmorClient(companyId, location),
-			location, externalReferenceCode);
+		ModelArmorClient modelArmorClient = _getModelArmorClient(location);
+
+		modelArmorClient.deleteTemplate(
+			TemplateName.of(
+				vertexAIConfiguration.projectId(), location,
+				externalReferenceCode));
 	}
 
 	@Override
@@ -74,18 +89,65 @@ public class ModelArmorTemplateHandlerImpl
 			Map<String, Object> properties)
 		throws Exception {
 
+		ModelArmorTemplate modelArmorTemplate = _getModelArmorTemplate(
+			externalReferenceCode, properties);
+
+		if ((modelArmorTemplate == null) ||
+			Validator.isNull(modelArmorTemplate.getTemplateId())) {
+
+			return;
+		}
+
 		VertexAIConfiguration vertexAIConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		ModelArmorTemplateUtil.updateModelArmorTemplate(
-			vertexAIConfiguration.projectId(),
-			ModelArmorClientUtil.getModelArmorClient(
-				companyId, GetterUtil.getString(properties.get("location"))),
-			_getModelArmorTemplateConfig(externalReferenceCode, properties));
+		ModelArmorClient modelArmorClient = _getModelArmorClient(
+			GetterUtil.getString(properties.get("location")));
+
+		modelArmorClient.updateTemplate(
+			Template.newBuilder(
+				modelArmorTemplate.getTemplate()
+			).setName(
+				StringBundler.concat(
+					"projects/", vertexAIConfiguration.projectId(),
+					"/locations/", modelArmorTemplate.getLocation(),
+					"/templates/", modelArmorTemplate.getTemplateId())
+			).build(),
+			FieldMask.newBuilder(
+			).addPaths(
+				"filter_config"
+			).addPaths(
+				"labels"
+			).addPaths(
+				"template_metadata"
+			).build());
 	}
 
-	private ModelArmorTemplateConfig _getModelArmorTemplateConfig(
+	private ModelArmorClient _getModelArmorClient(String location) {
+		return _modelArmorClients.computeIfAbsent(
+			location,
+			__ -> {
+				try {
+					String endpoint = "modelarmor";
+
+					if (!Objects.equals(location, "global")) {
+						endpoint += "." + location + ".rep";
+					}
+
+					return ModelArmorClient.create(
+						ModelArmorSettings.newBuilder(
+						).setEndpoint(
+							endpoint + ".googleapis.com:443"
+						).build());
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			});
+	}
+
+	private ModelArmorTemplate _getModelArmorTemplate(
 		String externalReferenceCode, Map<String, Object> properties) {
 
 		Map<RaiFilterType, DetectionConfidenceLevel> raiFilters = new EnumMap<>(
@@ -104,7 +166,7 @@ public class ModelArmorTemplateHandlerImpl
 			raiFilters, RaiFilterType.SEXUALLY_EXPLICIT,
 			Objects.toString(properties.get("raiSexuallyExplicitLevel"), null));
 
-		return ModelArmorTemplateConfig.builder(
+		return ModelArmorTemplate.builder(
 			externalReferenceCode
 		).guardrailType(
 			Objects.toString(properties.get("guardrailType"), null)
@@ -120,7 +182,7 @@ public class ModelArmorTemplateHandlerImpl
 		).piAndJailbreakFilterEnabled(
 			GetterUtil.getBoolean(properties.get("piAndJailbreakFilterEnabled"))
 		).piAndJailbreakConfidenceLevel(
-			_toConfidenceLevel(
+			_toDetectionConfidenceLevel(
 				Objects.toString(
 					properties.get("piAndJailbreakConfidenceLevel"), null))
 		).raiFilters(
@@ -134,46 +196,29 @@ public class ModelArmorTemplateHandlerImpl
 		Map<RaiFilterType, DetectionConfidenceLevel> raiFilters,
 		RaiFilterType raiFilterType, Object levelProperty) {
 
-		if (Objects.equals(
-				GetterUtil.getString(levelProperty, "none"), "none")) {
-
-			return;
+		if (!Objects.equals(GetterUtil.getString(levelProperty), "none")) {
+			raiFilters.put(
+				raiFilterType,
+				_toDetectionConfidenceLevel(
+					GetterUtil.getString(levelProperty)));
 		}
-
-		raiFilters.put(
-			raiFilterType,
-			_toConfidenceLevel(GetterUtil.getString(levelProperty, "none")));
 	}
 
-	private DetectionConfidenceLevel _toConfidenceLevel(String key) {
+	private DetectionConfidenceLevel _toDetectionConfidenceLevel(String key) {
 		try {
-			return DetectionConfidenceLevel.valueOf(_toEnumKey(key));
+			return DetectionConfidenceLevel.valueOf(
+				StringUtil.toUpperCase(
+					CamelCaseUtil.fromCamelCase(key, CharPool.UNDERLINE)));
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unknown confidence level " + key +
-						", falling back to MEDIUM_AND_ABOVE",
-					illegalArgumentException);
-			}
-
 			return DetectionConfidenceLevel.MEDIUM_AND_ABOVE;
 		}
 	}
 
-	private String _toEnumKey(String key) {
-		if (Validator.isNull(key)) {
-			return StringPool.BLANK;
-		}
-
-		return StringUtil.toUpperCase(
-			CamelCaseUtil.fromCamelCase(key, CharPool.UNDERLINE));
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModelArmorTemplateHandlerImpl.class);
-
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private final Map<String, ModelArmorClient> _modelArmorClients =
+		new ConcurrentHashMap<>();
 
 }

@@ -69,87 +69,82 @@ public class ModelArmorTemplateManagerImpl
 				dtoConverterContext, externalReferenceCode, objectDefinition,
 				null);
 
-		ObjectEntry savedObjectEntry = _updateObjectEntry(
+		ObjectEntry objectEntry = _updateObjectEntry(
 			accountEntry.getAccountEntryId(), companyId, dtoConverterContext,
 			externalReferenceCode, modelArmorTemplate, objectDefinition);
 
 		if (existingObjectEntry == null) {
 			_modelArmorTemplateHandler.createModelArmorTemplate(
-				companyId, externalReferenceCode,
-				savedObjectEntry.getProperties());
+				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 		else {
 			_modelArmorTemplateHandler.updateModelArmorTemplate(
-				companyId, externalReferenceCode,
-				savedObjectEntry.getProperties());
+				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 
 		return new ModelArmorTemplate() {
 			{
 				setActive(
 					() -> GetterUtil.getBoolean(
-						savedObjectEntry.getPropertyValue("active")));
+						objectEntry.getPropertyValue("active")));
 				setDescription(
 					() -> GetterUtil.getString(
-						savedObjectEntry.getPropertyValue("description")));
-				setExternalReferenceCode(
-					savedObjectEntry::getExternalReferenceCode);
+						objectEntry.getPropertyValue("description")));
+				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setGuardrailType(
 					() -> ModelArmorTemplate.GuardrailType.create(
 						GetterUtil.getString(
-							savedObjectEntry.getPropertyValue(
-								"guardrailType"))));
+							objectEntry.getPropertyValue("guardrailType"))));
 				setLocation(
 					() -> GetterUtil.getString(
-						savedObjectEntry.getPropertyValue("location")));
+						objectEntry.getPropertyValue("location")));
 				setMaliciousUriFilterEnabled(
 					() -> GetterUtil.getBoolean(
-						savedObjectEntry.getPropertyValue(
+						objectEntry.getPropertyValue(
 							"maliciousUriFilterEnabled")));
 				setMultiLanguageDetectionEnabled(
 					() -> GetterUtil.getBoolean(
-						savedObjectEntry.getPropertyValue(
+						objectEntry.getPropertyValue(
 							"multiLanguageDetectionEnabled")));
 				setPiAndJailbreakConfidenceLevel(
 					() ->
 						ModelArmorTemplate.PiAndJailbreakConfidenceLevel.create(
 							GetterUtil.getString(
-								savedObjectEntry.getPropertyValue(
+								objectEntry.getPropertyValue(
 									"piAndJailbreakConfidenceLevel"))));
 				setPiAndJailbreakFilterEnabled(
 					() -> GetterUtil.getBoolean(
-						savedObjectEntry.getPropertyValue(
+						objectEntry.getPropertyValue(
 							"piAndJailbreakFilterEnabled")));
 				setRaiDangerousLevel(
 					() -> ModelArmorTemplate.RaiDangerousLevel.create(
 						GetterUtil.getString(
-							savedObjectEntry.getPropertyValue(
+							objectEntry.getPropertyValue(
 								"raiDangerousLevel"))));
 				setRaiHarassmentLevel(
 					() -> ModelArmorTemplate.RaiHarassmentLevel.create(
 						GetterUtil.getString(
-							savedObjectEntry.getPropertyValue(
+							objectEntry.getPropertyValue(
 								"raiHarassmentLevel"))));
 				setRaiHateSpeechLevel(
 					() -> ModelArmorTemplate.RaiHateSpeechLevel.create(
 						GetterUtil.getString(
-							savedObjectEntry.getPropertyValue(
+							objectEntry.getPropertyValue(
 								"raiHateSpeechLevel"))));
 				setRaiSexuallyExplicitLevel(
 					() -> ModelArmorTemplate.RaiSexuallyExplicitLevel.create(
 						GetterUtil.getString(
-							savedObjectEntry.getPropertyValue(
+							objectEntry.getPropertyValue(
 								"raiSexuallyExplicitLevel"))));
 				setSdpFilterEnabled(
 					() -> GetterUtil.getBoolean(
-						savedObjectEntry.getPropertyValue("sdpFilterEnabled")));
+						objectEntry.getPropertyValue("sdpFilterEnabled")));
 				setTitle(
 					() -> GetterUtil.getString(
-						savedObjectEntry.getPropertyValue("title")));
+						objectEntry.getPropertyValue("title")));
 				setTitle_i18n(
-					() ->
-						(Map<String, String>)savedObjectEntry.getPropertyValue(
-							"title_i18n"));
+					() -> (Map<String, String>)objectEntry.getPropertyValue(
+						"title_i18n"));
 			}
 		};
 	}

@@ -6,6 +6,8 @@
 package com.liferay.account.internal.configuration.validator;
 
 import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.account.configuration.BaseAccountEntryValidatorConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -16,19 +18,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	strictScope = true
 )
 @Meta.OCD(
-	description = "account-entry-validation-configuration-description",
-	id = "com.liferay.account.internal.configuration.validator.AccountEntryValidatorRegistryConfiguration",
+	description = "default-account-entry-validator-configuration-description",
+	id = "com.liferay.account.internal.configuration.validator.DefaultAccountEntryValidatorConfiguration",
 	localization = "content/Language",
-	name = "account-entry-validation-configuration-name"
+	name = "default-account-entry-validator-configuration-name"
 )
-public interface AccountEntryValidatorRegistryConfiguration {
-
-	@Meta.AD(
-		deflt = "false",
-		description = "enable-account-entry-validation-help",
-		name = "enable-account-entry-validation",
-		required = false
-	)
-	public boolean enableAccountEntryValidation();
-
+public interface DefaultAccountEntryValidatorConfiguration
+	extends BaseAccountEntryValidatorConfiguration {
 }

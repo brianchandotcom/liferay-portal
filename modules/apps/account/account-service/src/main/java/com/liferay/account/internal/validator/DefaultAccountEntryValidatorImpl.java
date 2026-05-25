@@ -5,15 +5,17 @@
 
 package com.liferay.account.internal.validator;
 
+import com.liferay.account.internal.configuration.validator.DefaultAccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
 import com.liferay.account.validator.AccountEntryValidatorResult;
+import com.liferay.account.validator.BaseAccountEntryValidator;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
-import java.util.Locale;
 import java.util.Map;
 
-import com.liferay.portal.kernel.language.Language;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -21,32 +23,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tancredi Covioli
  */
 @Component(
+	configurationPid = "com.liferay.account.internal.configuration.validator.DefaultAccountEntryValidatorConfiguration",
 	property = {
 		"account.entry.validator.key=" + DefaultAccountEntryValidatorImpl.KEY,
 		"account.entry.validator.priority:Integer=10"
 	},
 	service = AccountEntryValidator.class
 )
-public class DefaultAccountEntryValidatorImpl implements AccountEntryValidator {
+public class DefaultAccountEntryValidatorImpl
+	extends BaseAccountEntryValidator {
 
 	public static final String KEY = "default";
 
 	@Override
-	public String getKey() {
-		return KEY;
+	public String getKey(
+		AccountEntry accountEntry, Map<String, Object> context) {
+
+		return String.valueOf(accountEntry.getAccountEntryId());
 	}
 
 	@Override
-	public AccountEntryValidatorResult validate(
-			Locale locale, AccountEntry accountEntry,
-			Map<String, Object> context)
+	protected AccountEntryValidatorResult doValidate(
+			AccountEntry accountEntry, Map<String, Object> context)
 		throws PortalException {
 
-		return new AccountEntryValidatorResult(
-			false, _language.get(locale, "an-error-occurred"));
+		return new AccountEntryValidatorResult(false, "an-error-occurred");
+	}
+
+	@Override
+	protected DefaultAccountEntryValidatorConfiguration getConfiguration(
+			AccountEntry accountEntry, Map<String, Object> context)
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			DefaultAccountEntryValidatorConfiguration.class,
+			accountEntry.getCompanyId());
 	}
 
 	@Reference
-	private Language _language;
+	private ConfigurationProvider _configurationProvider;
 
 }

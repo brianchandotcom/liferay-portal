@@ -19,49 +19,48 @@ public class AccountEntryValidatorResult implements Serializable {
 		this(true, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
-	public AccountEntryValidatorResult(boolean valid, String localizedMessage) {
-		this(valid, StringPool.BLANK, StringPool.BLANK, localizedMessage);
+	public AccountEntryValidatorResult(boolean valid, String messageKey) {
+		this(valid, StringPool.BLANK, StringPool.BLANK, messageKey);
 	}
 
 	public AccountEntryValidatorResult(
-		boolean valid, String link, String localizedMessage) {
+		boolean valid, String link, String messageKey) {
 
-		this(valid, link, StringPool.BLANK, localizedMessage);
+		this(valid, link, StringPool.BLANK, messageKey);
 	}
 
 	public AccountEntryValidatorResult(
-		boolean valid, String link, String localizedLabel,
-		String localizedMessage) {
+		boolean valid, String link, String labelKey, String messageKey) {
 
 		_valid = valid;
 		_link = link;
-		_localizedLabel = localizedLabel;
-		_localizedMessage = localizedMessage;
+		_labelKey = labelKey;
+		_messageKey = messageKey;
+	}
+
+	public String getLabelKey() {
+		return _labelKey;
 	}
 
 	public String getLink() {
 		return _link;
 	}
 
-	public String getLocalizedLabel() {
-		return _localizedLabel;
-	}
-
-	public String getLocalizedMessage() {
-		return _localizedMessage;
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
 	public boolean hasMessageResult() {
-		return Validator.isNotNull(getLocalizedMessage());
+		return Validator.isNotNull(getMessageKey());
 	}
 
 	public boolean isValid() {
 		return _valid;
 	}
 
+	private final String _labelKey;
 	private final String _link;
-	private final String _localizedLabel;
-	private final String _localizedMessage;
+	private final String _messageKey;
 	private final boolean _valid;
 
 }

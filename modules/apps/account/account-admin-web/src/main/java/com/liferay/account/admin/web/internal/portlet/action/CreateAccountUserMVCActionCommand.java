@@ -93,7 +93,7 @@ public class CreateAccountUserMVCActionCommand
 				return;
 			}
 
-			user = _addUser(actionRequest, ticket.getExtraInfo());
+			user = _addUser(actionRequest, ticket.getEmailAddress());
 
 			_updateSharingEntries(ticket, user);
 		}

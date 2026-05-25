@@ -83,7 +83,7 @@ public class SharingCollaborationMailSenderImpl
 			return;
 		}
 
-		String emailAddress = ticket.getExtraInfo();
+		String emailAddress = ticket.getEmailAddress();
 
 		_validateEmailAddress(emailAddress);
 

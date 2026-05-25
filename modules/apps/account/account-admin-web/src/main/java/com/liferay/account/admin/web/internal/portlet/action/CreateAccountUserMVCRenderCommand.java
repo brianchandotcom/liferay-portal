@@ -75,7 +75,7 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getCompanyId(), "LPD-52006")) {
 
 			invitedAccountUserDisplayContext.setEmailAddress(
-				ticket.getExtraInfo());
+				ticket.getEmailAddress());
 			invitedAccountUserDisplayContext.setTitle(
 				"accept-invitation-to-collaborate");
 		}

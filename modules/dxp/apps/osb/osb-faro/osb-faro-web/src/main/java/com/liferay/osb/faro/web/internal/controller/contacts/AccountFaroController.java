@@ -7,6 +7,7 @@ package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountDetails;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleStatus;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Individual;
@@ -20,8 +21,10 @@ import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.annotation.security.RolesAllowed;
 
@@ -35,6 +38,8 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -174,11 +179,30 @@ public class AccountFaroController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroFDSResultsDisplay<Object> searchFDSFieldValues(
 			@PathParam("groupId") long groupId,
+			@QueryParam("accountLifecycleId") String accountLifecycleId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
 			@QueryParam("query") String query, @QueryParam("page") int page,
 			@QueryParam("pageSize") int pageSize)
 		throws Exception {
+
+		if (Objects.equals(fieldMappingFieldName, "lifecycleStatus")) {
+			AccountLifecycle accountLifecycle =
+				contactsEngineClient.getAccountLifecycle(
+					faroProjectLocalService.getFaroProjectByGroupId(groupId),
+					accountLifecycleId);
+
+			List<Map<String, String>> items = TransformUtil.transform(
+				accountLifecycle.getStages(),
+				stage -> HashMapBuilder.put(
+					"id", stage.getId()
+				).put(
+					"stageType", stage.getStageType()
+				).build());
+
+			return new FaroFDSResultsDisplay<>(
+				new Results<>(items, items.size()), page, pageSize);
+		}
 
 		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAccountFieldValues(

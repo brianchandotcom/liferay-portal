@@ -26,6 +26,11 @@ public class ViewAnalyticsMostActiveVisitorsJSPSectionFragmentRenderer
 		<ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "most-active-visitors";
 	}

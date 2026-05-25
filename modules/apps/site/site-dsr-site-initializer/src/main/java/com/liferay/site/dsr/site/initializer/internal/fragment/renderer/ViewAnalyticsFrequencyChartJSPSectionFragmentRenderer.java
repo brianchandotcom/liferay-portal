@@ -26,6 +26,11 @@ public class ViewAnalyticsFrequencyChartJSPSectionFragmentRenderer
 		<ViewAnalyticsFrequencyChartAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "frequency-chart";
 	}

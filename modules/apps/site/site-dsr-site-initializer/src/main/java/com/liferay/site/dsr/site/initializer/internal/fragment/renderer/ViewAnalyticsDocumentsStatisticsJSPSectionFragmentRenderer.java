@@ -26,6 +26,11 @@ public class ViewAnalyticsDocumentsStatisticsJSPSectionFragmentRenderer
 		<ViewAnalyticsDocumentsStatisticsAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "documents-statistics";
 	}

@@ -63,12 +63,12 @@
 				.balloon-group-item:hover {
 					background-color: $gray-100;
 				}
+			}
 
-				.balloon-group-separator {
-					border-top: 1px solid $gray-300;
-					display: block;
-					margin: 0.5rem 0;
-				}
+			.balloon-group-separator {
+				border-top: 1px solid $gray-300;
+				display: block;
+				margin: 0.5rem 0;
 			}
 		}
 	}

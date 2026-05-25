@@ -19,14 +19,17 @@ function WritingAssistantBalloon({
 }) {
 	return (
 		<div className="balloon-container">
-			{actionsGroup.map((group: IActionGroup) => (
-				<BalloonGroup
-					handleItemClick={handleActionClick}
-					header={group.name}
-					key={group.name}
-				>
-					{group.children}
-				</BalloonGroup>
+			{actionsGroup.map((group: IActionGroup, index: number) => (
+				<React.Fragment key={group.name}>
+					{index > 0 && <span className="balloon-group-separator" />}
+
+					<BalloonGroup
+						handleItemClick={handleActionClick}
+						header={group.name}
+					>
+						{group.children}
+					</BalloonGroup>
+				</React.Fragment>
 			))}
 		</div>
 	);

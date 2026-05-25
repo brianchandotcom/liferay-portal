@@ -8,6 +8,7 @@ package com.liferay.ai.hub.rest.client.resource.v1_0;
 import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.ProvisioningRequestSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -31,7 +32,8 @@ public interface ProvisioningRequestResource {
 		return new Builder();
 	}
 
-	public void postProvisioning(ProvisioningRequest provisioningRequest)
+	public ProvisioningRequest postProvisioning(
+			ProvisioningRequest provisioningRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProvisioningHttpResponse(
@@ -147,7 +149,8 @@ public interface ProvisioningRequestResource {
 	public static class ProvisioningRequestResourceImpl
 		implements ProvisioningRequestResource {
 
-		public void postProvisioning(ProvisioningRequest provisioningRequest)
+		public ProvisioningRequest postProvisioning(
+				ProvisioningRequest provisioningRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -201,7 +204,7 @@ public interface ProvisioningRequestResource {
 			}
 
 			try {
-				return;
+				return ProvisioningRequestSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -265,4 +268,4 @@ public interface ProvisioningRequestResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-653955770
+// LIFERAY-REST-BUILDER-HASH:70628923

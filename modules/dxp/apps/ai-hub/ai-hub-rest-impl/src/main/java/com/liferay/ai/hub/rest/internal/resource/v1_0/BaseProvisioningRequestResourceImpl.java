@@ -45,7 +45,7 @@ public abstract class BaseProvisioningRequestResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/provisioning' -d $'{"customerName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/provisioning' -d $'{"accountEntryExternalReferenceCode": ___, "accountEntryName": ___, "liferayDXPURL": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -59,8 +59,11 @@ public abstract class BaseProvisioningRequestResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postProvisioning(ProvisioningRequest provisioningRequest)
+	public ProvisioningRequest postProvisioning(
+			ProvisioningRequest provisioningRequest)
 		throws Exception {
+
+		return new ProvisioningRequest();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -508,4 +511,4 @@ public abstract class BaseProvisioningRequestResourceImpl
 		LogFactoryUtil.getLog(BaseProvisioningRequestResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:743267857
+// LIFERAY-REST-BUILDER-HASH:978919054

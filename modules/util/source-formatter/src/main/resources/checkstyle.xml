@@ -934,6 +934,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.TestClassStaticVariableCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary static modifiers in test classes." />
+			<property name="enabled" value="false" />
 			<message key="modifier.unnecessary" value="Private static variable &quot;{0}&quot; should be an instance variable, as it is not used by any static members" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TextBlockCheck">

@@ -66,19 +66,7 @@ public class StyleBookEntryProviderUtilTest {
 		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
 			_group.getGroupId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Group depotGroup = depotEntry.getGroup();
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		StyleBookEntry depotStyleBookEntry = _addStyleBookEntry(
-			depotGroup.getGroupId());
+		StyleBookEntry depotStyleBookEntry = _getDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -103,19 +91,7 @@ public class StyleBookEntryProviderUtilTest {
 		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
 			_group.getGroupId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Group depotGroup = depotEntry.getGroup();
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		StyleBookEntry depotStyleBookEntry = _addStyleBookEntry(
-			depotGroup.getGroupId());
+		StyleBookEntry depotStyleBookEntry = _getDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -209,6 +185,21 @@ public class StyleBookEntryProviderUtilTest {
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
 			false, null, RandomTestUtil.randomString(), null,
 			"classic_WAR_classictheme", null);
+	}
+
+	private StyleBookEntry _getDepotEntryStyleBookEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Group depotGroup = depotEntry.getGroup();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		return _addStyleBookEntry(depotGroup.getGroupId());
 	}
 
 	@Inject

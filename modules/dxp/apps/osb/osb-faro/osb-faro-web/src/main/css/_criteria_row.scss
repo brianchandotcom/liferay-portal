@@ -99,6 +99,15 @@
 
 			.select-entity-group {
 				width: auto;
+
+				.input-group-append {
+					margin-left: 0;
+				}
+
+				.select-input-root .input-root {
+					border-bottom-right-radius: 0;
+					border-top-right-radius: 0;
+				}
 			}
 
 			@media screen and (max-width: $gridMaxPageWidth + $criteriaSidebarWidth) {

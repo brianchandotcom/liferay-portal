@@ -173,11 +173,13 @@ const FDS_PROPS: Omit<
 						sortable: true,
 					},
 					{
+						contentRenderer: 'cmsFilesFallbackCellRenderer',
 						fieldName: 'embedded.file.mimeType',
 						label: Liferay.Language.get('type'),
 						sortable: false,
 					},
 					{
+						contentRenderer: 'cmsFilesFallbackCellRenderer',
 						fieldName: 'embedded.file.size',
 						label: Liferay.Language.get('size'),
 						sortable: false,

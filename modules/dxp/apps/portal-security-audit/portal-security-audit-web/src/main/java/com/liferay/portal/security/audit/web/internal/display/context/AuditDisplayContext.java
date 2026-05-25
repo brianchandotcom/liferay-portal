@@ -239,15 +239,15 @@ public class AuditDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> AuditEventManagerUtil.getAuditEvents(
 					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
-					getUserName(), startDate, endDate, getClassName(),
-					getClassPK(), getClientHost(), getClientIP(),
+					getUserName(), startDate, endDate, null, getClassName(),
+					getClassPK(), getClientHost(), getClientIP(), null,
 					getEventType(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator(), range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
-					getUserName(), startDate, endDate, getClassName(),
-					getClassPK(), getClientHost(), getClientIP(),
+					getUserName(), startDate, endDate, null, getClassName(),
+					getClassPK(), getClientHost(), getClientIP(), null,
 					getEventType(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator()));
 		}
@@ -260,14 +260,14 @@ public class AuditDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> AuditEventManagerUtil.getAuditEvents(
 					_themeDisplay.getCompanyId(), getGroupId(),
-					Long.valueOf(number), keywords, null, null, keywords,
-					keywords, keywords, keywords, keywords, keywords,
+					Long.valueOf(number), keywords, null, null, null, keywords,
+					keywords, keywords, keywords, null, keywords, keywords,
 					Integer.valueOf(number), null, false, range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), getGroupId(),
-					Long.valueOf(number), keywords, null, null, keywords,
-					keywords, keywords, keywords, keywords, keywords,
+					Long.valueOf(number), keywords, null, null, null, keywords,
+					keywords, keywords, keywords, null, keywords, keywords,
 					Integer.valueOf(number), null, false));
 		}
 

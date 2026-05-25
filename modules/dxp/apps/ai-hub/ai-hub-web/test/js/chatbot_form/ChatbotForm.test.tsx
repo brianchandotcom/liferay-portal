@@ -63,18 +63,18 @@ jest.mock('frontend-js-web', () => ({
 
 const defaultProps = {
 	accountEntryExternalReferenceCode: 'ACCOUNT',
+	avatarAcceptedFileExtensions: 'jpeg, jpg, png',
+	avatarMaximumFileSize: 1024,
+	avatarMaximumFileSizeLabel: '1 KB',
+	avatarUploadTip: 'Upload a jpeg, jpg, png no larger than 1 KB',
 	backURL: '/back',
-	companyLogoAcceptedFileExtensions: 'jpeg, jpg, png',
-	companyLogoMaximumFileSize: 1024,
-	companyLogoMaximumFileSizeLabel: '1 KB',
-	companyLogoUploadTip: 'Upload a jpeg, jpg, png no larger than 1 KB',
 	externalReferenceCode: '',
 	portalURL: 'http://localhost:8080',
 	readOnly: false,
 };
 
 function getHiddenFileInput(): HTMLInputElement {
-	return document.getElementById('companyLogo') as HTMLInputElement;
+	return document.getElementById('avatar') as HTMLInputElement;
 }
 
 function makeFile(name: string, sizeInBytes: number, type = 'image/png'): File {
@@ -95,7 +95,7 @@ describe('ChatbotForm company logo upload', () => {
 		cleanup();
 	});
 
-	it('rejects files larger than companyLogoMaximumFileSize when limit is greater than zero', async () => {
+	it('rejects files larger than avatarMaximumFileSize when limit is greater than zero', async () => {
 		render(<ChatbotForm {...defaultProps} />);
 
 		const file = makeFile('big-logo.png', 4096);
@@ -111,10 +111,8 @@ describe('ChatbotForm company logo upload', () => {
 		expect(screen.queryByText('big-logo.png')).not.toBeInTheDocument();
 	});
 
-	it('accepts files of any size when companyLogoMaximumFileSize is zero (unlimited)', async () => {
-		render(
-			<ChatbotForm {...defaultProps} companyLogoMaximumFileSize={0} />
-		);
+	it('accepts files of any size when avatarMaximumFileSize is zero (unlimited)', async () => {
+		render(<ChatbotForm {...defaultProps} avatarMaximumFileSize={0} />);
 
 		const file = makeFile('huge-logo.png', 5_000_000);
 

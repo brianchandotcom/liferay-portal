@@ -44,7 +44,7 @@ public class EditChatbotDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
-		ObjectField objectField = _getCompanyLogoObjectField();
+		ObjectField objectField = _getAvatarObjectField();
 
 		String acceptedFileExtensions = "";
 		long maximumFileSize = 0;
@@ -72,6 +72,23 @@ public class EditChatbotDisplayContext {
 				return accountEntry.getExternalReferenceCode();
 			}
 		).put(
+			"avatarAcceptedFileExtensions", acceptedFileExtensions
+		).put(
+			"avatarMaximumFileSize", maximumFileSize
+		).put(
+			"avatarMaximumFileSizeLabel",
+			_language.formatStorageSize(
+				maximumFileSize, _themeDisplay.getLocale())
+		).put(
+			"avatarUploadTip",
+			_language.format(
+				_themeDisplay.getLocale(), "upload-a-x-no-larger-than-x",
+				new Object[] {
+					acceptedFileExtensions,
+					_language.formatStorageSize(
+						maximumFileSize, _themeDisplay.getLocale())
+				})
+		).put(
 			"backURL",
 			() -> {
 				String backURL = PortalUtil.escapeRedirect(
@@ -84,23 +101,6 @@ public class EditChatbotDisplayContext {
 				return DisplayContextUtil.getAIHubURL(_themeDisplay) +
 					"/chatbots";
 			}
-		).put(
-			"companyLogoAcceptedFileExtensions", acceptedFileExtensions
-		).put(
-			"companyLogoMaximumFileSize", maximumFileSize
-		).put(
-			"companyLogoMaximumFileSizeLabel",
-			_language.formatStorageSize(
-				maximumFileSize, _themeDisplay.getLocale())
-		).put(
-			"companyLogoUploadTip",
-			_language.format(
-				_themeDisplay.getLocale(), "upload-a-x-no-larger-than-x",
-				new Object[] {
-					acceptedFileExtensions,
-					_language.formatStorageSize(
-						maximumFileSize, _themeDisplay.getLocale())
-				})
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
@@ -115,7 +115,7 @@ public class EditChatbotDisplayContext {
 		).build();
 	}
 
-	private ObjectField _getCompanyLogoObjectField() {
+	private ObjectField _getAvatarObjectField() {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -126,7 +126,7 @@ public class EditChatbotDisplayContext {
 		}
 
 		return ObjectFieldLocalServiceUtil.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(), "companyLogo");
+			objectDefinition.getObjectDefinitionId(), "avatar");
 	}
 
 	private final AttachmentManager _attachmentManager;

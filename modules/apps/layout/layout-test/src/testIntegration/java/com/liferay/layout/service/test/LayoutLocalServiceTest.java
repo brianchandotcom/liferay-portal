@@ -1122,16 +1122,17 @@ public class LayoutLocalServiceTest {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		String entryERC = RandomTestUtil.randomString();
-		String scopeERC = RandomTestUtil.randomString();
+		String styleBookEntryERC = RandomTestUtil.randomString();
+		String styleBookEntryScopeERC = RandomTestUtil.randomString();
 
 		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			entryERC, scopeERC);
+			styleBookEntryERC, styleBookEntryScopeERC);
 
-		Assert.assertEquals(entryERC, updatedLayout.getStyleBookEntryERC());
 		Assert.assertEquals(
-			scopeERC, updatedLayout.getStyleBookEntryScopeERC());
+			styleBookEntryERC, updatedLayout.getStyleBookEntryERC());
+		Assert.assertEquals(
+			styleBookEntryScopeERC, updatedLayout.getStyleBookEntryScopeERC());
 	}
 
 	@Test

@@ -89,7 +89,7 @@ public class SharingCollaborationMailSenderImpl
 
 		if (serviceContext.getRequest() == null) {
 			throw new PortalException(
-				"Unable to send sharing collaboration email for ticket ID " +
+				"Unable to send sharing collaboration email for ticket " +
 					ticket.getTicketId() +
 						" because the service context has no HTTP request");
 		}

@@ -10,9 +10,11 @@ import type {AuthorizationToken, ChatbotConfiguration} from './types';
 const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
 let aiHubURL = '';
+let liferayDXPURL = '';
 
-export function setAIHubURL(url: string) {
-	aiHubURL = url;
+export function setURLs(aiHub: string, liferayDXP: string) {
+	aiHubURL = aiHub;
+	liferayDXPURL = liferayDXP;
 }
 
 async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
@@ -20,7 +22,7 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 		const csrfToken = (window as any).Liferay?.authToken;
 
 		const response = await fetch(
-			`${aiHubURL}/o/ai-hub-cell/v1.0/authorization-tokens`,
+			'/o/ai-hub-cell/v1.0/authorization-tokens',
 			{
 				headers: csrfToken
 					? new Headers({'x-csrf-token': csrfToken})
@@ -61,16 +63,8 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 export async function getChatbotConfiguration(
 	chatbotExternalReferenceCode: string
 ): Promise<ChatbotConfiguration> {
-	const authorizationToken = await postAuthorizationToken();
-
-	if (!authorizationToken) {
-		throw new Error(
-			'Unable to obtain authorization token for chatbot configuration.'
-		);
-	}
-
 	const response = await fetch(
-		`${authorizationToken.serviceURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
+		`${liferayDXPURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
 		{
 			headers: new Headers({
 				Accept: 'application/json',
@@ -88,26 +82,29 @@ export async function getChatbotConfiguration(
 }
 
 export async function createEventSource(): Promise<EventSource | null> {
-	const authorizationToken = await postAuthorizationToken();
+	const headers = new Headers({Accept: 'text/event-stream'});
 
-	if (!authorizationToken) {
-		return null;
+	if ((window as any).Liferay) {
+		const authorizationToken = await postAuthorizationToken();
+
+		if (!authorizationToken) {
+			return null;
+		}
+
+		headers.set(
+			'Authorization',
+			`Bearer ${authorizationToken.accessToken}`
+		);
 	}
 
-	return new EventSource(
-		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/chats/subscribe`,
-		{
-			fetch: (input, init) =>
-				fetch(input as RequestInfo, {
-					...init,
-					headers: new Headers({
-						Accept: 'text/event-stream',
-						Authorization: `Bearer ${authorizationToken.accessToken}`,
-					}),
-				}),
-			withCredentials: true,
-		}
-	);
+	return new EventSource(`${aiHubURL}${AI_HUB_ENDPOINT}/chats/subscribe`, {
+		fetch: (input, init) =>
+			fetch(input as RequestInfo, {
+				...init,
+				headers,
+			}),
+		withCredentials: true,
+	});
 }
 
 export async function postChatMessage(
@@ -115,16 +112,32 @@ export async function postChatMessage(
 	eventSourceReference: string,
 	text: string
 ): Promise<Response> {
-	const authorizationToken = await postAuthorizationToken();
+	const headers = new Headers({
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+	});
 
-	if (!authorizationToken) {
-		throw new Error(
-			'Unable to obtain authorization token for chat message.'
+	if ((window as any).Liferay) {
+		const authorizationToken = await postAuthorizationToken();
+
+		if (!authorizationToken) {
+			throw new Error(
+				'Unable to obtain authorization token for chat message.'
+			);
+		}
+
+		headers.set(
+			'Authorization',
+			`Bearer ${authorizationToken.accessToken}`
+		);
+		headers.set(
+			'Liferay-AI-Hub-Cell-On-Behalf-Of',
+			authorizationToken.userToken
 		);
 	}
 
 	return fetch(
-		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
+		`${aiHubURL}${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
 				chatbotExternalReferenceCode,
@@ -132,13 +145,7 @@ export async function postChatMessage(
 				instructionDefinitionScope: 'clickToChat',
 				text,
 			}),
-			headers: new Headers({
-				'Accept': 'application/json',
-				'Authorization': `Bearer ${authorizationToken.accessToken}`,
-				'Content-Type': 'application/json',
-				'Liferay-AI-Hub-Cell-On-Behalf-Of':
-					authorizationToken.userToken,
-			}),
+			headers,
 			method: 'POST',
 		}
 	);

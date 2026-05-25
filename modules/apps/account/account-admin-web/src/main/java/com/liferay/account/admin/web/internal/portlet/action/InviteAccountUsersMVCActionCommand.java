@@ -6,7 +6,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.notification.AccountUserInvitationNotificationHelper;
+import com.liferay.account.notification.AccountUserInvitationNotificationSender;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -172,7 +172,7 @@ public class InviteAccountUsersMVCActionCommand
 						accountEntryId, accountRoleIds, emailAddress, user,
 						serviceContext);
 
-				_accountUserInvitationNotificationHelper.sendNotification(
+				_accountUserInvitationNotificationSender.sendNotification(
 					accountEntryId,
 					_getCallbackURL(
 						user.getCompanyId(), groupId, ticket.getKey(),
@@ -195,8 +195,8 @@ public class InviteAccountUsersMVCActionCommand
 	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
-	private AccountUserInvitationNotificationHelper
-		_accountUserInvitationNotificationHelper;
+	private AccountUserInvitationNotificationSender
+		_accountUserInvitationNotificationSender;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

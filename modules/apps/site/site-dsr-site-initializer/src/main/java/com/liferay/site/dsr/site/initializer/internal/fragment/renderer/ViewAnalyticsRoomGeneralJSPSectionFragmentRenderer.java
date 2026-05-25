@@ -26,6 +26,11 @@ public class ViewAnalyticsRoomGeneralJSPSectionFragmentRenderer
 		<ViewAnalyticsRoomGeneralAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "room-general";
 	}

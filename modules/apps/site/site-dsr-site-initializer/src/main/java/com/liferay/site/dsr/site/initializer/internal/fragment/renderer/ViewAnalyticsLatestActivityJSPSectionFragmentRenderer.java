@@ -26,6 +26,11 @@ public class ViewAnalyticsLatestActivityJSPSectionFragmentRenderer
 		<ViewAnalyticsLatestActivityAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "latest-activity";
 	}

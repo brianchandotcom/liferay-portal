@@ -26,6 +26,11 @@ public class ViewAnalyticsActivityLogJSPSectionFragmentRenderer
 		<ViewAnalyticsActivityLogAnalyticsSectionDisplayContext> {
 
 	@Override
+	public String getCollectionKey() {
+		return "digital-sales-room-analytics";
+	}
+
+	@Override
 	public String getLabelKey() {
 		return "activity-log";
 	}

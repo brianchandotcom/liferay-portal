@@ -2065,12 +2065,12 @@ public class LayoutLocalServiceUtil {
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static Layout updateStyleBookEntryERC(
+	public static Layout updateStyleBookEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			String styleBookEntryERC, String styleBookEntryScopeERC)
 		throws PortalException {
 
-		return getService().updateStyleBookEntryERC(
+		return getService().updateStyleBookEntry(
 			groupId, privateLayout, layoutId, styleBookEntryERC,
 			styleBookEntryScopeERC);
 	}
@@ -2127,4 +2127,4 @@ public class LayoutLocalServiceUtil {
 	private static volatile LayoutLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1189291981
+// LIFERAY-SERVICE-BUILDER-HASH:1471757

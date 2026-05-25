@@ -87,8 +87,9 @@ public class MBSuspiciousActivityPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBSuspiciousActivity>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63;.
@@ -129,16 +130,8 @@ public class MBSuspiciousActivityPersistenceImpl
 			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (mbSuspiciousActivity != null) {
-			return mbSuspiciousActivity;
-		}
-
-		throw new NoSuchSuspiciousActivityException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBSuspiciousActivity>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity findByUUID_G(String uuid, long groupId)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByUUID_G(
-			uuid, groupId);
-
-		if (mbSuspiciousActivity == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSuspiciousActivityException(message);
-		}
-
-		return mbSuspiciousActivity;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -258,8 +238,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBSuspiciousActivity>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
@@ -302,16 +283,8 @@ public class MBSuspiciousActivityPersistenceImpl
 			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (mbSuspiciousActivity != null) {
-			return mbSuspiciousActivity;
-		}
-
-		throw new NoSuchSuspiciousActivityException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -356,8 +329,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<MBSuspiciousActivity>
-		_collectionPersistenceFinderByMessageId;
+	private CollectionPersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_collectionPersistenceFinderByMessageId;
 
 	/**
 	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
@@ -398,16 +372,8 @@ public class MBSuspiciousActivityPersistenceImpl
 			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByMessageId_First(
-			messageId, orderByComparator);
-
-		if (mbSuspiciousActivity != null) {
-			return mbSuspiciousActivity;
-		}
-
-		throw new NoSuchSuspiciousActivityException(
-			_collectionPersistenceFinderByMessageId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {messageId}));
+		return _collectionPersistenceFinderByMessageId.findFirst(
+			finderCache, new Object[] {messageId}, orderByComparator);
 	}
 
 	/**
@@ -449,8 +415,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {messageId});
 	}
 
-	private CollectionPersistenceFinder<MBSuspiciousActivity>
-		_collectionPersistenceFinderByThreadId;
+	private CollectionPersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_collectionPersistenceFinderByThreadId;
 
 	/**
 	 * Returns an ordered range of all the message boards suspicious activities where threadId = &#63;.
@@ -491,16 +458,8 @@ public class MBSuspiciousActivityPersistenceImpl
 			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByThreadId_First(
-			threadId, orderByComparator);
-
-		if (mbSuspiciousActivity != null) {
-			return mbSuspiciousActivity;
-		}
-
-		throw new NoSuchSuspiciousActivityException(
-			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
+		return _collectionPersistenceFinderByThreadId.findFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -542,8 +501,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private UniquePersistenceFinder<MBSuspiciousActivity>
-		_uniquePersistenceFinderByU_M;
+	private UniquePersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_uniquePersistenceFinderByU_M;
 
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
@@ -557,22 +517,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity findByU_M(long userId, long messageId)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByU_M(
-			userId, messageId);
-
-		if (mbSuspiciousActivity == null) {
-			String message =
-				_uniquePersistenceFinderByU_M.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, messageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSuspiciousActivityException(message);
-		}
-
-		return mbSuspiciousActivity;
+		return _uniquePersistenceFinderByU_M.find(
+			finderCache, new Object[] {userId, messageId});
 	}
 
 	/**
@@ -621,8 +567,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {userId, messageId});
 	}
 
-	private UniquePersistenceFinder<MBSuspiciousActivity>
-		_uniquePersistenceFinderByU_T;
+	private UniquePersistenceFinder
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
+			_uniquePersistenceFinderByU_T;
 
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and threadId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
@@ -636,22 +583,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity findByU_T(long userId, long threadId)
 		throws NoSuchSuspiciousActivityException {
 
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByU_T(
-			userId, threadId);
-
-		if (mbSuspiciousActivity == null) {
-			String message =
-				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, threadId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSuspiciousActivityException(message);
-		}
-
-		return mbSuspiciousActivity;
+		return _uniquePersistenceFinderByU_T.find(
+			finderCache, new Object[] {userId, threadId});
 	}
 
 	/**
@@ -1236,4 +1169,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1617523544
+// LIFERAY-SERVICE-BUILDER-HASH:-1428561112

@@ -76,8 +76,9 @@ public class ERCGroupEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ERCGroupEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ERCGroupEntry, NoSuchERCGroupEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the erc group entries where uuid = &#63;.
@@ -117,16 +118,8 @@ public class ERCGroupEntryPersistenceImpl
 			String uuid, OrderByComparator<ERCGroupEntry> orderByComparator)
 		throws NoSuchERCGroupEntryException {
 
-		ERCGroupEntry ercGroupEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (ercGroupEntry != null) {
-			return ercGroupEntry;
-		}
-
-		throw new NoSuchERCGroupEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -167,7 +160,7 @@ public class ERCGroupEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<ERCGroupEntry>
+	private UniquePersistenceFinder<ERCGroupEntry, NoSuchERCGroupEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -182,21 +175,8 @@ public class ERCGroupEntryPersistenceImpl
 	public ERCGroupEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchERCGroupEntryException {
 
-		ERCGroupEntry ercGroupEntry = fetchByUUID_G(uuid, groupId);
-
-		if (ercGroupEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchERCGroupEntryException(message);
-		}
-
-		return ercGroupEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -244,8 +224,9 @@ public class ERCGroupEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<ERCGroupEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ERCGroupEntry, NoSuchERCGroupEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the erc group entries where uuid = &#63; and companyId = &#63;.
@@ -288,16 +269,8 @@ public class ERCGroupEntryPersistenceImpl
 			OrderByComparator<ERCGroupEntry> orderByComparator)
 		throws NoSuchERCGroupEntryException {
 
-		ERCGroupEntry ercGroupEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ercGroupEntry != null) {
-			return ercGroupEntry;
-		}
-
-		throw new NoSuchERCGroupEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -342,7 +315,7 @@ public class ERCGroupEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<ERCGroupEntry>
+	private UniquePersistenceFinder<ERCGroupEntry, NoSuchERCGroupEntryException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -357,23 +330,8 @@ public class ERCGroupEntryPersistenceImpl
 	public ERCGroupEntry findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchERCGroupEntryException {
 
-		ERCGroupEntry ercGroupEntry = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (ercGroupEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchERCGroupEntryException(message);
-		}
-
-		return ercGroupEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -808,4 +766,4 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:521669282
+// LIFERAY-SERVICE-BUILDER-HASH:1755184570

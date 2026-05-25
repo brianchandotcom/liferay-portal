@@ -62,8 +62,9 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LocalizedEntryLocalization>
-		_collectionPersistenceFinderByLocalizedEntryId;
+	private CollectionPersistenceFinder
+		<LocalizedEntryLocalization, NoSuchLocalizedEntryLocalizationException>
+			_collectionPersistenceFinderByLocalizedEntryId;
 
 	/**
 	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;.
@@ -104,17 +105,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			OrderByComparator<LocalizedEntryLocalization> orderByComparator)
 		throws NoSuchLocalizedEntryLocalizationException {
 
-		LocalizedEntryLocalization localizedEntryLocalization =
-			fetchByLocalizedEntryId_First(localizedEntryId, orderByComparator);
-
-		if (localizedEntryLocalization != null) {
-			return localizedEntryLocalization;
-		}
-
-		throw new NoSuchLocalizedEntryLocalizationException(
-			_collectionPersistenceFinderByLocalizedEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {localizedEntryId}));
+		return _collectionPersistenceFinderByLocalizedEntryId.findFirst(
+			finderCache, new Object[] {localizedEntryId}, orderByComparator);
 	}
 
 	/**
@@ -156,8 +148,9 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {localizedEntryId});
 	}
 
-	private UniquePersistenceFinder<LocalizedEntryLocalization>
-		_uniquePersistenceFinderByLocalizedEntryId_LanguageId;
+	private UniquePersistenceFinder
+		<LocalizedEntryLocalization, NoSuchLocalizedEntryLocalizationException>
+			_uniquePersistenceFinderByLocalizedEntryId_LanguageId;
 
 	/**
 	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLocalizedEntryLocalizationException</code> if it could not be found.
@@ -172,24 +165,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			long localizedEntryId, String languageId)
 		throws NoSuchLocalizedEntryLocalizationException {
 
-		LocalizedEntryLocalization localizedEntryLocalization =
-			fetchByLocalizedEntryId_LanguageId(localizedEntryId, languageId);
-
-		if (localizedEntryLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByLocalizedEntryId_LanguageId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {localizedEntryId, languageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLocalizedEntryLocalizationException(message);
-		}
-
-		return localizedEntryLocalization;
+		return _uniquePersistenceFinderByLocalizedEntryId_LanguageId.find(
+			finderCache, new Object[] {localizedEntryId, languageId});
 	}
 
 	/**
@@ -522,4 +499,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2050271521
+// LIFERAY-SERVICE-BUILDER-HASH:184364389

@@ -69,7 +69,8 @@ public class TicketPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<Ticket> _uniquePersistenceFinderByKey;
+	private UniquePersistenceFinder<Ticket, NoSuchTicketException>
+		_uniquePersistenceFinderByKey;
 
 	/**
 	 * Returns the ticket where key = &#63; or throws a <code>NoSuchTicketException</code> if it could not be found.
@@ -80,21 +81,8 @@ public class TicketPersistenceImpl
 	 */
 	@Override
 	public Ticket findByKey(String key) throws NoSuchTicketException {
-		Ticket ticket = fetchByKey(key);
-
-		if (ticket == null) {
-			String message =
-				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTicketException(message);
-		}
-
-		return ticket;
+		return _uniquePersistenceFinderByKey.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {key});
 	}
 
 	/**
@@ -136,7 +124,7 @@ public class TicketPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {key});
 	}
 
-	private CollectionPersistenceFinder<Ticket>
+	private CollectionPersistenceFinder<Ticket, NoSuchTicketException>
 		_collectionPersistenceFinderByC_C_C;
 
 	/**
@@ -182,17 +170,9 @@ public class TicketPersistenceImpl
 			OrderByComparator<Ticket> orderByComparator)
 		throws NoSuchTicketException {
 
-		Ticket ticket = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		throw new NoSuchTicketException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -243,7 +223,7 @@ public class TicketPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<Ticket>
+	private CollectionPersistenceFinder<Ticket, NoSuchTicketException>
 		_collectionPersistenceFinderByC_T_EA;
 
 	/**
@@ -289,17 +269,9 @@ public class TicketPersistenceImpl
 			OrderByComparator<Ticket> orderByComparator)
 		throws NoSuchTicketException {
 
-		Ticket ticket = fetchByC_T_EA_First(
-			companyId, type, emailAddress, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		throw new NoSuchTicketException(
-			_collectionPersistenceFinderByC_T_EA.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, type, emailAddress}));
+		return _collectionPersistenceFinderByC_T_EA.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, emailAddress}, orderByComparator);
 	}
 
 	/**
@@ -350,7 +322,7 @@ public class TicketPersistenceImpl
 			new Object[] {companyId, type, emailAddress});
 	}
 
-	private CollectionPersistenceFinder<Ticket>
+	private CollectionPersistenceFinder<Ticket, NoSuchTicketException>
 		_collectionPersistenceFinderByC_C_T;
 
 	/**
@@ -396,17 +368,9 @@ public class TicketPersistenceImpl
 			OrderByComparator<Ticket> orderByComparator)
 		throws NoSuchTicketException {
 
-		Ticket ticket = fetchByC_C_T_First(
-			classNameId, classPK, type, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		throw new NoSuchTicketException(
-			_collectionPersistenceFinderByC_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, type}));
+		return _collectionPersistenceFinderByC_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type}, orderByComparator);
 	}
 
 	/**
@@ -457,7 +421,7 @@ public class TicketPersistenceImpl
 			new Object[] {classNameId, classPK, type});
 	}
 
-	private CollectionPersistenceFinder<Ticket>
+	private CollectionPersistenceFinder<Ticket, NoSuchTicketException>
 		_collectionPersistenceFinderByC_C_C_T;
 
 	/**
@@ -506,17 +470,10 @@ public class TicketPersistenceImpl
 			OrderByComparator<Ticket> orderByComparator)
 		throws NoSuchTicketException {
 
-		Ticket ticket = fetchByC_C_C_T_First(
-			companyId, classNameId, classPK, type, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		throw new NoSuchTicketException(
-			_collectionPersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK, type}));
+		return _collectionPersistenceFinderByC_C_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -978,4 +935,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1448420254
+// LIFERAY-SERVICE-BUILDER-HASH:951635519

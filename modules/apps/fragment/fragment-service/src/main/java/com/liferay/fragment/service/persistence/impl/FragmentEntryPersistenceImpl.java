@@ -96,7 +96,7 @@ public class FragmentEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -137,16 +137,8 @@ public class FragmentEntryPersistenceImpl
 			String uuid, OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -187,7 +179,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_Head;
 
 	/**
@@ -231,16 +223,8 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUuid_Head_First(
-			uuid, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, head}));
+		return _collectionPersistenceFinderByUuid_Head.findFirst(
+			finderCache, new Object[] {uuid, head}, orderByComparator);
 	}
 
 	/**
@@ -285,7 +269,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUUID_G;
 
 	/**
@@ -329,16 +313,8 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUUID_G_First(
-			uuid, groupId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
+		return _collectionPersistenceFinderByUUID_G.findFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -383,7 +359,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private UniquePersistenceFinder<FragmentEntry>
+	private UniquePersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G_Head;
 
 	/**
@@ -400,22 +376,8 @@ public class FragmentEntryPersistenceImpl
 			String uuid, long groupId, boolean head)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUUID_G_Head(uuid, groupId, head);
-
-		if (fragmentEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return fragmentEntry;
+		return _uniquePersistenceFinderByUUID_G_Head.find(
+			finderCache, new Object[] {uuid, groupId, head});
 	}
 
 	/**
@@ -467,7 +429,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -511,16 +473,8 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -565,7 +519,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C_Head;
 
 	/**
@@ -611,17 +565,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByUuid_C_Head_First(
-			uuid, companyId, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {uuid, companyId, head}));
+		return _collectionPersistenceFinderByUuid_C_Head.findFirst(
+			finderCache, new Object[] {uuid, companyId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -670,7 +616,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -711,16 +657,8 @@ public class FragmentEntryPersistenceImpl
 			long groupId, OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -761,7 +699,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId_Head;
 
 	/**
@@ -805,16 +743,8 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByGroupId_Head_First(
-			groupId, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, head}));
+		return _collectionPersistenceFinderByGroupId_Head.findFirst(
+			finderCache, new Object[] {groupId, head}, orderByComparator);
 	}
 
 	/**
@@ -859,7 +789,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByFragmentCollectionId;
 
 	/**
@@ -901,18 +831,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByFragmentCollectionId_First(
-			fragmentCollectionId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByFragmentCollectionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fragmentCollectionId}));
+		return _collectionPersistenceFinderByFragmentCollectionId.findFirst(
+			finderCache, new Object[] {fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -955,7 +876,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {fragmentCollectionId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByFragmentCollectionId_Head;
 
 	/**
@@ -999,18 +920,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByFragmentCollectionId_Head_First(
-			fragmentCollectionId, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByFragmentCollectionId_Head.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fragmentCollectionId, head}));
+		return _collectionPersistenceFinderByFragmentCollectionId_Head.
+			findFirst(
+				finderCache, new Object[] {fragmentCollectionId, head},
+				orderByComparator);
 	}
 
 	/**
@@ -1061,7 +974,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {fragmentCollectionId, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByType;
 
 	/**
@@ -1102,16 +1015,8 @@ public class FragmentEntryPersistenceImpl
 			int type, OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByType_First(
-			type, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -1152,7 +1057,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByType_Head;
 
 	/**
@@ -1196,16 +1101,8 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByType_Head_First(
-			type, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByType_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, head}));
+		return _collectionPersistenceFinderByType_Head.findFirst(
+			finderCache, new Object[] {type, head}, orderByComparator);
 	}
 
 	/**
@@ -1250,7 +1147,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {type, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI;
 
 	/**
@@ -1294,17 +1191,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_First(
-			groupId, fragmentCollectionId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId}));
+		return _collectionPersistenceFinderByG_FCI.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1350,7 +1239,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_Head;
 
 	/**
@@ -1396,17 +1285,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_Head_First(
-			groupId, fragmentCollectionId, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, head}));
+		return _collectionPersistenceFinderByG_FCI_Head.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1459,7 +1340,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FEK;
 
 	/**
@@ -1503,17 +1384,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FEK_First(
-			groupId, fragmentEntryKey, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FEK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentEntryKey}));
+		return _collectionPersistenceFinderByG_FEK.findFirst(
+			finderCache, new Object[] {groupId, fragmentEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1559,7 +1432,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentEntryKey});
 	}
 
-	private UniquePersistenceFinder<FragmentEntry>
+	private UniquePersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_FEK_Head;
 
 	/**
@@ -1576,23 +1449,8 @@ public class FragmentEntryPersistenceImpl
 			long groupId, String fragmentEntryKey, boolean head)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FEK_Head(
-			groupId, fragmentEntryKey, head);
-
-		if (fragmentEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_FEK_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, fragmentEntryKey, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return fragmentEntry;
+		return _uniquePersistenceFinderByG_FEK_Head.find(
+			finderCache, new Object[] {groupId, fragmentEntryKey, head});
 	}
 
 	/**
@@ -1649,7 +1507,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentEntryKey, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_LikeN;
 
 	/**
@@ -1760,17 +1618,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_LikeN_First(
-			groupId, fragmentCollectionId, name, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, name}));
+		return _collectionPersistenceFinderByG_FCI_LikeN.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1823,7 +1673,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, name});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_LikeN_Head;
 
 	/**
@@ -1941,18 +1791,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_LikeN_Head_First(
-			groupId, fragmentCollectionId, name, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_LikeN_Head.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, fragmentCollectionId, name, head}));
+		return _collectionPersistenceFinderByG_FCI_LikeN_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, head},
+			orderByComparator);
 	}
 
 	/**
@@ -2011,7 +1853,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, name, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_T;
 
 	/**
@@ -2057,17 +1899,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_T_First(
-			groupId, fragmentCollectionId, type, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type}));
+		return _collectionPersistenceFinderByG_FCI_T.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -2120,7 +1954,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, type});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_T_Head;
 
 	/**
@@ -2169,17 +2003,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_T_Head_First(
-			groupId, fragmentCollectionId, type, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_T_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type, head}));
+		return _collectionPersistenceFinderByG_FCI_T_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, head},
+			orderByComparator);
 	}
 
 	/**
@@ -2238,7 +2065,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, type, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_S;
 
 	/**
@@ -2284,17 +2111,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, status}));
+		return _collectionPersistenceFinderByG_FCI_S.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2347,7 +2166,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_S_Head;
 
 	/**
@@ -2396,17 +2215,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_S_Head_First(
-			groupId, fragmentCollectionId, status, head, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_S_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, status, head}));
+		return _collectionPersistenceFinderByG_FCI_S_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, head},
+			orderByComparator);
 	}
 
 	/**
@@ -2465,7 +2277,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, status, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_LikeN_S;
 
 	/**
@@ -2583,17 +2395,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_LikeN_S_First(
-			groupId, fragmentCollectionId, name, status, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_LikeN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, name, status}));
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2652,7 +2457,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, name, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_LikeN_S_Head;
 
 	/**
@@ -2778,21 +2583,10 @@ public class FragmentEntryPersistenceImpl
 			boolean head, OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_LikeN_S_Head_First(
-			groupId, fragmentCollectionId, name, status, head,
+		return _collectionPersistenceFinderByG_FCI_LikeN_S_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status, head},
 			orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_LikeN_S_Head.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentCollectionId, name, status, head
-					}));
 	}
 
 	/**
@@ -2856,7 +2650,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, name, status, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_T_S;
 
 	/**
@@ -2905,17 +2699,10 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_T_S_First(
-			groupId, fragmentCollectionId, type, status, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type, status}));
+		return _collectionPersistenceFinderByG_FCI_T_S.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2974,7 +2761,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, type, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_FCI_T_S_Head;
 
 	/**
@@ -3026,20 +2813,10 @@ public class FragmentEntryPersistenceImpl
 			boolean head, OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByG_FCI_T_S_Head_First(
-			groupId, fragmentCollectionId, type, status, head,
+		return _collectionPersistenceFinderByG_FCI_T_S_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status, head},
 			orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_FCI_T_S_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, fragmentCollectionId, type, status, head
-				}));
 	}
 
 	/**
@@ -3103,7 +2880,7 @@ public class FragmentEntryPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, type, status, head});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntry>
+	private CollectionPersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByERC_G;
 
 	/**
@@ -3147,17 +2924,9 @@ public class FragmentEntryPersistenceImpl
 			OrderByComparator<FragmentEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByERC_G_First(
-			externalReferenceCode, groupId, orderByComparator);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByERC_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {externalReferenceCode, groupId}));
+		return _collectionPersistenceFinderByERC_G.findFirst(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -3203,7 +2972,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
-	private UniquePersistenceFinder<FragmentEntry>
+	private UniquePersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByERC_G_Head;
 
 	/**
@@ -3220,23 +2989,8 @@ public class FragmentEntryPersistenceImpl
 			String externalReferenceCode, long groupId, boolean head)
 		throws NoSuchEntryException {
 
-		FragmentEntry fragmentEntry = fetchByERC_G_Head(
-			externalReferenceCode, groupId, head);
-
-		if (fragmentEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return fragmentEntry;
+		return _uniquePersistenceFinderByERC_G_Head.find(
+			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
 	/**
@@ -3293,7 +3047,7 @@ public class FragmentEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
-	private UniquePersistenceFinder<FragmentEntry>
+	private UniquePersistenceFinder<FragmentEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByHeadId;
 
 	/**
@@ -3305,21 +3059,8 @@ public class FragmentEntryPersistenceImpl
 	 */
 	@Override
 	public FragmentEntry findByHeadId(long headId) throws NoSuchEntryException {
-		FragmentEntry fragmentEntry = fetchByHeadId(headId);
-
-		if (fragmentEntry == null) {
-			String message =
-				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return fragmentEntry;
+		return _uniquePersistenceFinderByHeadId.find(
+			finderCache, new Object[] {headId});
 	}
 
 	/**
@@ -4851,4 +4592,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1058136546
+// LIFERAY-SERVICE-BUILDER-HASH:1953089196

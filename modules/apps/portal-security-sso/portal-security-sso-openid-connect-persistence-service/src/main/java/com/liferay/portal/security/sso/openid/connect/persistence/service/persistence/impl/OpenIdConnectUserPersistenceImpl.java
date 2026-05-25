@@ -75,7 +75,7 @@ public class OpenIdConnectUserPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<OpenIdConnectUser>
+	private CollectionPersistenceFinder<OpenIdConnectUser, NoSuchUserException>
 		_collectionPersistenceFinderByC_U;
 
 	/**
@@ -119,16 +119,8 @@ public class OpenIdConnectUserPersistenceImpl
 			OrderByComparator<OpenIdConnectUser> orderByComparator)
 		throws NoSuchUserException {
 
-		OpenIdConnectUser openIdConnectUser = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (openIdConnectUser != null) {
-			return openIdConnectUser;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -173,7 +165,7 @@ public class OpenIdConnectUserPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private UniquePersistenceFinder<OpenIdConnectUser>
+	private UniquePersistenceFinder<OpenIdConnectUser, NoSuchUserException>
 		_uniquePersistenceFinderByC_I_S;
 
 	/**
@@ -190,23 +182,8 @@ public class OpenIdConnectUserPersistenceImpl
 			long companyId, String issuer, String subject)
 		throws NoSuchUserException {
 
-		OpenIdConnectUser openIdConnectUser = fetchByC_I_S(
-			companyId, issuer, subject);
-
-		if (openIdConnectUser == null) {
-			String message =
-				_uniquePersistenceFinderByC_I_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, issuer, subject});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return openIdConnectUser;
+		return _uniquePersistenceFinderByC_I_S.find(
+			finderCache, new Object[] {companyId, issuer, subject});
 	}
 
 	/**
@@ -571,4 +548,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-554993699
+// LIFERAY-SERVICE-BUILDER-HASH:770042871

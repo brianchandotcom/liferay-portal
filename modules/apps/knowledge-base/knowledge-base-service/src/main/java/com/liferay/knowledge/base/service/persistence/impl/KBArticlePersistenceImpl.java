@@ -99,7 +99,7 @@ public class KBArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByResourcePrimKey;
 
 	/**
@@ -141,16 +141,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByResourcePrimKey_First(
-			resourcePrimKey, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByResourcePrimKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {resourcePrimKey}));
+		return _collectionPersistenceFinderByResourcePrimKey.findFirst(
+			finderCache, new Object[] {resourcePrimKey}, orderByComparator);
 	}
 
 	/**
@@ -191,7 +183,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -232,15 +224,8 @@ public class KBArticlePersistenceImpl
 			String uuid, OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByUuid_First(uuid, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -281,7 +266,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<KBArticle, NoSuchArticleException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the kb article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -295,21 +281,8 @@ public class KBArticlePersistenceImpl
 	public KBArticle findByUUID_G(String uuid, long groupId)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByUUID_G(uuid, groupId);
-
-		if (kbArticle == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return kbArticle;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -357,7 +330,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -401,16 +374,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -455,7 +420,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G;
 
 	/**
@@ -499,17 +464,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByR_G_First(
-			resourcePrimKey, groupId, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByR_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, groupId}));
+		return _collectionPersistenceFinderByR_G.findFirst(
+			finderCache, new Object[] {resourcePrimKey, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -592,7 +549,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId}, groupId);
 	}
 
-	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_V;
+	private UniquePersistenceFinder<KBArticle, NoSuchArticleException>
+		_uniquePersistenceFinderByR_V;
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -606,22 +564,8 @@ public class KBArticlePersistenceImpl
 	public KBArticle findByR_V(long resourcePrimKey, int version)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByR_V(resourcePrimKey, version);
-
-		if (kbArticle == null) {
-			String message =
-				_uniquePersistenceFinderByR_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {resourcePrimKey, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return kbArticle;
+		return _uniquePersistenceFinderByR_V.find(
+			finderCache, new Object[] {resourcePrimKey, version});
 	}
 
 	/**
@@ -670,7 +614,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, version});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_L;
 
 	/**
@@ -820,7 +764,7 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), latest});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_M;
 
 	/**
@@ -970,7 +914,7 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), main});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_S;
 
 	/**
@@ -1130,7 +1074,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_ERC;
 
 	/**
@@ -1174,17 +1118,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_ERC_First(
-			groupId, externalReferenceCode, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_ERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, externalReferenceCode}));
+		return _collectionPersistenceFinderByG_ERC.findFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode},
+			orderByComparator);
 	}
 
 	/**
@@ -1268,7 +1204,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_L;
 
 	/**
@@ -1312,16 +1248,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_L_First(
-			groupId, latest, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, latest}));
+		return _collectionPersistenceFinderByG_L.findFirst(
+			finderCache, new Object[] {groupId, latest}, orderByComparator);
 	}
 
 	/**
@@ -1403,7 +1331,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_M;
 
 	/**
@@ -1447,16 +1375,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_M_First(
-			groupId, main, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_M.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, main}));
+		return _collectionPersistenceFinderByG_M.findFirst(
+			finderCache, new Object[] {groupId, main}, orderByComparator);
 	}
 
 	/**
@@ -1538,7 +1458,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_S;
 
 	/**
@@ -1582,16 +1502,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1673,7 +1585,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_L;
 
 	/**
@@ -1717,16 +1629,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByC_L_First(
-			companyId, latest, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, latest}));
+		return _collectionPersistenceFinderByC_L.findFirst(
+			finderCache, new Object[] {companyId, latest}, orderByComparator);
 	}
 
 	/**
@@ -1771,7 +1675,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_M;
 
 	/**
@@ -1815,16 +1719,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByC_M_First(
-			companyId, main, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_M.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, main}));
+		return _collectionPersistenceFinderByC_M.findFirst(
+			finderCache, new Object[] {companyId, main}, orderByComparator);
 	}
 
 	/**
@@ -1869,7 +1765,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -1913,16 +1809,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1967,7 +1855,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByP_L;
 
 	/**
@@ -2125,7 +2013,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByP_M;
 
 	/**
@@ -2281,7 +2169,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByP_S;
 
 	/**
@@ -2439,7 +2327,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByLtD_S;
 
 	/**
@@ -2539,16 +2427,8 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -2593,7 +2473,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_G_V;
+	private UniquePersistenceFinder<KBArticle, NoSuchArticleException>
+		_uniquePersistenceFinderByR_G_V;
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -2609,22 +2490,8 @@ public class KBArticlePersistenceImpl
 			long resourcePrimKey, long groupId, int version)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByR_G_V(resourcePrimKey, groupId, version);
-
-		if (kbArticle == null) {
-			String message =
-				_uniquePersistenceFinderByR_G_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {resourcePrimKey, groupId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return kbArticle;
+		return _uniquePersistenceFinderByR_G_V.find(
+			finderCache, new Object[] {resourcePrimKey, groupId, version});
 	}
 
 	/**
@@ -2678,7 +2545,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId, version});
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_L;
 
 	/**
@@ -2944,7 +2811,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_M;
 
 	/**
@@ -3208,7 +3075,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_S;
 
 	/**
@@ -3468,7 +3335,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_NotS;
 
 	/**
@@ -3578,17 +3445,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByR_G_NotS_First(
-			resourcePrimKey, groupId, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByR_G_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, groupId, status}));
+		return _collectionPersistenceFinderByR_G_NotS.findFirst(
+			finderCache, new Object[] {resourcePrimKey, groupId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3720,7 +3579,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_L_NotS;
 
 	/**
@@ -4027,7 +3886,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_M_NotS;
 
 	/**
@@ -4328,7 +4187,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<KBArticle>
+	private UniquePersistenceFinder<KBArticle, NoSuchArticleException>
 		_uniquePersistenceFinderByG_ERC_V;
 
 	/**
@@ -4345,23 +4204,9 @@ public class KBArticlePersistenceImpl
 			long groupId, String externalReferenceCode, int version)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_ERC_V(
-			groupId, externalReferenceCode, version);
-
-		if (kbArticle == null) {
-			String message =
-				_uniquePersistenceFinderByG_ERC_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, externalReferenceCode, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return kbArticle;
+		return _uniquePersistenceFinderByG_ERC_V.find(
+			finderCache,
+			new Object[] {groupId, externalReferenceCode, version});
 	}
 
 	/**
@@ -4419,7 +4264,7 @@ public class KBArticlePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_ERC_S;
 
 	/**
@@ -4465,17 +4310,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_ERC_S_First(
-			groupId, externalReferenceCode, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_ERC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, externalReferenceCode, status}));
+		return _collectionPersistenceFinderByG_ERC_S.findFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4570,7 +4407,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_L;
 
 	/**
@@ -4836,7 +4673,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_M;
 
 	/**
@@ -5102,7 +4939,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_S;
 
 	/**
@@ -5368,7 +5205,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_UT;
 
 	/**
@@ -5414,17 +5251,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_KBFI_UT_First(
-			groupId, kbFolderId, urlTitle, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_KBFI_UT.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, kbFolderId, urlTitle}));
+		return _collectionPersistenceFinderByG_KBFI_UT.findFirst(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -5518,7 +5347,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, urlTitle}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_L;
 
 	/**
@@ -5564,17 +5393,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_KBFI_L_First(
-			groupId, kbFolderId, latest, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_KBFI_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, kbFolderId, latest}));
+		return _collectionPersistenceFinderByG_KBFI_L.findFirst(
+			finderCache, new Object[] {groupId, kbFolderId, latest},
+			orderByComparator);
 	}
 
 	/**
@@ -5666,7 +5487,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, latest}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_S;
 
 	/**
@@ -5712,17 +5533,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_KBFI_S_First(
-			groupId, kbFolderId, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_KBFI_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, kbFolderId, status}));
+		return _collectionPersistenceFinderByG_KBFI_S.findFirst(
+			finderCache, new Object[] {groupId, kbFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5812,7 +5625,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_LikeS_L;
 
 	/**
@@ -6273,7 +6086,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_LikeS_M;
 
 	/**
@@ -6726,7 +6539,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_LikeS_S;
 
 	/**
@@ -7183,7 +6996,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_L_NotS;
 
 	/**
@@ -7291,17 +7104,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_L_NotS_First(
-			groupId, latest, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_L_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, latest, status}));
+		return _collectionPersistenceFinderByG_L_NotS.findFirst(
+			finderCache, new Object[] {groupId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7427,7 +7232,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_M_NotS;
 
 	/**
@@ -7534,17 +7339,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_M_NotS_First(
-			groupId, main, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_M_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, main, status}));
+		return _collectionPersistenceFinderByG_M_NotS.findFirst(
+			finderCache, new Object[] {groupId, main, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7669,7 +7466,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_L_NotS;
 
 	/**
@@ -7777,17 +7574,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByC_L_NotS_First(
-			companyId, latest, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_L_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, latest, status}));
+		return _collectionPersistenceFinderByC_L_NotS.findFirst(
+			finderCache, new Object[] {companyId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7836,7 +7625,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest, status});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_M_NotS;
 
 	/**
@@ -7944,17 +7733,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByC_M_NotS_First(
-			companyId, main, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_M_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, main, status}));
+		return _collectionPersistenceFinderByC_M_NotS.findFirst(
+			finderCache, new Object[] {companyId, main, status},
+			orderByComparator);
 	}
 
 	/**
@@ -8003,7 +7784,7 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main, status});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByP_L_NotS;
 
 	/**
@@ -8311,7 +8092,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<KBArticle>
+	private CollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByP_M_NotS;
 
 	/**
@@ -8619,7 +8400,7 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_L_NotS;
 
 	/**
@@ -9139,7 +8920,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_G_M_NotS;
 
 	/**
@@ -9643,7 +9424,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_L_S;
 
 	/**
@@ -9941,7 +9722,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_L_NotS;
 
 	/**
@@ -10465,7 +10246,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_M_S;
 
 	/**
@@ -10761,7 +10542,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_P_M_NotS;
 
 	/**
@@ -11281,7 +11062,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_UT_S;
 
 	/**
@@ -11561,7 +11342,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_UT_NotS;
 
 	/**
@@ -11677,17 +11458,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_KBFI_UT_NotS_First(
-			groupId, kbFolderId, urlTitle, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_KBFI_UT_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, kbFolderId, urlTitle, status}));
+		return _collectionPersistenceFinderByG_KBFI_UT_NotS.findFirst(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -11829,7 +11602,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_KBFI_L_NotS;
 
 	/**
@@ -11945,17 +11718,9 @@ public class KBArticlePersistenceImpl
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_KBFI_L_NotS_First(
-			groupId, kbFolderId, latest, status, orderByComparator);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_KBFI_L_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, kbFolderId, latest, status}));
+		return _collectionPersistenceFinderByG_KBFI_L_NotS.findFirst(
+			finderCache, new Object[] {groupId, kbFolderId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -12097,7 +11862,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_LikeS_L_NotS;
 
 	/**
@@ -12601,7 +12366,7 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<KBArticle>
+	private FilterCollectionPersistenceFinder<KBArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByG_LikeS_M_NotS;
 
 	/**
@@ -15417,4 +15182,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:100653586
+// LIFERAY-SERVICE-BUILDER-HASH:1770650340

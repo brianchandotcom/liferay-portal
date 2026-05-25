@@ -63,8 +63,9 @@ public class PortalPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<PortalPreferences>
-		_collectionPersistenceFinderByOwnerType;
+	private CollectionPersistenceFinder
+		<PortalPreferences, NoSuchPreferencesException>
+			_collectionPersistenceFinderByOwnerType;
 
 	/**
 	 * Returns an ordered range of all the portal preferenceses where ownerType = &#63;.
@@ -105,16 +106,9 @@ public class PortalPreferencesPersistenceImpl
 			OrderByComparator<PortalPreferences> orderByComparator)
 		throws NoSuchPreferencesException {
 
-		PortalPreferences portalPreferences = fetchByOwnerType_First(
-			ownerType, orderByComparator);
-
-		if (portalPreferences != null) {
-			return portalPreferences;
-		}
-
-		throw new NoSuchPreferencesException(
-			_collectionPersistenceFinderByOwnerType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerType}));
+		return _collectionPersistenceFinderByOwnerType.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerType},
+			orderByComparator);
 	}
 
 	/**
@@ -156,8 +150,9 @@ public class PortalPreferencesPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {ownerType});
 	}
 
-	private UniquePersistenceFinder<PortalPreferences>
-		_uniquePersistenceFinderByO_O;
+	private UniquePersistenceFinder
+		<PortalPreferences, NoSuchPreferencesException>
+			_uniquePersistenceFinderByO_O;
 
 	/**
 	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.
@@ -171,22 +166,9 @@ public class PortalPreferencesPersistenceImpl
 	public PortalPreferences findByO_O(long ownerId, int ownerType)
 		throws NoSuchPreferencesException {
 
-		PortalPreferences portalPreferences = fetchByO_O(ownerId, ownerType);
-
-		if (portalPreferences == null) {
-			String message =
-				_uniquePersistenceFinderByO_O.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {ownerId, ownerType});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPreferencesException(message);
-		}
-
-		return portalPreferences;
+		return _uniquePersistenceFinderByO_O.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType});
 	}
 
 	/**
@@ -490,4 +472,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1675058243
+// LIFERAY-SERVICE-BUILDER-HASH:-894990208

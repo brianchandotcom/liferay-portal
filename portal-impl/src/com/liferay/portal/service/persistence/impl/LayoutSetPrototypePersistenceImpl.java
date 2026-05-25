@@ -76,8 +76,9 @@ public class LayoutSetPrototypePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<LayoutSetPrototype>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetPrototype, NoSuchLayoutSetPrototypeException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout set prototypes where uuid = &#63;.
@@ -118,16 +119,9 @@ public class LayoutSetPrototypePersistenceImpl
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws NoSuchLayoutSetPrototypeException {
 
-		LayoutSetPrototype layoutSetPrototype = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutSetPrototype != null) {
-			return layoutSetPrototype;
-		}
-
-		throw new NoSuchLayoutSetPrototypeException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -204,8 +198,9 @@ public class LayoutSetPrototypePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutSetPrototype>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetPrototype, NoSuchLayoutSetPrototypeException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout set prototypes where uuid = &#63; and companyId = &#63;.
@@ -248,16 +243,9 @@ public class LayoutSetPrototypePersistenceImpl
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws NoSuchLayoutSetPrototypeException {
 
-		LayoutSetPrototype layoutSetPrototype = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutSetPrototype != null) {
-			return layoutSetPrototype;
-		}
-
-		throw new NoSuchLayoutSetPrototypeException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -341,8 +329,9 @@ public class LayoutSetPrototypePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutSetPrototype>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetPrototype, NoSuchLayoutSetPrototypeException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the layout set prototypes where companyId = &#63;.
@@ -383,16 +372,9 @@ public class LayoutSetPrototypePersistenceImpl
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws NoSuchLayoutSetPrototypeException {
 
-		LayoutSetPrototype layoutSetPrototype = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (layoutSetPrototype != null) {
-			return layoutSetPrototype;
-		}
-
-		throw new NoSuchLayoutSetPrototypeException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -471,8 +453,9 @@ public class LayoutSetPrototypePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutSetPrototype>
-		_collectionPersistenceFinderByC_A;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetPrototype, NoSuchLayoutSetPrototypeException>
+			_collectionPersistenceFinderByC_A;
 
 	/**
 	 * Returns an ordered range of all the layout set prototypes where companyId = &#63; and active = &#63;.
@@ -515,16 +498,9 @@ public class LayoutSetPrototypePersistenceImpl
 			OrderByComparator<LayoutSetPrototype> orderByComparator)
 		throws NoSuchLayoutSetPrototypeException {
 
-		LayoutSetPrototype layoutSetPrototype = fetchByC_A_First(
-			companyId, active, orderByComparator);
-
-		if (layoutSetPrototype != null) {
-			return layoutSetPrototype;
-		}
-
-		throw new NoSuchLayoutSetPrototypeException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1062,4 +1038,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:844954695
+// LIFERAY-SERVICE-BUILDER-HASH:-1439831288

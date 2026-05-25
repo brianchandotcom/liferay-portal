@@ -78,8 +78,9 @@ public class PushNotificationsDevicePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<PushNotificationsDevice>
-		_uniquePersistenceFinderByToken;
+	private UniquePersistenceFinder
+		<PushNotificationsDevice, NoSuchDeviceException>
+			_uniquePersistenceFinderByToken;
 
 	/**
 	 * Returns the push notifications device where token = &#63; or throws a <code>NoSuchDeviceException</code> if it could not be found.
@@ -92,21 +93,8 @@ public class PushNotificationsDevicePersistenceImpl
 	public PushNotificationsDevice findByToken(String token)
 		throws NoSuchDeviceException {
 
-		PushNotificationsDevice pushNotificationsDevice = fetchByToken(token);
-
-		if (pushNotificationsDevice == null) {
-			String message =
-				_uniquePersistenceFinderByToken.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {token});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDeviceException(message);
-		}
-
-		return pushNotificationsDevice;
+		return _uniquePersistenceFinderByToken.find(
+			finderCache, new Object[] {token});
 	}
 
 	/**
@@ -151,8 +139,9 @@ public class PushNotificationsDevicePersistenceImpl
 			finderCache, new Object[] {token});
 	}
 
-	private CollectionPersistenceFinder<PushNotificationsDevice>
-		_collectionPersistenceFinderByU_P;
+	private CollectionPersistenceFinder
+		<PushNotificationsDevice, NoSuchDeviceException>
+			_collectionPersistenceFinderByU_P;
 
 	/**
 	 * Returns an ordered range of all the push notifications devices where userId = &#63; and platform = &#63;.
@@ -612,4 +601,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1869823255
+// LIFERAY-SERVICE-BUILDER-HASH:443266547

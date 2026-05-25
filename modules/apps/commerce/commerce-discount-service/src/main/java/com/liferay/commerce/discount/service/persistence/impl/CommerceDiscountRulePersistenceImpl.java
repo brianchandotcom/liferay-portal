@@ -76,8 +76,9 @@ public class CommerceDiscountRulePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceDiscountRule>
-		_collectionPersistenceFinderByCommerceDiscountId;
+	private CollectionPersistenceFinder
+		<CommerceDiscountRule, NoSuchDiscountRuleException>
+			_collectionPersistenceFinderByCommerceDiscountId;
 
 	/**
 	 * Returns an ordered range of all the commerce discount rules where commerceDiscountId = &#63;.
@@ -118,19 +119,8 @@ public class CommerceDiscountRulePersistenceImpl
 			OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException {
 
-		CommerceDiscountRule commerceDiscountRule =
-			fetchByCommerceDiscountId_First(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountRule != null) {
-			return commerceDiscountRule;
-		}
-
-		throw new NoSuchDiscountRuleException(
-			_collectionPersistenceFinderByCommerceDiscountId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceDiscountId}));
+		return _collectionPersistenceFinderByCommerceDiscountId.findFirst(
+			finderCache, new Object[] {commerceDiscountId}, orderByComparator);
 	}
 
 	/**
@@ -487,4 +477,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1004838979
+// LIFERAY-SERVICE-BUILDER-HASH:2100569033

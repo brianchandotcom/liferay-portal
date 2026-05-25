@@ -98,7 +98,7 @@ public class CalendarBookingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -139,16 +139,8 @@ public class CalendarBookingPersistenceImpl
 			String uuid, OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -189,7 +181,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CalendarBooking>
+	private UniquePersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -204,21 +196,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking findByUUID_G(String uuid, long groupId)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByUUID_G(uuid, groupId);
-
-		if (calendarBooking == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBookingException(message);
-		}
-
-		return calendarBooking;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -266,7 +245,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -310,16 +289,8 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -364,7 +335,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByCalendarId;
 
 	/**
@@ -406,16 +377,8 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByCalendarId_First(
-			calendarId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByCalendarId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {calendarId}));
+		return _collectionPersistenceFinderByCalendarId.findFirst(
+			finderCache, new Object[] {calendarId}, orderByComparator);
 	}
 
 	/**
@@ -456,7 +419,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByCalendarResourceId;
 
 	/**
@@ -498,18 +461,8 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByCalendarResourceId_First(
-			calendarResourceId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByCalendarResourceId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {calendarResourceId}));
+		return _collectionPersistenceFinderByCalendarResourceId.findFirst(
+			finderCache, new Object[] {calendarResourceId}, orderByComparator);
 	}
 
 	/**
@@ -551,7 +504,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarResourceId});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByParentCalendarBookingId;
 
 	/**
@@ -593,18 +546,9 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByParentCalendarBookingId_First(
-			parentCalendarBookingId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByParentCalendarBookingId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {parentCalendarBookingId}));
+		return _collectionPersistenceFinderByParentCalendarBookingId.findFirst(
+			finderCache, new Object[] {parentCalendarBookingId},
+			orderByComparator);
 	}
 
 	/**
@@ -647,7 +591,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {parentCalendarBookingId});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByRecurringCalendarBookingId;
 
 	/**
@@ -689,19 +633,10 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking =
-			fetchByRecurringCalendarBookingId_First(
-				recurringCalendarBookingId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByRecurringCalendarBookingId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {recurringCalendarBookingId}));
+		return _collectionPersistenceFinderByRecurringCalendarBookingId.
+			findFirst(
+				finderCache, new Object[] {recurringCalendarBookingId},
+				orderByComparator);
 	}
 
 	/**
@@ -749,7 +684,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {recurringCalendarBookingId});
 	}
 
-	private UniquePersistenceFinder<CalendarBooking>
+	private UniquePersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_uniquePersistenceFinderByC_P;
 
 	/**
@@ -765,23 +700,8 @@ public class CalendarBookingPersistenceImpl
 			long calendarId, long parentCalendarBookingId)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByC_P(
-			calendarId, parentCalendarBookingId);
-
-		if (calendarBooking == null) {
-			String message =
-				_uniquePersistenceFinderByC_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {calendarId, parentCalendarBookingId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBookingException(message);
-		}
-
-		return calendarBooking;
+		return _uniquePersistenceFinderByC_P.find(
+			finderCache, new Object[] {calendarId, parentCalendarBookingId});
 	}
 
 	/**
@@ -832,7 +752,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId, parentCalendarBookingId});
 	}
 
-	private UniquePersistenceFinder<CalendarBooking>
+	private UniquePersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_uniquePersistenceFinderByC_V;
 
 	/**
@@ -847,22 +767,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking findByC_V(long calendarId, String vEventUid)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByC_V(calendarId, vEventUid);
-
-		if (calendarBooking == null) {
-			String message =
-				_uniquePersistenceFinderByC_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {calendarId, vEventUid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBookingException(message);
-		}
-
-		return calendarBooking;
+		return _uniquePersistenceFinderByC_V.find(
+			finderCache, new Object[] {calendarId, vEventUid});
 	}
 
 	/**
@@ -910,7 +816,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId, vEventUid});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -1060,7 +966,7 @@ public class CalendarBookingPersistenceImpl
 			new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private CollectionPersistenceFinder<CalendarBooking>
+	private CollectionPersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_collectionPersistenceFinderByP_S;
 
 	/**
@@ -1104,17 +1010,9 @@ public class CalendarBookingPersistenceImpl
 			OrderByComparator<CalendarBooking> orderByComparator)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByP_S_First(
-			parentCalendarBookingId, status, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		throw new NoSuchBookingException(
-			_collectionPersistenceFinderByP_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {parentCalendarBookingId, status}));
+		return _collectionPersistenceFinderByP_S.findFirst(
+			finderCache, new Object[] {parentCalendarBookingId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1160,7 +1058,7 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {parentCalendarBookingId, status});
 	}
 
-	private UniquePersistenceFinder<CalendarBooking>
+	private UniquePersistenceFinder<CalendarBooking, NoSuchBookingException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -1176,23 +1074,8 @@ public class CalendarBookingPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchBookingException {
 
-		CalendarBooking calendarBooking = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (calendarBooking == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBookingException(message);
-		}
-
-		return calendarBooking;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1999,4 +1882,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2028829721
+// LIFERAY-SERVICE-BUILDER-HASH:-2134677023

@@ -90,8 +90,9 @@ public class BatchEngineExportTaskPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BatchEngineExportTask>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<BatchEngineExportTask, NoSuchExportTaskException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the batch engine export tasks where uuid = &#63;.
@@ -132,16 +133,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws NoSuchExportTaskException {
 
-		BatchEngineExportTask batchEngineExportTask = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		throw new NoSuchExportTaskException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -183,8 +176,9 @@ public class BatchEngineExportTaskPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<BatchEngineExportTask>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<BatchEngineExportTask, NoSuchExportTaskException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the batch engine export tasks where uuid = &#63; and companyId = &#63;.
@@ -227,16 +221,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws NoSuchExportTaskException {
 
-		BatchEngineExportTask batchEngineExportTask = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		throw new NoSuchExportTaskException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -281,8 +267,9 @@ public class BatchEngineExportTaskPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<BatchEngineExportTask>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<BatchEngineExportTask, NoSuchExportTaskException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the batch engine export tasks where companyId = &#63;.
@@ -323,16 +310,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws NoSuchExportTaskException {
 
-		BatchEngineExportTask batchEngineExportTask = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		throw new NoSuchExportTaskException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -374,8 +353,9 @@ public class BatchEngineExportTaskPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<BatchEngineExportTask>
-		_collectionPersistenceFinderByExecuteStatus;
+	private CollectionPersistenceFinder
+		<BatchEngineExportTask, NoSuchExportTaskException>
+			_collectionPersistenceFinderByExecuteStatus;
 
 	/**
 	 * Returns an ordered range of all the batch engine export tasks where executeStatus = &#63;.
@@ -416,16 +396,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws NoSuchExportTaskException {
 
-		BatchEngineExportTask batchEngineExportTask =
-			fetchByExecuteStatus_First(executeStatus, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		throw new NoSuchExportTaskException(
-			_collectionPersistenceFinderByExecuteStatus.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {executeStatus}));
+		return _collectionPersistenceFinderByExecuteStatus.findFirst(
+			finderCache, new Object[] {executeStatus}, orderByComparator);
 	}
 
 	/**
@@ -467,8 +439,9 @@ public class BatchEngineExportTaskPersistenceImpl
 			finderCache, new Object[] {executeStatus});
 	}
 
-	private UniquePersistenceFinder<BatchEngineExportTask>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<BatchEngineExportTask, NoSuchExportTaskException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the batch engine export task where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchExportTaskException</code> if it could not be found.
@@ -483,23 +456,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchExportTaskException {
 
-		BatchEngineExportTask batchEngineExportTask = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (batchEngineExportTask == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExportTaskException(message);
-		}
-
-		return batchEngineExportTask;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1061,4 +1019,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-982509366
+// LIFERAY-SERVICE-BUILDER-HASH:-1475961425

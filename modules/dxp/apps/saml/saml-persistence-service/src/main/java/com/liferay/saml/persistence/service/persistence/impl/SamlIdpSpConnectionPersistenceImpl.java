@@ -76,8 +76,9 @@ public class SamlIdpSpConnectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SamlIdpSpConnection>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<SamlIdpSpConnection, NoSuchIdpSpConnectionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the saml idp sp connections where companyId = &#63;.
@@ -118,16 +119,8 @@ public class SamlIdpSpConnectionPersistenceImpl
 			OrderByComparator<SamlIdpSpConnection> orderByComparator)
 		throws NoSuchIdpSpConnectionException {
 
-		SamlIdpSpConnection samlIdpSpConnection = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (samlIdpSpConnection != null) {
-			return samlIdpSpConnection;
-		}
-
-		throw new NoSuchIdpSpConnectionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -169,8 +162,9 @@ public class SamlIdpSpConnectionPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<SamlIdpSpConnection>
-		_uniquePersistenceFinderByC_SSEI;
+	private UniquePersistenceFinder
+		<SamlIdpSpConnection, NoSuchIdpSpConnectionException>
+			_uniquePersistenceFinderByC_SSEI;
 
 	/**
 	 * Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpConnectionException</code> if it could not be found.
@@ -185,23 +179,8 @@ public class SamlIdpSpConnectionPersistenceImpl
 			long companyId, String samlSpEntityId)
 		throws NoSuchIdpSpConnectionException {
 
-		SamlIdpSpConnection samlIdpSpConnection = fetchByC_SSEI(
-			companyId, samlSpEntityId);
-
-		if (samlIdpSpConnection == null) {
-			String message =
-				_uniquePersistenceFinderByC_SSEI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, samlSpEntityId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchIdpSpConnectionException(message);
-		}
-
-		return samlIdpSpConnection;
+		return _uniquePersistenceFinderByC_SSEI.find(
+			finderCache, new Object[] {companyId, samlSpEntityId});
 	}
 
 	/**
@@ -568,4 +547,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254148936
+// LIFERAY-SERVICE-BUILDER-HASH:770409849

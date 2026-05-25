@@ -69,8 +69,9 @@ public class CTSchemaVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTSchemaVersion>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CTSchemaVersion, NoSuchSchemaVersionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the ct schema versions where companyId = &#63;.
@@ -111,16 +112,8 @@ public class CTSchemaVersionPersistenceImpl
 			OrderByComparator<CTSchemaVersion> orderByComparator)
 		throws NoSuchSchemaVersionException {
 
-		CTSchemaVersion ctSchemaVersion = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctSchemaVersion != null) {
-			return ctSchemaVersion;
-		}
-
-		throw new NoSuchSchemaVersionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -428,4 +421,4 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:525026113
+// LIFERAY-SERVICE-BUILDER-HASH:1488835229

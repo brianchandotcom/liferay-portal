@@ -84,8 +84,9 @@ public class PatcherAccountPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PatcherAccount>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<PatcherAccount, NoSuchPatcherAccountException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the patcher accounts where companyId = &#63;.
@@ -125,16 +126,8 @@ public class PatcherAccountPersistenceImpl
 			long companyId, OrderByComparator<PatcherAccount> orderByComparator)
 		throws NoSuchPatcherAccountException {
 
-		PatcherAccount patcherAccount = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (patcherAccount != null) {
-			return patcherAccount;
-		}
-
-		throw new NoSuchPatcherAccountException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -210,8 +203,9 @@ public class PatcherAccountPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<PatcherAccount>
-		_uniquePersistenceFinderByAccountEntryCode;
+	private UniquePersistenceFinder
+		<PatcherAccount, NoSuchPatcherAccountException>
+			_uniquePersistenceFinderByAccountEntryCode;
 
 	/**
 	 * Returns the patcher account where accountEntryCode = &#63; or throws a <code>NoSuchPatcherAccountException</code> if it could not be found.
@@ -224,24 +218,8 @@ public class PatcherAccountPersistenceImpl
 	public PatcherAccount findByAccountEntryCode(String accountEntryCode)
 		throws NoSuchPatcherAccountException {
 
-		PatcherAccount patcherAccount = fetchByAccountEntryCode(
-			accountEntryCode);
-
-		if (patcherAccount == null) {
-			String message =
-				_uniquePersistenceFinderByAccountEntryCode.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {accountEntryCode});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherAccountException(message);
-		}
-
-		return patcherAccount;
+		return _uniquePersistenceFinderByAccountEntryCode.find(
+			finderCache, new Object[] {accountEntryCode});
 	}
 
 	/**
@@ -287,8 +265,9 @@ public class PatcherAccountPersistenceImpl
 			finderCache, new Object[] {accountEntryCode});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherAccount>
-		_collectionPersistenceFinderByC_LikeA;
+	private FilterCollectionPersistenceFinder
+		<PatcherAccount, NoSuchPatcherAccountException>
+			_collectionPersistenceFinderByC_LikeA;
 
 	/**
 	 * Returns all the patcher accounts where companyId = &#63; and accountEntryCode LIKE &#63;.
@@ -390,17 +369,9 @@ public class PatcherAccountPersistenceImpl
 			OrderByComparator<PatcherAccount> orderByComparator)
 		throws NoSuchPatcherAccountException {
 
-		PatcherAccount patcherAccount = fetchByC_LikeA_First(
-			companyId, accountEntryCode, orderByComparator);
-
-		if (patcherAccount != null) {
-			return patcherAccount;
-		}
-
-		throw new NoSuchPatcherAccountException(
-			_collectionPersistenceFinderByC_LikeA.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, accountEntryCode}));
+		return _collectionPersistenceFinderByC_LikeA.findFirst(
+			finderCache, new Object[] {companyId, accountEntryCode},
+			orderByComparator);
 	}
 
 	/**
@@ -1192,4 +1163,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1570008853
+// LIFERAY-SERVICE-BUILDER-HASH:371883938

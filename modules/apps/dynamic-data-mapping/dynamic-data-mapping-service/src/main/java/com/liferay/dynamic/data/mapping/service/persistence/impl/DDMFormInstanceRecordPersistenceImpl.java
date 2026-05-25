@@ -87,8 +87,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where uuid = &#63;.
@@ -129,16 +130,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DDMFormInstanceRecord>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the ddm form instance record where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFormInstanceRecordException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	public DDMFormInstanceRecord findByUUID_G(String uuid, long groupId)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByUUID_G(
-			uuid, groupId);
-
-		if (ddmFormInstanceRecord == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFormInstanceRecordException(message);
-		}
-
-		return ddmFormInstanceRecord;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where companyId = &#63;.
@@ -399,16 +373,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -450,8 +416,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByFormInstanceId;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByFormInstanceId;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63;.
@@ -492,16 +459,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			fetchByFormInstanceId_First(formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByFormInstanceId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {formInstanceId}));
+		return _collectionPersistenceFinderByFormInstanceId.findFirst(
+			finderCache, new Object[] {formInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -543,8 +502,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {formInstanceId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByU_F;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByU_F;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
@@ -587,17 +547,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByU_F_First(
-			userId, formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByU_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, formInstanceId}));
+		return _collectionPersistenceFinderByU_F.findFirst(
+			finderCache, new Object[] {userId, formInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -643,8 +595,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			finderCache, new Object[] {userId, formInstanceId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecord>
-		_collectionPersistenceFinderByF_F;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecord, NoSuchFormInstanceRecordException>
+			_collectionPersistenceFinderByF_F;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -687,17 +640,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws NoSuchFormInstanceRecordException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByF_F_First(
-			formInstanceId, formInstanceVersion, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		throw new NoSuchFormInstanceRecordException(
-			_collectionPersistenceFinderByF_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {formInstanceId, formInstanceVersion}));
+		return _collectionPersistenceFinderByF_F.findFirst(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -1320,4 +1265,4 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1839130792
+// LIFERAY-SERVICE-BUILDER-HASH:3652168

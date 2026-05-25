@@ -95,8 +95,9 @@ public class CommerceCatalogPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommerceCatalog>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommerceCatalog, NoSuchCatalogException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce catalogs where uuid = &#63;.
@@ -136,16 +137,8 @@ public class CommerceCatalogPersistenceImpl
 			String uuid, OrderByComparator<CommerceCatalog> orderByComparator)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		throw new NoSuchCatalogException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -220,8 +213,9 @@ public class CommerceCatalogPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceCatalog>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceCatalog, NoSuchCatalogException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce catalogs where uuid = &#63; and companyId = &#63;.
@@ -264,16 +258,8 @@ public class CommerceCatalogPersistenceImpl
 			OrderByComparator<CommerceCatalog> orderByComparator)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		throw new NoSuchCatalogException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +341,9 @@ public class CommerceCatalogPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceCatalog>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommerceCatalog, NoSuchCatalogException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce catalogs where companyId = &#63;.
@@ -397,16 +384,8 @@ public class CommerceCatalogPersistenceImpl
 			OrderByComparator<CommerceCatalog> orderByComparator)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		throw new NoSuchCatalogException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -482,8 +461,9 @@ public class CommerceCatalogPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceCatalog>
-		_collectionPersistenceFinderByAccountEntryId;
+	private FilterCollectionPersistenceFinder
+		<CommerceCatalog, NoSuchCatalogException>
+			_collectionPersistenceFinderByAccountEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce catalogs where accountEntryId = &#63;.
@@ -524,16 +504,8 @@ public class CommerceCatalogPersistenceImpl
 			OrderByComparator<CommerceCatalog> orderByComparator)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByAccountEntryId_First(
-			accountEntryId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		throw new NoSuchCatalogException(
-			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
+		return _collectionPersistenceFinderByAccountEntryId.findFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -610,8 +582,9 @@ public class CommerceCatalogPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceCatalog>
-		_collectionPersistenceFinderByC_S;
+	private FilterCollectionPersistenceFinder
+		<CommerceCatalog, NoSuchCatalogException>
+			_collectionPersistenceFinderByC_S;
 
 	/**
 	 * Returns an ordered range of all the commerce catalogs where companyId = &#63; and system = &#63;.
@@ -654,16 +627,8 @@ public class CommerceCatalogPersistenceImpl
 			OrderByComparator<CommerceCatalog> orderByComparator)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByC_S_First(
-			companyId, system, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		throw new NoSuchCatalogException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, system}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, system}, orderByComparator);
 	}
 
 	/**
@@ -745,7 +710,7 @@ public class CommerceCatalogPersistenceImpl
 			finderCache, new Object[] {companyId, system}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommerceCatalog>
+	private UniquePersistenceFinder<CommerceCatalog, NoSuchCatalogException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -761,23 +726,8 @@ public class CommerceCatalogPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchCatalogException {
 
-		CommerceCatalog commerceCatalog = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceCatalog == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCatalogException(message);
-		}
-
-		return commerceCatalog;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1435,4 +1385,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-229107470
+// LIFERAY-SERVICE-BUILDER-HASH:1782236408

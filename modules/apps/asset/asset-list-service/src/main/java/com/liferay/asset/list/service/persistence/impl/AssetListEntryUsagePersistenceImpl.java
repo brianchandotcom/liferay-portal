@@ -86,8 +86,9 @@ public class AssetListEntryUsagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where uuid = &#63;.
@@ -128,16 +129,8 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +171,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetListEntryUsage>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
@@ -193,21 +187,8 @@ public class AssetListEntryUsagePersistenceImpl
 	public AssetListEntryUsage findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByUUID_G(uuid, groupId);
-
-		if (assetListEntryUsage == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryUsageException(message);
-		}
-
-		return assetListEntryUsage;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -255,8 +236,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where uuid = &#63; and companyId = &#63;.
@@ -299,16 +281,8 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -353,8 +327,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByPlid;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByPlid;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where plid = &#63;.
@@ -394,16 +369,8 @@ public class AssetListEntryUsagePersistenceImpl
 			long plid, OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByPlid_First(
-			plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -444,8 +411,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByCT_P;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByCT_P;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where containerType = &#63; and plid = &#63;.
@@ -488,16 +456,8 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByCT_P_First(
-			containerType, plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByCT_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {containerType, plid}));
+		return _collectionPersistenceFinderByCT_P.findFirst(
+			finderCache, new Object[] {containerType, plid}, orderByComparator);
 	}
 
 	/**
@@ -542,8 +502,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {containerType, plid});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByG_C_K;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByG_C_K;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
@@ -588,17 +549,9 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByG_C_K_First(
-			groupId, classNameId, key, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByG_C_K.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, key}));
+		return _collectionPersistenceFinderByG_C_K.findFirst(
+			finderCache, new Object[] {groupId, classNameId, key},
+			orderByComparator);
 	}
 
 	/**
@@ -647,8 +600,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, key});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByC_C_K;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByC_C_K;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
@@ -693,17 +647,9 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByC_C_K_First(
-			companyId, classNameId, key, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByC_C_K.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, key}));
+		return _collectionPersistenceFinderByC_C_K.findFirst(
+			finderCache, new Object[] {companyId, classNameId, key},
+			orderByComparator);
 	}
 
 	/**
@@ -752,8 +698,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {companyId, classNameId, key});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByCK_CT_P;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByCK_CT_P;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
@@ -798,17 +745,9 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByCK_CT_P_First(
-			containerKey, containerType, plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByCK_CT_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {containerKey, containerType, plid}));
+		return _collectionPersistenceFinderByCK_CT_P.findFirst(
+			finderCache, new Object[] {containerKey, containerType, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -861,8 +800,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {containerKey, containerType, plid});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntryUsage>
-		_collectionPersistenceFinderByG_C_K_T;
+	private CollectionPersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_collectionPersistenceFinderByG_C_K_T;
 
 	/**
 	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
@@ -909,17 +849,9 @@ public class AssetListEntryUsagePersistenceImpl
 			OrderByComparator<AssetListEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByG_C_K_T_First(
-			groupId, classNameId, key, type, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		throw new NoSuchEntryUsageException(
-			_collectionPersistenceFinderByG_C_K_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, key, type}));
+		return _collectionPersistenceFinderByG_C_K_T.findFirst(
+			finderCache, new Object[] {groupId, classNameId, key, type},
+			orderByComparator);
 	}
 
 	/**
@@ -975,8 +907,9 @@ public class AssetListEntryUsagePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, key, type});
 	}
 
-	private UniquePersistenceFinder<AssetListEntryUsage>
-		_uniquePersistenceFinderByG_C_CK_CT_K_P;
+	private UniquePersistenceFinder
+		<AssetListEntryUsage, NoSuchEntryUsageException>
+			_uniquePersistenceFinderByG_C_CK_CT_K_P;
 
 	/**
 	 * Returns the asset list entry usage where groupId = &#63; and classNameId = &#63; and containerKey = &#63; and containerType = &#63; and key = &#63; and plid = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
@@ -996,26 +929,11 @@ public class AssetListEntryUsagePersistenceImpl
 			long containerType, String key, long plid)
 		throws NoSuchEntryUsageException {
 
-		AssetListEntryUsage assetListEntryUsage = fetchByG_C_CK_CT_K_P(
-			groupId, classNameId, containerKey, containerType, key, plid);
-
-		if (assetListEntryUsage == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_CK_CT_K_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, classNameId, containerKey, containerType, key,
-						plid
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryUsageException(message);
-		}
-
-		return assetListEntryUsage;
+		return _uniquePersistenceFinderByG_C_CK_CT_K_P.find(
+			finderCache,
+			new Object[] {
+				groupId, classNameId, containerKey, containerType, key, plid
+			});
 	}
 
 	/**
@@ -1814,4 +1732,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2042192004
+// LIFERAY-SERVICE-BUILDER-HASH:-18490153

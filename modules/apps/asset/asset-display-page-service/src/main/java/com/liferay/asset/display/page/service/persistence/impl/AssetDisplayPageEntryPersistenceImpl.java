@@ -87,8 +87,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetDisplayPageEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where uuid = &#63;.
@@ -129,16 +130,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		throw new NoSuchDisplayPageEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetDisplayPageEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDisplayPageEntryException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 	public AssetDisplayPageEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (assetDisplayPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDisplayPageEntryException(message);
-		}
-
-		return assetDisplayPageEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetDisplayPageEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		throw new NoSuchDisplayPageEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetDisplayPageEntry>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where groupId = &#63;.
@@ -399,16 +373,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		throw new NoSuchDisplayPageEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -450,8 +416,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetDisplayPageEntry>
-		_collectionPersistenceFinderByLayoutPageTemplateEntryId;
+	private CollectionPersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_collectionPersistenceFinderByLayoutPageTemplateEntryId;
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where layoutPageTemplateEntryId = &#63;.
@@ -492,19 +459,10 @@ public class AssetDisplayPageEntryPersistenceImpl
 			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			fetchByLayoutPageTemplateEntryId_First(
-				layoutPageTemplateEntryId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		throw new NoSuchDisplayPageEntryException(
-			_collectionPersistenceFinderByLayoutPageTemplateEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutPageTemplateEntryId}));
+		return _collectionPersistenceFinderByLayoutPageTemplateEntryId.
+			findFirst(
+				finderCache, new Object[] {layoutPageTemplateEntryId},
+				orderByComparator);
 	}
 
 	/**
@@ -552,8 +510,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {layoutPageTemplateEntryId});
 	}
 
-	private CollectionPersistenceFinder<AssetDisplayPageEntry>
-		_collectionPersistenceFinderByG_CN;
+	private CollectionPersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_collectionPersistenceFinderByG_CN;
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where groupId = &#63; and classNameId = &#63;.
@@ -596,16 +555,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByG_CN_First(
-			groupId, classNameId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		throw new NoSuchDisplayPageEntryException(
-			_collectionPersistenceFinderByG_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_CN.findFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -651,8 +603,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private UniquePersistenceFinder<AssetDisplayPageEntry>
-		_uniquePersistenceFinderByG_C_C;
+	private UniquePersistenceFinder
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
+			_uniquePersistenceFinderByG_C_C;
 
 	/**
 	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchDisplayPageEntryException</code> if it could not be found.
@@ -668,23 +621,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 			long groupId, long classNameId, long classPK)
 		throws NoSuchDisplayPageEntryException {
 
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByG_C_C(
-			groupId, classNameId, classPK);
-
-		if (assetDisplayPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDisplayPageEntryException(message);
-		}
-
-		return assetDisplayPageEntry;
+		return _uniquePersistenceFinderByG_C_C.find(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -1307,4 +1245,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-22904015
+// LIFERAY-SERVICE-BUILDER-HASH:2078543719

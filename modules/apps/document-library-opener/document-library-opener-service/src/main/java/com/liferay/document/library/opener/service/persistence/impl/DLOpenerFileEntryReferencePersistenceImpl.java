@@ -75,8 +75,9 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<DLOpenerFileEntryReference>
-		_uniquePersistenceFinderByFileEntryId;
+	private UniquePersistenceFinder
+		<DLOpenerFileEntryReference, NoSuchFileEntryReferenceException>
+			_uniquePersistenceFinderByFileEntryId;
 
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -89,22 +90,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	public DLOpenerFileEntryReference findByFileEntryId(long fileEntryId)
 		throws NoSuchFileEntryReferenceException {
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			fetchByFileEntryId(fileEntryId);
-
-		if (dlOpenerFileEntryReference == null) {
-			String message =
-				_uniquePersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileEntryReferenceException(message);
-		}
-
-		return dlOpenerFileEntryReference;
+		return _uniquePersistenceFinderByFileEntryId.find(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	/**
@@ -150,8 +137,9 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			finderCache, new Object[] {fileEntryId});
 	}
 
-	private UniquePersistenceFinder<DLOpenerFileEntryReference>
-		_uniquePersistenceFinderByR_F;
+	private UniquePersistenceFinder
+		<DLOpenerFileEntryReference, NoSuchFileEntryReferenceException>
+			_uniquePersistenceFinderByR_F;
 
 	/**
 	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -166,23 +154,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			String referenceType, long fileEntryId)
 		throws NoSuchFileEntryReferenceException {
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference = fetchByR_F(
-			referenceType, fileEntryId);
-
-		if (dlOpenerFileEntryReference == null) {
-			String message =
-				_uniquePersistenceFinderByR_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {referenceType, fileEntryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileEntryReferenceException(message);
-		}
-
-		return dlOpenerFileEntryReference;
+		return _uniquePersistenceFinderByR_F.find(
+			finderCache, new Object[] {referenceType, fileEntryId});
 	}
 
 	/**
@@ -557,4 +530,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1482131880
+// LIFERAY-SERVICE-BUILDER-HASH:-648235218

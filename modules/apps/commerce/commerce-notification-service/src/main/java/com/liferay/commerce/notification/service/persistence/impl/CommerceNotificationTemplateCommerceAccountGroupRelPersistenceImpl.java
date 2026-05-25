@@ -85,7 +85,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
 	private CollectionPersistenceFinder
-		<CommerceNotificationTemplateCommerceAccountGroupRel>
+		<CommerceNotificationTemplateCommerceAccountGroupRel,
+		 NoSuchNotificationTemplateCommerceAccountGroupRelException>
 			_collectionPersistenceFinderByCommerceNotificationTemplateId;
 
 	/**
@@ -134,20 +135,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 						orderByComparator)
 		throws NoSuchNotificationTemplateCommerceAccountGroupRelException {
 
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel =
-				fetchByCommerceNotificationTemplateId_First(
-					commerceNotificationTemplateId, orderByComparator);
-
-		if (commerceNotificationTemplateCommerceAccountGroupRel != null) {
-			return commerceNotificationTemplateCommerceAccountGroupRel;
-		}
-
-		throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-			_collectionPersistenceFinderByCommerceNotificationTemplateId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceNotificationTemplateId}));
+		return _collectionPersistenceFinderByCommerceNotificationTemplateId.
+			findFirst(
+				finderCache, new Object[] {commerceNotificationTemplateId},
+				orderByComparator);
 	}
 
 	/**
@@ -199,7 +190,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 	private CollectionPersistenceFinder
-		<CommerceNotificationTemplateCommerceAccountGroupRel>
+		<CommerceNotificationTemplateCommerceAccountGroupRel,
+		 NoSuchNotificationTemplateCommerceAccountGroupRelException>
 			_collectionPersistenceFinderByCommerceAccountGroupId;
 
 	/**
@@ -247,20 +239,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 						orderByComparator)
 		throws NoSuchNotificationTemplateCommerceAccountGroupRelException {
 
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel =
-				fetchByCommerceAccountGroupId_First(
-					commerceAccountGroupId, orderByComparator);
-
-		if (commerceNotificationTemplateCommerceAccountGroupRel != null) {
-			return commerceNotificationTemplateCommerceAccountGroupRel;
-		}
-
-		throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-			_collectionPersistenceFinderByCommerceAccountGroupId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceAccountGroupId}));
+		return _collectionPersistenceFinderByCommerceAccountGroupId.findFirst(
+			finderCache, new Object[] {commerceAccountGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -307,7 +288,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 	private UniquePersistenceFinder
-		<CommerceNotificationTemplateCommerceAccountGroupRel>
+		<CommerceNotificationTemplateCommerceAccountGroupRel,
+		 NoSuchNotificationTemplateCommerceAccountGroupRelException>
 			_uniquePersistenceFinderByC_C;
 
 	/**
@@ -323,27 +305,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			long commerceNotificationTemplateId, long commerceAccountGroupId)
 		throws NoSuchNotificationTemplateCommerceAccountGroupRelException {
 
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel = fetchByC_C(
-				commerceNotificationTemplateId, commerceAccountGroupId);
-
-		if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						commerceNotificationTemplateId, commerceAccountGroupId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-				message);
-		}
-
-		return commerceNotificationTemplateCommerceAccountGroupRel;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache,
+			new Object[] {
+				commerceNotificationTemplateId, commerceAccountGroupId
+			});
 	}
 
 	/**
@@ -847,4 +813,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1261937546
+// LIFERAY-SERVICE-BUILDER-HASH:1443569959

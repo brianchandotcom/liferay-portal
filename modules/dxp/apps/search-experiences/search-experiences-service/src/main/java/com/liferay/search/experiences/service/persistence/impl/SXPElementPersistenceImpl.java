@@ -89,8 +89,9 @@ public class SXPElementPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where uuid = &#63;.
@@ -130,15 +131,8 @@ public class SXPElementPersistenceImpl
 			String uuid, OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByUuid_First(uuid, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -213,8 +207,9 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where uuid = &#63; and companyId = &#63;.
@@ -257,16 +252,8 @@ public class SXPElementPersistenceImpl
 			OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -348,8 +335,9 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where companyId = &#63;.
@@ -389,16 +377,8 @@ public class SXPElementPersistenceImpl
 			long companyId, OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -474,8 +454,9 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByC_R;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByC_R;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where companyId = &#63; and readOnly = &#63;.
@@ -518,16 +499,8 @@ public class SXPElementPersistenceImpl
 			OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByC_R_First(
-			companyId, readOnly, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByC_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, readOnly}));
+		return _collectionPersistenceFinderByC_R.findFirst(
+			finderCache, new Object[] {companyId, readOnly}, orderByComparator);
 	}
 
 	/**
@@ -609,8 +582,9 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, readOnly}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByC_T;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where companyId = &#63; and type = &#63;.
@@ -653,16 +627,8 @@ public class SXPElementPersistenceImpl
 			OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -744,8 +710,9 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SXPElement>
-		_collectionPersistenceFinderByC_T_S;
+	private FilterCollectionPersistenceFinder
+		<SXPElement, NoSuchSXPElementException>
+			_collectionPersistenceFinderByC_T_S;
 
 	/**
 	 * Returns an ordered range of all the sxp elements where companyId = &#63; and type = &#63; and status = &#63;.
@@ -790,17 +757,9 @@ public class SXPElementPersistenceImpl
 			OrderByComparator<SXPElement> orderByComparator)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByC_T_S_First(
-			companyId, type, status, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		throw new NoSuchSXPElementException(
-			_collectionPersistenceFinderByC_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, type, status}));
+		return _collectionPersistenceFinderByC_T_S.findFirst(
+			finderCache, new Object[] {companyId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -888,7 +847,8 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, type, status}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<SXPElement> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<SXPElement, NoSuchSXPElementException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the sxp element where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchSXPElementException</code> if it could not be found.
@@ -902,22 +862,8 @@ public class SXPElementPersistenceImpl
 	public SXPElement findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchSXPElementException {
 
-		SXPElement sxpElement = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (sxpElement == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSXPElementException(message);
-		}
-
-		return sxpElement;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1542,4 +1488,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:906539284
+// LIFERAY-SERVICE-BUILDER-HASH:1018310809

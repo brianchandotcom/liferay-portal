@@ -82,7 +82,7 @@ public class CTSContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTSContent>
+	private CollectionPersistenceFinder<CTSContent, NoSuchContentException>
 		_collectionPersistenceFinderByR_P;
 
 	/**
@@ -126,16 +126,8 @@ public class CTSContentPersistenceImpl
 			OrderByComparator<CTSContent> orderByComparator)
 		throws NoSuchContentException {
 
-		CTSContent ctsContent = fetchByR_P_First(
-			repositoryId, path, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByR_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {repositoryId, path}));
+		return _collectionPersistenceFinderByR_P.findFirst(
+			finderCache, new Object[] {repositoryId, path}, orderByComparator);
 	}
 
 	/**
@@ -180,7 +172,7 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {repositoryId, path});
 	}
 
-	private CollectionPersistenceFinder<CTSContent>
+	private CollectionPersistenceFinder<CTSContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R_S;
 
 	/**
@@ -226,17 +218,9 @@ public class CTSContentPersistenceImpl
 			OrderByComparator<CTSContent> orderByComparator)
 		throws NoSuchContentException {
 
-		CTSContent ctsContent = fetchByC_R_S_First(
-			companyId, repositoryId, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId, storeType}));
+		return _collectionPersistenceFinderByC_R_S.findFirst(
+			finderCache, new Object[] {companyId, repositoryId, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -289,7 +273,7 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, storeType});
 	}
 
-	private CollectionPersistenceFinder<CTSContent>
+	private CollectionPersistenceFinder<CTSContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R_P_S;
 
 	/**
@@ -338,17 +322,10 @@ public class CTSContentPersistenceImpl
 			OrderByComparator<CTSContent> orderByComparator)
 		throws NoSuchContentException {
 
-		CTSContent ctsContent = fetchByC_R_P_S_First(
-			companyId, repositoryId, path, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId, path, storeType}));
+		return _collectionPersistenceFinderByC_R_P_S.findFirst(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -407,7 +384,7 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private CollectionPersistenceFinder<CTSContent>
+	private CollectionPersistenceFinder<CTSContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R_LikeP_S;
 
 	/**
@@ -524,17 +501,10 @@ public class CTSContentPersistenceImpl
 			OrderByComparator<CTSContent> orderByComparator)
 		throws NoSuchContentException {
 
-		CTSContent ctsContent = fetchByC_R_LikeP_S_First(
-			companyId, repositoryId, path, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R_LikeP_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId, path, storeType}));
+		return _collectionPersistenceFinderByC_R_LikeP_S.findFirst(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -593,7 +563,7 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private UniquePersistenceFinder<CTSContent>
+	private UniquePersistenceFinder<CTSContent, NoSuchContentException>
 		_uniquePersistenceFinderByC_R_P_V_S;
 
 	/**
@@ -613,25 +583,9 @@ public class CTSContentPersistenceImpl
 			String storeType)
 		throws NoSuchContentException {
 
-		CTSContent ctsContent = fetchByC_R_P_V_S(
-			companyId, repositoryId, path, version, storeType);
-
-		if (ctsContent == null) {
-			String message =
-				_uniquePersistenceFinderByC_R_P_V_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						companyId, repositoryId, path, version, storeType
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchContentException(message);
-		}
-
-		return ctsContent;
+		return _uniquePersistenceFinderByC_R_P_V_S.find(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, version, storeType});
 	}
 
 	/**
@@ -1224,4 +1178,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:974583559
+// LIFERAY-SERVICE-BUILDER-HASH:2134642421

@@ -80,8 +80,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoTaskAssignment>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<KaleoTaskAssignment, NoSuchTaskAssignmentException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the kaleo task assignments where companyId = &#63;.
@@ -122,16 +123,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 			OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException {
 
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		throw new NoSuchTaskAssignmentException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -173,8 +166,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoTaskAssignment>
-		_collectionPersistenceFinderByKaleoDefinitionVersionId;
+	private CollectionPersistenceFinder
+		<KaleoTaskAssignment, NoSuchTaskAssignmentException>
+			_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
 	 * Returns an ordered range of all the kaleo task assignments where kaleoDefinitionVersionId = &#63;.
@@ -215,19 +209,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 			OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException {
 
-		KaleoTaskAssignment kaleoTaskAssignment =
-			fetchByKaleoDefinitionVersionId_First(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		throw new NoSuchTaskAssignmentException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -273,8 +257,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private CollectionPersistenceFinder<KaleoTaskAssignment>
-		_collectionPersistenceFinderByKCN_KCPK;
+	private CollectionPersistenceFinder
+		<KaleoTaskAssignment, NoSuchTaskAssignmentException>
+			_collectionPersistenceFinderByKCN_KCPK;
 
 	/**
 	 * Returns an ordered range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -317,17 +302,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 			OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException {
 
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByKCN_KCPK_First(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		throw new NoSuchTaskAssignmentException(
-			_collectionPersistenceFinderByKCN_KCPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {kaleoClassName, kaleoClassPK}));
+		return _collectionPersistenceFinderByKCN_KCPK.findFirst(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -373,8 +350,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
-	private CollectionPersistenceFinder<KaleoTaskAssignment>
-		_collectionPersistenceFinderByKCN_KCPK_ACN;
+	private CollectionPersistenceFinder
+		<KaleoTaskAssignment, NoSuchTaskAssignmentException>
+			_collectionPersistenceFinderByKCN_KCPK_ACN;
 
 	/**
 	 * Returns an ordered range of all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
@@ -421,19 +399,10 @@ public class KaleoTaskAssignmentPersistenceImpl
 			OrderByComparator<KaleoTaskAssignment> orderByComparator)
 		throws NoSuchTaskAssignmentException {
 
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByKCN_KCPK_ACN_First(
-			kaleoClassName, kaleoClassPK, assigneeClassName, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		throw new NoSuchTaskAssignmentException(
-			_collectionPersistenceFinderByKCN_KCPK_ACN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					kaleoClassName, kaleoClassPK, assigneeClassName
-				}));
+		return _collectionPersistenceFinderByKCN_KCPK_ACN.findFirst(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoClassPK, assigneeClassName},
+			orderByComparator);
 	}
 
 	/**
@@ -991,4 +960,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1964405248
+// LIFERAY-SERVICE-BUILDER-HASH:-611493024

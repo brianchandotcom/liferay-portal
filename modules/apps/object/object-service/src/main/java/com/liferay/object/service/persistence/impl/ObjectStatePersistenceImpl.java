@@ -80,7 +80,7 @@ public class ObjectStatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectState>
+	private CollectionPersistenceFinder<ObjectState, NoSuchObjectStateException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -121,15 +121,8 @@ public class ObjectStatePersistenceImpl
 			String uuid, OrderByComparator<ObjectState> orderByComparator)
 		throws NoSuchObjectStateException {
 
-		ObjectState objectState = fetchByUuid_First(uuid, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		throw new NoSuchObjectStateException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -170,7 +163,7 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectState>
+	private CollectionPersistenceFinder<ObjectState, NoSuchObjectStateException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -214,16 +207,8 @@ public class ObjectStatePersistenceImpl
 			OrderByComparator<ObjectState> orderByComparator)
 		throws NoSuchObjectStateException {
 
-		ObjectState objectState = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		throw new NoSuchObjectStateException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -268,7 +253,7 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectState>
+	private CollectionPersistenceFinder<ObjectState, NoSuchObjectStateException>
 		_collectionPersistenceFinderByListTypeEntryId;
 
 	/**
@@ -310,16 +295,8 @@ public class ObjectStatePersistenceImpl
 			OrderByComparator<ObjectState> orderByComparator)
 		throws NoSuchObjectStateException {
 
-		ObjectState objectState = fetchByListTypeEntryId_First(
-			listTypeEntryId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		throw new NoSuchObjectStateException(
-			_collectionPersistenceFinderByListTypeEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {listTypeEntryId}));
+		return _collectionPersistenceFinderByListTypeEntryId.findFirst(
+			finderCache, new Object[] {listTypeEntryId}, orderByComparator);
 	}
 
 	/**
@@ -361,7 +338,7 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {listTypeEntryId});
 	}
 
-	private CollectionPersistenceFinder<ObjectState>
+	private CollectionPersistenceFinder<ObjectState, NoSuchObjectStateException>
 		_collectionPersistenceFinderByObjectStateFlowId;
 
 	/**
@@ -403,18 +380,8 @@ public class ObjectStatePersistenceImpl
 			OrderByComparator<ObjectState> orderByComparator)
 		throws NoSuchObjectStateException {
 
-		ObjectState objectState = fetchByObjectStateFlowId_First(
-			objectStateFlowId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		throw new NoSuchObjectStateException(
-			_collectionPersistenceFinderByObjectStateFlowId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectStateFlowId}));
+		return _collectionPersistenceFinderByObjectStateFlowId.findFirst(
+			finderCache, new Object[] {objectStateFlowId}, orderByComparator);
 	}
 
 	/**
@@ -456,7 +423,7 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {objectStateFlowId});
 	}
 
-	private UniquePersistenceFinder<ObjectState>
+	private UniquePersistenceFinder<ObjectState, NoSuchObjectStateException>
 		_uniquePersistenceFinderByLTEI_OSFI;
 
 	/**
@@ -472,23 +439,8 @@ public class ObjectStatePersistenceImpl
 			long listTypeEntryId, long objectStateFlowId)
 		throws NoSuchObjectStateException {
 
-		ObjectState objectState = fetchByLTEI_OSFI(
-			listTypeEntryId, objectStateFlowId);
-
-		if (objectState == null) {
-			String message =
-				_uniquePersistenceFinderByLTEI_OSFI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {listTypeEntryId, objectStateFlowId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectStateException(message);
-		}
-
-		return objectState;
+		return _uniquePersistenceFinderByLTEI_OSFI.find(
+			finderCache, new Object[] {listTypeEntryId, objectStateFlowId});
 	}
 
 	/**
@@ -950,4 +902,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-186724401
+// LIFERAY-SERVICE-BUILDER-HASH:-2705237

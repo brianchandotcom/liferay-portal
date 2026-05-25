@@ -74,8 +74,9 @@ public class CookiesConsentPreferencePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CookiesConsentPreference>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<CookiesConsentPreference, NoSuchCookiesConsentPreferenceException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
@@ -116,16 +117,8 @@ public class CookiesConsentPreferencePersistenceImpl
 			OrderByComparator<CookiesConsentPreference> orderByComparator)
 		throws NoSuchCookiesConsentPreferenceException {
 
-		CookiesConsentPreference cookiesConsentPreference = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (cookiesConsentPreference != null) {
-			return cookiesConsentPreference;
-		}
-
-		throw new NoSuchCookiesConsentPreferenceException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -167,8 +160,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<CookiesConsentPreference>
-		_collectionPersistenceFinderByExpirationDate;
+	private CollectionPersistenceFinder
+		<CookiesConsentPreference, NoSuchCookiesConsentPreferenceException>
+			_collectionPersistenceFinderByExpirationDate;
 
 	/**
 	 * Returns an ordered range of all the cookies consent preferences where expirationDate = &#63;.
@@ -209,16 +203,8 @@ public class CookiesConsentPreferencePersistenceImpl
 			OrderByComparator<CookiesConsentPreference> orderByComparator)
 		throws NoSuchCookiesConsentPreferenceException {
 
-		CookiesConsentPreference cookiesConsentPreference =
-			fetchByExpirationDate_First(expirationDate, orderByComparator);
-
-		if (cookiesConsentPreference != null) {
-			return cookiesConsentPreference;
-		}
-
-		throw new NoSuchCookiesConsentPreferenceException(
-			_collectionPersistenceFinderByExpirationDate.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
+		return _collectionPersistenceFinderByExpirationDate.findFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -260,8 +246,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {expirationDate});
 	}
 
-	private CollectionPersistenceFinder<CookiesConsentPreference>
-		_collectionPersistenceFinderByU_D;
+	private CollectionPersistenceFinder
+		<CookiesConsentPreference, NoSuchCookiesConsentPreferenceException>
+			_collectionPersistenceFinderByU_D;
 
 	/**
 	 * Returns an ordered range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
@@ -304,16 +291,8 @@ public class CookiesConsentPreferencePersistenceImpl
 			OrderByComparator<CookiesConsentPreference> orderByComparator)
 		throws NoSuchCookiesConsentPreferenceException {
 
-		CookiesConsentPreference cookiesConsentPreference = fetchByU_D_First(
-			userId, domain, orderByComparator);
-
-		if (cookiesConsentPreference != null) {
-			return cookiesConsentPreference;
-		}
-
-		throw new NoSuchCookiesConsentPreferenceException(
-			_collectionPersistenceFinderByU_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, domain}));
+		return _collectionPersistenceFinderByU_D.findFirst(
+			finderCache, new Object[] {userId, domain}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +337,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId, domain});
 	}
 
-	private UniquePersistenceFinder<CookiesConsentPreference>
-		_uniquePersistenceFinderByU_D_N;
+	private UniquePersistenceFinder
+		<CookiesConsentPreference, NoSuchCookiesConsentPreferenceException>
+			_uniquePersistenceFinderByU_D_N;
 
 	/**
 	 * Returns the cookies consent preference where userId = &#63; and domain = &#63; and name = &#63; or throws a <code>NoSuchCookiesConsentPreferenceException</code> if it could not be found.
@@ -375,23 +355,8 @@ public class CookiesConsentPreferencePersistenceImpl
 			long userId, String domain, String name)
 		throws NoSuchCookiesConsentPreferenceException {
 
-		CookiesConsentPreference cookiesConsentPreference = fetchByU_D_N(
-			userId, domain, name);
-
-		if (cookiesConsentPreference == null) {
-			String message =
-				_uniquePersistenceFinderByU_D_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, domain, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCookiesConsentPreferenceException(message);
-		}
-
-		return cookiesConsentPreference;
+		return _uniquePersistenceFinderByU_D_N.find(
+			finderCache, new Object[] {userId, domain, name});
 	}
 
 	/**
@@ -810,4 +775,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1946579596
+// LIFERAY-SERVICE-BUILDER-HASH:375667963

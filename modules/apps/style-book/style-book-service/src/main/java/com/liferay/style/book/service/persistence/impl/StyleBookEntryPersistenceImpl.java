@@ -96,7 +96,7 @@ public class StyleBookEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -137,16 +137,8 @@ public class StyleBookEntryPersistenceImpl
 			String uuid, OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -187,7 +179,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_Head;
 
 	/**
@@ -231,16 +223,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUuid_Head_First(
-			uuid, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, head}));
+		return _collectionPersistenceFinderByUuid_Head.findFirst(
+			finderCache, new Object[] {uuid, head}, orderByComparator);
 	}
 
 	/**
@@ -285,7 +269,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUUID_G;
 
 	/**
@@ -329,16 +313,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUUID_G_First(
-			uuid, groupId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
+		return _collectionPersistenceFinderByUUID_G.findFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -383,7 +359,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private UniquePersistenceFinder<StyleBookEntry>
+	private UniquePersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G_Head;
 
 	/**
@@ -400,22 +376,8 @@ public class StyleBookEntryPersistenceImpl
 			String uuid, long groupId, boolean head)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUUID_G_Head(uuid, groupId, head);
-
-		if (styleBookEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return styleBookEntry;
+		return _uniquePersistenceFinderByUUID_G_Head.find(
+			finderCache, new Object[] {uuid, groupId, head});
 	}
 
 	/**
@@ -467,7 +429,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -511,16 +473,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -565,7 +519,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C_Head;
 
 	/**
@@ -611,17 +565,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByUuid_C_Head_First(
-			uuid, companyId, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {uuid, companyId, head}));
+		return _collectionPersistenceFinderByUuid_C_Head.findFirst(
+			finderCache, new Object[] {uuid, companyId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -670,7 +616,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -711,16 +657,8 @@ public class StyleBookEntryPersistenceImpl
 			long groupId, OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -761,7 +699,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId_Head;
 
 	/**
@@ -805,16 +743,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByGroupId_Head_First(
-			groupId, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, head}));
+		return _collectionPersistenceFinderByGroupId_Head.findFirst(
+			finderCache, new Object[] {groupId, head}, orderByComparator);
 	}
 
 	/**
@@ -859,7 +789,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_D;
 
 	/**
@@ -903,17 +833,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_D_First(
-			groupId, defaultStyleBookEntry, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, defaultStyleBookEntry}));
+		return _collectionPersistenceFinderByG_D.findFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry},
+			orderByComparator);
 	}
 
 	/**
@@ -959,7 +881,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, defaultStyleBookEntry});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_D_Head;
 
 	/**
@@ -1005,17 +927,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_D_Head_First(
-			groupId, defaultStyleBookEntry, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, defaultStyleBookEntry, head}));
+		return _collectionPersistenceFinderByG_D_Head.findFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1068,7 +982,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, defaultStyleBookEntry, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_N;
 
 	/**
@@ -1112,16 +1026,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_N_First(
-			groupId, name, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
+		return _collectionPersistenceFinderByG_N.findFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -1166,7 +1072,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_N_Head;
 
 	/**
@@ -1212,16 +1118,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_N_Head_First(
-			groupId, name, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_N_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name, head}));
+		return _collectionPersistenceFinderByG_N_Head.findFirst(
+			finderCache, new Object[] {groupId, name, head}, orderByComparator);
 	}
 
 	/**
@@ -1269,7 +1167,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LikeN;
 
 	/**
@@ -1369,16 +1267,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_LikeN_First(
-			groupId, name, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
+		return _collectionPersistenceFinderByG_LikeN.findFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -1423,7 +1313,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LikeN_Head;
 
 	/**
@@ -1530,16 +1420,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_LikeN_Head_First(
-			groupId, name, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LikeN_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name, head}));
+		return _collectionPersistenceFinderByG_LikeN_Head.findFirst(
+			finderCache, new Object[] {groupId, name, head}, orderByComparator);
 	}
 
 	/**
@@ -1587,7 +1469,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_SBEK;
 
 	/**
@@ -1631,17 +1513,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_SBEK_First(
-			groupId, styleBookEntryKey, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_SBEK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, styleBookEntryKey}));
+		return _collectionPersistenceFinderByG_SBEK.findFirst(
+			finderCache, new Object[] {groupId, styleBookEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1687,7 +1561,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey});
 	}
 
-	private UniquePersistenceFinder<StyleBookEntry>
+	private UniquePersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_SBEK_Head;
 
 	/**
@@ -1704,23 +1578,8 @@ public class StyleBookEntryPersistenceImpl
 			long groupId, String styleBookEntryKey, boolean head)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_SBEK_Head(
-			groupId, styleBookEntryKey, head);
-
-		if (styleBookEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_SBEK_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, styleBookEntryKey, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return styleBookEntry;
+		return _uniquePersistenceFinderByG_SBEK_Head.find(
+			finderCache, new Object[] {groupId, styleBookEntryKey, head});
 	}
 
 	/**
@@ -1777,7 +1636,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_T;
 
 	/**
@@ -1821,16 +1680,8 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_T_First(
-			groupId, themeId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, themeId}));
+		return _collectionPersistenceFinderByG_T.findFirst(
+			finderCache, new Object[] {groupId, themeId}, orderByComparator);
 	}
 
 	/**
@@ -1875,7 +1726,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, themeId});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_T_Head;
 
 	/**
@@ -1921,17 +1772,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_T_Head_First(
-			groupId, themeId, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_T_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, themeId, head}));
+		return _collectionPersistenceFinderByG_T_Head.findFirst(
+			finderCache, new Object[] {groupId, themeId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1980,7 +1823,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, themeId, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_D_T;
 
 	/**
@@ -2026,17 +1869,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_D_T_First(
-			groupId, defaultStyleBookEntry, themeId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, defaultStyleBookEntry, themeId}));
+		return _collectionPersistenceFinderByG_D_T.findFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, themeId},
+			orderByComparator);
 	}
 
 	/**
@@ -2091,7 +1926,7 @@ public class StyleBookEntryPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, themeId});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_D_T_Head;
 
 	/**
@@ -2141,17 +1976,10 @@ public class StyleBookEntryPersistenceImpl
 			boolean head, OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByG_D_T_Head_First(
-			groupId, defaultStyleBookEntry, themeId, head, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D_T_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, defaultStyleBookEntry, themeId, head}));
+		return _collectionPersistenceFinderByG_D_T_Head.findFirst(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -2212,7 +2040,7 @@ public class StyleBookEntryPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, themeId, head});
 	}
 
-	private CollectionPersistenceFinder<StyleBookEntry>
+	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByERC_G;
 
 	/**
@@ -2256,17 +2084,9 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByERC_G_First(
-			externalReferenceCode, groupId, orderByComparator);
-
-		if (styleBookEntry != null) {
-			return styleBookEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByERC_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {externalReferenceCode, groupId}));
+		return _collectionPersistenceFinderByERC_G.findFirst(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -2312,7 +2132,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
-	private UniquePersistenceFinder<StyleBookEntry>
+	private UniquePersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByERC_G_Head;
 
 	/**
@@ -2329,23 +2149,8 @@ public class StyleBookEntryPersistenceImpl
 			String externalReferenceCode, long groupId, boolean head)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByERC_G_Head(
-			externalReferenceCode, groupId, head);
-
-		if (styleBookEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return styleBookEntry;
+		return _uniquePersistenceFinderByERC_G_Head.find(
+			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
 	/**
@@ -2402,7 +2207,7 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
-	private UniquePersistenceFinder<StyleBookEntry>
+	private UniquePersistenceFinder<StyleBookEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByHeadId;
 
 	/**
@@ -2416,21 +2221,8 @@ public class StyleBookEntryPersistenceImpl
 	public StyleBookEntry findByHeadId(long headId)
 		throws NoSuchEntryException {
 
-		StyleBookEntry styleBookEntry = fetchByHeadId(headId);
-
-		if (styleBookEntry == null) {
-			String message =
-				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return styleBookEntry;
+		return _uniquePersistenceFinderByHeadId.find(
+			finderCache, new Object[] {headId});
 	}
 
 	/**
@@ -3648,4 +3440,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776278389
+// LIFERAY-SERVICE-BUILDER-HASH:-1144509073

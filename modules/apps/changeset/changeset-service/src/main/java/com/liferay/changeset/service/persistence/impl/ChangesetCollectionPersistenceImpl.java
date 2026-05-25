@@ -75,8 +75,9 @@ public class ChangesetCollectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ChangesetCollection>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<ChangesetCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the changeset collections where groupId = &#63;.
@@ -117,16 +118,8 @@ public class ChangesetCollectionPersistenceImpl
 			OrderByComparator<ChangesetCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		ChangesetCollection changesetCollection = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -168,8 +161,9 @@ public class ChangesetCollectionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetCollection>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<ChangesetCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the changeset collections where companyId = &#63;.
@@ -210,16 +204,8 @@ public class ChangesetCollectionPersistenceImpl
 			OrderByComparator<ChangesetCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		ChangesetCollection changesetCollection = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -261,8 +247,9 @@ public class ChangesetCollectionPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetCollection>
-		_collectionPersistenceFinderByG_U;
+	private CollectionPersistenceFinder
+		<ChangesetCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByG_U;
 
 	/**
 	 * Returns an ordered range of all the changeset collections where groupId = &#63; and userId = &#63;.
@@ -305,16 +292,8 @@ public class ChangesetCollectionPersistenceImpl
 			OrderByComparator<ChangesetCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		ChangesetCollection changesetCollection = fetchByG_U_First(
-			groupId, userId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
+		return _collectionPersistenceFinderByG_U.findFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -359,8 +338,9 @@ public class ChangesetCollectionPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private UniquePersistenceFinder<ChangesetCollection>
-		_uniquePersistenceFinderByG_N;
+	private UniquePersistenceFinder
+		<ChangesetCollection, NoSuchCollectionException>
+			_uniquePersistenceFinderByG_N;
 
 	/**
 	 * Returns the changeset collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -374,21 +354,8 @@ public class ChangesetCollectionPersistenceImpl
 	public ChangesetCollection findByG_N(long groupId, String name)
 		throws NoSuchCollectionException {
 
-		ChangesetCollection changesetCollection = fetchByG_N(groupId, name);
-
-		if (changesetCollection == null) {
-			String message =
-				_uniquePersistenceFinderByG_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCollectionException(message);
-		}
-
-		return changesetCollection;
+		return _uniquePersistenceFinderByG_N.find(
+			finderCache, new Object[] {groupId, name});
 	}
 
 	/**
@@ -436,8 +403,9 @@ public class ChangesetCollectionPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private CollectionPersistenceFinder<ChangesetCollection>
-		_collectionPersistenceFinderByC_N;
+	private CollectionPersistenceFinder
+		<ChangesetCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByC_N;
 
 	/**
 	 * Returns an ordered range of all the changeset collections where companyId = &#63; and name = &#63;.
@@ -480,16 +448,8 @@ public class ChangesetCollectionPersistenceImpl
 			OrderByComparator<ChangesetCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		ChangesetCollection changesetCollection = fetchByC_N_First(
-			companyId, name, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
+		return _collectionPersistenceFinderByC_N.findFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -934,4 +894,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1837349433
+// LIFERAY-SERVICE-BUILDER-HASH:-262705439

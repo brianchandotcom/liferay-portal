@@ -86,7 +86,7 @@ public class DDMContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMContent>
+	private CollectionPersistenceFinder<DDMContent, NoSuchContentException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,8 @@ public class DDMContentPersistenceImpl
 			String uuid, OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DDMContent ddmContent = fetchByUuid_First(uuid, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +169,7 @@ public class DDMContentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DDMContent>
+	private UniquePersistenceFinder<DDMContent, NoSuchContentException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -191,21 +184,8 @@ public class DDMContentPersistenceImpl
 	public DDMContent findByUUID_G(String uuid, long groupId)
 		throws NoSuchContentException {
 
-		DDMContent ddmContent = fetchByUUID_G(uuid, groupId);
-
-		if (ddmContent == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchContentException(message);
-		}
-
-		return ddmContent;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,7 +233,7 @@ public class DDMContentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DDMContent>
+	private CollectionPersistenceFinder<DDMContent, NoSuchContentException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -297,16 +277,8 @@ public class DDMContentPersistenceImpl
 			OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DDMContent ddmContent = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,7 +323,7 @@ public class DDMContentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DDMContent>
+	private CollectionPersistenceFinder<DDMContent, NoSuchContentException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -392,16 +364,8 @@ public class DDMContentPersistenceImpl
 			long groupId, OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DDMContent ddmContent = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -442,7 +406,7 @@ public class DDMContentPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<DDMContent>
+	private CollectionPersistenceFinder<DDMContent, NoSuchContentException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -483,16 +447,8 @@ public class DDMContentPersistenceImpl
 			long companyId, OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DDMContent ddmContent = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1015,4 +971,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2124130152
+// LIFERAY-SERVICE-BUILDER-HASH:-180880868

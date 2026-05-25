@@ -75,7 +75,7 @@ public class DispatchLogPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DispatchLog>
+	private CollectionPersistenceFinder<DispatchLog, NoSuchLogException>
 		_collectionPersistenceFinderByDispatchTriggerId;
 
 	/**
@@ -117,18 +117,8 @@ public class DispatchLogPersistenceImpl
 			OrderByComparator<DispatchLog> orderByComparator)
 		throws NoSuchLogException {
 
-		DispatchLog dispatchLog = fetchByDispatchTriggerId_First(
-			dispatchTriggerId, orderByComparator);
-
-		if (dispatchLog != null) {
-			return dispatchLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByDispatchTriggerId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {dispatchTriggerId}));
+		return _collectionPersistenceFinderByDispatchTriggerId.findFirst(
+			finderCache, new Object[] {dispatchTriggerId}, orderByComparator);
 	}
 
 	/**
@@ -170,7 +160,7 @@ public class DispatchLogPersistenceImpl
 			finderCache, new Object[] {dispatchTriggerId});
 	}
 
-	private CollectionPersistenceFinder<DispatchLog>
+	private CollectionPersistenceFinder<DispatchLog, NoSuchLogException>
 		_collectionPersistenceFinderByDTI_S;
 
 	/**
@@ -214,17 +204,9 @@ public class DispatchLogPersistenceImpl
 			OrderByComparator<DispatchLog> orderByComparator)
 		throws NoSuchLogException {
 
-		DispatchLog dispatchLog = fetchByDTI_S_First(
-			dispatchTriggerId, status, orderByComparator);
-
-		if (dispatchLog != null) {
-			return dispatchLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByDTI_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {dispatchTriggerId, status}));
+		return _collectionPersistenceFinderByDTI_S.findFirst(
+			finderCache, new Object[] {dispatchTriggerId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -598,4 +580,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-355065192
+// LIFERAY-SERVICE-BUILDER-HASH:-667309731

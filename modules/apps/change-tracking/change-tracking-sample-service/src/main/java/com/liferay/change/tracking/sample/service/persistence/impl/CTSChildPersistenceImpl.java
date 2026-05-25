@@ -76,7 +76,7 @@ public class CTSChildPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTSChild>
+	private CollectionPersistenceFinder<CTSChild, NoSuchCTSChildException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -116,16 +116,8 @@ public class CTSChildPersistenceImpl
 			long companyId, OrderByComparator<CTSChild> orderByComparator)
 		throws NoSuchCTSChildException {
 
-		CTSChild ctsChild = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctsChild != null) {
-			return ctsChild;
-		}
-
-		throw new NoSuchCTSChildException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -166,7 +158,7 @@ public class CTSChildPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<CTSChild>
+	private CollectionPersistenceFinder<CTSChild, NoSuchCTSChildException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -209,17 +201,9 @@ public class CTSChildPersistenceImpl
 			OrderByComparator<CTSChild> orderByComparator)
 		throws NoSuchCTSChildException {
 
-		CTSChild ctsChild = fetchByC_C_First(
-			companyId, ctsGrandParentId, orderByComparator);
-
-		if (ctsChild != null) {
-			return ctsChild;
-		}
-
-		throw new NoSuchCTSChildException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, ctsGrandParentId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {companyId, ctsGrandParentId},
+			orderByComparator);
 	}
 
 	/**
@@ -265,7 +249,7 @@ public class CTSChildPersistenceImpl
 			finderCache, new Object[] {companyId, ctsGrandParentId});
 	}
 
-	private CollectionPersistenceFinder<CTSChild>
+	private CollectionPersistenceFinder<CTSChild, NoSuchCTSChildException>
 		_collectionPersistenceFinderByC_P;
 
 	/**
@@ -308,17 +292,9 @@ public class CTSChildPersistenceImpl
 			OrderByComparator<CTSChild> orderByComparator)
 		throws NoSuchCTSChildException {
 
-		CTSChild ctsChild = fetchByC_P_First(
-			companyId, parentCTSChildId, orderByComparator);
-
-		if (ctsChild != null) {
-			return ctsChild;
-		}
-
-		throw new NoSuchCTSChildException(
-			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentCTSChildId}));
+		return _collectionPersistenceFinderByC_P.findFirst(
+			finderCache, new Object[] {companyId, parentCTSChildId},
+			orderByComparator);
 	}
 
 	/**
@@ -743,4 +719,4 @@ public class CTSChildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1916066800
+// LIFERAY-SERVICE-BUILDER-HASH:-152821119

@@ -96,7 +96,7 @@ public class AssetTagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -136,15 +136,9 @@ public class AssetTagPersistenceImpl
 			String uuid, OrderByComparator<AssetTag> orderByComparator)
 		throws NoSuchTagException {
 
-		AssetTag assetTag = fetchByUuid_First(uuid, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		throw new NoSuchTagException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -186,7 +180,8 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetTag> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<AssetTag, NoSuchTagException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
@@ -200,21 +195,8 @@ public class AssetTagPersistenceImpl
 	public AssetTag findByUUID_G(String uuid, long groupId)
 		throws NoSuchTagException {
 
-		AssetTag assetTag = fetchByUUID_G(uuid, groupId);
-
-		if (assetTag == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTagException(message);
-		}
-
-		return assetTag;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -263,7 +245,7 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -306,16 +288,9 @@ public class AssetTagPersistenceImpl
 			OrderByComparator<AssetTag> orderByComparator)
 		throws NoSuchTagException {
 
-		AssetTag assetTag = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		throw new NoSuchTagException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -361,7 +336,7 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -499,7 +474,7 @@ public class AssetTagPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByName;
 
 	/**
@@ -637,7 +612,7 @@ public class AssetTagPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(names)});
 	}
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByG_N;
 
 	/**
@@ -680,15 +655,9 @@ public class AssetTagPersistenceImpl
 			OrderByComparator<AssetTag> orderByComparator)
 		throws NoSuchTagException {
 
-		AssetTag assetTag = fetchByG_N_First(groupId, name, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		throw new NoSuchTagException(
-			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
+		return _collectionPersistenceFinderByG_N.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -734,7 +703,7 @@ public class AssetTagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
-	private CollectionPersistenceFinder<AssetTag>
+	private CollectionPersistenceFinder<AssetTag, NoSuchTagException>
 		_collectionPersistenceFinderByG_LikeN;
 
 	/**
@@ -1001,7 +970,8 @@ public class AssetTagPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds), name});
 	}
 
-	private UniquePersistenceFinder<AssetTag> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<AssetTag, NoSuchTagException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the asset tag where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
@@ -1015,22 +985,9 @@ public class AssetTagPersistenceImpl
 	public AssetTag findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchTagException {
 
-		AssetTag assetTag = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (assetTag == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTagException(message);
-		}
-
-		return assetTag;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1997,4 +1954,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1693922579
+// LIFERAY-SERVICE-BUILDER-HASH:-1999114446

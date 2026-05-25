@@ -77,8 +77,9 @@ public class ObjectLayoutTabPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectLayoutTab>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectLayoutTab, NoSuchObjectLayoutTabException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object layout tabs where uuid = &#63;.
@@ -118,16 +119,8 @@ public class ObjectLayoutTabPersistenceImpl
 			String uuid, OrderByComparator<ObjectLayoutTab> orderByComparator)
 		throws NoSuchObjectLayoutTabException {
 
-		ObjectLayoutTab objectLayoutTab = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		throw new NoSuchObjectLayoutTabException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -168,8 +161,9 @@ public class ObjectLayoutTabPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectLayoutTab>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectLayoutTab, NoSuchObjectLayoutTabException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object layout tabs where uuid = &#63; and companyId = &#63;.
@@ -212,16 +206,8 @@ public class ObjectLayoutTabPersistenceImpl
 			OrderByComparator<ObjectLayoutTab> orderByComparator)
 		throws NoSuchObjectLayoutTabException {
 
-		ObjectLayoutTab objectLayoutTab = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		throw new NoSuchObjectLayoutTabException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -266,8 +252,9 @@ public class ObjectLayoutTabPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectLayoutTab>
-		_collectionPersistenceFinderByObjectLayoutId;
+	private CollectionPersistenceFinder
+		<ObjectLayoutTab, NoSuchObjectLayoutTabException>
+			_collectionPersistenceFinderByObjectLayoutId;
 
 	/**
 	 * Returns an ordered range of all the object layout tabs where objectLayoutId = &#63;.
@@ -308,16 +295,8 @@ public class ObjectLayoutTabPersistenceImpl
 			OrderByComparator<ObjectLayoutTab> orderByComparator)
 		throws NoSuchObjectLayoutTabException {
 
-		ObjectLayoutTab objectLayoutTab = fetchByObjectLayoutId_First(
-			objectLayoutId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		throw new NoSuchObjectLayoutTabException(
-			_collectionPersistenceFinderByObjectLayoutId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectLayoutId}));
+		return _collectionPersistenceFinderByObjectLayoutId.findFirst(
+			finderCache, new Object[] {objectLayoutId}, orderByComparator);
 	}
 
 	/**
@@ -359,8 +338,9 @@ public class ObjectLayoutTabPersistenceImpl
 			finderCache, new Object[] {objectLayoutId});
 	}
 
-	private CollectionPersistenceFinder<ObjectLayoutTab>
-		_collectionPersistenceFinderByObjectRelationshipId;
+	private CollectionPersistenceFinder
+		<ObjectLayoutTab, NoSuchObjectLayoutTabException>
+			_collectionPersistenceFinderByObjectRelationshipId;
 
 	/**
 	 * Returns an ordered range of all the object layout tabs where objectRelationshipId = &#63;.
@@ -401,18 +381,9 @@ public class ObjectLayoutTabPersistenceImpl
 			OrderByComparator<ObjectLayoutTab> orderByComparator)
 		throws NoSuchObjectLayoutTabException {
 
-		ObjectLayoutTab objectLayoutTab = fetchByObjectRelationshipId_First(
-			objectRelationshipId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		throw new NoSuchObjectLayoutTabException(
-			_collectionPersistenceFinderByObjectRelationshipId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectRelationshipId}));
+		return _collectionPersistenceFinderByObjectRelationshipId.findFirst(
+			finderCache, new Object[] {objectRelationshipId},
+			orderByComparator);
 	}
 
 	/**
@@ -858,4 +829,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1799075438
+// LIFERAY-SERVICE-BUILDER-HASH:-1926656997

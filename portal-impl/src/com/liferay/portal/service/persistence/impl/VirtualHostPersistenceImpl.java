@@ -74,7 +74,7 @@ public class VirtualHostPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<VirtualHost>
+	private CollectionPersistenceFinder<VirtualHost, NoSuchVirtualHostException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -115,16 +115,9 @@ public class VirtualHostPersistenceImpl
 			long companyId, OrderByComparator<VirtualHost> orderByComparator)
 		throws NoSuchVirtualHostException {
 
-		VirtualHost virtualHost = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (virtualHost != null) {
-			return virtualHost;
-		}
-
-		throw new NoSuchVirtualHostException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -166,7 +159,7 @@ public class VirtualHostPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<VirtualHost>
+	private UniquePersistenceFinder<VirtualHost, NoSuchVirtualHostException>
 		_uniquePersistenceFinderByHostname;
 
 	/**
@@ -180,21 +173,8 @@ public class VirtualHostPersistenceImpl
 	public VirtualHost findByHostname(String hostname)
 		throws NoSuchVirtualHostException {
 
-		VirtualHost virtualHost = fetchByHostname(hostname);
-
-		if (virtualHost == null) {
-			String message =
-				_uniquePersistenceFinderByHostname.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {hostname});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVirtualHostException(message);
-		}
-
-		return virtualHost;
+		return _uniquePersistenceFinderByHostname.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {hostname});
 	}
 
 	/**
@@ -240,7 +220,7 @@ public class VirtualHostPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {hostname});
 	}
 
-	private CollectionPersistenceFinder<VirtualHost>
+	private CollectionPersistenceFinder<VirtualHost, NoSuchVirtualHostException>
 		_collectionPersistenceFinderByC_L;
 
 	/**
@@ -285,17 +265,9 @@ public class VirtualHostPersistenceImpl
 			OrderByComparator<VirtualHost> orderByComparator)
 		throws NoSuchVirtualHostException {
 
-		VirtualHost virtualHost = fetchByC_L_First(
-			companyId, layoutSetId, orderByComparator);
-
-		if (virtualHost != null) {
-			return virtualHost;
-		}
-
-		throw new NoSuchVirtualHostException(
-			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, layoutSetId}));
+		return _collectionPersistenceFinderByC_L.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetId}, orderByComparator);
 	}
 
 	/**
@@ -343,7 +315,7 @@ public class VirtualHostPersistenceImpl
 			new Object[] {companyId, layoutSetId});
 	}
 
-	private CollectionPersistenceFinder<VirtualHost>
+	private CollectionPersistenceFinder<VirtualHost, NoSuchVirtualHostException>
 		_collectionPersistenceFinderByNotL_H;
 
 	/**
@@ -975,4 +947,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:68444542
+// LIFERAY-SERVICE-BUILDER-HASH:-307124620

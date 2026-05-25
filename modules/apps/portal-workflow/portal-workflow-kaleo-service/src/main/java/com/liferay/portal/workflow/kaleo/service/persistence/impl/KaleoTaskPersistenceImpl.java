@@ -82,7 +82,7 @@ public class KaleoTaskPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoTask>
+	private CollectionPersistenceFinder<KaleoTask, NoSuchTaskException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -123,16 +123,8 @@ public class KaleoTaskPersistenceImpl
 			long companyId, OrderByComparator<KaleoTask> orderByComparator)
 		throws NoSuchTaskException {
 
-		KaleoTask kaleoTask = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoTask != null) {
-			return kaleoTask;
-		}
-
-		throw new NoSuchTaskException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -173,7 +165,7 @@ public class KaleoTaskPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoTask>
+	private CollectionPersistenceFinder<KaleoTask, NoSuchTaskException>
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
@@ -215,18 +207,9 @@ public class KaleoTaskPersistenceImpl
 			OrderByComparator<KaleoTask> orderByComparator)
 		throws NoSuchTaskException {
 
-		KaleoTask kaleoTask = fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTask != null) {
-			return kaleoTask;
-		}
-
-		throw new NoSuchTaskException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -272,7 +255,7 @@ public class KaleoTaskPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private UniquePersistenceFinder<KaleoTask>
+	private UniquePersistenceFinder<KaleoTask, NoSuchTaskException>
 		_uniquePersistenceFinderByKaleoNodeId;
 
 	/**
@@ -286,21 +269,8 @@ public class KaleoTaskPersistenceImpl
 	public KaleoTask findByKaleoNodeId(long kaleoNodeId)
 		throws NoSuchTaskException {
 
-		KaleoTask kaleoTask = fetchByKaleoNodeId(kaleoNodeId);
-
-		if (kaleoTask == null) {
-			String message =
-				_uniquePersistenceFinderByKaleoNodeId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTaskException(message);
-		}
-
-		return kaleoTask;
+		return _uniquePersistenceFinderByKaleoNodeId.find(
+			finderCache, new Object[] {kaleoNodeId});
 	}
 
 	/**
@@ -748,4 +718,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1519251729
+// LIFERAY-SERVICE-BUILDER-HASH:-777791081

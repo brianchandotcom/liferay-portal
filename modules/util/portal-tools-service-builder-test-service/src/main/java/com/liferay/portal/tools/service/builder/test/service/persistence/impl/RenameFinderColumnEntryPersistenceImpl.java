@@ -58,8 +58,9 @@ public class RenameFinderColumnEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<RenameFinderColumnEntry>
-		_uniquePersistenceFinderByColumnToRename;
+	private UniquePersistenceFinder
+		<RenameFinderColumnEntry, NoSuchRenameFinderColumnEntryException>
+			_uniquePersistenceFinderByColumnToRename;
 
 	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or throws a <code>NoSuchRenameFinderColumnEntryException</code> if it could not be found.
@@ -72,22 +73,8 @@ public class RenameFinderColumnEntryPersistenceImpl
 	public RenameFinderColumnEntry findByColumnToRename(String columnToRename)
 		throws NoSuchRenameFinderColumnEntryException {
 
-		RenameFinderColumnEntry renameFinderColumnEntry = fetchByColumnToRename(
-			columnToRename);
-
-		if (renameFinderColumnEntry == null) {
-			String message =
-				_uniquePersistenceFinderByColumnToRename.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnToRename});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRenameFinderColumnEntryException(message);
-		}
-
-		return renameFinderColumnEntry;
+		return _uniquePersistenceFinderByColumnToRename.find(
+			finderCache, new Object[] {columnToRename});
 	}
 
 	/**
@@ -366,4 +353,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:625393277
+// LIFERAY-SERVICE-BUILDER-HASH:334149941

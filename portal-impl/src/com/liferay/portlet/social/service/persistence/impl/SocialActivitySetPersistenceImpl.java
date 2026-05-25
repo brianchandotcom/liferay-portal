@@ -70,8 +70,9 @@ public class SocialActivitySetPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where groupId = &#63;.
@@ -112,16 +113,9 @@ public class SocialActivitySetPersistenceImpl
 			OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -163,8 +157,9 @@ public class SocialActivitySetPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where userId = &#63;.
@@ -204,16 +199,9 @@ public class SocialActivitySetPersistenceImpl
 			long userId, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -255,8 +243,9 @@ public class SocialActivitySetPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByG_U_T;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByG_U_T;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where groupId = &#63; and userId = &#63; and type = &#63;.
@@ -302,17 +291,9 @@ public class SocialActivitySetPersistenceImpl
 			OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByG_U_T_First(
-			groupId, userId, type, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByG_U_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, type}));
+		return _collectionPersistenceFinderByG_U_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, type}, orderByComparator);
 	}
 
 	/**
@@ -363,8 +344,9 @@ public class SocialActivitySetPersistenceImpl
 			new Object[] {groupId, userId, type});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByC_C_T;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByC_C_T;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -410,17 +392,9 @@ public class SocialActivitySetPersistenceImpl
 			OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByC_C_T_First(
-			classNameId, classPK, type, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByC_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, type}));
+		return _collectionPersistenceFinderByC_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type}, orderByComparator);
 	}
 
 	/**
@@ -471,8 +445,9 @@ public class SocialActivitySetPersistenceImpl
 			new Object[] {classNameId, classPK, type});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByG_U_C_T;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByG_U_C_T;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
@@ -520,17 +495,10 @@ public class SocialActivitySetPersistenceImpl
 			OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByG_U_C_T_First(
-			groupId, userId, classNameId, type, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByG_U_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, classNameId, type}));
+		return _collectionPersistenceFinderByG_U_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, classNameId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -589,8 +557,9 @@ public class SocialActivitySetPersistenceImpl
 			new Object[] {groupId, userId, classNameId, type});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySet>
-		_collectionPersistenceFinderByU_C_C_T;
+	private CollectionPersistenceFinder
+		<SocialActivitySet, NoSuchActivitySetException>
+			_collectionPersistenceFinderByU_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the social activity sets where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -638,17 +607,10 @@ public class SocialActivitySetPersistenceImpl
 			OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 
-		SocialActivitySet socialActivitySet = fetchByU_C_C_T_First(
-			userId, classNameId, classPK, type, orderByComparator);
-
-		if (socialActivitySet != null) {
-			return socialActivitySet;
-		}
-
-		throw new NoSuchActivitySetException(
-			_collectionPersistenceFinderByU_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, classNameId, classPK, type}));
+		return _collectionPersistenceFinderByU_C_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1220,4 +1182,4 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2114258152
+// LIFERAY-SERVICE-BUILDER-HASH:-234989888

@@ -87,7 +87,7 @@ public class JournalFeedPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<JournalFeed>
+	private CollectionPersistenceFinder<JournalFeed, NoSuchFeedException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -128,15 +128,8 @@ public class JournalFeedPersistenceImpl
 			String uuid, OrderByComparator<JournalFeed> orderByComparator)
 		throws NoSuchFeedException {
 
-		JournalFeed journalFeed = fetchByUuid_First(uuid, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		throw new NoSuchFeedException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -177,7 +170,7 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<JournalFeed>
+	private UniquePersistenceFinder<JournalFeed, NoSuchFeedException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -192,21 +185,8 @@ public class JournalFeedPersistenceImpl
 	public JournalFeed findByUUID_G(String uuid, long groupId)
 		throws NoSuchFeedException {
 
-		JournalFeed journalFeed = fetchByUUID_G(uuid, groupId);
-
-		if (journalFeed == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFeedException(message);
-		}
-
-		return journalFeed;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -254,7 +234,7 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<JournalFeed>
+	private CollectionPersistenceFinder<JournalFeed, NoSuchFeedException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -298,16 +278,8 @@ public class JournalFeedPersistenceImpl
 			OrderByComparator<JournalFeed> orderByComparator)
 		throws NoSuchFeedException {
 
-		JournalFeed journalFeed = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		throw new NoSuchFeedException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,7 +324,7 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalFeed>
+	private FilterCollectionPersistenceFinder<JournalFeed, NoSuchFeedException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -393,16 +365,8 @@ public class JournalFeedPersistenceImpl
 			long groupId, OrderByComparator<JournalFeed> orderByComparator)
 		throws NoSuchFeedException {
 
-		JournalFeed journalFeed = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		throw new NoSuchFeedException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -478,7 +442,8 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private UniquePersistenceFinder<JournalFeed> _uniquePersistenceFinderByG_F;
+	private UniquePersistenceFinder<JournalFeed, NoSuchFeedException>
+		_uniquePersistenceFinderByG_F;
 
 	/**
 	 * Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a <code>NoSuchFeedException</code> if it could not be found.
@@ -492,21 +457,8 @@ public class JournalFeedPersistenceImpl
 	public JournalFeed findByG_F(long groupId, String feedId)
 		throws NoSuchFeedException {
 
-		JournalFeed journalFeed = fetchByG_F(groupId, feedId);
-
-		if (journalFeed == null) {
-			String message =
-				_uniquePersistenceFinderByG_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, feedId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFeedException(message);
-		}
-
-		return journalFeed;
+		return _uniquePersistenceFinderByG_F.find(
+			finderCache, new Object[] {groupId, feedId});
 	}
 
 	/**
@@ -1039,4 +991,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471759049
+// LIFERAY-SERVICE-BUILDER-HASH:-1607562611

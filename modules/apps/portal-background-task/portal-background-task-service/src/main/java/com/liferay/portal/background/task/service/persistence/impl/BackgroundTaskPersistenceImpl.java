@@ -75,8 +75,9 @@ public class BackgroundTaskPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63;.
@@ -116,16 +117,8 @@ public class BackgroundTaskPersistenceImpl
 			long groupId, OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException {
 
-		BackgroundTask backgroundTask = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		throw new NoSuchBackgroundTaskException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -166,8 +159,9 @@ public class BackgroundTaskPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the background tasks where companyId = &#63;.
@@ -207,16 +201,8 @@ public class BackgroundTaskPersistenceImpl
 			long companyId, OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException {
 
-		BackgroundTask backgroundTask = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		throw new NoSuchBackgroundTaskException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -257,8 +243,9 @@ public class BackgroundTaskPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByCompleted;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByCompleted;
 
 	/**
 	 * Returns an ordered range of all the background tasks where completed = &#63;.
@@ -299,16 +286,8 @@ public class BackgroundTaskPersistenceImpl
 			OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException {
 
-		BackgroundTask backgroundTask = fetchByCompleted_First(
-			completed, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		throw new NoSuchBackgroundTaskException(
-			_collectionPersistenceFinderByCompleted.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {completed}));
+		return _collectionPersistenceFinderByCompleted.findFirst(
+			finderCache, new Object[] {completed}, orderByComparator);
 	}
 
 	/**
@@ -350,8 +329,9 @@ public class BackgroundTaskPersistenceImpl
 			finderCache, new Object[] {completed});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByStatus;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByStatus;
 
 	/**
 	 * Returns an ordered range of all the background tasks where status = &#63;.
@@ -391,16 +371,8 @@ public class BackgroundTaskPersistenceImpl
 			int status, OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException {
 
-		BackgroundTask backgroundTask = fetchByStatus_First(
-			status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		throw new NoSuchBackgroundTaskException(
-			_collectionPersistenceFinderByStatus.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {status}));
+		return _collectionPersistenceFinderByStatus.findFirst(
+			finderCache, new Object[] {status}, orderByComparator);
 	}
 
 	/**
@@ -441,8 +413,9 @@ public class BackgroundTaskPersistenceImpl
 			finderCache, new Object[] {status});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_T;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_T;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -609,8 +582,9 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_S;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_S;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and status = &#63;.
@@ -653,16 +627,8 @@ public class BackgroundTaskPersistenceImpl
 			OrderByComparator<BackgroundTask> orderByComparator)
 		throws NoSuchBackgroundTaskException {
 
-		BackgroundTask backgroundTask = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		throw new NoSuchBackgroundTaskException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -707,8 +673,9 @@ public class BackgroundTaskPersistenceImpl
 			finderCache, new Object[] {groupId, status});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByT_S;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByT_S;
 
 	/**
 	 * Returns an ordered range of all the background tasks where taskExecutorClassName = &#63; and status = &#63;.
@@ -865,8 +832,9 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_N_T;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_N_T;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1049,8 +1017,9 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_T_C;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_T_C;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1237,8 +1206,9 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_T_S;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_T_S;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1419,8 +1389,9 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<BackgroundTask>
-		_collectionPersistenceFinderByG_N_T_C;
+	private CollectionPersistenceFinder
+		<BackgroundTask, NoSuchBackgroundTaskException>
+			_collectionPersistenceFinderByG_N_T_C;
 
 	/**
 	 * Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2247,4 +2218,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1666044443
+// LIFERAY-SERVICE-BUILDER-HASH:-267544640

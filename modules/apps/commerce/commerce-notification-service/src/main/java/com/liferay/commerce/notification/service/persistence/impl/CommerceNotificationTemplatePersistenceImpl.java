@@ -84,8 +84,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceNotificationTemplate>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce notification templates where uuid = &#63;.
@@ -126,16 +127,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -177,8 +170,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceNotificationTemplate>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce notification template where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
@@ -192,22 +186,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	public CommerceNotificationTemplate findByUUID_G(String uuid, long groupId)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByUUID_G(uuid, groupId);
-
-		if (commerceNotificationTemplate == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotificationTemplateException(message);
-		}
-
-		return commerceNotificationTemplate;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -257,8 +237,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceNotificationTemplate>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce notification templates where uuid = &#63; and companyId = &#63;.
@@ -301,16 +282,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +328,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the commerce notification templates where groupId = &#63;.
@@ -397,16 +371,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByGroupId_First(groupId, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -483,8 +449,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
-		_collectionPersistenceFinderByG_E;
+	private FilterCollectionPersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByG_E;
 
 	/**
 	 * Returns an ordered range of all the commerce notification templates where groupId = &#63; and enabled = &#63;.
@@ -527,16 +494,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByG_E_First(groupId, enabled, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByG_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, enabled}));
+		return _collectionPersistenceFinderByG_E.findFirst(
+			finderCache, new Object[] {groupId, enabled}, orderByComparator);
 	}
 
 	/**
@@ -618,8 +577,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {groupId, enabled}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
-		_collectionPersistenceFinderByG_T_E;
+	private FilterCollectionPersistenceFinder
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByG_T_E;
 
 	/**
 	 * Returns an ordered range of all the commerce notification templates where groupId = &#63; and type = &#63; and enabled = &#63;.
@@ -664,17 +624,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByG_T_E_First(groupId, type, enabled, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByG_T_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, type, enabled}));
+		return _collectionPersistenceFinderByG_T_E.findFirst(
+			finderCache, new Object[] {groupId, type, enabled},
+			orderByComparator);
 	}
 
 	/**
@@ -1264,4 +1216,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1561220403
+// LIFERAY-SERVICE-BUILDER-HASH:1801908509

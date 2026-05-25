@@ -64,8 +64,9 @@ public class MembershipRequestPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MembershipRequest>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<MembershipRequest, NoSuchMembershipRequestException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the membership requests where groupId = &#63;.
@@ -106,16 +107,9 @@ public class MembershipRequestPersistenceImpl
 			OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 
-		MembershipRequest membershipRequest = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		throw new NoSuchMembershipRequestException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -157,8 +151,9 @@ public class MembershipRequestPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<MembershipRequest>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<MembershipRequest, NoSuchMembershipRequestException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the membership requests where userId = &#63;.
@@ -198,16 +193,9 @@ public class MembershipRequestPersistenceImpl
 			long userId, OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 
-		MembershipRequest membershipRequest = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		throw new NoSuchMembershipRequestException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -249,8 +237,9 @@ public class MembershipRequestPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<MembershipRequest>
-		_collectionPersistenceFinderByG_S;
+	private CollectionPersistenceFinder
+		<MembershipRequest, NoSuchMembershipRequestException>
+			_collectionPersistenceFinderByG_S;
 
 	/**
 	 * Returns an ordered range of all the membership requests where groupId = &#63; and statusId = &#63;.
@@ -293,16 +282,9 @@ public class MembershipRequestPersistenceImpl
 			OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 
-		MembershipRequest membershipRequest = fetchByG_S_First(
-			groupId, statusId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		throw new NoSuchMembershipRequestException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, statusId}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, statusId},
+			orderByComparator);
 	}
 
 	/**
@@ -348,8 +330,9 @@ public class MembershipRequestPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, statusId});
 	}
 
-	private CollectionPersistenceFinder<MembershipRequest>
-		_collectionPersistenceFinderByG_U_S;
+	private CollectionPersistenceFinder
+		<MembershipRequest, NoSuchMembershipRequestException>
+			_collectionPersistenceFinderByG_U_S;
 
 	/**
 	 * Returns an ordered range of all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
@@ -395,17 +378,9 @@ public class MembershipRequestPersistenceImpl
 			OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 
-		MembershipRequest membershipRequest = fetchByG_U_S_First(
-			groupId, userId, statusId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		throw new NoSuchMembershipRequestException(
-			_collectionPersistenceFinderByG_U_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, statusId}));
+		return _collectionPersistenceFinderByG_U_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, statusId}, orderByComparator);
 	}
 
 	/**
@@ -798,4 +773,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:690763545
+// LIFERAY-SERVICE-BUILDER-HASH:1140207152

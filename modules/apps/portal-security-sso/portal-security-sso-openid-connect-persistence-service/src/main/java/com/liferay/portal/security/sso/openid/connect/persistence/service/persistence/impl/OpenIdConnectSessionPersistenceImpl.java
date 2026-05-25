@@ -76,8 +76,9 @@ public class OpenIdConnectSessionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<OpenIdConnectSession>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the open ID connect sessions where userId = &#63;.
@@ -118,16 +119,8 @@ public class OpenIdConnectSessionPersistenceImpl
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		throw new NoSuchSessionException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -169,8 +162,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<OpenIdConnectSession>
-		_collectionPersistenceFinderByLtAccessTokenExpirationDate;
+	private CollectionPersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_collectionPersistenceFinderByLtAccessTokenExpirationDate;
 
 	/**
 	 * Returns all the open ID connect sessions where accessTokenExpirationDate &lt; &#63;.
@@ -268,19 +262,10 @@ public class OpenIdConnectSessionPersistenceImpl
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession =
-			fetchByLtAccessTokenExpirationDate_First(
-				accessTokenExpirationDate, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		throw new NoSuchSessionException(
-			_collectionPersistenceFinderByLtAccessTokenExpirationDate.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {accessTokenExpirationDate}));
+		return _collectionPersistenceFinderByLtAccessTokenExpirationDate.
+			findFirst(
+				finderCache, new Object[] {accessTokenExpirationDate},
+				orderByComparator);
 	}
 
 	/**
@@ -328,8 +313,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {accessTokenExpirationDate});
 	}
 
-	private UniquePersistenceFinder<OpenIdConnectSession>
-		_uniquePersistenceFinderByU_I;
+	private UniquePersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_uniquePersistenceFinderByU_I;
 
 	/**
 	 * Returns the open ID connect session where userId = &#63; and issuer = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
@@ -343,21 +329,8 @@ public class OpenIdConnectSessionPersistenceImpl
 	public OpenIdConnectSession findByU_I(long userId, String issuer)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession = fetchByU_I(userId, issuer);
-
-		if (openIdConnectSession == null) {
-			String message =
-				_uniquePersistenceFinderByU_I.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, issuer});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSessionException(message);
-		}
-
-		return openIdConnectSession;
+		return _uniquePersistenceFinderByU_I.find(
+			finderCache, new Object[] {userId, issuer});
 	}
 
 	/**
@@ -405,8 +378,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {userId, issuer});
 	}
 
-	private UniquePersistenceFinder<OpenIdConnectSession>
-		_uniquePersistenceFinderByI_S;
+	private UniquePersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_uniquePersistenceFinderByI_S;
 
 	/**
 	 * Returns the open ID connect session where issuer = &#63; and sessionId = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
@@ -420,22 +394,8 @@ public class OpenIdConnectSessionPersistenceImpl
 	public OpenIdConnectSession findByI_S(String issuer, String sessionId)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession = fetchByI_S(
-			issuer, sessionId);
-
-		if (openIdConnectSession == null) {
-			String message =
-				_uniquePersistenceFinderByI_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {issuer, sessionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSessionException(message);
-		}
-
-		return openIdConnectSession;
+		return _uniquePersistenceFinderByI_S.find(
+			finderCache, new Object[] {issuer, sessionId});
 	}
 
 	/**
@@ -484,8 +444,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {issuer, sessionId});
 	}
 
-	private CollectionPersistenceFinder<OpenIdConnectSession>
-		_collectionPersistenceFinderByC_A_C;
+	private CollectionPersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_collectionPersistenceFinderByC_A_C;
 
 	/**
 	 * Returns an ordered range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
@@ -532,17 +493,10 @@ public class OpenIdConnectSessionPersistenceImpl
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession = fetchByC_A_C_First(
-			companyId, authServerWellKnownURI, clientId, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		throw new NoSuchSessionException(
-			_collectionPersistenceFinderByC_A_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, authServerWellKnownURI, clientId}));
+		return _collectionPersistenceFinderByC_A_C.findFirst(
+			finderCache,
+			new Object[] {companyId, authServerWellKnownURI, clientId},
+			orderByComparator);
 	}
 
 	/**
@@ -598,8 +552,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			new Object[] {companyId, authServerWellKnownURI, clientId});
 	}
 
-	private UniquePersistenceFinder<OpenIdConnectSession>
-		_uniquePersistenceFinderByU_A_C;
+	private UniquePersistenceFinder
+		<OpenIdConnectSession, NoSuchSessionException>
+			_uniquePersistenceFinderByU_A_C;
 
 	/**
 	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
@@ -615,23 +570,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			long userId, String authServerWellKnownURI, String clientId)
 		throws NoSuchSessionException {
 
-		OpenIdConnectSession openIdConnectSession = fetchByU_A_C(
-			userId, authServerWellKnownURI, clientId);
-
-		if (openIdConnectSession == null) {
-			String message =
-				_uniquePersistenceFinderByU_A_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, authServerWellKnownURI, clientId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSessionException(message);
-		}
-
-		return openIdConnectSession;
+		return _uniquePersistenceFinderByU_A_C.find(
+			finderCache,
+			new Object[] {userId, authServerWellKnownURI, clientId});
 	}
 
 	/**
@@ -1112,4 +1053,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-58965484
+// LIFERAY-SERVICE-BUILDER-HASH:1754045583

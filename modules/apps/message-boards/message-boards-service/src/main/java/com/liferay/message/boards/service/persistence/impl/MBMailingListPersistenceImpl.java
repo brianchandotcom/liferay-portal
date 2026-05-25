@@ -86,8 +86,9 @@ public class MBMailingListPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBMailingList>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<MBMailingList, NoSuchMailingListException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63;.
@@ -127,16 +128,8 @@ public class MBMailingListPersistenceImpl
 			String uuid, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 
-		MBMailingList mbMailingList = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		throw new NoSuchMailingListException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -177,7 +170,7 @@ public class MBMailingListPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBMailingList>
+	private UniquePersistenceFinder<MBMailingList, NoSuchMailingListException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -192,21 +185,8 @@ public class MBMailingListPersistenceImpl
 	public MBMailingList findByUUID_G(String uuid, long groupId)
 		throws NoSuchMailingListException {
 
-		MBMailingList mbMailingList = fetchByUUID_G(uuid, groupId);
-
-		if (mbMailingList == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMailingListException(message);
-		}
-
-		return mbMailingList;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -254,8 +234,9 @@ public class MBMailingListPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBMailingList>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<MBMailingList, NoSuchMailingListException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
@@ -298,16 +279,8 @@ public class MBMailingListPersistenceImpl
 			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 
-		MBMailingList mbMailingList = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		throw new NoSuchMailingListException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,8 +325,9 @@ public class MBMailingListPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<MBMailingList>
-		_collectionPersistenceFinderByActive;
+	private CollectionPersistenceFinder
+		<MBMailingList, NoSuchMailingListException>
+			_collectionPersistenceFinderByActive;
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where active = &#63;.
@@ -393,16 +367,8 @@ public class MBMailingListPersistenceImpl
 			boolean active, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 
-		MBMailingList mbMailingList = fetchByActive_First(
-			active, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		throw new NoSuchMailingListException(
-			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
+		return _collectionPersistenceFinderByActive.findFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -443,7 +409,7 @@ public class MBMailingListPersistenceImpl
 			finderCache, new Object[] {active});
 	}
 
-	private UniquePersistenceFinder<MBMailingList>
+	private UniquePersistenceFinder<MBMailingList, NoSuchMailingListException>
 		_uniquePersistenceFinderByG_C;
 
 	/**
@@ -458,22 +424,8 @@ public class MBMailingListPersistenceImpl
 	public MBMailingList findByG_C(long groupId, long categoryId)
 		throws NoSuchMailingListException {
 
-		MBMailingList mbMailingList = fetchByG_C(groupId, categoryId);
-
-		if (mbMailingList == null) {
-			String message =
-				_uniquePersistenceFinderByG_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, categoryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMailingListException(message);
-		}
-
-		return mbMailingList;
+		return _uniquePersistenceFinderByG_C.find(
+			finderCache, new Object[] {groupId, categoryId});
 	}
 
 	/**
@@ -1014,4 +966,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-957465438
+// LIFERAY-SERVICE-BUILDER-HASH:2077492077

@@ -65,8 +65,9 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<DefinedDefaultOrderEntry>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<DefinedDefaultOrderEntry, NoSuchDefinedDefaultOrderEntryException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the defined default order entry where name = &#63; or throws a <code>NoSuchDefinedDefaultOrderEntryException</code> if it could not be found.
@@ -79,21 +80,8 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	public DefinedDefaultOrderEntry findByName(String name)
 		throws NoSuchDefinedDefaultOrderEntryException {
 
-		DefinedDefaultOrderEntry definedDefaultOrderEntry = fetchByName(name);
-
-		if (definedDefaultOrderEntry == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDefinedDefaultOrderEntryException(message);
-		}
-
-		return definedDefaultOrderEntry;
+		return _uniquePersistenceFinderByName.find(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -138,8 +126,9 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 			finderCache, new Object[] {name});
 	}
 
-	private CollectionPersistenceFinder<DefinedDefaultOrderEntry>
-		_collectionPersistenceFinderByName_Collection;
+	private CollectionPersistenceFinder
+		<DefinedDefaultOrderEntry, NoSuchDefinedDefaultOrderEntryException>
+			_collectionPersistenceFinderByName_Collection;
 
 	/**
 	 * Returns an ordered range of all the defined default order entries where name = &#63;.
@@ -180,16 +169,8 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 			OrderByComparator<DefinedDefaultOrderEntry> orderByComparator)
 		throws NoSuchDefinedDefaultOrderEntryException {
 
-		DefinedDefaultOrderEntry definedDefaultOrderEntry =
-			fetchByName_Collection_First(name, orderByComparator);
-
-		if (definedDefaultOrderEntry != null) {
-			return definedDefaultOrderEntry;
-		}
-
-		throw new NoSuchDefinedDefaultOrderEntryException(
-			_collectionPersistenceFinderByName_Collection.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
+		return _collectionPersistenceFinderByName_Collection.findFirst(
+			finderCache, new Object[] {name}, orderByComparator);
 	}
 
 	/**
@@ -514,4 +495,4 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1616907329
+// LIFERAY-SERVICE-BUILDER-HASH:-1399173700

@@ -88,8 +88,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPConfigurationEntrySetting>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp configuration entry settings where uuid = &#63;.
@@ -130,16 +132,8 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
 		throws NoSuchCPConfigurationEntrySettingException {
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		throw new NoSuchCPConfigurationEntrySettingException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -181,8 +175,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPConfigurationEntrySetting>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp configuration entry setting where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPConfigurationEntrySettingException</code> if it could not be found.
@@ -196,22 +192,8 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	public CPConfigurationEntrySetting findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPConfigurationEntrySettingException {
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting = fetchByUUID_G(
-			uuid, groupId);
-
-		if (cpConfigurationEntrySetting == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPConfigurationEntrySettingException(message);
-		}
-
-		return cpConfigurationEntrySetting;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -260,8 +242,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPConfigurationEntrySetting>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp configuration entry settings where uuid = &#63; and companyId = &#63;.
@@ -304,16 +288,8 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
 		throws NoSuchCPConfigurationEntrySettingException {
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		throw new NoSuchCPConfigurationEntrySettingException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +334,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CPConfigurationEntrySetting>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cp configuration entry settings where companyId = &#63;.
@@ -400,16 +378,8 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
 		throws NoSuchCPConfigurationEntrySettingException {
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		throw new NoSuchCPConfigurationEntrySettingException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -451,8 +421,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<CPConfigurationEntrySetting>
-		_uniquePersistenceFinderByC_T;
+	private UniquePersistenceFinder
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
+			_uniquePersistenceFinderByC_T;
 
 	/**
 	 * Returns the cp configuration entry setting where CPConfigurationEntryId = &#63; and type = &#63; or throws a <code>NoSuchCPConfigurationEntrySettingException</code> if it could not be found.
@@ -467,23 +439,8 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			long CPConfigurationEntryId, int type)
 		throws NoSuchCPConfigurationEntrySettingException {
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting = fetchByC_T(
-			CPConfigurationEntryId, type);
-
-		if (cpConfigurationEntrySetting == null) {
-			String message =
-				_uniquePersistenceFinderByC_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPConfigurationEntryId, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPConfigurationEntrySettingException(message);
-		}
-
-		return cpConfigurationEntrySetting;
+		return _uniquePersistenceFinderByC_T.find(
+			finderCache, new Object[] {CPConfigurationEntryId, type});
 	}
 
 	/**
@@ -1054,4 +1011,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:999202143
+// LIFERAY-SERVICE-BUILDER-HASH:484346384

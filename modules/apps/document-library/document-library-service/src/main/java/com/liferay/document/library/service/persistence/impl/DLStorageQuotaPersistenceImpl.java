@@ -68,7 +68,7 @@ public class DLStorageQuotaPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<DLStorageQuota>
+	private UniquePersistenceFinder<DLStorageQuota, NoSuchStorageQuotaException>
 		_uniquePersistenceFinderByCompanyId;
 
 	/**
@@ -82,21 +82,8 @@ public class DLStorageQuotaPersistenceImpl
 	public DLStorageQuota findByCompanyId(long companyId)
 		throws NoSuchStorageQuotaException {
 
-		DLStorageQuota dlStorageQuota = fetchByCompanyId(companyId);
-
-		if (dlStorageQuota == null) {
-			String message =
-				_uniquePersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStorageQuotaException(message);
-		}
-
-		return dlStorageQuota;
+		return _uniquePersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -388,4 +375,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1225082035
+// LIFERAY-SERVICE-BUILDER-HASH:-327830309

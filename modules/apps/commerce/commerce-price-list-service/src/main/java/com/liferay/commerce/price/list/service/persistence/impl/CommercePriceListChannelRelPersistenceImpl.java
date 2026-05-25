@@ -87,8 +87,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommercePriceListChannelRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce price list channel rels where uuid = &#63;.
@@ -129,16 +130,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		throw new NoSuchPriceListChannelRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceListChannelRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce price list channel rels where uuid = &#63; and companyId = &#63;.
@@ -224,16 +218,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		throw new NoSuchPriceListChannelRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -278,8 +264,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceListChannelRel>
-		_collectionPersistenceFinderByCommercePriceListId;
+	private CollectionPersistenceFinder
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException>
+			_collectionPersistenceFinderByCommercePriceListId;
 
 	/**
 	 * Returns an ordered range of all the commerce price list channel rels where commercePriceListId = &#63;.
@@ -320,19 +307,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByCommercePriceListId_First(
-				commercePriceListId, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		throw new NoSuchPriceListChannelRelException(
-			_collectionPersistenceFinderByCommercePriceListId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePriceListId}));
+		return _collectionPersistenceFinderByCommercePriceListId.findFirst(
+			finderCache, new Object[] {commercePriceListId}, orderByComparator);
 	}
 
 	/**
@@ -374,8 +350,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {commercePriceListId});
 	}
 
-	private UniquePersistenceFinder<CommercePriceListChannelRel>
-		_uniquePersistenceFinderByCCI_CPI;
+	private UniquePersistenceFinder
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException>
+			_uniquePersistenceFinderByCCI_CPI;
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.
@@ -390,23 +367,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 			long commerceChannelId, long commercePriceListId)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByCCI_CPI(commerceChannelId, commercePriceListId);
-
-		if (commercePriceListChannelRel == null) {
-			String message =
-				_uniquePersistenceFinderByCCI_CPI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceChannelId, commercePriceListId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPriceListChannelRelException(message);
-		}
-
-		return commercePriceListChannelRel;
+		return _uniquePersistenceFinderByCCI_CPI.find(
+			finderCache, new Object[] {commerceChannelId, commercePriceListId});
 	}
 
 	/**
@@ -963,4 +925,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1568101721
+// LIFERAY-SERVICE-BUILDER-HASH:520885263

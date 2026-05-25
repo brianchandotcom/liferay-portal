@@ -96,8 +96,9 @@ public class ClientExtensionEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the client extension entries where uuid = &#63;.
@@ -138,16 +139,8 @@ public class ClientExtensionEntryPersistenceImpl
 			OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws NoSuchClientExtensionEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
-		}
-
-		throw new NoSuchClientExtensionEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -223,8 +216,9 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the client extension entries where uuid = &#63; and companyId = &#63;.
@@ -267,16 +261,8 @@ public class ClientExtensionEntryPersistenceImpl
 			OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws NoSuchClientExtensionEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
-		}
-
-		throw new NoSuchClientExtensionEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +344,9 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the client extension entries where companyId = &#63;.
@@ -400,16 +387,8 @@ public class ClientExtensionEntryPersistenceImpl
 			OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws NoSuchClientExtensionEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
-		}
-
-		throw new NoSuchClientExtensionEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -486,8 +465,9 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
-		_collectionPersistenceFinderByC_T;
+	private FilterCollectionPersistenceFinder
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
+			_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the client extension entries where companyId = &#63; and type = &#63;.
@@ -530,16 +510,8 @@ public class ClientExtensionEntryPersistenceImpl
 			OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws NoSuchClientExtensionEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
-		}
-
-		throw new NoSuchClientExtensionEntryException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -621,8 +593,9 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<ClientExtensionEntry>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the client extension entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
@@ -637,23 +610,8 @@ public class ClientExtensionEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchClientExtensionEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (clientExtensionEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchClientExtensionEntryException(message);
-		}
-
-		return clientExtensionEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1319,4 +1277,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-217753926
+// LIFERAY-SERVICE-BUILDER-HASH:1639667820

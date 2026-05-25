@@ -73,8 +73,9 @@ public class CTCollectionTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CTCollectionTemplate>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CTCollectionTemplate, NoSuchCollectionTemplateException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the ct collection templates where companyId = &#63;.
@@ -115,16 +116,8 @@ public class CTCollectionTemplatePersistenceImpl
 			OrderByComparator<CTCollectionTemplate> orderByComparator)
 		throws NoSuchCollectionTemplateException {
 
-		CTCollectionTemplate ctCollectionTemplate = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctCollectionTemplate != null) {
-			return ctCollectionTemplate;
-		}
-
-		throw new NoSuchCollectionTemplateException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -499,4 +492,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1736822077
+// LIFERAY-SERVICE-BUILDER-HASH:-2102990341

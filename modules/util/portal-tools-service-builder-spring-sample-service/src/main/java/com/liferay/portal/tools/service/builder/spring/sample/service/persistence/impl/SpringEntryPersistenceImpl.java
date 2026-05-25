@@ -67,7 +67,7 @@ public class SpringEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SpringEntry>
+	private CollectionPersistenceFinder<SpringEntry, NoSuchSpringEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -108,15 +108,8 @@ public class SpringEntryPersistenceImpl
 			String uuid, OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
-		SpringEntry springEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		throw new NoSuchSpringEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -157,7 +150,7 @@ public class SpringEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<SpringEntry>
+	private CollectionPersistenceFinder<SpringEntry, NoSuchSpringEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -201,16 +194,8 @@ public class SpringEntryPersistenceImpl
 			OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
-		SpringEntry springEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		throw new NoSuchSpringEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -255,7 +240,7 @@ public class SpringEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<SpringEntry>
+	private CollectionPersistenceFinder<SpringEntry, NoSuchSpringEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -296,16 +281,8 @@ public class SpringEntryPersistenceImpl
 			long companyId, OrderByComparator<SpringEntry> orderByComparator)
 		throws NoSuchSpringEntryException {
 
-		SpringEntry springEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		throw new NoSuchSpringEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -669,4 +646,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:879268457
+// LIFERAY-SERVICE-BUILDER-HASH:495192722

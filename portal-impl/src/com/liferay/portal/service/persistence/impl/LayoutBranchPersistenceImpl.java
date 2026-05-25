@@ -63,8 +63,9 @@ public class LayoutBranchPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutBranch>
-		_collectionPersistenceFinderByLayoutSetBranchId;
+	private CollectionPersistenceFinder
+		<LayoutBranch, NoSuchLayoutBranchException>
+			_collectionPersistenceFinderByLayoutSetBranchId;
 
 	/**
 	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63;.
@@ -105,18 +106,9 @@ public class LayoutBranchPersistenceImpl
 			OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
 
-		LayoutBranch layoutBranch = fetchByLayoutSetBranchId_First(
-			layoutSetBranchId, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		throw new NoSuchLayoutBranchException(
-			_collectionPersistenceFinderByLayoutSetBranchId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutSetBranchId}));
+		return _collectionPersistenceFinderByLayoutSetBranchId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutSetBranchId},
+			orderByComparator);
 	}
 
 	/**
@@ -159,8 +151,9 @@ public class LayoutBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {layoutSetBranchId});
 	}
 
-	private CollectionPersistenceFinder<LayoutBranch>
-		_collectionPersistenceFinderByPlid;
+	private CollectionPersistenceFinder
+		<LayoutBranch, NoSuchLayoutBranchException>
+			_collectionPersistenceFinderByPlid;
 
 	/**
 	 * Returns an ordered range of all the layout branches where plid = &#63;.
@@ -200,15 +193,9 @@ public class LayoutBranchPersistenceImpl
 			long plid, OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
 
-		LayoutBranch layoutBranch = fetchByPlid_First(plid, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		throw new NoSuchLayoutBranchException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid},
+			orderByComparator);
 	}
 
 	/**
@@ -250,8 +237,9 @@ public class LayoutBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {plid});
 	}
 
-	private CollectionPersistenceFinder<LayoutBranch>
-		_collectionPersistenceFinderByL_P;
+	private CollectionPersistenceFinder
+		<LayoutBranch, NoSuchLayoutBranchException>
+			_collectionPersistenceFinderByL_P;
 
 	/**
 	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
@@ -295,17 +283,9 @@ public class LayoutBranchPersistenceImpl
 			OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
 
-		LayoutBranch layoutBranch = fetchByL_P_First(
-			layoutSetBranchId, plid, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		throw new NoSuchLayoutBranchException(
-			_collectionPersistenceFinderByL_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {layoutSetBranchId, plid}));
+		return _collectionPersistenceFinderByL_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, plid}, orderByComparator);
 	}
 
 	/**
@@ -353,7 +333,7 @@ public class LayoutBranchPersistenceImpl
 			new Object[] {layoutSetBranchId, plid});
 	}
 
-	private UniquePersistenceFinder<LayoutBranch>
+	private UniquePersistenceFinder<LayoutBranch, NoSuchLayoutBranchException>
 		_uniquePersistenceFinderByL_P_N;
 
 	/**
@@ -370,22 +350,9 @@ public class LayoutBranchPersistenceImpl
 			long layoutSetBranchId, long plid, String name)
 		throws NoSuchLayoutBranchException {
 
-		LayoutBranch layoutBranch = fetchByL_P_N(layoutSetBranchId, plid, name);
-
-		if (layoutBranch == null) {
-			String message =
-				_uniquePersistenceFinderByL_P_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutSetBranchId, plid, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutBranchException(message);
-		}
-
-		return layoutBranch;
+		return _uniquePersistenceFinderByL_P_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, plid, name});
 	}
 
 	/**
@@ -440,8 +407,9 @@ public class LayoutBranchPersistenceImpl
 			new Object[] {layoutSetBranchId, plid, name});
 	}
 
-	private CollectionPersistenceFinder<LayoutBranch>
-		_collectionPersistenceFinderByL_P_M;
+	private CollectionPersistenceFinder
+		<LayoutBranch, NoSuchLayoutBranchException>
+			_collectionPersistenceFinderByL_P_M;
 
 	/**
 	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
@@ -487,17 +455,9 @@ public class LayoutBranchPersistenceImpl
 			OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
 
-		LayoutBranch layoutBranch = fetchByL_P_M_First(
-			layoutSetBranchId, plid, master, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		throw new NoSuchLayoutBranchException(
-			_collectionPersistenceFinderByL_P_M.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {layoutSetBranchId, plid, master}));
+		return _collectionPersistenceFinderByL_P_M.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, plid, master}, orderByComparator);
 	}
 
 	/**
@@ -894,4 +854,4 @@ public class LayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:581981701
+// LIFERAY-SERVICE-BUILDER-HASH:-57832400

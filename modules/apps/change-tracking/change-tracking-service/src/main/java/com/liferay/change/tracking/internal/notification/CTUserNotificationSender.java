@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.internal.helper;
+package com.liferay.change.tracking.internal.notification;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = CTUserNotificationHelper.class)
-public class CTUserNotificationHelper {
+@Component(service = CTUserNotificationSender.class)
+public class CTUserNotificationSender {
 
 	public long[] getPublicationRoleUserIds(
 		CTCollection ctCollection, boolean includeOwner,

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.notification.util;
+package com.liferay.commerce.notification;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @deprecated As of Cavanaugh (7.4.x)
  */
 @Deprecated
-public interface CommerceNotificationHelper {
+public interface CommerceNotificationSender {
 
 	public void sendNotifications(
 			long groupId, long userId, String key, Object object)

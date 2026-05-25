@@ -12,9 +12,9 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 /**
  * @author Michael C. Han
  */
-public interface NotificationHelper {
+public interface KaleoNotificationSender {
 
-	public void sendKaleoNotifications(
+	public void sendNotifications(
 			String kaleoClassName, long kaleoClassPK,
 			ExecutionType executionType, ExecutionContext executionContext)
 		throws PortalException;

@@ -12,6 +12,7 @@ import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,11 +26,10 @@ import org.mockito.Mockito;
  */
 public class DisplayContextTestUtil {
 
-	public static void setUpReadOnlyMocks(
+	public static void setGetReactDataMocks(
 		MockedStatic<ObjectDefinitionLocalServiceUtil>
 			objectDefinitionLocalServiceUtilMockedStatic,
 		MockedStatic<ObjectEntryServiceUtil> objectEntryServiceUtilMockedStatic,
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		boolean hasUpdatePermission) {
 
 		objectDefinitionLocalServiceUtilMockedStatic.when(
@@ -38,8 +38,10 @@ public class DisplayContextTestUtil {
 					getObjectDefinitionByExternalReferenceCode(
 						Mockito.anyString(), Mockito.anyLong())
 		).thenReturn(
-			objectDefinition
+			Mockito.mock(ObjectDefinition.class)
 		);
+
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
 
 		objectEntryServiceUtilMockedStatic.when(
 			() -> ObjectEntryServiceUtil.getObjectEntry(
@@ -56,7 +58,20 @@ public class DisplayContextTestUtil {
 		);
 	}
 
-	public static ThemeDisplay setUpThemeDisplay(
+	public static HttpServletRequest setUpHttpServletRequest() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getParameter("externalReferenceCode")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		return httpServletRequest;
+	}
+
+	public static void setUpThemeDisplay(
 			Company company, Group group, HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -109,8 +124,6 @@ public class DisplayContextTestUtil {
 		).thenReturn(
 			"/test"
 		);
-
-		return themeDisplay;
 	}
 
 }

@@ -6,8 +6,6 @@
 package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -40,8 +38,11 @@ public class EditContentRetrieverDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
+		HttpServletRequest httpServletRequest =
+			DisplayContextTestUtil.setUpHttpServletRequest();
+
 		DisplayContextTestUtil.setUpThemeDisplay(
-			_company, _group, _httpServletRequest);
+			Mockito.mock(Company.class), _group, httpServletRequest);
 
 		Mockito.when(
 			_groupLocalService.getGroup(1L)
@@ -49,24 +50,19 @@ public class EditContentRetrieverDisplayContextTest {
 			_group
 		);
 
-		Mockito.when(
-			_httpServletRequest.getParameter("externalReferenceCode")
-		).thenReturn(
-			"L_TEST_CONTENT_RETRIEVER"
-		);
-
 		_editContentRetrieverDisplayContext =
 			new EditContentRetrieverDisplayContext(
-				_groupLocalService, _httpServletRequest);
+				_groupLocalService, httpServletRequest);
 	}
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_assertReadOnly(true, false);
-		_assertReadOnly(false, true);
+		_testGetReactDataWithReadOnly(true, false);
+		_testGetReactDataWithReadOnly(false, true);
 	}
 
-	private void _assertReadOnly(boolean hasUpdatePermission, boolean readOnly)
+	private void _testGetReactDataWithReadOnly(
+			boolean hasUpdatePermission, boolean readOnly)
 		throws Exception {
 
 		try (MockedStatic<ObjectDefinitionLocalServiceUtil>
@@ -76,10 +72,9 @@ public class EditContentRetrieverDisplayContextTest {
 				objectEntryServiceUtilMockedStatic = Mockito.mockStatic(
 					ObjectEntryServiceUtil.class)) {
 
-			DisplayContextTestUtil.setUpReadOnlyMocks(
+			DisplayContextTestUtil.setGetReactDataMocks(
 				objectDefinitionLocalServiceUtilMockedStatic,
-				objectEntryServiceUtilMockedStatic, _objectDefinition,
-				_objectEntry, hasUpdatePermission);
+				objectEntryServiceUtilMockedStatic, hasUpdatePermission);
 
 			Map<String, Object> reactData =
 				_editContentRetrieverDisplayContext.getReactData();
@@ -88,16 +83,10 @@ public class EditContentRetrieverDisplayContextTest {
 		}
 	}
 
-	private final Company _company = Mockito.mock(Company.class);
 	private EditContentRetrieverDisplayContext
 		_editContentRetrieverDisplayContext;
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
-	private final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
-	private final ObjectDefinition _objectDefinition = Mockito.mock(
-		ObjectDefinition.class);
-	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
 
 }

@@ -8,8 +8,6 @@ package com.liferay.ai.hub.web.internal.display.context;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
 import com.liferay.object.field.attachment.AttachmentManager;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -42,26 +40,26 @@ public class EditChatbotDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DisplayContextTestUtil.setUpThemeDisplay(
-			_company, _group, _httpServletRequest);
+		HttpServletRequest httpServletRequest =
+			DisplayContextTestUtil.setUpHttpServletRequest();
 
-		Mockito.when(
-			_httpServletRequest.getParameter("externalReferenceCode")
-		).thenReturn(
-			"L_TEST_CHATBOT"
-		);
+		DisplayContextTestUtil.setUpThemeDisplay(
+			Mockito.mock(Company.class), Mockito.mock(Group.class),
+			httpServletRequest);
 
 		_editChatbotDisplayContext = new EditChatbotDisplayContext(
-			_attachmentManager, _httpServletRequest, _language);
+			Mockito.mock(AttachmentManager.class), httpServletRequest,
+			Mockito.mock(Language.class));
 	}
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_assertReadOnly(true, false);
-		_assertReadOnly(false, true);
+		_testGetReactDataWithReadOnly(true, false);
+		_testGetReactDataWithReadOnly(false, true);
 	}
 
-	private void _assertReadOnly(boolean hasUpdatePermission, boolean readOnly)
+	private void _testGetReactDataWithReadOnly(
+			boolean hasUpdatePermission, boolean readOnly)
 		throws Exception {
 
 		try (MockedStatic<AccountEntryUtil> accountEntryUtilMockedStatic =
@@ -79,10 +77,9 @@ public class EditChatbotDisplayContextTest {
 				null
 			);
 
-			DisplayContextTestUtil.setUpReadOnlyMocks(
+			DisplayContextTestUtil.setGetReactDataMocks(
 				objectDefinitionLocalServiceUtilMockedStatic,
-				objectEntryServiceUtilMockedStatic, _objectDefinition,
-				_objectEntry, hasUpdatePermission);
+				objectEntryServiceUtilMockedStatic, hasUpdatePermission);
 
 			Map<String, Object> reactData =
 				_editChatbotDisplayContext.getReactData();
@@ -91,16 +88,6 @@ public class EditChatbotDisplayContextTest {
 		}
 	}
 
-	private final AttachmentManager _attachmentManager = Mockito.mock(
-		AttachmentManager.class);
-	private final Company _company = Mockito.mock(Company.class);
 	private EditChatbotDisplayContext _editChatbotDisplayContext;
-	private final Group _group = Mockito.mock(Group.class);
-	private final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
-	private final Language _language = Mockito.mock(Language.class);
-	private final ObjectDefinition _objectDefinition = Mockito.mock(
-		ObjectDefinition.class);
-	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
 
 }

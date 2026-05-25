@@ -88,9 +88,7 @@ export default function AsyncPicker<T>({
 }: Props<T>) {
 	const [active, setActive] = useState(false);
 
-	const [value, setValue] = useState(
-		getItemName(items, selectedKey) || placeholder
-	);
+	const value = getItemName(items, selectedKey) || placeholder;
 
 	return (
 		<Picker
@@ -116,17 +114,7 @@ export default function AsyncPicker<T>({
 				setActive(active);
 			}}
 			onBlur={onBlur}
-			onSelectionChange={(selectedKey: React.Key) => {
-				const name = getItemName(items, selectedKey);
-
-				if (name) {
-					setValue(name);
-				}
-
-				if (onSelectionChange) {
-					onSelectionChange(selectedKey);
-				}
-			}}
+			onSelectionChange={onSelectionChange}
 			open={active}
 			placeholder={placeholder}
 			selectedKey={selectedKey ? String(selectedKey) : ''}

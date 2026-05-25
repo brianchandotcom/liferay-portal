@@ -189,11 +189,6 @@ public class FragmentEntryVersionUpgradeProcessTest {
 		_testUpgrade(10, 10, 10, 10);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -202,5 +197,10 @@ public class FragmentEntryVersionUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

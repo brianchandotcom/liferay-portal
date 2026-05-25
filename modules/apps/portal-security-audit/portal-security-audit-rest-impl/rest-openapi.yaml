@@ -1,0 +1,118 @@
+components:
+    schemas:
+        AuditEvent:
+            properties:
+                accountId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                additionalInfo:
+                    additionalProperties: true
+                    readOnly: true
+                    type: object
+                clientHost:
+                    readOnly: true
+                    type: string
+                clientIP:
+                    readOnly: true
+                    type: string
+                contextName:
+                    readOnly: true
+                    type: string
+                creator:
+                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                entityId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                entityType:
+                    readOnly: true
+                    type: string
+                eventType:
+                    readOnly: true
+                    type: string
+                groupId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                serverName:
+                    readOnly: true
+                    type: string
+            type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.portal.security.audit.rest.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Audit
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/audit-events":
+        get:
+            description:
+                Retrieves a paginated list of audit log entries, scoped to the caller's accessible accounts.
+            operationId: getAuditEventsPage
+            parameters:
+                -   in: query
+                    name: accountIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                    type: array
+                -   in: query
+                    name: contextName
+                    schema:
+                        type: string
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: eventType
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEvent"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEvent"
+                                type: array
+            tags: ["AuditEvent"]

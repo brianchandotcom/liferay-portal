@@ -44,7 +44,7 @@ public class SegmentsEntrySegmentsCriteriaContributor
 	public static final String KEY = "segments";
 
 	@Override
-	public void contribute(
+	public void contributeForMemberLookup(
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction) {
 

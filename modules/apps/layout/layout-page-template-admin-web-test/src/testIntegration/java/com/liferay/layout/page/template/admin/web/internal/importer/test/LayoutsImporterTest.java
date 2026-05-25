@@ -2301,7 +2301,7 @@ public class LayoutsImporterTest {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		ContentLayoutTestUtil.publishLayout(
-			_layoutLocalService.updateStyleBookEntryERC(
+			_layoutLocalService.updateStyleBookEntry(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 				draftLayout.getLayoutId(), styleBookEntryERC, null),
 			layout);

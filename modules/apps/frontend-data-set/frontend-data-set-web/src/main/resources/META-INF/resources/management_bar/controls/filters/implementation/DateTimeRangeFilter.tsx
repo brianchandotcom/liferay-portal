@@ -230,10 +230,10 @@ function toViewerWallClock(dateParts: DateParts): DateParts {
 
 	const offsetMinutes = parseOffsetMinutes(dateParts.offset);
 
-	const instantMs = datePartsToInstantMs(dateParts) - offsetMinutes * 60_000;
+	const utcMs = datePartsToUTCMs(dateParts) - offsetMinutes * 60_000;
 
 	return extractDatePartsInTimeZone(
-		new Date(instantMs),
+		new Date(utcMs),
 		Liferay.ThemeDisplay.getTimeZone()
 	);
 }
@@ -264,7 +264,7 @@ function resolveBound(bound?: Bound): DateParts | undefined {
 	return dateParts;
 }
 
-function datePartsToInstantMs(dateParts: DateParts): number {
+function datePartsToUTCMs(dateParts: DateParts): number {
 	return Date.UTC(
 		dateParts.year,
 		dateParts.month - 1,
@@ -283,17 +283,17 @@ export function isWithinBounds(
 		return true;
 	}
 
-	const datePartsMs = datePartsToInstantMs(dateParts);
+	const datePartsUTCMs = datePartsToUTCMs(dateParts);
 
 	const resolvedMin = resolveBound(min);
 
-	if (resolvedMin && datePartsMs < datePartsToInstantMs(resolvedMin)) {
+	if (resolvedMin && datePartsUTCMs < datePartsToUTCMs(resolvedMin)) {
 		return false;
 	}
 
 	const resolvedMax = resolveBound(max);
 
-	if (resolvedMax && datePartsMs > datePartsToInstantMs(resolvedMax)) {
+	if (resolvedMax && datePartsUTCMs > datePartsToUTCMs(resolvedMax)) {
 		return false;
 	}
 
@@ -325,7 +325,7 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 function computeOffsetForDateParts(dateParts: DateParts): string {
 	return getTimeZoneOffset(
 		Liferay.ThemeDisplay.getTimeZone(),
-		new Date(datePartsToInstantMs(dateParts))
+		new Date(datePartsToUTCMs(dateParts))
 	);
 }
 
@@ -344,7 +344,7 @@ function datePartsToOdataDateTime(dateParts: DateParts): string {
 	}
 
 	const utcDate = new Date(
-		datePartsToInstantMs(dateParts) - offsetMinutes * 60_000
+		datePartsToUTCMs(dateParts) - offsetMinutes * 60_000
 	);
 
 	return `${utcDate.getUTCFullYear()}-${pad2(
@@ -490,8 +490,8 @@ const DateTimeRangeFilter = ({
 	const isValidRange =
 		!fromDateParts ||
 		!toDateParts ||
-		datePartsToInstantMs(fromDateParts) <=
-			datePartsToInstantMs(toDateParts);
+		datePartsToUTCMs(fromDateParts) <=
+			datePartsToUTCMs(toDateParts);
 
 	const fromOutOfBounds = isWithinBounds(fromDateParts, min, max) === false;
 	const toOutOfBounds = isWithinBounds(toDateParts, min, max) === false;

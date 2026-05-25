@@ -42,7 +42,7 @@ export default function WritingAssistantActions({
 					type: EActionType.TRANSLATE_TO,
 				},
 			],
-			name: Liferay.Language.get('suggested'),
+			name: Liferay.Language.get('ai-writing-tools'),
 		},
 		{
 			children: [
@@ -65,7 +65,7 @@ export default function WritingAssistantActions({
 					type: EActionType.CHANGE_TONE,
 				},
 			],
-			name: Liferay.Language.get('edit'),
+			name: Liferay.Language.get('edit-with-ai'),
 		},
 	];
 

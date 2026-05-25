@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContentLabel rendering default 1`] = `
-<span
-  className="label label-inverse-secondary"
->
-  <span
-    className="label-item label-item-expand"
-  >
-    Default Content Label
-  </span>
-</span>
-`;
-
 exports[`ContentLabel rendering renders as closable 1`] = `
 <span
   className="label label-dismissible label-inverse-content-1"

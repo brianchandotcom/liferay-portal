@@ -19,12 +19,14 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 
 	return (
 		<>
-			<div className='criteria-builder-clear-all mt-5 text-center'>
+			<div className='criteria-builder-clear-all mt-4 text-center'>
 				<ClayButton
-					displayType='unstyled'
+					borderless
+					displayType='secondary'
 					onClick={() => onOpenChange(true)}
+					size='sm'
 				>
-					<Text color='secondary' weight='semi-bold'>
+					<Text weight='semi-bold'>
 						<ClayIcon className='mr-2' symbol='times-circle' />
 
 						{Liferay.Language.get('clear-all')}
@@ -63,7 +65,7 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 									displayType='warning'
 									onClick={handleConfirm}
 								>
-									{Liferay.Language.get('clear-all')}
+									{Liferay.Language.get('continue')}
 								</ClayButton>
 							</ClayButton.Group>
 						}

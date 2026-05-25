@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.notification.internal.util;
+package com.liferay.commerce.notification.internal;
 
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
+import com.liferay.commerce.notification.CommerceNotificationSender;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.util.CommerceNotificationHelper;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.order.CommerceDefinitionTermContributorRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -43,9 +43,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = CommerceNotificationHelper.class)
-public class CommerceNotificationHelperImpl
-	implements CommerceNotificationHelper {
+@Component(service = CommerceNotificationSender.class)
+public class CommerceNotificationSenderImpl
+	implements CommerceNotificationSender {
 
 	@Override
 	public void sendNotifications(
@@ -327,7 +327,7 @@ public class CommerceNotificationHelperImpl
 	private static final int _FIELD_TO = 3;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceNotificationHelperImpl.class);
+		CommerceNotificationSenderImpl.class);
 
 	private static final Pattern _placeholderPattern = Pattern.compile(
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);

@@ -4,29 +4,25 @@
  */
 
 import {sessionStorage} from 'frontend-js-web';
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import {PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY} from './sessionKeys';
 
-// An iframe embed can fail silently — no JS error fires. We infer failure
-// from `onLoad` timing:
-//
-// - Header block (X-Frame-Options, frame-ancestors): the browser shows
-//   `chrome-error://` as soon as response headers arrive and fires `onLoad`
-//   under 600 ms — well below a real page, which must also load body and
-//   subresources.
-// - Unreachable URL (dead DNS, no response): `onLoad` never fires; the
-//   timeout catches it.
+// Iframes can fail silently (no JS error fires). We detect failures via
+// `onLoad` timing: header-blocked iframes (X-Frame-Options) fire `onLoad`
+// in <600ms with `chrome-error://`; unreachable URLs never fire `onLoad`,
+// so we also need a timeout.
 
 const IFRAME_LOAD_BLOCKED_MS = 600;
 const IFRAME_LOAD_TIMEOUT_MS = 8000;
+
+type Status = 'error' | 'idle' | 'loaded' | 'loading';
 
 export default function useIframeLoad(
 	previewURL: string | undefined,
 	isExternalURL: boolean
 ) {
-	const [iframeError, setIframeError] = useState<boolean>(false);
-	const [isIframeLoading, setIsIframeLoading] = useState<boolean>(false);
+	const [status, setStatus] = useState<Status>('idle');
 	const [iframeKey, setIframeKey] = useState<number>(0);
 
 	const cachedURL = sessionStorage.getItem(
@@ -38,42 +34,26 @@ export default function useIframeLoad(
 		new Set(cachedURL ? [cachedURL] : [])
 	);
 	const loadStartRef = useRef<number>(0);
-	const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	const clearLoadTimeout = () => {
-		if (loadTimeoutRef.current === null) {
-			return;
-		}
-
-		clearTimeout(loadTimeoutRef.current);
-
-		loadTimeoutRef.current = null;
-	};
-
-	useLayoutEffect(() => {
-		setIframeError(false);
-
+	useEffect(() => {
 		if (!previewURL) {
-			setIsIframeLoading(false);
+			setStatus('idle');
 
 			return;
 		}
 
-		setIsIframeLoading(true);
+		setStatus('loading');
 
 		loadStartRef.current = performance.now();
 
-		loadTimeoutRef.current = setTimeout(() => {
-			setIframeError(true);
-			setIsIframeLoading(false);
+		const timeoutId = setTimeout(() => {
+			setStatus((current) => (current === 'loading' ? 'error' : current));
 		}, IFRAME_LOAD_TIMEOUT_MS);
 
-		return clearLoadTimeout;
+		return () => clearTimeout(timeoutId);
 	}, [iframeKey, previewURL]);
 
 	const handleIframeLoad = () => {
-		clearLoadTimeout();
-
 		if (isExternalURL && previewURL) {
 			const loadTime = performance.now() - loadStartRef.current;
 
@@ -87,11 +67,13 @@ export default function useIframeLoad(
 				);
 			}
 			else if (!cachedURLsRef.current.has(previewURL)) {
-				setIframeError(true);
+				setStatus('error');
+
+				return;
 			}
 		}
 
-		setIsIframeLoading(false);
+		setStatus((current) => (current === 'loading' ? 'loaded' : current));
 	};
 
 	const reloadIframe = () => {
@@ -100,9 +82,9 @@ export default function useIframeLoad(
 
 	return {
 		handleIframeLoad,
-		iframeError,
+		iframeError: status === 'error',
 		iframeKey,
-		isIframeLoading,
+		isIframeLoading: status === 'loading',
 		reloadIframe,
 	};
 }

@@ -7,7 +7,7 @@ package com.liferay.commerce.internal.messaging;
 
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
-import com.liferay.commerce.notification.util.CommerceNotificationHelper;
+import com.liferay.commerce.notification.CommerceNotificationSender;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
@@ -49,7 +49,7 @@ public class CommerceSubscriptionStatusMessageListener
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceSubscriptionEntry.getGroupId());
 
-		_commerceNotificationHelper.sendNotifications(
+		_commerceNotificationSender.sendNotifications(
 			commerceChannel.getSiteGroupId(),
 			commerceSubscriptionEntry.getUserId(),
 			CommerceSubscriptionNotificationConstants.getNotificationKey(
@@ -61,7 +61,7 @@ public class CommerceSubscriptionStatusMessageListener
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceNotificationHelper _commerceNotificationHelper;
+	private CommerceNotificationSender _commerceNotificationSender;
 
 	@Reference
 	private CommerceSubscriptionEntryLocalService

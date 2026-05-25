@@ -847,14 +847,22 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				"2023-06-01 06:42:08.0", MapUtil.getString(values, "time"));
 
+			_assertWebhookObjectAction(
+				"2000-12-25T00:00:00.000Z", "Peter", "White",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				_objectDefinition, "João", "o Discípulo Amado",
+				WorkflowConstants.STATUS_APPROVED);
+
 			// Execute standalone system action to update the current object
 			// entry
+
+			String firstName = RandomTestUtil.randomString();
 
 			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 				objectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomTestUtil.randomString()
+					"firstName", firstName
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
@@ -871,6 +879,12 @@ public class ObjectActionLocalServiceTest {
 				objectEntry.getObjectEntryId());
 
 			Assert.assertEquals("Jack", MapUtil.getString(values, "firstName"));
+
+			_assertWebhookObjectAction(
+				"2000-12-25T00:00:00.000Z", "Jack", "White",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				_objectDefinition, firstName, "White",
+				WorkflowConstants.STATUS_APPROVED);
 
 			// Delete object entry
 

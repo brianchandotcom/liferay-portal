@@ -128,52 +128,25 @@ public class StyleBookEntryProviderUtilTest {
 		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
 			_group.getGroupId());
 
-		_layout.setStyleBookEntryERC(
-			siteStyleBookEntry.getExternalReferenceCode());
-
-		_layout = _layoutLocalService.updateLayout(_layout);
-
-		StyleBookEntry actualStyleBookEntry =
-			StyleBookEntryProviderUtil.getStyleBookEntry(_layout);
-
-		Assert.assertEquals(
-			siteStyleBookEntry.getStyleBookEntryId(),
-			actualStyleBookEntry.getStyleBookEntryId());
+		_testGetStyleBookEntry(
+			siteStyleBookEntry, siteStyleBookEntry.getExternalReferenceCode(),
+			null);
 
 		Group group = GroupTestUtil.addGroup();
 
-		_layout.setStyleBookEntryERC(RandomTestUtil.randomString());
-		_layout.setStyleBookEntryScopeERC(group.getExternalReferenceCode());
+		_testGetStyleBookEntry(
+			null, RandomTestUtil.randomString(),
+			group.getExternalReferenceCode());
 
-		_layout = _layoutLocalService.updateLayout(_layout);
-
-		Assert.assertNull(
-			StyleBookEntryProviderUtil.getStyleBookEntry(_layout));
-
-		StyleBookEntry depotStyleBookEntry = _addStyleBookEntry(
+		StyleBookEntry groupStyleBookEntry = _addStyleBookEntry(
 			group.getGroupId());
 
-		_layout.setStyleBookEntryERC(
-			depotStyleBookEntry.getExternalReferenceCode());
+		_testGetStyleBookEntry(
+			groupStyleBookEntry, groupStyleBookEntry.getExternalReferenceCode(),
+			group.getExternalReferenceCode());
 
-		_layout.setStyleBookEntryScopeERC(group.getExternalReferenceCode());
-
-		_layout = _layoutLocalService.updateLayout(_layout);
-
-		actualStyleBookEntry = StyleBookEntryProviderUtil.getStyleBookEntry(
-			_layout);
-
-		Assert.assertEquals(
-			depotStyleBookEntry.getStyleBookEntryId(),
-			actualStyleBookEntry.getStyleBookEntryId());
-
-		_layout.setStyleBookEntryERC(RandomTestUtil.randomString());
-		_layout.setStyleBookEntryScopeERC(RandomTestUtil.randomString());
-
-		_layout = _layoutLocalService.updateLayout(_layout);
-
-		Assert.assertNull(
-			StyleBookEntryProviderUtil.getStyleBookEntry(_layout));
+		_testGetStyleBookEntry(
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	private StyleBookEntry _addStyleBookEntry(long groupId) throws Exception {
@@ -196,6 +169,30 @@ public class StyleBookEntryProviderUtilTest {
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		return _addStyleBookEntry(depotGroup.getGroupId());
+	}
+
+	private void _testGetStyleBookEntry(
+			StyleBookEntry expectedStyleBookEntry, String styleBookEntryERC,
+			String styleBookEntryScopeERC)
+		throws Exception {
+
+		_layout.setStyleBookEntryERC(styleBookEntryERC);
+		_layout.setStyleBookEntryScopeERC(styleBookEntryScopeERC);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		StyleBookEntry actualStyleBookEntry =
+			StyleBookEntryProviderUtil.getStyleBookEntry(_layout);
+
+		if (expectedStyleBookEntry == null) {
+			Assert.assertNull(actualStyleBookEntry);
+
+			return;
+		}
+
+		Assert.assertEquals(
+			expectedStyleBookEntry.getStyleBookEntryId(),
+			actualStyleBookEntry.getStyleBookEntryId());
 	}
 
 	@Inject

@@ -9,6 +9,7 @@
 				"hooks": [
 					{
 						"command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/worktree-create.sh",
+						"timeout": 1800,
 						"type": "command"
 					}
 				]

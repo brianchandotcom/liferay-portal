@@ -115,10 +115,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntryTest {
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		User user = UserTestUtil.addUser();
-
 		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
@@ -137,8 +135,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntryTest {
 						user)));
 		}
 		finally {
-			_userLocalService.deleteUser(user);
 			_roleLocalService.deleteRole(roleId);
+			_userLocalService.deleteUser(user);
 		}
 	}
 

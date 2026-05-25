@@ -114,6 +114,16 @@ public class WorkflowTaskSerDes {
 			sb.append(workflowTask.getCompleted());
 		}
 
+		if (workflowTask.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(workflowTask.getCreator()));
+		}
+
 		if (workflowTask.getDateCompletion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -352,6 +362,13 @@ public class WorkflowTaskSerDes {
 			map.put("completed", String.valueOf(workflowTask.getCompleted()));
 		}
 
+		if (workflowTask.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(workflowTask.getCreator()));
+		}
+
 		if (workflowTask.getDateCompletion() == null) {
 			map.put("dateCompletion", null);
 		}
@@ -495,6 +512,9 @@ public class WorkflowTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "completed")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
 				return false;
 			}
@@ -587,6 +607,12 @@ public class WorkflowTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "completed")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setCompleted((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
@@ -764,4 +790,4 @@ public class WorkflowTaskSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:199526033
+// LIFERAY-REST-BUILDER-HASH:979929558

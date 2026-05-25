@@ -63,10 +63,10 @@ public class StyleBookEntryProviderUtilTest {
 	public void testGetStyleBookEntriesExcludesConnectedDepotEntryStyleBookEntries()
 		throws Exception {
 
-		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
-			_group.getGroupId());
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
-		StyleBookEntry depotStyleBookEntry = _getDepotEntryStyleBookEntry();
+		StyleBookEntry depotEntryStyleBookEntry =
+			_getDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -74,10 +74,10 @@ public class StyleBookEntryProviderUtilTest {
 
 		Assert.assertFalse(
 			styleBookEntries.toString(),
-			styleBookEntries.contains(depotStyleBookEntry));
+			styleBookEntries.contains(depotEntryStyleBookEntry));
 		Assert.assertTrue(
 			styleBookEntries.toString(),
-			styleBookEntries.contains(siteStyleBookEntry));
+			styleBookEntries.contains(styleBookEntry));
 	}
 
 	@FeatureFlags(
@@ -88,10 +88,10 @@ public class StyleBookEntryProviderUtilTest {
 	public void testGetStyleBookEntriesIncludesConnectedDepotEntryStyleBookEntries()
 		throws Exception {
 
-		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
-			_group.getGroupId());
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
-		StyleBookEntry depotStyleBookEntry = _getDepotEntryStyleBookEntry();
+		StyleBookEntry depotEntryStyleBookEntry =
+			_getDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -99,10 +99,10 @@ public class StyleBookEntryProviderUtilTest {
 
 		Assert.assertTrue(
 			styleBookEntries.toString(),
-			styleBookEntries.contains(depotStyleBookEntry));
+			styleBookEntries.contains(depotEntryStyleBookEntry));
 		Assert.assertTrue(
 			styleBookEntries.toString(),
-			styleBookEntries.contains(siteStyleBookEntry));
+			styleBookEntries.contains(styleBookEntry));
 	}
 
 	@Test
@@ -110,8 +110,7 @@ public class StyleBookEntryProviderUtilTest {
 	public void testGetStyleBookEntriesReturnsGroupStyleBookEntries()
 		throws Exception {
 
-		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
-			_group.getGroupId());
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -119,18 +118,16 @@ public class StyleBookEntryProviderUtilTest {
 
 		Assert.assertTrue(
 			styleBookEntries.toString(),
-			styleBookEntries.contains(siteStyleBookEntry));
+			styleBookEntries.contains(styleBookEntry));
 	}
 
 	@Test
 	@TestInfo("LPD-88081")
 	public void testGetStyleBookEntry() throws Exception {
-		StyleBookEntry siteStyleBookEntry = _addStyleBookEntry(
-			_group.getGroupId());
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
 		_testGetStyleBookEntry(
-			siteStyleBookEntry, siteStyleBookEntry.getExternalReferenceCode(),
-			null);
+			styleBookEntry, styleBookEntry.getExternalReferenceCode(), null);
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -163,12 +160,12 @@ public class StyleBookEntryProviderUtilTest {
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Group depotGroup = depotEntry.getGroup();
+		Group depotEntryGroup = depotEntry.getGroup();
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
-		return _addStyleBookEntry(depotGroup.getGroupId());
+		return _addStyleBookEntry(depotEntryGroup.getGroupId());
 	}
 
 	private void _testGetStyleBookEntry(

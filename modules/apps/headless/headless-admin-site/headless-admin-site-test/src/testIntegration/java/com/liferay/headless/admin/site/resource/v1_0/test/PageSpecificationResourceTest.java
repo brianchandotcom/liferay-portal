@@ -1229,17 +1229,18 @@ public class PageSpecificationResourceTest
 
 		Settings settings = SettingsTestUtil.getSettings(pageSpecification);
 
-		Scope scope = new Scope();
-
-		scope.setExternalReferenceCode(
-			irrelevantGroup.getExternalReferenceCode());
-
 		ItemExternalReference itemExternalReference =
 			new ItemExternalReference();
 
 		itemExternalReference.setExternalReferenceCode(
 			styleBookEntry.getExternalReferenceCode());
-		itemExternalReference.setScope(scope);
+		itemExternalReference.setScope(
+			new Scope() {
+				{
+					setExternalReferenceCode(
+						irrelevantGroup.getExternalReferenceCode());
+				}
+			});
 
 		settings.setStyleBookItemExternalReference(itemExternalReference);
 
@@ -1259,9 +1260,9 @@ public class PageSpecificationResourceTest
 			irrelevantGroup.getExternalReferenceCode(),
 			updatedDraftLayout.getStyleBookEntryScopeERC());
 
-		String unresolvableScopeERC = RandomTestUtil.randomString();
+		Scope scope = itemExternalReference.getScope();
 
-		scope.setExternalReferenceCode(unresolvableScopeERC);
+		scope.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		pageSpecificationResource.putSitePageSpecification(
 			testGroup.getExternalReferenceCode(),
@@ -1271,7 +1272,7 @@ public class PageSpecificationResourceTest
 			draftLayout.getPlid());
 
 		Assert.assertEquals(
-			unresolvableScopeERC,
+			scope.getExternalReferenceCode(),
 			updatedDraftLayout.getStyleBookEntryScopeERC());
 	}
 

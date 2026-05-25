@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "2",
+					"label": "Item Count",
+					"name": "itemCount",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

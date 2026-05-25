@@ -13,6 +13,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServer
 import com.liferay.oauth.client.persistence.exception.OAuthClientEntryOIDCUserInfoMapperJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OAuthClientTestUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -143,6 +144,15 @@ public class OAuthClientEntryLocalServiceTest {
 				JSONUtil.put(
 					"user", JSONUtil.put("emailAddress", "")
 				).toString(),
+				_tokenRequestParametersJSON));
+
+		OAuthClientTestUtil.assertNoCookieWarnings(
+			"/.well-known/openid-configuration",
+			serverURL -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
+				serverURL, _CUSTOM_CLAIMS_JSON, _infoJSON, "email",
+				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
 	}
 

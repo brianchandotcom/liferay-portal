@@ -82,11 +82,11 @@ public class ViewContentRetrieversDisplayContextTest {
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
 			"/o/ai-hub/content-retrievers/by-external-reference-code" +
-				"/{externalReferenceCode}/object-actions/crawl",
+				"/{externalReferenceCode}/object-actions/crawler",
 			"reload", "put", "sync-now", "put", "async");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2),
-			"/o/ai-hub/content-retrievers/by-external-reference-code" +
+			"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
 		_assertFDSActionDropdownItem(

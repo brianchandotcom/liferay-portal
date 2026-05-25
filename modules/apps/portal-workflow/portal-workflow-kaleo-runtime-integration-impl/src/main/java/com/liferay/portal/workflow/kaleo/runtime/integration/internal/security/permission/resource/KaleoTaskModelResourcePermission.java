@@ -65,6 +65,12 @@ public class KaleoTaskModelResourcePermission
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, String actionId)
 		throws PortalException {
 
+		if (kaleoTaskInstanceToken.getCompanyId() !=
+				permissionChecker.getCompanyId()) {
+
+			return false;
+		}
+
 		WorkflowTask workflowTask = _kaleoWorkflowModelConverter.toWorkflowTask(
 			kaleoTaskInstanceToken,
 			WorkflowContextUtil.convert(

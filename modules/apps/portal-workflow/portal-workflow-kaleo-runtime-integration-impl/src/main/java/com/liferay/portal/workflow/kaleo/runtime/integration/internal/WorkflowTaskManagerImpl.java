@@ -124,6 +124,15 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				ActionKeys.VIEW);
 		}
 
+		User assigneeUser = _userLocalService.fetchUser(assigneeUserId);
+
+		if ((assigneeUser == null) ||
+			(assigneeUser.getCompanyId() != companyId)) {
+
+			throw new PrincipalException.MustHavePermission(
+				userId, User.class.getName(), assigneeUserId, ActionKeys.VIEW);
+		}
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);

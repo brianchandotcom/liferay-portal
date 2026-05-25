@@ -616,4 +616,4 @@ public class ERCGroupEntryModelImpl
 	private ERCGroupEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:122836118
+// LIFERAY-SERVICE-BUILDER-HASH:-1001734356

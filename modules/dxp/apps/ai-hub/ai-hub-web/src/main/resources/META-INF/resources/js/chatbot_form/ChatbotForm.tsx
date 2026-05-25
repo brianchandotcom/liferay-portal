@@ -571,9 +571,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<label htmlFor="companyLogo">
-											{Liferay.Language.get(
-												'company-logo'
-											)}
+											{Liferay.Language.get('avatar')}
 										</label>
 
 										<div className="chatbot-company-logo">
@@ -583,7 +581,7 @@ export default function ChatbotForm({
 														'select-x'
 													),
 													Liferay.Language.get(
-														'company-logo'
+														'avatar'
 													)
 												)}
 												disabled={
@@ -768,7 +766,7 @@ export default function ChatbotForm({
 									<ClayToggle
 										disabled={readOnly}
 										label={Liferay.Language.get(
-											'show-company-logo'
+											'show-avatar'
 										)}
 										onBlur={(
 											event: React.FocusEvent<HTMLInputElement>

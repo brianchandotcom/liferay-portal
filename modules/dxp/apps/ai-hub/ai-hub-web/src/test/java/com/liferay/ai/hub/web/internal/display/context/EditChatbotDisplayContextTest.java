@@ -54,11 +54,11 @@ public class EditChatbotDisplayContextTest {
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_testGetReactDataWithReadOnly(true, false);
-		_testGetReactDataWithReadOnly(false, true);
+		_testGetReactData(true, false);
+		_testGetReactData(false, true);
 	}
 
-	private void _testGetReactDataWithReadOnly(
+	private void _testGetReactData(
 			boolean hasUpdatePermission, boolean readOnly)
 		throws Exception {
 

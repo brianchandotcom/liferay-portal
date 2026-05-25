@@ -41,9 +41,11 @@ public class EditAgentDefinitionDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(_portal);
+		Mockito.when(
+			_groupLocalService.getGroup(1L)
+		).thenReturn(
+			_group
+		);
 
 		HttpServletRequest httpServletRequest =
 			DisplayContextTestUtil.setUpHttpServletRequest();
@@ -51,11 +53,9 @@ public class EditAgentDefinitionDisplayContextTest {
 		DisplayContextTestUtil.setUpThemeDisplay(
 			Mockito.mock(Company.class), _group, httpServletRequest);
 
-		Mockito.when(
-			_groupLocalService.getGroup(1L)
-		).thenReturn(
-			_group
-		);
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
 
 		Mockito.when(
 			_portal.getCurrentURL(httpServletRequest)
@@ -88,11 +88,11 @@ public class EditAgentDefinitionDisplayContextTest {
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_testGetReactDataWithReadOnly(true, false);
-		_testGetReactDataWithReadOnly(false, true);
+		_testGetReactData(true, false);
+		_testGetReactData(false, true);
 	}
 
-	private void _testGetReactDataWithReadOnly(
+	private void _testGetReactData(
 			boolean hasUpdatePermission, boolean readOnly)
 		throws Exception {
 

@@ -75,6 +75,18 @@ public class DisplayContextTestUtil {
 			Company company, Group group, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		Mockito.when(
+			company.getPortalURL(Mockito.anyLong())
+		).thenReturn(
+			"http://localhost:8080"
+		);
+
+		Mockito.when(
+			group.getFriendlyURL()
+		).thenReturn(
+			"/test"
+		);
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -111,18 +123,6 @@ public class DisplayContextTestUtil {
 			themeDisplay.getUserId()
 		).thenReturn(
 			1L
-		);
-
-		Mockito.when(
-			company.getPortalURL(Mockito.anyLong())
-		).thenReturn(
-			"http://localhost:8080"
-		);
-
-		Mockito.when(
-			group.getFriendlyURL()
-		).thenReturn(
-			"/test"
 		);
 	}
 

@@ -1639,4 +1639,4 @@ public class CPDefinitionVirtualSettingModelImpl
 	private CPDefinitionVirtualSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1514796714
+// LIFERAY-SERVICE-BUILDER-HASH:-785544758

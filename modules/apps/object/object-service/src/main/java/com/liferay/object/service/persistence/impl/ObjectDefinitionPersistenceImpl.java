@@ -2695,16 +2695,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectDefinition::getUuid));
@@ -2732,16 +2722,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectDefinition::getUuid),
@@ -2772,16 +2752,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId));
@@ -2811,16 +2781,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "objectFolderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2852,16 +2812,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "accountEntryRestricted",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2902,16 +2852,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectDefinition::isSystem));
@@ -2939,16 +2879,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3015,16 +2945,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3059,16 +2979,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectDefinition::isSystem),
@@ -3106,16 +3016,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3156,16 +3056,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3210,16 +3100,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3281,16 +3161,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3401,4 +3271,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1781816132
+// LIFERAY-SERVICE-BUILDER-HASH:-265858690

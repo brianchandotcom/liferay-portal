@@ -558,4 +558,4 @@ public class RSVEntryModelImpl
 	private RSVEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2015811482
+// LIFERAY-SERVICE-BUILDER-HASH:251497688

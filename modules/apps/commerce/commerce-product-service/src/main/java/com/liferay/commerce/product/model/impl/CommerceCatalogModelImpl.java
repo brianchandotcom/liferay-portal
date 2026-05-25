@@ -103,6 +103,8 @@ public class CommerceCatalogModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceCatalog";
 
+	public static final String FILTER_PK_COLUMN_NAME = "commerceCatalogId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceCatalog.createDate DESC";
 
@@ -1183,4 +1185,4 @@ public class CommerceCatalogModelImpl
 	private CommerceCatalog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524279874
+// LIFERAY-SERVICE-BUILDER-HASH:-192706666

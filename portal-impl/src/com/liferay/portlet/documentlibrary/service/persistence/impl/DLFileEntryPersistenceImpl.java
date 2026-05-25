@@ -3360,15 +3360,6 @@ public class DLFileEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
-					"DLFileEntry", "dlFileEntry.fileEntryId",
-					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
-					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
-					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
-					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
-					DLFileEntryModelImpl.ORDER_BY_SQL,
-					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId));
@@ -3604,15 +3595,6 @@ public class DLFileEntryPersistenceImpl
 					new String[] {"groupId", "userId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
-					"DLFileEntry", "dlFileEntry.fileEntryId",
-					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
-					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
-					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
-					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
-					DLFileEntryModelImpl.ORDER_BY_SQL,
-					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId),
@@ -3641,15 +3623,6 @@ public class DLFileEntryPersistenceImpl
 					new String[] {"groupId", "folderId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
-					"DLFileEntry", "dlFileEntry.fileEntryId",
-					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
-					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
-					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
-					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
-					DLFileEntryModelImpl.ORDER_BY_SQL,
-					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId),
@@ -3739,15 +3712,6 @@ public class DLFileEntryPersistenceImpl
 					new String[] {"groupId", "userId", "folderId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
-					"DLFileEntry", "dlFileEntry.fileEntryId",
-					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
-					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
-					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
-					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
-					DLFileEntryModelImpl.ORDER_BY_SQL,
-					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId),
@@ -3855,15 +3819,6 @@ public class DLFileEntryPersistenceImpl
 					false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
-					"DLFileEntry", "dlFileEntry.fileEntryId",
-					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
-					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
-					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
-					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
-					DLFileEntryModelImpl.ORDER_BY_SQL,
-					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId),
@@ -4018,4 +3973,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1390330507
+// LIFERAY-SERVICE-BUILDER-HASH:842590915

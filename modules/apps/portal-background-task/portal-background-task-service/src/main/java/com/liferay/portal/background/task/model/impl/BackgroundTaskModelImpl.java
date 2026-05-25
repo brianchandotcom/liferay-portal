@@ -1186,4 +1186,4 @@ public class BackgroundTaskModelImpl
 	private BackgroundTask _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-773409600
+// LIFERAY-SERVICE-BUILDER-HASH:2064778570

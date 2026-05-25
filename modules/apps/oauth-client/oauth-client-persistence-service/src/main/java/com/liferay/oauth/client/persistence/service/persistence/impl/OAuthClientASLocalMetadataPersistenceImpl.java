@@ -1410,18 +1410,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientASLocalMetadataImpl.class,
-					OAuthClientASLocalMetadata.class,
-					"oAuthClientASLocalMetadata", "OAuthClientASLocalMetadata",
-					"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT DISTINCT {oAuthClientASLocalMetadata.*} FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					"SELECT {OAuthClientASLocalMetadata.*} FROM (SELECT DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientASLocalMetadata ON TEMP_TABLE.oAuthClientASLocalMetadataId = OAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT COUNT(DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId) AS COUNT_VALUE FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL,
-					OAuthClientASLocalMetadataModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientASLocalMetadata.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1450,18 +1438,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientASLocalMetadataImpl.class,
-					OAuthClientASLocalMetadata.class,
-					"oAuthClientASLocalMetadata", "OAuthClientASLocalMetadata",
-					"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT DISTINCT {oAuthClientASLocalMetadata.*} FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					"SELECT {OAuthClientASLocalMetadata.*} FROM (SELECT DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientASLocalMetadata ON TEMP_TABLE.oAuthClientASLocalMetadataId = OAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT COUNT(DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId) AS COUNT_VALUE FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL,
-					OAuthClientASLocalMetadataModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientASLocalMetadata.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1494,18 +1470,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientASLocalMetadataImpl.class,
-					OAuthClientASLocalMetadata.class,
-					"oAuthClientASLocalMetadata", "OAuthClientASLocalMetadata",
-					"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT DISTINCT {oAuthClientASLocalMetadata.*} FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					"SELECT {OAuthClientASLocalMetadata.*} FROM (SELECT DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientASLocalMetadata ON TEMP_TABLE.oAuthClientASLocalMetadataId = OAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT COUNT(DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId) AS COUNT_VALUE FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL,
-					OAuthClientASLocalMetadataModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientASLocalMetadata.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1534,18 +1498,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientASLocalMetadataImpl.class,
-					OAuthClientASLocalMetadata.class,
-					"oAuthClientASLocalMetadata", "OAuthClientASLocalMetadata",
-					"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT DISTINCT {oAuthClientASLocalMetadata.*} FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					"SELECT {OAuthClientASLocalMetadata.*} FROM (SELECT DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientASLocalMetadata ON TEMP_TABLE.oAuthClientASLocalMetadataId = OAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT COUNT(DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId) AS COUNT_VALUE FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL,
-					OAuthClientASLocalMetadataModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientASLocalMetadata.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1596,18 +1548,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientASLocalMetadataImpl.class,
-					OAuthClientASLocalMetadata.class,
-					"oAuthClientASLocalMetadata", "OAuthClientASLocalMetadata",
-					"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT DISTINCT {oAuthClientASLocalMetadata.*} FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					"SELECT {OAuthClientASLocalMetadata.*} FROM (SELECT DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientASLocalMetadata ON TEMP_TABLE.oAuthClientASLocalMetadataId = OAuthClientASLocalMetadata.oAuthClientASLocalMetadataId",
-					"SELECT COUNT(DISTINCT oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId) AS COUNT_VALUE FROM OAuthClientASLocalMetadata oAuthClientASLocalMetadata WHERE ",
-					OAuthClientASLocalMetadataModelImpl.ORDER_BY_SQL,
-					OAuthClientASLocalMetadataModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientASLocalMetadata.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1744,4 +1684,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:636456659
+// LIFERAY-SERVICE-BUILDER-HASH:-890849527

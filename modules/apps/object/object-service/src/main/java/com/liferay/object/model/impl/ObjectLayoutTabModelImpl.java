@@ -1174,4 +1174,4 @@ public class ObjectLayoutTabModelImpl
 	private ObjectLayoutTab _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2144920797
+// LIFERAY-SERVICE-BUILDER-HASH:-5299335

@@ -1333,4 +1333,4 @@ public class KaleoTaskAssignmentModelImpl
 	private KaleoTaskAssignment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1921231659
+// LIFERAY-SERVICE-BUILDER-HASH:525705249

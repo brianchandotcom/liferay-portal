@@ -1022,4 +1022,4 @@ public class WorkflowInstanceLinkModelImpl
 	private WorkflowInstanceLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-988638035
+// LIFERAY-SERVICE-BUILDER-HASH:-608944747

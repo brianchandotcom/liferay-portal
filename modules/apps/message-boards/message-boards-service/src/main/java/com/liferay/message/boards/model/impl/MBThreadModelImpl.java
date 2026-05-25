@@ -116,6 +116,8 @@ public class MBThreadModelImpl
 
 	public static final String ENTITY_ALIAS = "mbThread";
 
+	public static final String FILTER_PK_COLUMN_NAME = "threadId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbThread.priority DESC, mbThread.lastPostDate DESC";
 
@@ -1593,4 +1595,4 @@ public class MBThreadModelImpl
 	private MBThread _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-228778548
+// LIFERAY-SERVICE-BUILDER-HASH:-475794538

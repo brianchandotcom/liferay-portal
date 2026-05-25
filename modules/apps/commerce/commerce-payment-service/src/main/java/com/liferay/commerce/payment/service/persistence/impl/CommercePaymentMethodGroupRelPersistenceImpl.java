@@ -684,19 +684,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentMethodGroupRelImpl.class,
-					CommercePaymentMethodGroupRel.class,
-					"commercePaymentMethodGroupRel",
-					"CommercePaymentMethodGroupRel",
-					"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
-					"SELECT DISTINCT {commercePaymentMethodGroupRel.*} FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					"SELECT {CommercePaymentMethodGroupRel.*} FROM (SELECT DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentMethodGroupRel ON TEMP_TABLE.CPaymentMethodGroupRelId = CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
-					"SELECT COUNT(DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId) AS COUNT_VALUE FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL,
-					CommercePaymentMethodGroupRelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentMethodGroupRel.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -729,19 +716,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentMethodGroupRelImpl.class,
-					CommercePaymentMethodGroupRel.class,
-					"commercePaymentMethodGroupRel",
-					"CommercePaymentMethodGroupRel",
-					"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
-					"SELECT DISTINCT {commercePaymentMethodGroupRel.*} FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					"SELECT {CommercePaymentMethodGroupRel.*} FROM (SELECT DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentMethodGroupRel ON TEMP_TABLE.CPaymentMethodGroupRelId = CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
-					"SELECT COUNT(DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId) AS COUNT_VALUE FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
-					CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL,
-					CommercePaymentMethodGroupRelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentMethodGroupRel.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -841,4 +815,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-19210006
+// LIFERAY-SERVICE-BUILDER-HASH:2033920776

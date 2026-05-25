@@ -970,4 +970,4 @@ public class SubscriptionModelImpl
 	private Subscription _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-561592286
+// LIFERAY-SERVICE-BUILDER-HASH:-644205544

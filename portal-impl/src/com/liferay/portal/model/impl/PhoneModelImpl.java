@@ -1184,4 +1184,4 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private Phone _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1187241966
+// LIFERAY-SERVICE-BUILDER-HASH:-1667038236

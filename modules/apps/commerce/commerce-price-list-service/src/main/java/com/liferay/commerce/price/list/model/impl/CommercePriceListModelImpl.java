@@ -121,6 +121,8 @@ public class CommercePriceListModelImpl
 
 	public static final String ENTITY_ALIAS = "commercePriceList";
 
+	public static final String FILTER_PK_COLUMN_NAME = "commercePriceListId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePriceList.displayDate DESC, commercePriceList.createDate DESC, commercePriceList.priority DESC";
 
@@ -1763,4 +1765,4 @@ public class CommercePriceListModelImpl
 	private CommercePriceList _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1991239034
+// LIFERAY-SERVICE-BUILDER-HASH:687482002

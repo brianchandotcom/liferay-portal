@@ -959,4 +959,4 @@ public class TicketModelImpl
 	private Ticket _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1394219312
+// LIFERAY-SERVICE-BUILDER-HASH:1545459266

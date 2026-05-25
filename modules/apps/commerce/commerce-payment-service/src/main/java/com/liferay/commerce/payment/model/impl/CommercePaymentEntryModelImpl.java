@@ -131,6 +131,8 @@ public class CommercePaymentEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "commercePaymentEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME = "commercePaymentEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentEntry.createDate DESC";
 
@@ -1859,4 +1861,4 @@ public class CommercePaymentEntryModelImpl
 	private CommercePaymentEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:165007611
+// LIFERAY-SERVICE-BUILDER-HASH:-1916077100

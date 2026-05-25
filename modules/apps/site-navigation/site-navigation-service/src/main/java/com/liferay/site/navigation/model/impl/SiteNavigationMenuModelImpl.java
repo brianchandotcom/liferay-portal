@@ -103,6 +103,8 @@ public class SiteNavigationMenuModelImpl
 
 	public static final String ENTITY_ALIAS = "siteNavigationMenu";
 
+	public static final String FILTER_PK_COLUMN_NAME = "siteNavigationMenuId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY siteNavigationMenu.siteNavigationMenuId ASC";
 
@@ -1198,4 +1200,4 @@ public class SiteNavigationMenuModelImpl
 	private SiteNavigationMenu _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1603471728
+// LIFERAY-SERVICE-BUILDER-HASH:1280744394

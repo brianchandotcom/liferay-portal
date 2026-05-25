@@ -607,4 +607,4 @@ public class BigDecimalEntryModelImpl
 	private BigDecimalEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-207713386
+// LIFERAY-SERVICE-BUILDER-HASH:568532584

@@ -934,16 +934,6 @@ public class LayoutSetPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetPrototypeImpl.class, LayoutSetPrototype.class,
-					"layoutSetPrototype", "LayoutSetPrototype",
-					"layoutSetPrototype.layoutSetPrototypeId",
-					"SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					"SELECT {LayoutSetPrototype.*} FROM (SELECT DISTINCT layoutSetPrototype.layoutSetPrototypeId FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetPrototype ON TEMP_TABLE.layoutSetPrototypeId = LayoutSetPrototype.layoutSetPrototypeId",
-					"SELECT COUNT(DISTINCT layoutSetPrototype.layoutSetPrototypeId) AS COUNT_VALUE FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetPrototype.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, LayoutSetPrototype::getUuid));
@@ -971,16 +961,6 @@ public class LayoutSetPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetPrototypeImpl.class, LayoutSetPrototype.class,
-					"layoutSetPrototype", "LayoutSetPrototype",
-					"layoutSetPrototype.layoutSetPrototypeId",
-					"SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					"SELECT {LayoutSetPrototype.*} FROM (SELECT DISTINCT layoutSetPrototype.layoutSetPrototypeId FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetPrototype ON TEMP_TABLE.layoutSetPrototypeId = LayoutSetPrototype.layoutSetPrototypeId",
-					"SELECT COUNT(DISTINCT layoutSetPrototype.layoutSetPrototypeId) AS COUNT_VALUE FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetPrototype.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, LayoutSetPrototype::getUuid),
@@ -1011,16 +991,6 @@ public class LayoutSetPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetPrototypeImpl.class, LayoutSetPrototype.class,
-					"layoutSetPrototype", "LayoutSetPrototype",
-					"layoutSetPrototype.layoutSetPrototypeId",
-					"SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					"SELECT {LayoutSetPrototype.*} FROM (SELECT DISTINCT layoutSetPrototype.layoutSetPrototypeId FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetPrototype ON TEMP_TABLE.layoutSetPrototypeId = LayoutSetPrototype.layoutSetPrototypeId",
-					"SELECT COUNT(DISTINCT layoutSetPrototype.layoutSetPrototypeId) AS COUNT_VALUE FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutSetPrototype::getCompanyId));
@@ -1052,16 +1022,6 @@ public class LayoutSetPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetPrototypeImpl.class, LayoutSetPrototype.class,
-					"layoutSetPrototype", "LayoutSetPrototype",
-					"layoutSetPrototype.layoutSetPrototypeId",
-					"SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					"SELECT {LayoutSetPrototype.*} FROM (SELECT DISTINCT layoutSetPrototype.layoutSetPrototypeId FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetPrototype ON TEMP_TABLE.layoutSetPrototypeId = LayoutSetPrototype.layoutSetPrototypeId",
-					"SELECT COUNT(DISTINCT layoutSetPrototype.layoutSetPrototypeId) AS COUNT_VALUE FROM LayoutSetPrototype layoutSetPrototype WHERE ",
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutSetPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutSetPrototype::getCompanyId),
@@ -1102,4 +1062,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1266243381
+// LIFERAY-SERVICE-BUILDER-HASH:844954695

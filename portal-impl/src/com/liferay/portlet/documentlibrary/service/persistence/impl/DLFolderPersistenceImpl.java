@@ -3822,15 +3822,6 @@ public class DLFolderPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId));
@@ -3907,15 +3898,6 @@ public class DLFolderPersistenceImpl
 					new String[] {"groupId", "parentFolderId"}, false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4084,15 +4066,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4205,15 +4178,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4256,15 +4220,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4315,15 +4270,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4382,15 +4328,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4439,15 +4376,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4525,4 +4453,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1428810887
+// LIFERAY-SERVICE-BUILDER-HASH:-1373644865

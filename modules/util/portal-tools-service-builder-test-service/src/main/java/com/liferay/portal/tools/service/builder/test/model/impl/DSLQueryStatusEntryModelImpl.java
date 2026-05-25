@@ -638,4 +638,4 @@ public class DSLQueryStatusEntryModelImpl
 	private DSLQueryStatusEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1469891162
+// LIFERAY-SERVICE-BUILDER-HASH:1159985028

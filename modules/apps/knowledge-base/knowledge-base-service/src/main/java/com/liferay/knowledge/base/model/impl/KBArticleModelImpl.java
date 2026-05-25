@@ -134,6 +134,8 @@ public class KBArticleModelImpl
 
 	public static final String ENTITY_ALIAS = "kbArticle";
 
+	public static final String FILTER_PK_COLUMN_NAME = "resourcePrimKey";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kbArticle.modifiedDate DESC";
 
@@ -2055,4 +2057,4 @@ public class KBArticleModelImpl
 	private KBArticle _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2047249200
+// LIFERAY-SERVICE-BUILDER-HASH:-1495088060

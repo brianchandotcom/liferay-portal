@@ -2104,4 +2104,4 @@ public class FragmentEntryLinkModelImpl
 	private FragmentEntryLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-109082964
+// LIFERAY-SERVICE-BUILDER-HASH:-497871176

@@ -1337,18 +1337,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1377,18 +1365,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1421,18 +1397,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1465,18 +1429,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1512,18 +1464,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1572,18 +1512,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1688,4 +1616,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-61728932
+// LIFERAY-SERVICE-BUILDER-HASH:2111252276

@@ -1778,15 +1778,6 @@ public class COREntryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, COREntry::getUuid));
@@ -1812,15 +1803,6 @@ public class COREntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, COREntry::getUuid),
@@ -1853,15 +1835,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "active_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1887,15 +1860,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1923,15 +1887,6 @@ public class COREntryPersistenceImpl
 					new String[] {"displayDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "displayDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getDisplayDate),
@@ -1959,15 +1914,6 @@ public class COREntryPersistenceImpl
 					new String[] {"expirationDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "expirationDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getExpirationDate),
@@ -1999,15 +1945,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "active_", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -2103,4 +2040,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:10518695
+// LIFERAY-SERVICE-BUILDER-HASH:1061085825

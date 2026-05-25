@@ -111,6 +111,8 @@ public class CommerceShipmentModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceShipment";
 
+	public static final String FILTER_PK_COLUMN_NAME = "commerceShipmentId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShipment.createDate DESC";
 
@@ -1374,4 +1376,4 @@ public class CommerceShipmentModelImpl
 	private CommerceShipment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1982044209
+// LIFERAY-SERVICE-BUILDER-HASH:836503292

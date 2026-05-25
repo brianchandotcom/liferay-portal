@@ -947,15 +947,6 @@ public class JournalFeedPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalFeedImpl.class, JournalFeed.class, "journalFeed",
-					"JournalFeed", "journalFeed.id_",
-					"SELECT DISTINCT {journalFeed.*} FROM JournalFeed journalFeed WHERE ",
-					"SELECT {JournalFeed.*} FROM (SELECT DISTINCT journalFeed.id_ FROM JournalFeed journalFeed WHERE ",
-					") TEMP_TABLE INNER JOIN JournalFeed ON TEMP_TABLE.id_ = JournalFeed.id_",
-					"SELECT COUNT(DISTINCT journalFeed.id_) AS COUNT_VALUE FROM JournalFeed journalFeed WHERE ",
-					JournalFeedModelImpl.ORDER_BY_SQL,
-					JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalFeed.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getGroupId));
@@ -1048,4 +1039,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-103124819
+// LIFERAY-SERVICE-BUILDER-HASH:-1471759049

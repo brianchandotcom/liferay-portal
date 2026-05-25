@@ -1128,16 +1128,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId));
@@ -1165,16 +1155,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1209,16 +1189,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1249,16 +1219,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1293,16 +1253,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1340,16 +1290,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1426,4 +1366,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1278515785
+// LIFERAY-SERVICE-BUILDER-HASH:742154633

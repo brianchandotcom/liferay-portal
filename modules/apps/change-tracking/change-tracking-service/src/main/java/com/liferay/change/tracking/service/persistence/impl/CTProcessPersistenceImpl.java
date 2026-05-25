@@ -680,15 +680,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCompanyId));
@@ -716,15 +707,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId));
@@ -754,15 +736,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"ctCollectionId", "type_"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId),
@@ -836,4 +809,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2139897132
+// LIFERAY-SERVICE-BUILDER-HASH:-1985385828

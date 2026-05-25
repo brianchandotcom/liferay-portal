@@ -1189,18 +1189,6 @@ public class CPSpecificationOptionPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTION_WHERE,
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPSpecificationOptionImpl.class,
-					CPSpecificationOption.class, "cpSpecificationOption",
-					"CPSpecificationOption",
-					"cpSpecificationOption.CPSpecificationOptionId",
-					"SELECT DISTINCT {cpSpecificationOption.*} FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					"SELECT {CPSpecificationOption.*} FROM (SELECT DISTINCT cpSpecificationOption.CPSpecificationOptionId FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					") TEMP_TABLE INNER JOIN CPSpecificationOption ON TEMP_TABLE.CPSpecificationOptionId = CPSpecificationOption.CPSpecificationOptionId",
-					"SELECT COUNT(DISTINCT cpSpecificationOption.CPSpecificationOptionId) AS COUNT_VALUE FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					CPSpecificationOptionModelImpl.ORDER_BY_SQL,
-					CPSpecificationOptionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpSpecificationOption.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CPSpecificationOption::getUuid));
@@ -1228,18 +1216,6 @@ public class CPSpecificationOptionPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTION_WHERE,
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPSpecificationOptionImpl.class,
-					CPSpecificationOption.class, "cpSpecificationOption",
-					"CPSpecificationOption",
-					"cpSpecificationOption.CPSpecificationOptionId",
-					"SELECT DISTINCT {cpSpecificationOption.*} FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					"SELECT {CPSpecificationOption.*} FROM (SELECT DISTINCT cpSpecificationOption.CPSpecificationOptionId FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					") TEMP_TABLE INNER JOIN CPSpecificationOption ON TEMP_TABLE.CPSpecificationOptionId = CPSpecificationOption.CPSpecificationOptionId",
-					"SELECT COUNT(DISTINCT cpSpecificationOption.CPSpecificationOptionId) AS COUNT_VALUE FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					CPSpecificationOptionModelImpl.ORDER_BY_SQL,
-					CPSpecificationOptionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpSpecificationOption.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CPSpecificationOption::getUuid),
@@ -1271,18 +1247,6 @@ public class CPSpecificationOptionPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTION_WHERE,
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPSpecificationOptionImpl.class,
-					CPSpecificationOption.class, "cpSpecificationOption",
-					"CPSpecificationOption",
-					"cpSpecificationOption.CPSpecificationOptionId",
-					"SELECT DISTINCT {cpSpecificationOption.*} FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					"SELECT {CPSpecificationOption.*} FROM (SELECT DISTINCT cpSpecificationOption.CPSpecificationOptionId FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					") TEMP_TABLE INNER JOIN CPSpecificationOption ON TEMP_TABLE.CPSpecificationOptionId = CPSpecificationOption.CPSpecificationOptionId",
-					"SELECT COUNT(DISTINCT cpSpecificationOption.CPSpecificationOptionId) AS COUNT_VALUE FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					CPSpecificationOptionModelImpl.ORDER_BY_SQL,
-					CPSpecificationOptionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpSpecificationOption.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1314,18 +1278,6 @@ public class CPSpecificationOptionPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTION_WHERE,
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPSpecificationOptionImpl.class,
-					CPSpecificationOption.class, "cpSpecificationOption",
-					"CPSpecificationOption",
-					"cpSpecificationOption.CPSpecificationOptionId",
-					"SELECT DISTINCT {cpSpecificationOption.*} FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					"SELECT {CPSpecificationOption.*} FROM (SELECT DISTINCT cpSpecificationOption.CPSpecificationOptionId FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					") TEMP_TABLE INNER JOIN CPSpecificationOption ON TEMP_TABLE.CPSpecificationOptionId = CPSpecificationOption.CPSpecificationOptionId",
-					"SELECT COUNT(DISTINCT cpSpecificationOption.CPSpecificationOptionId) AS COUNT_VALUE FROM CPSpecificationOption cpSpecificationOption WHERE ",
-					CPSpecificationOptionModelImpl.ORDER_BY_SQL,
-					CPSpecificationOptionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpSpecificationOption.", "CPOptionCategoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1438,4 +1390,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1728288268
+// LIFERAY-SERVICE-BUILDER-HASH:-175105484

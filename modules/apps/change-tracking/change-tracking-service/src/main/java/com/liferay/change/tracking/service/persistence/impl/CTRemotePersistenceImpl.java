@@ -412,15 +412,6 @@ public class CTRemotePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTREMOTE_WHERE, _SQL_COUNT_CTREMOTE_WHERE,
 				CTRemoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTRemoteImpl.class, CTRemote.class, "ctRemote", "CTRemote",
-					"ctRemote.ctRemoteId",
-					"SELECT DISTINCT {ctRemote.*} FROM CTRemote ctRemote WHERE ",
-					"SELECT {CTRemote.*} FROM (SELECT DISTINCT ctRemote.ctRemoteId FROM CTRemote ctRemote WHERE ",
-					") TEMP_TABLE INNER JOIN CTRemote ON TEMP_TABLE.ctRemoteId = CTRemote.ctRemoteId",
-					"SELECT COUNT(DISTINCT ctRemote.ctRemoteId) AS COUNT_VALUE FROM CTRemote ctRemote WHERE ",
-					CTRemoteModelImpl.ORDER_BY_SQL,
-					CTRemoteModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctRemote.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTRemote::getCompanyId));
@@ -488,4 +479,4 @@ public class CTRemotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1274683859
+// LIFERAY-SERVICE-BUILDER-HASH:-819391125

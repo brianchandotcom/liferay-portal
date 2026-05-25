@@ -775,4 +775,4 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	private OAuth2ApplicationScopeAliases _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:525097126
+// LIFERAY-SERVICE-BUILDER-HASH:-61721030

@@ -1854,16 +1854,6 @@ public class SavedContentEntryPersistenceImpl
 				_SQL_COUNT_SAVEDCONTENTENTRY_WHERE,
 				SavedContentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SavedContentEntryImpl.class, SavedContentEntry.class,
-					"savedContentEntry", "SavedContentEntry",
-					"savedContentEntry.savedContentEntryId",
-					"SELECT DISTINCT {savedContentEntry.*} FROM SavedContentEntry savedContentEntry WHERE ",
-					"SELECT {SavedContentEntry.*} FROM (SELECT DISTINCT savedContentEntry.savedContentEntryId FROM SavedContentEntry savedContentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN SavedContentEntry ON TEMP_TABLE.savedContentEntryId = SavedContentEntry.savedContentEntryId",
-					"SELECT COUNT(DISTINCT savedContentEntry.savedContentEntryId) AS COUNT_VALUE FROM SavedContentEntry savedContentEntry WHERE ",
-					SavedContentEntryModelImpl.ORDER_BY_SQL,
-					SavedContentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"savedContentEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SavedContentEntry::getGroupId));
@@ -1918,16 +1908,6 @@ public class SavedContentEntryPersistenceImpl
 				_SQL_COUNT_SAVEDCONTENTENTRY_WHERE,
 				SavedContentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SavedContentEntryImpl.class, SavedContentEntry.class,
-					"savedContentEntry", "SavedContentEntry",
-					"savedContentEntry.savedContentEntryId",
-					"SELECT DISTINCT {savedContentEntry.*} FROM SavedContentEntry savedContentEntry WHERE ",
-					"SELECT {SavedContentEntry.*} FROM (SELECT DISTINCT savedContentEntry.savedContentEntryId FROM SavedContentEntry savedContentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN SavedContentEntry ON TEMP_TABLE.savedContentEntryId = SavedContentEntry.savedContentEntryId",
-					"SELECT COUNT(DISTINCT savedContentEntry.savedContentEntryId) AS COUNT_VALUE FROM SavedContentEntry savedContentEntry WHERE ",
-					SavedContentEntryModelImpl.ORDER_BY_SQL,
-					SavedContentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"savedContentEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SavedContentEntry::getGroupId),
@@ -1958,16 +1938,6 @@ public class SavedContentEntryPersistenceImpl
 				_SQL_COUNT_SAVEDCONTENTENTRY_WHERE,
 				SavedContentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SavedContentEntryImpl.class, SavedContentEntry.class,
-					"savedContentEntry", "SavedContentEntry",
-					"savedContentEntry.savedContentEntryId",
-					"SELECT DISTINCT {savedContentEntry.*} FROM SavedContentEntry savedContentEntry WHERE ",
-					"SELECT {SavedContentEntry.*} FROM (SELECT DISTINCT savedContentEntry.savedContentEntryId FROM SavedContentEntry savedContentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN SavedContentEntry ON TEMP_TABLE.savedContentEntryId = SavedContentEntry.savedContentEntryId",
-					"SELECT COUNT(DISTINCT savedContentEntry.savedContentEntryId) AS COUNT_VALUE FROM SavedContentEntry savedContentEntry WHERE ",
-					SavedContentEntryModelImpl.ORDER_BY_SQL,
-					SavedContentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"savedContentEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SavedContentEntry::getGroupId),
@@ -2033,16 +2003,6 @@ public class SavedContentEntryPersistenceImpl
 				_SQL_COUNT_SAVEDCONTENTENTRY_WHERE,
 				SavedContentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SavedContentEntryImpl.class, SavedContentEntry.class,
-					"savedContentEntry", "SavedContentEntry",
-					"savedContentEntry.savedContentEntryId",
-					"SELECT DISTINCT {savedContentEntry.*} FROM SavedContentEntry savedContentEntry WHERE ",
-					"SELECT {SavedContentEntry.*} FROM (SELECT DISTINCT savedContentEntry.savedContentEntryId FROM SavedContentEntry savedContentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN SavedContentEntry ON TEMP_TABLE.savedContentEntryId = SavedContentEntry.savedContentEntryId",
-					"SELECT COUNT(DISTINCT savedContentEntry.savedContentEntryId) AS COUNT_VALUE FROM SavedContentEntry savedContentEntry WHERE ",
-					SavedContentEntryModelImpl.ORDER_BY_SQL,
-					SavedContentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"savedContentEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SavedContentEntry::getGroupId),
@@ -2266,4 +2226,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1063795589
+// LIFERAY-SERVICE-BUILDER-HASH:-1820757379

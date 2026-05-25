@@ -945,16 +945,6 @@ public class CPTaxCategoryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					"cpTaxCategory", "CPTaxCategory",
-					"cpTaxCategory.CPTaxCategoryId",
-					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
-					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
-					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
-					CPTaxCategoryModelImpl.ORDER_BY_SQL,
-					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CPTaxCategory::getUuid));
@@ -980,16 +970,6 @@ public class CPTaxCategoryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					"cpTaxCategory", "CPTaxCategory",
-					"cpTaxCategory.CPTaxCategoryId",
-					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
-					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
-					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
-					CPTaxCategoryModelImpl.ORDER_BY_SQL,
-					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CPTaxCategory::getUuid),
@@ -1018,16 +998,6 @@ public class CPTaxCategoryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					"cpTaxCategory", "CPTaxCategory",
-					"cpTaxCategory.CPTaxCategoryId",
-					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
-					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
-					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
-					CPTaxCategoryModelImpl.ORDER_BY_SQL,
-					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
@@ -1122,4 +1092,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-122491162
+// LIFERAY-SERVICE-BUILDER-HASH:-1525373566

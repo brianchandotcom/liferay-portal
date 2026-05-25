@@ -2398,15 +2398,6 @@ public class CountryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid));
@@ -2432,15 +2423,6 @@ public class CountryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid),
@@ -2469,15 +2451,6 @@ public class CountryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -2503,15 +2476,6 @@ public class CountryPersistenceImpl
 					new String[] {"active_"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
@@ -2572,15 +2536,6 @@ public class CountryPersistenceImpl
 					new String[] {"companyId", "active_"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2649,15 +2604,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2699,15 +2645,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2758,15 +2695,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2820,15 +2748,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2887,15 +2806,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2967,4 +2877,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-811860500
+// LIFERAY-SERVICE-BUILDER-HASH:2050333164

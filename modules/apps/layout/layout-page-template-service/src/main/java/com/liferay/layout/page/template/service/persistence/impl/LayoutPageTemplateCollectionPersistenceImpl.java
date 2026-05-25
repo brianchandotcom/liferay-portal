@@ -2128,19 +2128,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2169,19 +2156,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2220,19 +2194,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2275,19 +2236,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2365,19 +2313,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2415,19 +2350,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateCollectionImpl.class,
-					LayoutPageTemplateCollection.class,
-					"layoutPageTemplateCollection",
-					"LayoutPageTemplateCollection",
-					"layoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT DISTINCT {layoutPageTemplateCollection.*} FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					"SELECT {LayoutPageTemplateCollection.*} FROM (SELECT DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateCollection ON TEMP_TABLE.layoutPageTemplateCollectionId = LayoutPageTemplateCollection.layoutPageTemplateCollectionId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateCollection.layoutPageTemplateCollectionId) AS COUNT_VALUE FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ",
-					LayoutPageTemplateCollectionModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateCollectionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2572,4 +2494,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:831324613
+// LIFERAY-SERVICE-BUILDER-HASH:-1116855251

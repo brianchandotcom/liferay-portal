@@ -1364,15 +1364,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CTCollection::getUuid));
@@ -1398,15 +1389,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CTCollection::getUuid),
@@ -1435,15 +1417,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId));
@@ -1469,15 +1442,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "userId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1506,15 +1470,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "schemaVersionId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1547,15 +1502,6 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionImpl.class, CTCollection.class, "ctCollection",
-					"CTCollection", "ctCollection.ctCollectionId",
-					"SELECT DISTINCT {ctCollection.*} FROM CTCollection ctCollection WHERE ",
-					"SELECT {CTCollection.*} FROM (SELECT DISTINCT ctCollection.ctCollectionId FROM CTCollection ctCollection WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollection ON TEMP_TABLE.ctCollectionId = CTCollection.ctCollectionId",
-					"SELECT COUNT(DISTINCT ctCollection.ctCollectionId) AS COUNT_VALUE FROM CTCollection ctCollection WHERE ",
-					CTCollectionModelImpl.ORDER_BY_SQL,
-					CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1650,4 +1596,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1267372747
+// LIFERAY-SERVICE-BUILDER-HASH:1325633851

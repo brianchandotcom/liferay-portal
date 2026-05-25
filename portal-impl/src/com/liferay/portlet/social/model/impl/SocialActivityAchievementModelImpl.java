@@ -874,4 +874,4 @@ public class SocialActivityAchievementModelImpl
 	private SocialActivityAchievement _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562179834
+// LIFERAY-SERVICE-BUILDER-HASH:1955850708

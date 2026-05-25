@@ -978,4 +978,4 @@ public class ContactsLayoutTemplateModelImpl
 	private ContactsLayoutTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1064147012
+// LIFERAY-SERVICE-BUILDER-HASH:-642664458

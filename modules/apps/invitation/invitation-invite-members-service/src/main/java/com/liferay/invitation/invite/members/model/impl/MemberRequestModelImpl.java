@@ -987,4 +987,4 @@ public class MemberRequestModelImpl
 	private MemberRequest _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1342145952
+// LIFERAY-SERVICE-BUILDER-HASH:2032886764

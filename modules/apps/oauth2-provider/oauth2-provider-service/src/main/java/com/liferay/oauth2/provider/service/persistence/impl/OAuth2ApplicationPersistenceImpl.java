@@ -1092,16 +1092,6 @@ public class OAuth2ApplicationPersistenceImpl
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					"oAuth2Application", "OAuth2Application",
-					"oAuth2Application.oAuth2ApplicationId",
-					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
-					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
-					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
-					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuth2Application::getUuid));
@@ -1129,16 +1119,6 @@ public class OAuth2ApplicationPersistenceImpl
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					"oAuth2Application", "OAuth2Application",
-					"oAuth2Application.oAuth2ApplicationId",
-					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
-					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
-					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
-					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuth2Application::getUuid),
@@ -1169,16 +1149,6 @@ public class OAuth2ApplicationPersistenceImpl
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					"oAuth2Application", "OAuth2Application",
-					"oAuth2Application.oAuth2ApplicationId",
-					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
-					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
-					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
-					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
@@ -1226,16 +1196,6 @@ public class OAuth2ApplicationPersistenceImpl
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					"oAuth2Application", "OAuth2Application",
-					"oAuth2Application.oAuth2ApplicationId",
-					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
-					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
-					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
-					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId),
@@ -1332,4 +1292,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1008968131
+// LIFERAY-SERVICE-BUILDER-HASH:658213053

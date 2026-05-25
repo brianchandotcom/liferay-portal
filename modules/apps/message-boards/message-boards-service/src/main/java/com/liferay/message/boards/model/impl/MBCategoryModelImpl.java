@@ -112,6 +112,8 @@ public class MBCategoryModelImpl
 
 	public static final String ENTITY_ALIAS = "mbCategory";
 
+	public static final String FILTER_PK_COLUMN_NAME = "categoryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
 
@@ -1547,4 +1549,4 @@ public class MBCategoryModelImpl
 	private MBCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:462271848
+// LIFERAY-SERVICE-BUILDER-HASH:574626858

@@ -904,4 +904,4 @@ public class ContactsCardTemplateModelImpl
 	private ContactsCardTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:742899168
+// LIFERAY-SERVICE-BUILDER-HASH:-930379370

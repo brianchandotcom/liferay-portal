@@ -853,15 +853,6 @@ public class KaleoProcessPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 				KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KaleoProcessImpl.class, KaleoProcess.class, "kaleoProcess",
-					"KaleoProcess", "kaleoProcess.kaleoProcessId",
-					"SELECT DISTINCT {kaleoProcess.*} FROM KaleoProcess kaleoProcess WHERE ",
-					"SELECT {KaleoProcess.*} FROM (SELECT DISTINCT kaleoProcess.kaleoProcessId FROM KaleoProcess kaleoProcess WHERE ",
-					") TEMP_TABLE INNER JOIN KaleoProcess ON TEMP_TABLE.kaleoProcessId = KaleoProcess.kaleoProcessId",
-					"SELECT COUNT(DISTINCT kaleoProcess.kaleoProcessId) AS COUNT_VALUE FROM KaleoProcess kaleoProcess WHERE ",
-					KaleoProcessModelImpl.ORDER_BY_SQL,
-					KaleoProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"kaleoProcess.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoProcess::getGroupId));
@@ -948,4 +939,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-229528345
+// LIFERAY-SERVICE-BUILDER-HASH:446703311

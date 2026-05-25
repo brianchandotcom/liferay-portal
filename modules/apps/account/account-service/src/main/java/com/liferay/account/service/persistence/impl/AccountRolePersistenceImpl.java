@@ -1052,15 +1052,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId));
@@ -1088,15 +1079,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountRole::getAccountEntryId));
@@ -1133,15 +1115,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"companyId", "accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId),
@@ -1233,4 +1206,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2081669354
+// LIFERAY-SERVICE-BUILDER-HASH:-1155574028

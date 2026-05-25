@@ -37,7 +37,7 @@
 				"en_US": "Avatar"
 			},
 			"localized": false,
-			"name": "companyLogo",
+			"name": "avatar",
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",
@@ -135,12 +135,12 @@
 			"DBType": "Boolean",
 			"businessType": "Boolean",
 			"defaultValue": true,
-			"externalReferenceCode": "SHOW_COMPANY_LOGO",
+			"externalReferenceCode": "SHOW_AVATAR",
 			"indexed": true,
 			"label": {
 				"en_US": "Show Avatar"
 			},
-			"name": "showCompanyLogo",
+			"name": "showAvatar",
 			"system": true,
 			"type": "Boolean"
 		},

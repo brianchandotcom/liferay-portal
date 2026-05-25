@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.FeatureFlag;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
+@FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
 public class ToolSetResourceTest extends BaseToolSetResourceTestCase {
 

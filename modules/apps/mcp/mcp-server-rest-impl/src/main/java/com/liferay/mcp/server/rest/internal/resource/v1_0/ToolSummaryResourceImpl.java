@@ -8,6 +8,7 @@ package com.liferay.mcp.server.rest.internal.resource.v1_0;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSummary;
 import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolSummaryResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,6 +26,12 @@ public class ToolSummaryResourceImpl extends BaseToolSummaryResourceImpl {
 	@Override
 	public Page<ToolSummary> getToolSummaries(String toolSetName)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-63311")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return ToolSetUtil.getToolSummariesPage(
 			contextHttpServletRequest, toolSetName);

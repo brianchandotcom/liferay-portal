@@ -6,7 +6,7 @@
 package com.liferay.account.internal.notification;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.notification.AccountUserInvitationNotificationHelper;
+import com.liferay.account.notification.AccountUserInvitationNotificationSender;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.notification.context.NotificationContextBuilder;
 import com.liferay.notification.exception.NoSuchNotificationTemplateException;
@@ -24,9 +24,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Stefano Motta
  */
-@Component(service = AccountUserInvitationNotificationHelper.class)
-public class AccountUserInvitationNotificationHelperImpl
-	implements AccountUserInvitationNotificationHelper {
+@Component(service = AccountUserInvitationNotificationSender.class)
+public class AccountUserInvitationNotificationSenderImpl
+	implements AccountUserInvitationNotificationSender {
 
 	@Override
 	public void sendNotification(

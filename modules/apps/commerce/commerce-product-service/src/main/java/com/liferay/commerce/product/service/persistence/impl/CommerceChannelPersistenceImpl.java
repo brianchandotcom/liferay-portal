@@ -95,8 +95,9 @@ public class CommerceChannelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommerceChannel>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommerceChannel, NoSuchChannelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce channels where uuid = &#63;.
@@ -136,16 +137,8 @@ public class CommerceChannelPersistenceImpl
 			String uuid, OrderByComparator<CommerceChannel> orderByComparator)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		throw new NoSuchChannelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -220,8 +213,9 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceChannel>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceChannel, NoSuchChannelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce channels where uuid = &#63; and companyId = &#63;.
@@ -264,16 +258,8 @@ public class CommerceChannelPersistenceImpl
 			OrderByComparator<CommerceChannel> orderByComparator)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		throw new NoSuchChannelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +341,9 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceChannel>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommerceChannel, NoSuchChannelException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce channels where companyId = &#63;.
@@ -397,16 +384,8 @@ public class CommerceChannelPersistenceImpl
 			OrderByComparator<CommerceChannel> orderByComparator)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		throw new NoSuchChannelException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -482,8 +461,9 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceChannel>
-		_collectionPersistenceFinderByAccountEntryId;
+	private FilterCollectionPersistenceFinder
+		<CommerceChannel, NoSuchChannelException>
+			_collectionPersistenceFinderByAccountEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce channels where accountEntryId = &#63;.
@@ -524,16 +504,8 @@ public class CommerceChannelPersistenceImpl
 			OrderByComparator<CommerceChannel> orderByComparator)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchByAccountEntryId_First(
-			accountEntryId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		throw new NoSuchChannelException(
-			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
+		return _collectionPersistenceFinderByAccountEntryId.findFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -610,8 +582,9 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceChannel>
-		_collectionPersistenceFinderBySiteGroupId;
+	private FilterCollectionPersistenceFinder
+		<CommerceChannel, NoSuchChannelException>
+			_collectionPersistenceFinderBySiteGroupId;
 
 	/**
 	 * Returns an ordered range of all the commerce channels where siteGroupId = &#63;.
@@ -652,16 +625,8 @@ public class CommerceChannelPersistenceImpl
 			OrderByComparator<CommerceChannel> orderByComparator)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchBySiteGroupId_First(
-			siteGroupId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		throw new NoSuchChannelException(
-			_collectionPersistenceFinderBySiteGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {siteGroupId}));
+		return _collectionPersistenceFinderBySiteGroupId.findFirst(
+			finderCache, new Object[] {siteGroupId}, orderByComparator);
 	}
 
 	/**
@@ -738,7 +703,7 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {siteGroupId});
 	}
 
-	private UniquePersistenceFinder<CommerceChannel>
+	private UniquePersistenceFinder<CommerceChannel, NoSuchChannelException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -754,23 +719,8 @@ public class CommerceChannelPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchChannelException {
 
-		CommerceChannel commerceChannel = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceChannel == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchChannelException(message);
-		}
-
-		return commerceChannel;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1424,4 +1374,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1612880758
+// LIFERAY-SERVICE-BUILDER-HASH:412933977

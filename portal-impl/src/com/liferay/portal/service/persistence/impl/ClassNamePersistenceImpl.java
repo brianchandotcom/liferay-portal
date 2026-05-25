@@ -58,7 +58,8 @@ public class ClassNamePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<ClassName> _uniquePersistenceFinderByValue;
+	private UniquePersistenceFinder<ClassName, NoSuchClassNameException>
+		_uniquePersistenceFinderByValue;
 
 	/**
 	 * Returns the class name where value = &#63; or throws a <code>NoSuchClassNameException</code> if it could not be found.
@@ -69,21 +70,8 @@ public class ClassNamePersistenceImpl
 	 */
 	@Override
 	public ClassName findByValue(String value) throws NoSuchClassNameException {
-		ClassName className = fetchByValue(value);
-
-		if (className == null) {
-			String message =
-				_uniquePersistenceFinderByValue.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {value});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchClassNameException(message);
-		}
-
-		return className;
+		return _uniquePersistenceFinderByValue.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {value});
 	}
 
 	/**
@@ -333,4 +321,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:530755084
+// LIFERAY-SERVICE-BUILDER-HASH:-413307527

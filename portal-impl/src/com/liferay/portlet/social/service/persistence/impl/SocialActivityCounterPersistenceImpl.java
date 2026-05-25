@@ -74,8 +74,9 @@ public class SocialActivityCounterPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SocialActivityCounter>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<SocialActivityCounter, NoSuchActivityCounterException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the social activity counters where groupId = &#63;.
@@ -116,16 +117,9 @@ public class SocialActivityCounterPersistenceImpl
 			OrderByComparator<SocialActivityCounter> orderByComparator)
 		throws NoSuchActivityCounterException {
 
-		SocialActivityCounter socialActivityCounter = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		throw new NoSuchActivityCounterException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -168,8 +162,9 @@ public class SocialActivityCounterPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivityCounter>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<SocialActivityCounter, NoSuchActivityCounterException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
@@ -213,16 +208,9 @@ public class SocialActivityCounterPersistenceImpl
 			OrderByComparator<SocialActivityCounter> orderByComparator)
 		throws NoSuchActivityCounterException {
 
-		SocialActivityCounter socialActivityCounter = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		throw new NoSuchActivityCounterException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -270,8 +258,9 @@ public class SocialActivityCounterPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<SocialActivityCounter>
-		_collectionPersistenceFinderByG_C_C_O;
+	private CollectionPersistenceFinder
+		<SocialActivityCounter, NoSuchActivityCounterException>
+			_collectionPersistenceFinderByG_C_C_O;
 
 	/**
 	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
@@ -319,17 +308,10 @@ public class SocialActivityCounterPersistenceImpl
 			OrderByComparator<SocialActivityCounter> orderByComparator)
 		throws NoSuchActivityCounterException {
 
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_First(
-			groupId, classNameId, classPK, ownerType, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		throw new NoSuchActivityCounterException(
-			_collectionPersistenceFinderByG_C_C_O.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classPK, ownerType}));
+		return _collectionPersistenceFinderByG_C_C_O.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK, ownerType},
+			orderByComparator);
 	}
 
 	/**
@@ -388,8 +370,9 @@ public class SocialActivityCounterPersistenceImpl
 			new Object[] {groupId, classNameId, classPK, ownerType});
 	}
 
-	private UniquePersistenceFinder<SocialActivityCounter>
-		_uniquePersistenceFinderByG_C_C_N_O_S;
+	private UniquePersistenceFinder
+		<SocialActivityCounter, NoSuchActivityCounterException>
+			_uniquePersistenceFinderByG_C_C_N_O_S;
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
@@ -409,26 +392,11 @@ public class SocialActivityCounterPersistenceImpl
 			int ownerType, int startPeriod)
 		throws NoSuchActivityCounterException {
 
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_S(
-			groupId, classNameId, classPK, name, ownerType, startPeriod);
-
-		if (socialActivityCounter == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_C_N_O_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, classNameId, classPK, name, ownerType,
-						startPeriod
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchActivityCounterException(message);
-		}
-
-		return socialActivityCounter;
+		return _uniquePersistenceFinderByG_C_C_N_O_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, classNameId, classPK, name, ownerType, startPeriod
+			});
 	}
 
 	/**
@@ -502,8 +470,9 @@ public class SocialActivityCounterPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<SocialActivityCounter>
-		_uniquePersistenceFinderByG_C_C_N_O_E;
+	private UniquePersistenceFinder
+		<SocialActivityCounter, NoSuchActivityCounterException>
+			_uniquePersistenceFinderByG_C_C_N_O_E;
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
@@ -523,26 +492,11 @@ public class SocialActivityCounterPersistenceImpl
 			int ownerType, int endPeriod)
 		throws NoSuchActivityCounterException {
 
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_E(
-			groupId, classNameId, classPK, name, ownerType, endPeriod);
-
-		if (socialActivityCounter == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_C_N_O_E.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, classNameId, classPK, name, ownerType,
-						endPeriod
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchActivityCounterException(message);
-		}
-
-		return socialActivityCounter;
+		return _uniquePersistenceFinderByG_C_C_N_O_E.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, classNameId, classPK, name, ownerType, endPeriod
+			});
 	}
 
 	/**
@@ -1124,4 +1078,4 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:729733460
+// LIFERAY-SERVICE-BUILDER-HASH:-1578190491

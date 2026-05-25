@@ -63,7 +63,7 @@ public class ContactPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Contact>
+	private CollectionPersistenceFinder<Contact, NoSuchContactException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -103,15 +103,9 @@ public class ContactPersistenceImpl
 			long companyId, OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
 
-		Contact contact = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		throw new NoSuchContactException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -153,7 +147,7 @@ public class ContactPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<Contact>
+	private CollectionPersistenceFinder<Contact, NoSuchContactException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -193,15 +187,9 @@ public class ContactPersistenceImpl
 			long userId, OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
 
-		Contact contact = fetchByUserId_First(userId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		throw new NoSuchContactException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -243,7 +231,7 @@ public class ContactPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<Contact>
+	private CollectionPersistenceFinder<Contact, NoSuchContactException>
 		_collectionPersistenceFinderByC_U;
 
 	/**
@@ -286,16 +274,9 @@ public class ContactPersistenceImpl
 			OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
 
-		Contact contact = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		throw new NoSuchContactException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, userId},
+			orderByComparator);
 	}
 
 	/**
@@ -341,7 +322,7 @@ public class ContactPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, userId});
 	}
 
-	private CollectionPersistenceFinder<Contact>
+	private CollectionPersistenceFinder<Contact, NoSuchContactException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -385,16 +366,9 @@ public class ContactPersistenceImpl
 			OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
 
-		Contact contact = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		throw new NoSuchContactException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -769,4 +743,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-725095993
+// LIFERAY-SERVICE-BUILDER-HASH:-18498882

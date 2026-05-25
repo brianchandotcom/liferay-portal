@@ -67,8 +67,9 @@ public class UserNotificationEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63;.
@@ -109,16 +110,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -161,8 +155,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
@@ -205,16 +200,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -260,8 +248,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63;.
@@ -302,16 +291,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -354,8 +336,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByType;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByType;
 
 	/**
 	 * Returns an ordered range of all the user notification events where type = &#63;.
@@ -396,16 +379,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByType_First(
-			type, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -448,8 +424,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63;.
@@ -493,16 +470,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_First(
-			userId, deliveryType, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, deliveryType}));
+		return _collectionPersistenceFinderByU_DT.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType}, orderByComparator);
 	}
 
 	/**
@@ -550,8 +520,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_D;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_D;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63;.
@@ -594,16 +565,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_D_First(
-			userId, delivered, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, delivered}));
+		return _collectionPersistenceFinderByU_D.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -649,8 +613,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, delivered});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and archived = &#63;.
@@ -693,16 +658,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_A_First(
-			userId, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, archived}));
+		return _collectionPersistenceFinderByU_A.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -748,8 +706,9 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_D;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_D;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -795,17 +754,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_First(
-			userId, deliveryType, delivered, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, deliveryType, delivered}));
+		return _collectionPersistenceFinderByU_DT_D.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered}, orderByComparator);
 	}
 
 	/**
@@ -858,8 +809,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
@@ -905,17 +857,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_A_First(
-			userId, deliveryType, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, deliveryType, archived}));
+		return _collectionPersistenceFinderByU_DT_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, archived}, orderByComparator);
 	}
 
 	/**
@@ -968,8 +912,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_D_AR;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_D_AR;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1015,17 +960,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_D_AR_First(
-			userId, delivered, actionRequired, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_D_AR.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, delivered, actionRequired}));
+		return _collectionPersistenceFinderByU_D_AR.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired},
+			orderByComparator);
 	}
 
 	/**
@@ -1081,8 +1019,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, actionRequired});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_D_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_D_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
@@ -1128,17 +1067,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_D_A_First(
-			userId, delivered, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_D_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, delivered, archived}));
+		return _collectionPersistenceFinderByU_D_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, archived}, orderByComparator);
 	}
 
 	/**
@@ -1191,8 +1122,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_AR_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_AR_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1238,17 +1170,9 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_AR_A_First(
-			userId, actionRequired, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_AR_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, actionRequired, archived}));
+		return _collectionPersistenceFinderByU_AR_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, actionRequired, archived}, orderByComparator);
 	}
 
 	/**
@@ -1303,8 +1227,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, actionRequired, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_T_GteT_D;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_T_GteT_D;
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and type = &#63; and timestamp &ge; &#63; and delivered = &#63;.
@@ -1420,17 +1345,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_T_GteT_D_First(
-			userId, type, timestamp, delivered, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_T_GteT_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, type, timestamp, delivered}));
+		return _collectionPersistenceFinderByU_T_GteT_D.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, timestamp, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -1489,8 +1407,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, timestamp, delivered});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_T_DT_D;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_T_DT_D;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1539,17 +1458,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_T_DT_D_First(
-			userId, type, deliveryType, delivered, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_T_DT_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, type, deliveryType, delivered}));
+		return _collectionPersistenceFinderByU_T_DT_D.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -1608,8 +1520,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, deliveryType, delivered});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_D_AR;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_D_AR;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1659,19 +1572,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_AR_First(
-			userId, deliveryType, delivered, actionRequired, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_D_AR.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					userId, deliveryType, delivered, actionRequired
-				}));
+		return _collectionPersistenceFinderByU_DT_D_AR.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, actionRequired},
+			orderByComparator);
 	}
 
 	/**
@@ -1733,8 +1637,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered, actionRequired});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_D_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_D_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -1783,17 +1688,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_A_First(
-			userId, deliveryType, delivered, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_D_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, deliveryType, delivered, archived}));
+		return _collectionPersistenceFinderByU_DT_D_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -1852,8 +1750,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_AR_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_AR_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1903,17 +1802,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_AR_A_First(
-			userId, deliveryType, actionRequired, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_AR_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, deliveryType, actionRequired, archived}));
+		return _collectionPersistenceFinderByU_DT_AR_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, actionRequired, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -1974,8 +1866,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, actionRequired, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_D_AR_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_D_AR_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2025,17 +1918,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_D_AR_A_First(
-			userId, delivered, actionRequired, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_D_AR_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, delivered, actionRequired, archived}));
+		return _collectionPersistenceFinderByU_D_AR_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -2097,8 +1983,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, actionRequired, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_T_DT_D_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_T_DT_D_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -2150,19 +2037,10 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_T_DT_D_A_First(
-			userId, type, deliveryType, delivered, archived, orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_T_DT_D_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					userId, type, deliveryType, delivered, archived
-				}));
+		return _collectionPersistenceFinderByU_T_DT_D_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -2227,8 +2105,9 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, deliveryType, delivered, archived});
 	}
 
-	private CollectionPersistenceFinder<UserNotificationEvent>
-		_collectionPersistenceFinderByU_DT_D_AR_A;
+	private CollectionPersistenceFinder
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
+			_collectionPersistenceFinderByU_DT_D_AR_A;
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2282,20 +2161,12 @@ public class UserNotificationEventPersistenceImpl
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 
-		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_AR_A_First(
-			userId, deliveryType, delivered, actionRequired, archived,
+		return _collectionPersistenceFinderByU_DT_D_AR_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				userId, deliveryType, delivered, actionRequired, archived
+			},
 			orderByComparator);
-
-		if (userNotificationEvent != null) {
-			return userNotificationEvent;
-		}
-
-		throw new NoSuchUserNotificationEventException(
-			_collectionPersistenceFinderByU_DT_D_AR_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					userId, deliveryType, delivered, actionRequired, archived
-				}));
 	}
 
 	/**
@@ -3472,4 +3343,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1777434380
+// LIFERAY-SERVICE-BUILDER-HASH:1932724492

@@ -81,8 +81,9 @@ public class KaleoProcessPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoProcess>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<KaleoProcess, NoSuchKaleoProcessException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the kaleo processes where uuid = &#63;.
@@ -122,15 +123,8 @@ public class KaleoProcessPersistenceImpl
 			String uuid, OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException {
 
-		KaleoProcess kaleoProcess = fetchByUuid_First(uuid, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		throw new NoSuchKaleoProcessException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +165,7 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<KaleoProcess>
+	private UniquePersistenceFinder<KaleoProcess, NoSuchKaleoProcessException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -186,21 +180,8 @@ public class KaleoProcessPersistenceImpl
 	public KaleoProcess findByUUID_G(String uuid, long groupId)
 		throws NoSuchKaleoProcessException {
 
-		KaleoProcess kaleoProcess = fetchByUUID_G(uuid, groupId);
-
-		if (kaleoProcess == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchKaleoProcessException(message);
-		}
-
-		return kaleoProcess;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -248,8 +229,9 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<KaleoProcess>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<KaleoProcess, NoSuchKaleoProcessException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
@@ -292,16 +274,8 @@ public class KaleoProcessPersistenceImpl
 			OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException {
 
-		KaleoProcess kaleoProcess = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		throw new NoSuchKaleoProcessException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -346,8 +320,9 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<KaleoProcess>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<KaleoProcess, NoSuchKaleoProcessException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the kaleo processes where groupId = &#63;.
@@ -387,16 +362,8 @@ public class KaleoProcessPersistenceImpl
 			long groupId, OrderByComparator<KaleoProcess> orderByComparator)
 		throws NoSuchKaleoProcessException {
 
-		KaleoProcess kaleoProcess = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		throw new NoSuchKaleoProcessException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -472,7 +439,7 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private UniquePersistenceFinder<KaleoProcess>
+	private UniquePersistenceFinder<KaleoProcess, NoSuchKaleoProcessException>
 		_uniquePersistenceFinderByDDLRecordSetId;
 
 	/**
@@ -486,21 +453,8 @@ public class KaleoProcessPersistenceImpl
 	public KaleoProcess findByDDLRecordSetId(long DDLRecordSetId)
 		throws NoSuchKaleoProcessException {
 
-		KaleoProcess kaleoProcess = fetchByDDLRecordSetId(DDLRecordSetId);
-
-		if (kaleoProcess == null) {
-			String message =
-				_uniquePersistenceFinderByDDLRecordSetId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {DDLRecordSetId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchKaleoProcessException(message);
-		}
-
-		return kaleoProcess;
+		return _uniquePersistenceFinderByDDLRecordSetId.find(
+			finderCache, new Object[] {DDLRecordSetId});
 	}
 
 	/**
@@ -939,4 +893,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:446703311
+// LIFERAY-SERVICE-BUILDER-HASH:1244386715

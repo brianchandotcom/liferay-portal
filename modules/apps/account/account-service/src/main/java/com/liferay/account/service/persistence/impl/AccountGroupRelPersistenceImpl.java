@@ -75,8 +75,9 @@ public class AccountGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AccountGroupRel>
-		_collectionPersistenceFinderByAccountGroupId;
+	private CollectionPersistenceFinder
+		<AccountGroupRel, NoSuchGroupRelException>
+			_collectionPersistenceFinderByAccountGroupId;
 
 	/**
 	 * Returns an ordered range of all the account group rels where accountGroupId = &#63;.
@@ -117,16 +118,8 @@ public class AccountGroupRelPersistenceImpl
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = fetchByAccountGroupId_First(
-			accountGroupId, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		throw new NoSuchGroupRelException(
-			_collectionPersistenceFinderByAccountGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountGroupId}));
+		return _collectionPersistenceFinderByAccountGroupId.findFirst(
+			finderCache, new Object[] {accountGroupId}, orderByComparator);
 	}
 
 	/**
@@ -168,8 +161,9 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {accountGroupId});
 	}
 
-	private CollectionPersistenceFinder<AccountGroupRel>
-		_collectionPersistenceFinderByA_C;
+	private CollectionPersistenceFinder
+		<AccountGroupRel, NoSuchGroupRelException>
+			_collectionPersistenceFinderByA_C;
 
 	/**
 	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
@@ -212,17 +206,9 @@ public class AccountGroupRelPersistenceImpl
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = fetchByA_C_First(
-			accountGroupId, classNameId, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		throw new NoSuchGroupRelException(
-			_collectionPersistenceFinderByA_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {accountGroupId, classNameId}));
+		return _collectionPersistenceFinderByA_C.findFirst(
+			finderCache, new Object[] {accountGroupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -268,8 +254,9 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {accountGroupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<AccountGroupRel>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<AccountGroupRel, NoSuchGroupRelException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the account group rels where classNameId = &#63; and classPK = &#63;.
@@ -312,16 +299,9 @@ public class AccountGroupRelPersistenceImpl
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		throw new NoSuchGroupRelException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -367,7 +347,7 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private UniquePersistenceFinder<AccountGroupRel>
+	private UniquePersistenceFinder<AccountGroupRel, NoSuchGroupRelException>
 		_uniquePersistenceFinderByA_C_C;
 
 	/**
@@ -384,23 +364,8 @@ public class AccountGroupRelPersistenceImpl
 			long accountGroupId, long classNameId, long classPK)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = fetchByA_C_C(
-			accountGroupId, classNameId, classPK);
-
-		if (accountGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByA_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {accountGroupId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupRelException(message);
-		}
-
-		return accountGroupRel;
+		return _uniquePersistenceFinderByA_C_C.find(
+			finderCache, new Object[] {accountGroupId, classNameId, classPK});
 	}
 
 	/**
@@ -831,4 +796,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:229343028
+// LIFERAY-SERVICE-BUILDER-HASH:-197789305

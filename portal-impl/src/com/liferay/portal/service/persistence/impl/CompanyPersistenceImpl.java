@@ -68,7 +68,8 @@ public class CompanyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<Company> _uniquePersistenceFinderByWebId;
+	private UniquePersistenceFinder<Company, NoSuchCompanyException>
+		_uniquePersistenceFinderByWebId;
 
 	/**
 	 * Returns the company where webId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -79,21 +80,8 @@ public class CompanyPersistenceImpl
 	 */
 	@Override
 	public Company findByWebId(String webId) throws NoSuchCompanyException {
-		Company company = fetchByWebId(webId);
-
-		if (company == null) {
-			String message =
-				_uniquePersistenceFinderByWebId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {webId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCompanyException(message);
-		}
-
-		return company;
+		return _uniquePersistenceFinderByWebId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {webId});
 	}
 
 	/**
@@ -135,7 +123,7 @@ public class CompanyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {webId});
 	}
 
-	private CollectionPersistenceFinder<Company>
+	private CollectionPersistenceFinder<Company, NoSuchCompanyException>
 		_collectionPersistenceFinderByLogoId;
 
 	/**
@@ -175,15 +163,9 @@ public class CompanyPersistenceImpl
 			long logoId, OrderByComparator<Company> orderByComparator)
 		throws NoSuchCompanyException {
 
-		Company company = fetchByLogoId_First(logoId, orderByComparator);
-
-		if (company != null) {
-			return company;
-		}
-
-		throw new NoSuchCompanyException(
-			_collectionPersistenceFinderByLogoId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {logoId}));
+		return _collectionPersistenceFinderByLogoId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {logoId},
+			orderByComparator);
 	}
 
 	/**
@@ -501,4 +483,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1649774719
+// LIFERAY-SERVICE-BUILDER-HASH:570864361

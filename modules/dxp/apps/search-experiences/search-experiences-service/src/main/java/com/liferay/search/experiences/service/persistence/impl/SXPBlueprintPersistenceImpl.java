@@ -89,8 +89,9 @@ public class SXPBlueprintPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<SXPBlueprint>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<SXPBlueprint, NoSuchSXPBlueprintException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the sxp blueprints where uuid = &#63;.
@@ -130,15 +131,8 @@ public class SXPBlueprintPersistenceImpl
 			String uuid, OrderByComparator<SXPBlueprint> orderByComparator)
 		throws NoSuchSXPBlueprintException {
 
-		SXPBlueprint sxpBlueprint = fetchByUuid_First(uuid, orderByComparator);
-
-		if (sxpBlueprint != null) {
-			return sxpBlueprint;
-		}
-
-		throw new NoSuchSXPBlueprintException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -213,8 +207,9 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<SXPBlueprint>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<SXPBlueprint, NoSuchSXPBlueprintException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the sxp blueprints where uuid = &#63; and companyId = &#63;.
@@ -257,16 +252,8 @@ public class SXPBlueprintPersistenceImpl
 			OrderByComparator<SXPBlueprint> orderByComparator)
 		throws NoSuchSXPBlueprintException {
 
-		SXPBlueprint sxpBlueprint = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (sxpBlueprint != null) {
-			return sxpBlueprint;
-		}
-
-		throw new NoSuchSXPBlueprintException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -348,8 +335,9 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SXPBlueprint>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<SXPBlueprint, NoSuchSXPBlueprintException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the sxp blueprints where companyId = &#63;.
@@ -389,16 +377,8 @@ public class SXPBlueprintPersistenceImpl
 			long companyId, OrderByComparator<SXPBlueprint> orderByComparator)
 		throws NoSuchSXPBlueprintException {
 
-		SXPBlueprint sxpBlueprint = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (sxpBlueprint != null) {
-			return sxpBlueprint;
-		}
-
-		throw new NoSuchSXPBlueprintException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -474,7 +454,7 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<SXPBlueprint>
+	private UniquePersistenceFinder<SXPBlueprint, NoSuchSXPBlueprintException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -490,23 +470,8 @@ public class SXPBlueprintPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchSXPBlueprintException {
 
-		SXPBlueprint sxpBlueprint = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (sxpBlueprint == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSXPBlueprintException(message);
-		}
-
-		return sxpBlueprint;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1030,4 +995,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:636123597
+// LIFERAY-SERVICE-BUILDER-HASH:-1663602098

@@ -89,8 +89,9 @@ public class ObjectRelationshipPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object relationships where uuid = &#63;.
@@ -131,16 +132,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -181,8 +174,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object relationships where uuid = &#63; and companyId = &#63;.
@@ -225,16 +219,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -279,8 +265,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the object relationships where companyId = &#63;.
@@ -321,16 +308,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -372,8 +351,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByObjectDefinitionId1;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByObjectDefinitionId1;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63;.
@@ -414,19 +394,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship =
-			fetchByObjectDefinitionId1_First(
-				objectDefinitionId1, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByObjectDefinitionId1.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId1}));
+		return _collectionPersistenceFinderByObjectDefinitionId1.findFirst(
+			finderCache, new Object[] {objectDefinitionId1}, orderByComparator);
 	}
 
 	/**
@@ -468,8 +437,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByObjectDefinitionId2;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByObjectDefinitionId2;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63;.
@@ -510,19 +480,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship =
-			fetchByObjectDefinitionId2_First(
-				objectDefinitionId2, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByObjectDefinitionId2.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId2}));
+		return _collectionPersistenceFinderByObjectDefinitionId2.findFirst(
+			finderCache, new Object[] {objectDefinitionId2}, orderByComparator);
 	}
 
 	/**
@@ -564,8 +523,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2});
 	}
 
-	private UniquePersistenceFinder<ObjectRelationship>
-		_uniquePersistenceFinderByObjectFieldId2;
+	private UniquePersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_uniquePersistenceFinderByObjectFieldId2;
 
 	/**
 	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
@@ -578,22 +538,8 @@ public class ObjectRelationshipPersistenceImpl
 	public ObjectRelationship findByObjectFieldId2(long objectFieldId2)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByObjectFieldId2(
-			objectFieldId2);
-
-		if (objectRelationship == null) {
-			String message =
-				_uniquePersistenceFinderByObjectFieldId2.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFieldId2});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectRelationshipException(message);
-		}
-
-		return objectRelationship;
+		return _uniquePersistenceFinderByObjectFieldId2.find(
+			finderCache, new Object[] {objectFieldId2});
 	}
 
 	/**
@@ -639,8 +585,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectFieldId2});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByParameterObjectFieldId;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByParameterObjectFieldId;
 
 	/**
 	 * Returns an ordered range of all the object relationships where parameterObjectFieldId = &#63;.
@@ -681,19 +628,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship =
-			fetchByParameterObjectFieldId_First(
-				parameterObjectFieldId, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByParameterObjectFieldId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {parameterObjectFieldId}));
+		return _collectionPersistenceFinderByParameterObjectFieldId.findFirst(
+			finderCache, new Object[] {parameterObjectFieldId},
+			orderByComparator);
 	}
 
 	/**
@@ -736,8 +673,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {parameterObjectFieldId});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByC_U;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns an ordered range of all the object relationships where companyId = &#63; and userId = &#63;.
@@ -780,16 +718,8 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -834,8 +764,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_E;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_E;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
@@ -878,17 +809,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_E_First(
-			objectDefinitionId1, edge, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, edge}));
+		return _collectionPersistenceFinderByODI1_E.findFirst(
+			finderCache, new Object[] {objectDefinitionId1, edge},
+			orderByComparator);
 	}
 
 	/**
@@ -934,8 +857,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, edge});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_N;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_N;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
@@ -978,17 +902,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_N_First(
-			objectDefinitionId1, name, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, name}));
+		return _collectionPersistenceFinderByODI1_N.findFirst(
+			finderCache, new Object[] {objectDefinitionId1, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1034,8 +950,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, name});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_R;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_R;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
@@ -1078,17 +995,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_R_First(
-			objectDefinitionId1, reverse, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, reverse}));
+		return _collectionPersistenceFinderByODI1_R.findFirst(
+			finderCache, new Object[] {objectDefinitionId1, reverse},
+			orderByComparator);
 	}
 
 	/**
@@ -1134,8 +1043,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, reverse});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI2_E;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI2_E;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
@@ -1178,17 +1088,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI2_E_First(
-			objectDefinitionId2, edge, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI2_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId2, edge}));
+		return _collectionPersistenceFinderByODI2_E.findFirst(
+			finderCache, new Object[] {objectDefinitionId2, edge},
+			orderByComparator);
 	}
 
 	/**
@@ -1234,8 +1136,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, edge});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI2_R;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI2_R;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
@@ -1278,17 +1181,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI2_R_First(
-			objectDefinitionId2, reverse, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI2_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId2, reverse}));
+		return _collectionPersistenceFinderByODI2_R.findFirst(
+			finderCache, new Object[] {objectDefinitionId2, reverse},
+			orderByComparator);
 	}
 
 	/**
@@ -1334,8 +1229,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, reverse});
 	}
 
-	private UniquePersistenceFinder<ObjectRelationship>
-		_uniquePersistenceFinderByDTN_R;
+	private UniquePersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_uniquePersistenceFinderByDTN_R;
 
 	/**
 	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
@@ -1349,23 +1245,8 @@ public class ObjectRelationshipPersistenceImpl
 	public ObjectRelationship findByDTN_R(String dbTableName, boolean reverse)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByDTN_R(
-			dbTableName, reverse);
-
-		if (objectRelationship == null) {
-			String message =
-				_uniquePersistenceFinderByDTN_R.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {dbTableName, reverse});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectRelationshipException(message);
-		}
-
-		return objectRelationship;
+		return _uniquePersistenceFinderByDTN_R.find(
+			finderCache, new Object[] {dbTableName, reverse});
 	}
 
 	/**
@@ -1414,8 +1295,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {dbTableName, reverse});
 	}
 
-	private UniquePersistenceFinder<ObjectRelationship>
-		_uniquePersistenceFinderByERC_C_ODI1;
+	private UniquePersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_uniquePersistenceFinderByERC_C_ODI1;
 
 	/**
 	 * Returns the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
@@ -1432,25 +1314,11 @@ public class ObjectRelationshipPersistenceImpl
 			long objectDefinitionId1)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByERC_C_ODI1(
-			externalReferenceCode, companyId, objectDefinitionId1);
-
-		if (objectRelationship == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C_ODI1.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						externalReferenceCode, companyId, objectDefinitionId1
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectRelationshipException(message);
-		}
-
-		return objectRelationship;
+		return _uniquePersistenceFinderByERC_C_ODI1.find(
+			finderCache,
+			new Object[] {
+				externalReferenceCode, companyId, objectDefinitionId1
+			});
 	}
 
 	/**
@@ -1515,8 +1383,9 @@ public class ObjectRelationshipPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_ODI2_T;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_ODI2_T;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
@@ -1563,17 +1432,10 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_ODI2_T_First(
-			objectDefinitionId1, objectDefinitionId2, type, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_ODI2_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, objectDefinitionId2, type}));
+		return _collectionPersistenceFinderByODI1_ODI2_T.findFirst(
+			finderCache,
+			new Object[] {objectDefinitionId1, objectDefinitionId2, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1629,8 +1491,9 @@ public class ObjectRelationshipPersistenceImpl
 			new Object[] {objectDefinitionId1, objectDefinitionId2, type});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_DT_R;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_DT_R;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
@@ -1677,17 +1540,10 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_DT_R_First(
-			objectDefinitionId1, deletionType, reverse, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_DT_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, deletionType, reverse}));
+		return _collectionPersistenceFinderByODI1_DT_R.findFirst(
+			finderCache,
+			new Object[] {objectDefinitionId1, deletionType, reverse},
+			orderByComparator);
 	}
 
 	/**
@@ -1743,8 +1599,9 @@ public class ObjectRelationshipPersistenceImpl
 			new Object[] {objectDefinitionId1, deletionType, reverse});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_R_T;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_R_T;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
@@ -1789,17 +1646,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_R_T_First(
-			objectDefinitionId1, reverse, type, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_R_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId1, reverse, type}));
+		return _collectionPersistenceFinderByODI1_R_T.findFirst(
+			finderCache, new Object[] {objectDefinitionId1, reverse, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1852,8 +1701,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, reverse, type});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI2_R_T;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI2_R_T;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
@@ -1898,17 +1748,9 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI2_R_T_First(
-			objectDefinitionId2, reverse, type, orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI2_R_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId2, reverse, type}));
+		return _collectionPersistenceFinderByODI2_R_T.findFirst(
+			finderCache, new Object[] {objectDefinitionId2, reverse, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1961,8 +1803,9 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, reverse, type});
 	}
 
-	private CollectionPersistenceFinder<ObjectRelationship>
-		_collectionPersistenceFinderByODI1_ODI2_N_T;
+	private CollectionPersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_collectionPersistenceFinderByODI1_ODI2_N_T;
 
 	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
@@ -2012,20 +1855,10 @@ public class ObjectRelationshipPersistenceImpl
 			OrderByComparator<ObjectRelationship> orderByComparator)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_ODI2_N_T_First(
-			objectDefinitionId1, objectDefinitionId2, name, type,
+		return _collectionPersistenceFinderByODI1_ODI2_N_T.findFirst(
+			finderCache,
+			new Object[] {objectDefinitionId1, objectDefinitionId2, name, type},
 			orderByComparator);
-
-		if (objectRelationship != null) {
-			return objectRelationship;
-		}
-
-		throw new NoSuchObjectRelationshipException(
-			_collectionPersistenceFinderByODI1_ODI2_N_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					objectDefinitionId1, objectDefinitionId2, name, type
-				}));
 	}
 
 	/**
@@ -2090,8 +1923,9 @@ public class ObjectRelationshipPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<ObjectRelationship>
-		_uniquePersistenceFinderByODI1_ODI2_N_R_T;
+	private UniquePersistenceFinder
+		<ObjectRelationship, NoSuchObjectRelationshipException>
+			_uniquePersistenceFinderByODI1_ODI2_N_R_T;
 
 	/**
 	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and reverse = &#63; and type = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
@@ -2110,26 +1944,11 @@ public class ObjectRelationshipPersistenceImpl
 			boolean reverse, String type)
 		throws NoSuchObjectRelationshipException {
 
-		ObjectRelationship objectRelationship = fetchByODI1_ODI2_N_R_T(
-			objectDefinitionId1, objectDefinitionId2, name, reverse, type);
-
-		if (objectRelationship == null) {
-			String message =
-				_uniquePersistenceFinderByODI1_ODI2_N_R_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						objectDefinitionId1, objectDefinitionId2, name, reverse,
-						type
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectRelationshipException(message);
-		}
-
-		return objectRelationship;
+		return _uniquePersistenceFinderByODI1_ODI2_N_R_T.find(
+			finderCache,
+			new Object[] {
+				objectDefinitionId1, objectDefinitionId2, name, reverse, type
+			});
 	}
 
 	/**
@@ -3266,4 +3085,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1935148699
+// LIFERAY-SERVICE-BUILDER-HASH:1651721543

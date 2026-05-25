@@ -81,8 +81,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63;.
@@ -123,16 +124,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceSubscriptionEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -189,22 +183,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public CommerceSubscriptionEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (commerceSubscriptionEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSubscriptionEntryException(message);
-		}
-
-		return commerceSubscriptionEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,8 +233,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
@@ -297,16 +278,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,8 +324,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63;.
@@ -393,16 +367,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByGroupId_First(groupId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -444,8 +410,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63;.
@@ -486,16 +453,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -537,8 +496,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<CommerceSubscriptionEntry>
-		_uniquePersistenceFinderByCommerceOrderItemId;
+	private UniquePersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_uniquePersistenceFinderByCommerceOrderItemId;
 
 	/**
 	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -552,24 +512,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			long commerceOrderItemId)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByCommerceOrderItemId(commerceOrderItemId);
-
-		if (commerceSubscriptionEntry == null) {
-			String message =
-				_uniquePersistenceFinderByCommerceOrderItemId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {commerceOrderItemId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSubscriptionEntryException(message);
-		}
-
-		return commerceSubscriptionEntry;
+		return _uniquePersistenceFinderByCommerceOrderItemId.find(
+			finderCache, new Object[] {commerceOrderItemId});
 	}
 
 	/**
@@ -616,8 +560,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {commerceOrderItemId});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderBySubscriptionStatus;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderBySubscriptionStatus;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where subscriptionStatus = &#63;.
@@ -658,19 +603,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchBySubscriptionStatus_First(
-				subscriptionStatus, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderBySubscriptionStatus.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {subscriptionStatus}));
+		return _collectionPersistenceFinderBySubscriptionStatus.findFirst(
+			finderCache, new Object[] {subscriptionStatus}, orderByComparator);
 	}
 
 	/**
@@ -712,8 +646,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {subscriptionStatus});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByC_U;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63; and userId = &#63;.
@@ -756,16 +691,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -810,8 +737,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
-		_collectionPersistenceFinderByG_C_U;
+	private CollectionPersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_collectionPersistenceFinderByG_C_U;
 
 	/**
 	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
@@ -856,17 +784,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByG_C_U_First(groupId, companyId, userId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		throw new NoSuchSubscriptionEntryException(
-			_collectionPersistenceFinderByG_C_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, userId}));
+		return _collectionPersistenceFinderByG_C_U.findFirst(
+			finderCache, new Object[] {groupId, companyId, userId},
+			orderByComparator);
 	}
 
 	/**
@@ -915,8 +835,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			finderCache, new Object[] {groupId, companyId, userId});
 	}
 
-	private UniquePersistenceFinder<CommerceSubscriptionEntry>
-		_uniquePersistenceFinderByC_C_C;
+	private UniquePersistenceFinder
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
+			_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -932,25 +853,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			String CPInstanceUuid, long CProductId, long commerceOrderItemId)
 		throws NoSuchSubscriptionEntryException {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByC_C_C(
-			CPInstanceUuid, CProductId, commerceOrderItemId);
-
-		if (commerceSubscriptionEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						CPInstanceUuid, CProductId, commerceOrderItemId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSubscriptionEntryException(message);
-		}
-
-		return commerceSubscriptionEntry;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache,
+			new Object[] {CPInstanceUuid, CProductId, commerceOrderItemId});
 	}
 
 	/**
@@ -1589,4 +1494,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1480611750
+// LIFERAY-SERVICE-BUILDER-HASH:359514455

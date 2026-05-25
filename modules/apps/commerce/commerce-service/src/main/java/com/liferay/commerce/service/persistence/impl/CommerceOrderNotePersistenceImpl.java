@@ -89,8 +89,9 @@ public class CommerceOrderNotePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceOrderNote>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceOrderNote, NoSuchOrderNoteException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce order notes where uuid = &#63;.
@@ -130,16 +131,8 @@ public class CommerceOrderNotePersistenceImpl
 			String uuid, OrderByComparator<CommerceOrderNote> orderByComparator)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		throw new NoSuchOrderNoteException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,7 +173,7 @@ public class CommerceOrderNotePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderNote>
+	private UniquePersistenceFinder<CommerceOrderNote, NoSuchOrderNoteException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -195,21 +188,8 @@ public class CommerceOrderNotePersistenceImpl
 	public CommerceOrderNote findByUUID_G(String uuid, long groupId)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByUUID_G(uuid, groupId);
-
-		if (commerceOrderNote == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderNoteException(message);
-		}
-
-		return commerceOrderNote;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -257,8 +237,9 @@ public class CommerceOrderNotePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderNote>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceOrderNote, NoSuchOrderNoteException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce order notes where uuid = &#63; and companyId = &#63;.
@@ -301,16 +282,8 @@ public class CommerceOrderNotePersistenceImpl
 			OrderByComparator<CommerceOrderNote> orderByComparator)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		throw new NoSuchOrderNoteException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +328,9 @@ public class CommerceOrderNotePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderNote>
-		_collectionPersistenceFinderByCommerceOrderId;
+	private CollectionPersistenceFinder
+		<CommerceOrderNote, NoSuchOrderNoteException>
+			_collectionPersistenceFinderByCommerceOrderId;
 
 	/**
 	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63;.
@@ -397,16 +371,8 @@ public class CommerceOrderNotePersistenceImpl
 			OrderByComparator<CommerceOrderNote> orderByComparator)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByCommerceOrderId_First(
-			commerceOrderId, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		throw new NoSuchOrderNoteException(
-			_collectionPersistenceFinderByCommerceOrderId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {commerceOrderId}));
+		return _collectionPersistenceFinderByCommerceOrderId.findFirst(
+			finderCache, new Object[] {commerceOrderId}, orderByComparator);
 	}
 
 	/**
@@ -448,8 +414,9 @@ public class CommerceOrderNotePersistenceImpl
 			finderCache, new Object[] {commerceOrderId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderNote>
-		_collectionPersistenceFinderByC_R;
+	private CollectionPersistenceFinder
+		<CommerceOrderNote, NoSuchOrderNoteException>
+			_collectionPersistenceFinderByC_R;
 
 	/**
 	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
@@ -492,17 +459,9 @@ public class CommerceOrderNotePersistenceImpl
 			OrderByComparator<CommerceOrderNote> orderByComparator)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByC_R_First(
-			commerceOrderId, restricted, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		throw new NoSuchOrderNoteException(
-			_collectionPersistenceFinderByC_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceOrderId, restricted}));
+		return _collectionPersistenceFinderByC_R.findFirst(
+			finderCache, new Object[] {commerceOrderId, restricted},
+			orderByComparator);
 	}
 
 	/**
@@ -548,7 +507,7 @@ public class CommerceOrderNotePersistenceImpl
 			finderCache, new Object[] {commerceOrderId, restricted});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderNote>
+	private UniquePersistenceFinder<CommerceOrderNote, NoSuchOrderNoteException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -564,23 +523,8 @@ public class CommerceOrderNotePersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchOrderNoteException {
 
-		CommerceOrderNote commerceOrderNote = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceOrderNote == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderNoteException(message);
-		}
-
-		return commerceOrderNote;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1139,4 +1083,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296252039
+// LIFERAY-SERVICE-BUILDER-HASH:-987152593

@@ -87,7 +87,7 @@ public class RepositoryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Repository>
+	private CollectionPersistenceFinder<Repository, NoSuchRepositoryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -128,15 +128,9 @@ public class RepositoryPersistenceImpl
 			String uuid, OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByUuid_First(uuid, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		throw new NoSuchRepositoryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -178,7 +172,7 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Repository>
+	private UniquePersistenceFinder<Repository, NoSuchRepositoryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -193,21 +187,8 @@ public class RepositoryPersistenceImpl
 	public Repository findByUUID_G(String uuid, long groupId)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByUUID_G(uuid, groupId);
-
-		if (repository == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRepositoryException(message);
-		}
-
-		return repository;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,7 +237,7 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<Repository>
+	private CollectionPersistenceFinder<Repository, NoSuchRepositoryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -300,16 +281,9 @@ public class RepositoryPersistenceImpl
 			OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		throw new NoSuchRepositoryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -355,7 +329,7 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<Repository>
+	private CollectionPersistenceFinder<Repository, NoSuchRepositoryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -396,16 +370,9 @@ public class RepositoryPersistenceImpl
 			long groupId, OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		throw new NoSuchRepositoryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -447,7 +414,7 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<Repository>
+	private CollectionPersistenceFinder<Repository, NoSuchRepositoryException>
 		_collectionPersistenceFinderByPortletId;
 
 	/**
@@ -488,16 +455,9 @@ public class RepositoryPersistenceImpl
 			String portletId, OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByPortletId_First(
-			portletId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		throw new NoSuchRepositoryException(
-			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
+		return _collectionPersistenceFinderByPortletId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -539,7 +499,8 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {portletId});
 	}
 
-	private UniquePersistenceFinder<Repository> _uniquePersistenceFinderByG_N_P;
+	private UniquePersistenceFinder<Repository, NoSuchRepositoryException>
+		_uniquePersistenceFinderByG_N_P;
 
 	/**
 	 * Returns the repository where groupId = &#63; and name = &#63; and portletId = &#63; or throws a <code>NoSuchRepositoryException</code> if it could not be found.
@@ -554,22 +515,9 @@ public class RepositoryPersistenceImpl
 	public Repository findByG_N_P(long groupId, String name, String portletId)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByG_N_P(groupId, name, portletId);
-
-		if (repository == null) {
-			String message =
-				_uniquePersistenceFinderByG_N_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, name, portletId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRepositoryException(message);
-		}
-
-		return repository;
+		return _uniquePersistenceFinderByG_N_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, name, portletId});
 	}
 
 	/**
@@ -622,7 +570,8 @@ public class RepositoryPersistenceImpl
 			new Object[] {groupId, name, portletId});
 	}
 
-	private UniquePersistenceFinder<Repository> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<Repository, NoSuchRepositoryException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the repository where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchRepositoryException</code> if it could not be found.
@@ -636,22 +585,9 @@ public class RepositoryPersistenceImpl
 	public Repository findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchRepositoryException {
 
-		Repository repository = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (repository == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRepositoryException(message);
-		}
-
-		return repository;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1259,4 +1195,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:828143117
+// LIFERAY-SERVICE-BUILDER-HASH:334946403

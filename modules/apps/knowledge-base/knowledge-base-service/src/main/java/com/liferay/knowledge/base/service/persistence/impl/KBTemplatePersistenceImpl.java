@@ -94,7 +94,7 @@ public class KBTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KBTemplate>
+	private CollectionPersistenceFinder<KBTemplate, NoSuchTemplateException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -135,15 +135,8 @@ public class KBTemplatePersistenceImpl
 			String uuid, OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException {
 
-		KBTemplate kbTemplate = fetchByUuid_First(uuid, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		throw new NoSuchTemplateException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -184,7 +177,7 @@ public class KBTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<KBTemplate>
+	private UniquePersistenceFinder<KBTemplate, NoSuchTemplateException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -199,21 +192,8 @@ public class KBTemplatePersistenceImpl
 	public KBTemplate findByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException {
 
-		KBTemplate kbTemplate = fetchByUUID_G(uuid, groupId);
-
-		if (kbTemplate == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTemplateException(message);
-		}
-
-		return kbTemplate;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -261,7 +241,7 @@ public class KBTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<KBTemplate>
+	private CollectionPersistenceFinder<KBTemplate, NoSuchTemplateException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -305,16 +285,8 @@ public class KBTemplatePersistenceImpl
 			OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException {
 
-		KBTemplate kbTemplate = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		throw new NoSuchTemplateException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -359,8 +331,9 @@ public class KBTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<KBTemplate>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<KBTemplate, NoSuchTemplateException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the kb templates where groupId = &#63;.
@@ -400,16 +373,8 @@ public class KBTemplatePersistenceImpl
 			long groupId, OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException {
 
-		KBTemplate kbTemplate = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		throw new NoSuchTemplateException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -966,4 +931,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2036632004
+// LIFERAY-SERVICE-BUILDER-HASH:-49961566

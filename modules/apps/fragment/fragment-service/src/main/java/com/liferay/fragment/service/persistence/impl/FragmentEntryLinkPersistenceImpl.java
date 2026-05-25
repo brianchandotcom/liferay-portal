@@ -98,8 +98,9 @@ public class FragmentEntryLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where uuid = &#63;.
@@ -139,16 +140,8 @@ public class FragmentEntryLinkPersistenceImpl
 			String uuid, OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -189,7 +182,7 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<FragmentEntryLink>
+	private UniquePersistenceFinder<FragmentEntryLink, NoSuchEntryLinkException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -204,21 +197,8 @@ public class FragmentEntryLinkPersistenceImpl
 	public FragmentEntryLink findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByUUID_G(uuid, groupId);
-
-		if (fragmentEntryLink == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryLinkException(message);
-		}
-
-		return fragmentEntryLink;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -266,8 +246,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
@@ -310,16 +291,8 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -364,8 +337,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63;.
@@ -406,16 +380,8 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -456,8 +422,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByRendererKey;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByRendererKey;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where rendererKey = &#63;.
@@ -498,16 +465,8 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByRendererKey_First(
-			rendererKey, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByRendererKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {rendererKey}));
+		return _collectionPersistenceFinderByRendererKey.findFirst(
+			finderCache, new Object[] {rendererKey}, orderByComparator);
 	}
 
 	/**
@@ -549,8 +508,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {rendererKey});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByType;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByType;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where type = &#63;.
@@ -590,16 +550,8 @@ public class FragmentEntryLinkPersistenceImpl
 			int type, OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByType_First(
-			type, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -640,8 +592,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_P;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_P;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63;.
@@ -684,16 +637,8 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_P_First(
-			groupId, plid, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, plid}));
+		return _collectionPersistenceFinderByG_P.findFirst(
+			finderCache, new Object[] {groupId, plid}, orderByComparator);
 	}
 
 	/**
@@ -738,8 +683,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, plid});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByC_R;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByC_R;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
@@ -888,8 +834,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(rendererKeys)});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByFEERC_FESERC;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByFEERC_FESERC;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
@@ -932,17 +879,9 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByFEERC_FESERC_First(
-			fragmentEntryERC, fragmentEntryScopeERC, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByFEERC_FESERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {fragmentEntryERC, fragmentEntryScopeERC}));
+		return _collectionPersistenceFinderByFEERC_FESERC.findFirst(
+			finderCache, new Object[] {fragmentEntryERC, fragmentEntryScopeERC},
+			orderByComparator);
 	}
 
 	/**
@@ -994,8 +933,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_OFELERC_P;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_OFELERC_P;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
@@ -1041,17 +981,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_OFELERC_P_First(
-			groupId, originalFragmentEntryLinkERC, plid, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_OFELERC_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, originalFragmentEntryLinkERC, plid}));
+		return _collectionPersistenceFinderByG_OFELERC_P.findFirst(
+			finderCache,
+			new Object[] {groupId, originalFragmentEntryLinkERC, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -1107,8 +1040,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, originalFragmentEntryLinkERC, plid});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_FEERC_FESERC;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_FEERC_FESERC;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
@@ -1155,20 +1089,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_FEERC_FESERC_First(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC,
+		return _collectionPersistenceFinderByG_FEERC_FESERC.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentEntryERC, fragmentEntryScopeERC},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_FEERC_FESERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, fragmentEntryERC, fragmentEntryScopeERC
-				}));
 	}
 
 	/**
@@ -1224,8 +1148,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_S_P;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_S_P;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
@@ -1398,8 +1323,9 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_C_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_C_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1444,17 +1370,9 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classPK}));
+		return _collectionPersistenceFinderByG_C_C.findFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1503,8 +1421,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_P_D;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_P_D;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
@@ -1549,17 +1468,9 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_P_D_First(
-			groupId, plid, deleted, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_P_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, plid, deleted}));
+		return _collectionPersistenceFinderByG_P_D.findFirst(
+			finderCache, new Object[] {groupId, plid, deleted},
+			orderByComparator);
 	}
 
 	/**
@@ -1608,8 +1519,9 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, plid, deleted});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByFEERC_FESERC_D;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByFEERC_FESERC_D;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
@@ -1657,20 +1569,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByFEERC_FESERC_D_First(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted,
+		return _collectionPersistenceFinderByFEERC_FESERC_D.findFirst(
+			finderCache,
+			new Object[] {fragmentEntryERC, fragmentEntryScopeERC, deleted},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByFEERC_FESERC_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					fragmentEntryERC, fragmentEntryScopeERC, deleted
-				}));
 	}
 
 	/**
@@ -1728,8 +1630,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {fragmentEntryERC, fragmentEntryScopeERC, deleted});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_FEERC_FESERC_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_FEERC_FESERC_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
@@ -1781,22 +1684,12 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_FEERC_FESERC_C_First(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_C.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId
+			},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_FEERC_FESERC_C.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentEntryERC, fragmentEntryScopeERC,
-						classNameId
-					}));
 	}
 
 	/**
@@ -1864,8 +1757,9 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_FEERC_FESERC_P;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_FEERC_FESERC_P;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
@@ -1916,21 +1810,12 @@ public class FragmentEntryLinkPersistenceImpl
 			long plid, OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_FEERC_FESERC_P_First(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_P.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, plid
+			},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_FEERC_FESERC_P.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentEntryERC, fragmentEntryScopeERC, plid
-					}));
 	}
 
 	/**
@@ -1997,8 +1882,9 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_FEERC_FESERC_D;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_FEERC_FESERC_D;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
@@ -2050,22 +1936,12 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_FEERC_FESERC_D_First(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_D.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted
+			},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_FEERC_FESERC_D.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentEntryERC, fragmentEntryScopeERC,
-						deleted
-					}));
 	}
 
 	/**
@@ -2133,8 +2009,9 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_S_C_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_S_C_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -2184,20 +2061,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_S_C_C_First(
-			groupId, segmentsExperienceId, classNameId, classPK,
+		return _collectionPersistenceFinderByG_S_C_C.findFirst(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, classNameId, classPK},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_S_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, segmentsExperienceId, classNameId, classPK
-				}));
 	}
 
 	/**
@@ -2258,8 +2125,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, segmentsExperienceId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_S_P_D;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_S_P_D;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
@@ -2455,8 +2323,9 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_S_P_R;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_S_P_R;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
@@ -2506,20 +2375,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_S_P_R_First(
-			groupId, segmentsExperienceId, plid, rendererKey,
+		return _collectionPersistenceFinderByG_S_P_R.findFirst(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, plid, rendererKey},
 			orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_S_P_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, segmentsExperienceId, plid, rendererKey
-				}));
 	}
 
 	/**
@@ -2580,8 +2439,9 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, segmentsExperienceId, plid, rendererKey});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryLink>
-		_collectionPersistenceFinderByG_FEERC_FESERC_C_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryLink, NoSuchEntryLinkException>
+			_collectionPersistenceFinderByG_FEERC_FESERC_C_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -2636,22 +2496,13 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_FEERC_FESERC_C_C_First(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			classPK, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		throw new NoSuchEntryLinkException(
-			_collectionPersistenceFinderByG_FEERC_FESERC_C_C.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentEntryERC, fragmentEntryScopeERC,
-						classNameId, classPK
-					}));
+		return _collectionPersistenceFinderByG_FEERC_FESERC_C_C.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
+				classPK
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -2725,7 +2576,7 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<FragmentEntryLink>
+	private UniquePersistenceFinder<FragmentEntryLink, NoSuchEntryLinkException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -2741,23 +2592,8 @@ public class FragmentEntryLinkPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (fragmentEntryLink == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryLinkException(message);
-		}
-
-		return fragmentEntryLink;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -4214,4 +4050,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1615956167
+// LIFERAY-SERVICE-BUILDER-HASH:2134099127

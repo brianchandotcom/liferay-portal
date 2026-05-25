@@ -96,8 +96,9 @@ public class CPSpecificationOptionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CPSpecificationOption>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp specification options where uuid = &#63;.
@@ -138,16 +139,8 @@ public class CPSpecificationOptionPersistenceImpl
 			OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		throw new NoSuchCPSpecificationOptionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -223,8 +216,9 @@ public class CPSpecificationOptionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CPSpecificationOption>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp specification options where uuid = &#63; and companyId = &#63;.
@@ -267,16 +261,8 @@ public class CPSpecificationOptionPersistenceImpl
 			OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		throw new NoSuchCPSpecificationOptionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +344,9 @@ public class CPSpecificationOptionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CPSpecificationOption>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cp specification options where companyId = &#63;.
@@ -400,16 +387,8 @@ public class CPSpecificationOptionPersistenceImpl
 			OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		throw new NoSuchCPSpecificationOptionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -486,8 +465,9 @@ public class CPSpecificationOptionPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CPSpecificationOption>
-		_collectionPersistenceFinderByCPOptionCategoryId;
+	private FilterCollectionPersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_collectionPersistenceFinderByCPOptionCategoryId;
 
 	/**
 	 * Returns an ordered range of all the cp specification options where CPOptionCategoryId = &#63;.
@@ -528,19 +508,8 @@ public class CPSpecificationOptionPersistenceImpl
 			OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption =
-			fetchByCPOptionCategoryId_First(
-				CPOptionCategoryId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		throw new NoSuchCPSpecificationOptionException(
-			_collectionPersistenceFinderByCPOptionCategoryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPOptionCategoryId}));
+		return _collectionPersistenceFinderByCPOptionCategoryId.findFirst(
+			finderCache, new Object[] {CPOptionCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -617,8 +586,9 @@ public class CPSpecificationOptionPersistenceImpl
 			finderCache, new Object[] {CPOptionCategoryId});
 	}
 
-	private UniquePersistenceFinder<CPSpecificationOption>
-		_uniquePersistenceFinderByC_K;
+	private UniquePersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_uniquePersistenceFinderByC_K;
 
 	/**
 	 * Returns the cp specification option where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPSpecificationOptionException</code> if it could not be found.
@@ -632,22 +602,8 @@ public class CPSpecificationOptionPersistenceImpl
 	public CPSpecificationOption findByC_K(long companyId, String key)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption = fetchByC_K(
-			companyId, key);
-
-		if (cpSpecificationOption == null) {
-			String message =
-				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPSpecificationOptionException(message);
-		}
-
-		return cpSpecificationOption;
+		return _uniquePersistenceFinderByC_K.find(
+			finderCache, new Object[] {companyId, key});
 	}
 
 	/**
@@ -695,8 +651,9 @@ public class CPSpecificationOptionPersistenceImpl
 			finderCache, new Object[] {companyId, key});
 	}
 
-	private UniquePersistenceFinder<CPSpecificationOption>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the cp specification option where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPSpecificationOptionException</code> if it could not be found.
@@ -711,23 +668,8 @@ public class CPSpecificationOptionPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchCPSpecificationOptionException {
 
-		CPSpecificationOption cpSpecificationOption = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (cpSpecificationOption == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPSpecificationOptionException(message);
-		}
-
-		return cpSpecificationOption;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1390,4 +1332,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-175105484
+// LIFERAY-SERVICE-BUILDER-HASH:-1430133158

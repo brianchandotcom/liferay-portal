@@ -98,8 +98,9 @@ public class TemplateEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<TemplateEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<TemplateEntry, NoSuchTemplateEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the template entries where uuid = &#63;.
@@ -139,16 +140,8 @@ public class TemplateEntryPersistenceImpl
 			String uuid, OrderByComparator<TemplateEntry> orderByComparator)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		throw new NoSuchTemplateEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -189,7 +182,7 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<TemplateEntry>
+	private UniquePersistenceFinder<TemplateEntry, NoSuchTemplateEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -204,21 +197,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByUUID_G(uuid, groupId);
-
-		if (templateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTemplateEntryException(message);
-		}
-
-		return templateEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -266,8 +246,9 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<TemplateEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<TemplateEntry, NoSuchTemplateEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the template entries where uuid = &#63; and companyId = &#63;.
@@ -310,16 +291,8 @@ public class TemplateEntryPersistenceImpl
 			OrderByComparator<TemplateEntry> orderByComparator)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		throw new NoSuchTemplateEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -364,8 +337,9 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<TemplateEntry>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<TemplateEntry, NoSuchTemplateEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the template entries where groupId = &#63;.
@@ -500,7 +474,7 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
 
-	private UniquePersistenceFinder<TemplateEntry>
+	private UniquePersistenceFinder<TemplateEntry, NoSuchTemplateEntryException>
 		_uniquePersistenceFinderByDDMTemplateId;
 
 	/**
@@ -514,21 +488,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry findByDDMTemplateId(long ddmTemplateId)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByDDMTemplateId(ddmTemplateId);
-
-		if (templateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByDDMTemplateId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ddmTemplateId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTemplateEntryException(message);
-		}
-
-		return templateEntry;
+		return _uniquePersistenceFinderByDDMTemplateId.find(
+			finderCache, new Object[] {ddmTemplateId});
 	}
 
 	/**
@@ -573,8 +534,9 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {ddmTemplateId});
 	}
 
-	private CollectionPersistenceFinder<TemplateEntry>
-		_collectionPersistenceFinderByG_IICN;
+	private CollectionPersistenceFinder
+		<TemplateEntry, NoSuchTemplateEntryException>
+			_collectionPersistenceFinderByG_IICN;
 
 	/**
 	 * Returns an ordered range of all the template entries where groupId = &#63; and infoItemClassName = &#63;.
@@ -617,17 +579,9 @@ public class TemplateEntryPersistenceImpl
 			OrderByComparator<TemplateEntry> orderByComparator)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByG_IICN_First(
-			groupId, infoItemClassName, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		throw new NoSuchTemplateEntryException(
-			_collectionPersistenceFinderByG_IICN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, infoItemClassName}));
+		return _collectionPersistenceFinderByG_IICN.findFirst(
+			finderCache, new Object[] {groupId, infoItemClassName},
+			orderByComparator);
 	}
 
 	/**
@@ -673,8 +627,9 @@ public class TemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, infoItemClassName});
 	}
 
-	private CollectionPersistenceFinder<TemplateEntry>
-		_collectionPersistenceFinderByG_IICN_IIFVK;
+	private CollectionPersistenceFinder
+		<TemplateEntry, NoSuchTemplateEntryException>
+			_collectionPersistenceFinderByG_IICN_IIFVK;
 
 	/**
 	 * Returns an ordered range of all the template entries where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
@@ -867,7 +822,7 @@ public class TemplateEntryPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<TemplateEntry>
+	private UniquePersistenceFinder<TemplateEntry, NoSuchTemplateEntryException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -882,23 +837,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (templateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTemplateEntryException(message);
-		}
-
-		return templateEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1593,4 +1533,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1274880141
+// LIFERAY-SERVICE-BUILDER-HASH:1226585071

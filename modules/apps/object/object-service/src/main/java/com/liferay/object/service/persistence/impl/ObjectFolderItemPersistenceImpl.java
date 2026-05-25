@@ -81,8 +81,9 @@ public class ObjectFolderItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectFolderItem>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectFolderItem, NoSuchObjectFolderItemException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object folder items where uuid = &#63;.
@@ -122,16 +123,8 @@ public class ObjectFolderItemPersistenceImpl
 			String uuid, OrderByComparator<ObjectFolderItem> orderByComparator)
 		throws NoSuchObjectFolderItemException {
 
-		ObjectFolderItem objectFolderItem = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		throw new NoSuchObjectFolderItemException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -172,8 +165,9 @@ public class ObjectFolderItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectFolderItem>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectFolderItem, NoSuchObjectFolderItemException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object folder items where uuid = &#63; and companyId = &#63;.
@@ -216,16 +210,8 @@ public class ObjectFolderItemPersistenceImpl
 			OrderByComparator<ObjectFolderItem> orderByComparator)
 		throws NoSuchObjectFolderItemException {
 
-		ObjectFolderItem objectFolderItem = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		throw new NoSuchObjectFolderItemException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -270,8 +256,9 @@ public class ObjectFolderItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectFolderItem>
-		_collectionPersistenceFinderByObjectDefinitionId;
+	private CollectionPersistenceFinder
+		<ObjectFolderItem, NoSuchObjectFolderItemException>
+			_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the object folder items where objectDefinitionId = &#63;.
@@ -312,18 +299,8 @@ public class ObjectFolderItemPersistenceImpl
 			OrderByComparator<ObjectFolderItem> orderByComparator)
 		throws NoSuchObjectFolderItemException {
 
-		ObjectFolderItem objectFolderItem = fetchByObjectDefinitionId_First(
-			objectDefinitionId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		throw new NoSuchObjectFolderItemException(
-			_collectionPersistenceFinderByObjectDefinitionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId}));
+		return _collectionPersistenceFinderByObjectDefinitionId.findFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -365,8 +342,9 @@ public class ObjectFolderItemPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<ObjectFolderItem>
-		_collectionPersistenceFinderByObjectFolderId;
+	private CollectionPersistenceFinder
+		<ObjectFolderItem, NoSuchObjectFolderItemException>
+			_collectionPersistenceFinderByObjectFolderId;
 
 	/**
 	 * Returns an ordered range of all the object folder items where objectFolderId = &#63;.
@@ -407,16 +385,8 @@ public class ObjectFolderItemPersistenceImpl
 			OrderByComparator<ObjectFolderItem> orderByComparator)
 		throws NoSuchObjectFolderItemException {
 
-		ObjectFolderItem objectFolderItem = fetchByObjectFolderId_First(
-			objectFolderId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		throw new NoSuchObjectFolderItemException(
-			_collectionPersistenceFinderByObjectFolderId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFolderId}));
+		return _collectionPersistenceFinderByObjectFolderId.findFirst(
+			finderCache, new Object[] {objectFolderId}, orderByComparator);
 	}
 
 	/**
@@ -458,8 +428,9 @@ public class ObjectFolderItemPersistenceImpl
 			finderCache, new Object[] {objectFolderId});
 	}
 
-	private UniquePersistenceFinder<ObjectFolderItem>
-		_uniquePersistenceFinderByODI_OFI;
+	private UniquePersistenceFinder
+		<ObjectFolderItem, NoSuchObjectFolderItemException>
+			_uniquePersistenceFinderByODI_OFI;
 
 	/**
 	 * Returns the object folder item where objectDefinitionId = &#63; and objectFolderId = &#63; or throws a <code>NoSuchObjectFolderItemException</code> if it could not be found.
@@ -474,23 +445,8 @@ public class ObjectFolderItemPersistenceImpl
 			long objectDefinitionId, long objectFolderId)
 		throws NoSuchObjectFolderItemException {
 
-		ObjectFolderItem objectFolderItem = fetchByODI_OFI(
-			objectDefinitionId, objectFolderId);
-
-		if (objectFolderItem == null) {
-			String message =
-				_uniquePersistenceFinderByODI_OFI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId, objectFolderId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectFolderItemException(message);
-		}
-
-		return objectFolderItem;
+		return _uniquePersistenceFinderByODI_OFI.find(
+			finderCache, new Object[] {objectDefinitionId, objectFolderId});
 	}
 
 	/**
@@ -965,4 +921,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-568901636
+// LIFERAY-SERVICE-BUILDER-HASH:1937232852

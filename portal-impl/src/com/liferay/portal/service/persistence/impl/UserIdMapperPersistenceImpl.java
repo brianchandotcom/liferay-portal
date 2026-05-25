@@ -66,8 +66,9 @@ public class UserIdMapperPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserIdMapper>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<UserIdMapper, NoSuchUserIdMapperException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the user ID mappers where userId = &#63;.
@@ -107,16 +108,9 @@ public class UserIdMapperPersistenceImpl
 			long userId, OrderByComparator<UserIdMapper> orderByComparator)
 		throws NoSuchUserIdMapperException {
 
-		UserIdMapper userIdMapper = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (userIdMapper != null) {
-			return userIdMapper;
-		}
-
-		throw new NoSuchUserIdMapperException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -158,7 +152,8 @@ public class UserIdMapperPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private UniquePersistenceFinder<UserIdMapper> _uniquePersistenceFinderByU_T;
+	private UniquePersistenceFinder<UserIdMapper, NoSuchUserIdMapperException>
+		_uniquePersistenceFinderByU_T;
 
 	/**
 	 * Returns the user ID mapper where userId = &#63; and type = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
@@ -172,21 +167,8 @@ public class UserIdMapperPersistenceImpl
 	public UserIdMapper findByU_T(long userId, String type)
 		throws NoSuchUserIdMapperException {
 
-		UserIdMapper userIdMapper = fetchByU_T(userId, type);
-
-		if (userIdMapper == null) {
-			String message =
-				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserIdMapperException(message);
-		}
-
-		return userIdMapper;
+		return _uniquePersistenceFinderByU_T.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, type});
 	}
 
 	/**
@@ -235,7 +217,8 @@ public class UserIdMapperPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, type});
 	}
 
-	private UniquePersistenceFinder<UserIdMapper> _uniquePersistenceFinderByT_E;
+	private UniquePersistenceFinder<UserIdMapper, NoSuchUserIdMapperException>
+		_uniquePersistenceFinderByT_E;
 
 	/**
 	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
@@ -249,22 +232,9 @@ public class UserIdMapperPersistenceImpl
 	public UserIdMapper findByT_E(String type, String externalUserId)
 		throws NoSuchUserIdMapperException {
 
-		UserIdMapper userIdMapper = fetchByT_E(type, externalUserId);
-
-		if (userIdMapper == null) {
-			String message =
-				_uniquePersistenceFinderByT_E.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {type, externalUserId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserIdMapperException(message);
-		}
-
-		return userIdMapper;
+		return _uniquePersistenceFinderByT_E.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {type, externalUserId});
 	}
 
 	/**
@@ -592,4 +562,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1793545962
+// LIFERAY-SERVICE-BUILDER-HASH:770262060

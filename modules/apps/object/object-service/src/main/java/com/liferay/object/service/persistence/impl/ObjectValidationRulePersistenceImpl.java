@@ -89,8 +89,9 @@ public class ObjectValidationRulePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where uuid = &#63;.
@@ -131,16 +132,8 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -182,8 +175,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where uuid = &#63; and companyId = &#63;.
@@ -226,16 +220,8 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -280,8 +266,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByObjectDefinitionId;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63;.
@@ -322,19 +309,8 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule =
-			fetchByObjectDefinitionId_First(
-				objectDefinitionId, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByObjectDefinitionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId}));
+		return _collectionPersistenceFinderByObjectDefinitionId.findFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -376,8 +352,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByODI_A;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByODI_A;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
@@ -420,17 +397,9 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByODI_A_First(
-			objectDefinitionId, active, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByODI_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId, active}));
+		return _collectionPersistenceFinderByODI_A.findFirst(
+			finderCache, new Object[] {objectDefinitionId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -476,8 +445,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, active});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByODI_E;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByODI_E;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
@@ -520,17 +490,9 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByODI_E_First(
-			objectDefinitionId, engine, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByODI_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId, engine}));
+		return _collectionPersistenceFinderByODI_E.findFirst(
+			finderCache, new Object[] {objectDefinitionId, engine},
+			orderByComparator);
 	}
 
 	/**
@@ -576,8 +538,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, engine});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByODI_O;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByODI_O;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
@@ -620,17 +583,9 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByODI_O_First(
-			objectDefinitionId, outputType, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByODI_O.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {objectDefinitionId, outputType}));
+		return _collectionPersistenceFinderByODI_O.findFirst(
+			finderCache, new Object[] {objectDefinitionId, outputType},
+			orderByComparator);
 	}
 
 	/**
@@ -676,8 +631,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, outputType});
 	}
 
-	private CollectionPersistenceFinder<ObjectValidationRule>
-		_collectionPersistenceFinderByA_E;
+	private CollectionPersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_collectionPersistenceFinderByA_E;
 
 	/**
 	 * Returns an ordered range of all the object validation rules where active = &#63; and engine = &#63;.
@@ -720,16 +676,8 @@ public class ObjectValidationRulePersistenceImpl
 			OrderByComparator<ObjectValidationRule> orderByComparator)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByA_E_First(
-			active, engine, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		throw new NoSuchObjectValidationRuleException(
-			_collectionPersistenceFinderByA_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active, engine}));
+		return _collectionPersistenceFinderByA_E.findFirst(
+			finderCache, new Object[] {active, engine}, orderByComparator);
 	}
 
 	/**
@@ -774,8 +722,9 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {active, engine});
 	}
 
-	private UniquePersistenceFinder<ObjectValidationRule>
-		_uniquePersistenceFinderByERC_C_ODI;
+	private UniquePersistenceFinder
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
+			_uniquePersistenceFinderByERC_C_ODI;
 
 	/**
 	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectValidationRuleException</code> if it could not be found.
@@ -792,25 +741,11 @@ public class ObjectValidationRulePersistenceImpl
 			long objectDefinitionId)
 		throws NoSuchObjectValidationRuleException {
 
-		ObjectValidationRule objectValidationRule = fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId);
-
-		if (objectValidationRule == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C_ODI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						externalReferenceCode, companyId, objectDefinitionId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectValidationRuleException(message);
-		}
-
-		return objectValidationRule;
+		return _uniquePersistenceFinderByERC_C_ODI.find(
+			finderCache,
+			new Object[] {
+				externalReferenceCode, companyId, objectDefinitionId
+			});
 	}
 
 	/**
@@ -1450,4 +1385,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-935970674
+// LIFERAY-SERVICE-BUILDER-HASH:1995233235

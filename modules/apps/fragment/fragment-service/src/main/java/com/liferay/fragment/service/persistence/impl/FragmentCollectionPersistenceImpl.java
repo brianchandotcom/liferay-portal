@@ -99,8 +99,9 @@ public class FragmentCollectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the fragment collections where uuid = &#63;.
@@ -141,16 +142,8 @@ public class FragmentCollectionPersistenceImpl
 			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		FragmentCollection fragmentCollection = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -191,8 +184,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<FragmentCollection>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the fragment collection where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -206,21 +200,8 @@ public class FragmentCollectionPersistenceImpl
 	public FragmentCollection findByUUID_G(String uuid, long groupId)
 		throws NoSuchCollectionException {
 
-		FragmentCollection fragmentCollection = fetchByUUID_G(uuid, groupId);
-
-		if (fragmentCollection == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCollectionException(message);
-		}
-
-		return fragmentCollection;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -268,8 +249,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the fragment collections where uuid = &#63; and companyId = &#63;.
@@ -312,16 +294,8 @@ public class FragmentCollectionPersistenceImpl
 			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		FragmentCollection fragmentCollection = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		throw new NoSuchCollectionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -366,8 +340,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the fragment collections where groupId = &#63;.
@@ -503,8 +478,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
 
-	private UniquePersistenceFinder<FragmentCollection>
-		_uniquePersistenceFinderByG_FCK;
+	private UniquePersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_uniquePersistenceFinderByG_FCK;
 
 	/**
 	 * Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -519,23 +495,8 @@ public class FragmentCollectionPersistenceImpl
 			long groupId, String fragmentCollectionKey)
 		throws NoSuchCollectionException {
 
-		FragmentCollection fragmentCollection = fetchByG_FCK(
-			groupId, fragmentCollectionKey);
-
-		if (fragmentCollection == null) {
-			String message =
-				_uniquePersistenceFinderByG_FCK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, fragmentCollectionKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCollectionException(message);
-		}
-
-		return fragmentCollection;
+		return _uniquePersistenceFinderByG_FCK.find(
+			finderCache, new Object[] {groupId, fragmentCollectionKey});
 	}
 
 	/**
@@ -586,8 +547,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionKey});
 	}
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByG_LikeN;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByG_LikeN;
 
 	/**
 	 * Returns all the fragment collections where groupId = &#63; and name LIKE &#63;.
@@ -852,8 +814,9 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), name});
 	}
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByG_M;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByG_M;
 
 	/**
 	 * Returns an ordered range of all the fragment collections where groupId = &#63; and marketplace = &#63;.
@@ -1002,8 +965,9 @@ public class FragmentCollectionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace});
 	}
 
-	private CollectionPersistenceFinder<FragmentCollection>
-		_collectionPersistenceFinderByG_LikeN_M;
+	private CollectionPersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_collectionPersistenceFinderByG_LikeN_M;
 
 	/**
 	 * Returns all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
@@ -1298,8 +1262,9 @@ public class FragmentCollectionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds), name, marketplace});
 	}
 
-	private UniquePersistenceFinder<FragmentCollection>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<FragmentCollection, NoSuchCollectionException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the fragment collection where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -1314,23 +1279,8 @@ public class FragmentCollectionPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchCollectionException {
 
-		FragmentCollection fragmentCollection = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (fragmentCollection == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCollectionException(message);
-		}
-
-		return fragmentCollection;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -2055,4 +2005,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1298388072
+// LIFERAY-SERVICE-BUILDER-HASH:-1877863546

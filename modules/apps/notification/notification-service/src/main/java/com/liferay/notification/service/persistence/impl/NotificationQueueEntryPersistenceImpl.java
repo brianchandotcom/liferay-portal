@@ -77,8 +77,9 @@ public class NotificationQueueEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<NotificationQueueEntry, NoSuchNotificationQueueEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where companyId = &#63;.
@@ -119,16 +120,8 @@ public class NotificationQueueEntryPersistenceImpl
 			OrderByComparator<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException {
 
-		NotificationQueueEntry notificationQueueEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		throw new NoSuchNotificationQueueEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -205,8 +198,9 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
-		_collectionPersistenceFinderByNotificationTemplateId;
+	private FilterCollectionPersistenceFinder
+		<NotificationQueueEntry, NoSuchNotificationQueueEntryException>
+			_collectionPersistenceFinderByNotificationTemplateId;
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where notificationTemplateId = &#63;.
@@ -247,19 +241,9 @@ public class NotificationQueueEntryPersistenceImpl
 			OrderByComparator<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException {
 
-		NotificationQueueEntry notificationQueueEntry =
-			fetchByNotificationTemplateId_First(
-				notificationTemplateId, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		throw new NoSuchNotificationQueueEntryException(
-			_collectionPersistenceFinderByNotificationTemplateId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {notificationTemplateId}));
+		return _collectionPersistenceFinderByNotificationTemplateId.findFirst(
+			finderCache, new Object[] {notificationTemplateId},
+			orderByComparator);
 	}
 
 	/**
@@ -339,8 +323,9 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {notificationTemplateId});
 	}
 
-	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
-		_collectionPersistenceFinderByLtSentDate;
+	private FilterCollectionPersistenceFinder
+		<NotificationQueueEntry, NoSuchNotificationQueueEntryException>
+			_collectionPersistenceFinderByLtSentDate;
 
 	/**
 	 * Returns all the notification queue entries where sentDate &lt; &#63;.
@@ -433,16 +418,8 @@ public class NotificationQueueEntryPersistenceImpl
 			OrderByComparator<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException {
 
-		NotificationQueueEntry notificationQueueEntry = fetchByLtSentDate_First(
-			sentDate, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		throw new NoSuchNotificationQueueEntryException(
-			_collectionPersistenceFinderByLtSentDate.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sentDate}));
+		return _collectionPersistenceFinderByLtSentDate.findFirst(
+			finderCache, new Object[] {sentDate}, orderByComparator);
 	}
 
 	/**
@@ -550,8 +527,9 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {sentDate});
 	}
 
-	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
-		_collectionPersistenceFinderByT_S;
+	private FilterCollectionPersistenceFinder
+		<NotificationQueueEntry, NoSuchNotificationQueueEntryException>
+			_collectionPersistenceFinderByT_S;
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where type = &#63; and status = &#63;.
@@ -594,16 +572,8 @@ public class NotificationQueueEntryPersistenceImpl
 			OrderByComparator<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException {
 
-		NotificationQueueEntry notificationQueueEntry = fetchByT_S_First(
-			type, status, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		throw new NoSuchNotificationQueueEntryException(
-			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, status}));
+		return _collectionPersistenceFinderByT_S.findFirst(
+			finderCache, new Object[] {type, status}, orderByComparator);
 	}
 
 	/**
@@ -1093,4 +1063,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-222112677
+// LIFERAY-SERVICE-BUILDER-HASH:1162816896

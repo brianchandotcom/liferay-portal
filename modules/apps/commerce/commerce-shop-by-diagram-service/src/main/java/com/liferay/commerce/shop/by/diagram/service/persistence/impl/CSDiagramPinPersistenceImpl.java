@@ -79,8 +79,9 @@ public class CSDiagramPinPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CSDiagramPin>
-		_collectionPersistenceFinderByCPDefinitionId;
+	private CollectionPersistenceFinder
+		<CSDiagramPin, NoSuchCSDiagramPinException>
+			_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the cs diagram pins where CPDefinitionId = &#63;.
@@ -121,16 +122,8 @@ public class CSDiagramPinPersistenceImpl
 			OrderByComparator<CSDiagramPin> orderByComparator)
 		throws NoSuchCSDiagramPinException {
 
-		CSDiagramPin csDiagramPin = fetchByCPDefinitionId_First(
-			CPDefinitionId, orderByComparator);
-
-		if (csDiagramPin != null) {
-			return csDiagramPin;
-		}
-
-		throw new NoSuchCSDiagramPinException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -537,4 +530,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:767437601
+// LIFERAY-SERVICE-BUILDER-HASH:-450074057

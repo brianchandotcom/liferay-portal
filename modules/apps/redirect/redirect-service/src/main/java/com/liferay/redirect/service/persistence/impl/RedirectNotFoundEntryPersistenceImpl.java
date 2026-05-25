@@ -83,8 +83,9 @@ public class RedirectNotFoundEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<RedirectNotFoundEntry>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<RedirectNotFoundEntry, NoSuchNotFoundEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the redirect not found entries where groupId = &#63;.
@@ -125,16 +126,8 @@ public class RedirectNotFoundEntryPersistenceImpl
 			OrderByComparator<RedirectNotFoundEntry> orderByComparator)
 		throws NoSuchNotFoundEntryException {
 
-		RedirectNotFoundEntry redirectNotFoundEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (redirectNotFoundEntry != null) {
-			return redirectNotFoundEntry;
-		}
-
-		throw new NoSuchNotFoundEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -176,8 +169,9 @@ public class RedirectNotFoundEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private UniquePersistenceFinder<RedirectNotFoundEntry>
-		_uniquePersistenceFinderByG_U;
+	private UniquePersistenceFinder
+		<RedirectNotFoundEntry, NoSuchNotFoundEntryException>
+			_uniquePersistenceFinderByG_U;
 
 	/**
 	 * Returns the redirect not found entry where groupId = &#63; and url = &#63; or throws a <code>NoSuchNotFoundEntryException</code> if it could not be found.
@@ -191,21 +185,8 @@ public class RedirectNotFoundEntryPersistenceImpl
 	public RedirectNotFoundEntry findByG_U(long groupId, String url)
 		throws NoSuchNotFoundEntryException {
 
-		RedirectNotFoundEntry redirectNotFoundEntry = fetchByG_U(groupId, url);
-
-		if (redirectNotFoundEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_U.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, url});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotFoundEntryException(message);
-		}
-
-		return redirectNotFoundEntry;
+		return _uniquePersistenceFinderByG_U.find(
+			finderCache, new Object[] {groupId, url});
 	}
 
 	/**
@@ -600,4 +581,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1344497443
+// LIFERAY-SERVICE-BUILDER-HASH:-303401106

@@ -66,8 +66,9 @@ public class ServiceComponentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ServiceComponent>
-		_collectionPersistenceFinderByBuildNamespace;
+	private CollectionPersistenceFinder
+		<ServiceComponent, NoSuchServiceComponentException>
+			_collectionPersistenceFinderByBuildNamespace;
 
 	/**
 	 * Returns an ordered range of all the service components where buildNamespace = &#63;.
@@ -108,16 +109,9 @@ public class ServiceComponentPersistenceImpl
 			OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException {
 
-		ServiceComponent serviceComponent = fetchByBuildNamespace_First(
-			buildNamespace, orderByComparator);
-
-		if (serviceComponent != null) {
-			return serviceComponent;
-		}
-
-		throw new NoSuchServiceComponentException(
-			_collectionPersistenceFinderByBuildNamespace.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {buildNamespace}));
+		return _collectionPersistenceFinderByBuildNamespace.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {buildNamespace},
+			orderByComparator);
 	}
 
 	/**
@@ -160,8 +154,9 @@ public class ServiceComponentPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {buildNamespace});
 	}
 
-	private UniquePersistenceFinder<ServiceComponent>
-		_uniquePersistenceFinderByBNS_BNU;
+	private UniquePersistenceFinder
+		<ServiceComponent, NoSuchServiceComponentException>
+			_uniquePersistenceFinderByBNS_BNU;
 
 	/**
 	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a <code>NoSuchServiceComponentException</code> if it could not be found.
@@ -176,23 +171,9 @@ public class ServiceComponentPersistenceImpl
 			String buildNamespace, long buildNumber)
 		throws NoSuchServiceComponentException {
 
-		ServiceComponent serviceComponent = fetchByBNS_BNU(
-			buildNamespace, buildNumber);
-
-		if (serviceComponent == null) {
-			String message =
-				_uniquePersistenceFinderByBNS_BNU.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {buildNamespace, buildNumber});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchServiceComponentException(message);
-		}
-
-		return serviceComponent;
+		return _uniquePersistenceFinderByBNS_BNU.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {buildNamespace, buildNumber});
 	}
 
 	/**
@@ -512,4 +493,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-621617975
+// LIFERAY-SERVICE-BUILDER-HASH:2142334661

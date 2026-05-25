@@ -87,8 +87,9 @@ public class EmailAddressPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the email addresses where uuid = &#63;.
@@ -128,15 +129,9 @@ public class EmailAddressPersistenceImpl
 			String uuid, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByUuid_First(uuid, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -178,8 +173,9 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the email addresses where uuid = &#63; and companyId = &#63;.
@@ -222,16 +218,9 @@ public class EmailAddressPersistenceImpl
 			OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -277,8 +266,9 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the email addresses where companyId = &#63;.
@@ -318,16 +308,9 @@ public class EmailAddressPersistenceImpl
 			long companyId, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -369,8 +352,9 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the email addresses where userId = &#63;.
@@ -410,16 +394,9 @@ public class EmailAddressPersistenceImpl
 			long userId, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -461,8 +438,9 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the email addresses where companyId = &#63; and classNameId = &#63;.
@@ -506,17 +484,9 @@ public class EmailAddressPersistenceImpl
 			OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -564,8 +534,9 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByC_C_C;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByC_C_C;
 
 	/**
 	 * Returns an ordered range of all the email addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -611,17 +582,9 @@ public class EmailAddressPersistenceImpl
 			OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -672,8 +635,9 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<EmailAddress>
-		_collectionPersistenceFinderByC_C_C_P;
+	private CollectionPersistenceFinder
+		<EmailAddress, NoSuchEmailAddressException>
+			_collectionPersistenceFinderByC_C_C_P;
 
 	/**
 	 * Returns an ordered range of all the email addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -721,17 +685,10 @@ public class EmailAddressPersistenceImpl
 			OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByC_C_C_P_First(
-			companyId, classNameId, classPK, primary, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		throw new NoSuchEmailAddressException(
-			_collectionPersistenceFinderByC_C_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK, primary}));
+		return _collectionPersistenceFinderByC_C_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary},
+			orderByComparator);
 	}
 
 	/**
@@ -790,7 +747,7 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId, classPK, primary});
 	}
 
-	private UniquePersistenceFinder<EmailAddress>
+	private UniquePersistenceFinder<EmailAddress, NoSuchEmailAddressException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -806,23 +763,9 @@ public class EmailAddressPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchEmailAddressException {
 
-		EmailAddress emailAddress = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (emailAddress == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEmailAddressException(message);
-		}
-
-		return emailAddress;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1503,4 +1446,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1533913862
+// LIFERAY-SERVICE-BUILDER-HASH:1604494861

@@ -63,7 +63,7 @@ public class UserTrackerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserTracker>
+	private CollectionPersistenceFinder<UserTracker, NoSuchUserTrackerException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -104,16 +104,9 @@ public class UserTrackerPersistenceImpl
 			long companyId, OrderByComparator<UserTracker> orderByComparator)
 		throws NoSuchUserTrackerException {
 
-		UserTracker userTracker = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		throw new NoSuchUserTrackerException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -155,7 +148,7 @@ public class UserTrackerPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<UserTracker>
+	private CollectionPersistenceFinder<UserTracker, NoSuchUserTrackerException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -196,16 +189,9 @@ public class UserTrackerPersistenceImpl
 			long userId, OrderByComparator<UserTracker> orderByComparator)
 		throws NoSuchUserTrackerException {
 
-		UserTracker userTracker = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		throw new NoSuchUserTrackerException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -247,7 +233,7 @@ public class UserTrackerPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<UserTracker>
+	private CollectionPersistenceFinder<UserTracker, NoSuchUserTrackerException>
 		_collectionPersistenceFinderBySessionId;
 
 	/**
@@ -288,16 +274,9 @@ public class UserTrackerPersistenceImpl
 			String sessionId, OrderByComparator<UserTracker> orderByComparator)
 		throws NoSuchUserTrackerException {
 
-		UserTracker userTracker = fetchBySessionId_First(
-			sessionId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		throw new NoSuchUserTrackerException(
-			_collectionPersistenceFinderBySessionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sessionId}));
+		return _collectionPersistenceFinderBySessionId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {sessionId},
+			orderByComparator);
 	}
 
 	/**
@@ -632,4 +611,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-668625110
+// LIFERAY-SERVICE-BUILDER-HASH:1566270327

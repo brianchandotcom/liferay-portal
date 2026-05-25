@@ -96,8 +96,9 @@ public class UserGroupPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63;.
@@ -137,15 +138,9 @@ public class UserGroupPersistenceImpl
 			String uuid, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByUuid_First(uuid, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -222,8 +217,9 @@ public class UserGroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63; and companyId = &#63;.
@@ -266,16 +262,9 @@ public class UserGroupPersistenceImpl
 			OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -359,8 +348,9 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63;.
@@ -400,16 +390,9 @@ public class UserGroupPersistenceImpl
 			long companyId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -487,8 +470,8 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByC_P;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException> _collectionPersistenceFinderByC_P;
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
@@ -532,17 +515,9 @@ public class UserGroupPersistenceImpl
 			OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByC_P_First(
-			companyId, parentUserGroupId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentUserGroupId}));
+		return _collectionPersistenceFinderByC_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentUserGroupId}, orderByComparator);
 	}
 
 	/**
@@ -629,7 +604,8 @@ public class UserGroupPersistenceImpl
 			new Object[] {companyId, parentUserGroupId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<UserGroup> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<UserGroup, NoSuchUserGroupException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the user group where companyId = &#63; and name = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.
@@ -643,21 +619,8 @@ public class UserGroupPersistenceImpl
 	public UserGroup findByC_N(long companyId, String name)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByC_N(companyId, name);
-
-		if (userGroup == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserGroupException(message);
-		}
-
-		return userGroup;
+		return _uniquePersistenceFinderByC_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
 	/**
@@ -706,8 +669,9 @@ public class UserGroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByC_LikeN;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException>
+			_collectionPersistenceFinderByC_LikeN;
 
 	/**
 	 * Returns all the user groups where companyId = &#63; and name LIKE &#63;.
@@ -806,16 +770,9 @@ public class UserGroupPersistenceImpl
 			OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByC_LikeN_First(
-			companyId, name, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByC_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
+		return _collectionPersistenceFinderByC_LikeN.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -932,8 +889,9 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<UserGroup>
-		_collectionPersistenceFinderByGtU_C_P;
+	private FilterCollectionPersistenceFinder
+		<UserGroup, NoSuchUserGroupException>
+			_collectionPersistenceFinderByGtU_C_P;
 
 	/**
 	 * Returns all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
@@ -1044,17 +1002,10 @@ public class UserGroupPersistenceImpl
 			OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByGtU_C_P_First(
-			userGroupId, companyId, parentUserGroupId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		throw new NoSuchUserGroupException(
-			_collectionPersistenceFinderByGtU_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userGroupId, companyId, parentUserGroupId}));
+		return _collectionPersistenceFinderByGtU_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userGroupId, companyId, parentUserGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1194,7 +1145,8 @@ public class UserGroupPersistenceImpl
 			0);
 	}
 
-	private UniquePersistenceFinder<UserGroup> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<UserGroup, NoSuchUserGroupException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the user group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.
@@ -1208,22 +1160,9 @@ public class UserGroupPersistenceImpl
 	public UserGroup findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchUserGroupException {
 
-		UserGroup userGroup = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (userGroup == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserGroupException(message);
-		}
-
-		return userGroup;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -2874,4 +2813,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:5842970
+// LIFERAY-SERVICE-BUILDER-HASH:1595171393

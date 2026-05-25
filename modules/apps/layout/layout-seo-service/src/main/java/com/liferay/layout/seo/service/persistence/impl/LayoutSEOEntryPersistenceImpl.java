@@ -86,7 +86,7 @@ public class LayoutSEOEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutSEOEntry>
+	private CollectionPersistenceFinder<LayoutSEOEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,16 +127,8 @@ public class LayoutSEOEntryPersistenceImpl
 			String uuid, OrderByComparator<LayoutSEOEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		LayoutSEOEntry layoutSEOEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutSEOEntry != null) {
-			return layoutSEOEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -177,7 +169,7 @@ public class LayoutSEOEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutSEOEntry>
+	private UniquePersistenceFinder<LayoutSEOEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -192,21 +184,8 @@ public class LayoutSEOEntryPersistenceImpl
 	public LayoutSEOEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException {
 
-		LayoutSEOEntry layoutSEOEntry = fetchByUUID_G(uuid, groupId);
-
-		if (layoutSEOEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return layoutSEOEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -254,7 +233,7 @@ public class LayoutSEOEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutSEOEntry>
+	private CollectionPersistenceFinder<LayoutSEOEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -298,16 +277,8 @@ public class LayoutSEOEntryPersistenceImpl
 			OrderByComparator<LayoutSEOEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		LayoutSEOEntry layoutSEOEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutSEOEntry != null) {
-			return layoutSEOEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,7 +323,7 @@ public class LayoutSEOEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<LayoutSEOEntry>
+	private UniquePersistenceFinder<LayoutSEOEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_P_L;
 
 	/**
@@ -369,23 +340,8 @@ public class LayoutSEOEntryPersistenceImpl
 			long groupId, boolean privateLayout, long layoutId)
 		throws NoSuchEntryException {
 
-		LayoutSEOEntry layoutSEOEntry = fetchByG_P_L(
-			groupId, privateLayout, layoutId);
-
-		if (layoutSEOEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_L.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, privateLayout, layoutId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return layoutSEOEntry;
+		return _uniquePersistenceFinderByG_P_L.find(
+			finderCache, new Object[] {groupId, privateLayout, layoutId});
 	}
 
 	/**
@@ -917,4 +873,4 @@ public class LayoutSEOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:668067893
+// LIFERAY-SERVICE-BUILDER-HASH:-1651481726

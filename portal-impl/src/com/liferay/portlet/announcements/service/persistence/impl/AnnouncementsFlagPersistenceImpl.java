@@ -74,7 +74,7 @@ public class AnnouncementsFlagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AnnouncementsFlag>
+	private CollectionPersistenceFinder<AnnouncementsFlag, NoSuchFlagException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -116,16 +116,9 @@ public class AnnouncementsFlagPersistenceImpl
 			OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
 
-		AnnouncementsFlag announcementsFlag = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (announcementsFlag != null) {
-			return announcementsFlag;
-		}
-
-		throw new NoSuchFlagException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -168,7 +161,7 @@ public class AnnouncementsFlagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<AnnouncementsFlag>
+	private CollectionPersistenceFinder<AnnouncementsFlag, NoSuchFlagException>
 		_collectionPersistenceFinderByEntryId;
 
 	/**
@@ -210,16 +203,9 @@ public class AnnouncementsFlagPersistenceImpl
 			OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
 
-		AnnouncementsFlag announcementsFlag = fetchByEntryId_First(
-			entryId, orderByComparator);
-
-		if (announcementsFlag != null) {
-			return announcementsFlag;
-		}
-
-		throw new NoSuchFlagException(
-			_collectionPersistenceFinderByEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId}));
+		return _collectionPersistenceFinderByEntryId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {entryId},
+			orderByComparator);
 	}
 
 	/**
@@ -261,7 +247,7 @@ public class AnnouncementsFlagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {entryId});
 	}
 
-	private UniquePersistenceFinder<AnnouncementsFlag>
+	private UniquePersistenceFinder<AnnouncementsFlag, NoSuchFlagException>
 		_uniquePersistenceFinderByU_E_V;
 
 	/**
@@ -277,23 +263,9 @@ public class AnnouncementsFlagPersistenceImpl
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)
 		throws NoSuchFlagException {
 
-		AnnouncementsFlag announcementsFlag = fetchByU_E_V(
-			userId, entryId, value);
-
-		if (announcementsFlag == null) {
-			String message =
-				_uniquePersistenceFinderByU_E_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, entryId, value});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFlagException(message);
-		}
-
-		return announcementsFlag;
+		return _uniquePersistenceFinderByU_E_V.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, entryId, value});
 	}
 
 	/**
@@ -713,4 +685,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1910695575
+// LIFERAY-SERVICE-BUILDER-HASH:-32841522

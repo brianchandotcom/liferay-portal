@@ -69,7 +69,7 @@ public class CTMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTMessage>
+	private CollectionPersistenceFinder<CTMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
@@ -110,16 +110,8 @@ public class CTMessagePersistenceImpl
 			long ctCollectionId, OrderByComparator<CTMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		CTMessage ctMessage = fetchByCtCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (ctMessage != null) {
-			return ctMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
+		return _collectionPersistenceFinderByCtCollectionId.findFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -421,4 +413,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-536133942
+// LIFERAY-SERVICE-BUILDER-HASH:-1802072068

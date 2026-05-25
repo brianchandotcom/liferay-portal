@@ -73,8 +73,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AnnouncementsDelivery>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<AnnouncementsDelivery, NoSuchDeliveryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the announcements deliveries where companyId = &#63;.
@@ -115,16 +116,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
 
-		AnnouncementsDelivery announcementsDelivery = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (announcementsDelivery != null) {
-			return announcementsDelivery;
-		}
-
-		throw new NoSuchDeliveryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -167,8 +161,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<AnnouncementsDelivery>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<AnnouncementsDelivery, NoSuchDeliveryException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the announcements deliveries where userId = &#63;.
@@ -209,16 +204,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
 
-		AnnouncementsDelivery announcementsDelivery = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (announcementsDelivery != null) {
-			return announcementsDelivery;
-		}
-
-		throw new NoSuchDeliveryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -261,8 +249,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private UniquePersistenceFinder<AnnouncementsDelivery>
-		_uniquePersistenceFinderByU_T;
+	private UniquePersistenceFinder
+		<AnnouncementsDelivery, NoSuchDeliveryException>
+			_uniquePersistenceFinderByU_T;
 
 	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or throws a <code>NoSuchDeliveryException</code> if it could not be found.
@@ -276,21 +265,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 	public AnnouncementsDelivery findByU_T(long userId, String type)
 		throws NoSuchDeliveryException {
 
-		AnnouncementsDelivery announcementsDelivery = fetchByU_T(userId, type);
-
-		if (announcementsDelivery == null) {
-			String message =
-				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDeliveryException(message);
-		}
-
-		return announcementsDelivery;
+		return _uniquePersistenceFinderByU_T.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, type});
 	}
 
 	/**
@@ -709,4 +685,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:598016581
+// LIFERAY-SERVICE-BUILDER-HASH:-1322477903

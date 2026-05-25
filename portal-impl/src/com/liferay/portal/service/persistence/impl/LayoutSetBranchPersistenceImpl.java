@@ -69,8 +69,9 @@ public class LayoutSetBranchPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<LayoutSetBranch>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetBranch, NoSuchLayoutSetBranchException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the layout set branches where groupId = &#63;.
@@ -110,16 +111,9 @@ public class LayoutSetBranchPersistenceImpl
 			long groupId, OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
 
-		LayoutSetBranch layoutSetBranch = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		throw new NoSuchLayoutSetBranchException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -196,8 +190,9 @@ public class LayoutSetBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutSetBranch>
-		_collectionPersistenceFinderByG_P;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetBranch, NoSuchLayoutSetBranchException>
+			_collectionPersistenceFinderByG_P;
 
 	/**
 	 * Returns an ordered range of all the layout set branches where groupId = &#63; and privateLayout = &#63;.
@@ -241,17 +236,9 @@ public class LayoutSetBranchPersistenceImpl
 			OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
 
-		LayoutSetBranch layoutSetBranch = fetchByG_P_First(
-			groupId, privateLayout, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		throw new NoSuchLayoutSetBranchException(
-			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, privateLayout}));
+		return _collectionPersistenceFinderByG_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout}, orderByComparator);
 	}
 
 	/**
@@ -338,8 +325,9 @@ public class LayoutSetBranchPersistenceImpl
 			new Object[] {groupId, privateLayout}, groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutSetBranch>
-		_uniquePersistenceFinderByG_P_N;
+	private UniquePersistenceFinder
+		<LayoutSetBranch, NoSuchLayoutSetBranchException>
+			_uniquePersistenceFinderByG_P_N;
 
 	/**
 	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or throws a <code>NoSuchLayoutSetBranchException</code> if it could not be found.
@@ -355,23 +343,9 @@ public class LayoutSetBranchPersistenceImpl
 			long groupId, boolean privateLayout, String name)
 		throws NoSuchLayoutSetBranchException {
 
-		LayoutSetBranch layoutSetBranch = fetchByG_P_N(
-			groupId, privateLayout, name);
-
-		if (layoutSetBranch == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, privateLayout, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutSetBranchException(message);
-		}
-
-		return layoutSetBranch;
+		return _uniquePersistenceFinderByG_P_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, name});
 	}
 
 	/**
@@ -427,8 +401,9 @@ public class LayoutSetBranchPersistenceImpl
 			new Object[] {groupId, privateLayout, name});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutSetBranch>
-		_collectionPersistenceFinderByG_P_M;
+	private FilterCollectionPersistenceFinder
+		<LayoutSetBranch, NoSuchLayoutSetBranchException>
+			_collectionPersistenceFinderByG_P_M;
 
 	/**
 	 * Returns an ordered range of all the layout set branches where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -474,17 +449,9 @@ public class LayoutSetBranchPersistenceImpl
 			OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
 
-		LayoutSetBranch layoutSetBranch = fetchByG_P_M_First(
-			groupId, privateLayout, master, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		throw new NoSuchLayoutSetBranchException(
-			_collectionPersistenceFinderByG_P_M.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, privateLayout, master}));
+		return _collectionPersistenceFinderByG_P_M.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, master}, orderByComparator);
 	}
 
 	/**
@@ -955,4 +922,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2047384510
+// LIFERAY-SERVICE-BUILDER-HASH:-2065472490

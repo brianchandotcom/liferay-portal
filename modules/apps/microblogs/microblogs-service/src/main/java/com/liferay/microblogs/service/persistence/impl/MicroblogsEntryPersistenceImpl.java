@@ -78,8 +78,9 @@ public class MicroblogsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63;.
@@ -120,16 +121,8 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -205,8 +198,9 @@ public class MicroblogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByUserId;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where userId = &#63;.
@@ -246,16 +240,8 @@ public class MicroblogsEntryPersistenceImpl
 			long userId, OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -330,8 +316,9 @@ public class MicroblogsEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByU_T;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByU_T;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where userId = &#63; and type = &#63;.
@@ -374,16 +361,8 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByU_T_First(
-			userId, type, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByU_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type}));
+		return _collectionPersistenceFinderByU_T.findFirst(
+			finderCache, new Object[] {userId, type}, orderByComparator);
 	}
 
 	/**
@@ -465,8 +444,9 @@ public class MicroblogsEntryPersistenceImpl
 			finderCache, new Object[] {userId, type});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByCCNI_CCPK;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCCNI_CCPK;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -713,8 +693,9 @@ public class MicroblogsEntryPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByCCNI_T;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCCNI_T;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and type = &#63;.
@@ -757,17 +738,9 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByCCNI_T_First(
-			creatorClassNameId, type, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCCNI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {creatorClassNameId, type}));
+		return _collectionPersistenceFinderByCCNI_T.findFirst(
+			finderCache, new Object[] {creatorClassNameId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -850,8 +823,9 @@ public class MicroblogsEntryPersistenceImpl
 			finderCache, new Object[] {creatorClassNameId, type});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByT_P;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByT_P;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where type = &#63; and parentMicroblogsEntryId = &#63;.
@@ -894,17 +868,9 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByT_P_First(
-			type, parentMicroblogsEntryId, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByT_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {type, parentMicroblogsEntryId}));
+		return _collectionPersistenceFinderByT_P.findFirst(
+			finderCache, new Object[] {type, parentMicroblogsEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -987,8 +953,9 @@ public class MicroblogsEntryPersistenceImpl
 			finderCache, new Object[] {type, parentMicroblogsEntryId});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByC_CCNI_CCPK;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_CCNI_CCPK;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -1271,8 +1238,9 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByC_CCNI_T;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_CCNI_T;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
@@ -1317,17 +1285,9 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByC_CCNI_T_First(
-			companyId, creatorClassNameId, type, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_CCNI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, creatorClassNameId, type}));
+		return _collectionPersistenceFinderByC_CCNI_T.findFirst(
+			finderCache, new Object[] {companyId, creatorClassNameId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1422,8 +1382,9 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByCCNI_CCPK_T;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCCNI_CCPK_T;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -1702,8 +1663,9 @@ public class MicroblogsEntryPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByC_CCNI_CCPK_T;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_CCNI_CCPK_T;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -2008,8 +1970,9 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<MicroblogsEntry>
-		_collectionPersistenceFinderByU_C_T_S;
+	private FilterCollectionPersistenceFinder
+		<MicroblogsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByU_C_T_S;
 
 	/**
 	 * Returns an ordered range of all the microblogs entries where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
@@ -2058,17 +2021,10 @@ public class MicroblogsEntryPersistenceImpl
 			OrderByComparator<MicroblogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		MicroblogsEntry microblogsEntry = fetchByU_C_T_S_First(
-			userId, createDate, type, socialRelationType, orderByComparator);
-
-		if (microblogsEntry != null) {
-			return microblogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByU_C_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, createDate, type, socialRelationType}));
+		return _collectionPersistenceFinderByU_C_T_S.findFirst(
+			finderCache,
+			new Object[] {userId, createDate, type, socialRelationType},
+			orderByComparator);
 	}
 
 	/**
@@ -2910,4 +2866,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:822266618
+// LIFERAY-SERVICE-BUILDER-HASH:-662080846

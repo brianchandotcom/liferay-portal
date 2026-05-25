@@ -95,8 +95,9 @@ public class CPTaxCategoryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CPTaxCategory>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CPTaxCategory, NoSuchCPTaxCategoryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp tax categories where uuid = &#63;.
@@ -136,16 +137,8 @@ public class CPTaxCategoryPersistenceImpl
 			String uuid, OrderByComparator<CPTaxCategory> orderByComparator)
 		throws NoSuchCPTaxCategoryException {
 
-		CPTaxCategory cpTaxCategory = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		throw new NoSuchCPTaxCategoryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -220,8 +213,9 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CPTaxCategory>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CPTaxCategory, NoSuchCPTaxCategoryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp tax categories where uuid = &#63; and companyId = &#63;.
@@ -264,16 +258,8 @@ public class CPTaxCategoryPersistenceImpl
 			OrderByComparator<CPTaxCategory> orderByComparator)
 		throws NoSuchCPTaxCategoryException {
 
-		CPTaxCategory cpTaxCategory = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		throw new NoSuchCPTaxCategoryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +341,9 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CPTaxCategory>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CPTaxCategory, NoSuchCPTaxCategoryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cp tax categories where companyId = &#63;.
@@ -396,16 +383,8 @@ public class CPTaxCategoryPersistenceImpl
 			long companyId, OrderByComparator<CPTaxCategory> orderByComparator)
 		throws NoSuchCPTaxCategoryException {
 
-		CPTaxCategory cpTaxCategory = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		throw new NoSuchCPTaxCategoryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -481,7 +460,7 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CPTaxCategory>
+	private UniquePersistenceFinder<CPTaxCategory, NoSuchCPTaxCategoryException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -497,23 +476,8 @@ public class CPTaxCategoryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchCPTaxCategoryException {
 
-		CPTaxCategory cpTaxCategory = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (cpTaxCategory == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPTaxCategoryException(message);
-		}
-
-		return cpTaxCategory;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1092,4 +1056,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1525373566
+// LIFERAY-SERVICE-BUILDER-HASH:-471371481

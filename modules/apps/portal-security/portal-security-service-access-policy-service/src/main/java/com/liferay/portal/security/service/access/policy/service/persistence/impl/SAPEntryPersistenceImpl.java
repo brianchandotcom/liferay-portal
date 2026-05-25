@@ -80,7 +80,7 @@ public class SAPEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -120,15 +120,8 @@ public class SAPEntryPersistenceImpl
 			String uuid, OrderByComparator<SAPEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SAPEntry sapEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -203,7 +196,7 @@ public class SAPEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -246,16 +239,8 @@ public class SAPEntryPersistenceImpl
 			OrderByComparator<SAPEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SAPEntry sapEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -337,7 +322,7 @@ public class SAPEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -377,16 +362,8 @@ public class SAPEntryPersistenceImpl
 			long companyId, OrderByComparator<SAPEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SAPEntry sapEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -462,7 +439,7 @@ public class SAPEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_D;
 
 	/**
@@ -505,17 +482,9 @@ public class SAPEntryPersistenceImpl
 			OrderByComparator<SAPEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SAPEntry sapEntry = fetchByC_D_First(
-			companyId, defaultSAPEntry, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, defaultSAPEntry}));
+		return _collectionPersistenceFinderByC_D.findFirst(
+			finderCache, new Object[] {companyId, defaultSAPEntry},
+			orderByComparator);
 	}
 
 	/**
@@ -599,7 +568,8 @@ public class SAPEntryPersistenceImpl
 			0);
 	}
 
-	private UniquePersistenceFinder<SAPEntry> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<SAPEntry, NoSuchEntryException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the sap entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -613,21 +583,8 @@ public class SAPEntryPersistenceImpl
 	public SAPEntry findByC_N(long companyId, String name)
 		throws NoSuchEntryException {
 
-		SAPEntry sapEntry = fetchByC_N(companyId, name);
-
-		if (sapEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return sapEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -1084,4 +1041,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1840937106
+// LIFERAY-SERVICE-BUILDER-HASH:1828850841

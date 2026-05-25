@@ -82,8 +82,9 @@ public class KaleoNodeSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoNodeSetting>
-		_collectionPersistenceFinderByKaleoNodeId;
+	private CollectionPersistenceFinder
+		<KaleoNodeSetting, NoSuchNodeSettingException>
+			_collectionPersistenceFinderByKaleoNodeId;
 
 	/**
 	 * Returns an ordered range of all the kaleo node settings where kaleoNodeId = &#63;.
@@ -124,16 +125,8 @@ public class KaleoNodeSettingPersistenceImpl
 			OrderByComparator<KaleoNodeSetting> orderByComparator)
 		throws NoSuchNodeSettingException {
 
-		KaleoNodeSetting kaleoNodeSetting = fetchByKaleoNodeId_First(
-			kaleoNodeId, orderByComparator);
-
-		if (kaleoNodeSetting != null) {
-			return kaleoNodeSetting;
-		}
-
-		throw new NoSuchNodeSettingException(
-			_collectionPersistenceFinderByKaleoNodeId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId}));
+		return _collectionPersistenceFinderByKaleoNodeId.findFirst(
+			finderCache, new Object[] {kaleoNodeId}, orderByComparator);
 	}
 
 	/**
@@ -175,8 +168,9 @@ public class KaleoNodeSettingPersistenceImpl
 			finderCache, new Object[] {kaleoNodeId});
 	}
 
-	private UniquePersistenceFinder<KaleoNodeSetting>
-		_uniquePersistenceFinderByKNI_N;
+	private UniquePersistenceFinder
+		<KaleoNodeSetting, NoSuchNodeSettingException>
+			_uniquePersistenceFinderByKNI_N;
 
 	/**
 	 * Returns the kaleo node setting where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchNodeSettingException</code> if it could not be found.
@@ -190,21 +184,8 @@ public class KaleoNodeSettingPersistenceImpl
 	public KaleoNodeSetting findByKNI_N(long kaleoNodeId, String name)
 		throws NoSuchNodeSettingException {
 
-		KaleoNodeSetting kaleoNodeSetting = fetchByKNI_N(kaleoNodeId, name);
-
-		if (kaleoNodeSetting == null) {
-			String message =
-				_uniquePersistenceFinderByKNI_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNodeSettingException(message);
-		}
-
-		return kaleoNodeSetting;
+		return _uniquePersistenceFinderByKNI_N.find(
+			finderCache, new Object[] {kaleoNodeId, name});
 	}
 
 	/**
@@ -641,4 +622,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-322948091
+// LIFERAY-SERVICE-BUILDER-HASH:-1959807797

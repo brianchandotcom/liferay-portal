@@ -82,8 +82,9 @@ public class KaleoTransitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoTransition>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<KaleoTransition, NoSuchTransitionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the kaleo transitions where companyId = &#63;.
@@ -124,16 +125,8 @@ public class KaleoTransitionPersistenceImpl
 			OrderByComparator<KaleoTransition> orderByComparator)
 		throws NoSuchTransitionException {
 
-		KaleoTransition kaleoTransition = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		throw new NoSuchTransitionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class KaleoTransitionPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoTransition>
-		_collectionPersistenceFinderByKaleoDefinitionVersionId;
+	private CollectionPersistenceFinder
+		<KaleoTransition, NoSuchTransitionException>
+			_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
 	 * Returns an ordered range of all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
@@ -216,18 +210,9 @@ public class KaleoTransitionPersistenceImpl
 			OrderByComparator<KaleoTransition> orderByComparator)
 		throws NoSuchTransitionException {
 
-		KaleoTransition kaleoTransition = fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		throw new NoSuchTransitionException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -273,8 +258,9 @@ public class KaleoTransitionPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private CollectionPersistenceFinder<KaleoTransition>
-		_collectionPersistenceFinderByKaleoNodeId;
+	private CollectionPersistenceFinder
+		<KaleoTransition, NoSuchTransitionException>
+			_collectionPersistenceFinderByKaleoNodeId;
 
 	/**
 	 * Returns an ordered range of all the kaleo transitions where kaleoNodeId = &#63;.
@@ -315,16 +301,8 @@ public class KaleoTransitionPersistenceImpl
 			OrderByComparator<KaleoTransition> orderByComparator)
 		throws NoSuchTransitionException {
 
-		KaleoTransition kaleoTransition = fetchByKaleoNodeId_First(
-			kaleoNodeId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		throw new NoSuchTransitionException(
-			_collectionPersistenceFinderByKaleoNodeId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId}));
+		return _collectionPersistenceFinderByKaleoNodeId.findFirst(
+			finderCache, new Object[] {kaleoNodeId}, orderByComparator);
 	}
 
 	/**
@@ -366,7 +344,7 @@ public class KaleoTransitionPersistenceImpl
 			finderCache, new Object[] {kaleoNodeId});
 	}
 
-	private UniquePersistenceFinder<KaleoTransition>
+	private UniquePersistenceFinder<KaleoTransition, NoSuchTransitionException>
 		_uniquePersistenceFinderByKNI_N;
 
 	/**
@@ -381,21 +359,8 @@ public class KaleoTransitionPersistenceImpl
 	public KaleoTransition findByKNI_N(long kaleoNodeId, String name)
 		throws NoSuchTransitionException {
 
-		KaleoTransition kaleoTransition = fetchByKNI_N(kaleoNodeId, name);
-
-		if (kaleoTransition == null) {
-			String message =
-				_uniquePersistenceFinderByKNI_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTransitionException(message);
-		}
-
-		return kaleoTransition;
+		return _uniquePersistenceFinderByKNI_N.find(
+			finderCache, new Object[] {kaleoNodeId, name});
 	}
 
 	/**
@@ -443,7 +408,7 @@ public class KaleoTransitionPersistenceImpl
 			finderCache, new Object[] {kaleoNodeId, name});
 	}
 
-	private UniquePersistenceFinder<KaleoTransition>
+	private UniquePersistenceFinder<KaleoTransition, NoSuchTransitionException>
 		_uniquePersistenceFinderByKNI_DT;
 
 	/**
@@ -459,23 +424,8 @@ public class KaleoTransitionPersistenceImpl
 			long kaleoNodeId, boolean defaultTransition)
 		throws NoSuchTransitionException {
 
-		KaleoTransition kaleoTransition = fetchByKNI_DT(
-			kaleoNodeId, defaultTransition);
-
-		if (kaleoTransition == null) {
-			String message =
-				_uniquePersistenceFinderByKNI_DT.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoNodeId, defaultTransition});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTransitionException(message);
-		}
-
-		return kaleoTransition;
+		return _uniquePersistenceFinderByKNI_DT.find(
+			finderCache, new Object[] {kaleoNodeId, defaultTransition});
 	}
 
 	/**
@@ -997,4 +947,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:473538683
+// LIFERAY-SERVICE-BUILDER-HASH:1277578568

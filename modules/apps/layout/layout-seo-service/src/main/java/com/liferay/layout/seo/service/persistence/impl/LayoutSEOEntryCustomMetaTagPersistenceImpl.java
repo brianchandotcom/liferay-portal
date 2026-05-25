@@ -77,8 +77,9 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutSEOEntryCustomMetaTag>
-		_collectionPersistenceFinderByG_L;
+	private CollectionPersistenceFinder
+		<LayoutSEOEntryCustomMetaTag, NoSuchEntryCustomMetaTagException>
+			_collectionPersistenceFinderByG_L;
 
 	/**
 	 * Returns an ordered range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
@@ -121,17 +122,9 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 			OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator)
 		throws NoSuchEntryCustomMetaTagException {
 
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag =
-			fetchByG_L_First(groupId, layoutSEOEntryId, orderByComparator);
-
-		if (layoutSEOEntryCustomMetaTag != null) {
-			return layoutSEOEntryCustomMetaTag;
-		}
-
-		throw new NoSuchEntryCustomMetaTagException(
-			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, layoutSEOEntryId}));
+		return _collectionPersistenceFinderByG_L.findFirst(
+			finderCache, new Object[] {groupId, layoutSEOEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -540,4 +533,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1280445603
+// LIFERAY-SERVICE-BUILDER-HASH:606501004

@@ -77,8 +77,10 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<OAuth2ApplicationScopeAliases,
+		 NoSuchOAuth2ApplicationScopeAliasesException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -119,16 +121,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
 
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (oAuth2ApplicationScopeAliases != null) {
-			return oAuth2ApplicationScopeAliases;
-		}
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -170,8 +164,10 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
-		_collectionPersistenceFinderByOAuth2ApplicationId;
+	private CollectionPersistenceFinder
+		<OAuth2ApplicationScopeAliases,
+		 NoSuchOAuth2ApplicationScopeAliasesException>
+			_collectionPersistenceFinderByOAuth2ApplicationId;
 
 	/**
 	 * Returns an ordered range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63;.
@@ -212,19 +208,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
 
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByOAuth2ApplicationId_First(
-				oAuth2ApplicationId, orderByComparator);
-
-		if (oAuth2ApplicationScopeAliases != null) {
-			return oAuth2ApplicationScopeAliases;
-		}
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(
-			_collectionPersistenceFinderByOAuth2ApplicationId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {oAuth2ApplicationId}));
+		return _collectionPersistenceFinderByOAuth2ApplicationId.findFirst(
+			finderCache, new Object[] {oAuth2ApplicationId}, orderByComparator);
 	}
 
 	/**
@@ -618,4 +603,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1423927722
+// LIFERAY-SERVICE-BUILDER-HASH:1461443562

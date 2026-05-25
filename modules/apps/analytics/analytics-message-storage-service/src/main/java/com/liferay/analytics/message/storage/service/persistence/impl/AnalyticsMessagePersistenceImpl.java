@@ -79,8 +79,9 @@ public class AnalyticsMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AnalyticsMessage>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<AnalyticsMessage, NoSuchMessageException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the analytics messages where companyId = &#63;.
@@ -121,16 +122,8 @@ public class AnalyticsMessagePersistenceImpl
 			OrderByComparator<AnalyticsMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		AnalyticsMessage analyticsMessage = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (analyticsMessage != null) {
-			return analyticsMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -529,4 +522,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258172847
+// LIFERAY-SERVICE-BUILDER-HASH:1111256831

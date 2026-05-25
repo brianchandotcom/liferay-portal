@@ -79,8 +79,9 @@ public class DDMStructureLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMStructureLink>
-		_collectionPersistenceFinderByStructureId;
+	private CollectionPersistenceFinder
+		<DDMStructureLink, NoSuchStructureLinkException>
+			_collectionPersistenceFinderByStructureId;
 
 	/**
 	 * Returns an ordered range of all the ddm structure links where structureId = &#63;.
@@ -121,16 +122,8 @@ public class DDMStructureLinkPersistenceImpl
 			OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 
-		DDMStructureLink ddmStructureLink = fetchByStructureId_First(
-			structureId, orderByComparator);
-
-		if (ddmStructureLink != null) {
-			return ddmStructureLink;
-		}
-
-		throw new NoSuchStructureLinkException(
-			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
+		return _collectionPersistenceFinderByStructureId.findFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -172,8 +165,9 @@ public class DDMStructureLinkPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLink>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<DDMStructureLink, NoSuchStructureLinkException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the ddm structure links where classNameId = &#63; and classPK = &#63;.
@@ -216,16 +210,9 @@ public class DDMStructureLinkPersistenceImpl
 			OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 
-		DDMStructureLink ddmStructureLink = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (ddmStructureLink != null) {
-			return ddmStructureLink;
-		}
-
-		throw new NoSuchStructureLinkException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -271,8 +258,9 @@ public class DDMStructureLinkPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private UniquePersistenceFinder<DDMStructureLink>
-		_uniquePersistenceFinderByC_C_S;
+	private UniquePersistenceFinder
+		<DDMStructureLink, NoSuchStructureLinkException>
+			_uniquePersistenceFinderByC_C_S;
 
 	/**
 	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a <code>NoSuchStructureLinkException</code> if it could not be found.
@@ -288,23 +276,8 @@ public class DDMStructureLinkPersistenceImpl
 			long classNameId, long classPK, long structureId)
 		throws NoSuchStructureLinkException {
 
-		DDMStructureLink ddmStructureLink = fetchByC_C_S(
-			classNameId, classPK, structureId);
-
-		if (ddmStructureLink == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK, structureId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStructureLinkException(message);
-		}
-
-		return ddmStructureLink;
+		return _uniquePersistenceFinderByC_C_S.find(
+			finderCache, new Object[] {classNameId, classPK, structureId});
 	}
 
 	/**
@@ -751,4 +724,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:921641753
+// LIFERAY-SERVICE-BUILDER-HASH:-137957670

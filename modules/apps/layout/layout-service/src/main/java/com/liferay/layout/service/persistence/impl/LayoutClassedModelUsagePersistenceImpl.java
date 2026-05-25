@@ -87,8 +87,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where uuid = &#63;.
@@ -129,16 +130,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutClassedModelUsage>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the layout classed model usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 	public LayoutClassedModelUsage findByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByUUID_G(
-			uuid, groupId);
-
-		if (layoutClassedModelUsage == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutClassedModelUsageException(message);
-		}
-
-		return layoutClassedModelUsage;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByPlid;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByPlid;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where plid = &#63;.
@@ -399,16 +373,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByPlid_First(
-			plid, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -450,8 +416,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByC_CN;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByC_CN;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63;.
@@ -494,17 +461,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByC_CN_First(
-			companyId, classNameId, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_CN.findFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -550,8 +509,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByCN_CPK;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByCN_CPK;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where classNameId = &#63; and classPK = &#63;.
@@ -594,16 +554,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByCN_CPK_First(
-			classNameId, classPK, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByCN_CPK.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -649,8 +602,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByC_CERC_CN;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByC_CERC_CN;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63;.
@@ -697,21 +651,10 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage =
-			fetchByC_CERC_CN_First(
-				companyId, classExternalReferenceCode, classNameId,
-				orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByC_CERC_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, classExternalReferenceCode, classNameId
-				}));
+		return _collectionPersistenceFinderByC_CERC_CN.findFirst(
+			finderCache,
+			new Object[] {companyId, classExternalReferenceCode, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -767,8 +710,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			new Object[] {companyId, classExternalReferenceCode, classNameId});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByC_CN_CT;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByC_CN_CT;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and containerType = &#63;.
@@ -813,17 +757,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByC_CN_CT_First(
-			companyId, classNameId, containerType, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByC_CN_CT.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, containerType}));
+		return _collectionPersistenceFinderByC_CN_CT.findFirst(
+			finderCache, new Object[] {companyId, classNameId, containerType},
+			orderByComparator);
 	}
 
 	/**
@@ -876,8 +812,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {companyId, classNameId, containerType});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByCN_CPK_T;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByCN_CPK_T;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -922,17 +859,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByCN_CPK_T_First(
-			classNameId, classPK, type, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByCN_CPK_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, type}));
+		return _collectionPersistenceFinderByCN_CPK_T.findFirst(
+			finderCache, new Object[] {classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -981,8 +910,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, type});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByCK_CT_P;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByCK_CT_P;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
@@ -1027,17 +957,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByCK_CT_P_First(
-			containerKey, containerType, plid, orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByCK_CT_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {containerKey, containerType, plid}));
+		return _collectionPersistenceFinderByCK_CT_P.findFirst(
+			finderCache, new Object[] {containerKey, containerType, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -1090,8 +1012,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			finderCache, new Object[] {containerKey, containerType, plid});
 	}
 
-	private CollectionPersistenceFinder<LayoutClassedModelUsage>
-		_collectionPersistenceFinderByC_CERC_CN_T;
+	private CollectionPersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_collectionPersistenceFinderByC_CERC_CN_T;
 
 	/**
 	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63;.
@@ -1143,21 +1066,12 @@ public class LayoutClassedModelUsagePersistenceImpl
 			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage =
-			fetchByC_CERC_CN_T_First(
-				companyId, classExternalReferenceCode, classNameId, type,
-				orderByComparator);
-
-		if (layoutClassedModelUsage != null) {
-			return layoutClassedModelUsage;
-		}
-
-		throw new NoSuchLayoutClassedModelUsageException(
-			_collectionPersistenceFinderByC_CERC_CN_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, classExternalReferenceCode, classNameId, type
-				}));
+		return _collectionPersistenceFinderByC_CERC_CN_T.findFirst(
+			finderCache,
+			new Object[] {
+				companyId, classExternalReferenceCode, classNameId, type
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -1225,8 +1139,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<LayoutClassedModelUsage>
-		_uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P;
+	private UniquePersistenceFinder
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
+			_uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P;
 
 	/**
 	 * Returns the layout classed model usage where groupId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
@@ -1247,29 +1162,12 @@ public class LayoutClassedModelUsagePersistenceImpl
 			long classPK, String containerKey, long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage =
-			fetchByG_CERC_CN_CPK_CK_CT_P(
+		return _uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P.find(
+			finderCache,
+			new Object[] {
 				groupId, classExternalReferenceCode, classNameId, classPK,
-				containerKey, containerType, plid);
-
-		if (layoutClassedModelUsage == null) {
-			String message =
-				_uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {
-							groupId, classExternalReferenceCode, classNameId,
-							classPK, containerKey, containerType, plid
-						});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutClassedModelUsageException(message);
-		}
-
-		return layoutClassedModelUsage;
+				containerKey, containerType, plid
+			});
 	}
 
 	/**
@@ -2215,4 +2113,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1202120374
+// LIFERAY-SERVICE-BUILDER-HASH:1519950679

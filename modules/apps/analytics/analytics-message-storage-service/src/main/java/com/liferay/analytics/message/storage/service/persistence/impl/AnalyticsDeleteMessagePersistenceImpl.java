@@ -81,8 +81,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AnalyticsDeleteMessage>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<AnalyticsDeleteMessage, NoSuchDeleteMessageException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the analytics delete messages where companyId = &#63;.
@@ -123,16 +124,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
 		throws NoSuchDeleteMessageException {
 
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (analyticsDeleteMessage != null) {
-			return analyticsDeleteMessage;
-		}
-
-		throw new NoSuchDeleteMessageException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<AnalyticsDeleteMessage>
-		_collectionPersistenceFinderByC_GtM;
+	private CollectionPersistenceFinder
+		<AnalyticsDeleteMessage, NoSuchDeleteMessageException>
+			_collectionPersistenceFinderByC_GtM;
 
 	/**
 	 * Returns all the analytics delete messages where companyId = &#63; and modifiedDate &gt; &#63;.
@@ -277,17 +271,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
 		throws NoSuchDeleteMessageException {
 
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByC_GtM_First(
-			companyId, modifiedDate, orderByComparator);
-
-		if (analyticsDeleteMessage != null) {
-			return analyticsDeleteMessage;
-		}
-
-		throw new NoSuchDeleteMessageException(
-			_collectionPersistenceFinderByC_GtM.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, modifiedDate}));
+		return _collectionPersistenceFinderByC_GtM.findFirst(
+			finderCache, new Object[] {companyId, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -333,8 +319,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
-	private CollectionPersistenceFinder<AnalyticsDeleteMessage>
-		_collectionPersistenceFinderByC_LtM;
+	private CollectionPersistenceFinder
+		<AnalyticsDeleteMessage, NoSuchDeleteMessageException>
+			_collectionPersistenceFinderByC_LtM;
 
 	/**
 	 * Returns all the analytics delete messages where companyId = &#63; and modifiedDate &lt; &#63;.
@@ -436,17 +423,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
 		throws NoSuchDeleteMessageException {
 
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByC_LtM_First(
-			companyId, modifiedDate, orderByComparator);
-
-		if (analyticsDeleteMessage != null) {
-			return analyticsDeleteMessage;
-		}
-
-		throw new NoSuchDeleteMessageException(
-			_collectionPersistenceFinderByC_LtM.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, modifiedDate}));
+		return _collectionPersistenceFinderByC_LtM.findFirst(
+			finderCache, new Object[] {companyId, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -923,4 +902,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-811061661
+// LIFERAY-SERVICE-BUILDER-HASH:-766547224

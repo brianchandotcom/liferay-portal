@@ -69,8 +69,9 @@ public class CTSGrandParentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTSGrandParent>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CTSGrandParent, NoSuchCTSGrandParentException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cts grand parents where companyId = &#63;.
@@ -110,16 +111,8 @@ public class CTSGrandParentPersistenceImpl
 			long companyId, OrderByComparator<CTSGrandParent> orderByComparator)
 		throws NoSuchCTSGrandParentException {
 
-		CTSGrandParent ctsGrandParent = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctsGrandParent != null) {
-			return ctsGrandParent;
-		}
-
-		throw new NoSuchCTSGrandParentException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -425,4 +418,4 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1651586237
+// LIFERAY-SERVICE-BUILDER-HASH:-895335357

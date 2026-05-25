@@ -86,8 +86,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommercePricingClassCPDefinitionRel>
-		_collectionPersistenceFinderByCommercePricingClassId;
+	private CollectionPersistenceFinder
+		<CommercePricingClassCPDefinitionRel,
+		 NoSuchPricingClassCPDefinitionRelException>
+			_collectionPersistenceFinderByCommercePricingClassId;
 
 	/**
 	 * Returns an ordered range of all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
@@ -132,20 +134,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 					orderByComparator)
 		throws NoSuchPricingClassCPDefinitionRelException {
 
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel =
-				fetchByCommercePricingClassId_First(
-					commercePricingClassId, orderByComparator);
-
-		if (commercePricingClassCPDefinitionRel != null) {
-			return commercePricingClassCPDefinitionRel;
-		}
-
-		throw new NoSuchPricingClassCPDefinitionRelException(
-			_collectionPersistenceFinderByCommercePricingClassId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePricingClassId}));
+		return _collectionPersistenceFinderByCommercePricingClassId.findFirst(
+			finderCache, new Object[] {commercePricingClassId},
+			orderByComparator);
 	}
 
 	/**
@@ -190,8 +181,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			finderCache, new Object[] {commercePricingClassId});
 	}
 
-	private CollectionPersistenceFinder<CommercePricingClassCPDefinitionRel>
-		_collectionPersistenceFinderByCPDefinitionId;
+	private CollectionPersistenceFinder
+		<CommercePricingClassCPDefinitionRel,
+		 NoSuchPricingClassCPDefinitionRelException>
+			_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
@@ -234,17 +227,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				orderByComparator)
 		throws NoSuchPricingClassCPDefinitionRelException {
 
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel = fetchByCPDefinitionId_First(
-				CPDefinitionId, orderByComparator);
-
-		if (commercePricingClassCPDefinitionRel != null) {
-			return commercePricingClassCPDefinitionRel;
-		}
-
-		throw new NoSuchPricingClassCPDefinitionRelException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -287,8 +271,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private UniquePersistenceFinder<CommercePricingClassCPDefinitionRel>
-		_uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder
+		<CommercePricingClassCPDefinitionRel,
+		 NoSuchPricingClassCPDefinitionRelException>
+			_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchPricingClassCPDefinitionRelException</code> if it could not be found.
@@ -303,24 +289,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			long commercePricingClassId, long CPDefinitionId)
 		throws NoSuchPricingClassCPDefinitionRelException {
 
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel = fetchByC_C(
-				commercePricingClassId, CPDefinitionId);
-
-		if (commercePricingClassCPDefinitionRel == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePricingClassId, CPDefinitionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPricingClassCPDefinitionRelException(message);
-		}
-
-		return commercePricingClassCPDefinitionRel;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {commercePricingClassId, CPDefinitionId});
 	}
 
 	/**
@@ -855,4 +825,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1409758951
+// LIFERAY-SERVICE-BUILDER-HASH:-947525174

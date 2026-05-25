@@ -202,13 +202,16 @@ public class UserModelListenerTest {
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), emailAddress);
+
+		_addTicketSharingEntry(_group1.getGroupId(), ticket1.getTicketId());
+
+		_assertToTicketSharingEntriesCount(1, ticket1);
+
 		Ticket ticket2 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), emailAddress);
 
-		_addTicketSharingEntry(_group1.getGroupId(), ticket1.getTicketId());
 		_addTicketSharingEntry(_group1.getGroupId(), ticket2.getTicketId());
 
-		_assertToTicketSharingEntriesCount(1, ticket1);
 		_assertToTicketSharingEntriesCount(1, ticket2);
 
 		User user = _addUser(emailAddress);
@@ -257,15 +260,19 @@ public class UserModelListenerTest {
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), null);
-		Ticket ticket2 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), "not-an-email");
-		Ticket ticket3 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress);
 
 		SharingEntry sharingEntry1 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket1.getTicketId());
+
+		Ticket ticket2 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), "not-an-email");
+
 		SharingEntry sharingEntry2 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket2.getTicketId());
+
+		Ticket ticket3 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress);
+
 		SharingEntry sharingEntry3 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket3.getTicketId());
 
@@ -286,22 +293,27 @@ public class UserModelListenerTest {
 	private void _testOnAfterCreateWithInviteCollaboratorTickets()
 		throws Exception {
 
-		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
-		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
-
 		_group2 = GroupTestUtil.addGroup();
+
+		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), emailAddress1);
-		Ticket ticket2 = _addInviteCollaboratorTicket(
-			_group2.getGroupId(), emailAddress1);
-		Ticket ticket3 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress2);
 
 		SharingEntry sharingEntry1 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket1.getTicketId());
+
+		Ticket ticket2 = _addInviteCollaboratorTicket(
+			_group2.getGroupId(), emailAddress1);
+
 		SharingEntry sharingEntry2 = _addTicketSharingEntry(
 			_group2.getGroupId(), ticket2.getTicketId());
+
+		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
+
+		Ticket ticket3 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress2);
+
 		SharingEntry sharingEntry3 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket3.getTicketId());
 
@@ -338,22 +350,27 @@ public class UserModelListenerTest {
 	}
 
 	private void _testOnAfterCreateWithWorkflow() throws Exception {
-		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
-		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
-
 		_group2 = GroupTestUtil.addGroup();
+
+		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), emailAddress1);
-		Ticket ticket2 = _addInviteCollaboratorTicket(
-			_group2.getGroupId(), emailAddress1);
-		Ticket ticket3 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress2);
 
 		SharingEntry sharingEntry1 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket1.getTicketId());
+
+		Ticket ticket2 = _addInviteCollaboratorTicket(
+			_group2.getGroupId(), emailAddress1);
+
 		SharingEntry sharingEntry2 = _addTicketSharingEntry(
 			_group2.getGroupId(), ticket2.getTicketId());
+
+		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
+
+		Ticket ticket3 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress2);
+
 		SharingEntry sharingEntry3 = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket3.getTicketId());
 

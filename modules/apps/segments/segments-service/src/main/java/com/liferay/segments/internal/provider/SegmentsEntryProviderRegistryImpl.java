@@ -74,7 +74,7 @@ public class SegmentsEntryProviderRegistryImpl
 		}
 
 		return segmentsEntryProvider.getSegmentsEntryClassPKs(
-			segmentsEntryId, start, end);
+			segmentsEntryId, true, start, end);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class SegmentsEntryProviderRegistryImpl
 		}
 
 		return segmentsEntryProvider.getSegmentsEntryClassPKsCount(
-			segmentsEntryId);
+			segmentsEntryId, true);
 	}
 
 	@Override

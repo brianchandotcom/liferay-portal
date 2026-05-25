@@ -34,7 +34,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Company Logo"
+				"en_US": "Avatar"
 			},
 			"localized": false,
 			"name": "companyLogo",
@@ -138,7 +138,7 @@
 			"externalReferenceCode": "SHOW_COMPANY_LOGO",
 			"indexed": true,
 			"label": {
-				"en_US": "Show Company Logo"
+				"en_US": "Show Avatar"
 			},
 			"name": "showCompanyLogo",
 			"system": true,

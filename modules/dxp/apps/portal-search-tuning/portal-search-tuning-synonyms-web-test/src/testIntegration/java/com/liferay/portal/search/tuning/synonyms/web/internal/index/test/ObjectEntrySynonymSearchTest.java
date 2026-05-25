@@ -92,10 +92,8 @@ public class ObjectEntrySynonymSearchTest {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(user);
 
-
 		_addObjectEntry("PD initiative", objectDefinition, user);
-		_addObjectEntry(
-			"product delivery Initiative", objectDefinition, user);
+		_addObjectEntry("product delivery Initiative", objectDefinition, user);
 		_addObjectEntry("Query Builder Initiative", objectDefinition, user);
 		_addObjectEntry("UQB Initiative", objectDefinition, user);
 
@@ -182,20 +180,6 @@ public class ObjectEntrySynonymSearchTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _updateSynonymSets(long companyId) {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, companyId);
-
-		ReflectionTestUtil.invoke(
-			_editSynonymSetsMVCActionCommand, "updateSynonymSets",
-			new Class<?>[] {ActionRequest.class, String[].class},
-			mockLiferayPortletActionRequest,
-			new String[] {"product delivery,PD", "query,uqb"});
-	}
-
 	private void _deleteSynonymSets(long companyId) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -231,6 +215,20 @@ public class ObjectEntrySynonymSearchTest {
 
 		Assert.assertEquals(
 			searchResponse.getRequestString(), 2, documents.size());
+	}
+
+	private void _updateSynonymSets(long companyId) {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, companyId);
+
+		ReflectionTestUtil.invoke(
+			_editSynonymSetsMVCActionCommand, "updateSynonymSets",
+			new Class<?>[] {ActionRequest.class, String[].class},
+			mockLiferayPortletActionRequest,
+			new String[] {"product delivery,PD", "query,uqb"});
 	}
 
 	@Inject(

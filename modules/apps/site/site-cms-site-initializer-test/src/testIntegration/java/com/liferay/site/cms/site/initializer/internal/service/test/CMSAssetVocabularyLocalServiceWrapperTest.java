@@ -61,9 +61,7 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 	public void setUp() throws Exception {
 		_cmsGroup = CMSTestUtil.getOrAddGroup(
 			CMSAssetVocabularyLocalServiceWrapperTest.class);
-
 		_group = GroupTestUtil.addGroup();
-
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition();
 	}
 
@@ -125,13 +123,13 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				_objectDefinition.getClassName(), classTypePK);
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertFalse(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	private void _testGetGroupsVocabulariesWithSameVocabularyInMultipleSpaceDepotEntries()
@@ -150,12 +148,12 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 				new long[] {depotEntry1.getGroupId(), depotEntry2.getGroupId()},
 				_objectDefinition.getClassName(), classTypePK);
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		List<AssetVocabulary> matchingAssetVocabularies = ListUtil.filter(
 			assetVocabularies,
 			curAssetVocabulary ->
-				curAssetVocabulary.getVocabularyId() == vocabularyId);
+				curAssetVocabulary.getVocabularyId() == assetVocabularyId);
 
 		Assert.assertEquals(
 			matchingAssetVocabularies.toString(), 1,
@@ -178,12 +176,12 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				_objectDefinition.getClassName(), classTypePK);
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		List<AssetVocabulary> matchingAssetVocabularies = ListUtil.filter(
 			assetVocabularies,
 			curAssetVocabulary ->
-				curAssetVocabulary.getVocabularyId() == vocabularyId);
+				curAssetVocabulary.getVocabularyId() == assetVocabularyId);
 
 		Assert.assertEquals(
 			matchingAssetVocabularies.toString(), 1,
@@ -205,13 +203,13 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				_objectDefinition.getClassName(), classTypePK);
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertTrue(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	private void _testGetGroupsVocabulariesWithSpaceDepotEntryAndDifferentClassName()
@@ -229,13 +227,13 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				Group.class.getName(), classTypePK);
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertFalse(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	@Inject

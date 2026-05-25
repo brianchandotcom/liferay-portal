@@ -59,7 +59,6 @@ public class CMSAssetVocabularyServiceWrapperTest {
 	public void setUp() throws Exception {
 		_cmsGroup = CMSTestUtil.getOrAddGroup(
 			CMSAssetVocabularyServiceWrapperTest.class);
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -124,13 +123,13 @@ public class CMSAssetVocabularyServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertFalse(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	private void _testGetGroupVocabulariesWithSpaceDepotEntry()
@@ -147,13 +146,13 @@ public class CMSAssetVocabularyServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertTrue(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	private void _testGetGroupVocabulariesWithSpaceDepotEntryAndDifferentVisibilityType()
@@ -170,13 +169,13 @@ public class CMSAssetVocabularyServiceWrapperTest {
 				new long[] {_group.getGroupId(), depotEntry.getGroupId()},
 				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
-		long vocabularyId = assetVocabulary.getVocabularyId();
+		long assetVocabularyId = assetVocabulary.getVocabularyId();
 
 		Assert.assertFalse(
 			ListUtil.exists(
 				assetVocabularies,
 				curAssetVocabulary ->
-					curAssetVocabulary.getVocabularyId() == vocabularyId));
+					curAssetVocabulary.getVocabularyId() == assetVocabularyId));
 	}
 
 	@Inject

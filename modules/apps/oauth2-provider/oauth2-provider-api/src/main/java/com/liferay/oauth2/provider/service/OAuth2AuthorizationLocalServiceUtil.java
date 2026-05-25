@@ -54,29 +54,6 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addOAuth2Authorization(long, long, String, long, long,
-	 String, Date, Date, String, String, String, Date, Date,
-	 List)}
-	 */
-	@Deprecated
-	public static OAuth2Authorization addOAuth2Authorization(
-		long companyId, long userId, String userName, long oAuth2ApplicationId,
-		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
-		java.util.Date accessTokenCreateDate,
-		java.util.Date accessTokenExpirationDate, String remoteIPInfo,
-		String refreshTokenContent, java.util.Date refreshTokenCreateDate,
-		java.util.Date refreshTokenExpirationDate) {
-
-		return getService().addOAuth2Authorization(
-			companyId, userId, userName, oAuth2ApplicationId,
-			oAuth2ApplicationScopeAliasesId, accessTokenContent,
-			accessTokenCreateDate, accessTokenExpirationDate, remoteIPInfo,
-			refreshTokenContent, refreshTokenCreateDate,
-			refreshTokenExpirationDate);
-	}
-
-	/**
 	 * Adds the o auth2 authorization to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -565,4 +542,4 @@ public class OAuth2AuthorizationLocalServiceUtil {
 			OAuth2AuthorizationLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:231210767
+// LIFERAY-SERVICE-BUILDER-HASH:1114366708

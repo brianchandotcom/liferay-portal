@@ -65,20 +65,6 @@ public interface OAuth2AuthorizationLocalService
 		Date refreshTokenExpirationDate);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addOAuth2Authorization(long, long, String, long, long,
-	 String, Date, Date, String, String, String, Date, Date,
-	 List)}
-	 */
-	@Deprecated
-	public OAuth2Authorization addOAuth2Authorization(
-		long companyId, long userId, String userName, long oAuth2ApplicationId,
-		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
-		Date accessTokenCreateDate, Date accessTokenExpirationDate,
-		String remoteIPInfo, String refreshTokenContent,
-		Date refreshTokenCreateDate, Date refreshTokenExpirationDate);
-
-	/**
 	 * Adds the o auth2 authorization to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -405,4 +391,4 @@ public interface OAuth2AuthorizationLocalService
 		String refreshTokenContent, String rememberDeviceContent);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1241700801
+// LIFERAY-SERVICE-BUILDER-HASH:-1375974007

@@ -125,12 +125,30 @@ const NewItemsNotificationComponent = ({
 	);
 };
 
+type DetachedCMSFilesItemSelectorModalProps<T extends Record<string, any>> =
+	TDetachedItemSelectorModal<T> & {
+		buildApiURL: (folderId: number | null) => string;
+	};
+
+type FolderCrumb = {
+	id: number | null;
+	label: string;
+};
+
 const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
-	props: TDetachedItemSelectorModal<T>
+	props: DetachedCMSFilesItemSelectorModalProps<T>
 ) => {
+	const {buildApiURL, ...restProps} = props;
+
 	const {observer, onOpenChange, open} = useModal();
 	const [newItemsCount, setNewItemsCount] = useState(0);
 	const [showInlineNotification, setShowInlineNotification] = useState(false);
+	const [currentFolder, setCurrentFolder] = useState<FolderCrumb[]>(() => [
+		{
+			id: null,
+			label: props.itemTypeLabel ?? Liferay.Language.get('files'),
+		},
+	]);
 
 	const isBrowserTabVisible = useBrowserTabVisibility();
 	const lastRequestTimeRef = useRef(new Date().toISOString());
@@ -154,12 +172,41 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		}
 	}, [isBrowserTabVisible, open, props.apiURL]);
 
+	const activeFolderId = currentFolder[currentFolder.length - 1].id;
+
+	const apiURL = useMemo(
+		() => buildApiURL(activeFolderId),
+		[activeFolderId, buildApiURL]
+	);
+
+	const breadcrumbs = useMemo(
+		() =>
+			currentFolder.map((crumb, index) => {
+				const isLast = index === currentFolder.length - 1;
+
+				return {
+					active: isLast,
+					label: crumb.label,
+					onClick: isLast
+						? undefined
+						: (event: React.SyntheticEvent) => {
+								event.preventDefault();
+
+								setCurrentFolder((path) =>
+									path.slice(0, index + 1)
+								);
+							},
+				};
+			}),
+		[currentFolder]
+	);
+
 	const fdsProps = useMemo(
 		() => ({
-			...props.fdsProps,
+			...restProps.fdsProps,
 			inlineNotificationComponent: NewItemsNotificationComponent,
 		}),
-		[props.fdsProps]
+		[restProps.fdsProps]
 	);
 
 	return (
@@ -172,7 +219,10 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		>
 			{open && (
 				<ItemSelectorModal
-					{...props}
+					{...restProps}
+					apiURL={apiURL}
+					breadcrumbs={breadcrumbs}
+					breadcrumbsLabel={false}
 					fdsProps={fdsProps}
 					observer={observer}
 					onOpenChange={onOpenChange}

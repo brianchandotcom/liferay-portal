@@ -92,7 +92,7 @@ function EnterpriseModal() {
 				},
 				{
 					displayType: 'primary',
-					href: 'https://www.liferay.com/web/lr/cms-upgrade',
+					href: 'https://www.liferay.com/web/lr/cms-upgrade?utm_medium=referral&utm_source=cms-ft&utm_content=cms-ft-upgrade&utm_cid=701VO00000wwP6IYAU',
 					icon: 'shortcut',
 					label: Liferay.Language.get('contact-sales'),
 				},

@@ -139,6 +139,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						</div>
 
 						<AccountsDataSet
+							activityStatusFilter='ACTIVE'
 							apiURL={`/o/faro/contacts/${groupId}/account/search?channelId=${channelId}`}
 							channelId={channelId}
 							groupId={groupId}

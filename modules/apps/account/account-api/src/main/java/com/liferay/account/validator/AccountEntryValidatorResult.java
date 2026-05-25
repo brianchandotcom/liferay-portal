@@ -6,61 +6,153 @@
 package com.liferay.account.validator;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 /**
  * @author Tancredi Covioli
  */
-public class AccountEntryValidatorResult implements Serializable {
+public final class AccountEntryValidatorResult implements Serializable {
 
-	public AccountEntryValidatorResult() {
-		this(true, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+	public static final String RESULT_BYPASSED = "bypassed";
+
+	public static final String RESULT_FAILED = "failed";
+
+	public static final String RESULT_PASSED = "passed";
+
+	public static final String RESULT_WARNING = "warning";
+
+	public static Builder builder(String key) {
+		return new Builder(key);
 	}
 
-	public AccountEntryValidatorResult(boolean valid, String messageKey) {
-		this(valid, StringPool.BLANK, StringPool.BLANK, messageKey);
+	public String getAdditionalProps() {
+		return _additionalProps;
 	}
 
-	public AccountEntryValidatorResult(
-		boolean valid, String link, String messageKey) {
-
-		this(valid, link, StringPool.BLANK, messageKey);
+	public String getButtonLabel() {
+		return _buttonLabel;
 	}
 
-	public AccountEntryValidatorResult(
-		boolean valid, String link, String labelKey, String messageKey) {
-
-		_valid = valid;
-		_link = link;
-		_labelKey = labelKey;
-		_messageKey = messageKey;
+	public String getButtonLink() {
+		return _buttonLink;
 	}
 
-	public String getLabelKey() {
-		return _labelKey;
+	public String getKey() {
+		return _key;
 	}
 
-	public String getLink() {
-		return _link;
+	public String getMessage() {
+		return _message;
 	}
 
-	public String getMessageKey() {
-		return _messageKey;
+	public String getResult() {
+		return _result;
 	}
 
-	public boolean hasMessageResult() {
-		return Validator.isNotNull(getMessageKey());
+	public String getResultReason() {
+		return _resultReason;
 	}
 
 	public boolean isValid() {
-		return _valid;
+		return !RESULT_FAILED.equals(_result);
 	}
 
-	private final String _labelKey;
-	private final String _link;
-	private final String _messageKey;
-	private final boolean _valid;
+	public static class Builder {
+
+		public Builder additionalProps(String additionalProps) {
+			_additionalProps = additionalProps;
+
+			return this;
+		}
+
+		public AccountEntryValidatorResult build() {
+			return new AccountEntryValidatorResult(
+				_additionalProps, _key, _buttonLabel, _buttonLink, _message,
+				_result, _resultReason);
+		}
+
+		public Builder button(String buttonLink) {
+			_buttonLink = buttonLink;
+
+			return this;
+		}
+
+		public Builder button(String buttonLabel, String buttonLink) {
+			_buttonLabel = buttonLabel;
+			_buttonLink = buttonLink;
+
+			return this;
+		}
+
+		public Builder message(String message) {
+			_message = message;
+
+			return this;
+		}
+
+		public Builder resultBypassed(String resultReason) {
+			_result = RESULT_BYPASSED;
+			_resultReason = resultReason;
+
+			return this;
+		}
+
+		public Builder resultFailed(String resultReason) {
+			_result = RESULT_FAILED;
+			_resultReason = resultReason;
+
+			return this;
+		}
+
+		public Builder resultPassed(String resultReason) {
+			_result = RESULT_PASSED;
+			_resultReason = resultReason;
+
+			return this;
+		}
+
+		public Builder resultWarning(String resultReason) {
+			_result = RESULT_WARNING;
+			_resultReason = resultReason;
+
+			return this;
+		}
+
+		private Builder(String key) {
+			_key = key;
+		}
+
+		private String _additionalProps = StringPool.BLANK;
+		private String _buttonLabel = StringPool.BLANK;
+		private String _buttonLink = StringPool.BLANK;
+		private final String _key;
+		private String _message = StringPool.BLANK;
+		private String _result = RESULT_PASSED;
+		private String _resultReason = StringPool.BLANK;
+
+	}
+
+	private AccountEntryValidatorResult(
+		String additionalProps, String key, String labelKey, String link,
+		String messageKey, String result, String resultReason) {
+
+		_additionalProps = additionalProps;
+		_key = key;
+		_result = result;
+		_resultReason = resultReason;
+
+		_buttonLabel = labelKey;
+		_buttonLink = link;
+		_message = messageKey;
+	}
+
+	private final String _additionalProps;
+	private final String _buttonLabel;
+	private final String _buttonLink;
+	private final String _key;
+	private final String _message;
+	private final String _result;
+	private final String _resultReason;
 
 }

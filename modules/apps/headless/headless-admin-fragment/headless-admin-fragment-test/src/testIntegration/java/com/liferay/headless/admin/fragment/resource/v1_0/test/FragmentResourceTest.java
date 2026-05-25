@@ -104,13 +104,11 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			new InetSocketAddress("127.0.0.1", 0), 0);
 
 		_thumbnail1Bytes = _getBytes("thumbnail1.png");
-
 		_thumbnail2Bytes = _getBytes("thumbnail2.png");
 
 		_httpServer.createContext(
 			"/thumbnail1.png",
 			httpExchange -> _writeBytes(httpExchange, _thumbnail1Bytes));
-
 		_httpServer.createContext(
 			"/thumbnail2.png",
 			httpExchange -> _writeBytes(httpExchange, _thumbnail2Bytes));
@@ -118,7 +116,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_httpServer.start();
 
 		_thumbnail1Base64 = Base64.encode(_thumbnail1Bytes);
-
 		_thumbnail2Base64 = Base64.encode(_thumbnail2Bytes);
 
 		InetSocketAddress inetSocketAddress = _httpServer.getAddress();
@@ -126,7 +123,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		String baseURL = "http://127.0.0.1:" + inetSocketAddress.getPort();
 
 		_thumbnail1URL = baseURL + "/thumbnail1.png";
-
 		_thumbnail2URL = baseURL + "/thumbnail2.png";
 	}
 
@@ -487,7 +483,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference =
 			fragment.getThumbnailURLReference();
 
-		Assert.assertNotNull(thumbnailURLReference);
 		Assert.assertEquals(
 			expectedExternalReferenceCode,
 			thumbnailURLReference.getExternalReferenceCode());
@@ -496,8 +491,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			PortletFileRepositoryUtil.
 				fetchPortletFileEntryByExternalReferenceCode(
 					expectedExternalReferenceCode, testGroup.getGroupId());
-
-		Assert.assertNotNull(fileEntry);
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
@@ -537,10 +530,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		String contentType = httpURLConnection.getContentType();
 
-		Assert.assertNotNull(contentType);
-		Assert.assertTrue(
-			"Expected image/* content type but got: " + contentType,
-			contentType.startsWith("image/"));
+		Assert.assertTrue(contentType.startsWith("image/"));
 	}
 
 	private FragmentResource _getFragmentResource(String nestedFields)

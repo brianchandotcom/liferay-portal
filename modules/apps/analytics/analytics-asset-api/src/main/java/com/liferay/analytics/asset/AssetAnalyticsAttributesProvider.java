@@ -103,9 +103,9 @@ public class AssetAnalyticsAttributesProvider {
 			return null;
 		}
 
-		Object assetObject = _assetRenderer.getAssetObject();
+		if (_assetRenderer.getAssetObject() instanceof
+				JournalArticle journalArticle) {
 
-		if (assetObject instanceof JournalArticle journalArticle) {
 			return StringUtil.toLowerCase(journalArticle.getDDMStructureKey());
 		}
 

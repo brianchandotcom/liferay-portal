@@ -38,6 +38,10 @@ String clickToChatAIHubServiceURL = (String)request.getAttribute(ClickToChatWebK
 			'chatbot-external-reference-code',
 			'<%= clickToChatChatProviderAccountId %>'
 		);
+		scriptElement.setAttribute(
+			'liferay-dxp-url',
+			'<%= HtmlUtil.escapeJS(themeDisplay.getPortalURL()) %>'
+		);
 
 		document.body.appendChild(scriptElement);
 	})();

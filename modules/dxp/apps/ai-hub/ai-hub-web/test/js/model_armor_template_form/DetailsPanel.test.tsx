@@ -127,6 +127,7 @@ function renderPanel(
 		<DetailsPanel
 			errors={overrides.errors || {}}
 			handleBlur={handleBlur}
+			readOnly={false}
 			setField={setField}
 			setFieldTouched={setFieldTouched}
 			touched={

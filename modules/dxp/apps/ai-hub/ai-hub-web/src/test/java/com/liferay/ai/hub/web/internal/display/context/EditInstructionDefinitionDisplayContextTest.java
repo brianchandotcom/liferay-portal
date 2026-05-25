@@ -51,12 +51,14 @@ public class EditInstructionDefinitionDisplayContextTest {
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_testGetReactData(true, false);
-		_testGetReactData(false, true);
+		_testGetReactData(false, true, false);
+		_testGetReactData(false, true, true);
+		_testGetReactData(true, false, false);
+		_testGetReactData(true, true, true);
 	}
 
 	private void _testGetReactData(
-			boolean hasUpdatePermission, boolean readOnly)
+			boolean hasUpdatePermission, boolean readOnly, boolean system)
 		throws Exception {
 
 		try (MockedStatic<AccountEntryUtil> accountEntryUtilMockedStatic =
@@ -76,7 +78,8 @@ public class EditInstructionDefinitionDisplayContextTest {
 
 			DisplayContextTestUtil.setGetReactDataMocks(
 				objectDefinitionLocalServiceUtilMockedStatic,
-				objectEntryServiceUtilMockedStatic, hasUpdatePermission);
+				objectEntryServiceUtilMockedStatic, hasUpdatePermission,
+				system);
 
 			Map<String, Object> reactData =
 				_editInstructionDefinitionDisplayContext.getReactData();

@@ -14,9 +14,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.Serializable;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -32,6 +35,17 @@ public class DisplayContextTestUtil {
 		MockedStatic<ObjectEntryServiceUtil> objectEntryServiceUtilMockedStatic,
 		boolean hasUpdatePermission) {
 
+		setGetReactDataMocks(
+			objectDefinitionLocalServiceUtilMockedStatic,
+			objectEntryServiceUtilMockedStatic, hasUpdatePermission, false);
+	}
+
+	public static void setGetReactDataMocks(
+		MockedStatic<ObjectDefinitionLocalServiceUtil>
+			objectDefinitionLocalServiceUtilMockedStatic,
+		MockedStatic<ObjectEntryServiceUtil> objectEntryServiceUtilMockedStatic,
+		boolean hasUpdatePermission, boolean system) {
+
 		objectDefinitionLocalServiceUtilMockedStatic.when(
 			() ->
 				ObjectDefinitionLocalServiceUtil.
@@ -42,6 +56,14 @@ public class DisplayContextTestUtil {
 		);
 
 		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		Mockito.when(
+			objectEntry.getValues()
+		).thenReturn(
+			HashMapBuilder.<String, Serializable>put(
+				"system", system
+			).build()
+		);
 
 		objectEntryServiceUtilMockedStatic.when(
 			() -> ObjectEntryServiceUtil.getObjectEntry(

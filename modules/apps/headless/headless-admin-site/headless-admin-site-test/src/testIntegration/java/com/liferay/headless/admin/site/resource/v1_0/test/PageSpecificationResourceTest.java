@@ -1209,14 +1209,6 @@ public class PageSpecificationResourceTest
 			ServiceContext serviceContext)
 		throws Exception {
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
-				false, null, RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					irrelevantGroup.getGroupId(), TestPropsValues.getUserId()));
-
 		Layout layout = _addLayout(
 			LayoutConstants.TYPE_CONTENT, serviceContext);
 
@@ -1232,8 +1224,17 @@ public class PageSpecificationResourceTest
 		ItemExternalReference itemExternalReference =
 			new ItemExternalReference();
 
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
+				false, null, RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					irrelevantGroup.getGroupId(), TestPropsValues.getUserId()));
+
 		itemExternalReference.setExternalReferenceCode(
 			styleBookEntry.getExternalReferenceCode());
+
 		itemExternalReference.setScope(
 			new Scope() {
 				{

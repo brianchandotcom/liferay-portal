@@ -48,7 +48,7 @@ public class AccountUserInvitationNotificationSenderTest {
 	}
 
 	@Test
-	public void testSendUserInvitationNotification() throws Exception {
+	public void testSendNotification() throws Exception {
 		try {
 			_accountUserInvitationNotificationSender.sendNotification(
 				_accountEntry.getAccountEntryId(),

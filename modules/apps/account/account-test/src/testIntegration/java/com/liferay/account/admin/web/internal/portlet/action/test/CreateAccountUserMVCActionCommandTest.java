@@ -110,16 +110,18 @@ public class CreateAccountUserMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		String password = RandomTestUtil.randomString();
-
 		mockLiferayPortletActionRequest.setParameter(
 			"firstName", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 		mockLiferayPortletActionRequest.setParameter(
 			"lastName", RandomTestUtil.randomString());
+
+		String password = RandomTestUtil.randomString();
+
 		mockLiferayPortletActionRequest.setParameter("password1", password);
 		mockLiferayPortletActionRequest.setParameter("password2", password);
+
 		mockLiferayPortletActionRequest.setParameter(
 			"screenName", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(

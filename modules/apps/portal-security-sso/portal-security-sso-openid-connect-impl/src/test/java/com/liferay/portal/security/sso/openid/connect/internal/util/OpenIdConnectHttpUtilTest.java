@@ -96,6 +96,11 @@ public class OpenIdConnectHttpUtilTest {
 
 		Assert.assertNull(httpResponse.getEntityContentType());
 		Assert.assertEquals(204, httpResponse.getStatusCode());
+
+		OAuthClientTestUtil.assertNoCookieWarnings(
+			"/userinfo",
+			serverURL -> OpenIdConnectHttpUtil.send(
+				new HTTPRequest(HTTPRequest.Method.GET, new URL(serverURL))));
 	}
 
 	@Test
@@ -113,6 +118,8 @@ public class OpenIdConnectHttpUtilTest {
 		Http.Options httpOptions = _toHttpOptions(httpRequest);
 
 		Assert.assertNull(httpOptions.getBody());
+		Assert.assertEquals(
+			Http.CookieSpec.STANDARD, httpOptions.getCookieSpec());
 		Assert.assertEquals(
 			authorization, httpOptions.getHeader("Authorization"));
 		Assert.assertEquals(userInfoURL.toString(), httpOptions.getLocation());

@@ -133,6 +133,27 @@ public class WorkflowTask implements Cloneable, Serializable {
 
 	protected Boolean completed;
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
+
 	public Date getDateCompletion() {
 		return dateCompletion;
 	}
@@ -438,4 +459,4 @@ public class WorkflowTask implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1033475492
+// LIFERAY-REST-BUILDER-HASH:-458072351

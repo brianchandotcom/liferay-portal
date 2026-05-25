@@ -236,7 +236,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 						if (isFolder(itemData)) {
 							return (
 								<div className="align-items-center d-flex">
-									<ClaySticker className="c-mr-2 flex-shrink-0 inline-item inline-item-before">
+									<ClaySticker className="c-mr-2 file-icon-color-0 flex-shrink-0 inline-item inline-item-before">
 										<ClayIcon symbol="folder" />
 									</ClaySticker>
 
@@ -298,6 +298,17 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 						);
 					},
 					name: 'cmsFilesTitleCellRenderer',
+					type: 'internal' as const,
+				},
+				{
+					component: ({
+						itemData,
+						value,
+					}: {
+						itemData: any;
+						value: any;
+					}) => (isFolder(itemData) ? '--' : value),
+					name: 'cmsFilesFallbackCellRenderer',
 					type: 'internal' as const,
 				},
 			],

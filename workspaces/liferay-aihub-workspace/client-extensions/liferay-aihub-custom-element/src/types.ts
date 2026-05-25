@@ -15,11 +15,12 @@ export interface ChatbotConfiguration {
 	companyLogo?: {
 		fileURL: string;
 	};
-	disclaimerMessage: string;
-	introMessage: string;
-	notificationMessage: string;
-	placeholderMessage: string;
-	title: string;
+	defaultLanguageId: string;
+	disclaimerMessage_i18n?: Record<string, string>;
+	introMessage_i18n?: Record<string, string>;
+	notificationMessage_i18n?: Record<string, string>;
+	placeholderMessage_i18n?: Record<string, string>;
+	title_i18n?: Record<string, string>;
 }
 
 export interface ChatMessage {

@@ -139,10 +139,11 @@ public class AuditEventServiceHttp {
 				getAuditEvents(
 					HttpPrincipal httpPrincipal, long companyId, long groupId,
 					long userId, String userName, java.util.Date createDateGT,
-					java.util.Date createDateLT, String className,
-					String classPK, String clientHost, String clientIP,
-					String eventType, String serverName, int serverPort,
-					String sessionID, boolean andSearch, int start, int end)
+					java.util.Date createDateLT, long[] accountEntryIds,
+					String className, String classPK, String clientHost,
+					String clientIP, String contextName, String eventType,
+					String serverName, int serverPort, String sessionID,
+					boolean andSearch, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -152,9 +153,9 @@ public class AuditEventServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, userId, userName, createDateGT,
-				createDateLT, className, classPK, clientHost, clientIP,
-				eventType, serverName, serverPort, sessionID, andSearch, start,
-				end);
+				createDateLT, accountEntryIds, className, classPK, clientHost,
+				clientIP, contextName, eventType, serverName, serverPort,
+				sessionID, andSearch, start, end);
 
 			Object returnObj = null;
 
@@ -191,10 +192,11 @@ public class AuditEventServiceHttp {
 				getAuditEvents(
 					HttpPrincipal httpPrincipal, long companyId, long groupId,
 					long userId, String userName, java.util.Date createDateGT,
-					java.util.Date createDateLT, String className,
-					String classPK, String clientHost, String clientIP,
-					String eventType, String serverName, int serverPort,
-					String sessionID, boolean andSearch, int start, int end,
+					java.util.Date createDateLT, long[] accountEntryIds,
+					String className, String classPK, String clientHost,
+					String clientIP, String contextName, String eventType,
+					String serverName, int serverPort, String sessionID,
+					boolean andSearch, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.portal.security.audit.storage.model.
 							AuditEvent> orderByComparator)
@@ -207,9 +209,9 @@ public class AuditEventServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, userId, userName, createDateGT,
-				createDateLT, className, classPK, clientHost, clientIP,
-				eventType, serverName, serverPort, sessionID, andSearch, start,
-				end, orderByComparator);
+				createDateLT, accountEntryIds, className, classPK, clientHost,
+				clientIP, contextName, eventType, serverName, serverPort,
+				sessionID, andSearch, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -284,8 +286,9 @@ public class AuditEventServiceHttp {
 	public static int getAuditEventsCount(
 			HttpPrincipal httpPrincipal, long companyId, long groupId,
 			long userId, String userName, java.util.Date createDateGT,
-			java.util.Date createDateLT, String className, String classPK,
-			String clientHost, String clientIP, String eventType,
+			java.util.Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
 			String serverName, int serverPort, String sessionID,
 			boolean andSearch)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -297,8 +300,9 @@ public class AuditEventServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, userId, userName, createDateGT,
-				createDateLT, className, classPK, clientHost, clientIP,
-				eventType, serverName, serverPort, sessionID, andSearch);
+				createDateLT, accountEntryIds, className, classPK, clientHost,
+				clientIP, contextName, eventType, serverName, serverPort,
+				sessionID, andSearch);
 
 			Object returnObj = null;
 
@@ -341,28 +345,30 @@ public class AuditEventServiceHttp {
 	private static final Class<?>[] _getAuditEventsParameterTypes2 =
 		new Class[] {
 			long.class, long.class, long.class, String.class,
-			java.util.Date.class, java.util.Date.class, String.class,
+			java.util.Date.class, java.util.Date.class, long[].class,
 			String.class, String.class, String.class, String.class,
-			String.class, int.class, String.class, boolean.class, int.class,
-			int.class
+			String.class, String.class, String.class, int.class, String.class,
+			boolean.class, int.class, int.class
 		};
 	private static final Class<?>[] _getAuditEventsParameterTypes3 =
 		new Class[] {
 			long.class, long.class, long.class, String.class,
-			java.util.Date.class, java.util.Date.class, String.class,
+			java.util.Date.class, java.util.Date.class, long[].class,
 			String.class, String.class, String.class, String.class,
-			String.class, int.class, String.class, boolean.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			String.class, String.class, String.class, int.class, String.class,
+			boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getAuditEventsCountParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getAuditEventsCountParameterTypes5 =
 		new Class[] {
 			long.class, long.class, long.class, String.class,
-			java.util.Date.class, java.util.Date.class, String.class,
+			java.util.Date.class, java.util.Date.class, long[].class,
 			String.class, String.class, String.class, String.class,
-			String.class, int.class, String.class, boolean.class
+			String.class, String.class, String.class, int.class, String.class,
+			boolean.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1118974720
+// LIFERAY-SERVICE-BUILDER-HASH:168740298

@@ -57,19 +57,21 @@ public interface AuditEventService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch, int start, int end)
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch, int start, int end,
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end,
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException;
 
@@ -79,10 +81,11 @@ public interface AuditEventService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEventsCount(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch)
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch)
 		throws PortalException;
 
 	/**
@@ -93,4 +96,4 @@ public interface AuditEventService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-335380219
+// LIFERAY-SERVICE-BUILDER-HASH:-2104087296

@@ -88,8 +88,6 @@ public class AssetStatisticsResourceImpl
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_APPROVED
 						).and(
-							ObjectEntryTable.INSTANCE.expirationDate.gt(date)
-						).and(
 							ObjectEntryTable.INSTANCE.expirationDate.lte(
 								new Date(
 									date.getTime() +

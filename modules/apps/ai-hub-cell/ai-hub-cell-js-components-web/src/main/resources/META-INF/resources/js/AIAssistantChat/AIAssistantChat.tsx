@@ -17,6 +17,7 @@ import {
 	createEventSource,
 	postChatByExternalReferenceCodeMessage,
 } from './api';
+import AIAssistantFooterDisclaimer from './components/AIAssistantFooterDisclaimer';
 import AIAssistantMessageBalloon from './components/AIAssistantMessageBalloon';
 import UserMessageBalloon from './components/UserMessageBalloon';
 
@@ -282,10 +283,10 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 				</div>
 
 				<ClayForm
-					className="flex-shrink-0 p-3"
+					className="flex-shrink-0 pt-3 px-3"
 					onSubmit={(event) => onSubmit(event)}
 				>
-					<div className="align-items-end border-top d-flex flex-row pt-4">
+					<div className="align-items-end d-flex flex-row">
 						<textarea
 							className="ai-assistant-chat__input form-control mr-2"
 							disabled={isGenerating}
@@ -321,6 +322,8 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 						</ClayButton>
 					</div>
 				</ClayForm>
+
+				<AIAssistantFooterDisclaimer />
 			</div>
 		</ClayDropDown>
 	);

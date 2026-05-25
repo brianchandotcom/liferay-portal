@@ -9,13 +9,7 @@ import type {AuthorizationToken, ChatbotConfiguration} from './types';
 
 const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
-const AUTHORIZATION_TOKEN_TTL = 9 * 60 * 1000;
-
 let aiHubURL = '';
-let cachedAuthorizationToken: AuthorizationToken | null = null;
-let cachedAuthorizationTokenMintedAt = 0;
-let pendingAuthorizationTokenPromise: Promise<AuthorizationToken | null> | null =
-	null;
 
 export function setAIHubURL(url: string) {
 	aiHubURL = url;
@@ -64,38 +58,10 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 	}
 }
 
-async function getAuthorizationToken(): Promise<AuthorizationToken | null> {
-	const now = Date.now();
-
-	if (
-		cachedAuthorizationToken &&
-		now - cachedAuthorizationTokenMintedAt < AUTHORIZATION_TOKEN_TTL
-	) {
-		return cachedAuthorizationToken;
-	}
-
-	if (!pendingAuthorizationTokenPromise) {
-		pendingAuthorizationTokenPromise = postAuthorizationToken().then(
-			(token) => {
-				if (token) {
-					cachedAuthorizationToken = token;
-					cachedAuthorizationTokenMintedAt = Date.now();
-				}
-
-				pendingAuthorizationTokenPromise = null;
-
-				return token;
-			}
-		);
-	}
-
-	return pendingAuthorizationTokenPromise;
-}
-
 export async function getChatbotConfiguration(
 	chatbotExternalReferenceCode: string
 ): Promise<ChatbotConfiguration> {
-	const authorizationToken = await getAuthorizationToken();
+	const authorizationToken = await postAuthorizationToken();
 
 	if (!authorizationToken) {
 		throw new Error(
@@ -122,7 +88,7 @@ export async function getChatbotConfiguration(
 }
 
 export async function createEventSource(): Promise<EventSource | null> {
-	const authorizationToken = await getAuthorizationToken();
+	const authorizationToken = await postAuthorizationToken();
 
 	if (!authorizationToken) {
 		return null;
@@ -149,7 +115,7 @@ export async function postChatMessage(
 	eventSourceReference: string,
 	text: string
 ): Promise<Response> {
-	const authorizationToken = await getAuthorizationToken();
+	const authorizationToken = await postAuthorizationToken();
 
 	if (!authorizationToken) {
 		throw new Error(

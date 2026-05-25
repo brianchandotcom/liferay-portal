@@ -1,0 +1,14 @@
+apiDir: ../portal-security-audit-rest-api/src/main/java
+apiPackagePath: com.liferay.portal.security.audit.rest
+application:
+    baseURI: /audit
+    className: AuditRESTApplication
+    name: Liferay.Audit.REST
+author: Rafael Praxedes
+clientDir: ../portal-security-audit-rest-client/src/main/java
+compatibilityVersion: 15
+forcePredictableOperationId: true
+generateBatch: false
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../portal-security-audit-rest-test/src/testIntegration/java

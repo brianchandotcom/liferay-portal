@@ -11,3 +11,8 @@
 .item-selector-modal-breadcrumb-wrapper {
 	border-bottom: 1px solid $cadmin-border-color;
 }
+
+.cms-item-selector-folder-row .cell-select-item .custom-control,
+.cms-item-selector-folder-row .cell-select-item .form-check {
+	display: none;
+}

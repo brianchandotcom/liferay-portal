@@ -319,7 +319,10 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	const views = useMemo(
 		() =>
 			(restProps.fdsProps.views ?? []).map((view: any) => {
-				if (view.contentRenderer !== 'cards') {
+				if (
+					view.contentRenderer !== 'cards' &&
+					view.contentRenderer !== 'table'
+				) {
 					return view;
 				}
 
@@ -342,8 +345,14 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 										id: item.embedded.id,
 										label: item.embedded.title,
 									}),
-								onSelectChange: null,
-								symbol: 'folder',
+								...(view.contentRenderer === 'cards'
+									? {onSelectChange: null, symbol: 'folder'}
+									: {
+											className: classNames(
+												props.className,
+												'cms-item-selector-folder-row'
+											),
+										}),
 							};
 						}
 

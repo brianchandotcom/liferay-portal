@@ -2033,6 +2033,8 @@
 			@if ($_disabled) {
 				&.disabled,
 				&:has(.custom-control-input:disabled) {
+					@include clay-css($_disabled);
+
 					$_card: map-get($_disabled, card);
 
 					@if ($_card) {

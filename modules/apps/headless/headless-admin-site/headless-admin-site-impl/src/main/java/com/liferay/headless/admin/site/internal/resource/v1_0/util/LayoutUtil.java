@@ -798,7 +798,7 @@ public class LayoutUtil {
 			!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-57283")) {
 
 			throw new UnsupportedOperationException(
-				"Style book scoping must be enabled");
+				"Style book scoping is not enabled");
 		}
 
 		return styleBookEntryScopeERC;

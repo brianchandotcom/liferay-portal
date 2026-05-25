@@ -94,6 +94,47 @@
 					"name": "Item"
 				}
 			},
+			"LevelA": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"next": {
+						"$ref": "#/components/schemas/LevelB"
+					}
+				},
+				"type": "object"
+			},
+			"LevelB": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"next": {
+						"$ref": "#/components/schemas/LevelC"
+					}
+				},
+				"type": "object"
+			},
+			"LevelC": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"next": {
+						"$ref": "#/components/schemas/LevelD"
+					}
+				},
+				"type": "object"
+			},
+			"LevelD": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"Parent": {
 				"discriminator": {
 					"propertyName": "kind"
@@ -293,6 +334,20 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/levels": {
+			"post": {
+				"operationId": "postLevel",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LevelA"
 							}
 						}
 					}

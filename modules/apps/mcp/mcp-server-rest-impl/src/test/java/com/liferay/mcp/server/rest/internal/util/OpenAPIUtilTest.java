@@ -226,6 +226,8 @@ public class OpenAPIUtilTest {
 		_testGetTool(
 			"POST /v1.0/items", "post_test_v1.0_items.json", "postItem");
 		_testGetTool(
+			"POST /v1.0/levels", "post_test_v1.0_levels.json", "postLevel");
+		_testGetTool(
 			"POST /v1.0/no-content", "post_test_v1.0_no-content.json",
 			"postNoContent");
 		_testGetTool(
@@ -245,37 +247,39 @@ public class OpenAPIUtilTest {
 		List<ToolSummary> toolSummaries = OpenAPIUtil.getToolSummaries(
 			_openAPIJSONObject);
 
-		Assert.assertEquals(toolSummaries.toString(), 14, toolSummaries.size());
+		Assert.assertEquals(toolSummaries.toString(), 15, toolSummaries.size());
 		_assertToolSummary(
 			"POST /v1.0/described", "postDescribed", toolSummaries.get(0));
 		_assertToolSummary(
-			"POST /v1.0/undescribed", "postUndescribed", toolSummaries.get(1));
+			"POST /v1.0/levels", "postLevel", toolSummaries.get(1));
 		_assertToolSummary(
-			"This is the description", "getItem", toolSummaries.get(2));
+			"POST /v1.0/undescribed", "postUndescribed", toolSummaries.get(2));
 		_assertToolSummary(
-			"PATCH /v1.0/items/{itemId}", "patchItem", toolSummaries.get(3));
+			"This is the description", "getItem", toolSummaries.get(3));
 		_assertToolSummary(
-			"PUT /v1.0/items/{itemId}", "putItem", toolSummaries.get(4));
+			"PATCH /v1.0/items/{itemId}", "patchItem", toolSummaries.get(4));
 		_assertToolSummary(
-			"POST /v1.0/binaries", "postBinary", toolSummaries.get(5));
+			"PUT /v1.0/items/{itemId}", "putItem", toolSummaries.get(5));
+		_assertToolSummary(
+			"POST /v1.0/binaries", "postBinary", toolSummaries.get(6));
 		_assertToolSummary(
 			"POST /v1.0/empty-content", "postEmptyContent",
-			toolSummaries.get(6));
+			toolSummaries.get(7));
 		_assertToolSummary(
-			"POST /v1.0/no-content", "postNoContent", toolSummaries.get(7));
+			"POST /v1.0/no-content", "postNoContent", toolSummaries.get(8));
 		_assertToolSummary(
-			"POST /v1.0/parents", "postParent", toolSummaries.get(8));
+			"POST /v1.0/parents", "postParent", toolSummaries.get(9));
 		_assertToolSummary(
-			"POST /v1.0/uploads", "postUpload", toolSummaries.get(9));
+			"POST /v1.0/uploads", "postUpload", toolSummaries.get(10));
 		_assertToolSummary(
 			"This is the summary. This is the description", "getItems",
-			toolSummaries.get(10));
+			toolSummaries.get(11));
 		_assertToolSummary(
-			"POST /v1.0/items", "postItem", toolSummaries.get(11));
+			"POST /v1.0/items", "postItem", toolSummaries.get(12));
 		_assertToolSummary(
-			"POST /v1.0/no-schema", "postNoSchema", toolSummaries.get(12));
+			"POST /v1.0/no-schema", "postNoSchema", toolSummaries.get(13));
 		_assertToolSummary(
-			"This is the summary", "getItemsPage", toolSummaries.get(13));
+			"This is the summary", "getItemsPage", toolSummaries.get(14));
 
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,

@@ -20,6 +20,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SegmentsEntryProvider {
 
+	public long[] getSegmentsEntryClassPKs(
+			long segmentsEntryId, boolean memberLookup, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Returns the primary keys of the entities related to the segment.
 	 *
@@ -41,6 +45,10 @@ public interface SegmentsEntryProvider {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
+		throws PortalException;
+
+	public int getSegmentsEntryClassPKsCount(
+			long segmentsEntryId, boolean memberLookup)
 		throws PortalException;
 
 	/**

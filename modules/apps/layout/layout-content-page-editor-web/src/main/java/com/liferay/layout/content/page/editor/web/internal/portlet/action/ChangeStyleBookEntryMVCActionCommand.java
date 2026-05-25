@@ -56,7 +56,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
 			themeDisplay.getPermissionChecker(), layout);
 
-		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryERC(
+		Layout updatedLayout = _layoutLocalService.updateStyleBookEntry(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			ParamUtil.getString(actionRequest, "styleBookEntryERC"),
 			ParamUtil.getString(

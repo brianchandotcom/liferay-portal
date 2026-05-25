@@ -585,17 +585,32 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
-	public Account getAccount(FaroProject faroProject, String id)
+	public Account getAccount(
+			FaroProject faroProject, Long channelId, String id)
 		throws FaroEngineClientException {
 
-		return get(faroProject, Rels.ACCOUNT, id, Account.class);
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
+
+		if (Validator.isNotNull(channelId)) {
+			uriVariables.put("channelId", channelId);
+		}
+
+		return get(faroProject, Rels.ACCOUNT, id, Account.class, uriVariables);
 	}
 
 	@Override
-	public AccountDetails getAccountDetails(FaroProject faroProject, String id)
+	public AccountDetails getAccountDetails(
+			FaroProject faroProject, Long channelId, String id)
 		throws FaroEngineClientException {
 
-		return get(faroProject, Rels.ACCOUNT, id, AccountDetails.class);
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
+
+		if (Validator.isNotNull(channelId)) {
+			uriVariables.put("channelId", channelId);
+		}
+
+		return get(
+			faroProject, Rels.ACCOUNT, id, AccountDetails.class, uriVariables);
 	}
 
 	@Override

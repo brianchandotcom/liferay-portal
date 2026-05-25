@@ -175,10 +175,12 @@ public interface ContactsEngineClient {
 			Map<String, List<String>> queryParameters, Class<T> returnType)
 		throws Exception;
 
-	public Account getAccount(FaroProject faroProject, String id)
+	public Account getAccount(
+			FaroProject faroProject, Long channelId, String id)
 		throws FaroEngineClientException;
 
-	public AccountDetails getAccountDetails(FaroProject faroProject, String id)
+	public AccountDetails getAccountDetails(
+			FaroProject faroProject, Long channelId, String id)
 		throws FaroEngineClientException;
 
 	public Results<Object> getAccountFieldValues(

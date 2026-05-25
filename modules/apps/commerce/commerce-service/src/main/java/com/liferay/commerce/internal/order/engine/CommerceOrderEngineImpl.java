@@ -39,7 +39,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.attributes.provider.CommerceModelAttributesProvider;
-import com.liferay.commerce.notification.util.CommerceNotificationHelper;
+import com.liferay.commerce.notification.CommerceNotificationSender;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
@@ -569,7 +569,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						checkCommerceSubscriptions(commerceOrder);
 				}
 
-				_commerceNotificationHelper.sendNotifications(
+				_commerceNotificationSender.sendNotifications(
 					commerceOrder.getGroupId(), commerceOrder.getUserId(),
 					CommerceOrderConstants.getNotificationKey(orderStatus),
 					commerceOrder);
@@ -778,7 +778,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	private CommerceModelAttributesProvider _commerceModelAttributesProvider;
 
 	@Reference
-	private CommerceNotificationHelper _commerceNotificationHelper;
+	private CommerceNotificationSender _commerceNotificationSender;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

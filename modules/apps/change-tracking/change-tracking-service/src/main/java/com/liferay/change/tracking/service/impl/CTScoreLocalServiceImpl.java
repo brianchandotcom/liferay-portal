@@ -6,7 +6,7 @@
 package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
-import com.liferay.change.tracking.internal.helper.CTUserNotificationHelper;
+import com.liferay.change.tracking.internal.notification.CTUserNotificationSender;
 import com.liferay.change.tracking.internal.score.CTScoreCalculator;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -112,11 +112,11 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 				_ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 
 			Set<Long> userIds = SetUtil.fromArray(
-				_ctUserNotificationHelper.getPublicationRoleUserIds(
+				_ctUserNotificationSender.getPublicationRoleUserIds(
 					ctCollection, true, PublicationRoleConstants.NAME_ADMIN,
 					PublicationRoleConstants.NAME_PUBLISHER));
 
-			_ctUserNotificationHelper.sendUserNotificationEvents(
+			_ctUserNotificationSender.sendUserNotificationEvents(
 				ctCollection,
 				JSONUtil.put(
 					"ctCollectionId", ctCollectionId
@@ -225,7 +225,7 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 	private CTScoreCalculator _ctScoreCalculator;
 
 	@Reference
-	private CTUserNotificationHelper _ctUserNotificationHelper;
+	private CTUserNotificationSender _ctUserNotificationSender;
 
 	@Reference
 	private EntityCache _entityCache;

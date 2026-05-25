@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.internal.model.listener;
 
-import com.liferay.commerce.notification.util.CommerceNotificationHelper;
+import com.liferay.commerce.notification.CommerceNotificationSender;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.object.model.ObjectDefinition;
@@ -115,7 +115,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId());
 
-			_commerceNotificationHelper.sendNotifications(
+			_commerceNotificationSender.sendNotifications(
 				commerceChannel.getGroupId(), objectEntry.getUserId(),
 				objectDefinition.getClassName() + "#" + action, objectEntry);
 		}
@@ -211,7 +211,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceNotificationHelper _commerceNotificationHelper;
+	private CommerceNotificationSender _commerceNotificationSender;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

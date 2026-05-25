@@ -58,7 +58,7 @@ import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
+import com.liferay.portal.workflow.kaleo.runtime.notification.KaleoNotificationSender;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceService;
@@ -782,7 +782,7 @@ public class DefaultWorkflowEngineImpl
 			_reassignKaleoTask(kaleoTaskReassignments, executionContext);
 		}
 
-		_notificationHelper.sendKaleoNotifications(
+		_kaleoNotificationSender.sendNotifications(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -945,6 +945,9 @@ public class DefaultWorkflowEngineImpl
 	private KaleoLogLocalService _kaleoLogLocalService;
 
 	@Reference
+	private KaleoNotificationSender _kaleoNotificationSender;
+
+	@Reference
 	private KaleoSignaler _kaleoSignaler;
 
 	@Reference
@@ -953,9 +956,6 @@ public class DefaultWorkflowEngineImpl
 
 	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
-
-	@Reference
-	private NotificationHelper _notificationHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

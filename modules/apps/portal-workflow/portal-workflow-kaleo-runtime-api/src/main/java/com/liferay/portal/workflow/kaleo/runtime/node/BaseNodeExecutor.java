@@ -13,7 +13,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
+import com.liferay.portal.workflow.kaleo.runtime.notification.KaleoNotificationSender;
 import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
@@ -52,7 +52,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
-		notificationHelper.sendKaleoNotifications(
+		kaleoNotificationSender.sendNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -86,7 +86,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 
-		notificationHelper.sendKaleoNotifications(
+		kaleoNotificationSender.sendNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 	}
@@ -122,13 +122,13 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 	protected KaleoActionExecutor kaleoActionExecutor;
 
 	@Reference
+	protected KaleoNotificationSender kaleoNotificationSender;
+
+	@Reference
 	protected KaleoTimerInstanceTokenLocalService
 		kaleoTimerInstanceTokenLocalService;
 
 	@Reference
 	protected KaleoTimerLocalService kaleoTimerLocalService;
-
-	@Reference
-	protected NotificationHelper notificationHelper;
 
 }

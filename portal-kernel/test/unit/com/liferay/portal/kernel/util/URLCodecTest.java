@@ -87,10 +87,7 @@ public class URLCodecTest {
 
 		// LPS-62628
 
-		_testDecodeURL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/?id=%'",
-			false);
+		_testDecodeURL("http://localhost:1234/?id=%'", false);
 	}
 
 	@Test

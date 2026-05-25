@@ -5,7 +5,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
@@ -17,7 +16,6 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -80,9 +78,7 @@ public class PortalImplEscapeRedirectTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setPortalURL(
-			StringBundler.concat(
-				"https://", _HOSTNAME_PORTAL_DOMAIN, ":",
-				PortalUtil.getPortalServerPort(false)));
+			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":1234");
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
@@ -107,46 +103,41 @@ public class PortalImplEscapeRedirectTest {
 
 		// Allow request host header
 
-		String portalURL = StringBundler.concat(
-			"https://", _HOSTNAME_PORTAL_DOMAIN, ":",
-			PortalUtil.getPortalServerPort(false));
-
-		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+		Assert.assertEquals(
+			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":1234",
+			_portalImpl.escapeRedirect(
+				"https://" + _HOSTNAME_PORTAL_DOMAIN + ":1234"));
 
 		// Allow virtual host
 
-		portalURL = StringBundler.concat(
-			"https://", _HOSTNAME_VIRTUAL_HOST, ":",
-			PortalUtil.getPortalServerPort(false));
-
-		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+		Assert.assertEquals(
+			"https://" + _HOSTNAME_VIRTUAL_HOST + ":1234",
+			_portalImpl.escapeRedirect(
+				"https://" + _HOSTNAME_VIRTUAL_HOST + ":1234"));
 
 		// Allowed domains
 
 		Assert.assertEquals(
 			"http://localhost", _portalImpl.escapeRedirect("http://localhost"));
 
-		portalURL =
-			"https://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/a/b;c=d?e=f&g=h#x=y";
-
-		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+		Assert.assertEquals(
+			"https://localhost:1234/a/b;c=d?e=f&g=h#x=y",
+			_portalImpl.escapeRedirect(
+				"https://localhost:1234/a/b;c=d?e=f&g=h#x=y"));
 
 		Assert.assertEquals(
 			"http://google.com",
 			_portalImpl.escapeRedirect("http://google.com"));
 
-		String url =
-			"https://google.com:" + PortalUtil.getPortalServerPort(false) +
-				"/a/b;c=d?e=f&g=h#x=y";
-
-		Assert.assertEquals(url, _portalImpl.escapeRedirect(url));
+		Assert.assertEquals(
+			"https://google.com:1234/a/b;c=d?e=f&g=h#x=y",
+			_portalImpl.escapeRedirect(
+				"https://google.com:1234/a/b;c=d?e=f&g=h#x=y"));
 
 		Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect(
-				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) +
-					"/a/b;c=d?e=f&g=h#x=y"));
+				"https://liferay.com:1234/a/b;c=d?e=f&g=h#x=y"));
 
 		// Disabled domains
 
@@ -198,12 +189,10 @@ public class PortalImplEscapeRedirectTest {
 				"http://localhost",
 				_portalImpl.escapeRedirect("http://localhost"));
 
-			String portalURL =
-				"https://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/a/b;c=d?e=f&g=h#x=y";
-
 			Assert.assertEquals(
-				portalURL, _portalImpl.escapeRedirect(portalURL));
+				"https://localhost:1234/a/b;c=d?e=f&g=h#x=y",
+				_portalImpl.escapeRedirect(
+					"https://localhost:1234/a/b;c=d?e=f&g=h#x=y"));
 
 			Set<String> computerAddresses = _portalImpl.getComputerAddresses();
 
@@ -220,9 +209,7 @@ public class PortalImplEscapeRedirectTest {
 			Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 			Assert.assertNull(
 				_portalImpl.escapeRedirect(
-					"https://liferay.com:" +
-						PortalUtil.getPortalServerPort(false) +
-							"/a/b;c=d?e=f&g=h#x=y"));
+					"https://liferay.com:1234/a/b;c=d?e=f&g=h#x=y"));
 			Assert.assertNull(
 				_portalImpl.escapeRedirect("http://127.0.0.1suffix"));
 			Assert.assertNull(
@@ -321,37 +308,33 @@ public class PortalImplEscapeRedirectTest {
 			"http://test.liferay.com",
 			_portalImpl.escapeRedirect("http://test.liferay.com"));
 
-		String portalURL =
-			"https://test.liferay.com:" +
-				PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y";
-
-		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+		Assert.assertEquals(
+			"https://test.liferay.com:1234/a/b;c=d?e=f&g=h#x=y",
+			_portalImpl.escapeRedirect(
+				"https://test.liferay.com:1234/a/b;c=d?e=f&g=h#x=y"));
 
 		Assert.assertEquals(
 			"http://second.test.liferay.com",
 			_portalImpl.escapeRedirect("http://second.test.liferay.com"));
 
-		portalURL =
-			"https://second.test.liferay.com:" +
-				PortalUtil.getPortalServerPort(false) + "/a;c=d?e=f&g=h#x=y";
-
-		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+		Assert.assertEquals(
+			"https://second.test.liferay.com:1234/a;c=d?e=f&g=h#x=y",
+			_portalImpl.escapeRedirect(
+				"https://second.test.liferay.com:1234/a;c=d?e=f&g=h#x=y"));
 
 		Assert.assertEquals(
 			"http://google.com",
 			_portalImpl.escapeRedirect("http://google.com"));
 
-		String url =
-			"https://google.com:" + PortalUtil.getPortalServerPort(false) +
-				"/a/b;c=d?e=f&g=h#x=y";
-
-		Assert.assertEquals(url, _portalImpl.escapeRedirect(url));
+		Assert.assertEquals(
+			"https://google.com:1234/a/b;c=d?e=f&g=h#x=y",
+			_portalImpl.escapeRedirect(
+				"https://google.com:1234/a/b;c=d?e=f&g=h#x=y"));
 
 		Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect(
-				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) +
-					"/a/b;c=d?e=f&g=h#x=y"));
+				"https://liferay.com:1234/a/b;c=d?e=f&g=h#x=y"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect("http://test.liferay.comsuffix"));
 		Assert.assertNull(

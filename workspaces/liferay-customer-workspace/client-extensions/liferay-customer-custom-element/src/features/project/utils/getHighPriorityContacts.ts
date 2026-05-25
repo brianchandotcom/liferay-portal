@@ -79,7 +79,7 @@ const getAccountRolesId = async (
 };
 
 const getContactRoleByFilter = (filter: string): string | undefined => {
-	if (filter.includes('cloud')) {
+	if (filter.includes('paas')) {
 		return 'PaaS User';
 	}
 

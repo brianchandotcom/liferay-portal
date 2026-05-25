@@ -419,6 +419,7 @@
 	"owner-email": "E-mail do proprietário",
 	"paas": "PaaS",
 	"paas-user": "Usuário PaaS",
+	"paas-user-contact": "Usuário PaaS",
 	"paas-users": "Usuários PaaS",
 	"paas-users-will-have-access-to-paas-experience-applications": "Os usuários de PaaS terão acesso às aplicações PaaS Experience: Argo CD, Argo Workflows e Grafana.",
 	"partner": "Parceiro",

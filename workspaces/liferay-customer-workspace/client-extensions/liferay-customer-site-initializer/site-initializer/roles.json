@@ -5,11 +5,6 @@
 		"type": 2
 	},
 	{
-		"externalReferenceCode": "ROLE_PAAS_USER",
-		"name": "PaaS User",
-		"type": 6
-	},
-	{
 		"externalReferenceCode": "ROLE_CRITICAL_INCIDENT_CONTACT",
 		"name": "Critical Incident Contact",
 		"type": 6
@@ -38,6 +33,11 @@
 		"externalReferenceCode": "ROLE_LIFERAY_STAFF",
 		"name": "Liferay Staff",
 		"type": 1
+	},
+	{
+		"externalReferenceCode": "ROLE_PAAS_USER",
+		"name": "PaaS User",
+		"type": 6
 	},
 	{
 		"externalReferenceCode": "ROLE_PARTNER",

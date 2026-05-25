@@ -176,49 +176,61 @@ public class AssetStatisticsResourceTest
 
 		_assertAssetStatistics(0, 1, 0, 0, 3);
 
-		// Add object entry with overdue review date
+		// Add object entry with already-passed expiration date
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry4.setReviewDate(new Date(date.getTime() - (2 * Time.DAY)));
+		objectEntry4.setExpirationDate(
+			new Date(date.getTime() - (2 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry4);
 
-		_assertAssetStatistics(0, 1, 0, 1, 4);
+		_assertAssetStatistics(0, 2, 0, 0, 4);
 
-		// Add object entry with status draft
+		// Add object entry with overdue review date
 
 		ObjectEntry objectEntry5 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		_objectEntryLocalService.updateStatus(
-			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+		objectEntry5.setReviewDate(new Date(date.getTime() - (2 * Time.DAY)));
 
-		_assertAssetStatistics(0, 1, 1, 1, 5);
+		_objectEntryLocalService.updateObjectEntry(objectEntry5);
 
-		// Add object entry with status expired
+		_assertAssetStatistics(0, 2, 0, 1, 5);
+
+		// Add object entry with status draft
 
 		ObjectEntry objectEntry6 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
 		_objectEntryLocalService.updateStatus(
 			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
-			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(1, 1, 1, 1, 6);
+		_assertAssetStatistics(0, 2, 1, 1, 6);
 
-		// Add object entry in a status that is not visible in the All view
+		// Add object entry with status expired
 
 		ObjectEntry objectEntry7 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
 		_objectEntryLocalService.updateStatus(
 			TestPropsValues.getUserId(), objectEntry7.getObjectEntryId(),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+
+		_assertAssetStatistics(1, 2, 1, 1, 7);
+
+		// Add object entry in a status that is not visible in the All view
+
+		ObjectEntry objectEntry8 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry8.getObjectEntryId(),
 			WorkflowConstants.STATUS_DENIED, serviceContext);
 
-		_assertAssetStatistics(1, 1, 1, 1, 6);
+		_assertAssetStatistics(1, 2, 1, 1, 7);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			irrelevantObjectDefinition);

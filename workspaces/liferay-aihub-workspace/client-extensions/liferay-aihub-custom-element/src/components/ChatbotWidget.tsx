@@ -221,7 +221,9 @@ export default function ChatbotWidget({
 					placeholder={chatbotConfiguration.placeholderMessage}
 				/>
 
-				<ChatbotFooter />
+				<ChatbotFooter
+					disclaimerMessage={chatbotConfiguration.disclaimerMessage}
+				/>
 			</div>
 
 			{!open &&

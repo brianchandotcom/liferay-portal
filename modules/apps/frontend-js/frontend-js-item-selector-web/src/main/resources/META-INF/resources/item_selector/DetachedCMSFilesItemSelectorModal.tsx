@@ -158,7 +158,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	const [currentFolder, setCurrentFolder] = useState<FolderCrumb[]>(() => [
 		{
 			id: null,
-			label: props.itemTypeLabel ?? Liferay.Language.get('files'),
+			label: Liferay.Language.get('files'),
 		},
 	]);
 

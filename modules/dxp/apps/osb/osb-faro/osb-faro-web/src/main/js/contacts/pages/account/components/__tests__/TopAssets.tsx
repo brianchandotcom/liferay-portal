@@ -327,13 +327,25 @@ describe('TopAssets', () => {
 	});
 
 	describe('empty state', () => {
-		it('should render the empty message when no assets are returned', () => {
+		it('should render the Content empty state when no assets are returned on the Content tab', () => {
 			mockUseRequestWith({data: {items: []}});
 
 			render(<TopAssets />);
 
 			expect(
-				screen.getAllByText('No data available').length
+				screen.getAllByText('No Assets Available').length
+			).toBeGreaterThan(0);
+		});
+
+		it('should render the Files empty state when no assets are returned on the Files tab', () => {
+			mockUseRequestWith({data: {items: []}});
+
+			render(<TopAssets />);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
+
+			expect(
+				screen.getAllByText('No Files Available').length
 			).toBeGreaterThan(0);
 		});
 

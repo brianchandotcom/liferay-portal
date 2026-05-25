@@ -3,13 +3,14 @@ import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
-import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
+import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {getMimeType} from 'assets/components/mime-type';
 import {ITopAsset, TopAssetMetric, TopAssetObjectType} from 'shared/api/assets';
 import {Routes, toRoute} from 'shared/util/router';
@@ -56,6 +57,7 @@ const getAssetRoute = (assetType?: string) =>
 interface ITopAssetsTabContentProps {
 	assets: ITopAsset[];
 	groupBy: GroupByMetric;
+	isFiles: boolean;
 	loading: boolean;
 	setGroupBy: (metric: GroupByMetric) => void;
 }
@@ -63,6 +65,7 @@ interface ITopAssetsTabContentProps {
 const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	assets,
 	groupBy,
+	isFiles,
 	loading,
 	setGroupBy
 }) => {
@@ -80,64 +83,77 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	const groupByLabel = groupByLabels[groupBy];
 	const selectedMetric = GROUP_BY_TO_METRIC[groupBy];
 
+	const isEmpty = !loading && assets.length === 0;
+
 	return (
-		<>
-			<ClayDropDown
-				alignmentPosition={Align.BottomRight}
-				closeOnClick
-				trigger={
-					<ClayButton
-						borderless
-						className='align-items-baseline d-inline-flex'
-						displayType='unstyled'
-						size='sm'
-					>
-						<div className='font-weight-semi-bold mr-3'>
-							<Text size={3}>
-								{Liferay.Language.get('group-by')}
-							</Text>
-						</div>
+		<StatesRenderer empty={isEmpty} loading={loading}>
+			<StatesRenderer.Loading />
+			<StatesRenderer.Empty>
+				<ClayEmptyState
+					className='py-3'
+					description={
+						isFiles
+							? Liferay.Language.get(
+									'files-will-appear-here-once-they-are-available'
+							  )
+							: Liferay.Language.get(
+									'assets-will-appear-here-once-they-are-available'
+							  )
+					}
+					small
+					title={
+						isFiles
+							? Liferay.Language.get('no-files-available')
+							: Liferay.Language.get('no-assets-available')
+					}
+				/>
+			</StatesRenderer.Empty>
+			<StatesRenderer.Success>
+				<ClayDropDown
+					alignmentPosition={Align.BottomRight}
+					closeOnClick
+					trigger={
+						<ClayButton
+							borderless
+							className='align-items-baseline d-inline-flex'
+							displayType='unstyled'
+							size='sm'
+						>
+							<div className='font-weight-semi-bold mr-3'>
+								<Text size={3}>
+									{Liferay.Language.get('group-by')}
+								</Text>
+							</div>
 
-						<div className='font-weight-semi-bold text-secondary'>
-							<Text size={3}>
-								{groupByLabel}
-								<ClayIcon
-									className='ml-1'
-									symbol='caret-bottom'
-								/>
-							</Text>
-						</div>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{(Object.keys(groupByLabels) as GroupByMetric[]).map(
-						key => (
-							<ClayDropDown.Item
-								key={key}
-								onClick={() => setGroupBy(key)}
-								symbolRight={
-									groupBy === key ? 'check' : undefined
-								}
-							>
-								{groupByLabels[key]}
-							</ClayDropDown.Item>
-						)
-					)}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+							<div className='font-weight-semi-bold text-secondary'>
+								<Text size={3}>
+									{groupByLabel}
+									<ClayIcon
+										className='ml-1'
+										symbol='caret-bottom'
+									/>
+								</Text>
+							</div>
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						{(Object.keys(groupByLabels) as GroupByMetric[]).map(
+							key => (
+								<ClayDropDown.Item
+									key={key}
+									onClick={() => setGroupBy(key)}
+									symbolRight={
+										groupBy === key ? 'check' : undefined
+									}
+								>
+									{groupByLabels[key]}
+								</ClayDropDown.Item>
+							)
+						)}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
 
-			{loading ? (
-				<div className='p-4'>
-					<Loading />
-				</div>
-			) : assets.length === 0 ? (
-				<div className='p-4 text-center'>
-					<Text color='secondary'>
-						{Liferay.Language.get('no-data-available')}
-					</Text>
-				</div>
-			) : (
 				<ClayTable className='mt-3'>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -210,8 +226,8 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 						})}
 					</ClayTable.Body>
 				</ClayTable>
-			)}
-		</>
+			</StatesRenderer.Success>
+		</StatesRenderer>
 	);
 };
 
@@ -254,13 +270,14 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 		<TopAssetsTabContent
 			assets={assets}
 			groupBy={groupBy}
+			isFiles={TABS[activeTab] === 'files'}
 			loading={loading}
 			setGroupBy={setGroupBy}
 		/>
 	);
 
 	return (
-		<Card className={classNames('top-assets', className)}>
+		<Card className={classNames('top-assets', className)} minHeight={260}>
 			<Card.Title className='p-3'>
 				<Text weight='semi-bold'>
 					{Liferay.Language.get('top-assets').toUpperCase()}

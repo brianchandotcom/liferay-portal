@@ -32,24 +32,10 @@ public class IndividualSegmentResourceImpl
 	extends BaseIndividualSegmentResourceImpl {
 
 	@Override
-	public IndividualSegment getWorkspaceGroupIndividualSegment(
-			Long groupId, String individualSegmentId)
-		throws Exception {
-
-		return _individualSegmentDTOConverter.toDTO(
-			new FaroDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				individualSegmentId,
-				contextAcceptLanguage.getPreferredLocale()),
-			_contactsEngineClient.getIndividualSegment(
-				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				individualSegmentId, false));
-	}
-
-	@Override
-	public Page<IndividualSegment> getWorkspaceGroupIndividualSegmentsPage(
-			Long groupId, String channelId, String name, String search,
-			String status, Pagination pagination)
+	public Page<IndividualSegment>
+			getWorkspaceGroupChannelIndividualSegmentsPage(
+				Long groupId, String channelId, String name, String search,
+				String status, Pagination pagination)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -71,6 +57,21 @@ public class IndividualSegmentResourceImpl
 						contextAcceptLanguage.getPreferredLocale()),
 					individualSegment)),
 			pagination, results.getTotal());
+	}
+
+	@Override
+	public IndividualSegment getWorkspaceGroupIndividualSegment(
+			Long groupId, String individualSegmentId)
+		throws Exception {
+
+		return _individualSegmentDTOConverter.toDTO(
+			new FaroDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				individualSegmentId,
+				contextAcceptLanguage.getPreferredLocale()),
+			_contactsEngineClient.getIndividualSegment(
+				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				individualSegmentId, false));
 	}
 
 	@Reference

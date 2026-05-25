@@ -11,6 +11,7 @@ export type InstructionDefinition = {
 	occasion: string;
 	r_accountToAIHubInstructionDefinitions_accountEntryERC: string;
 	scope: string;
+	system: boolean;
 	title_i18n: {
 		[key: string]: string;
 	};

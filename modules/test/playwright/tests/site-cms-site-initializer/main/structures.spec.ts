@@ -893,7 +893,7 @@ async function applySpaceFilter(
 
 test(
 	'Content Structures list can be filtered by space with include and exclude',
-	{tag: '@LPD-89342'},
+	{tag: ['@LPD-89342', '@LPD-91933']},
 	async ({apiHelpers, page, structureBuilderPage, structuresPage}) => {
 		const spaceName1 = `Space ${getRandomString()}`;
 		const spaceName2 = `Space ${getRandomString()}`;

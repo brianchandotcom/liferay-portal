@@ -862,9 +862,9 @@ const SelectSubscription = ({
 												? i18n.sub('perpetual-duration')
 												: currentStartAndEndDate
 										}
-										onChange={(event) => {
+										onChange={(subscriptionTerm) => {
 											setSelectedSubscription({
-												...event.target.value,
+												...subscriptionTerm,
 												index,
 											});
 											setAvailableActivationKeysTotal(
@@ -892,9 +892,9 @@ const SelectSubscription = ({
 								}
 								isActivationKeyAvailable={5}
 								label={i18n.translate('complimentary')}
-								onChange={(event) => {
+								onChange={(complimentaryKey) => {
 									setSelectedSubscription({
-										...event.target.value,
+										...complimentaryKey,
 									});
 									setHasComplimentaryKey(true);
 

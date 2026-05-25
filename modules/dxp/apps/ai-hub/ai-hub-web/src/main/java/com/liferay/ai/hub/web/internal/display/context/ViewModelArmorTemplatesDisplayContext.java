@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
-import com.liferay.ai.hub.web.internal.util.ActionUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -40,7 +40,7 @@ public class ViewModelArmorTemplatesDisplayContext {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					ActionUtil.getAIHubURL(_themeDisplay) +
+					DisplayContextUtil.getAIHubURL(_themeDisplay) +
 						"/model-armor-template");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new-guardrail"));
@@ -54,7 +54,7 @@ public class ViewModelArmorTemplatesDisplayContext {
 		return List.of(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					ActionUtil.getAIHubURL(_themeDisplay),
+					DisplayContextUtil.getAIHubURL(_themeDisplay),
 					"/model-armor-template",
 					"?externalReferenceCode={externalReferenceCode}"),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),

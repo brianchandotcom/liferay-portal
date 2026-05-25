@@ -13,7 +13,7 @@ import java.util.List;
  * @author Leslie Wong
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GetWorkspaceGroupAssetSummariesPageResponse {
+public class GetWorkspaceGroupChannelAssetSummariesPageResponse {
 
 	public AssetSummaryMetricBag getAssetSummaryMetricBag() {
 		return _assetSummaryMetricBag;

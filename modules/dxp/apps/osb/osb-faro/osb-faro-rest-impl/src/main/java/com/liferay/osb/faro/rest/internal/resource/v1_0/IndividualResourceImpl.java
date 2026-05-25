@@ -31,22 +31,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class IndividualResourceImpl extends BaseIndividualResourceImpl {
 
 	@Override
-	public Individual getWorkspaceGroupIndividual(
-			Long groupId, String individualId, String channelId)
-		throws Exception {
-
-		return _individualDTOConverter.toDTO(
-			new FaroDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), individualId,
-				contextAcceptLanguage.getPreferredLocale()),
-			_contactsEngineClient.getIndividual(
-				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				individualId, channelId));
-	}
-
-	@Override
-	public Page<Individual> getWorkspaceGroupIndividualsPage(
-			Long groupId, String accountId, String channelId,
+	public Page<Individual> getWorkspaceGroupChannelIndividualsPage(
+			Long groupId, String channelId, String accountId,
 			Boolean includeAnonymousUsers, String individualSegmentId,
 			String interestName, Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -71,6 +57,20 @@ public class IndividualResourceImpl extends BaseIndividualResourceImpl {
 						contextAcceptLanguage.getPreferredLocale()),
 					individual)),
 			pagination, results.getTotal());
+	}
+
+	@Override
+	public Individual getWorkspaceGroupIndividual(
+			Long groupId, String individualId, String channelId)
+		throws Exception {
+
+		return _individualDTOConverter.toDTO(
+			new FaroDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), individualId,
+				contextAcceptLanguage.getPreferredLocale()),
+			_contactsEngineClient.getIndividual(
+				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				individualId, channelId));
 	}
 
 	@Reference

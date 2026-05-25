@@ -9,7 +9,7 @@ import com.liferay.osb.faro.rest.dto.v1_0.AssetSummaryMetric;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.converter.FaroDTOConverterContext;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.util.FaroPaginationUtil;
 import com.liferay.osb.faro.rest.internal.graphql.client.FaroGraphQLClient;
-import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupAssetSummariesPageResponse;
+import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelAssetSummariesPageResponse;
 import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.portal.kernel.search.Sort;
@@ -35,7 +35,7 @@ public class AssetSummaryMetricResourceImpl
 	extends BaseAssetSummaryMetricResourceImpl {
 
 	@Override
-	public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
+	public Page<AssetSummaryMetric> getWorkspaceGroupChannelAssetSummariesPage(
 			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, String search, Pagination pagination,
 			Sort[] sorts)
@@ -44,12 +44,12 @@ public class AssetSummaryMetricResourceImpl
 		int cur = FaroPaginationUtil.getCur(pagination);
 		int delta = FaroPaginationUtil.getDelta(pagination);
 
-		GetWorkspaceGroupAssetSummariesPageResponse
-			getWorkspaceGroupAssetSummariesPageResponse =
+		GetWorkspaceGroupChannelAssetSummariesPageResponse
+			getWorkspaceGroupChannelAssetSummariesPageResponse =
 				_faroGraphQLClient.execute(
-					GetWorkspaceGroupAssetSummariesPageResponse.class,
+					GetWorkspaceGroupChannelAssetSummariesPageResponse.class,
 					_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-					"getWorkspaceGroupAssetSummariesPage",
+					"getWorkspaceGroupChannelAssetSummariesPage",
 					HashMapBuilder.<String, Object>put(
 						"channelId", channelId
 					).put(
@@ -68,9 +68,9 @@ public class AssetSummaryMetricResourceImpl
 						"start", (cur - 1) * delta
 					).build());
 
-		GetWorkspaceGroupAssetSummariesPageResponse.AssetSummaryMetricBag
+		GetWorkspaceGroupChannelAssetSummariesPageResponse.AssetSummaryMetricBag
 			assetSummaryMetricBag =
-				getWorkspaceGroupAssetSummariesPageResponse.
+				getWorkspaceGroupChannelAssetSummariesPageResponse.
 					getAssetSummaryMetricBag();
 
 		if (assetSummaryMetricBag == null) {
@@ -99,7 +99,7 @@ public class AssetSummaryMetricResourceImpl
 		target = "(component.name=com.liferay.osb.faro.rest.internal.dto.v1_0.converter.AssetSummaryMetricDTOConverter)"
 	)
 	private DTOConverter
-		<GetWorkspaceGroupAssetSummariesPageResponse.AssetSummaryMetric,
+		<GetWorkspaceGroupChannelAssetSummariesPageResponse.AssetSummaryMetric,
 		 AssetSummaryMetric> _assetSummaryMetricDTOConverter;
 
 	@Reference

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Leslie Wong
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GetWorkspaceGroupPagesPageResponse {
+public class GetWorkspaceGroupChannelPagesPageResponse {
 
 	public PageMetricBag getPageMetricBag() {
 		return _pageMetricBag;

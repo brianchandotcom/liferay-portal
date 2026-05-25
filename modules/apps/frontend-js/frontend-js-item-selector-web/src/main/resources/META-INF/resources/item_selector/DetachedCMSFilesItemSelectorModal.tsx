@@ -5,7 +5,10 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
+import ClaySticker from '@clayui/sticker';
 import {
 	IInlineNotificationComponent,
 	TSort,
@@ -14,6 +17,7 @@ import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {
 	createContext,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -25,6 +29,13 @@ import ItemSelectorModal from './ItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
 
 import '../css/DetachedCMSFilesItemSelectorModal.scss';
+
+const OBJECT_ENTRY_FOLDER_CLASS_NAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
+function isFolder(item: any): boolean {
+	return item?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+}
 
 async function checkNewCMSFiles(
 	cmsRootFilesURL: string,
@@ -201,12 +212,110 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		[currentFolder]
 	);
 
+	const navigateToFolder = useCallback(
+		(folder: {id: number; label: string}) => {
+			setCurrentFolder((path) => [...path, folder]);
+		},
+		[]
+	);
+
+	const customRenderers = useMemo(
+		() => ({
+			...restProps.fdsProps.customRenderers,
+			tableCell: [
+				...(restProps.fdsProps.customRenderers?.tableCell ?? []),
+				{
+					component: ({
+						itemData,
+						value,
+					}: {
+						itemData: any;
+						value: any;
+					}) => {
+						if (!isFolder(itemData)) {
+							return value;
+						}
+
+						return (
+							<div className="d-flex">
+								<ClaySticker className="c-mr-2 flex-shrink-0 inline-item inline-item-before">
+									<ClayIcon symbol="folder" />
+								</ClaySticker>
+
+								<div className="table-list-title">
+									<ClayLink
+										className="text-decoration-underline"
+										data-senna-off
+										href="#"
+										onClick={(event: React.MouseEvent) => {
+											event.preventDefault();
+
+											navigateToFolder({
+												id: itemData.embedded.id,
+												label: itemData.embedded.title,
+											});
+										}}
+									>
+										{value}
+									</ClayLink>
+								</div>
+							</div>
+						);
+					},
+					name: 'cmsFilesTitleCellRenderer',
+					type: 'internal' as const,
+				},
+			],
+		}),
+		[navigateToFolder, restProps.fdsProps.customRenderers]
+	);
+
+	const views = useMemo(
+		() =>
+			(restProps.fdsProps.views ?? []).map((view: any) => {
+				if (view.contentRenderer !== 'cards') {
+					return view;
+				}
+
+				const original = view.setItemComponentProps;
+
+				return {
+					...view,
+					setItemComponentProps: ({
+						item,
+						props,
+					}: {
+						item: any;
+						props: any;
+					}) => {
+						if (isFolder(item)) {
+							return {
+								...props,
+								onClick: () =>
+									navigateToFolder({
+										id: item.embedded.id,
+										label: item.embedded.title,
+									}),
+								onSelectChange: null,
+								symbol: 'folder',
+							};
+						}
+
+						return original ? original({item, props}) : props;
+					},
+				};
+			}),
+		[navigateToFolder, restProps.fdsProps.views]
+	);
+
 	const fdsProps = useMemo(
 		() => ({
 			...restProps.fdsProps,
+			customRenderers,
 			inlineNotificationComponent: NewItemsNotificationComponent,
+			views,
 		}),
-		[restProps.fdsProps]
+		[customRenderers, restProps.fdsProps, views]
 	);
 
 	return (

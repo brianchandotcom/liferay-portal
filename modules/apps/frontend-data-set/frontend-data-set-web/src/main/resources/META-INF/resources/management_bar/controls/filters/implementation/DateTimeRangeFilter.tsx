@@ -159,7 +159,7 @@ export function parseClayValue(
 	};
 }
 
-function parseGmtOffset(value: string | undefined): string {
+function parseGMTOffset(value: string | undefined): string {
 	if (!value) {
 		return '+00:00';
 	}
@@ -214,7 +214,7 @@ function extractDatePartsInTimeZone(date: Date, timeZone: string): DateParts {
 		hour: dateParts.hour === '24' ? 0 : Number(dateParts.hour),
 		minute: Number(dateParts.minute),
 		month: Number(dateParts.month),
-		offset: parseGmtOffset(dateParts.timeZoneName),
+		offset: parseGMTOffset(dateParts.timeZoneName),
 		year: Number(dateParts.year),
 	};
 }
@@ -311,7 +311,7 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 			.formatToParts(atDate)
 			.find((p) => p.type === 'timeZoneName');
 
-		return parseGmtOffset(part?.value);
+		return parseGMTOffset(part?.value);
 	}
 	catch {
 

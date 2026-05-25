@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -64,6 +64,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -508,7 +509,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			"thumbnailURLReference");
 
 		URL url = new URL(
-			PollTestUtil.pollUntilNotNull(
+			IdempotentRetryAssert.retryAssert(
+				30, TimeUnit.SECONDS, 500, TimeUnit.MILLISECONDS,
 				() -> {
 					Fragment getFragment = fragmentResource.getSiteFragment(
 						testGroup.getExternalReferenceCode(),
@@ -516,6 +518,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 					ThumbnailURLReference getThumbnailURLReference =
 						getFragment.getThumbnailURLReference();
+
+					Assert.assertNotNull(getThumbnailURLReference);
 
 					return getThumbnailURLReference.getUrl();
 				}));

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -69,6 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -752,7 +753,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
-		PollTestUtil.pollUntilNotNull(
+		IdempotentRetryAssert.retryAssert(
+			30, TimeUnit.SECONDS, 500, TimeUnit.MILLISECONDS,
 			() -> {
 				UtilityPage getUtilityPage =
 					utilityPageResource.getSiteUtilityPage(
@@ -762,9 +764,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				ThumbnailURLReference thumbnailURLReference =
 					getUtilityPage.getThumbnailURLReference();
 
-				if (thumbnailURLReference == null) {
-					return null;
-				}
+				Assert.assertNotNull(thumbnailURLReference);
 
 				return thumbnailURLReference.getUrl();
 			});

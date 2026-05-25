@@ -83,7 +83,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -99,6 +98,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -119,6 +119,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -1213,7 +1214,8 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource("thumbnailURLReference");
 
-		PollTestUtil.pollUntilNotNull(
+		IdempotentRetryAssert.retryAssert(
+			30, TimeUnit.SECONDS, 500, TimeUnit.MILLISECONDS,
 			() -> {
 				DisplayPageTemplate getDisplayPageTemplate =
 					displayPageTemplateResource.getSiteDisplayPageTemplate(
@@ -1223,9 +1225,7 @@ public class DisplayPageTemplateResourceTest
 				ThumbnailURLReference thumbnailURLReference =
 					getDisplayPageTemplate.getThumbnailURLReference();
 
-				if (thumbnailURLReference == null) {
-					return null;
-				}
+				Assert.assertNotNull(thumbnailURLReference);
 
 				return thumbnailURLReference.getUrl();
 			});

@@ -15,8 +15,8 @@ import java.io.Serializable;
  */
 public class AccountEntryValidatorResult implements Serializable {
 
-	public AccountEntryValidatorResult(boolean valid) {
-		this(valid, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+	public AccountEntryValidatorResult() {
+		this(true, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	public AccountEntryValidatorResult(boolean valid, String localizedMessage) {

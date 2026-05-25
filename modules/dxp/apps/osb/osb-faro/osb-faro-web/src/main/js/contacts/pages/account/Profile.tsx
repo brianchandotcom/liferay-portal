@@ -2,6 +2,7 @@ import AccountIndividuals from './components/AccountIndividuals';
 import AccountInfo, {IAccount} from './components/AccountInfo';
 import LifecycleStatus from './components/LifecycleStatus';
 import React from 'react';
+import TopAssets from './components/TopAssets';
 import {SectionHeader} from 'shared/components/SectionHeader';
 
 interface IProfileProps {
@@ -24,6 +25,7 @@ const Profile: React.FC<IProfileProps> = ({account, loading}) => (
 				className='h-100'
 				loading={loading}
 			/>
+			<TopAssets />
 		</div>
 		<AccountIndividuals />
 	</section>

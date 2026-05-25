@@ -5,8 +5,11 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
+import com.liferay.oauth.client.test.util.OAuthClientTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.http.internal.HttpImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -24,14 +27,14 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 /**
  * @author Christian Moura
@@ -42,6 +45,32 @@ public class OpenIdConnectHttpUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_httpImpl = new HttpImpl();
+
+		ReflectionTestUtil.invoke(
+			_httpImpl, "activate", new Class<?>[] {Map.class},
+			Collections.emptyMap());
+
+		Snapshot<Http> snapshot = ReflectionTestUtil.getFieldValue(
+			HttpUtil.class, "_httpSnapshot");
+
+		_originalServiceSupplier = ReflectionTestUtil.getAndSetFieldValue(
+			snapshot, "_serviceSupplier", (Supplier<Http>)() -> _httpImpl);
+	}
+
+	@After
+	public void tearDown() {
+		Snapshot<Http> snapshot = ReflectionTestUtil.getFieldValue(
+			HttpUtil.class, "_httpSnapshot");
+
+		ReflectionTestUtil.setFieldValue(
+			snapshot, "_serviceSupplier", _originalServiceSupplier);
+
+		ReflectionTestUtil.invoke(_httpImpl, "deactivate", new Class<?>[0]);
+	}
 
 	@Test
 	public void testSend() throws Exception {
@@ -169,32 +198,15 @@ public class OpenIdConnectHttpUtilTest {
 			String contentType, int responseCode, String responseJSON)
 		throws Exception {
 
-		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
-				HttpUtil.class)) {
+		try (OAuthClientTestUtil.HttpServerHandle httpServerHandle =
+				OAuthClientTestUtil.startServer(
+					contentType, null, "/userinfo", responseJSON,
+					responseCode)) {
 
-			httpUtilMockedStatic.when(
-				() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
-			).thenAnswer(
-				invocation -> {
-					Http.Options httpOptions = invocation.getArgument(0);
-
-					Http.Response httpResponse = new Http.Response();
-
-					httpResponse.setContentType(contentType);
-					httpResponse.setResponseCode(responseCode);
-
-					httpOptions.setResponse(httpResponse);
-
-					return responseJSON;
-				}
-			);
-
-			HTTPRequest httpRequest = new HTTPRequest(
-				HTTPRequest.Method.GET,
-				new URL(
-					"http://" + RandomTestUtil.randomString() + "/userinfo"));
-
-			return OpenIdConnectHttpUtil.send(httpRequest);
+			return OpenIdConnectHttpUtil.send(
+				new HTTPRequest(
+					HTTPRequest.Method.GET,
+					new URL(httpServerHandle.getURL())));
 		}
 	}
 
@@ -203,5 +215,8 @@ public class OpenIdConnectHttpUtilTest {
 			OpenIdConnectHttpUtil.class, "_toHttpOptions",
 			new Class<?>[] {HTTPRequest.class}, httpRequest);
 	}
+
+	private HttpImpl _httpImpl;
+	private Supplier<Http> _originalServiceSupplier;
 
 }

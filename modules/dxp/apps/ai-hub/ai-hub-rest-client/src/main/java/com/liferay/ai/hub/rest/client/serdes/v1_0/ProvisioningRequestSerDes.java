@@ -6,6 +6,7 @@
 package com.liferay.ai.hub.rest.client.serdes.v1_0;
 
 import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
+import com.liferay.ai.hub.rest.client.dto.v1_0.UserAccount;
 import com.liferay.ai.hub.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -46,18 +47,84 @@ public class ProvisioningRequestSerDes {
 
 		sb.append("{");
 
-		if (provisioningRequest.getCustomerName() != null) {
+		if (provisioningRequest.getAccountEntryExternalReferenceCode() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"customerName\": ");
+			sb.append("\"accountEntryExternalReferenceCode\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(provisioningRequest.getCustomerName()));
+			sb.append(
+				_escape(
+					provisioningRequest.
+						getAccountEntryExternalReferenceCode()));
 
 			sb.append("\"");
+		}
+
+		if (provisioningRequest.getAccountEntryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryId\": ");
+
+			sb.append(provisioningRequest.getAccountEntryId());
+		}
+
+		if (provisioningRequest.getAccountEntryName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(provisioningRequest.getAccountEntryName()));
+
+			sb.append("\"");
+		}
+
+		if (provisioningRequest.getLiferayDXPURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"liferayDXPURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(provisioningRequest.getLiferayDXPURL()));
+
+			sb.append("\"");
+		}
+
+		if (provisioningRequest.getUserAccounts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccounts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < provisioningRequest.getUserAccounts().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(provisioningRequest.getUserAccounts()[i]));
+
+				if ((i + 1) < provisioningRequest.getUserAccounts().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -81,13 +148,53 @@ public class ProvisioningRequestSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (provisioningRequest.getCustomerName() == null) {
-			map.put("customerName", null);
+		if (provisioningRequest.getAccountEntryExternalReferenceCode() ==
+				null) {
+
+			map.put("accountEntryExternalReferenceCode", null);
 		}
 		else {
 			map.put(
-				"customerName",
-				String.valueOf(provisioningRequest.getCustomerName()));
+				"accountEntryExternalReferenceCode",
+				String.valueOf(
+					provisioningRequest.
+						getAccountEntryExternalReferenceCode()));
+		}
+
+		if (provisioningRequest.getAccountEntryId() == null) {
+			map.put("accountEntryId", null);
+		}
+		else {
+			map.put(
+				"accountEntryId",
+				String.valueOf(provisioningRequest.getAccountEntryId()));
+		}
+
+		if (provisioningRequest.getAccountEntryName() == null) {
+			map.put("accountEntryName", null);
+		}
+		else {
+			map.put(
+				"accountEntryName",
+				String.valueOf(provisioningRequest.getAccountEntryName()));
+		}
+
+		if (provisioningRequest.getLiferayDXPURL() == null) {
+			map.put("liferayDXPURL", null);
+		}
+		else {
+			map.put(
+				"liferayDXPURL",
+				String.valueOf(provisioningRequest.getLiferayDXPURL()));
+		}
+
+		if (provisioningRequest.getUserAccounts() == null) {
+			map.put("userAccounts", null);
+		}
+		else {
+			map.put(
+				"userAccounts",
+				String.valueOf(provisioningRequest.getUserAccounts()));
 		}
 
 		return map;
@@ -108,7 +215,21 @@ public class ProvisioningRequestSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "customerName")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountEntryExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountEntryId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountEntryName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "liferayDXPURL")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
 				return false;
 			}
 
@@ -120,10 +241,46 @@ public class ProvisioningRequestSerDes {
 			ProvisioningRequest provisioningRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customerName")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountEntryExternalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
-					provisioningRequest.setCustomerName(
+					provisioningRequest.setAccountEntryExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountEntryId")) {
+				if (jsonParserFieldValue != null) {
+					provisioningRequest.setAccountEntryId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountEntryName")) {
+				if (jsonParserFieldValue != null) {
+					provisioningRequest.setAccountEntryName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "liferayDXPURL")) {
+				if (jsonParserFieldValue != null) {
+					provisioningRequest.setLiferayDXPURL(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserAccount[] userAccountsArray =
+						new UserAccount[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userAccountsArray.length; i++) {
+						userAccountsArray[i] = UserAccountSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					provisioningRequest.setUserAccounts(userAccountsArray);
 				}
 			}
 		}
@@ -207,4 +364,4 @@ public class ProvisioningRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:270323919
+// LIFERAY-REST-BUILDER-HASH:371244096

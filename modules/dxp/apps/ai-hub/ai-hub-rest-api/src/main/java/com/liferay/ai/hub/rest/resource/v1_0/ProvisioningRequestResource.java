@@ -41,7 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProvisioningRequestResource {
 
-	public void postProvisioning(ProvisioningRequest provisioningRequest)
+	public ProvisioningRequest postProvisioning(
+			ProvisioningRequest provisioningRequest)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -132,4 +133,4 @@ public interface ProvisioningRequestResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-237172674
+// LIFERAY-REST-BUILDER-HASH:1827184923

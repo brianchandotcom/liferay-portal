@@ -91,7 +91,10 @@ describe('RoomStatistics', () => {
 	beforeAll(() => {
 		window['Liferay'] = {
 			...originalLiferay,
-			Language: {get: mockLiferayLanguageGet},
+			Language: {
+				...originalLiferay.Language,
+				get: mockLiferayLanguageGet,
+			},
 
 			detach: (name, fn): void => {
 				window.removeEventListener(name as string, fn as EventListener);
@@ -168,7 +171,9 @@ describe('RoomStatistics', () => {
 	it('renders 1 day when totalSessionDuration is 24h', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(24 * 60);
 
-		const {getByText} = render(<RoomStatistics />);
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
 
 		expect(getByText('1 day')).toBeInTheDocument();
 	});
@@ -176,7 +181,9 @@ describe('RoomStatistics', () => {
 	it('renders 1 day 1 hour when totalSessionDuration is 25h30', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(25 * 60 + 30);
 
-		const {getByText} = render(<RoomStatistics />);
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
 
 		expect(getByText('1 day 1 hour')).toBeInTheDocument();
 	});
@@ -184,7 +191,9 @@ describe('RoomStatistics', () => {
 	it('renders 2 days when totalSessionDuration is 48h', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(48 * 60);
 
-		const {getByText} = render(<RoomStatistics />);
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
 
 		expect(getByText('2 days')).toBeInTheDocument();
 	});
@@ -192,7 +201,9 @@ describe('RoomStatistics', () => {
 	it('renders 2 days 2 hours when totalSessionDuration is 50h15', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(50 * 60 + 15);
 
-		const {getByText} = render(<RoomStatistics />);
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
 
 		expect(getByText('2 days 2 hours')).toBeInTheDocument();
 	});

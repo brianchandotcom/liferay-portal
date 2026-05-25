@@ -199,9 +199,8 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public Results<Account> getAccountLifecycleAccounts(
-			FaroProject faroProject, String country, String id, String industry,
-			String query, String stageType, int cur, int delta,
-			String sortString)
+			FaroProject faroProject, String filterString, String id,
+			String query, int cur, int delta, String sortString)
 		throws FaroEngineClientException;
 
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(

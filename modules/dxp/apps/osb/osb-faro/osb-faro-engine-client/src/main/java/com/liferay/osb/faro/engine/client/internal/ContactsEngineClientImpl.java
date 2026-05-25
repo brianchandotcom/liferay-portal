@@ -733,23 +733,18 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Account> getAccountLifecycleAccounts(
-			FaroProject faroProject, String country, String id, String industry,
-			String query, String stageType, int cur, int delta,
-			String sortString)
+			FaroProject faroProject, String filterString, String id,
+			String query, int cur, int delta, String sortString)
 		throws FaroEngineClientException {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
 
-		if (Validator.isNotNull(country)) {
-			uriVariables.put("country", country);
+		if (Validator.isNotNull(filterString)) {
+			uriVariables.put("filter", filterString);
 		}
 
 		uriVariables.put("id", id);
-
-		if (Validator.isNotNull(industry)) {
-			uriVariables.put("industry", industry);
-		}
 
 		if (Validator.isNotNull(query)) {
 			uriVariables.put("query", query);
@@ -761,10 +756,6 @@ public class ContactsEngineClientImpl
 				Arrays.asList(
 					StringUtil.replace(
 						sortString, CharPool.COLON, CharPool.COMMA)));
-		}
-
-		if (Validator.isNotNull(stageType)) {
-			uriVariables.put("stageType", stageType);
 		}
 
 		PagedModel<?, Account> pagedModel = get(

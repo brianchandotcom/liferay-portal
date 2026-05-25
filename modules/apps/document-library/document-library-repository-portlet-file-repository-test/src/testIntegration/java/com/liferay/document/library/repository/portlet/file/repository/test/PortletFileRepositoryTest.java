@@ -307,9 +307,7 @@ public class PortletFileRepositoryTest {
 		FileEntry fileEntry = _addPortletFileEntry(
 			RandomTestUtil.randomString());
 
-		String randomString = RandomTestUtil.randomString();
-
-		byte[] bytes = randomString.getBytes();
+		byte[] bytes = RandomTestUtil.randomBytes();
 
 		FileEntry updatedFileEntry;
 
@@ -322,9 +320,7 @@ public class PortletFileRepositoryTest {
 
 		_assertUpdatedFileEntry(bytes, fileEntry, updatedFileEntry);
 
-		randomString = RandomTestUtil.randomString();
-
-		bytes = randomString.getBytes();
+		bytes = RandomTestUtil.randomBytes();
 
 		File file = FileUtil.createTempFile(bytes);
 

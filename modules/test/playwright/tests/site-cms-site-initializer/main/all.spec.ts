@@ -1126,3 +1126,147 @@ test(
 		});
 	}
 );
+
+test(
+	'All section can be filtered by Space',
+	{tag: '@LPD-91933'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const space1Name = `Space ${getRandomString()}`;
+		const space2Name = `Space ${getRandomString()}`;
+		const space1ContentTitle = `Content ${getRandomString()}`;
+		const space2ContentTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create two Spaces with one content each', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: space1Name,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: space2Name,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: space1ContentTitle,
+				},
+				applicationName,
+				space1Name
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: space2ContentTitle,
+				},
+				applicationName,
+				space2Name
+			);
+		});
+
+		await test.step('Both contents are visible before filtering', async () => {
+			await assetsPage.gotoAll();
+
+			await expect(assetsPage.getItem(space1ContentTitle)).toBeVisible();
+			await expect(assetsPage.getItem(space2ContentTitle)).toBeVisible();
+		});
+
+		await test.step('Filter by Space and check only the matching content is visible', async () => {
+			await page
+				.getByRole('button', {exact: true, name: 'Filter'})
+				.click();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Space'})
+				.click();
+
+			await page
+				.getByRole('checkbox', {exact: true, name: space1Name})
+				.check();
+
+			await page
+				.getByRole('button', {exact: true, name: 'Add Filter'})
+				.click();
+
+			await expect(
+				page.getByRole('button', {name: `Space: ${space1Name}`})
+			).toBeVisible();
+
+			await expect(assetsPage.getItem(space1ContentTitle)).toBeVisible();
+			await expect(assetsPage.getItem(space2ContentTitle)).toBeHidden();
+		});
+	}
+);
+
+test(
+	'All section can be filtered by Status',
+	{tag: '@LPD-91933'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const approvedTitle = `Content A ${getRandomString()}`;
+		const expiredTitle = `Content B ${getRandomString()}`;
+
+		await test.step('Create one approved and one expired content in the Default Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: approvedTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			const expiredEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: expiredTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			await apiHelpers.objectEntry.expireObjectEntryByExternalReferenceCode(
+				applicationName,
+				'Default',
+				expiredEntry.externalReferenceCode
+			);
+		});
+
+		await test.step('Both contents are visible before filtering', async () => {
+			await assetsPage.gotoAll();
+
+			await expect(assetsPage.getItem(approvedTitle)).toBeVisible();
+			await expect(assetsPage.getItem(expiredTitle)).toBeVisible();
+		});
+
+		await test.step('Filter by Status Approved and check only the approved content is visible', async () => {
+			await page
+				.getByRole('button', {exact: true, name: 'Filter'})
+				.click();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Status'})
+				.click();
+
+			await page
+				.getByRole('checkbox', {exact: true, name: 'Approved'})
+				.check();
+
+			await page
+				.getByRole('button', {exact: true, name: 'Add Filter'})
+				.click();
+
+			await expect(
+				page.getByRole('button', {name: 'Status: Approved'})
+			).toBeVisible();
+
+			await expect(assetsPage.getItem(approvedTitle)).toBeVisible();
+			await expect(assetsPage.getItem(expiredTitle)).toBeHidden();
+		});
+	}
+);

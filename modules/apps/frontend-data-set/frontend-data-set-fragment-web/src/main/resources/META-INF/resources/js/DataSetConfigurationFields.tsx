@@ -39,9 +39,9 @@ interface IContextMappedTokenValue {
 
 type IMappedTokenValue = IContentMappedTokenValue | IContextMappedTokenValue;
 
-type TokenValue = string | IMappedTokenValue;
+type TokenMapping = string | IMappedTokenValue;
 
-function isMappedTokenValue(value: TokenValue): value is IMappedTokenValue {
+function isMappedTokenValue(value: TokenMapping): value is IMappedTokenValue {
 	return typeof value === 'object' && value !== null;
 }
 
@@ -58,7 +58,7 @@ function isOnDisplayPageTemplate(): boolean {
 interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
 	values: {
-		apiURLTokenValues: string;
+		apiURLTokenMappings: string;
 		itemSelector: IDataSet;
 	};
 }
@@ -94,10 +94,10 @@ function TokenRow({
 	tokenInputId,
 	value,
 }: {
-	onChange: (next: TokenValue) => void;
+	onChange: (next: TokenMapping) => void;
 	token: string;
 	tokenInputId: string;
-	value: TokenValue;
+	value: TokenMapping;
 }) {
 	const fieldSelectId = useId();
 
@@ -319,9 +319,9 @@ export default function DataSetConfigurationFields({
 	onValueSelect,
 	values,
 }: IConfigurationField) {
-	const [localAPIURLTokenValues, setLocalAPIURLTokenValues] = useState<
-		Record<string, TokenValue>
-	>(JSON.parse(values.apiURLTokenValues || '{}'));
+	const [localAPIURLTokenMappings, setLocalAPIURLTokenMappings] = useState<
+		Record<string, TokenMapping>
+	>(JSON.parse(values.apiURLTokenMappings || '{}'));
 
 	const itemSelectorInputId = useId();
 	const tokenBaseInputId = useId();
@@ -385,22 +385,25 @@ export default function DataSetConfigurationFields({
 
 	const apiURL =
 		values.itemSelector.restEndpoint +
-		values.itemSelector.additionalAPIURLParameters || '';
+			values.itemSelector.additionalAPIURLParameters || '';
 
 	const tokens = apiURL?.match(/{(.*?)}/g);
 
-	const updateTokenValue = useCallback(
-		(tokenKey: string, value: TokenValue) => {
-			const newTokensValue = {
-				...localAPIURLTokenValues,
-				[tokenKey]: value,
+	const updateTokenMapping = useCallback(
+		(tokenKey: string, tokenMapping: TokenMapping) => {
+			const newTokenMappings = {
+				...localAPIURLTokenMappings,
+				[tokenKey]: tokenMapping,
 			};
 
-			setLocalAPIURLTokenValues(newTokensValue);
+			setLocalAPIURLTokenMappings(newTokenMappings);
 
-			onValueSelect('apiURLTokenValues', JSON.stringify(newTokensValue));
+			onValueSelect(
+				'apiURLTokenMappings',
+				JSON.stringify(newTokenMappings)
+			);
 		},
-		[localAPIURLTokenValues, onValueSelect]
+		[localAPIURLTokenMappings, onValueSelect]
 	);
 
 	return (
@@ -516,18 +519,18 @@ export default function DataSetConfigurationFields({
 
 					const tokenInputId = `${tokenBaseInputId}_${tokenKey}`;
 
-					const tokenValue: TokenValue =
-						localAPIURLTokenValues[tokenKey] ?? '';
+					const tokenMapping: TokenMapping =
+						localAPIURLTokenMappings[tokenKey] ?? '';
 
 					return (
 						<TokenRow
 							key={token}
 							onChange={(value) =>
-								updateTokenValue(tokenKey, value)
+								updateTokenMapping(tokenKey, value)
 							}
 							token={token}
 							tokenInputId={tokenInputId}
-							value={tokenValue}
+							value={tokenMapping}
 						/>
 					);
 				})}

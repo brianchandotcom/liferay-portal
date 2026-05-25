@@ -624,6 +624,18 @@ public class AssetEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
+		long companyId, long[] groupIds, long userId, long[] classNameIds,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts) {
+
+		return _assetEntryLocalService.search(
+			companyId, groupIds, userId, classNameIds, classTypeId, keywords,
+			showNonindexable, statuses, start, end, sorts);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable, int status,
 		int start, int end) {
@@ -654,6 +666,18 @@ public class AssetEntryLocalServiceWrapper
 		return _assetEntryLocalService.search(
 			companyId, groupIds, userId, className, classTypeId, keywords,
 			showNonindexable, statuses, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts) {
+
+		return _assetEntryLocalService.search(
+			companyId, groupIds, userId, className, classTypeId, keywords,
+			showNonindexable, statuses, start, end, sorts);
 	}
 
 	@Override
@@ -947,4 +971,4 @@ public class AssetEntryLocalServiceWrapper
 	private AssetEntryLocalService _assetEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:300908687
+// LIFERAY-SERVICE-BUILDER-HASH:-1238175294

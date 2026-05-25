@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '4cb5d4f47dcf9c9cf50bf1d79ec074ee6f2cdacdb3b273dd4bcf0897d4612089',
+	hash: '5b98c09b335561814c001c7227294100c7e51ff5e5838299c40f4da5a28b3aab',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -182,6 +182,7 @@ module.exports = {
 			'react-text-mask',
 			'text-mask-addons',
 			'text-mask-core',
+			'ua-parser-js',
 		],
 		'@liferay/frontend-js-importmaps-extender': [],
 		'@liferay/frontend-js-item-selector-sample-web': [],

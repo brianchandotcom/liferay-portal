@@ -107,8 +107,8 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 
 		long[] layoutIds = GetterUtil.getLongValues(
 			parameterMap.get("layoutIds"));
-		boolean privateLayout = GetterUtil.getBoolean(
-			parameterMap.get("privateLayout"));
+		boolean privateLayout = MapUtil.getBoolean(
+			parameterMap, "privateLayout");
 
 		if (ArrayUtil.isEmpty(layoutIds) &&
 			MapUtil.getBoolean(

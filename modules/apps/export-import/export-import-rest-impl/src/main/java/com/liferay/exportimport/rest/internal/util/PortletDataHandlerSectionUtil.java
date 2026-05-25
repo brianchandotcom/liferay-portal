@@ -128,37 +128,34 @@ public class PortletDataHandlerSectionUtil {
 
 		return TransformUtil.transformToArray(
 			previewPortletDataHandlersMap.entrySet(),
-			entry -> new PreviewPortletDataHandlerSection() {
-				{
-					long additionCount = 0;
-					long deletionCount = 0;
+			entry -> {
+				long additionCount = 0;
+				long deletionCount = 0;
 
-					List<PreviewPortletDataHandler> previewPortletDataHandlers =
-						entry.getValue();
+				List<PreviewPortletDataHandler> previewPortletDataHandlerList =
+					entry.getValue();
 
-					for (PreviewPortletDataHandler previewPortletDataHandler :
-							previewPortletDataHandlers) {
+				for (PreviewPortletDataHandler previewPortletDataHandler :
+						previewPortletDataHandlerList) {
 
-						additionCount +=
-							previewPortletDataHandler.getAdditionCount();
-						deletionCount +=
-							previewPortletDataHandler.getDeletionCount();
-					}
-
-					long finalAdditionCount = additionCount;
-
-					setAdditionCount(() -> finalAdditionCount);
-
-					long finalDeletionCount = deletionCount;
-
-					setDeletionCount(() -> finalDeletionCount);
-
-					setLabel(() -> LanguageUtil.get(locale, entry.getKey()));
-					setName(entry::getKey);
-					setPreviewPortletDataHandlers(
-						() -> previewPortletDataHandlers.toArray(
-							new PreviewPortletDataHandler[0]));
+					additionCount +=
+						previewPortletDataHandler.getAdditionCount();
+					deletionCount +=
+						previewPortletDataHandler.getDeletionCount();
 				}
+
+				return new PreviewPortletDataHandlerSection() {
+					{
+						setAdditionCount(() -> additionCount);
+						setDeletionCount(() -> deletionCount);
+						setLabel(
+							() -> LanguageUtil.get(locale, entry.getKey()));
+						setName(entry::getKey);
+						setPreviewPortletDataHandlers(
+							() -> previewPortletDataHandlerList.toArray(
+								new PreviewPortletDataHandler[0]));
+					}
+				};
 			},
 			PreviewPortletDataHandlerSection.class);
 	}

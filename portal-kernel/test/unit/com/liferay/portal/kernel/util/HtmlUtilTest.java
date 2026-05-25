@@ -90,8 +90,7 @@ public class HtmlUtilTest {
 				"data:text/html;base64," +
 					"PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"));
 
-		String portalURL =
-			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+		String portalURL = "http://localhost:1234";
 
 		Assert.assertEquals(portalURL, HtmlUtil.escapeHREF(portalURL));
 
@@ -163,8 +162,7 @@ public class HtmlUtilTest {
 			HtmlUtil.escapeJSLink(
 				"%00javascript://localhost:800/123%0aalert(document.domain)"));
 
-		String portalURL =
-			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+		String portalURL = "http://localhost:1234";
 
 		Assert.assertEquals(portalURL, HtmlUtil.escapeJSLink(portalURL));
 		Assert.assertEquals(

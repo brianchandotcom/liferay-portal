@@ -325,7 +325,7 @@ public class PortalImplUnitTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		int portalServerPort = _portalImpl.getPortalServerPort(false);
+		int portalServerPort = 1234;
 
 		mockHttpServletRequest.setServerPort(portalServerPort);
 
@@ -352,12 +352,10 @@ public class PortalImplUnitTest {
 				new MockHttpServletRequest();
 
 			mockHttpServletRequest.addHeader("X-Forwarded-Custom-Port", 8081);
-			mockHttpServletRequest.setServerPort(
-				_portalImpl.getPortalServerPort(false));
+			mockHttpServletRequest.setServerPort(1234);
 
 			Assert.assertEquals(
-				_portalImpl.getPortalServerPort(false),
-				_portalImpl.getForwardedPort(mockHttpServletRequest));
+				1234, _portalImpl.getForwardedPort(mockHttpServletRequest));
 		}
 		finally {
 			setPropsValuesValue(
@@ -383,12 +381,10 @@ public class PortalImplUnitTest {
 				new MockHttpServletRequest();
 
 			mockHttpServletRequest.addHeader("X-Forwarded-Port", 8081);
-			mockHttpServletRequest.setServerPort(
-				_portalImpl.getPortalServerPort(false));
+			mockHttpServletRequest.setServerPort(1234);
 
 			Assert.assertEquals(
-				_portalImpl.getPortalServerPort(false),
-				_portalImpl.getForwardedPort(mockHttpServletRequest));
+				1234, _portalImpl.getForwardedPort(mockHttpServletRequest));
 		}
 		finally {
 			setPropsValuesValue(
@@ -411,8 +407,7 @@ public class PortalImplUnitTest {
 				new MockHttpServletRequest();
 
 			mockHttpServletRequest.addHeader("X-Forwarded-Port", "8081");
-			mockHttpServletRequest.setServerPort(
-				_portalImpl.getPortalServerPort(false));
+			mockHttpServletRequest.setServerPort(1234);
 
 			Assert.assertEquals(
 				8081, _portalImpl.getForwardedPort(mockHttpServletRequest));
@@ -443,9 +438,8 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/web/test-group",
-			"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-			false, new TreeMap<>());
+			"/web/test-group", "http://liferay.com:1234", false,
+			new TreeMap<>());
 	}
 
 	@Test
@@ -455,9 +449,8 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/group/test-group",
-			"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-			true, new TreeMap<>());
+			"/group/test-group", "http://liferay.com:1234", true,
+			new TreeMap<>());
 	}
 
 	@Test
@@ -467,9 +460,8 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK, true);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/user/test-group",
-			"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-			true, new TreeMap<>());
+			"/user/test-group", "http://liferay.com:1234", true,
+			new TreeMap<>());
 	}
 
 	@Test
@@ -479,9 +471,7 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/web/test-group",
-			"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-			false,
+			"/web/test-group", "http://liferay.com:1234", false,
 			TreeMapBuilder.put(
 				"test.com", StringPool.BLANK
 			).build());
@@ -493,8 +483,7 @@ public class PortalImplUnitTest {
 
 		_setUpPortalImpl(StringPool.BLANK);
 
-		String portalURL = _portalImpl.getPortalURL(
-			"test.com", _portalImpl.getPortalServerPort(false), false);
+		String portalURL = _portalImpl.getPortalURL("test.com", 1234, false);
 
 		_assertGetLayoutSetFriendlyURL(
 			portalURL, portalURL, false,
@@ -511,9 +500,7 @@ public class PortalImplUnitTest {
 
 		_assertGetLayoutSetFriendlyURL(
 			"/context-path/web/test-group",
-			"http://liferay.com:" + _portalImpl.getPortalServerPort(false) +
-				"/context-path",
-			false,
+			"http://liferay.com:1234/context-path", false,
 			TreeMapBuilder.put(
 				"test.com", StringPool.BLANK
 			).build());
@@ -525,8 +512,7 @@ public class PortalImplUnitTest {
 
 		_setUpPortalImpl("context-path");
 
-		String portalURL = _portalImpl.getPortalURL(
-			"test.com", _portalImpl.getPortalServerPort(false), false);
+		String portalURL = _portalImpl.getPortalURL("test.com", 1234, false);
 
 		String portalURLWithContextPath = portalURL + "/context-path";
 
@@ -551,10 +537,8 @@ public class PortalImplUnitTest {
 			_setUpPortalImpl(StringPool.BLANK);
 
 			_assertGetLayoutSetFriendlyURL(
-				"/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false) +
-					"",
-				false, new TreeMap<>());
+				"/test-group", "http://liferay.com:1234", false,
+				new TreeMap<>());
 		}
 		finally {
 			setPropsValuesValue(
@@ -578,9 +562,7 @@ public class PortalImplUnitTest {
 
 			_assertGetLayoutSetFriendlyURL(
 				"/context-path/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false) +
-					"/context-path",
-				false, new TreeMap<>());
+				"http://liferay.com:1234/context-path", false, new TreeMap<>());
 		}
 		finally {
 			setPropsValuesValue(
@@ -603,9 +585,8 @@ public class PortalImplUnitTest {
 			_setUpPortalImpl(StringPool.BLANK);
 
 			_assertGetLayoutSetFriendlyURL(
-				"/group/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-				true, new TreeMap<>());
+				"/group/test-group", "http://liferay.com:1234", true,
+				new TreeMap<>());
 		}
 		finally {
 			setPropsValuesValue(
@@ -628,9 +609,8 @@ public class PortalImplUnitTest {
 			_setUpPortalImpl(StringPool.BLANK, true);
 
 			_assertGetLayoutSetFriendlyURL(
-				"/user/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-				true, new TreeMap<>());
+				"/user/test-group", "http://liferay.com:1234", true,
+				new TreeMap<>());
 		}
 		finally {
 			setPropsValuesValue(
@@ -653,9 +633,7 @@ public class PortalImplUnitTest {
 			_setUpPortalImpl(StringPool.BLANK);
 
 			_assertGetLayoutSetFriendlyURL(
-				"/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-				false,
+				"/test-group", "http://liferay.com:1234", false,
 				TreeMapBuilder.put(
 					"test.com", StringPool.BLANK
 				).build());
@@ -681,9 +659,8 @@ public class PortalImplUnitTest {
 			_setUpPortalImpl(StringPool.BLANK);
 
 			_assertGetLayoutSetFriendlyURL(
-				"/web/test-group",
-				"http://liferay.com:" + _portalImpl.getPortalServerPort(false),
-				false, new TreeMap<>());
+				"/web/test-group", "http://liferay.com:1234", false,
+				new TreeMap<>());
 		}
 		finally {
 			setPropsValuesValue(
@@ -1023,7 +1000,7 @@ public class PortalImplUnitTest {
 		themeDisplay.setRefererGroupId(0);
 		themeDisplay.setRefererPlid(0);
 		themeDisplay.setSecure(false);
-		themeDisplay.setServerPort(_portalImpl.getPortalServerPort(false));
+		themeDisplay.setServerPort(1234);
 		themeDisplay.setURLPortal(portalURL);
 
 		Assert.assertEquals(

@@ -81,6 +81,23 @@
 			"type": "Clob"
 		},
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "DISCLAIMER_MESSAGE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Disclaimer Message"
+			},
+			"localized": true,
+			"name": "disclaimerMessage",
+			"readOnly": false,
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"system": true,
+			"type": "String"
+		},
+		{
 			"DBType": "Clob",
 			"businessType": "LongText",
 			"defaultValue": "null",

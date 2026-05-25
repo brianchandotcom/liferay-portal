@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Tancredi Covioli
  */
-@Component(
-	service = AccountEntryValidatorRegistry.class
-)
+@Component(service = AccountEntryValidatorRegistry.class)
 public class AccountEntryValidatorRegistryImpl
 	implements AccountEntryValidatorRegistry {
 

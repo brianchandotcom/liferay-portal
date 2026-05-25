@@ -47,7 +47,13 @@ public class DefaultAccountEntryValidatorImpl
 			AccountEntry accountEntry, Map<String, Object> context)
 		throws PortalException {
 
-		return new AccountEntryValidatorResult(false, "an-error-occurred");
+		return AccountEntryValidatorResult.builder(
+			getKey(accountEntry, context)
+		).message(
+			"an-error-occurred"
+		).resultFailed(
+			"an-error-occurred"
+		).build();
 	}
 
 	@Override

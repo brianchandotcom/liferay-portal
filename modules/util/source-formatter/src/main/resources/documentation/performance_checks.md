@@ -35,6 +35,7 @@ SetUtilMethodsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds case
 StringCastCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases where a redundant `toString()` is called on variable type `String`. |
 [StringMethodsCheck](check/string_methods_check.md#stringmethodscheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks if performance can be improved by using different String operation methods. |
 SubstringCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases like `s.substring(1, s.length())` (use `s.substring(1)` instead). |
+TestClassStaticVariableCheck | .java | Finds unnecessary static modifiers in test classes. |
 ThreadLocalUtilCheck | .java | Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead). |
 TryWithResourcesCheck | .java | Ensures using Try-With-Resources statement to properly close the resource. |
 [UnnecessaryAssignCheck](check/unnecessary_assign_check.md#unnecessaryassigncheck) | .java | Finds unnecessary assign statements (when it is either reassigned or returned right after). |

@@ -5,6 +5,10 @@
 
 import {Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {waitForAlert} from '../../../../utils/waitForAlert';
+
 export async function assertTerminatedABTest(page: Page) {
 	await expect(page.getByText('Terminated')).toBeVisible();
 
@@ -28,49 +32,111 @@ export async function clickOnABTestModalButton({
 	buttonName: string;
 	page: Page;
 }) {
-	const modalFooter = await page.locator('.modal-footer');
+	const modalFooter = page.locator('.modal-footer');
 
 	await modalFooter.getByText(buttonName).click();
 }
 
-export async function createABTest({name, page}: {name: string; page: Page}) {
-	await page.getByText('Create Test').click();
+export async function createABTest({
+	goal = 'Bounce Rate',
+	name,
+	page,
+}: {
+	goal?: 'Bounce Rate' | 'Click';
+	name: string;
+	page: Page;
+}) {
+	const modal = page.locator('.modal-content');
 
-	const modal = await page.locator('.modal-content');
+	await clickAndExpectToBeVisible({
+		target: modal.getByLabel('Test Name'),
+		trigger: page.getByText('Create Test'),
+	});
 
-	await modal.locator('input').fill(name);
+	await fillAndClickOutside(page, modal.getByLabel('Test Name'), name);
+
+	if (goal !== 'Bounce Rate') {
+		await modal.getByLabel('Select Goal').selectOption({label: goal});
+	}
 
 	await modal.getByText('Save').click();
 
-	await expect(page.locator('[data-testid="create-variant"]')).toBeVisible();
+	if (goal === 'Click') {
+		await expect(page.locator('#clickableElement')).toBeVisible();
+	}
+	else {
+		await expect(
+			page.locator('[data-testid="create-variant"]')
+		).toBeVisible();
+	}
+
+	await waitForAlert(page);
 }
 
 export async function createVariant({name, page}: {name: string; page: Page}) {
-	const createVariantButton = await page.locator(
-		'[data-testid="create-variant"]'
-	);
+	const createVariantButton = page.locator('[data-testid="create-variant"]');
 
 	await expect(createVariantButton).toBeVisible();
 
 	await createVariantButton.click();
 
-	const variantModal = await page.locator('.modal-content');
+	const variantModal = page.locator('.modal-content');
 
 	await variantModal.locator('input').fill(name);
 
 	await variantModal.getByText('Save').click();
 
+	await waitForAlert(page);
+
 	await expect(page.locator(`[data-title="${name}"]`)).toBeVisible();
 }
 
+export async function getClickElementId({page}: {page: any}) {
+	const title = await page
+		.locator(
+			'.lfr-segments-experiment-click-goal-target-popover .text-truncate'
+		)
+		.getAttribute('title');
+
+	return (title ?? '').replace(/^#/, '');
+}
+
+export async function selectClickElement({
+	index = 0,
+	page,
+}: {
+	index?: number;
+	page: Page;
+}) {
+	page.getByText('Change Clickable Element');
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.locator('.lfr-segments-experiment-click-goal-target-overlay')
+			.nth(index),
+		trigger: page.getByText('Select Clickable Element'),
+	});
+
+	const title = getClickElementId({page});
+
+	await page
+		.locator('.lfr-segments-experiment-click-goal-target-popover')
+		.getByRole('button')
+		.click();
+
+	await waitForAlert(page);
+
+	return title;
+}
+
 export async function openABTesSidebar(page: Page) {
-	const sidebar = await page.locator('#segmentsExperimentSidebar');
+	const sidebar = page.locator('#segmentsExperimentSidebar');
 
 	if (!(await sidebar.isVisible())) {
-		await page
-			.locator('button[data-qa-id=segmentsExperimentPanel]')
-			.click();
+		await clickAndExpectToBeVisible({
+			target: page.locator('#segmentsExperimentSidebar'),
+			trigger: page.getByRole('button', {name: 'A/B Test'}),
+		});
 	}
-
-	await expect(page.locator('#segmentsExperimentSidebar')).toBeVisible();
 }

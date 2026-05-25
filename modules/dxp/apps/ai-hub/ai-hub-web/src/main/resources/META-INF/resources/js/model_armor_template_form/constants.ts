@@ -102,21 +102,19 @@ export const DETECTIONS: Array<{
 	label: string;
 }> = [
 	{
-		description: Liferay.Language.get('malicious-uri-filter-description'),
+		description: Liferay.Language.get('malicious-uri-filter-help'),
 		field: 'maliciousUriFilterEnabled',
 		label: Liferay.Language.get('malicious-uri-filter'),
 	},
 	{
 		description: Liferay.Language.get(
-			'prompt-injection-and-jailbreak-filter-description'
+			'prompt-injection-and-jailbreak-filter-help'
 		),
 		field: 'piAndJailbreakFilterEnabled',
 		label: Liferay.Language.get('prompt-injection-and-jailbreak-filter'),
 	},
 	{
-		description: Liferay.Language.get(
-			'sensitive-data-protection-description'
-		),
+		description: Liferay.Language.get('sensitive-data-protection-help'),
 		field: 'sdpFilterEnabled',
 		label: Liferay.Language.get('sensitive-data-protection'),
 	},

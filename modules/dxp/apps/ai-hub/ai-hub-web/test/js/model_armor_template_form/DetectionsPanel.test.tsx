@@ -116,15 +116,13 @@ describe('DetectionsPanel', () => {
 		renderPanel();
 
 		expect(
-			screen.getByText('malicious-uri-filter-description')
+			screen.getByText('malicious-uri-filter-help')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(
-				'prompt-injection-and-jailbreak-filter-description'
-			)
+			screen.getByText('prompt-injection-and-jailbreak-filter-help')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText('sensitive-data-protection-description')
+			screen.getByText('sensitive-data-protection-help')
 		).toBeInTheDocument();
 	});
 

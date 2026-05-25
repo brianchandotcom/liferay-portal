@@ -101,7 +101,7 @@ public class CollaboratorDTOConverterTest {
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), _objectEntry.getModelClassName(),
 			_objectEntry.getObjectEntryId(),
-			TicketConstants.TYPE_INVITE_COLLABORATOR, null, emailAddress,
+			TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress, null,
 			expirationDate, null);
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(

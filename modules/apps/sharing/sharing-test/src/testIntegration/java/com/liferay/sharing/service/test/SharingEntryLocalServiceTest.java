@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -510,12 +511,14 @@ public class SharingEntryLocalServiceTest {
 	public void testAddSharingEntryWithInviteCollaboratorTicket()
 		throws Exception {
 
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+		String emailAddress =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"@liferay.com";
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_group.getGroupId(), TicketConstants.TYPE_INVITE_COLLABORATOR, null,
-			emailAddress,
+			_group.getGroupId(), TicketConstants.TYPE_INVITE_COLLABORATOR,
+			emailAddress, null,
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
 

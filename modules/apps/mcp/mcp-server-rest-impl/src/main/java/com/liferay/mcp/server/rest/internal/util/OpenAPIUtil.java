@@ -839,7 +839,7 @@ public class OpenAPIUtil {
 			if (jsonObject.has("$ref")) {
 				String ref = jsonObject.getString("$ref");
 
-				if (visitedRefs.contains(ref)) {
+				if (visitedRefs.contains(ref) || (visitedRefs.size() >= 3)) {
 					return HashMapBuilder.<String, Object>put(
 						"type", "object"
 					).build();

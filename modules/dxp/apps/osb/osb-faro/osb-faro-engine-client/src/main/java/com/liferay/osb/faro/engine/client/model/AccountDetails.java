@@ -39,6 +39,10 @@ public class AccountDetails {
 			return _name;
 		}
 
+		public String getSourceName() {
+			return _sourceName;
+		}
+
 		public String getValue() {
 			return _value;
 		}
@@ -59,6 +63,10 @@ public class AccountDetails {
 			_name = name;
 		}
 
+		public void setSourceName(String sourceName) {
+			_sourceName = sourceName;
+		}
+
 		public void setValue(String value) {
 			_value = value;
 		}
@@ -67,6 +75,7 @@ public class AccountDetails {
 		private String _dataSourceName;
 		private Date _modifiedDate;
 		private String _name;
+		private String _sourceName;
 		private String _value;
 
 	}

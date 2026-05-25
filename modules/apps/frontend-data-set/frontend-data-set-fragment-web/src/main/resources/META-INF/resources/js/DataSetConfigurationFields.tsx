@@ -385,7 +385,7 @@ export default function DataSetConfigurationFields({
 
 	const apiURL =
 		values.itemSelector.restEndpoint +
-		values.itemSelector.additionalAPIURLParameters;
+		values.itemSelector.additionalAPIURLParameters || '';
 
 	const tokens = apiURL?.match(/{(.*?)}/g);
 

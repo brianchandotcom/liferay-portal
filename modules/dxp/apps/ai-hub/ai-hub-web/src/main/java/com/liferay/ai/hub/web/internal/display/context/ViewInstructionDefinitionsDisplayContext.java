@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class ViewInstructionDefinitionsDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/ai-hub/instruction-definitions";
+		return _BASE_API_URL + "?sort=system:desc,dateCreated:asc";
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -61,11 +62,14 @@ public class ViewInstructionDefinitionsDisplayContext {
 				"get", null, null),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					getAPIURL(), "/by-external-reference-code",
+					_BASE_API_URL, "/by-external-reference-code",
 					"/{externalReferenceCode}"),
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
-				"delete", "async"),
+				"delete", "async",
+				HashMapBuilder.<String, Object>put(
+					"system", false
+				).build()),
 			new FDSActionDropdownItem(
 				DisplayContextUtil.getPermissionsURL(
 					"L_AI_HUB_INSTRUCTION_DEFINITION", _httpServletRequest),
@@ -73,6 +77,9 @@ public class ViewInstructionDefinitionsDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"));
 	}
+
+	private static final String _BASE_API_URL =
+		"/o/ai-hub/instruction-definitions";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;

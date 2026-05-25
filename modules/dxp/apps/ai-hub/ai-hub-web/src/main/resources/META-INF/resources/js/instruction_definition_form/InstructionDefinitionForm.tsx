@@ -119,6 +119,7 @@ export default function InstructionDefinitionForm({
 					r_accountToAIHubInstructionDefinitions_accountEntryERC:
 						accountEntryExternalReferenceCode,
 					scope: '',
+					system: false,
 					title_i18n: {},
 				});
 
@@ -140,6 +141,7 @@ export default function InstructionDefinitionForm({
 					r_accountToAIHubInstructionDefinitions_accountEntryERC:
 						instructionDefinition.r_accountToAIHubInstructionDefinitions_accountEntryERC,
 					scope: instructionDefinition.scope?.key || '',
+					system: instructionDefinition.system,
 					title_i18n: instructionDefinition.title_i18n,
 				});
 			}

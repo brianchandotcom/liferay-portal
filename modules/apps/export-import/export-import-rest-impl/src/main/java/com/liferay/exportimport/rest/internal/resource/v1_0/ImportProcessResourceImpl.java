@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -261,9 +261,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			_exportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
 					contextUser.getUserId(), groupId,
-					GetterUtil.getBoolean(parameterMap.get("privateLayout")),
-					null, parameterMap,
-					contextAcceptLanguage.getPreferredLocale(),
+					MapUtil.getBoolean(parameterMap, "privateLayout"), null,
+					parameterMap, contextAcceptLanguage.getPreferredLocale(),
 					contextUser.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =

@@ -9,7 +9,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -22,8 +21,7 @@ public interface AccountEntryValidatorRegistry {
 	public List<AccountEntryValidator> getAccountEntryValidators();
 
 	public List<AccountEntryValidatorResult> validate(
-			Locale locale, AccountEntry accountEntry,
-			Map<String, Object> values)
+			AccountEntry accountEntry, Map<String, Object> values)
 		throws PortalException;
 
 }

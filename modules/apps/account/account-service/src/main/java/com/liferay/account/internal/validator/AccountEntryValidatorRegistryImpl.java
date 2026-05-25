@@ -5,7 +5,6 @@
 
 package com.liferay.account.internal.validator;
 
-import com.liferay.account.internal.configuration.validator.AccountEntryValidatorRegistryConfiguration;
 import com.liferay.account.internal.validator.comparator.AccountEntryValidatorServiceWrapperPriorityComparator;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
@@ -15,7 +14,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,20 +24,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tancredi Covioli
  */
 @Component(
-	configurationPid = "com.liferay.account.internal.configuration.validator.AccountEntryValidatorRegistryConfiguration",
 	service = AccountEntryValidatorRegistry.class
 )
 public class AccountEntryValidatorRegistryImpl
@@ -92,24 +87,10 @@ public class AccountEntryValidatorRegistryImpl
 
 	@Override
 	public List<AccountEntryValidatorResult> validate(
-			Locale locale, AccountEntry accountEntry,
-			Map<String, Object> values)
+			AccountEntry accountEntry, Map<String, Object> values)
 		throws PortalException {
 
 		if (accountEntry == null) {
-			return Collections.emptyList();
-		}
-
-		AccountEntryValidatorRegistryConfiguration
-			accountEntryValidatorConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AccountEntryValidatorRegistryConfiguration.class,
-					accountEntry.getCompanyId());
-
-		if (
-			!accountEntryValidatorConfiguration.enableAccountEntryValidation()
-		) {
-
 			return Collections.emptyList();
 		}
 
@@ -120,7 +101,7 @@ public class AccountEntryValidatorRegistryImpl
 				getAccountEntryValidators()) {
 
 			accountEntryValidatorResults.add(
-				accountEntryValidator.validate(locale, accountEntry, values));
+				accountEntryValidator.validate(accountEntry, values));
 		}
 
 		return accountEntryValidatorResults;
@@ -146,9 +127,6 @@ public class AccountEntryValidatorRegistryImpl
 	private static final Comparator<ServiceWrapper<AccountEntryValidator>>
 		_accountEntryValidatorServiceWrapperPriorityComparator =
 			new AccountEntryValidatorServiceWrapperPriorityComparator();
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	private ServiceTrackerMap<String, ServiceWrapper<AccountEntryValidator>>
 		_serviceTrackerMap;

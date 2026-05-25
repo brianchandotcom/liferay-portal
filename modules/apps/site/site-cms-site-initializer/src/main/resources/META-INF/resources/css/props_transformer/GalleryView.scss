@@ -1,8 +1,10 @@
 @import 'atlas-variables';
 
 .fds-gallery-view {
+	$gallery-preview-height: unquote('max(320px, calc(100dvh - 475px))');
+
 	&__preview {
-		height: 570px;
+		height: $gallery-preview-height;
 
 		&-wrapper > * {
 			margin: 0;
@@ -15,7 +17,7 @@
 	}
 
 	.preview-file .preview-file-container.preview-file-max-height {
-		height: 570px;
+		height: $gallery-preview-height;
 		max-height: 100%;
 	}
 

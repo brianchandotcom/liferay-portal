@@ -7,6 +7,9 @@ package com.liferay.frontend.js.audiences.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
@@ -30,6 +33,16 @@ public class FrontendJSAudiencesWebDynamicJSImportMapsContributor
 	public void writeGlobalImports(
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-83647")) {
+
+			return;
+		}
 
 		writer.write("\"@liferay/frontend-js-audiences-web\": \"");
 

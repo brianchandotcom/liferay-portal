@@ -19,6 +19,5 @@ export type Chatbot = {
 	notificationMessage_i18n: {[key: string]: string};
 	placeholderMessage_i18n: {[key: string]: string};
 	r_accountToAIHubChatbots_accountEntryERC: string;
-	showCompanyLogo: boolean;
 	title_i18n: {[key: string]: string};
 };

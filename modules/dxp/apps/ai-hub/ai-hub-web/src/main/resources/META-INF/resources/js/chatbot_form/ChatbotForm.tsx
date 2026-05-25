@@ -360,7 +360,6 @@ export default function ChatbotForm({
 					placeholderMessage_i18n: {},
 					r_accountToAIHubChatbots_accountEntryERC:
 						accountEntryExternalReferenceCode,
-					showCompanyLogo: true,
 					title_i18n: {},
 				});
 
@@ -393,7 +392,6 @@ export default function ChatbotForm({
 					placeholderMessage_i18n: chatbot.placeholderMessage_i18n,
 					r_accountToAIHubChatbots_accountEntryERC:
 						chatbot.r_accountToAIHubChatbots_accountEntryERC,
-					showCompanyLogo: chatbot.showCompanyLogo,
 					title_i18n: chatbot.title_i18n,
 				});
 
@@ -764,26 +762,6 @@ export default function ChatbotForm({
 											}
 										/>
 									</ClayForm.Group>
-
-									<ClayToggle
-										disabled={readOnly}
-										label={Liferay.Language.get(
-											'show-company-logo'
-										)}
-										onBlur={(
-											event: React.FocusEvent<HTMLInputElement>
-										) => {
-											event.stopPropagation();
-										}}
-										onToggle={() =>
-											setFormData((prev) => ({
-												...prev,
-												showCompanyLogo:
-													!prev.showCompanyLogo,
-											}))
-										}
-										toggled={formData.showCompanyLogo}
-									/>
 								</ClayPanel.Body>
 							</ClayPanel>
 

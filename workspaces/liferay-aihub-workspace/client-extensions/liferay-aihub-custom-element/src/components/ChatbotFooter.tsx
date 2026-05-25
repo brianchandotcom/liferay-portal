@@ -5,10 +5,17 @@
 
 import React from 'react';
 
+const DEFAULT_DISCLAIMER_MESSAGE =
+	'AI-generated responses can be inaccurate. Please review carefully.';
+
 interface ChatbotFooterProps {
 	disclaimerMessage: string;
 }
 
 export default function ChatbotFooter({disclaimerMessage}: ChatbotFooterProps) {
-	return <div className="aihub-footer">{disclaimerMessage}</div>;
+	return (
+		<div className="aihub-footer">
+			{disclaimerMessage || DEFAULT_DISCLAIMER_MESSAGE}
+		</div>
+	);
 }

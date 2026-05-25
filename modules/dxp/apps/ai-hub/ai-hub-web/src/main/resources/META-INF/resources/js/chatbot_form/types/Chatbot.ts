@@ -14,6 +14,7 @@ export type Chatbot = {
 	companyLogo?: number | CompanyLogoUpload | null;
 	companyLogoFileName?: string;
 	description: string;
+	disclaimerMessage_i18n?: {[key: string]: string};
 	externalReferenceCode: string;
 	introMessage_i18n: {[key: string]: string};
 	notificationMessage_i18n: {[key: string]: string};

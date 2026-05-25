@@ -351,6 +351,7 @@ export default function ChatbotForm({
 					active: false,
 					avatar: undefined,
 					description: '',
+					disclaimerMessage_i18n: {},
 					externalReferenceCode: '',
 					introMessage_i18n: {},
 					notificationMessage_i18n: {},
@@ -382,6 +383,7 @@ export default function ChatbotForm({
 						: chatbot.avatar,
 					avatarFileName: avatarAttachment?.name,
 					description: chatbot.description,
+					disclaimerMessage_i18n: chatbot.disclaimerMessage_i18n,
 					externalReferenceCode: chatbot.externalReferenceCode,
 					introMessage_i18n: chatbot.introMessage_i18n,
 					notificationMessage_i18n: chatbot.notificationMessage_i18n,
@@ -747,6 +749,32 @@ export default function ChatbotForm({
 											)}
 											translations={
 												(formData.introMessage_i18n as LocalizedValue<string>) ||
+												{}
+											}
+										/>
+									</ClayForm.Group>
+
+									<ClayForm.Group>
+										<InputLocalized
+											disabled={readOnly}
+											id="disclaimerMessage"
+											label={Liferay.Language.get(
+												'disclaimer-message'
+											)}
+											name="disclaimerMessage_i18n"
+											onChange={(value) =>
+												setFormData((prev) => ({
+													...prev,
+													disclaimerMessage_i18n:
+														value,
+												}))
+											}
+											onSelectedLocaleChange={() => {}}
+											placeholder={Liferay.Language.get(
+												'disclaimer-message'
+											)}
+											translations={
+												(formData.disclaimerMessage_i18n as LocalizedValue<string>) ||
 												{}
 											}
 										/>

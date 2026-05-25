@@ -337,7 +337,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			getModelResourcePermission(objectDefinitionId);
-
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return TransformUtil.transform(

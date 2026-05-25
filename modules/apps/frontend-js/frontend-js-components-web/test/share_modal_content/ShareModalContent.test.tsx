@@ -170,8 +170,7 @@ describe('ShareModalContent', () => {
 	it('renders the help icon when autocompleteHelpText is supplied', () => {
 		const {container} = renderComponent({
 			...DEFAULT_PROPS,
-			autocompleteHelpText:
-				'share-view-autocomplete-help',
+			autocompleteHelpText: 'share-view-autocomplete-help',
 		});
 
 		const helpIcon = container.querySelector(

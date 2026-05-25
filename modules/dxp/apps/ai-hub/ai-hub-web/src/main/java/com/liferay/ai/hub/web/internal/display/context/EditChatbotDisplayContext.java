@@ -18,6 +18,8 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,7 +73,17 @@ public class EditChatbotDisplayContext {
 			}
 		).put(
 			"backURL",
-			DisplayContextUtil.getAIHubURL(_themeDisplay) + "/chatbots"
+			() -> {
+				String backURL = PortalUtil.escapeRedirect(
+					_httpServletRequest.getParameter("backURL"));
+
+				if (Validator.isNotNull(backURL)) {
+					return backURL;
+				}
+
+				return DisplayContextUtil.getAIHubURL(_themeDisplay) +
+					"/chatbots";
+			}
 		).put(
 			"companyLogoAcceptedFileExtensions", acceptedFileExtensions
 		).put(

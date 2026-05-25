@@ -534,7 +534,7 @@ public class CollaboratorUtil {
 		if (ticket == null) {
 			return ticketLocalService.addTicket(
 				companyId, className, classPK,
-				TicketConstants.TYPE_INVITE_COLLABORATOR, null, emailAddress,
+				TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress, null,
 				GetterUtil.getObject(
 					collaborator.getDateExpired(),
 					() -> new Date(
@@ -548,7 +548,7 @@ public class CollaboratorUtil {
 			ticket.setExpirationDate(collaborator.getDateExpired());
 		}
 
-		ticket.setExtraInfo(emailAddress);
+		ticket.setEmailAddress(emailAddress);
 
 		return ticketLocalService.updateTicket(ticket);
 	}
@@ -562,7 +562,7 @@ public class CollaboratorUtil {
 			TicketConstants.TYPE_INVITE_COLLABORATOR);
 
 		for (Ticket ticket : tickets) {
-			if (StringUtil.equals(emailAddress, ticket.getExtraInfo())) {
+			if (StringUtil.equals(emailAddress, ticket.getEmailAddress())) {
 				return ticket;
 			}
 		}

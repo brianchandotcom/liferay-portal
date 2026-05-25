@@ -53,7 +53,7 @@ components:
             description:
                 "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal,
                 object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date
-                range to the previous date range. Use `getWorkspaceGroupAssetSummariesPage` to list these sets of
+                range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of
                 metrics."
             properties:
                 assetId:
@@ -436,7 +436,7 @@ components:
         PageMetric:
             description:
                 "Analytics metrics for a single tracked page over the selected date range. Use
-                `getWorkspaceGroupPagesPage` to list these metrics for a site."
+                `getWorkspaceGroupChannelPagesPage` to list these metrics for a site."
             properties:
                 assetId:
                     description:
@@ -575,13 +575,12 @@ info:
     x-class-name: FaroRest
 openapi: 3.0.1
 paths:
-    "/workspace/{groupId}/accounts":
+    "/workspace/{groupId}/accounts/{accountId}":
         get:
             description:
-                "List or search accounts synced to an Analytics Cloud workspace. Optionally narrow results to a single
-                channel (also known as property). Use this to browse or search accounts by name. To fetch a single
-                account by id, use `getAccount`."
-            operationId: getWorkspaceGroupAccountsPage
+                "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an
+                account id. To search accounts by name or filter, use `getWorkspaceGroupChannelAccountsPage`."
+            operationId: getWorkspaceGroupAccount
             parameters:
                 -   in: path
                     description:
@@ -591,10 +590,105 @@ paths:
                     schema:
                         format: int64
                         type: integer
-                -   in: query
+                -   in: path
                     description:
-                        "Optional channel id to scope results to a single channel."
+                        "ID of the account to fetch."
+                    name: accountId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+            tags: ["Account"]
+    "/workspace/{groupId}/channels":
+        get:
+            description:
+                "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use
+                `getWorkspaceGroupChannel`."
+            operationId: getWorkspaceGroupChannelsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Channel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Channel"
+                                type: array
+            tags: ["Channel"]
+    "/workspace/{groupId}/channels/{channelId}":
+        get:
+            description:
+                "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available
+                channels in the workspace use `getWorkspaceGroupChannelsPage`."
+            operationId: getWorkspaceGroupChannel
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "ID of the channel to fetch."
                     name: channelId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+            tags: ["Channel"]
+    "/workspace/{groupId}/channels/{channelId}/accounts":
+        get:
+            description:
+                "List or search accounts synced to an Analytics Cloud workspace. Optionally narrow results to a single
+                channel (also known as property). Use this to browse or search accounts by name. To fetch a single
+                account by id, use `getAccount`."
+            operationId: getWorkspaceGroupChannelAccountsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose search terms should be listed."
+                    name: channelId
+                    required: true
                     schema:
                         type: string
                 -   in: query
@@ -638,39 +732,7 @@ paths:
                                     $ref: "#/components/schemas/Account"
                                 type: array
             tags: ["Account"]
-    "/workspace/{groupId}/accounts/{accountId}":
-        get:
-            description:
-                "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an
-                account id. To search accounts by name or filter, use `getWorkspaceGroupAccountsPage`."
-            operationId: getWorkspaceGroupAccount
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: path
-                    description:
-                        "ID of the account to fetch."
-                    name: accountId
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Account"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Account"
-            tags: ["Account"]
-    "/workspace/{groupId}/asset-summaries":
+    "/workspace/{groupId}/channels/{channelId}/asset-summaries":
         get:
             description:
                 "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object
@@ -680,8 +742,8 @@ paths:
                 one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS,
                 LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this to
                 answer 'what content is performing best' and to pick assets for deeper drill-down via
-                `getWorkspaceGroupPagesPage`."
-            operationId: getWorkspaceGroupAssetSummariesPage
+                `getWorkspaceGroupChannelPagesPage`."
+            operationId: getWorkspaceGroupChannelAssetSummariesPage
             parameters:
                 -   in: path
                     description:
@@ -691,10 +753,11 @@ paths:
                     schema:
                         format: int64
                         type: integer
-                -   in: query
+                -   in: path
                     description:
-                        "Optional channel id to scope results to a single channel."
+                        "Identifier of the channel whose search terms should be listed."
                     name: channelId
+                    required: true
                     schema:
                         type: string
                 -   in: query
@@ -759,67 +822,6 @@ paths:
                                     $ref: "#/components/schemas/AssetSummaryMetric"
                                 type: array
             tags: ["AssetSummaryMetric"]
-    "/workspace/{groupId}/channels":
-        get:
-            description:
-                "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use
-                `getWorkspaceGroupChannel`."
-            operationId: getWorkspaceGroupChannelsPage
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Channel"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Channel"
-                                type: array
-            tags: ["Channel"]
-    "/workspace/{groupId}/channels/{channelId}":
-        get:
-            description:
-                "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available
-                channels in the workspace use `getWorkspaceGroupChannelsPage`."
-            operationId: getWorkspaceGroupChannel
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: path
-                    description:
-                        "ID of the channel to fetch."
-                    name: channelId
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Channel"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Channel"
-            tags: ["Channel"]
     "/workspace/{groupId}/channels/{channelId}/events":
         get:
             description:
@@ -827,7 +829,7 @@ paths:
                 date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS,
                 LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and
                 `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer
-                `getWorkspaceGroupAssetSummariesPage` or `getWorkspaceGroupPagesPage`."
+                `getWorkspaceGroupChannelAssetSummariesPage` or `getWorkspaceGroupChannelPagesPage`."
             operationId: getWorkspaceGroupChannelEventsPage
             parameters:
                 -   in: path
@@ -905,6 +907,248 @@ paths:
                                     $ref: "#/components/schemas/Event"
                                 type: array
             tags: ["Event"]
+    "/workspace/{groupId}/channels/{channelId}/individual-segments":
+        get:
+            description:
+                "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also
+                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`. To list
+                members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
+            operationId: getWorkspaceGroupChannelIndividualSegmentsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose search terms should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional segment name to match exactly."
+                    name: name
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Free-text search across segment name and related fields."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Filter by segment operational status."
+                    name: status
+                    schema:
+                        enum: [ACTIVE, INACTIVE]
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegment"
+                                type: array
+            tags: ["IndividualSegment"]
+    "/workspace/{groupId}/channels/{channelId}/individuals":
+        get:
+            description:
+                "List individuals for an Analytics Cloud workspace. Optionally narrowed to an associated account,
+                channel, segment, or interest. Use this for queries to find a person. To fetch a single individual by
+                id, use `getWorkspaceGroupIndividual` instead."
+            operationId: getWorkspaceGroupChannelIndividualsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose search terms should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional account id to restrict results to individuals associated with an account."
+                    name: accountId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "If true, anonymous (browser-tracked) individuals are included. Defaults to false."
+                    name: includeAnonymousUsers
+                    schema:
+                        type: boolean
+                -   in: query
+                    description:
+                        "Optional individual segment id to restrict results to members of that segment."
+                    name: individualSegmentId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional interest name to restrict results to individuals interested in the keyword."
+                    name: interestName
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`."
+                    example: lastActivityDate:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Individual"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Individual"
+                                type: array
+            tags: ["Individual"]
+    "/workspace/{groupId}/channels/{channelId}/pages":
+        get:
+            description:
+                "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
+                optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
+                visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey`
+                as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS,
+                LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window.
+                Use this for 'top pages' style queries."
+            operationId: getWorkspaceGroupChannelPagesPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose search terms should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional data source id to scope results to a single data source."
+                    name: dataSourceId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
+                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
+                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                    example: LAST_30_DAYS
+                    name: rangeKey
+                    schema:
+                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
+                        type: string
+                -   in: query
+                    description:
+                        "Custom range start as datetime (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
+                    name: rangeStart
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Free-text keyword search across page titles and URLs."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to `views:desc`. Common columns: views, visitors,
+                        bounceRate, avgTimeOnPage."
+                    example: views:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageMetric"
+                                type: array
+            tags: ["PageMetric"]
     "/workspace/{groupId}/channels/{channelId}/search-terms":
         get:
             description:
@@ -978,78 +1222,11 @@ paths:
                                     $ref: "#/components/schemas/SearchTerm"
                                 type: array
             tags: ["SearchTerm"]
-    "/workspace/{groupId}/individual-segments":
-        get:
-            description:
-                "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also
-                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`. To list
-                members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
-            operationId: getWorkspaceGroupIndividualSegmentsPage
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: query
-                    description:
-                        "Optional channel id to scope results to a single channel."
-                    name: channelId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Optional segment name to match exactly."
-                    name: name
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Page number (starts at 1)."
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Page size."
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Free-text search across segment name and related fields."
-                    name: search
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Filter by segment operational status."
-                    name: status
-                    schema:
-                        enum: [ACTIVE, INACTIVE]
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/IndividualSegment"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/IndividualSegment"
-                                type: array
-            tags: ["IndividualSegment"]
     "/workspace/{groupId}/individual-segments/{individualSegmentId}":
         get:
             description:
                 "Fetch a single individual segment by id from an Analytics Cloud workspace. To list segments, use
-                `getWorkspaceGroupIndividualSegmentsPage`. To list members of a segment, use
+                `getWorkspaceGroupChannelIndividualSegmentsPage`. To list members of a segment, use
                 `getWorkspaceGroupIndividualSegmentMembershipsPage`."
             operationId: getWorkspaceGroupIndividualSegment
             parameters:
@@ -1135,91 +1312,12 @@ paths:
                                     $ref: "#/components/schemas/IndividualSegmentMembership"
                                 type: array
             tags: ["IndividualSegmentMembership"]
-    "/workspace/{groupId}/individuals":
-        get:
-            description:
-                "List individuals for an Analytics Cloud workspace. Optionally narrowed to an associated account,
-                channel, segment, or interest. Use this for queries to find a person. To fetch a single individual by
-                id, use `getWorkspaceGroupIndividual` instead."
-            operationId: getWorkspaceGroupIndividualsPage
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: query
-                    description:
-                        "Optional account id to restrict results to individuals associated with an account."
-                    name: accountId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Optional channel id to scope results to a single channel."
-                    name: channelId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "If true, anonymous (browser-tracked) individuals are included. Defaults to false."
-                    name: includeAnonymousUsers
-                    schema:
-                        type: boolean
-                -   in: query
-                    description:
-                        "Optional individual segment id to restrict results to members of that segment."
-                    name: individualSegmentId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Optional interest name to restrict results to individuals interested in the keyword."
-                    name: interestName
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Page number (starts at 1)."
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Page size."
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Sort expression `column:asc|desc`."
-                    example: lastActivityDate:desc
-                    name: sort
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Individual"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Individual"
-                                type: array
-            tags: ["Individual"]
     "/workspace/{groupId}/individuals/{individualId}":
         get:
             description:
                 "Fetch a single Individual from an Analytics Cloud workspace. Optionally narrowed to a channel (also
                 known as property). Use this to fetch a contact's full profile once you have an id. To search
-                individuals by name, email, or other attributes, use `getWorkspaceGroupIndividualsPage`."
+                individuals by name, email, or other attributes, use `getWorkspaceGroupChannelIndividualsPage`."
             operationId: getWorkspaceGroupIndividual
             parameters:
                 -   in: path
@@ -1253,104 +1351,11 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Individual"
             tags: ["Individual"]
-    "/workspace/{groupId}/pages":
-        get:
-            description:
-                "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
-                optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
-                visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey`
-                as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS,
-                LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window.
-                Use this for 'top pages' style queries."
-            operationId: getWorkspaceGroupPagesPage
-            parameters:
-                -   in: path
-                    description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
-                    name: groupId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: query
-                    description:
-                        "Optional channel id to scope results to a single channel."
-                    name: channelId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Optional data source id to scope results to a single data source."
-                    name: dataSourceId
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Page number (starts at 1)."
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Page size."
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: query
-                    description:
-                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
-                    name: rangeEnd
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
-                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
-                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
-                    example: LAST_30_DAYS
-                    name: rangeKey
-                    schema:
-                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
-                        type: string
-                -   in: query
-                    description:
-                        "Custom range start as datetime (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
-                    name: rangeStart
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Free-text keyword search across page titles and URLs."
-                    name: search
-                    schema:
-                        type: string
-                -   in: query
-                    description:
-                        "Sort expression `column:asc|desc`. Defaults to `views:desc`. Common columns: views, visitors,
-                        bounceRate, avgTimeOnPage."
-                    example: views:desc
-                    name: sort
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/PageMetric"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/PageMetric"
-                                type: array
-            tags: ["PageMetric"]
     "/workspaces":
         get:
             description:
                 "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with
-                other endpoints (e.g. `getWorkspaceGroupAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope
+                other endpoints (e.g. `getWorkspaceGroupChannelAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope
                 requests to a specific workspace."
             operationId: getWorkspacesPage
             responses:

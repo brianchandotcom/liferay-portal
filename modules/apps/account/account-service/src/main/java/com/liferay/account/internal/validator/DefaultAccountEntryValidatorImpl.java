@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.language.Language;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tancredi Covioli
@@ -40,7 +42,11 @@ public class DefaultAccountEntryValidatorImpl implements AccountEntryValidator {
 			Map<String, Object> context)
 		throws PortalException {
 
-		return new AccountEntryValidatorResult(true);
+		return new AccountEntryValidatorResult(
+			false, _language.get(locale, "an-error-occurred"));
 	}
+
+	@Reference
+	private Language _language;
 
 }

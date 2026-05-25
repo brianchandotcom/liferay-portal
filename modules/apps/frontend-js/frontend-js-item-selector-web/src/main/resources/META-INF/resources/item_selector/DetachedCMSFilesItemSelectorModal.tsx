@@ -14,7 +14,8 @@ import {
 	TSort,
 } from '@liferay/frontend-data-set-web';
 import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import classNames from 'classnames';
+import {fetch, mimeTypeUtils} from 'frontend-js-web';
 import React, {
 	createContext,
 	useCallback,
@@ -232,33 +233,67 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 						itemData: any;
 						value: any;
 					}) => {
-						if (!isFolder(itemData)) {
-							return value;
+						if (isFolder(itemData)) {
+							return (
+								<div className="align-items-center d-flex">
+									<ClaySticker className="c-mr-2 flex-shrink-0 inline-item inline-item-before">
+										<ClayIcon symbol="folder" />
+									</ClaySticker>
+
+									<div className="table-list-title">
+										<ClayLink
+											className="text-decoration-underline"
+											data-senna-off
+											href="#"
+											onClick={(
+												event: React.MouseEvent
+											) => {
+												event.preventDefault();
+
+												navigateToFolder({
+													id: itemData.embedded.id,
+													label: itemData.embedded
+														.title,
+												});
+											}}
+										>
+											{value}
+										</ClayLink>
+									</div>
+								</div>
+							);
+						}
+
+						const fileMimeType = itemData?.embedded?.file?.mimeType;
+
+						let stickerClassName = 'file-icon-color-5';
+						let iconSymbol = 'document-default';
+
+						if (fileMimeType) {
+							stickerClassName =
+								mimeTypeUtils.getClassNameFromMimeType(
+									fileMimeType
+								);
+							iconSymbol =
+								mimeTypeUtils.getIconFromMimeType(fileMimeType);
+						}
+						else if (itemData?.embedded?.videoURL) {
+							stickerClassName = 'file-icon-color-3';
+							iconSymbol = 'document-multimedia';
 						}
 
 						return (
-							<div className="d-flex">
-								<ClaySticker className="c-mr-2 flex-shrink-0 inline-item inline-item-before">
-									<ClayIcon symbol="folder" />
+							<div className="align-items-center d-flex">
+								<ClaySticker
+									className={classNames(
+										'c-mr-2 flex-shrink-0 inline-item inline-item-before',
+										stickerClassName
+									)}
+								>
+									<ClayIcon symbol={iconSymbol} />
 								</ClaySticker>
 
-								<div className="table-list-title">
-									<ClayLink
-										className="text-decoration-underline"
-										data-senna-off
-										href="#"
-										onClick={(event: React.MouseEvent) => {
-											event.preventDefault();
-
-											navigateToFolder({
-												id: itemData.embedded.id,
-												label: itemData.embedded.title,
-											});
-										}}
-									>
-										{value}
-									</ClayLink>
-								</div>
+								<span>{value}</span>
 							</div>
 						);
 					},

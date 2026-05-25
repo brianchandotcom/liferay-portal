@@ -49,7 +49,7 @@ public class JournalArticleDDMFieldsUpgradeProcessTest {
 
 	@Test
 	@TestInfo("LPD-90349")
-	public void testPreservesInstanceIds() throws Exception {
+	public void testUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);
 

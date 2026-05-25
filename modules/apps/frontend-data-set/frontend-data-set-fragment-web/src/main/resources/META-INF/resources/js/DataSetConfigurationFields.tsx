@@ -271,18 +271,18 @@ function TokenRow({
 						<ClayDropDownWithItems
 							items={[
 								{
+									onClick: mapToContext,
+									symbolLeft: 'page',
 									title: Liferay.Language.get(
 										'map-to-current-entity'
 									),
-									onClick: mapToContext,
-									symbolLeft: 'page',
 								},
 								{
+									onClick: openInfoItemSelector,
+									symbolLeft: 'link',
 									title: Liferay.Language.get(
 										'map-to-a-specific-entity'
 									),
-									onClick: openInfoItemSelector,
-									symbolLeft: 'link',
 								},
 							]}
 							trigger={

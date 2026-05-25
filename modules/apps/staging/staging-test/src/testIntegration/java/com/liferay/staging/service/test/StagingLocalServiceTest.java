@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.impl.LayoutRevisionLocalServiceImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -567,6 +570,61 @@ public class StagingLocalServiceTest {
 			GroupLocalServiceUtil.deleteGroup(childGroup.getGroupId());
 
 			GroupLocalServiceUtil.deleteGroup(parentGroup.getGroupId());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-89203")
+	public void testEnableLocalStagingWithStyleBookEntryScopeERCAndFeatureFlagDisabled()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+		Group scopeGroup = GroupTestUtil.addGroup();
+
+		try {
+			Layout layout = LayoutTestUtil.addTypePortletLayout(group);
+
+			layout.setStyleBookEntryERC(RandomTestUtil.randomString());
+
+			layout.setStyleBookEntryScopeERC(
+				scopeGroup.getExternalReferenceCode());
+
+			layout = _layoutLocalService.updateLayout(layout);
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.batch.engine.internal." +
+						"BatchEngineImportTaskExecutorImpl",
+					LoggerTestUtil.ERROR)) {
+
+				StagingLocalServiceUtil.enableLocalStaging(
+					_user.getUserId(), group, true, false,
+					new ServiceContext());
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				String message = logEntry.getMessage();
+
+				Assert.assertTrue(
+					message,
+					message.contains("Style book scoping is not enabled"));
+			}
+
+			Group stagingGroup = group.getStagingGroup();
+
+			Layout stagingLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layout.getUuid(), stagingGroup.getGroupId(), false);
+
+			Assert.assertNull(stagingLayout);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+			GroupLocalServiceUtil.deleteGroup(scopeGroup.getGroupId());
 		}
 	}
 

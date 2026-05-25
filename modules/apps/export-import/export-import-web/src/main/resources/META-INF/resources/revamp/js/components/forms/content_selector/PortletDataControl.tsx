@@ -13,7 +13,6 @@ import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandle
 import {
 	HandlerSelection,
 	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
-	asNestedSelection,
 	getInitialSelection,
 	getSelectionSummary,
 	isSelected,
@@ -26,7 +25,6 @@ import PortletDataControlChoice from './PortletDataControlChoice';
 import SectionTags from './SectionTags';
 
 export default function PortletDataControl({
-	className,
 	control,
 	onChange,
 	pageTreeModalConfiguration,
@@ -34,7 +32,6 @@ export default function PortletDataControl({
 	topLevel = false,
 	value,
 }: {
-	className?: string;
 	control: PreviewPortletDataHandlerControl;
 	onChange: (value: HandlerSelection | undefined) => void;
 	pageTreeModalConfiguration?: PageTreeModalConfiguration;
@@ -50,7 +47,6 @@ export default function PortletDataControl({
 	) {
 		return (
 			<LayoutSetControl
-				className={className}
 				label={control.label}
 				onChange={onChange}
 				pageTreeModalConfiguration={pageTreeModalConfiguration}
@@ -70,7 +66,10 @@ export default function PortletDataControl({
 	}
 
 	const selected = isSelected(value, control);
-	const currentSelection = asNestedSelection(value);
+	const currentSelection =
+		typeof value === 'object'
+			? (value as Record<string, HandlerSelection>)
+			: {};
 	const nestedControls = control.previewPortletDataHandlerControls ?? [];
 	const expandable = !!nestedControls.length;
 
@@ -173,7 +172,7 @@ function PortletDataHandlerPanel({
 										)
 							}
 							displayType="link"
-							small
+							size="sm"
 						>
 							{expanded
 								? Liferay.Language.get('hide-all')

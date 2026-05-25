@@ -14,7 +14,6 @@ import PageTreeModal, {
 import {HandlerSelection} from '../../../utils/contentSelection';
 
 interface Props {
-	className?: string;
 	label: string;
 	onChange: (value: HandlerSelection | undefined) => void;
 	pageTreeModalConfiguration: PageTreeModalConfiguration;
@@ -22,7 +21,6 @@ interface Props {
 }
 
 export default function LayoutSetControl({
-	className = 'mb-2',
 	label,
 	onChange,
 	pageTreeModalConfiguration,
@@ -38,7 +36,7 @@ export default function LayoutSetControl({
 
 	return (
 		<div className="p-3">
-			<ClayLayout.ContentRow className={className}>
+			<ClayLayout.ContentRow className="mb-2">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					<ClayCheckbox
 						checked={isAll}

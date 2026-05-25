@@ -64,13 +64,9 @@ export function getInitialSelection(
 export function getInitialSelections(
 	controls: PreviewPortletDataHandlerControl[]
 ): Record<string, HandlerSelection> {
-	const selection: Record<string, HandlerSelection> = {};
-
-	controls.forEach((control) => {
-		selection[control.name] = getInitialSelection(control);
-	});
-
-	return selection;
+	return Object.fromEntries(
+		controls.map((control) => [control.name, getInitialSelection(control)])
+	);
 }
 
 export function updateSelection<V>(
@@ -92,12 +88,4 @@ export function getSelectionSummary(
 		.filter((control) => selection[control.name] !== undefined)
 		.map((control) => control.label)
 		.join(', ');
-}
-
-export function asNestedSelection(
-	value: HandlerSelection | undefined
-): Record<string, HandlerSelection> {
-	return typeof value === 'object'
-		? (value as Record<string, HandlerSelection>)
-		: {};
 }

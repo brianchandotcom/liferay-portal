@@ -14,11 +14,15 @@ import {Root, createRoot} from 'react-dom/client';
 import {createEventSource, postAgentInstance} from './api';
 import WritingAssistantActions from './components/WritingAssistantActions';
 import WritingAssistantConfirmationAction from './components/WritingAssistantConfirmationAction';
+import WritingAssistantDisclaimer from './components/WritingAssistantDisclaimer';
 import {EActionType} from './types';
+import {fireContentAcceptedEvent} from './utils/disclaimerUtils';
 
 export default class WritingAssistant extends Plugin {
 	public balloonView: View | null = null;
 	public contentSelection: string = '';
+	public disclaimerContainer: HTMLDivElement | null = null;
+	public disclaimerRoot: Root | null = null;
 	public eventSourceReference: string = '';
 	public reactRoot: Root | null = null;
 	public confirmationBalloonOpen: boolean = false;
@@ -153,6 +157,10 @@ export default class WritingAssistant extends Plugin {
 		});
 	}
 
+	_fireContentAcceptedEvent() {
+		fireContentAcceptedEvent();
+	}
+
 	_getBalloonPosition(editor: Editor) {
 		const view = editor.editing.view;
 
@@ -171,6 +179,18 @@ export default class WritingAssistant extends Plugin {
 		if (this.balloonView && balloon.hasView(this.balloonView)) {
 			balloon.remove(this.balloonView);
 			this.balloonView = null;
+		}
+	}
+
+	_removeDisclaimerFromEditor() {
+		if (this.disclaimerRoot) {
+			this.disclaimerRoot.unmount();
+			this.disclaimerRoot = null;
+		}
+
+		if (this.disclaimerContainer) {
+			this.disclaimerContainer.remove();
+			this.disclaimerContainer = null;
 		}
 	}
 
@@ -211,6 +231,8 @@ export default class WritingAssistant extends Plugin {
 			return;
 		}
 
+		this._removeDisclaimerFromEditor();
+
 		const reactView = new View();
 
 		reactView.setTemplate({
@@ -250,6 +272,29 @@ export default class WritingAssistant extends Plugin {
 		});
 	}
 
+	_showDisclaimerAfterAccept() {
+		this._removeDisclaimerFromEditor();
+
+		const editorElement = this.editor.ui.element;
+
+		if (!editorElement?.parentElement) {
+			return;
+		}
+
+		const container = document.createElement('div');
+
+		this.disclaimerContainer = container;
+
+		editorElement.parentElement.insertBefore(
+			container,
+			editorElement.nextSibling
+		);
+
+		this.disclaimerRoot = createRoot(container);
+
+		this.disclaimerRoot.render(<WritingAssistantDisclaimer />);
+	}
+
 	_showConfimationBalloon(balloon: ContextualBalloon, editor: Editor) {
 		if (this.balloonView && balloon.hasView(this.balloonView)) {
 			return;
@@ -278,6 +323,8 @@ export default class WritingAssistant extends Plugin {
 					containerRef={reactView.element}
 					handleAccept={() => {
 						this._removeMarker(editor.model);
+						this._fireContentAcceptedEvent();
+						this._showDisclaimerAfterAccept();
 					}}
 					handleDiscard={() => {
 						editor.execute('undo');

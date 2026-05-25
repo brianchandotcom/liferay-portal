@@ -1,7 +1,13 @@
+@import 'cadmin-variables';
+
 .detached-cms-files-alert > .container {
 	margin-left: 0;
 	max-width: none;
 	padding-left: 0;
 	padding-right: 0;
 	width: 100%;
+}
+
+.item-selector-modal-breadcrumb-wrapper {
+	border-bottom: 1px solid $cadmin-border-color;
 }

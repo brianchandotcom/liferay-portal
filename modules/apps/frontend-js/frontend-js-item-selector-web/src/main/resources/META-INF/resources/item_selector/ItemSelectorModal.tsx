@@ -247,7 +247,10 @@ function ItemSelectorModal<T extends Record<string, any>>({
 					fluid
 				>
 					{breadcrumbs && (
-						<ClayLayout.Container fluid>
+						<ClayLayout.Container
+							className="item-selector-modal-breadcrumb-wrapper"
+							fluid
+						>
 							{breadcrumbsLabel && (
 								<h2 className="mb-0 mt-2">
 									{breadcrumbs[breadcrumbs.length - 1].label}

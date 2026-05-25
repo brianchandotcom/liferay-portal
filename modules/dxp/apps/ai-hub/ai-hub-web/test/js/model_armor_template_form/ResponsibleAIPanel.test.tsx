@@ -66,6 +66,7 @@ function renderPanel(overrides: Partial<ModelArmorTemplate> = {}) {
 
 	render(
 		<ResponsibleAIPanel
+			readOnly={false}
 			setField={setField}
 			values={{...baseValues, ...overrides}}
 		/>

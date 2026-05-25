@@ -171,7 +171,7 @@ describe('ShareModalContent', () => {
 		const {container} = renderComponent({
 			...DEFAULT_PROPS,
 			autocompleteHelpText:
-				'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it',
+				'share-view-autocomplete-help',
 		});
 
 		const helpIcon = container.querySelector(
@@ -181,7 +181,7 @@ describe('ShareModalContent', () => {
 		expect(helpIcon).toBeInTheDocument();
 		expect(helpIcon).toHaveAttribute(
 			'data-title',
-			'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it'
+			'share-view-autocomplete-help'
 		);
 	});
 

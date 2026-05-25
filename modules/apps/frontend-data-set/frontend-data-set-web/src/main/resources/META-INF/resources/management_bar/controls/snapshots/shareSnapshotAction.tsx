@@ -31,7 +31,7 @@ const PERMISSION_OPTIONS: PermissionOption[] = [
 	},
 ];
 
-const _transformSourceItems = (items: any[]): AutocompleteItem[] =>
+const transformSourceItems = (items: any[]): AutocompleteItem[] =>
 	items.map((item) => {
 		if (item.entryClassName?.includes(COLLABORATOR_TYPE.USER_GROUP)) {
 			return {
@@ -86,13 +86,13 @@ export default async function shareSnapshotAction({
 			contentComponent: ({closeModal}: {closeModal: () => void}) => (
 				<ShareModalContent
 					autocompleteHelpText={Liferay.Language.get(
-						'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it'
+						'share-view-autocomplete-help'
 					)}
 					autocompleteLabel={Liferay.Language.get('add-people')}
 					autocompleteURL={AUTOCOMPLETE_URL}
 					closeModal={closeModal}
 					collaboratorsListTitle={Liferay.Language.get(
-						'who-can-see-this-view'
+						'who-can-use-this-view'
 					)}
 					creator={{
 						contentType: 'UserAccount',
@@ -120,7 +120,7 @@ export default async function shareSnapshotAction({
 					showAllowResharing={false}
 					showExpirationDate={false}
 					title={title}
-					transformSourceItems={_transformSourceItems}
+					transformSourceItems={transformSourceItems}
 				/>
 			),
 			size: 'md',

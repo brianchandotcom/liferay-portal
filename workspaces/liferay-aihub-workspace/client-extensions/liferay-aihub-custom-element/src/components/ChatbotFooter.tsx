@@ -5,18 +5,10 @@
 
 import React from 'react';
 
-export default function ChatbotFooter() {
-	return (
-		<div className="aihub-footer">
-			By messaging, you agree that this chat may be monitored and recorded
-			per our{' '}
-			<a
-				href="https://www.liferay.com/privacy-policy"
-				rel="noopener noreferrer"
-				target="_blank"
-			>
-				Privacy Policy
-			</a>
-		</div>
-	);
+interface ChatbotFooterProps {
+	disclaimerMessage: string;
+}
+
+export default function ChatbotFooter({disclaimerMessage}: ChatbotFooterProps) {
+	return <div className="aihub-footer">{disclaimerMessage}</div>;
 }

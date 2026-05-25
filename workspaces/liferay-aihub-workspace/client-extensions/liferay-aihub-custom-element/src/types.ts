@@ -15,6 +15,7 @@ export interface ChatbotConfiguration {
 	companyLogo?: {
 		fileURL: string;
 	};
+	disclaimerMessage: string;
 	introMessage: string;
 	notificationMessage: string;
 	placeholderMessage: string;

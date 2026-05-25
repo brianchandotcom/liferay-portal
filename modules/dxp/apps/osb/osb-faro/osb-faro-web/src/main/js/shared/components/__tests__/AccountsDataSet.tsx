@@ -78,7 +78,7 @@ describe('AccountsDataSet', () => {
 		);
 	});
 
-	it('should leave country/industry/lifecycleStatus filters without preloadedData when no props are passed', () => {
+	it('should leave activityStatus/country/industry/lifecycleStatus filters without preloadedData when no props are passed', () => {
 		render(
 			<AccountsDataSet
 				apiURL='fake-url'
@@ -88,15 +88,40 @@ describe('AccountsDataSet', () => {
 			/>
 		);
 
+		const activityStatusFilter = lastFilters?.find(
+			f => f.id === 'activityStatus'
+		);
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
 		const industryFilter = lastFilters?.find(f => f.id === 'industry');
 		const lifecycleStatusFilter = lastFilters?.find(
 			f => f.id === 'lifecycleStatus'
 		);
 
+		expect(activityStatusFilter?.preloadedData).toBeUndefined();
 		expect(countryFilter?.preloadedData).toBeUndefined();
 		expect(industryFilter?.preloadedData).toBeUndefined();
 		expect(lifecycleStatusFilter?.preloadedData).toBeUndefined();
+	});
+
+	it('should preload the activityStatus filter when activityStatusFilter prop is provided', () => {
+		render(
+			<AccountsDataSet
+				activityStatusFilter='ACTIVE'
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
+		);
+
+		const activityStatusFilter = lastFilters?.find(
+			f => f.id === 'activityStatus'
+		);
+
+		expect(activityStatusFilter?.preloadedData).toEqual({
+			exclude: false,
+			selectedItems: [{label: 'Active', value: 'ACTIVE'}]
+		});
 	});
 
 	it('should preload the country filter when countryFilter prop is provided', () => {

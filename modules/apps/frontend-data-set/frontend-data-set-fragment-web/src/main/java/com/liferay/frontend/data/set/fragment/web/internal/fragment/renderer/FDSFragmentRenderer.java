@@ -440,13 +440,17 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		if (Objects.equals(fieldId, "externalReferenceCode") &&
 			(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
 
-			return ((ERCInfoItemIdentifier)infoItemIdentifier).
-				getExternalReferenceCode();
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			return ercInfoItemIdentifier.getExternalReferenceCode();
 		}
 
 		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-			return String.valueOf(
-				((ClassPKInfoItemIdentifier)infoItemIdentifier).getClassPK());
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+			return String.valueOf(classPKInfoItemIdentifier.getClassPK());
 		}
 
 		return null;

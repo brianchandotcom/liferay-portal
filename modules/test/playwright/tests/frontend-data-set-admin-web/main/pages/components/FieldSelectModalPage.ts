@@ -46,7 +46,7 @@ export class FieldSelectModalPage {
 	}) {
 		const treeItem = dataId
 			? this.fieldSelectModalContainer.locator(
-					`.treeview-link[data-id="${dataId}"]`
+					`.treeview-link[data-id$=",${dataId}"]`
 				)
 			: this.fieldSelectModalContainer.getByRole('treeitem', {
 					exact: true,

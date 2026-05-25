@@ -8,6 +8,27 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
+type WithOptional<T, P extends keyof T> = Omit<T, P> & Partial<Pick<T, P>>;
+
+export type LabelDisplayType =
+	| 'danger'
+	| 'info'
+	| 'secondary'
+	| 'success'
+	| 'unstyled'
+	| 'warning';
+
+export type ContentLabelDisplayType =
+	| 'content-0'
+	| 'content-1'
+	| 'content-2'
+	| 'content-3'
+	| 'content-4'
+	| 'content-5'
+	| 'content-6'
+	| 'content-7'
+	| 'content-8';
+
 export const ItemAfter = React.forwardRef<
 	HTMLSpanElement,
 	React.HTMLAttributes<HTMLSpanElement>
@@ -58,25 +79,6 @@ export const ItemExpand = React.forwardRef<
 
 ItemExpand.displayName = 'ClayLabelItemExpand';
 
-export type LabelDisplayType =
-	| 'danger'
-	| 'info'
-	| 'secondary'
-	| 'success'
-	| 'unstyled'
-	| 'warning';
-
-export type ContentLabelDisplayType =
-	| 'content-0'
-	| 'content-1'
-	| 'content-2'
-	| 'content-3'
-	| 'content-4'
-	| 'content-5'
-	| 'content-6'
-	| 'content-7'
-	| 'content-8';
-
 interface IBaseProps<T extends string = string>
 	extends React.BaseHTMLAttributes<HTMLSpanElement> {
 
@@ -88,7 +90,7 @@ interface IBaseProps<T extends string = string>
 	/**
 	 * Determines the style of the label.
 	 */
-	displayType?: T;
+	displayType: T;
 
 	/**
 	 * Flag to indicate if the label should be of the `inverse` variant.
@@ -107,7 +109,7 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 			children,
 			className,
 			dismissible,
-			displayType = 'secondary',
+			displayType,
 			inverse = false,
 			large = false,
 			...otherProps
@@ -215,8 +217,10 @@ BaseLabel.displayName = 'ClayBaseLabel';
 
 const LabelComponent = React.forwardRef<
 	HTMLAnchorElement | HTMLSpanElement,
-	IProps<LabelDisplayType>
->((props, ref) => <BaseLabel {...props} ref={ref} />);
+	WithOptional<IProps<LabelDisplayType>, 'displayType'>
+>(({displayType = 'secondary', ...props}, ref) => (
+	<BaseLabel {...props} displayType={displayType} ref={ref} />
+));
 
 LabelComponent.displayName = 'ClayLabel';
 

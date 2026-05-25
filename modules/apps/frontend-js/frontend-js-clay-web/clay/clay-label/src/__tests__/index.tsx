@@ -112,14 +112,6 @@ describe('Rendering', () => {
 });
 
 describe('ContentLabel rendering', () => {
-	it('default', () => {
-		const testRenderer = TestRenderer.create(
-			<ContentLabel>Default Content Label</ContentLabel>
-		);
-
-		expect(testRenderer.toJSON()).toMatchSnapshot();
-	});
-
 	it('renders with a content displayType', () => {
 		const testRenderer = TestRenderer.create(
 			<ContentLabel displayType="content-2">Content 2 Label</ContentLabel>

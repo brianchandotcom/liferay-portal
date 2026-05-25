@@ -843,13 +843,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	private String _getMimeType(File file, String fileName, String mimeType) {
-		if (Validator.isNull(mimeType) ||
-			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+		if (Validator.isNotNull(mimeType) &&
+			!mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 
-			return MimeTypesUtil.getContentType(file, fileName);
+			return mimeType;
 		}
 
-		return mimeType;
+		return MimeTypesUtil.getContentType(file, fileName);
 	}
 
 	private boolean _isAttachment(FileEntry fileEntry) {

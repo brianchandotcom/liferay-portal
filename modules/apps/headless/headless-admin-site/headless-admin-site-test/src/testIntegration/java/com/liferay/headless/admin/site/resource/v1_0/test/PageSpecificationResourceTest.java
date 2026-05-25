@@ -964,7 +964,7 @@ public class PageSpecificationResourceTest
 			ServiceContext serviceContext)
 		throws Exception {
 
-		StyleBookEntry scopedStyleBookEntry =
+		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
 				false, null, RandomTestUtil.randomString(), null,
@@ -978,7 +978,7 @@ public class PageSpecificationResourceTest
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		draftLayout.setStyleBookEntryERC(
-			scopedStyleBookEntry.getExternalReferenceCode());
+			styleBookEntry.getExternalReferenceCode());
 		draftLayout.setStyleBookEntryScopeERC(
 			irrelevantGroup.getExternalReferenceCode());
 
@@ -991,14 +991,14 @@ public class PageSpecificationResourceTest
 
 		Settings settings = SettingsTestUtil.getSettings(pageSpecification);
 
-		ItemExternalReference styleBookItemExternalReference =
+		ItemExternalReference itemExternalReference =
 			settings.getStyleBookItemExternalReference();
 
 		Assert.assertEquals(
-			scopedStyleBookEntry.getExternalReferenceCode(),
-			styleBookItemExternalReference.getExternalReferenceCode());
+			styleBookEntry.getExternalReferenceCode(),
+			itemExternalReference.getExternalReferenceCode());
 
-		Scope scope = styleBookItemExternalReference.getScope();
+		Scope scope = itemExternalReference.getScope();
 
 		Assert.assertEquals(
 			irrelevantGroup.getExternalReferenceCode(),
@@ -1209,7 +1209,7 @@ public class PageSpecificationResourceTest
 			ServiceContext serviceContext)
 		throws Exception {
 
-		StyleBookEntry scopedStyleBookEntry =
+		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
 				false, null, RandomTestUtil.randomString(), null,
@@ -1234,15 +1234,14 @@ public class PageSpecificationResourceTest
 		scope.setExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 
-		ItemExternalReference styleBookItemExternalReference =
+		ItemExternalReference itemExternalReference =
 			new ItemExternalReference();
 
-		styleBookItemExternalReference.setExternalReferenceCode(
-			scopedStyleBookEntry.getExternalReferenceCode());
-		styleBookItemExternalReference.setScope(scope);
+		itemExternalReference.setExternalReferenceCode(
+			styleBookEntry.getExternalReferenceCode());
+		itemExternalReference.setScope(scope);
 
-		settings.setStyleBookItemExternalReference(
-			styleBookItemExternalReference);
+		settings.setStyleBookItemExternalReference(itemExternalReference);
 
 		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
@@ -1254,7 +1253,7 @@ public class PageSpecificationResourceTest
 			draftLayout.getPlid());
 
 		Assert.assertEquals(
-			scopedStyleBookEntry.getExternalReferenceCode(),
+			styleBookEntry.getExternalReferenceCode(),
 			updatedDraftLayout.getStyleBookEntryERC());
 		Assert.assertEquals(
 			irrelevantGroup.getExternalReferenceCode(),

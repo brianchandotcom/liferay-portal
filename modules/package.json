@@ -14,6 +14,7 @@
 		"@types/react-router-dom": "^5.3.3",
 		"@types/react-transition-group": "^4.4.6",
 		"@types/tinycolor2": "1.4.3",
+		"@types/ua-parser-js": "0.7.39",
 		"@types/uuid": "10.0.0",
 		"@types/warning": "^3.0.0",
 		"acorn": "7.1.1",

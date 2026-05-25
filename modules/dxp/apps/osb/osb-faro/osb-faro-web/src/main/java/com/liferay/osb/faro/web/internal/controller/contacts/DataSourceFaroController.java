@@ -175,7 +175,7 @@ public class DataSourceFaroController extends BaseFaroController {
 			_tokenManager.setDataSourceId(dataSource.getId(), token);
 		}
 		else {
-			dataSource = contactsEngineClient.patchDataSource(
+			dataSource = contactsEngineClient.reconnectDataSource(
 				faroProject, dataSourceId,
 				OAuthUtil.getOAuth20Credentials(
 					"CLIENT_CREDENTIALS", portalURL, "",

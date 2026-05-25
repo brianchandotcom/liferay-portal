@@ -9,8 +9,8 @@ import {RequestPortletDataHandler} from './portletDataHandler';
 export interface ExportRequest {
 	deletions?: boolean;
 	endDate?: string;
-	fileName: string;
 	last?: number;
+	name: string;
 	permissions?: boolean;
 	range?: Range;
 	requestPortletDataHandlers?: RequestPortletDataHandler[];
@@ -32,6 +32,7 @@ export type UserIdStrategy = 'CURRENT_USER_ID' | 'ALWAYS_CURRENT_USER_ID';
 export interface ImportRequest {
 	dataStrategy?: DataStrategy;
 	deletions?: boolean;
+	name?: string;
 	permissions?: boolean;
 	requestPortletDataHandlers?: RequestPortletDataHandler[];
 	userIdStrategy?: UserIdStrategy;

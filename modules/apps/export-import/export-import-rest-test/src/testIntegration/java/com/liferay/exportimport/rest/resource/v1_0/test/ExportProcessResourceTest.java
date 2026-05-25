@@ -103,7 +103,7 @@ public class ExportProcessResourceTest
 				testDepotEntryGroup.getExternalReferenceCode(),
 				new ExportRequest() {
 					{
-						fileName = RandomTestUtil.randomString() + ".lar";
+						name = RandomTestUtil.randomString();
 					}
 				}));
 
@@ -140,7 +140,7 @@ public class ExportProcessResourceTest
 			_exportProcessResource.postExportProcessHttpResponse(
 				new ExportRequest() {
 					{
-						fileName = RandomTestUtil.randomString() + ".lar";
+						name = RandomTestUtil.randomString();
 					}
 				}));
 
@@ -175,7 +175,7 @@ public class ExportProcessResourceTest
 				testGroup.getExternalReferenceCode(),
 				new ExportRequest() {
 					{
-						fileName = RandomTestUtil.randomString() + ".lar";
+						name = RandomTestUtil.randomString();
 					}
 				}));
 
@@ -262,8 +262,7 @@ public class ExportProcessResourceTest
 
 			ExportRequest dateRangeExportRequest = new ExportRequest();
 
-			dateRangeExportRequest.setFileName(
-				RandomTestUtil.randomString() + ".lar");
+			dateRangeExportRequest.setName(RandomTestUtil.randomString());
 			dateRangeExportRequest.setRange(ExportRequest.Range.DATE_RANGE);
 
 			assertHttpResponseStatusCode(
@@ -271,8 +270,7 @@ public class ExportProcessResourceTest
 
 			ExportRequest lastExportRequest = new ExportRequest();
 
-			lastExportRequest.setFileName(
-				RandomTestUtil.randomString() + ".lar");
+			lastExportRequest.setName(RandomTestUtil.randomString());
 			lastExportRequest.setRange(ExportRequest.Range.LAST);
 
 			assertHttpResponseStatusCode(
@@ -289,7 +287,7 @@ public class ExportProcessResourceTest
 
 		ExportRequest exportRequest = new ExportRequest();
 
-		exportRequest.setFileName(RandomTestUtil.randomString() + ".lar");
+		exportRequest.setName(RandomTestUtil.randomString());
 		exportRequest.setRequestPortletDataHandlers(
 			new RequestPortletDataHandler[] {
 				new RequestPortletDataHandler() {

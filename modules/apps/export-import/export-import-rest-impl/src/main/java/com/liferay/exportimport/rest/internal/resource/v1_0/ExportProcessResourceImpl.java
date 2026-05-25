@@ -131,7 +131,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					contextUser.getUserId(), exportRequest.getFileName(),
+					contextUser.getUserId(), exportRequest.getName(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					settingsMap);
 

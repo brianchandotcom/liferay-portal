@@ -25,8 +25,8 @@ export default function Setup() {
 
 			<ClayLayout.Sheet>
 				<FormikFieldText
-					label={Liferay.Language.get('file-name')}
-					name="fileName"
+					label={Liferay.Language.get('name')}
+					name="name"
 					placeholder={Liferay.Language.get('add-an-export-name')}
 					required
 				/>

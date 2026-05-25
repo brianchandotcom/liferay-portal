@@ -28,7 +28,7 @@ interface Props
 	initialSelectedIds: number[];
 	onClose: () => void;
 	onSubmit: (
-		result: {layoutIds: number[]; privateLayout: boolean} | null
+		result: {layoutIds?: number[]; privateLayout: boolean} | null
 	) => void;
 	privateLayout: boolean;
 }
@@ -128,7 +128,18 @@ export default function PageTreeModal({
 					.filter((id) => !Number.isNaN(id) && id !== 0)
 			: [];
 
-		onSubmit(layoutIds.length ? {layoutIds, privateLayout} : null);
+		if (!layoutIds.length) {
+			onSubmit(null);
+
+			return;
+		}
+
+		const allChecked =
+			treeRef.current?.querySelectorAll(
+				'input[type="checkbox"]:not(:checked)'
+			).length === 0;
+
+		onSubmit(allChecked ? {privateLayout} : {layoutIds, privateLayout});
 	};
 
 	return (

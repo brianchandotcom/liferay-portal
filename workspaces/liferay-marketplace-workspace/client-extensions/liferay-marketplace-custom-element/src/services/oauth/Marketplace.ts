@@ -77,6 +77,12 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 			{earlyReturn: true}
 		);
 
+		if (!response?.ok) {
+			throw new Error(
+				`Order export failed with status ${response?.status}`
+			);
+		}
+
 		await downloadFile('orders.csv', response);
 	}
 

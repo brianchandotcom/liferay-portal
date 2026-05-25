@@ -45,7 +45,15 @@ public class ContentSecurityPolicyFilterTest {
 	}
 
 	@Test
-	public void testExcludedPathMatchesOriginalForwardedURI() {
+	public void testIsExcludedURIPath() {
+		_testIsExcludedURIPath("/group/guest/home", "/c/portal/layout", true);
+		_testIsExcludedURIPath(null, "/group/guest/home", true);
+		_testIsExcludedURIPath(null, "/c/portal/layout", false);
+	}
+
+	private void _testIsExcludedURIPath(
+		String forwardRequestURI, String requestURI, boolean expected) {
+
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
@@ -53,68 +61,24 @@ public class ContentSecurityPolicyFilterTest {
 			httpServletRequest.getAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
 		).thenReturn(
-			"/group/guest/home"
+			forwardRequestURI
 		);
 
 		Mockito.when(
 			httpServletRequest.getRequestURI()
 		).thenReturn(
-			"/c/portal/layout"
+			requestURI
 		);
 
-		Assert.assertTrue(_isExcludedURIPath(httpServletRequest));
-	}
-
-	@Test
-	public void testExcludedPathMatchesRequestURIWhenNoForward() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(
-				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
-		).thenReturn(
-			null
-		);
-
-		Mockito.when(
-			httpServletRequest.getRequestURI()
-		).thenReturn(
-			"/group/guest/home"
-		);
-
-		Assert.assertTrue(_isExcludedURIPath(httpServletRequest));
-	}
-
-	@Test
-	public void testNonexcludedPathDoesNotMatch() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(
-				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
-		).thenReturn(
-			null
-		);
-
-		Mockito.when(
-			httpServletRequest.getRequestURI()
-		).thenReturn(
-			"/c/portal/layout"
-		);
-
-		Assert.assertFalse(_isExcludedURIPath(httpServletRequest));
-	}
-
-	private boolean _isExcludedURIPath(HttpServletRequest httpServletRequest) {
-		return ReflectionTestUtil.invoke(
+		boolean actual = ReflectionTestUtil.invoke(
 			_contentSecurityPolicyFilter, "_isExcludedURIPath",
 			new Class<?>[] {
 				ContentSecurityPolicyConfiguration.class,
 				HttpServletRequest.class
 			},
 			_contentSecurityPolicyConfiguration, httpServletRequest);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	private ContentSecurityPolicyConfiguration

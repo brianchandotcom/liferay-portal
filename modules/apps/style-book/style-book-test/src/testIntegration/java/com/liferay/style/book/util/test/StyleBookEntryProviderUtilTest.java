@@ -13,7 +13,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,10 +54,6 @@ public class StyleBookEntryProviderUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
-
-		layoutSet.setThemeId(_THEME_ID_CLASSIC);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}

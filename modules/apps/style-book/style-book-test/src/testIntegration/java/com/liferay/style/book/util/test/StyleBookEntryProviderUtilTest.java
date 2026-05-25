@@ -207,11 +207,9 @@ public class StyleBookEntryProviderUtilTest {
 	private StyleBookEntry _addStyleBookEntry(long groupId) throws Exception {
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
-			false, null, RandomTestUtil.randomString(), null, _THEME_ID_CLASSIC,
-			null);
+			false, null, RandomTestUtil.randomString(), null,
+			"classic_WAR_classictheme", null);
 	}
-
-	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";
 
 	@Inject
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

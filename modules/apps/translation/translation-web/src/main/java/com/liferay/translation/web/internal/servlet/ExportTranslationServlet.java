@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -125,15 +127,29 @@ public class ExportTranslationServlet extends HttpServlet {
 				String xliffMimeType = ParamUtil.getString(
 					httpServletRequest, "xliffMimeType");
 
-				File file = _translationManager.getXLIFFZipFile(
-					className, ArrayUtil.toLongArray(classPKs), xliffMimeType,
-					_portal.getLocale(httpServletRequest), sourceLanguageId,
-					targetLanguageIds);
+				ServiceContext serviceContext = new ServiceContext();
 
-				try (InputStream inputStream = new FileInputStream(file)) {
-					ServletResponseUtil.sendFile(
-						httpServletRequest, httpServletResponse, file.getName(),
-						inputStream, ContentTypes.APPLICATION_ZIP);
+				serviceContext.setCompanyId(user.getCompanyId());
+				serviceContext.setRequest(httpServletRequest);
+				serviceContext.setUserId(user.getUserId());
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				try {
+					File file = _translationManager.getXLIFFZipFile(
+						className, ArrayUtil.toLongArray(classPKs),
+						xliffMimeType, _portal.getLocale(httpServletRequest),
+						sourceLanguageId, targetLanguageIds);
+
+					try (InputStream inputStream = new FileInputStream(file)) {
+						ServletResponseUtil.sendFile(
+							httpServletRequest, httpServletResponse,
+							file.getName(), inputStream,
+							ContentTypes.APPLICATION_ZIP);
+					}
+				}
+				finally {
+					ServiceContextThreadLocal.popServiceContext();
 				}
 			}
 		}

@@ -835,7 +835,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		catch (IOException ioException) {
 			throw new SystemException(
-				"Unable to write temporary file", ioException);
+				"Unable to update portlet file entry", ioException);
 		}
 		finally {
 			FileUtil.delete(file);

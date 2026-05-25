@@ -490,8 +490,7 @@ const DateTimeRangeFilter = ({
 	const isValidRange =
 		!fromDateParts ||
 		!toDateParts ||
-		datePartsToUTCMs(fromDateParts) <=
-			datePartsToUTCMs(toDateParts);
+		datePartsToUTCMs(fromDateParts) <= datePartsToUTCMs(toDateParts);
 
 	const fromOutOfBounds = isWithinBounds(fromDateParts, min, max) === false;
 	const toOutOfBounds = isWithinBounds(toDateParts, min, max) === false;
@@ -529,10 +528,13 @@ const DateTimeRangeFilter = ({
 	const submitDisabled =
 		!isChanged || hasInvalidInput || !isValidRange || !withinBounds;
 
-	const yearRange = {
-		end: new Date().getFullYear() + 25,
-		start: new Date().getFullYear() - 50,
-	};
+	const yearRange = useMemo(
+		() => ({
+			end: new Date().getFullYear() + 25,
+			start: new Date().getFullYear() - 50,
+		}),
+		[]
+	);
 
 	const fallbackPlaceholder = dateConfig.placeholder;
 
@@ -647,7 +649,9 @@ const DateTimeRangeFilter = ({
 							): DateParts | null =>
 								dateParts && {
 									...dateParts,
-									offset: computeOffsetForDateParts(dateParts),
+									offset: computeOffsetForDateParts(
+										dateParts
+									),
 								};
 
 							setFilter({

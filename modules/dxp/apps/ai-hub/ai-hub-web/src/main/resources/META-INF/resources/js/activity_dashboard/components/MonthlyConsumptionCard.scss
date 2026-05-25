@@ -1,0 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+@import 'atlas-variables';
+
+.ai-hub-monthly-consumption-card {
+	&-allowance {
+		color: $gray-600;
+		font-size: 14px;
+		font-weight: 400;
+		margin-left: 8px;
+	}
+
+	&-progress-exceeded {
+		&.progress-success {
+			.progress,
+			.progress-bar {
+				background-color: $danger;
+			}
+
+			.progress-group-feedback {
+				color: $body-color;
+			}
+		}
+	}
+}

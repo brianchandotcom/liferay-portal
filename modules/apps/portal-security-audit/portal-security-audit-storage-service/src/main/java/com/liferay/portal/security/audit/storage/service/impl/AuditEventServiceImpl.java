@@ -5,13 +5,19 @@
 
 package com.liferay.portal.security.audit.storage.service.impl;
 
+import com.liferay.account.constants.AccountRoleConstants;
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.base.AuditEventServiceBaseImpl;
@@ -39,15 +45,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 	public List<AuditEvent> getAuditEvents(long companyId, int start, int end)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!(permissionChecker.isCompanyAdmin(companyId) ||
-			  _userLocalService.hasRoleUser(
-				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
-
-			throw new PrincipalException();
-		}
+		_checkPermission(companyId, null);
 
 		return auditEventLocalService.getAuditEvents(companyId, start, end);
 	}
@@ -58,15 +56,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!(permissionChecker.isCompanyAdmin(companyId) ||
-			  _userLocalService.hasRoleUser(
-				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
-
-			throw new PrincipalException();
-		}
+		_checkPermission(companyId, null);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, start, end, orderByComparator);
@@ -75,73 +65,107 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 	@Override
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch, int start, int end)
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!(permissionChecker.isCompanyAdmin(companyId) ||
-			  _userLocalService.hasRoleUser(
-				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
-
-			throw new PrincipalException();
-		}
+		_checkPermission(companyId, accountEntryIds);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
-			className, classPK, clientHost, clientIP, eventType, serverName,
-			serverPort, sessionID, andSearch, start, end);
+			accountEntryIds, className, classPK, clientHost, clientIP,
+			contextName, eventType, serverName, serverPort, sessionID,
+			andSearch, start, end);
 	}
 
 	@Override
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch, int start, int end,
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end,
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!(permissionChecker.isCompanyAdmin(companyId) ||
-			  _userLocalService.hasRoleUser(
-				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
-
-			throw new PrincipalException();
-		}
+		_checkPermission(companyId, accountEntryIds);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
-			className, classPK, clientHost, clientIP, eventType, serverName,
-			serverPort, sessionID, andSearch, start, end, orderByComparator);
+			accountEntryIds, className, classPK, clientHost, clientIP,
+			contextName, eventType, serverName, serverPort, sessionID,
+			andSearch, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getAuditEventsCount(long companyId) throws PortalException {
+		_checkPermission(companyId, null);
+
 		return auditEventLocalService.getAuditEventsCount(companyId);
 	}
 
 	@Override
 	public int getAuditEventsCount(
 			long companyId, long groupId, long userId, String userName,
-			Date createDateGT, Date createDateLT, String className,
-			String classPK, String clientHost, String clientIP,
-			String eventType, String serverName, int serverPort,
-			String sessionID, boolean andSearch)
+			Date createDateGT, Date createDateLT, long[] accountEntryIds,
+			String className, String classPK, String clientHost,
+			String clientIP, String contextName, String eventType,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch)
 		throws PortalException {
+
+		_checkPermission(companyId, accountEntryIds);
 
 		return auditEventLocalService.getAuditEventsCount(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
-			className, classPK, clientHost, clientIP, eventType, serverName,
-			serverPort, sessionID, andSearch);
+			accountEntryIds, className, classPK, clientHost, clientIP,
+			contextName, eventType, serverName, serverPort, sessionID,
+			andSearch);
 	}
+
+	private void _checkPermission(long companyId, long[] accountEntryIds)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin(companyId) ||
+			_userLocalService.hasRoleUser(
+				companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				permissionChecker.getUserId(), true)) {
+
+			return;
+		}
+
+		if (ArrayUtil.isEmpty(accountEntryIds)) {
+			throw new PrincipalException();
+		}
+
+		Role role = _roleLocalService.getRole(
+			companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		AccountRole accountRole =
+			_accountRoleLocalService.getAccountRoleByRoleId(role.getRoleId());
+
+		for (long accountEntryId : accountEntryIds) {
+			if (!_accountRoleLocalService.hasUserAccountRole(
+					accountEntryId, accountRole.getAccountRoleId(),
+					permissionChecker.getUserId())) {
+
+				throw new PrincipalException();
+			}
+		}
+	}
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

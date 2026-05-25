@@ -250,7 +250,7 @@ describe('DetailsPanel', () => {
 			});
 
 			fireEvent.click(
-				screen.getByRole('checkbox', {name: 'multi-language-detection'})
+				screen.getByRole('checkbox', {name: 'multilanguage-detection'})
 			);
 
 			expect(setField).toHaveBeenCalledWith(

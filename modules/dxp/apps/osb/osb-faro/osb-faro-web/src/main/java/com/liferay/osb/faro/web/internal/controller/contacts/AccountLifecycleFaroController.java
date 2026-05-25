@@ -110,20 +110,17 @@ public class AccountLifecycleFaroController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroFDSResultsDisplay getAccountsFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("country") String country,
-			@QueryParam("industry") String industry,
+			@QueryParam("filter") String filterString,
 			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize,
 			@QueryParam("query") String query,
 			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
-				sortString,
-			@QueryParam("stageType") String stageType)
+				sortString)
 		throws Exception {
 
 		Results<Account> results =
 			contactsEngineClient.getAccountLifecycleAccounts(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				country, id, industry, query, stageType, page, pageSize,
-				sortString);
+				filterString, id, query, page, pageSize, sortString);
 
 		Function<Account, AccountDisplay> function = AccountDisplay::new;
 

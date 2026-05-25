@@ -10,6 +10,7 @@ import path from 'path';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {applyFDSSelectionFilter} from '../../../utils/applyFDSSelectionFilter';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitchViaApi, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -1177,25 +1178,10 @@ test(
 		});
 
 		await test.step('Filter by Space and check only the matching content is visible', async () => {
-			await page
-				.getByRole('button', {exact: true, name: 'Filter'})
-				.click();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Space'})
-				.click();
-
-			await page
-				.getByRole('checkbox', {exact: true, name: space1Name})
-				.check();
-
-			await page
-				.getByRole('button', {exact: true, name: 'Add Filter'})
-				.click();
-
-			await expect(
-				page.getByRole('button', {name: `Space: ${space1Name}`})
-			).toBeVisible();
+			await applyFDSSelectionFilter(page, {
+				filter: 'Space',
+				value: space1Name,
+			});
 
 			await expect(assetsPage.getItem(space1ContentTitle)).toBeVisible();
 			await expect(assetsPage.getItem(space2ContentTitle)).toBeHidden();
@@ -1245,25 +1231,10 @@ test(
 		});
 
 		await test.step('Filter by Status Approved and check only the approved content is visible', async () => {
-			await page
-				.getByRole('button', {exact: true, name: 'Filter'})
-				.click();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Status'})
-				.click();
-
-			await page
-				.getByRole('checkbox', {exact: true, name: 'Approved'})
-				.check();
-
-			await page
-				.getByRole('button', {exact: true, name: 'Add Filter'})
-				.click();
-
-			await expect(
-				page.getByRole('button', {name: 'Status: Approved'})
-			).toBeVisible();
+			await applyFDSSelectionFilter(page, {
+				filter: 'Status',
+				value: 'Approved',
+			});
 
 			await expect(assetsPage.getItem(approvedTitle)).toBeVisible();
 			await expect(assetsPage.getItem(expiredTitle)).toBeHidden();

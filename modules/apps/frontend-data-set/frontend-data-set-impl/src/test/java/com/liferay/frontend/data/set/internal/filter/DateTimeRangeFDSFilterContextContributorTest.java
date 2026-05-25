@@ -38,33 +38,30 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		_dateTimeRangeFDSFilterContextContributor =
-			new DateTimeRangeFDSFilterContextContributor();
 	}
 
 	@Test
 	public void testGetFDSFilterContextReturnsEmptyMapForUnrelatedFilter() {
-		Map<String, Object> context =
+		Map<String, Object> fdsFilterContext =
 			_dateTimeRangeFDSFilterContextContributor.getFDSFilterContext(
 				new UnrelatedFDSFilter(), LocaleUtil.US);
 
-		Assert.assertEquals(Collections.emptyMap(), context);
+		Assert.assertEquals(Collections.emptyMap(), fdsFilterContext);
 	}
 
 	@Test
 	public void testGetFDSFilterContextSerializesMinAndMax() {
-		Map<String, Object> context =
+		Map<String, Object> fdsFilterContext =
 			_dateTimeRangeFDSFilterContextContributor.getFDSFilterContext(
 				new TestDateTimeRangeFDSFilter(
 					new DateTimeFDSFilterItem(1, 1, 2026, 0, 0),
 					new DateTimeFDSFilterItem(31, 12, 2026, 23, 59)),
 				LocaleUtil.US);
 
-		Assert.assertTrue(context.containsKey("min"));
-		Assert.assertTrue(context.containsKey("max"));
+		Assert.assertTrue(fdsFilterContext.containsKey("min"));
+		Assert.assertTrue(fdsFilterContext.containsKey("max"));
 
-		JSONObject minJSONObject = (JSONObject)context.get("min");
+		JSONObject minJSONObject = (JSONObject)fdsFilterContext.get("min");
 
 		Assert.assertEquals(1, minJSONObject.getInt("day"));
 		Assert.assertEquals(1, minJSONObject.getInt("month"));
@@ -72,7 +69,7 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 		Assert.assertEquals(0, minJSONObject.getInt("hour"));
 		Assert.assertEquals(0, minJSONObject.getInt("minute"));
 
-		JSONObject maxJSONObject = (JSONObject)context.get("max");
+		JSONObject maxJSONObject = (JSONObject)fdsFilterContext.get("max");
 
 		Assert.assertEquals(31, maxJSONObject.getInt("day"));
 		Assert.assertEquals(12, maxJSONObject.getInt("month"));
@@ -83,18 +80,19 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 
 	@Test
 	public void testGetFDSFilterContextSerializesNowAsString() {
-		Map<String, Object> context =
+		Map<String, Object> fdsFilterContext =
 			_dateTimeRangeFDSFilterContextContributor.getFDSFilterContext(
 				new TestDateTimeRangeFDSFilter(
 					new DateTimeFDSFilterItem(1, 1, 2026, 0, 0),
 					DateTimeFDSFilterItem.NOW),
 				LocaleUtil.US);
 
-		Assert.assertEquals("now", context.get("max"));
+		Assert.assertEquals("now", fdsFilterContext.get("max"));
 	}
 
 	private DateTimeRangeFDSFilterContextContributor
-		_dateTimeRangeFDSFilterContextContributor;
+		_dateTimeRangeFDSFilterContextContributor =
+			new DateTimeRangeFDSFilterContextContributor();
 
 	private static class TestDateTimeRangeFDSFilter
 		extends BaseDateTimeRangeFDSFilter {

@@ -3233,41 +3233,9 @@ public class ContactsEngineClientImpl
 		long userId, String name, String url, Provider provider, Event event,
 		String status) {
 
-		Map<String, Object> dataSourcePatch = new HashMap<>();
-
-		Author author = getAuthor(userId);
-
-		if (author != null) {
-			dataSourcePatch.put("author", author);
-		}
-
-		if (credentials != null) {
-			dataSourcePatch.put("credentials", credentials);
-		}
-
-		if (event != null) {
-			dataSourcePatch.put("event", event);
-		}
-
-		if (Validator.isNotNull(name)) {
-			dataSourcePatch.put("name", name);
-		}
-
-		if (provider != null) {
-			dataSourcePatch.put("provider", provider);
-		}
-
-		if (Validator.isNotNull(status)) {
-			dataSourcePatch.put("status", status);
-		}
-
-		if (Validator.isNotNull(url)) {
-			dataSourcePatch.put("url", url);
-		}
-
-		return patch(
-			faroProject, Rels.DATA_SOURCE, id, dataSourcePatch,
-			DataSource.class);
+		return _patchDataSource(
+			Rels.DATA_SOURCE, faroProject, id, credentials, userId, name, url,
+			provider, event, status);
 	}
 
 	@Override
@@ -3620,6 +3588,46 @@ public class ContactsEngineClientImpl
 
 	protected String getWorkspaceURL(long groupId) {
 		return FaroPropsValues.FARO_URL + "/workspace/" + groupId;
+	}
+
+	private DataSource _patchDataSource(
+		String rel, FaroProject faroProject, String id, Credentials credentials,
+		long userId, String name, String url, Provider provider, Event event,
+		String status) {
+
+		Map<String, Object> dataSourcePatch = new HashMap<>();
+
+		Author author = getAuthor(userId);
+
+		if (author != null) {
+			dataSourcePatch.put("author", author);
+		}
+
+		if (credentials != null) {
+			dataSourcePatch.put("credentials", credentials);
+		}
+
+		if (event != null) {
+			dataSourcePatch.put("event", event);
+		}
+
+		if (Validator.isNotNull(name)) {
+			dataSourcePatch.put("name", name);
+		}
+
+		if (provider != null) {
+			dataSourcePatch.put("provider", provider);
+		}
+
+		if (Validator.isNotNull(status)) {
+			dataSourcePatch.put("status", status);
+		}
+
+		if (Validator.isNotNull(url)) {
+			dataSourcePatch.put("url", url);
+		}
+
+		return patch(faroProject, rel, id, dataSourcePatch, DataSource.class);
 	}
 
 	private static final String _FARO_TEMP_FIELD = "faro_temp_field";

@@ -52,7 +52,7 @@ public class KaleoTaskInstanceTokenModelSearchConfigurator
 
 	@Override
 	public boolean isPermissionAware() {
-		return false;
+		return true;
 	}
 
 	@Activate

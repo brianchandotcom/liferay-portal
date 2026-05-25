@@ -8,6 +8,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
+InvitedAccountUserDisplayContext invitedAccountUserDisplayContext = (InvitedAccountUserDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+if (invitedAccountUserDisplayContext == null) {
+%>
+
+	<liferay-util:include page="/account_user_registration/error.jsp" servletContext="<%= application %>" />
+
+<%
+	return;
+}
+
 String backURL = ParamUtil.getString(request, "backURL", themeDisplay.getURLHome());
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -40,10 +51,6 @@ portletDisplay.setURLBack(backURL);
 >
 	<liferay-frontend:edit-form-body>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-
-		<%
-		InvitedAccountUserDisplayContext invitedAccountUserDisplayContext = (InvitedAccountUserDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-		%>
 
 		<aui:input name="ticketKey" type="hidden" value="<%= invitedAccountUserDisplayContext.getTicketKey() %>" />
 

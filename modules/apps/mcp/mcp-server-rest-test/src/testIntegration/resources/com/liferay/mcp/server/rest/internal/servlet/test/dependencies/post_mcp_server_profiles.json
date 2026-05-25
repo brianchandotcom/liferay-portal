@@ -5,10 +5,6 @@
 				"externalReferenceCode": {
 					"type": "string"
 				},
-				"id": {
-					"format": "int64",
-					"type": "integer"
-				},
 				"name": {
 					"type": "string"
 				}

@@ -76,11 +76,16 @@
 					"object2": {
 						"$ref": "#/components/schemas/Item"
 					},
+					"readOnly": {
+						"readOnly": true,
+						"type": "string"
+					},
 					"string": {
 						"type": "string"
 					}
 				},
 				"required": [
+					"readOnly",
 					"string"
 				],
 				"type": "object",

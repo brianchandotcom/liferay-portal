@@ -47,6 +47,13 @@ public interface SegmentsCriteriaContributor {
 			criteria, filterString, conjunction, getKey(), getType());
 	}
 
+	public default void contributeForMemberLookup(
+		Criteria criteria, String filterString,
+		Criteria.Conjunction conjunction) {
+
+		contribute(criteria, filterString, conjunction);
+	}
+
 	/**
 	 * Returns a criteria as a JSONObject.
 	 *

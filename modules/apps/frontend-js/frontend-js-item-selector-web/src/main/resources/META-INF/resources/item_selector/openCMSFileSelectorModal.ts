@@ -241,27 +241,33 @@ export default function openCMSFileSelectorModal({
 	maxFileSize?: number;
 	onSelect: (items: Array<CMSFile>) => void;
 }) {
+	let effectiveFilters: string[] = [];
+
+	if (filters?.length) {
+		effectiveFilters = filters;
+	}
+	else if (allowedExtensions) {
+		effectiveFilters = [normalizeExtensions(allowedExtensions)];
+	}
+
+	const buildApiURL = (folderId: number | null) =>
+		urlBuilder({
+			filters: effectiveFilters,
+			folderId: folderId ?? undefined,
+		});
+
 	const finalConfig = {
 		...CMS_FILE_ITEM_SELECTOR_CONFIG,
 		...config,
+		apiURL: buildApiURL(null),
 	};
-
-	if (filters?.length) {
-		finalConfig.apiURL = urlBuilder({filters});
-	}
-	else if (allowedExtensions) {
-		const extensions = normalizeExtensions(allowedExtensions);
-
-		finalConfig.apiURL = urlBuilder({
-			filters: [extensions],
-		});
-	}
 
 	return render(
 		DetachedCMSFilesItemSelectorModal,
 		{
 			...finalConfig,
 			allowedExtensions,
+			buildApiURL,
 			fdsProps: {
 				...FDS_PROPS,
 				emptyState: allowDragAndDrop

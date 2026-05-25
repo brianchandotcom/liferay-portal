@@ -16,7 +16,7 @@ import {
 import classNames from 'classnames';
 import {FileData} from 'frontend-js-components-web';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 type IItemSelectorModalFDSProps = Omit<
 	IFrontendDataSetProps,
@@ -192,6 +192,16 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			setSelectedItems(externalItems);
 		}
 	}, [externalItems, open]);
+
+	const initialApiURLRef = useRef(apiURL);
+
+	useEffect(() => {
+		if (apiURL === initialApiURLRef.current) {
+			return;
+		}
+
+		setFdsRefreshKey((key) => key + 1);
+	}, [apiURL]);
 
 	const getSelectedItemLabel = function (selectedItem: T) {
 		return getObjectValueFromPath({

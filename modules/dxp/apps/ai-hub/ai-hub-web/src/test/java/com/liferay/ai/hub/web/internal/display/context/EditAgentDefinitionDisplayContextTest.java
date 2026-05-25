@@ -7,8 +7,6 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -47,8 +45,11 @@ public class EditAgentDefinitionDisplayContextTest {
 
 		portalUtil.setPortal(_portal);
 
+		HttpServletRequest httpServletRequest =
+			DisplayContextTestUtil.setUpHttpServletRequest();
+
 		DisplayContextTestUtil.setUpThemeDisplay(
-			_company, _group, _httpServletRequest);
+			Mockito.mock(Company.class), _group, httpServletRequest);
 
 		Mockito.when(
 			_groupLocalService.getGroup(1L)
@@ -57,19 +58,13 @@ public class EditAgentDefinitionDisplayContextTest {
 		);
 
 		Mockito.when(
-			_httpServletRequest.getParameter("externalReferenceCode")
-		).thenReturn(
-			"L_TEST_AGENT"
-		);
-
-		Mockito.when(
-			_portal.getCurrentURL(_httpServletRequest)
+			_portal.getCurrentURL(httpServletRequest)
 		).thenReturn(
 			"/current"
 		);
 
 		Mockito.when(
-			_portal.getPortalURL(_httpServletRequest)
+			_portal.getPortalURL(httpServletRequest)
 		).thenReturn(
 			"http://localhost:8080"
 		);
@@ -88,16 +83,17 @@ public class EditAgentDefinitionDisplayContextTest {
 
 		_editAgentDefinitionDisplayContext =
 			new EditAgentDefinitionDisplayContext(
-				_groupLocalService, _httpServletRequest, _portal);
+				_groupLocalService, httpServletRequest, _portal);
 	}
 
 	@Test
 	public void testGetReactData() throws Exception {
-		_assertReadOnly(true, false);
-		_assertReadOnly(false, true);
+		_testGetReactDataWithReadOnly(true, false);
+		_testGetReactDataWithReadOnly(false, true);
 	}
 
-	private void _assertReadOnly(boolean hasUpdatePermission, boolean readOnly)
+	private void _testGetReactDataWithReadOnly(
+			boolean hasUpdatePermission, boolean readOnly)
 		throws Exception {
 
 		try (MockedStatic<AccountEntryUtil> accountEntryUtilMockedStatic =
@@ -115,10 +111,9 @@ public class EditAgentDefinitionDisplayContextTest {
 				null
 			);
 
-			DisplayContextTestUtil.setUpReadOnlyMocks(
+			DisplayContextTestUtil.setGetReactDataMocks(
 				objectDefinitionLocalServiceUtilMockedStatic,
-				objectEntryServiceUtilMockedStatic, _objectDefinition,
-				_objectEntry, hasUpdatePermission);
+				objectEntryServiceUtilMockedStatic, hasUpdatePermission);
 
 			Map<String, Object> reactData =
 				_editAgentDefinitionDisplayContext.getReactData();
@@ -127,17 +122,11 @@ public class EditAgentDefinitionDisplayContextTest {
 		}
 	}
 
-	private final Company _company = Mockito.mock(Company.class);
 	private EditAgentDefinitionDisplayContext
 		_editAgentDefinitionDisplayContext;
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
-	private final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
-	private final ObjectDefinition _objectDefinition = Mockito.mock(
-		ObjectDefinition.class);
-	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

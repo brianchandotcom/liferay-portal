@@ -201,28 +201,26 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			boolean hasTokens = _hasTokens(
 				externalReferenceCode, httpServletRequest);
 
-			JSONObject apiURLTokenValuesJSONObject =
-				_getAPIURLTokenValuesJSONObject(
-					(String)_fragmentEntryConfigurationParser.getFieldValue(
-						configurationJSONObject,
-						fragmentEntryLink.getEditableValuesJSONObject(),
-						fragmentRendererContext.getLocale(),
-						"apiURLTokenValues"));
-
-			JSONObject tokenValuesJSONObject = _getTokenResolutionsJSONObject(
-				apiURLTokenValuesJSONObject, externalReferenceCode,
-				httpServletRequest);
+			JSONObject tokenResolutionsJSONObject =
+				_getTokenResolutionsJSONObject(
+					_getAPIURLTokenMappingsJSONObject(
+						(String)_fragmentEntryConfigurationParser.getFieldValue(
+							configurationJSONObject,
+							fragmentEntryLink.getEditableValuesJSONObject(),
+							fragmentRendererContext.getLocale(),
+							"apiURLTokenMappings")),
+					externalReferenceCode, httpServletRequest);
 
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
 				printWriter.write(
 					_getAPIURLResolutionHTML(
-						tokenValuesJSONObject, externalReferenceCode,
+						tokenResolutionsJSONObject, externalReferenceCode,
 						httpServletRequest,
 						fragmentRendererContext.getLocale()));
 			}
 
 			if (_isResolved(
-					tokenValuesJSONObject, externalReferenceCode,
+					tokenResolutionsJSONObject, externalReferenceCode,
 					httpServletRequest)) {
 
 				printWriter.write("<div>");
@@ -237,7 +235,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						"tokenResolutions",
 						() -> {
 							if (hasTokens) {
-								return tokenValuesJSONObject;
+								return tokenResolutionsJSONObject;
 							}
 
 							return null;
@@ -261,7 +259,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getAPIURLResolutionHTML(
-		JSONObject apiURLTokenValuesJSONObject, String externalReferenceCode,
+		JSONObject tokenResolutionsJSONObject, String externalReferenceCode,
 		HttpServletRequest httpServletRequest, Locale locale) {
 
 		StringBundler sb = new StringBundler(10);
@@ -270,7 +268,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		sb.append("<strong class=\"label ml-2 text-uppercase ");
 
 		if (_isResolved(
-				apiURLTokenValuesJSONObject, externalReferenceCode,
+				tokenResolutionsJSONObject, externalReferenceCode,
 				httpServletRequest)) {
 
 			sb.append("label-success\">");
@@ -289,16 +287,14 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		Matcher matcher = _pattern.matcher(
 			_fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, true,
-				_getTokenResolutionsJSONObject(
-					apiURLTokenValuesJSONObject, externalReferenceCode,
-					httpServletRequest)));
+				tokenResolutionsJSONObject));
 
 		sb.append(
 			matcher.replaceAll(
 				match -> {
 					String tokenName = match.group(1);
 
-					String tokenValue = apiURLTokenValuesJSONObject.getString(
+					String tokenValue = tokenResolutionsJSONObject.getString(
 						tokenName);
 
 					if (Validator.isNull(tokenValue)) {
@@ -317,7 +313,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return sb.toString();
 	}
 
-	private JSONObject _getAPIURLTokenValuesJSONObject(String value) {
+	private JSONObject _getAPIURLTokenMappingsJSONObject(String value) {
 		if (Validator.isNull(value)) {
 			return _jsonFactory.createJSONObject();
 		}
@@ -328,7 +324,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to serialize APIURLTokenValues to JSON: " + value,
+					"Unable to serialize APIURLTokenMappings to JSON: " + value,
 					jsonException);
 			}
 		}
@@ -353,7 +349,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getTokenResolutionsJSONObject(
-		JSONObject apiURLTokenValuesJSONObject, String externalReferenceCode,
+		JSONObject apiURLTokenMappingsJSONObject, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
 		Set<String> tokenNames = _getTokenNames(
@@ -363,7 +359,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		for (String tokenName : tokenNames) {
 			String tokenValue = _getTokenValue(
-				apiURLTokenValuesJSONObject, httpServletRequest, tokenName);
+				apiURLTokenMappingsJSONObject, httpServletRequest, tokenName);
 
 			if (Validator.isNotNull(tokenValue)) {
 				tokenResolutionsJSONObject.put(
@@ -378,14 +374,14 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getTokenValue(
-		JSONObject apiURLTokenValuesJSONObject,
+		JSONObject apiURLTokenMappingsJSONObject,
 		HttpServletRequest httpServletRequest, String tokenName) {
 
 		JSONObject mappingJSONObject =
-			apiURLTokenValuesJSONObject.getJSONObject(tokenName);
+			apiURLTokenMappingsJSONObject.getJSONObject(tokenName);
 
 		if (mappingJSONObject == null) {
-			return apiURLTokenValuesJSONObject.getString(tokenName);
+			return apiURLTokenMappingsJSONObject.getString(tokenName);
 		}
 
 		String fieldId = mappingJSONObject.getString("fieldId");

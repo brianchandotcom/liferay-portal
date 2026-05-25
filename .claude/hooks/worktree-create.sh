@@ -185,11 +185,12 @@ function _set_database {
 	db_name="$(_derive_db_name "$(basename "${WORKTREE_DIR}")")"
 
 	local file="${BUNDLES_DIR}/portal-ext.properties"
+	local wizard_file="${BUNDLES_DIR}/portal-setup-wizard.properties"
 
 	local existing_user existing_password
 
-	existing_user="$(_get_property "${file}" "jdbc\.default\.username" root)"
-	existing_password="$(_get_property "${file}" "jdbc\.default\.password")"
+	existing_user="$(_get_property_from_files "jdbc\.default\.username" root "${file}" "${wizard_file}")"
+	existing_password="$(_get_property_from_files "jdbc\.default\.password" "" "${file}" "${wizard_file}")"
 
 	_set_property "${file}" jdbc.default.driverClassName com.mysql.cj.jdbc.Driver
 	_set_property "${file}" jdbc.default.url "jdbc:mysql://localhost/${db_name}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true"

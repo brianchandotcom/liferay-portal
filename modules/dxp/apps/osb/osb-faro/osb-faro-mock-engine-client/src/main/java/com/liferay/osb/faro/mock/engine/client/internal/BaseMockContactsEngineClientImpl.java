@@ -1235,6 +1235,17 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public DataSource reconnectDataSource(
+		FaroProject faroProject, String id, Credentials credentials,
+		long userId, String name, String url, Provider provider, Event event,
+		String status) {
+
+		return contactsEngineClient.reconnectDataSource(
+			faroProject, id, credentials, userId, name, url, provider, event,
+			status);
+	}
+
+	@Override
 	public List<Map<String, Object>> refreshLiferay(FaroProject faroProject) {
 		return contactsEngineClient.refreshLiferay(faroProject);
 	}

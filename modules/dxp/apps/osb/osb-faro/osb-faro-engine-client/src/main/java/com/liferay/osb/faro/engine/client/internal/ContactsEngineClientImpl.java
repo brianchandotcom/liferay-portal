@@ -3277,6 +3277,17 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public DataSource reconnectDataSource(
+		FaroProject faroProject, String id, Credentials credentials,
+		long userId, String name, String url, Provider provider, Event event,
+		String status) {
+
+		return _patchDataSource(
+			Rels.DATA_SOURCE_RECONNECT, faroProject, id, credentials, userId,
+			name, url, provider, event, status);
+	}
+
+	@Override
 	public List<Map<String, Object>> refreshLiferay(FaroProject faroProject) {
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, 1, 10000, null);

@@ -126,6 +126,8 @@ public interface Rels {
 
 	public static final String DATA_SOURCE_PROGRESS = "data-source-progress";
 
+	public static final String DATA_SOURCE_RECONNECT = "data-source-reconnect";
+
 	public static final String DATA_SOURCE_REFRESH_LIFERAY =
 		"data-source-refresh-liferay";
 

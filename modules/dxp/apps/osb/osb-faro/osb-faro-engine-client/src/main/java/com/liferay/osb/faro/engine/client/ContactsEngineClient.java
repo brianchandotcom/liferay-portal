@@ -605,6 +605,11 @@ public interface ContactsEngineClient {
 			Class<T> returnType)
 		throws Exception;
 
+	public DataSource reconnectDataSource(
+		FaroProject faroProject, String id, Credentials credentials,
+		long userId, String name, String url, Provider provider, Event event,
+		String status);
+
 	public List<Map<String, Object>> refreshLiferay(FaroProject faroProject);
 
 	public void setEngineURL(String engineURL);

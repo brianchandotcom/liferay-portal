@@ -911,10 +911,10 @@ public class ObjectEntryDTOConverter
 
 				return TransformUtil.transformToArray(
 					_auditEventLocalService.getAuditEvents(
-						0, 0, 0, null, null, null, null,
+						0, 0, 0, null, null, null, null, null,
 						String.valueOf(objectEntry.getObjectEntryId()), null,
-						null, null, null, 0, null, false, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS),
+						null, null, null, null, 0, null, false,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					auditEvent -> {
 						AuditEvent newAuditEvent = new AuditEvent();
 

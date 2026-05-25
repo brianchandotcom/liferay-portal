@@ -16,16 +16,21 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,14 +39,18 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,6 +154,95 @@ public class AddFormInstanceRecordMVCActionCommandTest {
 		_assertValue("TextField2", ddmFormFieldValuesMap, value2);
 	}
 
+	@Test
+	public void testProcessActionWithCaptchaValidationFailureOnUpdate()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
+
+		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "TextField1");
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				ddmForm, _group,
+				DDMFormInstanceTestUtil.createSettingsDDMFormValues(true),
+				TestPropsValues.getUserId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setRequest(
+			_mockLiferayPortletActionRequest.getHttpServletRequest());
+
+		DDMFormValues ddmFormValues1 =
+			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+
+		ddmFormValues1.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				"TextField1", "initial value"));
+
+		DDMFormInstanceRecord ddmFormInstanceRecord1 =
+			_ddmFormInstanceRecordLocalService.addFormInstanceRecord(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				ddmFormInstance.getFormInstanceId(), ddmFormValues1,
+				serviceContext);
+
+		_mockLiferayPortletActionRequest.addParameter(
+			"defaultLanguageId", "en_US");
+		_mockLiferayPortletActionRequest.addParameter(
+			"formInstanceId",
+			String.valueOf(ddmFormInstance.getFormInstanceId()));
+		_mockLiferayPortletActionRequest.addParameter(
+			"formInstanceRecordId",
+			String.valueOf(ddmFormInstanceRecord1.getFormInstanceRecordId()));
+		_mockLiferayPortletActionRequest.addParameter(
+			"ddm$$TextField1$$0$$en_US", RandomTestUtil.randomString());
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_addFormInstanceRecordMVCActionCommand.processAction(
+				_mockLiferayPortletActionRequest, mockActionResponse);
+		}
+
+		Assert.assertEquals(
+			"/admin/edit_form_instance_record.jsp",
+			mockActionResponse.getRenderParameter("mvcPath"));
+		Assert.assertTrue(
+			SessionErrors.contains(
+				_mockLiferayPortletActionRequest, CaptchaTextException.class));
+
+		DDMFormInstanceRecord ddmFormInstanceRecord2 =
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				ddmFormInstanceRecord1.getFormInstanceRecordId());
+
+		DDMFormValues ddmFormValues2 =
+			ddmFormInstanceRecord2.getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues2.getDDMFormFieldValuesMap(false);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"TextField1");
+
+		Assert.assertEquals(
+			String.valueOf(ddmFormFieldValues), 1, ddmFormFieldValues.size());
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		LocalizedValue localizedValue =
+			(LocalizedValue)ddmFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			"initial value", localizedValue.getString(LocaleUtil.US));
+	}
+
 	private void _assertValue(
 		String ddmFormFieldName,
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
@@ -173,6 +271,12 @@ public class AddFormInstanceRecordMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_CONFIG,
+			PortletConfigFactoryUtil.create(
+				_portletLocalService.getPortletById(
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN),
+				null));
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 		mockLiferayPortletActionRequest.setAttribute(
@@ -226,5 +330,24 @@ public class AddFormInstanceRecordMVCActionCommandTest {
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	private MockLiferayPortletActionRequest _mockLiferayPortletActionRequest;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	private static class MockActionResponse
+		extends MockLiferayPortletActionResponse {
+
+		public String getRenderParameter(String name) {
+			return _renderParameters.get(name);
+		}
+
+		@Override
+		public void setRenderParameter(String name, String value) {
+			_renderParameters.put(name, value);
+		}
+
+		private final Map<String, String> _renderParameters = new HashMap<>();
+
+	}
 
 }

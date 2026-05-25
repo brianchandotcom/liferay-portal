@@ -189,7 +189,7 @@ function parseOffsetMinutes(offset: string | undefined): number {
 	return sign * (Number(match[2]) * 60 + Number(match[3]));
 }
 
-function extractPartsInTimeZone(date: Date, timeZone: string): DateParts {
+function extractDatePartsInTimeZone(date: Date, timeZone: string): DateParts {
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		hour: '2-digit',
@@ -220,7 +220,7 @@ function extractPartsInTimeZone(date: Date, timeZone: string): DateParts {
 }
 
 function nowInTimeZone(timeZone: string): DateParts {
-	return extractPartsInTimeZone(new Date(), timeZone);
+	return extractDatePartsInTimeZone(new Date(), timeZone);
 }
 
 function toViewerWallClock(dateParts: DateParts): DateParts {
@@ -232,7 +232,7 @@ function toViewerWallClock(dateParts: DateParts): DateParts {
 
 	const instantMs = datePartsToInstantMs(dateParts) - offsetMinutes * 60_000;
 
-	return extractPartsInTimeZone(
+	return extractDatePartsInTimeZone(
 		new Date(instantMs),
 		Liferay.ThemeDisplay.getTimeZone()
 	);
@@ -322,15 +322,15 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 	return '+00:00';
 }
 
-function computeOffsetForParts(dateParts: DateParts): string {
+function computeOffsetForDateParts(dateParts: DateParts): string {
 	return getTimeZoneOffset(
 		Liferay.ThemeDisplay.getTimeZone(),
 		new Date(datePartsToInstantMs(dateParts))
 	);
 }
 
-function partsToOdataDateTime(dateParts: DateParts): string {
-	const offset = dateParts.offset || computeOffsetForParts(dateParts);
+function datePartsToOdataDateTime(dateParts: DateParts): string {
+	const offset = dateParts.offset || computeOffsetForDateParts(dateParts);
 
 	const offsetMatch = /^([+-])(\d{2}):(\d{2})$/.exec(offset);
 
@@ -383,7 +383,7 @@ function buildOdataString(
 
 	const edgeToOdata = (dateParts: DateParts, edge: 'from' | 'to'): string => {
 		if (dateTime) {
-			return partsToOdataDateTime(dateParts);
+			return datePartsToOdataDateTime(dateParts);
 		}
 
 		const iso = dateOnlyEdgeIso(dateParts, edge);
@@ -647,7 +647,7 @@ const DateTimeRangeFilter = ({
 							): DateParts | null =>
 								dateParts && {
 									...dateParts,
-									offset: computeOffsetForParts(dateParts),
+									offset: computeOffsetForDateParts(dateParts),
 								};
 
 							setFilter({

@@ -16,9 +16,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 /**
  * @author Alejandro Tardín
@@ -230,6 +233,52 @@ public class OpenAPIUtil {
 		sb.append(URLCodec.encodeURL(stringValue));
 	}
 
+	private static void _filterReadOnlyProperties(
+		Map<String, Object> schemaMap) {
+
+		Object propertiesObject = schemaMap.get("properties");
+
+		if (!(propertiesObject instanceof Map)) {
+			return;
+		}
+
+		Map<String, Object> properties = (Map<String, Object>)propertiesObject;
+
+		Set<String> readOnlyPropertyNames = new HashSet<>();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			Object value = entry.getValue();
+
+			if (!(value instanceof Map)) {
+				continue;
+			}
+
+			Map<?, ?> propertyMap = (Map<?, ?>)value;
+
+			if (GetterUtil.getBoolean(propertyMap.get("readOnly"))) {
+				readOnlyPropertyNames.add(entry.getKey());
+			}
+		}
+
+		if (readOnlyPropertyNames.isEmpty()) {
+			return;
+		}
+
+		readOnlyPropertyNames.forEach(properties::remove);
+
+		List<Object> requiredList = (List<Object>)schemaMap.get("required");
+
+		if (requiredList == null) {
+			return;
+		}
+
+		schemaMap.put(
+			"required",
+			ListUtil.filter(
+				TransformUtil.transform(requiredList, String::valueOf),
+				Predicate.not(readOnlyPropertyNames::contains)));
+	}
+
 	private static Map<String, Object> _getAllOfSchemaMap(
 		JSONObject jsonObject, JSONObject openAPIJSONObject,
 		Set<String> visitedRefs) {
@@ -299,6 +348,8 @@ public class OpenAPIUtil {
 		if (!allOfSchemaMap.containsKey("type")) {
 			allOfSchemaMap.put("type", "object");
 		}
+
+		_filterReadOnlyProperties(allOfSchemaMap);
 
 		return allOfSchemaMap;
 	}
@@ -614,6 +665,8 @@ public class OpenAPIUtil {
 						openAPIJSONObject, jsonObject.get(key), visitedRefs));
 			}
 
+			_filterReadOnlyProperties(schemaMap);
+
 			return schemaMap;
 		}
 
@@ -826,6 +879,8 @@ public class OpenAPIUtil {
 					_getSchemaObject(
 						openAPIJSONObject, jsonObject.get(key), visitedRefs));
 			}
+
+			_filterReadOnlyProperties(schemaMap);
 
 			return schemaMap;
 		}

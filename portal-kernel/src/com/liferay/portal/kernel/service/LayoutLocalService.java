@@ -1674,7 +1674,7 @@ public interface LayoutLocalService
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public Layout updateStyleBookEntryERC(
+	public Layout updateStyleBookEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			String styleBookEntryERC, String styleBookEntryScopeERC)
 		throws PortalException;
@@ -1724,4 +1724,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1245404884
+// LIFERAY-SERVICE-BUILDER-HASH:-51635040

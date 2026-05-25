@@ -138,11 +138,11 @@ public class AssetAnalyticsAttributesProviderTest {
 		String className = "com.liferay.object.model.ObjectDefinition#42";
 		long companyId = RandomTestUtil.randomLong();
 
-		AssetEntry objectEntry = _mockAssetEntry(
+		AssetEntry assetEntry = _mockAssetEntry(
 			className, RandomTestUtil.randomLong(), companyId);
 
 		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
-			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
 
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);
@@ -282,11 +282,11 @@ public class AssetAnalyticsAttributesProviderTest {
 		String className = "com.liferay.object.model.ObjectDefinition#42";
 		long companyId = RandomTestUtil.randomLong();
 
-		AssetEntry objectEntry = _mockAssetEntry(
+		AssetEntry assetEntry = _mockAssetEntry(
 			className, RandomTestUtil.randomLong(), companyId);
 
 		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
-			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
 
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);

@@ -535,6 +535,7 @@ class CriteriaRow extends React.Component<
 								className='mr-4'
 								displayType='secondary'
 								shape='circle'
+								size='sm'
 							>
 								{stepNumber}
 							</ClaySticker>

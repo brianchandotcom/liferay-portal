@@ -453,6 +453,7 @@
 	"owner-email": "Owner Email",
 	"paas": "PaaS",
 	"paas-user": "PaaS User",
+	"paas-user-contact": "PaaS User",
 	"paas-users": "PaaS Users",
 	"paas-users-will-have-access-to-paas-experience-applications": "PaaS Users will have access to the PaaS Experience applications (Argo CD, Argo Workflows, and Grafana).",
 	"part-of-your-organization-it-looks-like-x-is-a-new-domain-name": "part of your organization? It looks like {0} is a new domain name.",

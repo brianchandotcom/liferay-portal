@@ -30,9 +30,13 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -464,9 +468,20 @@ public class KeywordResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		boolean spaceDepotEntry = _isSpaceDepotEntry(groupId);
+
 		return SearchUtil.search(
 			actions,
 			booleanQuery -> {
+				if (!spaceDepotEntry) {
+					return;
+				}
+
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					_getSpaceBooleanFilter(groupId), BooleanClauseOccur.MUST);
 			},
 			filter, AssetTag.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -483,19 +498,7 @@ public class KeywordResourceImpl
 				searchContext.setUserId(UserConstants.USER_ID_DEFAULT);
 				searchContext.setVulcanCheckPermissions(false);
 
-				DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
-					groupId);
-
-				if ((depotEntry != null) &&
-					(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
-
-					searchContext.setAttribute(
-						"groupIds",
-						new long[] {
-							groupId, GroupConstants.ANY_PARENT_GROUP_ID
-						});
-				}
-				else {
+				if (!spaceDepotEntry) {
 					searchContext.setGroupIds(
 						new long[] {
 							groupId, GroupConstants.ANY_PARENT_GROUP_ID
@@ -530,6 +533,33 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
+	private BooleanFilter _getSpaceBooleanFilter(long groupId)
+		throws Exception {
+
+		BooleanFilter spaceBooleanFilter = new BooleanFilter();
+
+		TermsFilter groupIdsTermsFilter = new TermsFilter("groupIds");
+
+		groupIdsTermsFilter.addValues(
+			String.valueOf(groupId),
+			String.valueOf(GroupConstants.ANY_PARENT_GROUP_ID));
+
+		spaceBooleanFilter.add(groupIdsTermsFilter, BooleanClauseOccur.SHOULD);
+
+		BooleanFilter cmsGroupBooleanFilter = new BooleanFilter();
+
+		cmsGroupBooleanFilter.add(
+			new ExistsFilter("groupIds"), BooleanClauseOccur.MUST_NOT);
+		cmsGroupBooleanFilter.addRequiredTerm(
+			Field.GROUP_ID,
+			TaxonomyGroupUtil.getCMSGroupId(contextCompany.getCompanyId()));
+
+		spaceBooleanFilter.add(
+			cmsGroupBooleanFilter, BooleanClauseOccur.SHOULD);
+
+		return spaceBooleanFilter;
+	}
+
 	private long _getTotalCount(String search, Long siteId) {
 		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
 
@@ -548,6 +578,19 @@ public class KeywordResourceImpl
 		}
 
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	private boolean _isSpaceDepotEntry(long groupId) throws Exception {
+		DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
+			groupId);
+
+		if ((depotEntry != null) &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Keyword _patchSiteKeyword(

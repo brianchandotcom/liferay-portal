@@ -69,8 +69,9 @@ public class ObjectEntrySynonymSearchTest {
 
 	@Test
 	public void testSearch() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
 		String originalName = PrincipalThreadLocal.getName();
+
+		long companyId = TestPropsValues.getCompanyId();
 
 		User user = UserTestUtil.getAdminUser(companyId);
 
@@ -91,32 +92,29 @@ public class ObjectEntrySynonymSearchTest {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(user);
 
-		try {
-			_addObjectEntry("PD initiative", objectDefinition, user);
-			_addObjectEntry(
-				"product delivery Initiative", objectDefinition, user);
-			_addObjectEntry("Query Builder Initiative", objectDefinition, user);
-			_addObjectEntry("UQB Initiative", objectDefinition, user);
 
-			_addSynonymSets(companyId);
+		_addObjectEntry("PD initiative", objectDefinition, user);
+		_addObjectEntry(
+			"product delivery Initiative", objectDefinition, user);
+		_addObjectEntry("Query Builder Initiative", objectDefinition, user);
+		_addObjectEntry("UQB Initiative", objectDefinition, user);
 
-			_testSearch(companyId, "PD", objectDefinition);
-			_testSearch(companyId, "product delivery", objectDefinition);
-			_testSearch(companyId, "query", objectDefinition);
-			_testSearch(companyId, "uqb", objectDefinition);
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
+		_updateSynonymSets(companyId);
 
-			_deleteSynonymSets(companyId);
+		_testSearch(companyId, "PD", objectDefinition);
+		_testSearch(companyId, "product delivery", objectDefinition);
+		_testSearch(companyId, "query", objectDefinition);
+		_testSearch(companyId, "uqb", objectDefinition);
 
-			PrincipalThreadLocal.setName(originalName);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-			PortalPreferencesLocalServiceUtil.updatePreferences(
-				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-				originalPortalPreferencesXML);
-		}
+		_deleteSynonymSets(companyId);
+
+		PrincipalThreadLocal.setName(originalName);
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			originalPortalPreferencesXML);
 	}
 
 	private ObjectDefinition _addObjectDefinition(User user) throws Exception {
@@ -184,7 +182,7 @@ public class ObjectEntrySynonymSearchTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _addSynonymSets(long companyId) {
+	private void _updateSynonymSets(long companyId) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 

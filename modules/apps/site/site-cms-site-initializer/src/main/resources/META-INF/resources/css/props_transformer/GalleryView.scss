@@ -6,6 +6,19 @@
 	&__preview {
 		height: $gallery-preview-height;
 
+		.c-empty-state {
+			align-self: center;
+			margin: 0;
+		}
+
+		.c-empty-state-image {
+			max-width: 200px;
+		}
+
+		.c-empty-state-title {
+			margin-top: 1rem;
+		}
+
 		&-wrapper > * {
 			margin: 0;
 			width: 100%;

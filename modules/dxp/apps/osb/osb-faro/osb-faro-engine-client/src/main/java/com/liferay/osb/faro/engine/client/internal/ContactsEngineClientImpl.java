@@ -2426,10 +2426,11 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Individual> getIndividuals(
-		FaroProject faroProject, String accountId, String channelId,
-		String dataSourceId, String individualSegmentId,
+		FaroProject faroProject, String accountId, String activityStatus,
+		String channelId, String dataSourceId, String individualSegmentId,
 		String notIndividualSegmentId, String interestName, String filterString,
-		List<String> profileTypes, String query, List<String> fields,
+		List<String> profileTypes, String query, String rangeEnd,
+		Integer rangeKey, String rangeStart, List<String> fields,
 		boolean includeAnonymousUsers, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
@@ -2439,6 +2440,10 @@ public class ContactsEngineClientImpl
 
 		if (Validator.isNotNull(accountId)) {
 			uriVariables.put("accountId", accountId);
+		}
+
+		if (Validator.isNotNull(activityStatus)) {
+			uriVariables.put("activityStatus", activityStatus);
 		}
 
 		if (Validator.isNotNull(channelId)) {
@@ -2474,6 +2479,18 @@ public class ContactsEngineClientImpl
 
 		if (Validator.isNotNull(query)) {
 			uriVariables.put("query", query);
+		}
+
+		if (Validator.isNotNull(rangeEnd)) {
+			uriVariables.put("rangeEnd", rangeEnd);
+		}
+
+		if (rangeKey != null) {
+			uriVariables.put("rangeKey", rangeKey);
+		}
+
+		if (Validator.isNotNull(rangeStart)) {
+			uriVariables.put("rangeStart", rangeStart);
 		}
 
 		PagedModel<?, Individual> pagedModel = get(

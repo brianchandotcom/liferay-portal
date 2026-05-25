@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,10 +113,15 @@ public class InfoFieldUtil {
 		}
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return _renderHtml(fragmentEntryLink, defaultElementName);
+		}
+
 		HttpServletResponse httpServletResponse = serviceContext.getResponse();
 
-		if ((httpServletRequest == null) || (httpServletResponse == null)) {
-			return _renderHtml(fragmentEntryLink, defaultElementName);
+		if (httpServletResponse == null) {
+			httpServletResponse = new DummyHttpServletResponse();
 		}
 
 		ThemeDisplay themeDisplay =

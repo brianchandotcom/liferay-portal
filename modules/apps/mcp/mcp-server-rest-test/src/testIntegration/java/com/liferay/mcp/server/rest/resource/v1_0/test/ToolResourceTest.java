@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 
 import java.util.Base64;
 
@@ -22,6 +23,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
+@FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
 public class ToolResourceTest extends BaseToolResourceTestCase {
 

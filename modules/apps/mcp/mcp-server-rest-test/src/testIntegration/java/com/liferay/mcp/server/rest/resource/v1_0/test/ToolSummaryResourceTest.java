@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mcp.server.rest.client.dto.v1_0.ToolSummary;
 import com.liferay.mcp.server.rest.client.pagination.Page;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
+@FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
 public class ToolSummaryResourceTest extends BaseToolSummaryResourceTestCase {
 

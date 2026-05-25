@@ -8,6 +8,7 @@ package com.liferay.mcp.server.rest.internal.resource.v1_0;
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import jakarta.ws.rs.core.Response;
 
@@ -25,6 +26,12 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 
 	@Override
 	public Tool getTool(String toolSetName, String toolName) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-63311")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return ToolSetUtil.getTool(
 			contextHttpServletRequest, toolName, toolSetName);
 	}
@@ -33,6 +40,12 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 	public Response invokeToolObject(
 			String toolSetName, String toolName, Object object)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-63311")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return ToolSetUtil.invokeTool(
 			contextHttpServletRequest, object, toolName, toolSetName,

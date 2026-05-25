@@ -4,13 +4,14 @@
  */
 
 import {EventSource} from 'eventsource';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
 	createEventSource,
 	getChatbotConfiguration,
 	postChatMessage,
 } from '../api';
+import {getLanguageId, getLocalizedValue} from '../locale';
 import AssistantMessage from './AssistantMessage';
 import ChatbotFooter from './ChatbotFooter';
 import ChatbotHeader from './ChatbotHeader';
@@ -202,7 +203,32 @@ export default function ChatbotWidget({
 		[widgetConfiguration.chatbotExternalReferenceCode]
 	);
 
-	if (!chatbotConfiguration?.active) {
+	const localized = useMemo(() => {
+		if (!chatbotConfiguration) {
+			return null;
+		}
+
+		const pick = getLocalizedValue({
+			defaultLanguageId: chatbotConfiguration.defaultLanguageId,
+			editingLanguageId: getLanguageId(),
+		});
+
+		return {
+			disclaimerMessage: pick(
+				chatbotConfiguration.disclaimerMessage_i18n
+			),
+			introMessage: pick(chatbotConfiguration.introMessage_i18n),
+			notificationMessage: pick(
+				chatbotConfiguration.notificationMessage_i18n
+			),
+			placeholderMessage: pick(
+				chatbotConfiguration.placeholderMessage_i18n
+			),
+			title: pick(chatbotConfiguration.title_i18n),
+		};
+	}, [chatbotConfiguration]);
+
+	if (!chatbotConfiguration?.active || !localized) {
 		return null;
 	}
 
@@ -218,14 +244,14 @@ export default function ChatbotWidget({
 				<ChatbotHeader
 					companyLogo={companyLogoURL}
 					onClose={handleToggle}
-					title={chatbotConfiguration.title}
+					title={localized.title}
 				/>
 
 				<div aria-live="polite" className="aihub-messages">
 					<ChatbotIntro
 						companyLogo={companyLogoURL}
-						introMessage={chatbotConfiguration.introMessage}
-						title={chatbotConfiguration.title}
+						introMessage={localized.introMessage}
+						title={localized.title}
 					/>
 
 					{messages.map((msg, index) => {
@@ -235,7 +261,7 @@ export default function ChatbotWidget({
 									companyLogo={companyLogoURL}
 									key={index}
 									text={msg.text}
-									title={chatbotConfiguration.title}
+									title={localized.title}
 								/>
 							);
 						}
@@ -257,19 +283,19 @@ export default function ChatbotWidget({
 						loading || !subscribed || !eventSourceReference.current
 					}
 					onSubmit={sendMessage}
-					placeholder={chatbotConfiguration.placeholderMessage}
+					placeholder={localized.placeholderMessage}
 				/>
 
 				<ChatbotFooter
-					disclaimerMessage={chatbotConfiguration.disclaimerMessage}
+					disclaimerMessage={localized.disclaimerMessage}
 				/>
 			</div>
 
 			{!open &&
 				!notificationDismissed &&
-				chatbotConfiguration.notificationMessage && (
+				localized.notificationMessage && (
 					<div className="aihub-notification">
-						<span>{chatbotConfiguration.notificationMessage}</span>
+						<span>{localized.notificationMessage}</span>
 
 						<button
 							aria-label="Dismiss"

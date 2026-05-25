@@ -55,7 +55,7 @@ public class ViewContentRetrieversDisplayContextTest {
 		_setUpLanguageUtil();
 		_setUpMockHttpServletRequest();
 		_setUpObjectDefinitionLocalService();
-		_setUpPortal();
+		_setUpPortalUtil();
 	}
 
 	@Test
@@ -194,7 +194,9 @@ public class ViewContentRetrieversDisplayContextTest {
 		);
 	}
 
-	private void _setUpPortal() {
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
 		LiferayPortletURL liferayPortletURL = Mockito.mock(
 			LiferayPortletURL.class);
 
@@ -223,8 +225,6 @@ public class ViewContentRetrieversDisplayContextTest {
 		).stripURLAnchor(
 			Mockito.anyString(), Mockito.anyString()
 		);
-
-		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
 	}

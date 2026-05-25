@@ -223,12 +223,7 @@
 																"fontColor": "#ffffff",
 																"showIcon": false,
 																"url": {
-																	"layout": {
-																		"groupId": "[$GROUP_ID$]",
-																		"layoutId": "[$LAYOUT_ID:Agents$]",
-																		"privateLayout": false,
-																		"title": "Agents"
-																	}
+																	"href": "/c/portal/login"
 																}
 															},
 															"fragmentFields": [
@@ -248,7 +243,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "See Agents"
+																				"en_US": "Sign in"
 																			}
 																		}
 																	}
@@ -259,13 +254,13 @@
 																		"fragmentLink": {
 																			"value": {
 																				"href": {
-																					"value": ""
+																					"value": "/c/portal/login"
 																				}
 																			}
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "See Agents"
+																				"en_US": "Sign in"
 																			}
 																		}
 																	}

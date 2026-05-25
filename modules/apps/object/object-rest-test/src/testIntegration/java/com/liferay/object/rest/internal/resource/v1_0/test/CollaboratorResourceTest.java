@@ -1418,7 +1418,7 @@ public class CollaboratorResourceTest {
 			TicketConstants.TYPE_INVITE_COLLABORATOR);
 
 		for (Ticket ticket : tickets) {
-			if (Objects.equals(emailAddress, ticket.getExtraInfo())) {
+			if (Objects.equals(emailAddress, ticket.getEmailAddress())) {
 				return ticket;
 			}
 		}

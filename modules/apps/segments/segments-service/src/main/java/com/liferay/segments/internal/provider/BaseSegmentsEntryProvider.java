@@ -66,7 +66,7 @@ public abstract class BaseSegmentsEntryProvider
 
 	@Override
 	public long[] getSegmentsEntryClassPKs(
-			long segmentsEntryId, int start, int end)
+			long segmentsEntryId, boolean memberLookup, int start, int end)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry =
@@ -77,7 +77,7 @@ public abstract class BaseSegmentsEntryProvider
 		}
 
 		String filterString = getFilterString(
-			segmentsEntry, Criteria.Type.MODEL);
+			memberLookup, segmentsEntry, Criteria.Type.MODEL);
 
 		if (Validator.isNull(filterString)) {
 			return TransformUtil.transformToLongArray(
@@ -94,7 +94,23 @@ public abstract class BaseSegmentsEntryProvider
 	}
 
 	@Override
+	public long[] getSegmentsEntryClassPKs(
+			long segmentsEntryId, int start, int end)
+		throws PortalException {
+
+		return getSegmentsEntryClassPKs(segmentsEntryId, false, start, end);
+	}
+
+	@Override
 	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
+		throws PortalException {
+
+		return getSegmentsEntryClassPKsCount(segmentsEntryId, false);
+	}
+
+	@Override
+	public int getSegmentsEntryClassPKsCount(
+			long segmentsEntryId, boolean memberLookup)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry =
@@ -105,7 +121,7 @@ public abstract class BaseSegmentsEntryProvider
 		}
 
 		String filterString = getFilterString(
-			segmentsEntry, Criteria.Type.MODEL);
+			memberLookup, segmentsEntry, Criteria.Type.MODEL);
 
 		if (Validator.isNull(filterString)) {
 			return segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
@@ -198,7 +214,7 @@ public abstract class BaseSegmentsEntryProvider
 	}
 
 	protected String getFilterString(
-		SegmentsEntry segmentsEntry, Criteria.Type type) {
+		boolean memberLookup, SegmentsEntry segmentsEntry, Criteria.Type type) {
 
 		Criteria existingCriteria = segmentsEntry.getCriteriaObj();
 
@@ -219,12 +235,25 @@ public abstract class BaseSegmentsEntryProvider
 				continue;
 			}
 
-			segmentsCriteriaContributor.contribute(
-				criteria, criterion.getFilterString(),
-				Criteria.Conjunction.parse(criterion.getConjunction()));
+			if (memberLookup) {
+				segmentsCriteriaContributor.contributeForMemberLookup(
+					criteria, criterion.getFilterString(),
+					Criteria.Conjunction.parse(criterion.getConjunction()));
+			}
+			else {
+				segmentsCriteriaContributor.contribute(
+					criteria, criterion.getFilterString(),
+					Criteria.Conjunction.parse(criterion.getConjunction()));
+			}
 		}
 
 		return criteria.getFilterString(type);
+	}
+
+	protected String getFilterString(
+		SegmentsEntry segmentsEntry, Criteria.Type type) {
+
+		return getFilterString(false, segmentsEntry, type);
 	}
 
 	protected abstract String getSource();

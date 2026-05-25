@@ -664,15 +664,6 @@ public class ExpandoColumnPersistenceImpl
 					new String[] {"tableId"}, false),
 				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ExpandoColumnImpl.class, ExpandoColumn.class,
-					"expandoColumn", "ExpandoColumn", "expandoColumn.columnId",
-					"SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ",
-					"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ",
-					") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId",
-					"SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ",
-					ExpandoColumnModelImpl.ORDER_BY_SQL,
-					ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId));
@@ -698,15 +689,6 @@ public class ExpandoColumnPersistenceImpl
 					new String[] {"tableId", "name"}, 0, 2, false, null),
 				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ExpandoColumnImpl.class, ExpandoColumn.class,
-					"expandoColumn", "ExpandoColumn", "expandoColumn.columnId",
-					"SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ",
-					"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ",
-					") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId",
-					"SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ",
-					ExpandoColumnModelImpl.ORDER_BY_SQL,
-					ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId),
@@ -766,4 +748,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:392740810
+// LIFERAY-SERVICE-BUILDER-HASH:1843076136

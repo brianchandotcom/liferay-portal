@@ -106,6 +106,9 @@ public class NotificationQueueEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "notificationQueueEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME =
+		"notificationQueueEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY notificationQueueEntry.notificationQueueEntryId ASC";
 
@@ -1212,4 +1215,4 @@ public class NotificationQueueEntryModelImpl
 	private NotificationQueueEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1907449991
+// LIFERAY-SERVICE-BUILDER-HASH:-1759487333

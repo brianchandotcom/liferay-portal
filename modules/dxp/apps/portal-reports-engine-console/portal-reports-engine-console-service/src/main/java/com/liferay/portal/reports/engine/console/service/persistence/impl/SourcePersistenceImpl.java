@@ -855,15 +855,6 @@ public class SourcePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
 				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SourceImpl.class, Source.class, "source", "Reports_Source",
-					"source.sourceId",
-					"SELECT DISTINCT {source.*} FROM Reports_Source source WHERE ",
-					"SELECT {Reports_Source.*} FROM (SELECT DISTINCT source.sourceId FROM Reports_Source source WHERE ",
-					") TEMP_TABLE INNER JOIN Reports_Source ON TEMP_TABLE.sourceId = Reports_Source.sourceId",
-					"SELECT COUNT(DISTINCT source.sourceId) AS COUNT_VALUE FROM Reports_Source source WHERE ",
-					SourceModelImpl.ORDER_BY_SQL,
-					SourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"source.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getGroupId));
@@ -962,4 +953,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1212960456
+// LIFERAY-SERVICE-BUILDER-HASH:840105448

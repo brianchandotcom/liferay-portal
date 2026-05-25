@@ -107,6 +107,8 @@ public class LayoutSetPrototypeModelImpl
 
 	public static final String ENTITY_ALIAS = "layoutSetPrototype";
 
+	public static final String FILTER_PK_COLUMN_NAME = "layoutSetPrototypeId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutSetPrototype.layoutSetPrototypeId ASC";
 
@@ -1356,4 +1358,4 @@ public class LayoutSetPrototypeModelImpl
 	private LayoutSetPrototype _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369345545
+// LIFERAY-SERVICE-BUILDER-HASH:152259763

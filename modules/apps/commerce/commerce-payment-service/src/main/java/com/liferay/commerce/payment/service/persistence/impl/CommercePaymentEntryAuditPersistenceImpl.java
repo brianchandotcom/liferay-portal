@@ -448,18 +448,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryAuditImpl.class,
-					CommercePaymentEntryAudit.class,
-					"commercePaymentEntryAudit", "CommercePaymentEntryAudit",
-					"commercePaymentEntryAudit.commercePaymentEntryAuditId",
-					"SELECT DISTINCT {commercePaymentEntryAudit.*} FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					"SELECT {CommercePaymentEntryAudit.*} FROM (SELECT DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntryAudit ON TEMP_TABLE.commercePaymentEntryAuditId = CommercePaymentEntryAudit.commercePaymentEntryAuditId",
-					"SELECT COUNT(DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId) AS COUNT_VALUE FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					CommercePaymentEntryAuditModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryAuditModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntryAudit.", "commercePaymentEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -528,4 +516,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160756245
+// LIFERAY-SERVICE-BUILDER-HASH:-1999422423

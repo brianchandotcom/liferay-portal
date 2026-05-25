@@ -111,6 +111,8 @@ public class AnnouncementsEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "announcementsEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME = "entryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY announcementsEntry.priority ASC, announcementsEntry.modifiedDate ASC";
 
@@ -1376,4 +1378,4 @@ public class AnnouncementsEntryModelImpl
 	private AnnouncementsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:920733283
+// LIFERAY-SERVICE-BUILDER-HASH:1052921415

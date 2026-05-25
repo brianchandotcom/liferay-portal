@@ -1450,15 +1450,6 @@ public class KBFolderPersistenceImpl
 					new String[] {"groupId", "parentKBFolderId"}, false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
 				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBFolderImpl.class, KBFolder.class, "kbFolder", "KBFolder",
-					"kbFolder.kbFolderId",
-					"SELECT DISTINCT {kbFolder.*} FROM KBFolder kbFolder WHERE ",
-					"SELECT {KBFolder.*} FROM (SELECT DISTINCT kbFolder.kbFolderId FROM KBFolder kbFolder WHERE ",
-					") TEMP_TABLE INNER JOIN KBFolder ON TEMP_TABLE.kbFolderId = KBFolder.kbFolderId",
-					"SELECT COUNT(DISTINCT kbFolder.kbFolderId) AS COUNT_VALUE FROM KBFolder kbFolder WHERE ",
-					KBFolderModelImpl.ORDER_BY_SQL,
-					KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getGroupId),
@@ -1541,15 +1532,6 @@ public class KBFolderPersistenceImpl
 					false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
 				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBFolderImpl.class, KBFolder.class, "kbFolder", "KBFolder",
-					"kbFolder.kbFolderId",
-					"SELECT DISTINCT {kbFolder.*} FROM KBFolder kbFolder WHERE ",
-					"SELECT {KBFolder.*} FROM (SELECT DISTINCT kbFolder.kbFolderId FROM KBFolder kbFolder WHERE ",
-					") TEMP_TABLE INNER JOIN KBFolder ON TEMP_TABLE.kbFolderId = KBFolder.kbFolderId",
-					"SELECT COUNT(DISTINCT kbFolder.kbFolderId) AS COUNT_VALUE FROM KBFolder kbFolder WHERE ",
-					KBFolderModelImpl.ORDER_BY_SQL,
-					KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getGroupId),
@@ -1648,4 +1630,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-470323255
+// LIFERAY-SERVICE-BUILDER-HASH:-1358294223

@@ -3080,15 +3080,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, Organization::getUuid));
@@ -3114,15 +3105,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, Organization::getUuid),
@@ -3151,15 +3133,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId));
@@ -3189,15 +3162,6 @@ public class OrganizationPersistenceImpl
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"organization.parentOrganizationId != 0",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId));
@@ -3223,15 +3187,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"logoId"}, false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "logoId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getLogoId));
@@ -3257,15 +3212,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"companyId", "parentOrganizationId"}, false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId),
@@ -3292,15 +3238,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"companyId", "treePath"}, false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId),
@@ -3342,15 +3279,6 @@ public class OrganizationPersistenceImpl
 					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId),
@@ -3386,15 +3314,6 @@ public class OrganizationPersistenceImpl
 					false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "organizationId", FinderColumn.Type.LONG,
 					">", true, true, Organization::getOrganizationId),
@@ -3430,15 +3349,6 @@ public class OrganizationPersistenceImpl
 					false),
 				_SQL_SELECT_ORGANIZATION_WHERE, _SQL_COUNT_ORGANIZATION_WHERE,
 				OrganizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OrganizationImpl.class, Organization.class, "organization",
-					"Organization_", "organization.organizationId",
-					"SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ",
-					"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ",
-					") TEMP_TABLE INNER JOIN Organization_ ON TEMP_TABLE.organizationId = Organization_.organizationId",
-					"SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ",
-					OrganizationModelImpl.ORDER_BY_SQL,
-					OrganizationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"organization.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Organization::getCompanyId),
@@ -3519,4 +3429,4 @@ public class OrganizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2057990335
+// LIFERAY-SERVICE-BUILDER-HASH:-280037341

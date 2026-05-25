@@ -108,6 +108,8 @@ public class OAuthClientEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "oAuthClientEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME = "oAuthClientEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuthClientEntry.oAuthClientEntryId ASC";
 
@@ -1362,4 +1364,4 @@ public class OAuthClientEntryModelImpl
 	private OAuthClientEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1071379799
+// LIFERAY-SERVICE-BUILDER-HASH:1372120665

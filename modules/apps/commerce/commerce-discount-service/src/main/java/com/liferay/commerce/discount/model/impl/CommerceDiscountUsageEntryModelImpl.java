@@ -920,4 +920,4 @@ public class CommerceDiscountUsageEntryModelImpl
 	private CommerceDiscountUsageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550745085
+// LIFERAY-SERVICE-BUILDER-HASH:25569997

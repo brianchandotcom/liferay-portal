@@ -886,16 +886,6 @@ public class ListTypeDefinitionPersistenceImpl
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					"listTypeDefinition", "ListTypeDefinition",
-					"listTypeDefinition.listTypeDefinitionId",
-					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
-					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
-					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"listTypeDefinition.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ListTypeDefinition::getUuid));
@@ -923,16 +913,6 @@ public class ListTypeDefinitionPersistenceImpl
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					"listTypeDefinition", "ListTypeDefinition",
-					"listTypeDefinition.listTypeDefinitionId",
-					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
-					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
-					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"listTypeDefinition.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ListTypeDefinition::getUuid),
@@ -963,16 +943,6 @@ public class ListTypeDefinitionPersistenceImpl
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					"listTypeDefinition", "ListTypeDefinition",
-					"listTypeDefinition.listTypeDefinitionId",
-					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
-					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
-					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
-					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"listTypeDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ListTypeDefinition::getCompanyId),
@@ -1068,4 +1038,4 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-242499217
+// LIFERAY-SERVICE-BUILDER-HASH:-634539057

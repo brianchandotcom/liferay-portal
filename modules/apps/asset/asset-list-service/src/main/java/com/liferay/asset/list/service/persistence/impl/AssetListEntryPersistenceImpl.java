@@ -3392,16 +3392,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId));
@@ -3458,16 +3448,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3501,16 +3481,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetListEntry::getGroupId),
@@ -3542,16 +3512,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3584,16 +3544,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3644,16 +3594,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3699,16 +3639,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3813,4 +3743,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1873463488
+// LIFERAY-SERVICE-BUILDER-HASH:-1449274318

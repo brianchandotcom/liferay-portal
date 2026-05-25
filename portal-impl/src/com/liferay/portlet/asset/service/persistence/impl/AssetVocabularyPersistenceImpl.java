@@ -1770,16 +1770,6 @@ public class AssetVocabularyPersistenceImpl
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetVocabularyImpl.class, AssetVocabulary.class,
-					"assetVocabulary", "AssetVocabulary",
-					"assetVocabulary.vocabularyId",
-					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
-					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
-					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
-					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
-					AssetVocabularyModelImpl.ORDER_BY_SQL,
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetVocabulary::getGroupId));
@@ -1847,16 +1837,6 @@ public class AssetVocabularyPersistenceImpl
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetVocabularyImpl.class, AssetVocabulary.class,
-					"assetVocabulary", "AssetVocabulary",
-					"assetVocabulary.vocabularyId",
-					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
-					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
-					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
-					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
-					AssetVocabularyModelImpl.ORDER_BY_SQL,
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetVocabulary::getGroupId),
@@ -1891,16 +1871,6 @@ public class AssetVocabularyPersistenceImpl
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetVocabularyImpl.class, AssetVocabulary.class,
-					"assetVocabulary", "AssetVocabulary",
-					"assetVocabulary.vocabularyId",
-					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
-					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
-					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
-					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
-					AssetVocabularyModelImpl.ORDER_BY_SQL,
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetVocabulary::getGroupId),
@@ -1962,4 +1932,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1858964535
+// LIFERAY-SERVICE-BUILDER-HASH:-1424068449

@@ -1314,4 +1314,4 @@ public class SharingEntryModelImpl
 	private SharingEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1550076437
+// LIFERAY-SERVICE-BUILDER-HASH:-480170587

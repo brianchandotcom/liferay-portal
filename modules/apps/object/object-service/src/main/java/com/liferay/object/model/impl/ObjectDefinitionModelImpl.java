@@ -156,6 +156,8 @@ public class ObjectDefinitionModelImpl
 
 	public static final String ENTITY_ALIAS = "objectDefinition";
 
+	public static final String FILTER_PK_COLUMN_NAME = "objectDefinitionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectDefinition.name ASC";
 
@@ -2689,4 +2691,4 @@ public class ObjectDefinitionModelImpl
 	private ObjectDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:453700389
+// LIFERAY-SERVICE-BUILDER-HASH:-2111085837

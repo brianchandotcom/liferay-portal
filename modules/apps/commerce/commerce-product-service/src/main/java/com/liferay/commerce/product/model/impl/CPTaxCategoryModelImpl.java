@@ -105,6 +105,8 @@ public class CPTaxCategoryModelImpl
 
 	public static final String ENTITY_ALIAS = "cpTaxCategory";
 
+	public static final String FILTER_PK_COLUMN_NAME = "CPTaxCategoryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpTaxCategory.createDate DESC";
 
@@ -1295,4 +1297,4 @@ public class CPTaxCategoryModelImpl
 	private CPTaxCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-446833846
+// LIFERAY-SERVICE-BUILDER-HASH:-1582134986

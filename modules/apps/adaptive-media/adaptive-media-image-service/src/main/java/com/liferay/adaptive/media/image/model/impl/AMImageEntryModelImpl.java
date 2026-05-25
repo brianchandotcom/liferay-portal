@@ -984,4 +984,4 @@ public class AMImageEntryModelImpl
 	private AMImageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-456890274
+// LIFERAY-SERVICE-BUILDER-HASH:836837586

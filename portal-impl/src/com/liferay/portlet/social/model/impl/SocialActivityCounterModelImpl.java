@@ -1115,4 +1115,4 @@ public class SocialActivityCounterModelImpl
 	private SocialActivityCounter _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:649890896
+// LIFERAY-SERVICE-BUILDER-HASH:1050351150

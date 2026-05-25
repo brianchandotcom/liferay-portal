@@ -122,6 +122,8 @@ public class DDLRecordSetModelImpl
 
 	public static final String ENTITY_ALIAS = "ddlRecordSet";
 
+	public static final String FILTER_PK_COLUMN_NAME = "recordSetId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddlRecordSet.recordSetId ASC";
 
@@ -1713,4 +1715,4 @@ public class DDLRecordSetModelImpl
 	private DDLRecordSet _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-189655683
+// LIFERAY-SERVICE-BUILDER-HASH:-148290140

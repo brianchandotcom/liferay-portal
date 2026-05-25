@@ -870,15 +870,6 @@ public class DefinitionPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DefinitionImpl.class, Definition.class, "definition",
-					"Reports_Definition", "definition.definitionId",
-					"SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ",
-					"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ",
-					") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId",
-					"SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ",
-					DefinitionModelImpl.ORDER_BY_SQL,
-					DefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Definition::getGroupId));
@@ -977,4 +968,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-862966520
+// LIFERAY-SERVICE-BUILDER-HASH:-1967690984

@@ -936,15 +936,6 @@ public class ObjectFolderPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTFOLDER_WHERE, _SQL_COUNT_OBJECTFOLDER_WHERE,
 				ObjectFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectFolderImpl.class, ObjectFolder.class, "objectFolder",
-					"ObjectFolder", "objectFolder.objectFolderId",
-					"SELECT DISTINCT {objectFolder.*} FROM ObjectFolder objectFolder WHERE ",
-					"SELECT {ObjectFolder.*} FROM (SELECT DISTINCT objectFolder.objectFolderId FROM ObjectFolder objectFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectFolder ON TEMP_TABLE.objectFolderId = ObjectFolder.objectFolderId",
-					"SELECT COUNT(DISTINCT objectFolder.objectFolderId) AS COUNT_VALUE FROM ObjectFolder objectFolder WHERE ",
-					ObjectFolderModelImpl.ORDER_BY_SQL,
-					ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectFolder.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectFolder::getUuid));
@@ -970,15 +961,6 @@ public class ObjectFolderPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTFOLDER_WHERE, _SQL_COUNT_OBJECTFOLDER_WHERE,
 				ObjectFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectFolderImpl.class, ObjectFolder.class, "objectFolder",
-					"ObjectFolder", "objectFolder.objectFolderId",
-					"SELECT DISTINCT {objectFolder.*} FROM ObjectFolder objectFolder WHERE ",
-					"SELECT {ObjectFolder.*} FROM (SELECT DISTINCT objectFolder.objectFolderId FROM ObjectFolder objectFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectFolder ON TEMP_TABLE.objectFolderId = ObjectFolder.objectFolderId",
-					"SELECT COUNT(DISTINCT objectFolder.objectFolderId) AS COUNT_VALUE FROM ObjectFolder objectFolder WHERE ",
-					ObjectFolderModelImpl.ORDER_BY_SQL,
-					ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectFolder.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectFolder::getUuid),
@@ -1007,15 +989,6 @@ public class ObjectFolderPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_OBJECTFOLDER_WHERE, _SQL_COUNT_OBJECTFOLDER_WHERE,
 				ObjectFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectFolderImpl.class, ObjectFolder.class, "objectFolder",
-					"ObjectFolder", "objectFolder.objectFolderId",
-					"SELECT DISTINCT {objectFolder.*} FROM ObjectFolder objectFolder WHERE ",
-					"SELECT {ObjectFolder.*} FROM (SELECT DISTINCT objectFolder.objectFolderId FROM ObjectFolder objectFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectFolder ON TEMP_TABLE.objectFolderId = ObjectFolder.objectFolderId",
-					"SELECT COUNT(DISTINCT objectFolder.objectFolderId) AS COUNT_VALUE FROM ObjectFolder objectFolder WHERE ",
-					ObjectFolderModelImpl.ORDER_BY_SQL,
-					ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectFolder.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectFolder::getCompanyId));
@@ -1123,4 +1096,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-970662954
+// LIFERAY-SERVICE-BUILDER-HASH:874988154

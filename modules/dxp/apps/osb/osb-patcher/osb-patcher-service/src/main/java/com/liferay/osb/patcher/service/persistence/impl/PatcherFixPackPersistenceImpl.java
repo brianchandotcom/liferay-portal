@@ -2154,16 +2154,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2191,16 +2181,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, PatcherFixPack::getVersion));
@@ -2238,16 +2218,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2283,16 +2253,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2344,16 +2304,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2395,16 +2345,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2450,16 +2390,6 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixPackImpl.class, PatcherFixPack.class,
-					"patcherFixPack", "OSBPatcher_PatcherFixPack",
-					"patcherFixPack.patcherFixPackId",
-					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
-					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
-					PatcherFixPackModelImpl.ORDER_BY_SQL,
-					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2576,4 +2506,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2028945424
+// LIFERAY-SERVICE-BUILDER-HASH:-1633137060

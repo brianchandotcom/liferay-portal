@@ -1042,18 +1042,6 @@ public class PatcherProjectVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPROJECTVERSION_WHERE,
 				PatcherProjectVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherProjectVersionImpl.class,
-					PatcherProjectVersion.class, "patcherProjectVersion",
-					"OSBPatcher_PProjectVersion",
-					"patcherProjectVersion.patcherProjectVersionId",
-					"SELECT DISTINCT {patcherProjectVersion.*} FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					"SELECT {OSBPatcher_PProjectVersion.*} FROM (SELECT DISTINCT patcherProjectVersion.patcherProjectVersionId FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PProjectVersion ON TEMP_TABLE.patcherProjectVersionId = OSBPatcher_PProjectVersion.patcherProjectVersionId",
-					"SELECT COUNT(DISTINCT patcherProjectVersion.patcherProjectVersionId) AS COUNT_VALUE FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					PatcherProjectVersionModelImpl.ORDER_BY_SQL,
-					PatcherProjectVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProjectVersion.", "patcherProductVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1085,18 +1073,6 @@ public class PatcherProjectVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPROJECTVERSION_WHERE,
 				PatcherProjectVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherProjectVersionImpl.class,
-					PatcherProjectVersion.class, "patcherProjectVersion",
-					"OSBPatcher_PProjectVersion",
-					"patcherProjectVersion.patcherProjectVersionId",
-					"SELECT DISTINCT {patcherProjectVersion.*} FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					"SELECT {OSBPatcher_PProjectVersion.*} FROM (SELECT DISTINCT patcherProjectVersion.patcherProjectVersionId FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PProjectVersion ON TEMP_TABLE.patcherProjectVersionId = OSBPatcher_PProjectVersion.patcherProjectVersionId",
-					"SELECT COUNT(DISTINCT patcherProjectVersion.patcherProjectVersionId) AS COUNT_VALUE FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					PatcherProjectVersionModelImpl.ORDER_BY_SQL,
-					PatcherProjectVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProjectVersion.", "rootPatcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1158,18 +1134,6 @@ public class PatcherProjectVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPROJECTVERSION_WHERE,
 				PatcherProjectVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherProjectVersionImpl.class,
-					PatcherProjectVersion.class, "patcherProjectVersion",
-					"OSBPatcher_PProjectVersion",
-					"patcherProjectVersion.patcherProjectVersionId",
-					"SELECT DISTINCT {patcherProjectVersion.*} FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					"SELECT {OSBPatcher_PProjectVersion.*} FROM (SELECT DISTINCT patcherProjectVersion.patcherProjectVersionId FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PProjectVersion ON TEMP_TABLE.patcherProjectVersionId = OSBPatcher_PProjectVersion.patcherProjectVersionId",
-					"SELECT COUNT(DISTINCT patcherProjectVersion.patcherProjectVersionId) AS COUNT_VALUE FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					PatcherProjectVersionModelImpl.ORDER_BY_SQL,
-					PatcherProjectVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProjectVersion.", "patcherProductVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1205,18 +1169,6 @@ public class PatcherProjectVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPROJECTVERSION_WHERE,
 				PatcherProjectVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherProjectVersionImpl.class,
-					PatcherProjectVersion.class, "patcherProjectVersion",
-					"OSBPatcher_PProjectVersion",
-					"patcherProjectVersion.patcherProjectVersionId",
-					"SELECT DISTINCT {patcherProjectVersion.*} FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					"SELECT {OSBPatcher_PProjectVersion.*} FROM (SELECT DISTINCT patcherProjectVersion.patcherProjectVersionId FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PProjectVersion ON TEMP_TABLE.patcherProjectVersionId = OSBPatcher_PProjectVersion.patcherProjectVersionId",
-					"SELECT COUNT(DISTINCT patcherProjectVersion.patcherProjectVersionId) AS COUNT_VALUE FROM OSBPatcher_PProjectVersion patcherProjectVersion WHERE ",
-					PatcherProjectVersionModelImpl.ORDER_BY_SQL,
-					PatcherProjectVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProjectVersion.", "patcherProductVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1292,4 +1244,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-738097266
+// LIFERAY-SERVICE-BUILDER-HASH:-1750729424

@@ -1038,16 +1038,6 @@ public class CPOptionCategoryPersistenceImpl
 				_SQL_COUNT_CPOPTIONCATEGORY_WHERE,
 				CPOptionCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPOptionCategoryImpl.class, CPOptionCategory.class,
-					"cpOptionCategory", "CPOptionCategory",
-					"cpOptionCategory.CPOptionCategoryId",
-					"SELECT DISTINCT {cpOptionCategory.*} FROM CPOptionCategory cpOptionCategory WHERE ",
-					"SELECT {CPOptionCategory.*} FROM (SELECT DISTINCT cpOptionCategory.CPOptionCategoryId FROM CPOptionCategory cpOptionCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPOptionCategory ON TEMP_TABLE.CPOptionCategoryId = CPOptionCategory.CPOptionCategoryId",
-					"SELECT COUNT(DISTINCT cpOptionCategory.CPOptionCategoryId) AS COUNT_VALUE FROM CPOptionCategory cpOptionCategory WHERE ",
-					CPOptionCategoryModelImpl.ORDER_BY_SQL,
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpOptionCategory.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CPOptionCategory::getUuid));
@@ -1075,16 +1065,6 @@ public class CPOptionCategoryPersistenceImpl
 				_SQL_COUNT_CPOPTIONCATEGORY_WHERE,
 				CPOptionCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPOptionCategoryImpl.class, CPOptionCategory.class,
-					"cpOptionCategory", "CPOptionCategory",
-					"cpOptionCategory.CPOptionCategoryId",
-					"SELECT DISTINCT {cpOptionCategory.*} FROM CPOptionCategory cpOptionCategory WHERE ",
-					"SELECT {CPOptionCategory.*} FROM (SELECT DISTINCT cpOptionCategory.CPOptionCategoryId FROM CPOptionCategory cpOptionCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPOptionCategory ON TEMP_TABLE.CPOptionCategoryId = CPOptionCategory.CPOptionCategoryId",
-					"SELECT COUNT(DISTINCT cpOptionCategory.CPOptionCategoryId) AS COUNT_VALUE FROM CPOptionCategory cpOptionCategory WHERE ",
-					CPOptionCategoryModelImpl.ORDER_BY_SQL,
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpOptionCategory.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CPOptionCategory::getUuid),
@@ -1115,16 +1095,6 @@ public class CPOptionCategoryPersistenceImpl
 				_SQL_COUNT_CPOPTIONCATEGORY_WHERE,
 				CPOptionCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPOptionCategoryImpl.class, CPOptionCategory.class,
-					"cpOptionCategory", "CPOptionCategory",
-					"cpOptionCategory.CPOptionCategoryId",
-					"SELECT DISTINCT {cpOptionCategory.*} FROM CPOptionCategory cpOptionCategory WHERE ",
-					"SELECT {CPOptionCategory.*} FROM (SELECT DISTINCT cpOptionCategory.CPOptionCategoryId FROM CPOptionCategory cpOptionCategory WHERE ",
-					") TEMP_TABLE INNER JOIN CPOptionCategory ON TEMP_TABLE.CPOptionCategoryId = CPOptionCategory.CPOptionCategoryId",
-					"SELECT COUNT(DISTINCT cpOptionCategory.CPOptionCategoryId) AS COUNT_VALUE FROM CPOptionCategory cpOptionCategory WHERE ",
-					CPOptionCategoryModelImpl.ORDER_BY_SQL,
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpOptionCategory.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPOptionCategory::getCompanyId));
@@ -1235,4 +1205,4 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014952803
+// LIFERAY-SERVICE-BUILDER-HASH:337058963

@@ -112,6 +112,8 @@ public class DispatchTriggerModelImpl
 
 	public static final String ENTITY_ALIAS = "dispatchTrigger";
 
+	public static final String FILTER_PK_COLUMN_NAME = "dispatchTriggerId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dispatchTrigger.modifiedDate DESC";
 
@@ -1438,4 +1440,4 @@ public class DispatchTriggerModelImpl
 	private DispatchTrigger _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1972326308
+// LIFERAY-SERVICE-BUILDER-HASH:1242782378

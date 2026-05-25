@@ -2906,16 +2906,6 @@ public class AssetCategoryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getGroupId));
@@ -2996,16 +2986,6 @@ public class AssetCategoryPersistenceImpl
 					new String[] {"groupId", "parentCategoryId"}, false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getGroupId),
@@ -3035,16 +3015,6 @@ public class AssetCategoryPersistenceImpl
 					new String[] {"groupId", "vocabularyId"}, false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetCategory::getGroupId),
@@ -3170,16 +3140,6 @@ public class AssetCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getGroupId),
@@ -3214,16 +3174,6 @@ public class AssetCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getGroupId),
@@ -3256,16 +3206,6 @@ public class AssetCategoryPersistenceImpl
 					new String[] {"groupId", "name", "vocabularyId"}, false),
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetCategoryImpl.class, AssetCategory.class,
-					"assetCategory", "AssetCategory",
-					"assetCategory.categoryId",
-					"SELECT DISTINCT {assetCategory.*} FROM AssetCategory assetCategory WHERE ",
-					"SELECT {AssetCategory.*} FROM (SELECT DISTINCT assetCategory.categoryId FROM AssetCategory assetCategory WHERE ",
-					") TEMP_TABLE INNER JOIN AssetCategory ON TEMP_TABLE.categoryId = AssetCategory.categoryId",
-					"SELECT COUNT(DISTINCT assetCategory.categoryId) AS COUNT_VALUE FROM AssetCategory assetCategory WHERE ",
-					AssetCategoryModelImpl.ORDER_BY_SQL,
-					AssetCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetCategory::getGroupId),
@@ -3352,4 +3292,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-992578739
+// LIFERAY-SERVICE-BUILDER-HASH:435048431

@@ -2801,15 +2801,6 @@ public class RolePersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					Role::getUuid));
@@ -2835,15 +2826,6 @@ public class RolePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					Role::getUuid),
@@ -2872,15 +2854,6 @@ public class RolePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
@@ -2906,15 +2879,6 @@ public class RolePersistenceImpl
 					new String[] {"name"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "name", FinderColumn.Type.STRING, "=", true, true,
 					Role::getName));
@@ -2940,15 +2904,6 @@ public class RolePersistenceImpl
 					new String[] {"type_"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
 					true, Role::getType));
@@ -2974,15 +2929,6 @@ public class RolePersistenceImpl
 					new String[] {"subtype"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
@@ -3027,15 +2973,6 @@ public class RolePersistenceImpl
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -3068,15 +3005,6 @@ public class RolePersistenceImpl
 					new String[] {"type_", "subtype"}, 0, 2, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
 					true, Role::getType),
@@ -3113,15 +3041,6 @@ public class RolePersistenceImpl
 					false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -3191,15 +3110,6 @@ public class RolePersistenceImpl
 					false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
-					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -3305,4 +3215,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:450760394
+// LIFERAY-SERVICE-BUILDER-HASH:680816896

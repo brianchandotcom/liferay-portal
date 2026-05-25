@@ -886,15 +886,6 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
-					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
-					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
-					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
-					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
-					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
-					SXPBlueprintModelImpl.ORDER_BY_SQL,
-					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, SXPBlueprint::getUuid));
@@ -920,15 +911,6 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
-					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
-					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
-					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
-					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
-					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
-					SXPBlueprintModelImpl.ORDER_BY_SQL,
-					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, SXPBlueprint::getUuid),
@@ -957,15 +939,6 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
-					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
-					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
-					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
-					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
-					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
-					SXPBlueprintModelImpl.ORDER_BY_SQL,
-					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
@@ -1057,4 +1030,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1294925113
+// LIFERAY-SERVICE-BUILDER-HASH:636123597

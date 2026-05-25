@@ -764,4 +764,4 @@ public class CountryLocalizationModelImpl
 	private CountryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:697222205
+// LIFERAY-SERVICE-BUILDER-HASH:-1269840959

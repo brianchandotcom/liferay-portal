@@ -101,6 +101,8 @@ public class AccountGroupModelImpl
 
 	public static final String ENTITY_ALIAS = "accountGroup";
 
+	public static final String FILTER_PK_COLUMN_NAME = "accountGroupId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountGroup.accountGroupId ASC";
 
@@ -1144,4 +1146,4 @@ public class AccountGroupModelImpl
 	private AccountGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1935053354
+// LIFERAY-SERVICE-BUILDER-HASH:-539892696

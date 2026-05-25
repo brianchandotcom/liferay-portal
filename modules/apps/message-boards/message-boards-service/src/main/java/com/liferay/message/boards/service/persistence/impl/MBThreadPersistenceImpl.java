@@ -3094,15 +3094,6 @@ public class MBThreadPersistenceImpl
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbThread.categoryId != -1",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId));
@@ -3140,15 +3131,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3174,15 +3156,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3216,15 +3189,6 @@ public class MBThreadPersistenceImpl
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbThread.categoryId != -1",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3318,15 +3282,6 @@ public class MBThreadPersistenceImpl
 					false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3365,15 +3320,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3406,15 +3352,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3447,15 +3384,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3489,15 +3417,6 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
-					"mbThread.threadId",
-					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
-					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
-					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
-					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
-					MBThreadModelImpl.ORDER_BY_SQL,
-					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3580,4 +3499,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-377551434
+// LIFERAY-SERVICE-BUILDER-HASH:-1177063223

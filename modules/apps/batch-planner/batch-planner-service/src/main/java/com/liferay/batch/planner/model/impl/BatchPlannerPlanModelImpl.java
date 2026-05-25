@@ -105,6 +105,8 @@ public class BatchPlannerPlanModelImpl
 
 	public static final String ENTITY_ALIAS = "batchPlannerPlan";
 
+	public static final String FILTER_PK_COLUMN_NAME = "batchPlannerPlanId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY batchPlannerPlan.modifiedDate DESC";
 
@@ -1269,4 +1271,4 @@ public class BatchPlannerPlanModelImpl
 	private BatchPlannerPlan _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:619485000
+// LIFERAY-SERVICE-BUILDER-HASH:-1770750681

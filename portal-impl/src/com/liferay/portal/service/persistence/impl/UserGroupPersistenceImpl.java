@@ -2636,15 +2636,6 @@ public class UserGroupPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, UserGroup::getUuid));
@@ -2670,15 +2661,6 @@ public class UserGroupPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, UserGroup::getUuid),
@@ -2707,15 +2689,6 @@ public class UserGroupPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId));
@@ -2741,15 +2714,6 @@ public class UserGroupPersistenceImpl
 					new String[] {"companyId", "parentUserGroupId"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId),
@@ -2791,15 +2755,6 @@ public class UserGroupPersistenceImpl
 					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId),
@@ -2835,15 +2790,6 @@ public class UserGroupPersistenceImpl
 					false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, "userGroup",
-					"UserGroup", "userGroup.userGroupId",
-					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
-					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
-					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
-					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
-					UserGroupModelImpl.ORDER_BY_SQL,
-					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "userGroupId", FinderColumn.Type.LONG, ">",
 					true, true, UserGroup::getUserGroupId),
@@ -2928,4 +2874,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1144137114
+// LIFERAY-SERVICE-BUILDER-HASH:5842970

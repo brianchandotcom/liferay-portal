@@ -1023,15 +1023,6 @@ public class CalendarPersistenceImpl
 					new String[] {"groupId", "calendarResourceId"}, false),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
 				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarImpl.class, Calendar.class, "calendar", "Calendar",
-					"calendar.calendarId",
-					"SELECT DISTINCT {calendar.*} FROM Calendar calendar WHERE ",
-					"SELECT {Calendar.*} FROM (SELECT DISTINCT calendar.calendarId FROM Calendar calendar WHERE ",
-					") TEMP_TABLE INNER JOIN Calendar ON TEMP_TABLE.calendarId = Calendar.calendarId",
-					"SELECT COUNT(DISTINCT calendar.calendarId) AS COUNT_VALUE FROM Calendar calendar WHERE ",
-					CalendarModelImpl.ORDER_BY_SQL,
-					CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendar.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Calendar::getGroupId),
@@ -1076,15 +1067,6 @@ public class CalendarPersistenceImpl
 					false),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
 				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarImpl.class, Calendar.class, "calendar", "Calendar",
-					"calendar.calendarId",
-					"SELECT DISTINCT {calendar.*} FROM Calendar calendar WHERE ",
-					"SELECT {Calendar.*} FROM (SELECT DISTINCT calendar.calendarId FROM Calendar calendar WHERE ",
-					") TEMP_TABLE INNER JOIN Calendar ON TEMP_TABLE.calendarId = Calendar.calendarId",
-					"SELECT COUNT(DISTINCT calendar.calendarId) AS COUNT_VALUE FROM Calendar calendar WHERE ",
-					CalendarModelImpl.ORDER_BY_SQL,
-					CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendar.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Calendar::getGroupId),
@@ -1167,4 +1149,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2519415
+// LIFERAY-SERVICE-BUILDER-HASH:452768375

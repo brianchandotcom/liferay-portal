@@ -990,4 +990,4 @@ public class ObjectFolderItemModelImpl
 	private ObjectFolderItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1402792699
+// LIFERAY-SERVICE-BUILDER-HASH:-568845907

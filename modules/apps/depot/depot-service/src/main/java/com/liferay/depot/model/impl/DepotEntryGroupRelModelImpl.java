@@ -1227,4 +1227,4 @@ public class DepotEntryGroupRelModelImpl
 	private DepotEntryGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2009431194
+// LIFERAY-SERVICE-BUILDER-HASH:-1188176834

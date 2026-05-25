@@ -1160,4 +1160,4 @@ public class CSDiagramEntryModelImpl
 	private CSDiagramEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1267136136
+// LIFERAY-SERVICE-BUILDER-HASH:1435688288

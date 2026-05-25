@@ -1493,16 +1493,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId));
@@ -1530,16 +1520,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1575,16 +1555,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1679,4 +1649,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1091231279
+// LIFERAY-SERVICE-BUILDER-HASH:-464107211

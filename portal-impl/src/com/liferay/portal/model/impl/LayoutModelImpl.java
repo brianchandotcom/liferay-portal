@@ -157,6 +157,8 @@ public class LayoutModelImpl
 
 	public static final String ENTITY_ALIAS = "layout";
 
+	public static final String FILTER_PK_COLUMN_NAME = "plid";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 
@@ -3308,4 +3310,4 @@ public class LayoutModelImpl
 	private Layout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1091409911
+// LIFERAY-SERVICE-BUILDER-HASH:-648258715

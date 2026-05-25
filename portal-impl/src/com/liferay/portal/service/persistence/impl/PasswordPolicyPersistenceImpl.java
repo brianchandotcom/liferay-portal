@@ -784,16 +784,6 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PasswordPolicyImpl.class, PasswordPolicy.class,
-					"passwordPolicy", "PasswordPolicy",
-					"passwordPolicy.passwordPolicyId",
-					"SELECT DISTINCT {passwordPolicy.*} FROM PasswordPolicy passwordPolicy WHERE ",
-					"SELECT {PasswordPolicy.*} FROM (SELECT DISTINCT passwordPolicy.passwordPolicyId FROM PasswordPolicy passwordPolicy WHERE ",
-					") TEMP_TABLE INNER JOIN PasswordPolicy ON TEMP_TABLE.passwordPolicyId = PasswordPolicy.passwordPolicyId",
-					"SELECT COUNT(DISTINCT passwordPolicy.passwordPolicyId) AS COUNT_VALUE FROM PasswordPolicy passwordPolicy WHERE ",
-					PasswordPolicyModelImpl.ORDER_BY_SQL,
-					PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"passwordPolicy.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, PasswordPolicy::getUuid));
@@ -820,16 +810,6 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PasswordPolicyImpl.class, PasswordPolicy.class,
-					"passwordPolicy", "PasswordPolicy",
-					"passwordPolicy.passwordPolicyId",
-					"SELECT DISTINCT {passwordPolicy.*} FROM PasswordPolicy passwordPolicy WHERE ",
-					"SELECT {PasswordPolicy.*} FROM (SELECT DISTINCT passwordPolicy.passwordPolicyId FROM PasswordPolicy passwordPolicy WHERE ",
-					") TEMP_TABLE INNER JOIN PasswordPolicy ON TEMP_TABLE.passwordPolicyId = PasswordPolicy.passwordPolicyId",
-					"SELECT COUNT(DISTINCT passwordPolicy.passwordPolicyId) AS COUNT_VALUE FROM PasswordPolicy passwordPolicy WHERE ",
-					PasswordPolicyModelImpl.ORDER_BY_SQL,
-					PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"passwordPolicy.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, PasswordPolicy::getUuid),
@@ -859,16 +839,6 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PasswordPolicyImpl.class, PasswordPolicy.class,
-					"passwordPolicy", "PasswordPolicy",
-					"passwordPolicy.passwordPolicyId",
-					"SELECT DISTINCT {passwordPolicy.*} FROM PasswordPolicy passwordPolicy WHERE ",
-					"SELECT {PasswordPolicy.*} FROM (SELECT DISTINCT passwordPolicy.passwordPolicyId FROM PasswordPolicy passwordPolicy WHERE ",
-					") TEMP_TABLE INNER JOIN PasswordPolicy ON TEMP_TABLE.passwordPolicyId = PasswordPolicy.passwordPolicyId",
-					"SELECT COUNT(DISTINCT passwordPolicy.passwordPolicyId) AS COUNT_VALUE FROM PasswordPolicy passwordPolicy WHERE ",
-					PasswordPolicyModelImpl.ORDER_BY_SQL,
-					PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"passwordPolicy.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PasswordPolicy::getCompanyId));
@@ -925,4 +895,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1000812834
+// LIFERAY-SERVICE-BUILDER-HASH:1446991418

@@ -1782,15 +1782,6 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPDefinitionImpl.class, CPDefinition.class, "cpDefinition",
-					"CPDefinition", "cpDefinition.CPDefinitionId",
-					"SELECT DISTINCT {cpDefinition.*} FROM CPDefinition cpDefinition WHERE ",
-					"SELECT {CPDefinition.*} FROM (SELECT DISTINCT cpDefinition.CPDefinitionId FROM CPDefinition cpDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN CPDefinition ON TEMP_TABLE.CPDefinitionId = CPDefinition.CPDefinitionId",
-					"SELECT COUNT(DISTINCT cpDefinition.CPDefinitionId) AS COUNT_VALUE FROM CPDefinition cpDefinition WHERE ",
-					CPDefinitionModelImpl.ORDER_BY_SQL,
-					CPDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId));
@@ -1898,15 +1889,6 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId", "subscriptionEnabled"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPDefinitionImpl.class, CPDefinition.class, "cpDefinition",
-					"CPDefinition", "cpDefinition.CPDefinitionId",
-					"SELECT DISTINCT {cpDefinition.*} FROM CPDefinition cpDefinition WHERE ",
-					"SELECT {CPDefinition.*} FROM (SELECT DISTINCT cpDefinition.CPDefinitionId FROM CPDefinition cpDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN CPDefinition ON TEMP_TABLE.CPDefinitionId = CPDefinition.CPDefinitionId",
-					"SELECT COUNT(DISTINCT cpDefinition.CPDefinitionId) AS COUNT_VALUE FROM CPDefinition cpDefinition WHERE ",
-					CPDefinitionModelImpl.ORDER_BY_SQL,
-					CPDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId),
@@ -1940,15 +1922,6 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPDefinitionImpl.class, CPDefinition.class, "cpDefinition",
-					"CPDefinition", "cpDefinition.CPDefinitionId",
-					"SELECT DISTINCT {cpDefinition.*} FROM CPDefinition cpDefinition WHERE ",
-					"SELECT {CPDefinition.*} FROM (SELECT DISTINCT cpDefinition.CPDefinitionId FROM CPDefinition cpDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN CPDefinition ON TEMP_TABLE.CPDefinitionId = CPDefinition.CPDefinitionId",
-					"SELECT COUNT(DISTINCT cpDefinition.CPDefinitionId) AS COUNT_VALUE FROM CPDefinition cpDefinition WHERE ",
-					CPDefinitionModelImpl.ORDER_BY_SQL,
-					CPDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId),
@@ -2098,4 +2071,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-208546334
+// LIFERAY-SERVICE-BUILDER-HASH:-393448168

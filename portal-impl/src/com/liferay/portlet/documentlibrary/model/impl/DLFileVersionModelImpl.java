@@ -2077,4 +2077,4 @@ public class DLFileVersionModelImpl
 	private DLFileVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1289858316
+// LIFERAY-SERVICE-BUILDER-HASH:518624760

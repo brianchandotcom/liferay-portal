@@ -118,6 +118,8 @@ public class SegmentsExperienceModelImpl
 
 	public static final String ENTITY_ALIAS = "segmentsExperience";
 
+	public static final String FILTER_PK_COLUMN_NAME = "segmentsExperienceId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY segmentsExperience.priority DESC";
 
@@ -1621,4 +1623,4 @@ public class SegmentsExperienceModelImpl
 	private SegmentsExperience _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1429953386
+// LIFERAY-SERVICE-BUILDER-HASH:748499180

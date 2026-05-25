@@ -117,6 +117,8 @@ public class SXPElementModelImpl
 
 	public static final String ENTITY_ALIAS = "sxpElement";
 
+	public static final String FILTER_PK_COLUMN_NAME = "sxpElementId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sxpElement.sxpElementId ASC";
 
@@ -1641,4 +1643,4 @@ public class SXPElementModelImpl
 	private SXPElement _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:312049356
+// LIFERAY-SERVICE-BUILDER-HASH:-241071139

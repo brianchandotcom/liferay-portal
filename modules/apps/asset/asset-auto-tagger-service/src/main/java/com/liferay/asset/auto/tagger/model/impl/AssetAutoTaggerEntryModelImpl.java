@@ -823,4 +823,4 @@ public class AssetAutoTaggerEntryModelImpl
 	private AssetAutoTaggerEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:417138631
+// LIFERAY-SERVICE-BUILDER-HASH:779497843

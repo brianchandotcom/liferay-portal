@@ -162,7 +162,7 @@ public class CollaboratorDTOConverter
 			return null;
 		}
 
-		return ticket.getExtraInfo();
+		return ticket.getEmailAddress();
 	}
 
 	private Ticket _fetchTicket(SharingEntry sharingEntry) {

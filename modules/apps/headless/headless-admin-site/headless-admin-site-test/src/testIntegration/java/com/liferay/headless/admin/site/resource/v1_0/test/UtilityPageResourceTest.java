@@ -16,7 +16,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
-import com.liferay.headless.admin.site.resource.v1_0.test.util.BasicAuthorizationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
@@ -788,10 +787,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 				HttpURLConnection httpURLConnection =
 					(HttpURLConnection)url.openConnection();
-
-				httpURLConnection.setRequestProperty(
-					"Authorization",
-					BasicAuthorizationTestUtil.getBasicAuthorization());
 
 				Assert.assertEquals(
 					HttpURLConnection.HTTP_OK,

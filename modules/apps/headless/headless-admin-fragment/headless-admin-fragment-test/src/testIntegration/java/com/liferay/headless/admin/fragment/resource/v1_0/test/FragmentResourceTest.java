@@ -93,14 +93,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public static void setUpClass() throws Exception {
 		BaseFragmentResourceTestCase.setUpClass();
 
-		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
-
-		String credentials =
-			user.getEmailAddress() + StringPool.COLON +
-				PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-		_authorization = "Basic " + Base64.encode(credentials.getBytes());
-
 		_httpServer = HttpServer.create(
 			new InetSocketAddress("127.0.0.1", 0), 0);
 
@@ -526,8 +518,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestProperty("Authorization", _authorization);
 
 		Assert.assertEquals(
 			HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
@@ -1859,7 +1849,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		};
 	}
 
-	private static String _authorization;
 	private static HttpServer _httpServer;
 	private static String _thumbnail1Base64;
 	private static byte[] _thumbnail1Bytes;

@@ -78,20 +78,6 @@ public class ExportRequestSerDes {
 			sb.append("\"");
 		}
 
-		if (exportRequest.getFileName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(exportRequest.getFileName()));
-
-			sb.append("\"");
-		}
-
 		if (exportRequest.getLast() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -100,6 +86,20 @@ public class ExportRequestSerDes {
 			sb.append("\"last\": ");
 
 			sb.append(exportRequest.getLast());
+		}
+
+		if (exportRequest.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(exportRequest.getName()));
+
+			sb.append("\"");
 		}
 
 		if (exportRequest.getPermissions() != null) {
@@ -204,18 +204,18 @@ public class ExportRequestSerDes {
 				liferayToJSONDateFormat.format(exportRequest.getEndDate()));
 		}
 
-		if (exportRequest.getFileName() == null) {
-			map.put("fileName", null);
-		}
-		else {
-			map.put("fileName", String.valueOf(exportRequest.getFileName()));
-		}
-
 		if (exportRequest.getLast() == null) {
 			map.put("last", null);
 		}
 		else {
 			map.put("last", String.valueOf(exportRequest.getLast()));
+		}
+
+		if (exportRequest.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(exportRequest.getName()));
 		}
 
 		if (exportRequest.getPermissions() == null) {
@@ -275,10 +275,10 @@ public class ExportRequestSerDes {
 			else if (Objects.equals(jsonParserFieldName, "endDate")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileName")) {
+			else if (Objects.equals(jsonParserFieldName, "last")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "last")) {
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
@@ -315,15 +315,15 @@ public class ExportRequestSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileName")) {
-				if (jsonParserFieldValue != null) {
-					exportRequest.setFileName((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "last")) {
 				if (jsonParserFieldValue != null) {
 					exportRequest.setLast(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					exportRequest.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
@@ -449,4 +449,4 @@ public class ExportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:696058832
+// LIFERAY-REST-BUILDER-HASH:881442338

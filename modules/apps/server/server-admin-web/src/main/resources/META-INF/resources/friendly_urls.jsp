@@ -32,13 +32,13 @@ List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = (List
 				/>
 
 				<%
-				SearchContainer<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingSearchContainer = new SearchContainer<FriendlyURLPublicMappingConflict>(liferayPortletRequest, renderResponse.createRenderURL(), null, null);
+				SearchContainer<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflictsSearchContainer = new SearchContainer<FriendlyURLPublicMappingConflict>(liferayPortletRequest, renderResponse.createRenderURL(), null, null);
 
-				friendlyURLPublicMappingSearchContainer.setResultsAndTotal(friendlyURLPublicMappingConflicts);
+				friendlyURLPublicMappingConflictsSearchContainer.setResultsAndTotal(friendlyURLPublicMappingConflicts);
 				%>
 
 				<liferay-ui:search-container
-					searchContainer="<%= friendlyURLPublicMappingSearchContainer %>"
+					searchContainer="<%= friendlyURLPublicMappingConflictsSearchContainer %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.friendly.url.checker.FriendlyURLPublicMappingConflict"

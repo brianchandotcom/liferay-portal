@@ -100,6 +100,7 @@
 		"@types/react-transition-group": "^4.4.0",
 		"@types/recharts": "^2.0.0",
 		"@types/redux": "^3.6.0",
+		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
 		"@typescript-eslint/parser": "^5.62.0",
 		"autobind-decorator": "^2.1.0",

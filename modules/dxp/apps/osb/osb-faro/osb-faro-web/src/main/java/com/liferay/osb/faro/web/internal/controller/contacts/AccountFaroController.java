@@ -57,8 +57,8 @@ public class AccountFaroController extends BaseFaroController {
 
 		List<AccountDetails.Field> fields =
 			contactsEngineClient.getAccountDetails(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, id
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				channelId
 			).getFields();
 
 		for (AccountDetails.Field field : fields) {
@@ -89,8 +89,8 @@ public class AccountFaroController extends BaseFaroController {
 
 		return new AccountDisplay(
 			contactsEngineClient.getAccount(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, id));
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				channelId));
 	}
 
 	@GET

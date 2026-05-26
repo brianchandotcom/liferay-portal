@@ -7,11 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor4-sample-web/fixtures/ckeditorSamplePageTest';
-import {TabName} from '../../../../frontend-editor-ckeditor4-sample-web/pages/CKEditorSamplePage';
+import {ckeditor4SamplePageTest} from '../../../../frontend-editor-ckeditor4-sample-web/fixtures/ckeditor4SamplePageTest';
+import {TabName} from '../../../../frontend-editor-ckeditor4-sample-web/pages/CKEditor4SamplePage';
 
 export const test = mergeTests(
-	ckeditorSamplePageTest,
+	ckeditor4SamplePageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -19,8 +19,8 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.gotoTab(TabName.LEGACY);
+test.beforeEach(async ({ckeditor4SamplePage}) => {
+	await ckeditor4SamplePage.gotoTab(TabName.LEGACY);
 });
 
 test('XSS injection doesnt get invoked', async ({page}) => {

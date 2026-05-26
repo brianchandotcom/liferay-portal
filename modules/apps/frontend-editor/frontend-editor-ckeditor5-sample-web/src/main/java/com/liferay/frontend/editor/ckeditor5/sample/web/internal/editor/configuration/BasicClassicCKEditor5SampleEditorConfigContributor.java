@@ -17,7 +17,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marko Cikos
+ * @author Miguel Arroyo
  */
 @Component(
 	property = {

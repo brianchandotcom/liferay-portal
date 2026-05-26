@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String ckeditor5Navigation = ParamUtil.getString(request, "ckeditor5Navigation", "advanced_classic");
+String navigation = ParamUtil.getString(request, "navigation", "advanced_classic");
 %>
 
 <clay:container-fluid>
@@ -18,38 +18,38 @@ String ckeditor5Navigation = ParamUtil.getString(request, "ckeditor5Navigation",
 				{
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("advanced_classic"));
+							navigationItem.setActive(navigation.equals("advanced_classic"));
 							navigationItem.setHref(renderResponse.createRenderURL());
 							navigationItem.setLabel("Advanced Classic");
 						});
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("basic_classic"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "ckeditor5Navigation", "basic_classic");
+							navigationItem.setActive(navigation.equals("basic_classic"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "basic_classic");
 							navigationItem.setLabel("Basic Classic");
 						});
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("react"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "ckeditor5Navigation", "react");
+							navigationItem.setActive(navigation.equals("react"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "react");
 							navigationItem.setLabel("React");
 						});
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("react_cet"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "ckeditor5Navigation", "react_cet");
+							navigationItem.setActive(navigation.equals("react_cet"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "react_cet");
 							navigationItem.setLabel("React + CET");
 						});
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("balloon"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "ckeditor5Navigation", "balloon");
+							navigationItem.setActive(navigation.equals("balloon"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "balloon");
 							navigationItem.setLabel("Balloon");
 						});
 					add(
 						navigationItem -> {
-							navigationItem.setActive(ckeditor5Navigation.equals("input_localized"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "ckeditor5Navigation", "input_localized");
+							navigationItem.setActive(navigation.equals("input_localized"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "input_localized");
 							navigationItem.setLabel("Input Localized");
 						});
 				}
@@ -59,19 +59,19 @@ String ckeditor5Navigation = ParamUtil.getString(request, "ckeditor5Navigation",
 
 	<div class="mt-3">
 		<c:choose>
-			<c:when test='<%= StringUtil.equals(ckeditor5Navigation, "balloon") %>'>
+			<c:when test='<%= StringUtil.equals(navigation, "balloon") %>'>
 				<liferay-util:include page="/partials/balloon.jsp" servletContext="<%= application %>" />
 			</c:when>
-			<c:when test='<%= StringUtil.equals(ckeditor5Navigation, "basic_classic") %>'>
+			<c:when test='<%= StringUtil.equals(navigation, "basic_classic") %>'>
 				<liferay-util:include page="/partials/basic_classic.jsp" servletContext="<%= application %>" />
 			</c:when>
-			<c:when test='<%= StringUtil.equals(ckeditor5Navigation, "input_localized") %>'>
+			<c:when test='<%= StringUtil.equals(navigation, "input_localized") %>'>
 				<liferay-util:include page="/partials/input_localized.jsp" servletContext="<%= application %>" />
 			</c:when>
-			<c:when test='<%= StringUtil.equals(ckeditor5Navigation, "react") %>'>
+			<c:when test='<%= StringUtil.equals(navigation, "react") %>'>
 				<liferay-util:include page="/partials/react.jsp" servletContext="<%= application %>" />
 			</c:when>
-			<c:when test='<%= StringUtil.equals(ckeditor5Navigation, "react_cet") %>'>
+			<c:when test='<%= StringUtil.equals(navigation, "react_cet") %>'>
 				<liferay-util:include page="/partials/react_cet.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>

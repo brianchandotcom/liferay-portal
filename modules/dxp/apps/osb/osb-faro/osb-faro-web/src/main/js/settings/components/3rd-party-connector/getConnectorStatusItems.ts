@@ -86,18 +86,3 @@ export function getInitialLogEntries(
 
 	return [TOKEN_GENERATED];
 }
-
-export function getTransitionEntry(
-	status: ConnectorStatus,
-	entityCount: number
-): ConnectorStatusItem {
-	if (status === ConnectorStatus.Disconnected) {
-		return DATA_SOURCE_DISCONNECTED;
-	}
-
-	if (status === ConnectorStatus.Active) {
-		return entityCount > 0 ? DATA_FLOW_ACTIVE : LISTENING;
-	}
-
-	return entityCount > 0 ? INACTIVE_DATA_FLOW : TOKEN_GENERATED;
-}

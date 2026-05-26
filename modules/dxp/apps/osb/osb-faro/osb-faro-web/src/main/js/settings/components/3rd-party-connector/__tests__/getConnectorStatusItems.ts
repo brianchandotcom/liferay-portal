@@ -1,8 +1,5 @@
 import {ConnectorStatus} from '../types';
-import {
-	getInitialLogEntries,
-	getTransitionEntry
-} from '../getConnectorStatusItems';
+import {getInitialLogEntries} from '../getConnectorStatusItems';
 
 describe('getInitialLogEntries', () => {
 	it('seeds a single Token generated entry for Inactive with no data', () => {
@@ -48,44 +45,6 @@ describe('getInitialLogEntries', () => {
 		expect(entries[1].title).toBe('Inactive Data Flow');
 		expect(entries[2].title).toBe('Data Flow Established');
 		expect(entries[3].title).toBe('Listening...');
-	});
-});
-
-describe('getTransitionEntry', () => {
-	it('returns Token generated for Inactive with no data', () => {
-		const entry = getTransitionEntry(ConnectorStatus.Inactive, 0);
-
-		expect(entry.title).toBe('Token Generated');
-		expect(entry.iconDisplayType).toBe('success');
-	});
-
-	it('returns Inactive data flow for Inactive with data', () => {
-		const entry = getTransitionEntry(ConnectorStatus.Inactive, 3);
-
-		expect(entry.title).toBe('Inactive Data Flow');
-		expect(entry.iconDisplayType).toBe('secondary');
-	});
-
-	it('returns Listening for Active with no data', () => {
-		const entry = getTransitionEntry(ConnectorStatus.Active, 0);
-
-		expect(entry.title).toBe('Listening...');
-		expect(entry.iconDisplayType).toBe('success');
-	});
-
-	it('returns Data flow established for Active with data', () => {
-		const entry = getTransitionEntry(ConnectorStatus.Active, 7);
-
-		expect(entry.title).toBe('Data Flow Established');
-		expect(entry.iconDisplayType).toBe('success');
-		expect(entry.bold).toBe(true);
-	});
-
-	it('returns Data source disconnected for Disconnected', () => {
-		const entry = getTransitionEntry(ConnectorStatus.Disconnected, 0);
-
-		expect(entry.title).toBe('Data Source Disconnected');
-		expect(entry.iconDisplayType).toBe('secondary');
 	});
 });
 

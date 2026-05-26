@@ -152,7 +152,7 @@ public class IndividualDemographicField implements Cloneable, Serializable {
 
 	public static enum FieldType {
 
-		BOOLEAN("boolean"), DATE("date"), NUMBER("number"), STRING("string");
+		BOOLEAN("BOOLEAN"), DATE("DATE"), NUMBER("NUMBER"), STRING("STRING");
 
 		public static FieldType create(String value) {
 			for (FieldType fieldType : values()) {
@@ -184,4 +184,4 @@ public class IndividualDemographicField implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1366930917
+// LIFERAY-REST-BUILDER-HASH:2034407995

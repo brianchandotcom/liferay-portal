@@ -351,7 +351,7 @@ public class IndividualDemographicField implements Serializable {
 	@GraphQLName("FieldType")
 	public static enum FieldType {
 
-		BOOLEAN("boolean"), DATE("date"), NUMBER("number"), STRING("string");
+		BOOLEAN("BOOLEAN"), DATE("DATE"), NUMBER("NUMBER"), STRING("STRING");
 
 		@JsonCreator
 		public static FieldType create(String value) {
@@ -475,4 +475,4 @@ public class IndividualDemographicField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-551876361
+// LIFERAY-REST-BUILDER-HASH:1161446615

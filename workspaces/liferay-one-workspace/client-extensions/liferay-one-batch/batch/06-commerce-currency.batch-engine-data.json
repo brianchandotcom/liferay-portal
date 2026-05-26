@@ -1,0 +1,38 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "INSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"active": true,
+			"code": "HUF",
+			"name": {
+				"en_US": "Hungarian Forint"
+			},
+			"rate": 1.0
+		},
+		{
+			"active": true,
+			"code": "NZD",
+			"name": {
+				"en_US": "New Zealand Dollar"
+			},
+			"rate": 1.0
+		},
+		{
+			"active": true,
+			"code": "SGD",
+			"name": {
+				"en_US": "Singapore Dollar"
+			},
+			"rate": 1.0
+		}
+	]
+}

@@ -479,8 +479,8 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 	);
 
 	return (
-		<Container {...containerProps}>
-			<>
+		<>
+			<Container {...containerProps}>
 				<div
 					className={classNames(
 						'form-control form-control-tag-group input-group',
@@ -624,17 +624,17 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 						</span>
 					</div>
 				</div>
+			</Container>
 
-				{active && displayKeyboardArrowsIndicator && (
-					<ClayPortal>
-						<KeyboardArrowsIndicator
-							anchorRef={containerRef}
-							direction="vertical"
-						/>
-					</ClayPortal>
-				)}
-			</>
-		</Container>
+			{active && displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={containerRef}
+						direction="vertical"
+					/>
+				</ClayPortal>
+			)}
+		</>
 	);
 }) as Component;
 

@@ -69,7 +69,7 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 					).build())
@@ -85,7 +85,7 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 	@Test
 	public void testProcessValue() throws Exception {
 
-		// Defined by user prefix type
+		// Defined by user country source
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.InvalidPhoneNumber.class,
@@ -101,7 +101,7 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 			_objectFieldBusinessType.processValue(
 				_objectField, "+1 (555) 123-4567"));
 
-		// Fixed prefix type
+		// Fixed country source
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new PhoneNumberObjectFieldBuilder(
@@ -115,13 +115,13 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX
+						ObjectFieldSettingConstants.NAME_COUNTRY
 					).value(
-						"+1"
+						"US"
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_FIXED
 					).build())
@@ -161,6 +161,127 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 	@Test
 	public void testValidateObjectFieldSettings() throws Exception {
 
+		// Country
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ZZ of setting \"country\" is invalid for object ",
+				"field \"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY
+					).value(
+						"ZZ"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+					).value(
+						ObjectFieldSettingConstants.VALUE_FIXED
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			StringBundler.concat(
+				"The settings \"country\" are required for object field \"",
+				_OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+					).value(
+						ObjectFieldSettingConstants.VALUE_FIXED
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingNameException.NotAllowedNames.class,
+			"The settings country are not allowed for object field " +
+				_OBJECT_FIELD_NAME,
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY
+					).value(
+						"US"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+					).value(
+						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
+					).build())));
+
+		_objectFieldBusinessType.validateObjectFieldSettings(
+			_objectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_COUNTRY
+				).value(
+					"US"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+				).value(
+					ObjectFieldSettingConstants.VALUE_FIXED
+				).build()));
+		_objectFieldBusinessType.validateObjectFieldSettings(
+			_objectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_COUNTRY
+				).value(
+					"us"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+				).value(
+					ObjectFieldSettingConstants.VALUE_FIXED
+				).build()));
+
+		// Country source
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value defineByUser of setting \"countrySource\" is ",
+				"invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+					).value(
+						"defineByUser"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			StringBundler.concat(
+				"The settings \"countrySource\" are required for object field ",
+				"\"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField, Collections.emptyList()));
+
+		_objectFieldBusinessType.validateObjectFieldSettings(
+			_objectField,
+			Collections.singletonList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
+				).value(
+					ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
+				).build()));
+
 		// Default value
 
 		AssertUtils.assertFailure(
@@ -173,16 +294,16 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 					validateObjectFieldSettingsDefaultValue(
 						_objectField,
 						HashMapBuilder.put(
+							ObjectFieldSettingConstants.NAME_COUNTRY, "US"
+						).put(
+							ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE,
+							ObjectFieldSettingConstants.VALUE_FIXED
+						).put(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
 							"+445551234567"
 						).put(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-						).put(
-							ObjectFieldSettingConstants.NAME_PREFIX, "+1"
-						).put(
-							ObjectFieldSettingConstants.NAME_PREFIX_TYPE,
-							ObjectFieldSettingConstants.VALUE_FIXED
 						).build()));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
@@ -218,108 +339,6 @@ public class PhoneNumberObjectFieldBusinessTypeTest {
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 			).build());
-
-		// Prefix type
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value 1 of setting \"prefix\" is invalid for object ",
-				"field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX
-					).value(
-						"1"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-					).value(
-						ObjectFieldSettingConstants.VALUE_FIXED
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value defineByUser of setting \"prefixType\" is invalid ",
-				"for object field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-					).value(
-						"defineByUser"
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			StringBundler.concat(
-				"The settings \"prefix\" are required for object field \"",
-				_OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-					).value(
-						ObjectFieldSettingConstants.VALUE_FIXED
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			StringBundler.concat(
-				"The settings \"prefixType\" are required for object field \"",
-				_OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField, Collections.emptyList()));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingNameException.NotAllowedNames.class,
-			"The settings prefix are not allowed for object field " +
-				_OBJECT_FIELD_NAME,
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX
-					).value(
-						"+1"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-					).value(
-						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
-					).build())));
-
-		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
-			Arrays.asList(
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_PREFIX
-				).value(
-					"+1"
-				).build(),
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-				).value(
-					ObjectFieldSettingConstants.VALUE_FIXED
-				).build()));
-		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
-			Collections.singletonList(
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE
-				).value(
-					ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
-				).build()));
 	}
 
 	private static final String _OBJECT_FIELD_NAME =

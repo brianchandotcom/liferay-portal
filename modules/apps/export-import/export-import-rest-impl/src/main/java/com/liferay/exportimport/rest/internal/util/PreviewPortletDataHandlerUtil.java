@@ -144,10 +144,13 @@ public class PreviewPortletDataHandlerUtil {
 						previewPortletDataHandler.getDeletionCount();
 				}
 
+				long finalAdditionCount = additionCount;
+				long finalDeletionCount = deletionCount;
+
 				return new PreviewPortletDataHandlerSection() {
 					{
-						setAdditionCount(() -> additionCount);
-						setDeletionCount(() -> deletionCount);
+						setAdditionCount(() -> finalAdditionCount);
+						setDeletionCount(() -> finalDeletionCount);
 						setLabel(
 							() -> LanguageUtil.get(locale, entry.getKey()));
 						setName(entry::getKey);

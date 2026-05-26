@@ -117,12 +117,13 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	ZA: 'en-gb',
 };
 
-export const PREFIX_TYPE = {
+export const COUNTRY_SOURCE = {
 	DEFINED_BY_USER: 'definedByUser',
 	FIXED: 'fixed',
 } as const;
 
-export type PrefixType = (typeof PREFIX_TYPE)[keyof typeof PREFIX_TYPE];
+export type CountrySource =
+	(typeof COUNTRY_SOURCE)[keyof typeof COUNTRY_SOURCE];
 
 export function getCombinedValue(
 	countryA2: string,

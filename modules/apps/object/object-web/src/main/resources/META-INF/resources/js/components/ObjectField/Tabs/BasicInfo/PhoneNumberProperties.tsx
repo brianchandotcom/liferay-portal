@@ -5,11 +5,12 @@
 
 import ClayForm from '@clayui/form';
 import {
+	COUNTRY_SOURCE,
 	CountryCodePicker,
 	CountryInfo,
-	PREFIX_TYPE,
-	PrefixType,
+	CountrySource,
 	SingleSelect,
+	getDefaultCountry,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
@@ -34,33 +35,35 @@ export function PhoneNumberProperties({
 	setValues,
 	values,
 }: IPhoneNumberPropertiesProps) {
-	const prefixPickerId = React.useId();
-	const prefixTypeId = React.useId();
+	const countryPickerId = React.useId();
+	const countrySourceId = React.useId();
 
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
-	const prefix = settings.prefix || '+1';
-	const prefixType = settings.prefixType || PREFIX_TYPE.DEFINED_BY_USER;
+	const defaultCountry = getDefaultCountry(countries);
+
+	const country = settings.country || defaultCountry.a2;
+	const countrySource =
+		settings.countrySource || COUNTRY_SOURCE.DEFINED_BY_USER;
 
 	const selectedCountry =
-		countries.find((country) => `+${country.idd}` === prefix) ||
-		countries[0];
+		countries.find((c) => c.a2 === country) || defaultCountry;
 
-	const handlePrefixTypeChange = (value: PrefixType) => {
+	const handleCountrySourceChange = (value: CountrySource) => {
 		let updatedSettings = updateFieldSettings(objectFieldSettings, {
-			name: 'prefixType',
+			name: 'countrySource',
 			value,
 		});
 
-		if (value === PREFIX_TYPE.DEFINED_BY_USER) {
+		if (value === COUNTRY_SOURCE.DEFINED_BY_USER) {
 			updatedSettings = updatedSettings.filter(
-				(setting) => setting.name !== 'prefix'
+				(setting) => setting.name !== 'country'
 			);
 		}
-		else if (value === PREFIX_TYPE.FIXED) {
+		else if (value === COUNTRY_SOURCE.FIXED) {
 			updatedSettings = updateFieldSettings(updatedSettings, {
-				name: 'prefix',
-				value: `+${countries[0].idd}`,
+				name: 'country',
+				value: defaultCountry.a2,
 			});
 		}
 
@@ -76,10 +79,10 @@ export function PhoneNumberProperties({
 		}
 	};
 
-	const handlePrefixChange = (country: CountryInfo) => {
+	const handleCountryChange = (country: CountryInfo) => {
 		const updatedSettings = updateFieldSettings(objectFieldSettings, {
-			name: 'prefix',
-			value: `+${country.idd}`,
+			name: 'country',
+			value: country.a2,
 		});
 
 		setValues({
@@ -94,40 +97,40 @@ export function PhoneNumberProperties({
 		}
 	};
 
-	const prefixTypeOptions = [
+	const countrySourceOptions = [
 		{
 			label: Liferay.Language.get('defined-by-user'),
-			value: PREFIX_TYPE.DEFINED_BY_USER,
+			value: COUNTRY_SOURCE.DEFINED_BY_USER,
 		},
 		{
 			label: Liferay.Language.get('fixed'),
-			value: PREFIX_TYPE.FIXED,
+			value: COUNTRY_SOURCE.FIXED,
 		},
 	];
 
 	return (
 		<>
 			<SingleSelect
-				id={prefixTypeId}
-				items={prefixTypeOptions}
-				label={Liferay.Language.get('prefix-type')}
+				id={countrySourceId}
+				items={countrySourceOptions}
+				label={Liferay.Language.get('country-source')}
 				onSelectionChange={(value) =>
-					handlePrefixTypeChange(value as PrefixType)
+					handleCountrySourceChange(value as CountrySource)
 				}
-				selectedKey={prefixType as string}
+				selectedKey={countrySource as string}
 			/>
 
-			{prefixType === PREFIX_TYPE.FIXED && (
+			{countrySource === COUNTRY_SOURCE.FIXED && (
 				<div className="form-group-autofit">
 					<ClayForm.Group className="form-group-item-shrink">
-						<label id={prefixPickerId}>
-							{Liferay.Language.get('prefix')}
+						<label id={countryPickerId}>
+							{Liferay.Language.get('country')}
 						</label>
 
 						<CountryCodePicker
-							aria-labelledby={prefixPickerId}
+							aria-labelledby={countryPickerId}
 							countries={countries}
-							onSelectionChange={handlePrefixChange}
+							onSelectionChange={handleCountryChange}
 							selectedKey={selectedCountry.a2}
 						/>
 					</ClayForm.Group>

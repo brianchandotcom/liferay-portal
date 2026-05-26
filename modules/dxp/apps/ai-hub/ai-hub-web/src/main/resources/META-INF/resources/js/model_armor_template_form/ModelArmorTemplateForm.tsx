@@ -25,7 +25,6 @@ interface IProps {
 }
 
 export default function ModelArmorTemplateForm({
-	accountEntryExternalReferenceCode,
 	backURL,
 	externalReferenceCode,
 }: IProps) {
@@ -39,7 +38,6 @@ export default function ModelArmorTemplateForm({
 		touched,
 		values,
 	} = useModelArmorTemplateForm({
-		accountEntryExternalReferenceCode,
 		externalReferenceCode,
 	});
 

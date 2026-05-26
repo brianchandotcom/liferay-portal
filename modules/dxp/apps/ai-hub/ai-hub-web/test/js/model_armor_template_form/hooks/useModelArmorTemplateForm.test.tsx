@@ -32,15 +32,12 @@ jest.mock('@liferay/object-js-components-web', () => ({
 };
 
 function renderModelArmorHook({
-	accountEntryExternalReferenceCode = 'ACCOUNT',
 	externalReferenceCode = '',
 }: {
-	accountEntryExternalReferenceCode?: string;
 	externalReferenceCode?: string;
 } = {}) {
 	return renderHook(() =>
 		useModelArmorTemplateForm({
-			accountEntryExternalReferenceCode,
 			externalReferenceCode,
 		})
 	);
@@ -63,7 +60,6 @@ describe('fetch lifecycle', () => {
 			multiLanguageDetectionEnabled: false,
 			piAndJailbreakConfidenceLevel: 'high',
 			piAndJailbreakFilterEnabled: true,
-			r_accountToAIHubModelArmorTemplates_accountEntryERC: 'ACCOUNT',
 			raiDangerousLevel: 'lowAndAbove',
 			raiHarassmentLevel: 'mediumAndAbove',
 			raiHateSpeechLevel: 'high',
@@ -130,17 +126,6 @@ describe('useModelArmorTemplateForm', () => {
 			);
 			expect(result.current.values.raiDangerousLevel).toBe('none');
 			expect(result.current.values.maliciousUriFilterEnabled).toBe(false);
-		});
-
-		it('seeds the account-relationship field from the prop', () => {
-			const {result} = renderModelArmorHook({
-				accountEntryExternalReferenceCode: 'ACCOUNT_42',
-			});
-
-			expect(
-				result.current.values
-					.r_accountToAIHubModelArmorTemplates_accountEntryERC
-			).toBe('ACCOUNT_42');
 		});
 	});
 

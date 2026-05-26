@@ -54,7 +54,6 @@ const baseValues: ModelArmorTemplate = {
 	multiLanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 	piAndJailbreakFilterEnabled: false,
-	r_accountToAIHubModelArmorTemplates_accountEntryERC: 'ACCOUNT',
 	raiDangerousLevel: 'none',
 	raiHarassmentLevel: 'none',
 	raiHateSpeechLevel: 'none',

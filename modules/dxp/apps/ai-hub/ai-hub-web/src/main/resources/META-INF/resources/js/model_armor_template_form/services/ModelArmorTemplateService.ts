@@ -7,15 +7,13 @@ import {fetch} from 'frontend-js-web';
 
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
 
-const MODEL_ARMOR_TEMPLATE_BASE_URI = '/o/ai-hub/model-armor-templates';
-
 const normalizeKey = <T extends string>(value: {key: T}): T => value.key;
 
 async function getModelArmorTemplate(
 	externalReferenceCode: string
 ): Promise<ModelArmorTemplate> {
 	const response = await fetch(
-		`${MODEL_ARMOR_TEMPLATE_BASE_URI}/by-external-reference-code/${externalReferenceCode}`,
+		`/o/ai-hub/model-armor-templates/by-external-reference-code/${externalReferenceCode}`,
 		{
 			method: 'GET',
 		}
@@ -44,7 +42,7 @@ async function putModelArmorTemplate(
 	modelArmorTemplate: ModelArmorTemplate
 ): Promise<ModelArmorTemplate> {
 	const response = await fetch(
-		`${MODEL_ARMOR_TEMPLATE_BASE_URI}/by-external-reference-code/${modelArmorTemplate.externalReferenceCode}`,
+		`/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/${modelArmorTemplate.externalReferenceCode}`,
 		{
 			body: JSON.stringify(modelArmorTemplate),
 			headers: {

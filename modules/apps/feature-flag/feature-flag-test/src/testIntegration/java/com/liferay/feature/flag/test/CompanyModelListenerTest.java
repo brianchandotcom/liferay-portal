@@ -94,6 +94,10 @@ public class CompanyModelListenerTest {
 				CompanyConstants.SYSTEM,
 				FeatureFlagType.DEPRECATION.getPredicate());
 
+		Assert.assertFalse(
+			"No deprecation feature flags were found to test",
+			deprecationFeatureFlags.isEmpty());
+
 		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
 			Assert.assertEquals(
 				StringBundler.concat(

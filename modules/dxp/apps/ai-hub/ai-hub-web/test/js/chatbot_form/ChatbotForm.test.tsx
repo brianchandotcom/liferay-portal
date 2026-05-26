@@ -46,7 +46,37 @@ jest.mock('@liferay/object-js-components-web', () => ({
 }));
 
 jest.mock('frontend-js-components-web', () => ({
-	InputLocalized: ({label}: {label: string}) => <label>{label}</label>,
+	InputLocalized: ({
+		error,
+		label,
+		name,
+		onChange,
+		translations,
+	}: {
+		error?: string;
+		label: string;
+		name: string;
+		onChange: (value: Record<string, string>) => void;
+		translations?: Record<string, string>;
+	}) => (
+		<div>
+			<label htmlFor={name}>{label}</label>
+
+			<input
+				data-testid={name}
+				id={name}
+				onChange={(event) =>
+					onChange({
+						...(translations ?? {}),
+						en_US: event.target.value,
+					})
+				}
+				value={translations?.en_US ?? ''}
+			/>
+
+			{error && <span data-testid={`${name}-error`}>{error}</span>}
+		</div>
+	),
 }));
 
 jest.mock('frontend-js-web', () => ({
@@ -58,6 +88,9 @@ jest.mock('frontend-js-web', () => ({
 	Icons: {spritemap: 'icons.svg'},
 	Language: {
 		get: (key: string) => key,
+	},
+	ThemeDisplay: {
+		getLanguageId: () => 'en_US',
 	},
 };
 
@@ -157,5 +190,56 @@ describe('ChatbotForm company logo upload', () => {
 		expect(selectButton).toBeDisabled();
 
 		await waitFor(() => expect(selectButton).not.toBeDisabled());
+	});
+});
+
+describe('ChatbotForm disclaimer message', () => {
+	beforeEach(() => {
+		mockOpenToast.mockClear();
+		mockGetChatbot.mockReset();
+		mockPostChatbot.mockReset();
+		mockPutChatbot.mockReset();
+	});
+
+	afterEach(() => {
+		cleanup();
+	});
+
+	it('submits with an empty disclaimer when the admin never fills it', async () => {
+		mockPostChatbot.mockResolvedValue({
+			externalReferenceCode: 'CHATBOT-ERC',
+		});
+
+		render(<ChatbotForm {...defaultProps} />);
+
+		await screen.findByTestId('disclaimerMessage_i18n');
+
+		fireEvent.click(screen.getByRole('button', {name: 'save'}));
+
+		await waitFor(() => expect(mockPostChatbot).toHaveBeenCalled());
+
+		expect(mockPostChatbot.mock.calls[0][0].disclaimerMessage_i18n).toEqual(
+			{}
+		);
+	});
+
+	it('sends the typed disclaimer through to the API payload', async () => {
+		mockPostChatbot.mockResolvedValue({
+			externalReferenceCode: 'CHATBOT-ERC',
+		});
+
+		render(<ChatbotForm {...defaultProps} />);
+
+		fireEvent.change(await screen.findByTestId('disclaimerMessage_i18n'), {
+			target: {value: 'Custom disclaimer'},
+		});
+
+		fireEvent.click(screen.getByRole('button', {name: 'save'}));
+
+		await waitFor(() => expect(mockPostChatbot).toHaveBeenCalled());
+
+		expect(mockPostChatbot.mock.calls[0][0].disclaimerMessage_i18n).toEqual(
+			{en_US: 'Custom disclaimer'}
+		);
 	});
 });

@@ -6,6 +6,7 @@
 package com.liferay.feature.flag.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
@@ -16,7 +17,9 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortalPreferencesWrapper;
@@ -79,6 +82,29 @@ public class CompanyModelListenerTest {
 					FeatureFlagConstants.PREFERENCE_NAMESPACE,
 					deprecationFeatureFlag.getKey()));
 			Assert.assertFalse(deprecationFeatureFlag.isEnabled());
+		}
+	}
+
+	@Test
+	public void testSystemDeprecationFeatureFlagsRespectPortalProperties()
+		throws Exception {
+
+		List<FeatureFlag> deprecationFeatureFlags =
+			_featureFlagManager.getFeatureFlags(
+				CompanyConstants.SYSTEM,
+				FeatureFlagType.DEPRECATION.getPredicate());
+
+		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"System deprecation feature flag ",
+					deprecationFeatureFlag.getKey(),
+					" must reflect its portal.properties value (and any ",
+					"portal-ext.properties or LIFERAY_* env override)"),
+				GetterUtil.getBoolean(
+					PropsUtil.get(
+						"feature.flag." + deprecationFeatureFlag.getKey())),
+				deprecationFeatureFlag.isEnabled());
 		}
 	}
 

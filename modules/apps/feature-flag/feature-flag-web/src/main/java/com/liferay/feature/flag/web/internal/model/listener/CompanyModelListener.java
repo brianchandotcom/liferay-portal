@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +42,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	public void onAfterCreate(Company company) throws ModelListenerException {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				_processDeprecationFeatureFlags(company.getCompanyId());
+				_processDeprecationFeatureFlagsForCompany(
+					company.getCompanyId());
 
 				return null;
 			});
@@ -50,11 +52,11 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Activate
 	protected void activate() {
 		if (StartupHelperUtil.isDBNew()) {
-			_processDeprecationFeatureFlags(CompanyConstants.SYSTEM);
+			_processDeprecationFeatureFlagsForSystem();
 		}
 
 		_companyLocalService.forEachCompanyId(
-			this::_processDeprecationFeatureFlags);
+			this::_processDeprecationFeatureFlagsForCompany);
 	}
 
 	private PortalPreferences _getPortalPreferences(long companyId) {
@@ -66,7 +68,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		return portalPreferencesWrapper.getPortalPreferencesImpl();
 	}
 
-	private void _processDeprecationFeatureFlags(long companyId) {
+	private void _processDeprecationFeatureFlags(
+		long companyId, Predicate<FeatureFlag> enabledPredicate) {
+
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
 		boolean processed = GetterUtil.getBoolean(
@@ -87,7 +91,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
 			_featureFlagsBagProvider.setEnabled(
-				companyId, deprecationFeatureFlag.getKey(), false);
+				companyId, deprecationFeatureFlag.getKey(),
+				enabledPredicate.test(deprecationFeatureFlag));
 		}
 
 		portalPreferences = _getPortalPreferences(companyId);
@@ -98,6 +103,16 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 		_portalPreferencesLocalService.updatePreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);
+	}
+
+	private void _processDeprecationFeatureFlagsForCompany(long companyId) {
+		_processDeprecationFeatureFlags(
+			companyId, deprecationFeatureFlag -> false);
+	}
+
+	private void _processDeprecationFeatureFlagsForSystem() {
+		_processDeprecationFeatureFlags(
+			CompanyConstants.SYSTEM, FeatureFlag::isEnabled);
 	}
 
 	@Reference

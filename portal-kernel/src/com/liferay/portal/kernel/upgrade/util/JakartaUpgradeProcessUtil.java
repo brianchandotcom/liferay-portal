@@ -10,7 +10,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Luis Ortiz
@@ -72,13 +74,19 @@ public class JakartaUpgradeProcessUtil {
 
 		value = StringUtil.replace(value, sourcePackage, targetPackage);
 
+		String escapedSourcePackage = _escapedCache.computeIfAbsent(
+			sourcePackage, HtmlUtil::escapeJS);
+		String escapedTargetPackage = _escapedCache.computeIfAbsent(
+			targetPackage, HtmlUtil::escapeJS);
+
 		return StringUtil.replace(
-			value, HtmlUtil.escapeJS(sourcePackage),
-			HtmlUtil.escapeJS(targetPackage));
+			value, escapedSourcePackage, escapedTargetPackage);
 	}
 
 	private static final char[] _SEPARATORS = {'-', '/'};
 
+	private static final Map<String, String> _escapedCache =
+		new ConcurrentHashMap<>();
 	private static final Set<String> _preservedSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
 	private static final Set<String> _subpackageNames = new HashSet<>(

@@ -157,7 +157,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		String columnName, String[] primaryKeyColumnNames, String tableName) {
 
 		StringBundler sb = new StringBundler(
-			(primaryKeyColumnNames.length * 2) + 7);
+			(primaryKeyColumnNames.length * 2) + 9);
 
 		sb.append("select ");
 
@@ -171,7 +171,9 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		sb.append(tableName);
 		sb.append(" where ");
 		sb.append(columnName);
-		sb.append(" is not null");
+		sb.append(" like '%javax%' or ");
+		sb.append(columnName);
+		sb.append(" like '%JAVAX%'");
 
 		return sb.toString();
 	}

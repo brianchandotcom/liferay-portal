@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import {GeomapCard} from '../GeomapCard';
 
 jest.unmock('react-dom');
@@ -101,5 +101,69 @@ describe('GeoMapCard', () => {
 		jest.runAllTimers();
 
 		expect(container.querySelector('.lighten-item')).toBeTruthy();
+	});
+
+	it('should keep the tooltip hidden on first render', () => {
+		const {container} = render(
+			<GeomapCard {...props} metricLabel='sessions' />
+		);
+
+		const tooltip = container.querySelector('.popover');
+
+		expect(tooltip).toBeTruthy();
+		expect(tooltip.style.display).toBe('none');
+	});
+
+	it('should show the tooltip with country information on mouseover', async () => {
+		const {container} = render(
+			<GeomapCard {...props} metricLabel='sessions' />
+		);
+
+		const paths = container.querySelectorAll('.analytics-geomap svg path');
+
+		const brazilPath = Array.from(paths).find(
+			path => path.__data__?.properties?.name === 'Brazil'
+		);
+
+		expect(brazilPath).toBeTruthy();
+
+		const tooltip = container.querySelector('.popover');
+
+		expect(tooltip.style.display).toBe('none');
+
+		fireEvent.mouseOver(brazilPath);
+
+		await waitFor(() => {
+			expect(tooltip.style.display).toBe('');
+		});
+
+		expect(tooltip).toHaveTextContent('Brazil');
+		expect(tooltip).toHaveTextContent('6274');
+		expect(tooltip).toHaveTextContent('sessions');
+		expect(tooltip).toHaveTextContent('34.3%');
+	});
+
+	it('should hide the tooltip on mouseout', async () => {
+		const {container} = render(
+			<GeomapCard {...props} metricLabel='sessions' />
+		);
+
+		const paths = container.querySelectorAll('.analytics-geomap svg path');
+
+		const brazilPath = Array.from(paths).find(
+			path => path.__data__?.properties?.name === 'Brazil'
+		);
+
+		const tooltip = container.querySelector('.popover');
+
+		fireEvent.mouseOver(brazilPath);
+
+		await waitFor(() => {
+			expect(tooltip.style.display).toBe('');
+		});
+
+		fireEvent.mouseOut(brazilPath);
+
+		expect(tooltip.style.display).toBe('none');
 	});
 });

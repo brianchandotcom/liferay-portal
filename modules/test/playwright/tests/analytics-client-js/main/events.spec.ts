@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -18,6 +19,9 @@ import getPageDefinition from '../../layout-content-page-editor-web/main/utils/g
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -26,10 +30,10 @@ const test = mergeTests(
 test(
 	'Verify events after navigating by SPA',
 	{
-		tag: '@LPD-56895',
+		tag: ['@LPD-56895', '@LRAC-8800'],
 	},
 	async ({apiHelpers, page, site}) => {
-		await syncAnalyticsCloud({
+		const {channel} = await syncAnalyticsCloud({
 			apiHelpers,
 			channelName: 'My Property - ' + getRandomString(),
 			page,
@@ -59,6 +63,10 @@ test(
 		});
 
 		const pageViewedTitles: string[] = [];
+		const pageViewedEvents: Array<{
+			channelId: string;
+			dataSourceId: string;
+		}> = [];
 
 		page.on('request', (request) => {
 			if (request.method() !== 'POST') {
@@ -78,6 +86,13 @@ test(
 
 				if (typeof title === 'string') {
 					pageViewedTitles.push(title);
+				}
+
+				if (eventBucket.channelId && eventBucket.dataSourceId) {
+					pageViewedEvents.push({
+						channelId: eventBucket.channelId,
+						dataSourceId: eventBucket.dataSourceId,
+					});
 				}
 			}
 			catch {
@@ -109,6 +124,15 @@ test(
 					pageViewedTitles.some((t) => t.includes('MyPage 2'))
 				)
 				.toBe(true);
+		});
+
+		await test.step('Verify channelId and dataSourceId in pageViewed events', async () => {
+			await expect.poll(() => pageViewedEvents.length).toBeGreaterThan(0);
+
+			for (const event of pageViewedEvents) {
+				expect(event.channelId).toBe(channel.id);
+				expect(event.dataSourceId).toBeTruthy();
+			}
 		});
 	}
 );

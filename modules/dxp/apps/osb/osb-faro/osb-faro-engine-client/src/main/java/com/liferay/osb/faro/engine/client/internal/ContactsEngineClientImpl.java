@@ -1743,7 +1743,7 @@ public class ContactsEngineClientImpl
 			for (String channelId : channelIds) {
 				channelIdsFilterBuilder.addFilter(
 					"channelId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-					channelId, false);
+					GetterUtil.getLong(channelId), false);
 			}
 
 			filterBuilder.addFilter(channelIdsFilterBuilder, true);

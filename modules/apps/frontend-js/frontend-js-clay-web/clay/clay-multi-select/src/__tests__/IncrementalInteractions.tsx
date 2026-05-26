@@ -154,7 +154,7 @@ describe('MultiSelect incremental interactions', () => {
 	});
 
 	describe('keyboard arrows indicator', () => {
-		it('does not render the indicator by default', () => {
+		it('does not render the indicator by default', async () => {
 			const {getByRole} = render(
 				<MultiSelect
 					defaultItems={[labels[0]!]}
@@ -163,14 +163,14 @@ describe('MultiSelect incremental interactions', () => {
 				/>
 			);
 
-			userEvent.click(getByRole('combobox'));
+			await userEvent.click(getByRole('combobox'));
 
 			expect(
 				document.body.querySelector('.clay-keyboard-arrows-indicator')
 			).not.toBeInTheDocument();
 		});
 
-		it('renders the floating indicator with direction "vertical" when enabled', () => {
+		it('renders the floating indicator with direction "vertical" when enabled', async () => {
 			const {getByRole} = render(
 				<MultiSelect
 					defaultItems={[labels[0]!]}
@@ -180,7 +180,7 @@ describe('MultiSelect incremental interactions', () => {
 				/>
 			);
 
-			userEvent.click(getByRole('combobox'));
+			await userEvent.click(getByRole('combobox'));
 
 			const indicator = document.body.querySelector(
 				'.clay-keyboard-arrows-indicator'

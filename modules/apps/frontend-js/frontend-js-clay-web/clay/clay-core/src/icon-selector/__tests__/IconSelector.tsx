@@ -26,17 +26,17 @@ beforeAll(() => {
 describe('IconSelector keyboard arrows indicator', () => {
 	afterEach(cleanup);
 
-	it('does not render the indicator by default', () => {
+	it('does not render the indicator by default', async () => {
 		const {getByRole} = render(<IconSelector spritemap="/foo/bar.svg" />);
 
-		userEvent.click(getByRole('button'));
+		await userEvent.click(getByRole('button'));
 
 		expect(
 			document.body.querySelector('.clay-keyboard-arrows-indicator')
 		).not.toBeInTheDocument();
 	});
 
-	it('renders the floating indicator with direction "vertical" when enabled', () => {
+	it('renders the floating indicator with direction "vertical" when enabled', async () => {
 		const {getByRole} = render(
 			<IconSelector
 				displayKeyboardArrowsIndicator
@@ -44,7 +44,7 @@ describe('IconSelector keyboard arrows indicator', () => {
 			/>
 		);
 
-		userEvent.click(getByRole('button'));
+		await userEvent.click(getByRole('button'));
 
 		const indicator = document.body.querySelector(
 			'.clay-keyboard-arrows-indicator'

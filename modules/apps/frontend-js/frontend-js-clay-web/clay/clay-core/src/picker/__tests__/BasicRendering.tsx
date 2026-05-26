@@ -315,7 +315,7 @@ describe('Picker basic rendering', () => {
 		expect(getByText('4').closest('a')).toBeNull();
 	});
 
-	it('does not render the keyboard arrows indicator by default', () => {
+	it('does not render the keyboard arrows indicator by default', async () => {
 		const {getByRole, queryByRole} = render(
 			<Picker>
 				<Option key="apple">Apple</Option>
@@ -324,14 +324,14 @@ describe('Picker basic rendering', () => {
 			</Picker>
 		);
 
-		userEvent.click(getByRole('combobox'));
+		await userEvent.click(getByRole('combobox'));
 
 		expect(queryByRole('img')).not.toHaveClass(
 			'clay-keyboard-arrows-indicator'
 		);
 	});
 
-	it('renders the keyboard arrows indicator alongside the menu when enabled', () => {
+	it('renders the keyboard arrows indicator alongside the menu when enabled', async () => {
 		const {getByRole} = render(
 			<Picker displayKeyboardArrowsIndicator>
 				<Option key="apple">Apple</Option>
@@ -340,7 +340,7 @@ describe('Picker basic rendering', () => {
 			</Picker>
 		);
 
-		userEvent.click(getByRole('combobox'));
+		await userEvent.click(getByRole('combobox'));
 
 		const indicator = document.querySelector(
 			'.clay-keyboard-arrows-indicator'

@@ -5,7 +5,6 @@
 
 package com.liferay.account.internal.validator;
 
-import com.liferay.account.internal.validator.comparator.AccountEntryValidatorServiceWrapperPriorityComparator;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
 import com.liferay.account.validator.AccountEntryValidatorRegistry;
@@ -14,15 +13,13 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -62,47 +59,24 @@ public class AccountEntryValidatorRegistryImpl
 
 	@Override
 	public List<AccountEntryValidator> getAccountEntryValidators() {
-		List<AccountEntryValidator> accountEntryValidators = new ArrayList<>();
-
-		List<ServiceWrapper<AccountEntryValidator>>
-			accountEntryValidatorServiceWrappers = ListUtil.fromCollection(
-				_serviceTrackerMap.values());
-
-		Collections.sort(
-			accountEntryValidatorServiceWrappers,
-			_accountEntryValidatorServiceWrapperPriorityComparator);
-
-		for (ServiceWrapper<AccountEntryValidator>
-				accountEntryValidatorServiceWrapper :
-					accountEntryValidatorServiceWrappers) {
-
-			accountEntryValidators.add(
-				accountEntryValidatorServiceWrapper.getService());
-		}
-
-		return Collections.unmodifiableList(accountEntryValidators);
+		return Collections.unmodifiableList(
+			TransformUtil.transform(
+				_serviceTrackerMap.values(), ServiceWrapper::getService));
 	}
 
 	@Override
 	public List<AccountEntryValidatorResult> validate(
-			AccountEntry accountEntry, Map<String, Object> values)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException {
 
 		if (accountEntry == null) {
 			return Collections.emptyList();
 		}
 
-		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			new ArrayList<>();
-
-		for (AccountEntryValidator accountEntryValidator :
-				getAccountEntryValidators()) {
-
-			accountEntryValidatorResults.add(
-				accountEntryValidator.validate(accountEntry, values));
-		}
-
-		return accountEntryValidatorResults;
+		return TransformUtil.transform(
+			getAccountEntryValidators(),
+			accountEntryValidator -> accountEntryValidator.validate(
+				accountEntry, additionalProps));
 	}
 
 	@Activate
@@ -121,10 +95,6 @@ public class AccountEntryValidatorRegistryImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryValidatorRegistryImpl.class);
-
-	private static final Comparator<ServiceWrapper<AccountEntryValidator>>
-		_accountEntryValidatorServiceWrapperPriorityComparator =
-			new AccountEntryValidatorServiceWrapperPriorityComparator();
 
 	private ServiceTrackerMap<String, ServiceWrapper<AccountEntryValidator>>
 		_serviceTrackerMap;

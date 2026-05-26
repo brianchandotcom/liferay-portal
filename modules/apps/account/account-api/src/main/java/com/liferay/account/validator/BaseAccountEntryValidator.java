@@ -20,23 +20,18 @@ public abstract class BaseAccountEntryValidator
 
 	@Override
 	public final AccountEntryValidatorResult validate(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException {
 
-		// TODO Check the history using getKey(...) and the duration via
-		// getConfiguration(accountEntry, context). Write the result in the
-		// object history using the key from getKey() after doValidate(...)
-		// returns.
-
-		return doValidate(accountEntry, context);
+		return doValidate(accountEntry, additionalProps);
 	}
 
 	protected abstract AccountEntryValidatorResult doValidate(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException;
 
 	protected abstract BaseAccountEntryValidatorConfiguration getConfiguration(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws ConfigurationException;
 
 }

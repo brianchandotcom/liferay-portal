@@ -5,62 +5,69 @@
 
 package com.liferay.account.validator;
 
+import com.liferay.account.constants.AccountEntryValidatorResultConstants;
 import com.liferay.petra.string.StringPool;
 
 import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Tancredi Covioli
  */
 public final class AccountEntryValidatorResult implements Serializable {
 
-	public static final String RESULT_BYPASSED = "bypassed";
-
-	public static final String RESULT_FAILED = "failed";
-
-	public static final String RESULT_PASSED = "passed";
-
-	public static final String RESULT_WARNING = "warning";
-
 	public static Builder builder(String key) {
 		return new Builder(key);
 	}
 
-	public String getAdditionalProps() {
+	public String getActionLabel() {
+		return _actionLabel;
+	}
+
+	public String getActionURL() {
+		return _actionURL;
+	}
+
+	public Map<String, String> getAdditionalProps() {
 		return _additionalProps;
-	}
-
-	public String getButtonLabel() {
-		return _buttonLabel;
-	}
-
-	public String getButtonLink() {
-		return _buttonLink;
 	}
 
 	public String getKey() {
 		return _key;
 	}
 
-	public String getMessage() {
-		return _message;
+	public String getResultMessage() {
+		return _resultMessage;
 	}
 
-	public String getResult() {
-		return _result;
-	}
-
-	public String getResultReason() {
-		return _resultReason;
+	public String getResultStatus() {
+		return _resultStatus;
 	}
 
 	public boolean isValid() {
-		return !RESULT_FAILED.equals(_result);
+		return !Objects.equals(
+			AccountEntryValidatorResultConstants.FAILURE, _resultStatus);
 	}
 
 	public static class Builder {
 
-		public Builder additionalProps(String additionalProps) {
+		public Builder action(String actionURL) {
+			_actionURL = actionURL;
+
+			return this;
+		}
+
+		public Builder action(String actionLabel, String actionURL) {
+			_actionLabel = actionLabel;
+			_actionURL = actionURL;
+
+			return this;
+		}
+
+		public Builder additionalProps(Map<String, String> additionalProps) {
 			_additionalProps = additionalProps;
 
 			return this;
@@ -68,53 +75,18 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 		public AccountEntryValidatorResult build() {
 			return new AccountEntryValidatorResult(
-				_additionalProps, _key, _buttonLabel, _buttonLink, _message,
-				_result, _resultReason);
+				_actionLabel, _actionURL, _additionalProps, _key, _resultStatus,
+				_resultMessage);
 		}
 
-		public Builder button(String buttonLink) {
-			_buttonLink = buttonLink;
+		public Builder resultMessage(String resultMessage) {
+			_resultMessage = resultMessage;
 
 			return this;
 		}
 
-		public Builder button(String buttonLabel, String buttonLink) {
-			_buttonLabel = buttonLabel;
-			_buttonLink = buttonLink;
-
-			return this;
-		}
-
-		public Builder message(String message) {
-			_message = message;
-
-			return this;
-		}
-
-		public Builder resultBypassed(String resultReason) {
-			_result = RESULT_BYPASSED;
-			_resultReason = resultReason;
-
-			return this;
-		}
-
-		public Builder resultFailed(String resultReason) {
-			_result = RESULT_FAILED;
-			_resultReason = resultReason;
-
-			return this;
-		}
-
-		public Builder resultPassed(String resultReason) {
-			_result = RESULT_PASSED;
-			_resultReason = resultReason;
-
-			return this;
-		}
-
-		public Builder resultWarning(String resultReason) {
-			_result = RESULT_WARNING;
-			_resultReason = resultReason;
+		public Builder resultStatus(String resultStatus) {
+			_resultStatus = resultStatus;
 
 			return this;
 		}
@@ -123,36 +95,34 @@ public final class AccountEntryValidatorResult implements Serializable {
 			_key = key;
 		}
 
-		private String _additionalProps = StringPool.BLANK;
-		private String _buttonLabel = StringPool.BLANK;
-		private String _buttonLink = StringPool.BLANK;
+		private String _actionLabel = StringPool.BLANK;
+		private String _actionURL = StringPool.BLANK;
+		private Map<String, String> _additionalProps = Collections.emptyMap();
 		private final String _key;
-		private String _message = StringPool.BLANK;
-		private String _result = RESULT_PASSED;
-		private String _resultReason = StringPool.BLANK;
+		private String _resultMessage = StringPool.BLANK;
+		private String _resultStatus =
+			AccountEntryValidatorResultConstants.SUCCESS;
 
 	}
 
 	private AccountEntryValidatorResult(
-		String additionalProps, String key, String labelKey, String link,
-		String messageKey, String result, String resultReason) {
+		String actionLabel, String actionURL,
+		Map<String, String> additionalProps, String key, String resultStatus,
+		String resultMessage) {
 
+		_actionLabel = actionLabel;
+		_actionURL = actionURL;
 		_additionalProps = additionalProps;
 		_key = key;
-		_result = result;
-		_resultReason = resultReason;
-
-		_buttonLabel = labelKey;
-		_buttonLink = link;
-		_message = messageKey;
+		_resultStatus = resultStatus;
+		_resultMessage = resultMessage;
 	}
 
-	private final String _additionalProps;
-	private final String _buttonLabel;
-	private final String _buttonLink;
+	private final String _actionLabel;
+	private final String _actionURL;
+	private final Map<String, String> _additionalProps;
 	private final String _key;
-	private final String _message;
-	private final String _result;
-	private final String _resultReason;
+	private final String _resultMessage;
+	private final String _resultStatus;
 
 }

@@ -16,10 +16,10 @@ import java.util.Map;
 public interface AccountEntryValidator {
 
 	public String getKey(
-		AccountEntry accountEntry, Map<String, Object> context);
+		AccountEntry accountEntry, Map<String, Object> additionalProps);
 
 	public AccountEntryValidatorResult validate(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException;
 
 }

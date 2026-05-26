@@ -13,18 +13,18 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface BaseAccountEntryValidatorConfiguration {
 
 	@Meta.AD(
-		deflt = "60",
-		description = "account-entry-validator-cache-validity-description",
-		min = "0", name = "account-entry-validator-cache-validity",
-		required = false, type = Meta.Type.Integer
+		deflt = "30",
+		description = "account-entry-validator-check-interval-description",
+		min = "0", name = "check-interval", required = false,
+		type = Meta.Type.Integer
 	)
-	public int cacheValiditySeconds();
+	public int checkInterval();
 
 	@Meta.AD(
 		deflt = "true",
-		description = "enable-account-entry-validator-description",
-		name = "enable-account-entry-validator", required = false
+		description = "account-entry-validator-enabled-description",
+		name = "enabled", required = false
 	)
-	public boolean enableValidator();
+	public boolean enabled();
 
 }

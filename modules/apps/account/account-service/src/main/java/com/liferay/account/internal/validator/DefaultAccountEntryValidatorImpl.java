@@ -5,6 +5,7 @@
 
 package com.liferay.account.internal.validator;
 
+import com.liferay.account.constants.AccountEntryValidatorResultConstants;
 import com.liferay.account.internal.configuration.validator.DefaultAccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
@@ -25,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.account.internal.configuration.validator.DefaultAccountEntryValidatorConfiguration",
 	property = {
-		"account.entry.validator.key=" + DefaultAccountEntryValidatorImpl.KEY,
+		"account.entry.validator.key=com.liferay.account.internal.validator.DefaultAccountEntryValidatorImpl",
 		"account.entry.validator.priority:Integer=10"
 	},
 	service = AccountEntryValidator.class
@@ -33,32 +34,30 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultAccountEntryValidatorImpl
 	extends BaseAccountEntryValidator {
 
-	public static final String KEY = "default";
-
 	@Override
 	public String getKey(
-		AccountEntry accountEntry, Map<String, Object> context) {
+		AccountEntry accountEntry, Map<String, Object> additionalProps) {
 
 		return String.valueOf(accountEntry.getAccountEntryId());
 	}
 
 	@Override
 	protected AccountEntryValidatorResult doValidate(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException {
 
 		return AccountEntryValidatorResult.builder(
-			getKey(accountEntry, context)
-		).message(
-			"an-error-occurred"
-		).resultFailed(
+			getKey(accountEntry, additionalProps)
+		).resultStatus(
+			AccountEntryValidatorResultConstants.FAILURE
+		).resultMessage(
 			"an-error-occurred"
 		).build();
 	}
 
 	@Override
 	protected DefaultAccountEntryValidatorConfiguration getConfiguration(
-			AccountEntry accountEntry, Map<String, Object> context)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws ConfigurationException {
 
 		return _configurationProvider.getCompanyConfiguration(

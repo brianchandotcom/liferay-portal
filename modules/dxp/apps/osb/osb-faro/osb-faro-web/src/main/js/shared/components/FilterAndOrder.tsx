@@ -209,28 +209,33 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 					</ClayButton>
 				}
 			>
-				<FilterOptionsList
-					filterBy={filterBy}
-					filterByOptions={filterByOptions}
-					flat={flat}
-					onChange={(value, field) => {
-						const option = filterByOptions.find(
-							({key}) => key === field
-						);
+				<ClayDropDown.ItemList>
+					<FilterOptionsList
+						filterBy={filterBy}
+						filterByOptions={filterByOptions}
+						flat={flat}
+						onChange={(value, field) => {
+							const option = filterByOptions.find(
+								({key}) => key === field
+							);
 
-						onFilterByChange(
-							filterBy.update(field, (values: any = Set()) => {
-								if (option?.type === 'radio') {
-									return Set([value]);
-								}
+							onFilterByChange(
+								filterBy.update(
+									field,
+									(values: any = Set()) => {
+										if (option?.type === 'radio') {
+											return Set([value]);
+										}
 
-								return values.has(value)
-									? values.delete(value)
-									: values.add(value);
-							})
-						);
-					}}
-				/>
+										return values.has(value)
+											? values.delete(value)
+											: values.add(value);
+									}
+								)
+							);
+						}}
+					/>
+				</ClayDropDown.ItemList>
 			</ClayDropDown>
 		)}
 

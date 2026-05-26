@@ -48,8 +48,8 @@ export function PhoneNumberInput({
 	);
 
 	const fixedCountry = countries.find((c) => c.a2 === country);
-	const fixedFlagSymbol = getFlagSymbol(country ?? '');
 
+	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
 	const fixedPrefix = fixedCountry ? `+${fixedCountry.idd}` : '';
 
 	const handleValueChange = (nextCountry: CountryInfo, number: string) => {

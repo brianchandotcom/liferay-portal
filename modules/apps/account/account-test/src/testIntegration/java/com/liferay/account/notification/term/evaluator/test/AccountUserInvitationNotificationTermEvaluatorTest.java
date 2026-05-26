@@ -74,19 +74,16 @@ public class AccountUserInvitationNotificationTermEvaluatorTest {
 			_notificationTermEvaluator.evaluate(
 				NotificationTermEvaluator.Context.CONTENT, notificationContext,
 				"[%ACCOUNT_NAME%]"));
-
 		Assert.assertEquals(
 			callbackURL,
 			_notificationTermEvaluator.evaluate(
 				NotificationTermEvaluator.Context.CONTENT, notificationContext,
 				"[%CREATE_ACCOUNT_URL%]"));
-
 		Assert.assertEquals(
 			inviteSenderName,
 			_notificationTermEvaluator.evaluate(
 				NotificationTermEvaluator.Context.CONTENT, notificationContext,
 				"[%INVITE_SENDER_NAME%]"));
-
 		Assert.assertEquals(
 			emailAddress,
 			_notificationTermEvaluator.evaluate(

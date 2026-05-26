@@ -29,13 +29,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Serves OAuth 2.0 Authorization Server Metadata (RFC 8414) at the
- * spec-mandated host-root location. The path suffix after
- * <code>/.well-known/oauth-authorization-server</code> is appended to the
- * request authority to reconstruct the issuer URL, which is then looked up
- * in the persisted authorization server metadata. With no suffix, the first
- * enabled record for the company is returned.
- *
  * @author Jorge García Jiménez
  */
 @Component(
@@ -70,7 +63,12 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 			return;
 		}
 
-		_setCORSHeaders(httpServletResponse);
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Methods", "GET, OPTIONS");
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Headers", "Authorization, Content-Type");
+		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
 
 		if (Objects.equals(httpServletRequest.getMethod(), "OPTIONS")) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -86,8 +84,8 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 			return;
 		}
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = _resolve(
-			companyId, httpServletRequest);
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			_resolveOAuthClientASLocalMetadata(companyId, httpServletRequest);
 
 		if ((oAuthClientASLocalMetadata == null) ||
 			!oAuthClientASLocalMetadata.isLocalWellKnownEnabled()) {
@@ -110,7 +108,7 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 		httpServletResponse.flushBuffer();
 	}
 
-	private OAuthClientASLocalMetadata _resolve(
+	private OAuthClientASLocalMetadata _resolveOAuthClientASLocalMetadata(
 		long companyId, HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
@@ -138,15 +136,6 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 
 		return _oAuthClientASLocalMetadataLocalService.
 			fetchOAuthClientASLocalMetadata(companyId, issuer);
-	}
-
-	private void _setCORSHeaders(HttpServletResponse httpServletResponse) {
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader(
-			"Access-Control-Allow-Methods", "GET, OPTIONS");
-		httpServletResponse.setHeader(
-			"Access-Control-Allow-Headers", "Authorization, Content-Type");
-		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
 	}
 
 	private static final String _WELL_KNOWN_PATH =

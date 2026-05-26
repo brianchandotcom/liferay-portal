@@ -1,0 +1,19 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"currencyCode": "USD",
+			"externalReferenceCode": "SALESFORCE_CATALOG",
+			"name": "Salesforce"
+		}
+	]
+}

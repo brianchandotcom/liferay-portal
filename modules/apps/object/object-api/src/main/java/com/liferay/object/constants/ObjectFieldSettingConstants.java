@@ -13,6 +13,10 @@ public class ObjectFieldSettingConstants {
 	public static final String NAME_ACCEPTED_FILE_EXTENSIONS =
 		"acceptedFileExtensions";
 
+	public static final String NAME_COUNTRY = "country";
+
+	public static final String NAME_COUNTRY_SOURCE = "countrySource";
+
 	public static final String NAME_DEFAULT_VALUE = "defaultValue";
 
 	public static final String NAME_DEFAULT_VALUE_TYPE = "defaultValueType";
@@ -41,8 +45,6 @@ public class ObjectFieldSettingConstants {
 		"objectRelationshipName";
 
 	public static final String NAME_PREFIX = "prefix";
-
-	public static final String NAME_PREFIX_TYPE = "prefixType";
 
 	public static final String NAME_SHOW_COUNTER = "showCounter";
 

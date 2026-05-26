@@ -230,6 +230,9 @@ public class CETFactoryImpl implements CETFactory {
 	@Activate
 	protected void activate() {
 		_cetImplFactories = HashMapBuilder.<String, CETImplFactory>put(
+			ClientExtensionEntryConstants.TYPE_AUDIENCES_CUSTOM_ATTRIBUTES,
+			new AudiencesCustomAttributesCETImplFactoryImpl()
+		).put(
 			ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP,
 			new CommerceCheckoutStepCETImplFactoryImpl()
 		).put(

@@ -151,9 +151,15 @@ test(
 
 		await friendlyURL.fill('cms-should-not-save');
 
-		page.once('dialog', (dialog) => dialog.dismiss());
-
 		await page.getByRole('button', {name: 'Save'}).click();
+
+		const dialog = page.getByRole('alertdialog', {
+			name: 'Save Custom Friendly URL',
+		});
+
+		await dialog.waitFor();
+
+		await dialog.getByRole('button', {name: 'Cancel'}).click();
 
 		const fetchedAssetLibrary =
 			await apiHelpers.headlessAssetLibrary.getAssetLibrary(

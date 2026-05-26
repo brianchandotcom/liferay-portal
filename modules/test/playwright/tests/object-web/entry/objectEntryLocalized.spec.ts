@@ -1036,12 +1036,12 @@ test.describe('Localized object entries are saved correctly', () => {
 						localized: true,
 						objectFieldSettings: [
 							{
-								name: 'prefixType',
+								name: 'countrySource',
 								value: 'fixed',
 							},
 							{
-								name: 'prefix',
-								value: fixedPrefix,
+								name: 'country',
+								value: 'US',
 							},
 						],
 					},

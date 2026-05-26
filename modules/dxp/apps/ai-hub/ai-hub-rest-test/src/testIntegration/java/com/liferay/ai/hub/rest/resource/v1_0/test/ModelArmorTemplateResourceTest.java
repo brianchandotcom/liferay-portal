@@ -31,7 +31,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.junit.After;
@@ -134,6 +133,8 @@ public class ModelArmorTemplateResourceTest
 						"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
 						TestPropsValues.getCompanyId()),
 				null));
+
+		_modelArmorTemplate = null;
 	}
 
 	@Ignore
@@ -142,14 +143,13 @@ public class ModelArmorTemplateResourceTest
 	public void testPutModelArmorTemplateByExternalReferenceCode()
 		throws Exception {
 
-		ModelArmorTemplate randomModelArmorTemplate =
-			_randomRequiredModelArmorTemplate();
+		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
 
 		_modelArmorTemplate =
 			modelArmorTemplateResource.
 				putModelArmorTemplateByExternalReferenceCode(
-					randomModelArmorTemplate.getExternalReferenceCode(),
-					randomModelArmorTemplate);
+					modelArmorTemplate.getExternalReferenceCode(),
+					modelArmorTemplate);
 
 		Assert.assertNotNull(
 			_objectEntryManager.getObjectEntry(
@@ -163,38 +163,33 @@ public class ModelArmorTemplateResourceTest
 	}
 
 	@Override
-	protected ModelArmorTemplate
-			testDeleteModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate()
-		throws Exception {
+	protected ModelArmorTemplate randomModelArmorTemplate() throws Exception {
+		ModelArmorTemplate modelArmorTemplate =
+			super.randomModelArmorTemplate();
 
-		ModelArmorTemplate randomModelArmorTemplate =
-			_randomRequiredModelArmorTemplate();
-
-		_modelArmorTemplate =
-			modelArmorTemplateResource.
-				putModelArmorTemplateByExternalReferenceCode(
-					randomModelArmorTemplate.getExternalReferenceCode(),
-					randomModelArmorTemplate);
-
-		return _modelArmorTemplate;
-	}
-
-	private ModelArmorTemplate _randomRequiredModelArmorTemplate()
-		throws Exception {
-
-		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
-
-		modelArmorTemplate.setExternalReferenceCode(
-			"test-template-" + RandomTestUtil.randomInt());
 		modelArmorTemplate.setGuardrailType(
 			ModelArmorTemplate.GuardrailType.INPUT);
 		modelArmorTemplate.setLocation("europe-southwest1");
 		modelArmorTemplate.setTitle_i18n(
-			Collections.singletonMap(
-				LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-				modelArmorTemplate.getTitle()));
+			RandomTestUtil.randomLanguageIdStringMap());
 
 		return modelArmorTemplate;
+	}
+
+	@Override
+	protected ModelArmorTemplate
+			testDeleteModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate()
+		throws Exception {
+
+		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
+
+		_modelArmorTemplate =
+			modelArmorTemplateResource.
+				putModelArmorTemplateByExternalReferenceCode(
+					modelArmorTemplate.getExternalReferenceCode(),
+					modelArmorTemplate);
+
+		return _modelArmorTemplate;
 	}
 
 	@Inject

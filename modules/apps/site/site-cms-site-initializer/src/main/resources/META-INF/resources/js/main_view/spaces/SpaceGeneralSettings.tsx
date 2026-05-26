@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import {useFormik} from 'formik';
-import {openConfirmModal, openToast, useId} from 'frontend-js-components-web';
+import {openModal, openToast, useId} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -171,15 +171,29 @@ export default function SpaceGeneralSettings({
 		}
 
 		if (values.friendlyURL !== initialFriendlyURL) {
-			openConfirmModal({
-				message: Liferay.Language.get(
+			openModal({
+				bodyHTML: Liferay.Language.get(
 					'changing-the-friendly-url-will-break-existing-inbound-links-bookmarks-and-redirects-pointing-to-this-space.-make-sure-to-set-up-redirects-and-update-any-references-before-saving'
 				),
-				onConfirm: (isConfirm: boolean) => {
-					if (isConfirm) {
-						submitForm();
-					}
-				},
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						onClick: ({processClose}) => {
+							processClose();
+						},
+						type: 'cancel',
+					},
+					{
+						displayType: 'warning',
+						label: Liferay.Language.get('save'),
+						onClick: ({processClose}) => {
+							processClose();
+							submitForm();
+						},
+					},
+				],
+				role: 'alertdialog',
 				status: 'warning',
 				title: Liferay.Language.get('save-custom-friendly-url'),
 			});

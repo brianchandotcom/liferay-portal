@@ -3,7 +3,6 @@ import GeomapChart from './GeomapChart';
 import GeoMapLangKey from './geo-map-lang-key';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
-import ReactDOMServer from 'react-dom/server';
 import {Colors} from 'shared/util/charts';
 import {toThousands} from 'shared/util/numbers';
 
@@ -139,23 +138,30 @@ const mergeData = (countries: ICountry[]) => {
 	};
 };
 
-const Tooltip = (payload: IFeature, metricLabel: string) => (
-	<>
-		<div className='arrow' />
+const escapeHTML = (value: string) =>
+	value.replace(
+		/[&<>"']/g,
+		char =>
+			({
+				'"': '&quot;',
+				'&': '&amp;',
+				"'": '&#39;',
+				'<': '&lt;',
+				'>': '&gt;'
+			}[char] as string)
+	);
 
-		<div className='popover-header'>
-			{geoMapLangKey[payload.properties.name]}
-		</div>
-
-		<div className='d-flex justify-content-between popover-body'>
-			<div className='mr-4'>
-				{payload.properties.total} <span>{metricLabel}</span>
-			</div>
-
-			<div>{`${payload.properties.value}%`}</div>
-		</div>
-	</>
-);
+const renderTooltip = (payload: IFeature, metricLabel: string) =>
+	'<div class="arrow"></div>' +
+	`<div class="popover-header">${escapeHTML(
+		geoMapLangKey[payload.properties.name] || ''
+	)}</div>` +
+	'<div class="d-flex justify-content-between popover-body">' +
+	`<div class="mr-4">${payload.properties.total} <span>${escapeHTML(
+		metricLabel
+	)}</span></div>` +
+	`<div>${payload.properties.value}%</div>` +
+	'</div>';
 
 interface IGeomapCardProps {
 	data: {
@@ -215,10 +221,9 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 
 			d3.select(node).style('fill', chartRef.current._color.selected);
 
-			const html = (feature: IFeature) =>
-				ReactDOMServer.renderToString(Tooltip(feature, metricLabel));
-
-			tooltip.html(html(_feature)).style('display', null);
+			tooltip
+				.html(renderTooltip(_feature, metricLabel))
+				.style('display', null);
 		};
 
 		const handleMouseOut = (

@@ -42,6 +42,9 @@ components:
             type: object
         ExportRequest:
             properties:
+                deletions:
+                    default: false
+                    type: boolean
                 endDate:
                     format: date-time
                     type: string
@@ -50,6 +53,9 @@ components:
                 last:
                     format: int32
                     type: integer
+                permissions:
+                    default: false
+                    type: boolean
                 range:
                     default: all
                     enum: [all, dateRange, last]
@@ -130,10 +136,24 @@ components:
             type: object
         ImportRequest:
             properties:
+                dataStrategy:
+                    default: MIRROR
+                    enum: [MIRROR, MIRROR_OVERWRITE, COPY_AS_NEW]
+                    type: string
+                deletions:
+                    default: false
+                    type: boolean
+                permissions:
+                    default: false
+                    type: boolean
                 requestPortletDataHandlers:
                     items:
                         $ref: "#/components/schemas/RequestPortletDataHandler"
                     type: array
+                userIdStrategy:
+                    default: CURRENT_USER_ID
+                    enum: [CURRENT_USER_ID, ALWAYS_CURRENT_USER_ID]
+                    type: string
             type: object
         Origin:
             properties:

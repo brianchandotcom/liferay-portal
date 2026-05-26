@@ -38,7 +38,7 @@ const GROUP_LABELS: Record<string, string> = {
 	'asset-categorization': Liferay.Language.get('asset-categorization'),
 	attributes: Liferay.Language.get('attributes'),
 	behavioral: Liferay.Language.get('behavioral'),
-	'page-topics': Liferay.Language.get('interests')
+	'page-topics': Liferay.Language.get('page-topics')
 };
 
 interface IPickerGroup {

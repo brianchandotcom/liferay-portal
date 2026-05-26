@@ -8,7 +8,6 @@ package com.liferay.friendly.url.internal.exportimport.staged.model.repository;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
-import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.internal.exportimport.lar.FriendlyURLExportImportPathUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -141,6 +140,7 @@ public class FriendlyURLEntryStagedModelRepository
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					friendlyURLEntry.getGroupId(),
 					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getParentClassPK(),
 					friendlyURLEntry.getClassPK(),
 					friendlyURLEntryLocalization.getUrlTitle(), null));
 
@@ -198,14 +198,13 @@ public class FriendlyURLEntryStagedModelRepository
 				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 					friendlyURLEntry.getGroupId(),
 					friendlyURLEntry.getClassNameId(),
-					FriendlyURLEntryConstants.
-						FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
-					urlTitle);
+					friendlyURLEntry.getParentClassPK(), urlTitle);
 
 			if (existingFriendlyURLEntry != null) {
 				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 					friendlyURLEntry.getGroupId(),
 					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getParentClassPK(),
 					friendlyURLEntry.getClassPK(), urlTitle, null);
 			}
 

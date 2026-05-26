@@ -5,10 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {
+	COUNTRY_SOURCE,
 	CountryInfo,
-	PREFIX_TYPE,
+	CountrySource,
 	PhoneNumberInput,
-	PrefixType,
 } from '@liferay/object-js-components-web';
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
@@ -26,6 +26,8 @@ const PHONE_NUMBER_PATTERN = /^\+[0-9]{7,15}$/;
 
 interface BasePhoneNumberProps {
 	countries?: CountryInfo[];
+	country?: string;
+	countrySource?: CountrySource;
 	disabled?: boolean;
 	displayErrors?: boolean;
 	errorMessage?: string;
@@ -37,8 +39,6 @@ interface BasePhoneNumberProps {
 	onFocus?: (event: React.FocusEvent) => void;
 	pageValidationFailed?: boolean;
 	predefinedValue?: string;
-	prefix?: string;
-	prefixType?: PrefixType;
 	readOnly?: boolean;
 	valid?: boolean;
 	[key: string]: unknown;
@@ -74,14 +74,14 @@ const getValidationState = (value: string) => {
 
 const LocalizablePhoneNumber = ({
 	countries = [],
+	country,
+	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	fieldName,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	predefinedValue,
-	prefix,
-	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
 	value = {} as LocalizedValue<string>,
 	...otherProps
@@ -123,6 +123,8 @@ const LocalizablePhoneNumber = ({
 			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
+					country={country}
+					countrySource={countrySource}
 					disabled={disabled}
 					id={otherProps.id as string}
 					key={editingLanguageId}
@@ -130,8 +132,6 @@ const LocalizablePhoneNumber = ({
 					onBlur={handleBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
-					prefix={prefix}
-					prefixType={prefixType}
 					value={currentValue}
 				/>
 
@@ -149,13 +149,13 @@ const LocalizablePhoneNumber = ({
 
 const NonLocalizablePhoneNumber = ({
 	countries = [],
+	country,
+	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	predefinedValue,
-	prefix,
-	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
 	value: initialValue,
 	...otherProps
@@ -194,14 +194,14 @@ const NonLocalizablePhoneNumber = ({
 			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
+					country={country}
+					countrySource={countrySource}
 					disabled={disabled}
 					id={otherProps.id as string}
 					name={name}
 					onBlur={handleBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
-					prefix={prefix}
-					prefixType={prefixType}
 					value={initialValue || predefinedValue}
 				/>
 			</ClayInput.Group>

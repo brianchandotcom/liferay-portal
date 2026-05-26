@@ -9,9 +9,9 @@ import ClayForm from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {
 	API,
+	COUNTRY_SOURCE,
 	FormError,
 	Input,
-	PREFIX_TYPE,
 	SingleSelect,
 	Toggle,
 } from '@liferay/object-js-components-web';
@@ -134,8 +134,8 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		'PhoneNumber',
 		[
 			{
-				name: 'prefixType',
-				value: PREFIX_TYPE.DEFINED_BY_USER,
+				name: 'countrySource',
+				value: COUNTRY_SOURCE.DEFINED_BY_USER,
 			},
 		],
 	],

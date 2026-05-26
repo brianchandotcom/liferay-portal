@@ -42,7 +42,7 @@ export function PhoneNumberProperties({
 
 	const defaultCountry = getDefaultCountry(countries);
 
-	const country = settings.country || defaultCountry.a2;
+	const country = settings.country || defaultCountry?.a2;
 	const countrySource =
 		settings.countrySource || COUNTRY_SOURCE.DEFINED_BY_USER;
 
@@ -63,7 +63,7 @@ export function PhoneNumberProperties({
 		else if (value === COUNTRY_SOURCE.FIXED) {
 			updatedSettings = updateFieldSettings(updatedSettings, {
 				name: 'country',
-				value: defaultCountry.a2,
+				value: defaultCountry?.a2,
 			});
 		}
 
@@ -131,7 +131,7 @@ export function PhoneNumberProperties({
 							aria-labelledby={countryPickerId}
 							countries={countries}
 							onSelectionChange={handleCountryChange}
-							selectedKey={selectedCountry.a2}
+							selectedKey={selectedCountry?.a2}
 						/>
 					</ClayForm.Group>
 				</div>

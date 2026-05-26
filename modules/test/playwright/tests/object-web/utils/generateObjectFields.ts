@@ -168,7 +168,7 @@ function getObjectFieldSpecificProperties(
 				businessType: 'PhoneNumber',
 				objectFieldSettings: [
 					{
-						name: 'prefixType',
+						name: 'countrySource',
 						value: 'definedByUser',
 					},
 				],

@@ -115,6 +115,59 @@ public class ExportAuditEventsMVCResourceCommand
 		}
 	}
 
+	private String _buildCSV(
+		List<AuditEvent> auditEvents, String[] columns,
+		ProgressTracker progressTracker) {
+
+		int percentage = 10;
+		int total = auditEvents.size();
+
+		if (progressTracker != null) {
+			progressTracker.setPercent(percentage);
+		}
+
+		StringBundler sb = new StringBundler((auditEvents.size() * 3) + 4);
+
+		sb.append(
+			StringUtil.merge(
+				TransformUtil.transform(columns, CSVUtil::encode, String.class),
+				StringPool.COMMA));
+		sb.append(StringPool.NEW_LINE);
+
+		for (int i = 0; i < auditEvents.size(); i++) {
+			AuditEvent auditEvent = auditEvents.get(i);
+
+			sb.append(
+				StringUtil.merge(
+					TransformUtil.transform(
+						columns,
+						column -> {
+							Function<AuditEvent, String> function =
+								_functions.get(column);
+
+							if (function == null) {
+								return StringPool.BLANK;
+							}
+
+							String value = function.apply(auditEvent);
+
+							return CSVUtil.encode(value);
+						},
+						String.class),
+					StringPool.COMMA));
+
+			sb.append(StringPool.NEW_LINE);
+
+			percentage = Math.min(10 + ((i * 90) / total), 99);
+
+			if (progressTracker != null) {
+				progressTracker.setPercent(percentage);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private String _formatDate(Date date) {
 		if (date instanceof Timestamp) {
 			date = new Date(date.getTime());
@@ -167,52 +220,11 @@ public class ExportAuditEventsMVCResourceCommand
 
 		progressTracker.start(resourceRequest);
 
-		int percentage = 10;
-		int total = auditEvents.size();
-
-		progressTracker.setPercent(percentage);
-
-		StringBundler sb = new StringBundler((auditEvents.size() * 3) + 4);
-
-		sb.append(StringPool.QUOTE);
-		sb.append(
-			StringUtil.merge(
-				columns,
-				StringPool.QUOTE + StringPool.COMMA + StringPool.QUOTE));
-		sb.append(StringPool.QUOTE);
-		sb.append(StringPool.NEW_LINE);
-
-		for (int i = 0; i < auditEvents.size(); i++) {
-			AuditEvent auditEvent = auditEvents.get(i);
-
-			sb.append(StringPool.QUOTE);
-			sb.append(
-				StringUtil.merge(
-					TransformUtil.transform(
-						columns,
-						column -> {
-							Function<AuditEvent, String> function =
-								_functions.get(column);
-
-							if (function == null) {
-								return StringPool.BLANK;
-							}
-
-							return function.apply(auditEvent);
-						},
-						String.class),
-					StringPool.QUOTE + StringPool.COMMA + StringPool.QUOTE));
-			sb.append(StringPool.QUOTE);
-			sb.append(StringPool.NEW_LINE);
-
-			percentage = Math.min(10 + ((i * 90) / total), 99);
-
-			progressTracker.setPercent(percentage);
-		}
+		String csv = _buildCSV(auditEvents, columns, progressTracker);
 
 		progressTracker.finish(resourceRequest);
 
-		return sb.toString();
+		return csv;
 	}
 
 	private String _getUserEmailAddress(AuditEvent auditEvent) {
@@ -277,10 +289,7 @@ public class ExportAuditEventsMVCResourceCommand
 	private final LinkedHashMap<String, Function<AuditEvent, String>>
 		_functions =
 			LinkedHashMapBuilder.<String, Function<AuditEvent, String>>put(
-				"additional-information",
-				auditEvent -> StringUtil.removeFirst(
-					CSVUtil.encode(auditEvent.getAdditionalInfo()),
-					StringPool.QUOTE)
+				"additional-information", AuditEvent::getAdditionalInfo
 			).put(
 				"client-host", AuditEvent::getClientHost
 			).put(

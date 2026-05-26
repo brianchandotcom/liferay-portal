@@ -865,10 +865,32 @@ describe('IncrementalInteractions', () => {
 			// Native HTML disabled would block focus entirely; aria-disabled
 			// keeps the button focusable for arrow-key grid navigation.
 
-			expect(beforeMin).not.toBeDisabled();
+			expect(beforeMin).toBeEnabled();
 		});
 
-		it('does not commit a click on a disabled day', () => {
+		it('selects a valid day inside the range', async () => {
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					max="2019-04-20"
+					min="2019-04-10"
+					spritemap={spritemap}
+				/>
+			);
+
+			const input: any = getByLabelText(ariaLabels.input);
+			const dayNumber = getByLabelText(
+				new Date('2019 04 15').toDateString()
+			);
+
+			await userEvent.click(dayNumber);
+
+			expect(input.value).toBe('2019-04-15');
+			expect(dayNumber).toHaveClass('active');
+		});
+
+		it('does not commit a click on a disabled day', async () => {
 			const onChange = jest.fn();
 
 			const {getByLabelText} = render(
@@ -883,14 +905,14 @@ describe('IncrementalInteractions', () => {
 				/>
 			);
 
-			fireEvent.click(
+			await userEvent.click(
 				getByLabelText(new Date('2019 04 05').toDateString())
 			);
 
 			expect(onChange).not.toHaveBeenCalled();
 		});
 
-		it('does not commit out-of-range values typed into the input', () => {
+		it('does not commit out-of-range values typed into the input', async () => {
 			const onChange = jest.fn();
 
 			const {getByLabelText} = render(
@@ -907,13 +929,13 @@ describe('IncrementalInteractions', () => {
 
 			const input: any = getByLabelText(ariaLabels.input);
 
-			fireEvent.change(input, {target: {value: '2019-04-05'}});
+			await userEvent.type(input, '2019-04-05');
 
 			const dayNumber = getByLabelText(
 				new Date('2019 04 05').toDateString()
 			);
 
-			expect(dayNumber.classList).not.toContain('active');
+			expect(dayNumber).not.toHaveClass('active');
 		});
 
 		it('warns and ignores both bounds when min >= max', () => {
@@ -966,7 +988,7 @@ describe('IncrementalInteractions', () => {
 			).toHaveAttribute('aria-disabled', 'true');
 		});
 
-		it('does not commit a time edit that falls outside min on the boundary day', () => {
+		it('does not commit a time edit that falls outside min on the boundary day', async () => {
 			const onChange = jest.fn();
 
 			const {getByTestId} = render(
@@ -983,20 +1005,22 @@ describe('IncrementalInteractions', () => {
 				/>
 			);
 
-			fireEvent.click(getByTestId('hours'));
-			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
+			const hoursInput = getByTestId('hours');
+
+			await userEvent.click(hoursInput);
 
 			// Hours start at 12, arrow down loops via config min=10 (down from
 			// 12 → 11 → 10). Further presses are clamped/wrapped by config.
 
-			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
-			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
+			await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}');
 
 			// `onChange` should not have been called with a value below 10:00.
 
 			const calls = onChange.mock.calls
 				.map((call: Array<string>) => call[0])
 				.filter(Boolean);
+
+			expect(calls.length).toBeGreaterThan(0);
 
 			calls.forEach((value: string) => {
 				const [, hh] = value.split(' ');
@@ -1005,29 +1029,27 @@ describe('IncrementalInteractions', () => {
 			});
 		});
 
-		it('announces out-of-range rejections via a polite live region', () => {
+		it('announces out-of-range rejections via a polite live region', async () => {
 			const {container, getByLabelText} = render(
-				<ClayDatePicker
+				<DatePickerWithState
 					ariaLabels={{
 						...ariaLabels,
 						outOfRange: 'Out of range',
 					}}
 					defaultExpanded
-					defaultMonth={new Date(2019, 3, 18)}
 					min="2019-04-10"
 					spritemap={spritemap}
-					years={{end: 2019, start: 2019}}
 				/>
 			);
 
 			const liveRegion = container.querySelector('[aria-live="polite"]');
 
-			expect(liveRegion).not.toBeNull();
+			expect(liveRegion).toBeInTheDocument();
 			expect(liveRegion).toHaveTextContent('');
 
-			const input: any = getByLabelText(ariaLabels.input);
-
-			fireEvent.change(input, {target: {value: '2019-04-05'}});
+			await userEvent.click(
+				getByLabelText(new Date('2019 04 05').toDateString())
+			);
 
 			expect(liveRegion).toHaveTextContent('Out of range');
 		});

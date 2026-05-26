@@ -2789,7 +2789,7 @@ public class ObjectEntryLocalServiceTest {
 			Collections.singletonList(
 				new ObjectFieldSettingBuilder(
 				).name(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 				).value(
 					ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 				).build())
@@ -3529,7 +3529,7 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddObjectEntryWithPhoneNumberObjectField()
 		throws Exception {
 
-		// Defined by user prefix type
+		// Defined by user country source
 
 		ObjectField objectField1 = new PhoneNumberObjectFieldBuilder(
 		).labelMap(
@@ -3540,7 +3540,7 @@ public class ObjectEntryLocalServiceTest {
 			Collections.singletonList(
 				new ObjectFieldSettingBuilder(
 				).name(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 				).value(
 					ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 				).build())
@@ -3583,7 +3583,7 @@ public class ObjectEntryLocalServiceTest {
 			"+15551234567", objectField1.getName(), objectDefinition,
 			"+15551234567");
 
-		// Fixed prefix type
+		// Fixed country source
 
 		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
 			new PhoneNumberObjectFieldBuilder(
@@ -3597,13 +3597,13 @@ public class ObjectEntryLocalServiceTest {
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX
+						ObjectFieldSettingConstants.NAME_COUNTRY
 					).value(
-						"+1"
+						"US"
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_FIXED
 					).build())
@@ -3646,7 +3646,7 @@ public class ObjectEntryLocalServiceTest {
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 					).build(),
@@ -7395,7 +7395,7 @@ public class ObjectEntryLocalServiceTest {
 					Collections.singletonList(
 						new ObjectFieldSettingBuilder(
 						).name(
-							ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+							ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 						).value(
 							ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 						).build())

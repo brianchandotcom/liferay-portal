@@ -10,35 +10,35 @@ const countries = [
 		id: 'United States',
 		name: 'United States',
 		total: 6911,
-		value: '37.7'
+		value: 37.7
 	},
 	{
 		group: 'Brazil',
 		id: 'Brazil',
 		name: 'Brazil',
 		total: 6274,
-		value: '34.3'
+		value: 34.3
 	},
 	{
 		group: 'India',
 		id: 'India',
 		name: 'India',
 		total: 574,
-		value: '3.1'
+		value: 3.1
 	},
 	{
 		group: 'Spain',
 		id: 'Spain',
 		name: 'Spain',
 		total: 490,
-		value: '2.7'
+		value: 2.7
 	},
 	{
 		group: 'Italy',
 		id: 'Italy',
 		name: 'Italy',
 		total: 463,
-		value: '2.5'
+		value: 2.5
 	},
 	{
 		color: '#CCCCCC',
@@ -46,7 +46,7 @@ const countries = [
 		id: 'others',
 		name: 'Others',
 		total: 3603,
-		value: '19.7'
+		value: 19.7
 	}
 ];
 
@@ -56,11 +56,25 @@ const props = {
 		total: countries.length
 	},
 	filters: {},
-	loading: false
+	loading: false,
+	metricLabel: 'sessions'
 };
+
+const getBrazilPath = (container: HTMLElement) => {
+	const paths = container.querySelectorAll('.analytics-geomap svg path');
+
+	return Array.from(paths).find(
+		path => (path as any).__data__?.properties?.name === 'Brazil'
+	) as SVGPathElement | undefined;
+};
+
+const getTooltip = (container: HTMLElement) =>
+	container.querySelector<HTMLElement>('.popover')!;
+
 describe('GeoMapCard', () => {
 	it('should render', () => {
 		const {container} = render(<GeomapCard {...props} />);
+
 		expect(container).toMatchSnapshot();
 	});
 
@@ -71,7 +85,7 @@ describe('GeoMapCard', () => {
 				id: 'Local Network',
 				name: 'Local Network',
 				total: 1,
-				value: '100'
+				value: 100
 			},
 			...countries
 		];
@@ -80,8 +94,7 @@ describe('GeoMapCard', () => {
 			<GeomapCard
 				{...props}
 				data={{
-					countries: dataWithLocalNetwork,
-					total: dataWithLocalNetwork.length
+					countries: dataWithLocalNetwork
 				}}
 			/>
 		);
@@ -94,7 +107,7 @@ describe('GeoMapCard', () => {
 
 		const firstRow = container.querySelector(
 			'.analytics-geomap-table > tbody > tr'
-		);
+		)!;
 
 		fireEvent.mouseOver(firstRow);
 
@@ -104,30 +117,22 @@ describe('GeoMapCard', () => {
 	});
 
 	it('should keep the tooltip hidden on first render', () => {
-		const {container} = render(
-			<GeomapCard {...props} metricLabel='sessions' />
-		);
+		const {container} = render(<GeomapCard {...props} />);
 
-		const tooltip = container.querySelector('.popover');
+		const tooltip = getTooltip(container);
 
 		expect(tooltip).toBeTruthy();
 		expect(tooltip.style.display).toBe('none');
 	});
 
 	it('should show the tooltip with country information on mouseover', async () => {
-		const {container} = render(
-			<GeomapCard {...props} metricLabel='sessions' />
-		);
+		const {container} = render(<GeomapCard {...props} />);
 
-		const paths = container.querySelectorAll('.analytics-geomap svg path');
-
-		const brazilPath = Array.from(paths).find(
-			path => path.__data__?.properties?.name === 'Brazil'
-		);
+		const brazilPath = getBrazilPath(container)!;
 
 		expect(brazilPath).toBeTruthy();
 
-		const tooltip = container.querySelector('.popover');
+		const tooltip = getTooltip(container);
 
 		expect(tooltip.style.display).toBe('none');
 
@@ -144,17 +149,11 @@ describe('GeoMapCard', () => {
 	});
 
 	it('should hide the tooltip on mouseout', async () => {
-		const {container} = render(
-			<GeomapCard {...props} metricLabel='sessions' />
-		);
+		const {container} = render(<GeomapCard {...props} />);
 
-		const paths = container.querySelectorAll('.analytics-geomap svg path');
+		const brazilPath = getBrazilPath(container)!;
 
-		const brazilPath = Array.from(paths).find(
-			path => path.__data__?.properties?.name === 'Brazil'
-		);
-
-		const tooltip = container.querySelector('.popover');
+		const tooltip = getTooltip(container);
 
 		fireEvent.mouseOver(brazilPath);
 

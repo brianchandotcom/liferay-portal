@@ -77,11 +77,11 @@ function _print_usage {
 Usage: run_ci_local.sh [command] [args...]
 
 Commands:
-  all                    Run all CI checks (default)
-  helm [chart...]        Run helm CI checks (lint, kubeconform)
-  shell                  Run shellcheck (not yet implemented)
-  terraform [stack...]   Run terraform CI checks (validate, tflint, checkov)
-  --help, -h             Show this message
+all: Run all CI checks (default)
+helm [chart...]: Run helm CI checks (lint, kubeconform)
+shell: Run shellcheck (not yet implemented)
+terraform [stack...]: Run terraform CI checks (validate, tflint, checkov)
+--help, -h: Show this message
 
 Without args, helm and terraform check every chart/stack listed in the CI
 workflow matrices. With args, only the specified charts/stacks are checked.

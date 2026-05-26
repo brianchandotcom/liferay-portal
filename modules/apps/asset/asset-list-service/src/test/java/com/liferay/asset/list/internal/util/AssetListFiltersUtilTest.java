@@ -185,6 +185,25 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testTextContainsIgnoresQuantifierOnTextField() {
+		_stubObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		JSONObject filterJSONObject = _buildFilter(
+			"contains", "title", "keyword"
+		).put(
+			"quantifier", "any"
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", filterJSONObject, BooleanClauseOccur.MUST);
+
+		Assert.assertTrue(
+			valueQuery.toString(), valueQuery instanceof MatchQuery);
+	}
+
+	@Test
 	public void testTextEqBuildsTermQuery() {
 		_stubObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -195,6 +214,20 @@ public class AssetListFiltersUtilTest {
 			BooleanClauseOccur.MUST);
 
 		_assertTermQuery(valueQuery, "nestedFieldArray.value_text", "keyword");
+	}
+
+	@Test
+	public void testTextNotContainsWrapsMatchQueryInMustNot() {
+		_stubObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("not-contains", "title", "keyword"),
+			BooleanClauseOccur.MUST_NOT);
+
+		Assert.assertTrue(
+			valueQuery.toString(), valueQuery instanceof MatchQuery);
 	}
 
 	@Test

@@ -75,6 +75,25 @@ public class ImportRequest implements Cloneable, Serializable {
 
 	protected Boolean deletions;
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
+
 	public Boolean getPermissions() {
 		return permissions;
 	}
@@ -251,4 +270,4 @@ public class ImportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-240863058
+// LIFERAY-REST-BUILDER-HASH:-1344546348

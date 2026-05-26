@@ -44,7 +44,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName("ExportRequest")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"fileName"})
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ExportRequest")
 public class ExportRequest implements Serializable {
@@ -140,48 +140,6 @@ public class ExportRequest implements Serializable {
 	private Supplier<Date> _endDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getFileName() {
-		if (_fileNameSupplier != null) {
-			fileName = _fileNameSupplier.get();
-
-			_fileNameSupplier = null;
-		}
-
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-
-		_fileNameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFileName(
-		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
-
-		_fileNameSupplier = () -> {
-			try {
-				return fileNameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String fileName;
-
-	@JsonIgnore
-	private Supplier<String> _fileNameSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getLast() {
 		if (_lastSupplier != null) {
 			last = _lastSupplier.get();
@@ -219,6 +177,46 @@ public class ExportRequest implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Integer> _lastSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+
+		_nameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String name;
+
+	@JsonIgnore
+	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getPermissions() {
@@ -459,22 +457,6 @@ public class ExportRequest implements Serializable {
 			sb.append("\"");
 		}
 
-		String fileName = getFileName();
-
-		if (fileName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fileName));
-
-			sb.append("\"");
-		}
-
 		Integer last = getLast();
 
 		if (last != null) {
@@ -485,6 +467,22 @@ public class ExportRequest implements Serializable {
 			sb.append("\"last\": ");
 
 			sb.append(last);
+		}
+
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
 		Boolean permissions = getPermissions();
@@ -691,4 +689,4 @@ public class ExportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1389794527
+// LIFERAY-REST-BUILDER-HASH:-979315471

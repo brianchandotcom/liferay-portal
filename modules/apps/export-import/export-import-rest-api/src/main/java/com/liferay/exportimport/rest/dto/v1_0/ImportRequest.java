@@ -147,6 +147,45 @@ public class ImportRequest implements Serializable {
 	private Supplier<Boolean> _deletionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+
+		_nameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
+	@JsonIgnore
+	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getPermissions() {
 		if (_permissionsSupplier != null) {
 			permissions = _permissionsSupplier.get();
@@ -340,6 +379,22 @@ public class ImportRequest implements Serializable {
 			sb.append("\"deletions\": ");
 
 			sb.append(deletions);
+		}
+
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
 		Boolean permissions = getPermissions();
@@ -570,4 +625,4 @@ public class ImportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:94521741
+// LIFERAY-REST-BUILDER-HASH:834924027

@@ -94,8 +94,9 @@ const SelectSubscription = ({
 		selectedKeyType?.includes('OEM') ||
 		selectedKeyType?.includes('Enterprise');
 
-	const productTypes = generateFormValues?.versions
-		?.find((version) => version.label === selectedVersion)?.types;
+	const productTypes = generateFormValues?.versions?.find(
+		(version) => version.label === selectedVersion
+	)?.types;
 	const isRenew = state?.id === 'renew';
 	const keyCount = state?.activationKeys?.length;
 	const renewKeySubtitle = getRenewKeySubtitle(state);
@@ -884,41 +885,41 @@ const SelectSubscription = ({
 					</div>
 
 					{allowComplimentary && (
-							<Radio
-								hasCustomAlert={
-									hasComplimentaryKey && (
-										<CustomComplimentaryKeyAlert />
-									)
-								}
-								isActivationKeyAvailable={5}
-								label={i18n.translate('complimentary')}
-								onChange={(complimentaryKey) => {
-									setSelectedSubscription({
-										...complimentaryKey,
-									});
-									setHasComplimentaryKey(true);
+						<Radio
+							hasCustomAlert={
+								hasComplimentaryKey && (
+									<CustomComplimentaryKeyAlert />
+								)
+							}
+							isActivationKeyAvailable={5}
+							label={i18n.translate('complimentary')}
+							onChange={(complimentaryKey) => {
+								setSelectedSubscription({
+									...complimentaryKey,
+								});
+								setHasComplimentaryKey(true);
 
-									setSelectedKeyData({
-										licenseEntryType: isRenew
-											? productName
-											: selectedKeyType,
-										productType: productGroupName,
-										productVersion: isRenew
-											? uniqueVersionOfTheSelectedKey
-											: selectedVersion,
-									});
-								}}
-								selected={hasComplimentaryKey}
-								subtitle={i18n.translate(
-									'choose-this-option-if-you-want-an-activation-key-for-30-days'
-								)}
-								value={
-									isRenew && !isSingleComplimentaryKey
-										? mockedValuesForComplimentaryKeysOfTheSelectedKeys
-										: mockedValuesForComplimentaryKeys
-								}
-							/>
-						)}
+								setSelectedKeyData({
+									licenseEntryType: isRenew
+										? productName
+										: selectedKeyType,
+									productType: productGroupName,
+									productVersion: isRenew
+										? uniqueVersionOfTheSelectedKey
+										: selectedVersion,
+								});
+							}}
+							selected={hasComplimentaryKey}
+							subtitle={i18n.translate(
+								'choose-this-option-if-you-want-an-activation-key-for-30-days'
+							)}
+							value={
+								isRenew && !isSingleComplimentaryKey
+									? mockedValuesForComplimentaryKeysOfTheSelectedKeys
+									: mockedValuesForComplimentaryKeys
+							}
+						/>
+					)}
 
 					<div className="dropdown-divider mt-3"></div>
 				</div>

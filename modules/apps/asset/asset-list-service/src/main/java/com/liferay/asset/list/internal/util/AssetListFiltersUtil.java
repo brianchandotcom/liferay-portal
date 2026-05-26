@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Joshua Cords
@@ -220,6 +222,37 @@ public class AssetListFiltersUtil {
 		return new NestedQuery("nestedFieldArray", booleanQuery);
 	}
 
+	private static Query _toPicklistQuery(
+		JSONObject filterJSONObject, String subfield) {
+
+		JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
+
+		if ((valueJSONArray == null) || (valueJSONArray.length() == 0)) {
+			return null;
+		}
+
+		BooleanClauseOccur innerOccur = BooleanClauseOccur.SHOULD;
+
+		String quantifier = filterJSONObject.getString("quantifier");
+
+		if (Objects.equals(quantifier, "all")) {
+			innerOccur = BooleanClauseOccur.MUST;
+		}
+
+		BooleanQuery booleanQuery = new BooleanQuery();
+
+		for (int i = 0; i < valueJSONArray.length(); i++) {
+			JSONObject itemJSONObject = valueJSONArray.getJSONObject(i);
+
+			String value = StringUtil.toLowerCase(
+				itemJSONObject.getString("value"));
+
+			booleanQuery.add(new TermQuery(subfield, value), innerOccur);
+		}
+
+		return booleanQuery;
+	}
+
 	private static Query _toRangeQuery(
 		JSONObject filterJSONObject, String subfield, String operatorName,
 		ObjectField objectField) {
@@ -298,6 +331,13 @@ public class AssetListFiltersUtil {
 	private static Query _toValueQuery(
 		JSONObject filterJSONObject, String subfield, String operatorName,
 		String value, ObjectField objectField) {
+
+		if (subfield.endsWith(".value_keyword") &&
+			(operatorName.equals("contains") ||
+			 operatorName.equals("not-contains"))) {
+
+			return _toPicklistQuery(filterJSONObject, subfield);
+		}
 
 		if (operatorName.equals("between") || operatorName.equals("gt") ||
 			operatorName.equals("ge") || operatorName.equals("lt") ||

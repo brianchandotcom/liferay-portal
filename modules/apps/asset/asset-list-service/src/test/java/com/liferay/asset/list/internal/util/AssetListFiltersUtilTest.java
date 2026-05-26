@@ -11,7 +11,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -64,6 +63,90 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testBooleanEqBuildsTermQuery() {
+		_stubObjectField(
+			"visible", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+			ObjectFieldConstants.DB_TYPE_BOOLEAN);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"visible", _buildFilter("eq", "visible", "true"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_boolean", "true");
+	}
+
+	@Test
+	public void testDecimalEqBuildsTermQuery() {
+		_stubObjectField(
+			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"priority", _buildFilter("eq", "priority", "3.14"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_double", "3.14");
+	}
+
+	@Test
+	public void testIntegerEqBuildsTermQuery() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("eq", "viewCount", "5"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_integer", "5");
+	}
+
+	@Test
+	public void testIntegerNotEqWrapsTermQueryInMustNot() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("not-eq", "viewCount", "5"),
+			BooleanClauseOccur.MUST_NOT);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_integer", "5");
+	}
+
+	@Test
+	public void testLocalizedTextEqUsesLocalizedSubfield() {
+		ObjectField objectField = _stubObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		Mockito.when(
+			objectField.isLocalized()
+		).thenReturn(
+			true
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("eq", "title", "keyword"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_en_US", "keyword");
+	}
+
+	@Test
+	public void testLongIntegerEqBuildsTermQuery() {
+		_stubObjectField(
+			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"externalId", _buildFilter("eq", "externalId", "99999"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_long", "99999");
+	}
+
+	@Test
 	public void testReturnsEmptyClausesWhenFiltersJSONArrayIsEmpty() {
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
@@ -89,18 +172,38 @@ public class AssetListFiltersUtilTest {
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			_buildFilter("contains", "title", "keyword"));
-
-		BooleanClause[] booleanClauses =
-			AssetListFiltersUtil.getFiltersBooleanClauses(
-				filtersJSONArray, _COMPANY_ID, LocaleUtil.US);
-
-		Query valueQuery = _assertNestedRow(
-			booleanClauses, 0, "title", BooleanClauseOccur.MUST);
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("contains", "title", "keyword"),
+			BooleanClauseOccur.MUST);
 
 		Assert.assertTrue(
 			valueQuery.toString(), valueQuery instanceof MatchQuery);
+	}
+
+	@Test
+	public void testTextEqBuildsTermQuery() {
+		_stubObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("eq", "title", "keyword"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_text", "keyword");
+	}
+
+	@Test
+	public void testTextNotEqWrapsTermQueryInMustNot() {
+		_stubObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("not-eq", "title", "keyword"),
+			BooleanClauseOccur.MUST_NOT);
+
+		_assertTermQuery(valueQuery, "nestedFieldArray.value_text", "keyword");
 	}
 
 	private static MockedStatic<ObjectDefinitionLocalServiceUtil>
@@ -178,6 +281,23 @@ public class AssetListFiltersUtilTest {
 		).getClause();
 	}
 
+	private void _assertTermQuery(
+		Query query, String expectedField, String expectedValue) {
+
+		Assert.assertTrue(query.toString(), query instanceof TermQuery);
+
+		TermQuery termQuery = (TermQuery)query;
+
+		Assert.assertEquals(
+			expectedField,
+			termQuery.getQueryTerm(
+			).getField());
+		Assert.assertEquals(
+			expectedValue,
+			termQuery.getQueryTerm(
+			).getValue());
+	}
+
 	private JSONObject _buildFilter(
 		String operatorName, String propertyName, String value) {
 
@@ -192,6 +312,18 @@ public class AssetListFiltersUtilTest {
 		).put(
 			"value", value
 		);
+	}
+
+	private Query _runAndAssertNestedRow(
+		String propertyName, JSONObject filterJSONObject,
+		BooleanClauseOccur expectedValueOccur) {
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				JSONUtil.putAll(filterJSONObject), _COMPANY_ID, LocaleUtil.US);
+
+		return _assertNestedRow(
+			booleanClauses, 0, propertyName, expectedValueOccur);
 	}
 
 	private ObjectField _stubObjectField(

@@ -386,6 +386,117 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testPicklistContainsAllBuildsMustOfTermQueries() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"contains", "status",
+			JSONUtil.putAll(
+				_picklistValueJSONObject("approved"),
+				_picklistValueJSONObject("draft"))
+		).put(
+			"quantifier", "all"
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"status", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertPicklistBooleanQuery(
+			valueQuery, BooleanClauseOccur.MUST, "approved", "draft");
+	}
+
+	@Test
+	public void testPicklistContainsAnyBuildsShouldOfTermQueries() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"contains", "status",
+			JSONUtil.putAll(
+				_picklistValueJSONObject("approved"),
+				_picklistValueJSONObject("draft"))
+		).put(
+			"quantifier", "any"
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"status", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertPicklistBooleanQuery(
+			valueQuery, BooleanClauseOccur.SHOULD, "approved", "draft");
+	}
+
+	@Test
+	public void testPicklistContainsDefaultsToAnyWhenQuantifierMissing() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"contains", "status",
+			JSONUtil.putAll(_picklistValueJSONObject("approved")));
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"status", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertPicklistBooleanQuery(
+			valueQuery, BooleanClauseOccur.SHOULD, "approved");
+	}
+
+	@Test
+	public void testPicklistEmptyValueArraySkipsRow() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"contains", "status", JSONFactoryUtil.createJSONArray()
+		).put(
+			"quantifier", "any"
+		);
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				JSONUtil.putAll(filterJSONObject), _COMPANY_ID, LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+	}
+
+	@Test
+	public void testPicklistNotContainsAnyWrapsInMustNot() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"not-contains", "status",
+			JSONUtil.putAll(
+				_picklistValueJSONObject("approved"),
+				_picklistValueJSONObject("draft"))
+		).put(
+			"quantifier", "any"
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"status", filterJSONObject, BooleanClauseOccur.MUST_NOT);
+
+		_assertPicklistBooleanQuery(
+			valueQuery, BooleanClauseOccur.SHOULD, "approved", "draft");
+	}
+
+	@Test
+	public void testPicklistValuesAreLowercased() {
+		_stubPicklistObjectField("status");
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"contains", "status",
+			JSONUtil.putAll(_picklistValueJSONObject("Approved"))
+		).put(
+			"quantifier", "any"
+		);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"status", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertPicklistBooleanQuery(
+			valueQuery, BooleanClauseOccur.SHOULD, "approved");
+	}
+
+	@Test
 	public void testReturnsEmptyClausesWhenFiltersJSONArrayIsEmpty() {
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
@@ -553,6 +664,35 @@ public class AssetListFiltersUtilTest {
 		).getClause();
 	}
 
+	private void _assertPicklistBooleanQuery(
+		Query query, BooleanClauseOccur expectedInnerOccur,
+		String... expectedValues) {
+
+		Assert.assertTrue(query.toString(), query instanceof BooleanQuery);
+
+		BooleanQuery booleanQuery = (BooleanQuery)query;
+
+		List<BooleanClause<Query>> innerBooleanClauses = booleanQuery.clauses();
+
+		Assert.assertEquals(
+			innerBooleanClauses.toString(), expectedValues.length,
+			innerBooleanClauses.size());
+
+		for (int i = 0; i < expectedValues.length; i++) {
+			Assert.assertEquals(
+				expectedInnerOccur,
+				innerBooleanClauses.get(
+					i
+				).getBooleanClauseOccur());
+
+			_assertTermQuery(
+				innerBooleanClauses.get(
+					i
+				).getClause(),
+				"nestedFieldArray.value_keyword", expectedValues[i]);
+		}
+	}
+
 	private void _assertTermQuery(
 		Query query, String expectedField, String expectedValue) {
 
@@ -617,6 +757,14 @@ public class AssetListFiltersUtilTest {
 			"propertyName", propertyName
 		).put(
 			"value", valueJSONArray
+		);
+	}
+
+	private JSONObject _picklistValueJSONObject(String value) {
+		return JSONUtil.put(
+			"label", value
+		).put(
+			"value", value
 		);
 	}
 
@@ -698,6 +846,20 @@ public class AssetListFiltersUtilTest {
 			() -> PortalUtil.getClassName(_CLASS_NAME_ID)
 		).thenReturn(
 			"com.liferay.test.Class" + _CLASS_NAME_ID
+		);
+
+		return objectField;
+	}
+
+	private ObjectField _stubPicklistObjectField(String name) {
+		ObjectField objectField = _stubObjectField(
+			name, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		Mockito.when(
+			objectField.isIndexedAsKeyword()
+		).thenReturn(
+			true
 		);
 
 		return objectField;

@@ -181,7 +181,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		);
 		left: $sidebarButtonWidth;
 		position: fixed;
-		transform: translateX(-100%);
+		transform: translateX(calc(-100% - $sidebarButtonWidth));
 		transition:
 			transform ease $defaultTransitionDuration,
 			left ease $defaultTransitionDuration;

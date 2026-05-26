@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaCompanyThreadLocalCheck" files="ai-hub-impl/src/main/java/com/liferay/ai/hub/internal/web/search/LiferayWebSearchEngine\.java" />
-		<suppress checks="JavaCompanyThreadLocalCheck" files="ai-hub-impl/src/main/java/com/liferay/ai/hub/internal/workflow/kaleo/runtime/node/AIDecisionNodeExecutor\.java" />
-	</source-check>
-</suppressions>

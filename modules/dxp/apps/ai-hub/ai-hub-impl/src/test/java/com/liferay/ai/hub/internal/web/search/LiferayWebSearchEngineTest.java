@@ -61,7 +61,7 @@ public class LiferayWebSearchEngineTest {
 			LiferayWebSearchEngine liferayWebSearchEngine =
 				new LiferayWebSearchEngine(
 					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-					RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+					RandomTestUtil.randomString());
 
 			SecurityException securityException = Assert.assertThrows(
 				SecurityException.class,

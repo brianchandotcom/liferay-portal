@@ -7,11 +7,10 @@ package com.liferay.ai.hub.internal.web.search;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -34,6 +33,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Feliphe Marinho
@@ -41,21 +42,23 @@ import java.util.Map;
 public class LiferayWebSearchEngine implements WebSearchEngine {
 
 	public LiferayWebSearchEngine(
-		String blueprintExternalReferenceCode, long companyId,
-		long oAuth2ApplicationId, String userToken) {
+		String blueprintExternalReferenceCode, long oAuth2ApplicationId,
+		String userToken) {
 
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
-		_companyId = companyId;
 		_oAuth2ApplicationId = oAuth2ApplicationId;
 		_userToken = userToken;
+
+		_searchCallable = new CompanyInheritableThreadLocalCallable<>(
+			() -> _search(_webSearchRequestAtomicReference.get()));
 	}
 
 	@Override
 	public WebSearchResults search(WebSearchRequest webSearchRequest) {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId)) {
+		_webSearchRequestAtomicReference.set(webSearchRequest);
 
-			return _search(webSearchRequest);
+		try {
+			return _searchCallable.call();
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -148,8 +151,10 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 	}
 
 	private final String _blueprintExternalReferenceCode;
-	private final long _companyId;
 	private final long _oAuth2ApplicationId;
+	private final Callable<WebSearchResults> _searchCallable;
 	private final String _userToken;
+	private final AtomicReference<WebSearchRequest>
+		_webSearchRequestAtomicReference = new AtomicReference<>();
 
 }

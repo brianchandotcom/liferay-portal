@@ -19,12 +19,12 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +57,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +76,36 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 	public class Tools {
 
+		public Tools() {
+			_completeWorkflowNodeCallable =
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						InvocationParameters invocationParameters =
+							_invocationParametersAtomicReference.get();
+
+						ExecutionContext executionContext =
+							invocationParameters.get("executionContext");
+
+						KaleoInstanceToken kaleoInstanceToken =
+							executionContext.getKaleoInstanceToken();
+
+						Map<String, Serializable> workflowContext =
+							executionContext.getWorkflowContext();
+
+						workflowContext.put(
+							"reason", _reasonAtomicReference.get());
+
+						_workflowNodeManager.completeWorkflowNode(
+							kaleoInstanceToken.getCompanyId(),
+							kaleoInstanceToken.getUserId(),
+							kaleoInstanceToken.getKaleoInstanceTokenId(),
+							_transitionNameAtomicReference.get(),
+							workflowContext, false);
+
+						return null;
+					});
+		}
+
 		@Tool(
 			"Complete the workflow node by proceeding to the chosen transition"
 		)
@@ -86,28 +118,25 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				@P("Transition name") String transitionName)
 			throws PortalException {
 
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						invocationParameters.get("companyId"))) {
+			_invocationParametersAtomicReference.set(invocationParameters);
+			_reasonAtomicReference.set(reason);
+			_transitionNameAtomicReference.set(transitionName);
 
-				ExecutionContext executionContext = invocationParameters.get(
-					"executionContext");
-
-				KaleoInstanceToken kaleoInstanceToken =
-					executionContext.getKaleoInstanceToken();
-
-				Map<String, Serializable> workflowContext =
-					executionContext.getWorkflowContext();
-
-				workflowContext.put("reason", reason);
-
-				_workflowNodeManager.completeWorkflowNode(
-					kaleoInstanceToken.getCompanyId(),
-					kaleoInstanceToken.getUserId(),
-					kaleoInstanceToken.getKaleoInstanceTokenId(),
-					transitionName, workflowContext, false);
+			try {
+				_completeWorkflowNodeCallable.call();
+			}
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
 			}
 		}
+
+		private final Callable<Void> _completeWorkflowNodeCallable;
+		private final AtomicReference<InvocationParameters>
+			_invocationParametersAtomicReference = new AtomicReference<>();
+		private final AtomicReference<String> _reasonAtomicReference =
+			new AtomicReference<>();
+		private final AtomicReference<String> _transitionNameAtomicReference =
+			new AtomicReference<>();
 
 	}
 
@@ -179,9 +208,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				inputGuardrails
 			).invocationParameters(
 				InvocationParameters.from(
-					Map.of(
-						"companyId", CompanyThreadLocal.getCompanyId(),
-						"executionContext", executionContext))
+					Map.of("executionContext", executionContext))
 			).memoryId(
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(

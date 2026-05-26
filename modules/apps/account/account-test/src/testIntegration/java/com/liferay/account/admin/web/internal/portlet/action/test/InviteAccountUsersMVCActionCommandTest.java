@@ -123,11 +123,11 @@ public class InviteAccountUsersMVCActionCommandTest {
 			_accountEntry.getAccountEntryId(),
 			AccountTicketConstants.TYPE_USER_INVITATION);
 
-		NotificationTemplate notificationTemplate = _addNotificationTemplate(
-			RandomTestUtil.randomString());
-
 		MockPortletPreferences mockPortletPreferences =
 			new MockPortletPreferences();
+
+		NotificationTemplate notificationTemplate = _addNotificationTemplate(
+			RandomTestUtil.randomString());
 
 		mockPortletPreferences.setValue(
 			"invitationNotificationTemplateExternalReferenceCode",

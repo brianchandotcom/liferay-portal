@@ -74,27 +74,6 @@ public class RequestPortletDataHandlerControl
 	protected RequestPortletDataHandlerControl[]
 		requestPortletDataHandlerControls;
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String value;
-
 	public String[] getValues() {
 		return values;
 	}
@@ -152,4 +131,4 @@ public class RequestPortletDataHandlerControl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1392321019
+// LIFERAY-REST-BUILDER-HASH:205022519

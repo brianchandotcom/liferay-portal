@@ -37,7 +37,7 @@ export default function DataSelectionStep({
 					'export-import-permissions-help'
 				)}
 				label={Liferay.Language.get('import-permissions')}
-				name="importPermissions"
+				name="permissions"
 				title={Liferay.Language.get('permissions')}
 			/>
 

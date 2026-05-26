@@ -50,6 +50,12 @@ public class EditModelArmorTemplateDisplayContext {
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
+		).put(
+			"readOnly",
+			DisplayContextUtil.isReadOnly(
+				_themeDisplay.getCompanyId(),
+				_httpServletRequest.getParameter("externalReferenceCode"),
+				"L_AI_HUB_MODEL_ARMOR_TEMPLATE")
 		).build();
 	}
 

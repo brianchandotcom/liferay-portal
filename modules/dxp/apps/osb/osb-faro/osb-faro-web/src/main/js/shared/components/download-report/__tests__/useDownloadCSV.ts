@@ -1,6 +1,8 @@
+jest.unmock('react-dom');
+
 import {CSVType, useDownloadCSV} from '../utils';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react';
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),

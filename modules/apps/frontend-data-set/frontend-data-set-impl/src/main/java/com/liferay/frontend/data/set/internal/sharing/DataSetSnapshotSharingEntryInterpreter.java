@@ -59,7 +59,13 @@ public class DataSetSnapshotSharingEntryInterpreter
 
 	@Override
 	public String getTitle(SharingEntry sharingEntry, Locale locale) {
-		return _getLabel(sharingEntry);
+		String label = _getLabel(sharingEntry);
+
+		if (label.isEmpty()) {
+			return label;
+		}
+
+		return "'" + label + "'";
 	}
 
 	@Override

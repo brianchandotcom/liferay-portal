@@ -6,6 +6,12 @@
 declare const Analytics: any;
 
 export async function getSegments(): Promise<Set<string>> {
+	if (Analytics === undefined) {
+		throw new Error(
+			`Unable to use 'segments' attribute because 'Analytics' global object is missing`
+		);
+	}
+
 	const set: Set<string> = new Set();
 
 	for (const segment of await Analytics.segment.getBatchSegmentExternalReferenceCodes()) {

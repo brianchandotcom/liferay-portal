@@ -13,7 +13,7 @@ import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
-import com.liferay.info.field.type.PhoneInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.PicklistMultiselectInfoFieldType;
 import com.liferay.info.field.type.PicklistSelectInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -84,7 +84,7 @@ public class ObjectFieldInfoFieldTypeUtil {
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
 
-			return PhoneInfoFieldType.INSTANCE;
+			return PhoneNumberInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

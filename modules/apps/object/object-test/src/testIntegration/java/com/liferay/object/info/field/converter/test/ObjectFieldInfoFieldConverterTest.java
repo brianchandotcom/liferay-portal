@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.type.PhoneInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -279,17 +279,18 @@ public class ObjectFieldInfoFieldConverterTest {
 				_objectFieldSettingLocalService, null, null, null, null, null,
 				null, null);
 
-		InfoField<PhoneInfoFieldType> infoField =
-			(InfoField<PhoneInfoFieldType>)
+		InfoField<PhoneNumberInfoFieldType> infoField =
+			(InfoField<PhoneNumberInfoFieldType>)
 				objectFieldInfoFieldConverter.getInfoField(
 					true, ObjectField.class.getSimpleName(), objectField);
 
 		Assert.assertSame(
-			PhoneInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-		Assert.assertNull(infoField.getAttribute(PhoneInfoFieldType.PREFIX));
+			PhoneNumberInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertNull(
+			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
 		Assert.assertEquals(
 			ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER,
-			infoField.getAttribute(PhoneInfoFieldType.PREFIX_TYPE));
+			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
 
 		objectField = ObjectFieldUtil.addCustomObjectField(
 			new PhoneNumberObjectFieldBuilder(
@@ -318,17 +319,17 @@ public class ObjectFieldInfoFieldConverterTest {
 			).build());
 
 		infoField =
-			(InfoField<PhoneInfoFieldType>)
+			(InfoField<PhoneNumberInfoFieldType>)
 				objectFieldInfoFieldConverter.getInfoField(
 					true, ObjectField.class.getSimpleName(), objectField);
 
 		Assert.assertSame(
-			PhoneInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+			PhoneNumberInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals(
-			"+1", infoField.getAttribute(PhoneInfoFieldType.PREFIX));
+			"+1", infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
 		Assert.assertEquals(
 			ObjectFieldSettingConstants.VALUE_FIXED,
-			infoField.getAttribute(PhoneInfoFieldType.PREFIX_TYPE));
+			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
 	}
 
 	private String _getRelationshipURL(

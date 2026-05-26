@@ -26,7 +26,7 @@ import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.OptionInfoFieldType;
-import com.liferay.info.field.type.PhoneInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.PicklistMultiselectInfoFieldType;
 import com.liferay.info.field.type.PicklistSelectInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -557,8 +557,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			_addNumberInfoFieldTypeInputTemplateNodeAttributes(
 				infoField, inputTemplateNode);
 		}
-		else if (infoField.getInfoFieldType() instanceof PhoneInfoFieldType) {
-			_addPhoneInfoFieldTypeInputTemplateNodeAttributes(
+		else if (infoField.getInfoFieldType() instanceof
+					PhoneNumberInfoFieldType) {
+
+			_addPhoneNumberInfoFieldTypeInputTemplateNodeAttributes(
 				infoField, inputTemplateNode, locale);
 		}
 		else if (infoField.getInfoFieldType() instanceof
@@ -731,17 +733,17 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 	}
 
-	private void _addPhoneInfoFieldTypeInputTemplateNodeAttributes(
+	private void _addPhoneNumberInfoFieldTypeInputTemplateNodeAttributes(
 		InfoField infoField, InputTemplateNode inputTemplateNode,
 		Locale locale) {
 
 		inputTemplateNode.addAttribute(
-			"countries", _getCountryJSONObjects(locale));
+			"countries", _getCountriesJSONObjects(locale));
 		inputTemplateNode.addAttribute(
-			"prefix", infoField.getAttribute(PhoneInfoFieldType.PREFIX));
+			"prefix", infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
 		inputTemplateNode.addAttribute(
 			"prefixType",
-			infoField.getAttribute(PhoneInfoFieldType.PREFIX_TYPE));
+			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
 	}
 
 	private void _addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
@@ -847,7 +849,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		return sb.toString();
 	}
 
-	private List<JSONObject> _getCountryJSONObjects(Locale locale) {
+	private List<JSONObject> _getCountriesJSONObjects(Locale locale) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -874,7 +876,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			}
 		}
 
-		List<JSONObject> countries = new ArrayList<>();
+		List<JSONObject> countriesJSONObjects = new ArrayList<>();
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -893,7 +895,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				continue;
 			}
 
-			countries.add(
+			countriesJSONObjects.add(
 				JSONUtil.put(
 					"a2", a2
 				).put(
@@ -904,7 +906,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		return ListUtil.sort(
-			countries,
+			countriesJSONObjects,
 			Comparator.comparing(country -> country.getString("name")));
 	}
 

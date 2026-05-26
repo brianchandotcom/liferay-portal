@@ -16,7 +16,7 @@ import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
-import com.liferay.info.field.type.PhoneInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -153,7 +153,7 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			NumberInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-numeric-input")
 		).put(
-			PhoneInfoFieldType.INSTANCE.getName(),
+			PhoneNumberInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-phone-number-input")
 		).put(
 			RelationshipInfoFieldType.INSTANCE.getName(),

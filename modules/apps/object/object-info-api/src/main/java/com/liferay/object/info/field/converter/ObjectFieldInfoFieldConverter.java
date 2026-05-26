@@ -13,7 +13,7 @@ import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.OptionInfoFieldType;
-import com.liferay.info.field.type.PhoneInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -247,11 +247,11 @@ public class ObjectFieldInfoFieldConverter {
 					ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
 
 			finalStep.attribute(
-				PhoneInfoFieldType.PREFIX,
+				PhoneNumberInfoFieldType.PREFIX,
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.NAME_PREFIX, objectField)
 			).attribute(
-				PhoneInfoFieldType.PREFIX_TYPE,
+				PhoneNumberInfoFieldType.PREFIX_TYPE,
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.NAME_PREFIX_TYPE, objectField)
 			);

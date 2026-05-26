@@ -901,7 +901,7 @@ public class LiferayOAuthDataProvider
 						registrationAccessToken, DateUtil.newDate(),
 						DateUtil.newDate(
 							System.currentTimeMillis() + Time.YEAR),
-						remoteHost, remoteAddr, null, null, null);
+						null, remoteHost, remoteAddr, null, null, null);
 				}
 			}
 
@@ -1768,17 +1768,8 @@ public class LiferayOAuthDataProvider
 				oAuth2Application.getOAuth2ApplicationId(),
 				oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
 				serverAccessToken.getTokenKey(), createDate, expirationDate,
-				remoteHost, remoteAddr, null, null, null);
-
-		List<String> audiences = serverAccessToken.getAudiences();
-
-		if (ListUtil.isNotEmpty(audiences)) {
-			oAuth2Authorization.setAudiencesList(audiences);
-
-			oAuth2Authorization =
-				_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
-					oAuth2Authorization);
-		}
+				serverAccessToken.getAudiences(), remoteHost, remoteAddr, null,
+				null, null);
 
 		List<String> scopeAliasesList =
 			OAuthUtils.convertPermissionsToScopeList(

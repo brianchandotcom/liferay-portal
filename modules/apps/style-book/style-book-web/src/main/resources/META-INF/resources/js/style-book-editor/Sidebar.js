@@ -29,7 +29,10 @@ export default React.memo(function Sidebar() {
 
 	return (
 		<div className="style-book-editor__sidebar" ref={sidebarRef}>
-			<div className="panel-group-sm style-book-editor__sidebar-content">
+			<div
+				className="panel-group-sm style-book-editor__sidebar-content"
+				data-qa-id="styleBookEditorSidebarContent"
+			>
 				{!!config.frontendTokenDefinitions.length && (
 					<TokenDefinitionSelector
 						activeDefinitionId={activeDefinitionId}

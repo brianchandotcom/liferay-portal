@@ -175,9 +175,6 @@ components:
                     tokenUrl: /oauth/token
             type: oauth2
 info:
-    contact:
-        email: team-commerce@liferay.com
-        name: Commerce Team
     description:
         "Liferay Commerce Admin Payment API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.payment.client', and version '1.0.17'."
@@ -915,5 +912,3 @@ paths:
             summary: Makes a refund from an existing payment.
             tags:
                 -   Payment
-servers:
-    -   url: /

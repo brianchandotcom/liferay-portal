@@ -5021,7 +5021,3 @@ paths:
                         -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Tax Category by ID.
             tags: ["TaxCategory"]
-servers:
-    -   description:
-            SwaggerHub API Auto Mocking
-        url: https://virtserver.swaggerhub.com/liferayinc/commerce-admin-channel-api/v1.0

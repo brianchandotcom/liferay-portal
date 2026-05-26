@@ -403,9 +403,6 @@ components:
                     tokenUrl: /oauth/token
             type: oauth2
 info:
-    contact:
-        email: team-commerce@liferay.com
-        name: Commerce Team
     description:
         "Liferay Commerce Admin Inventory API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.43'."
@@ -4331,51 +4328,3 @@ paths:
             summary: Creates a Replenishment Item by warehouse ID and SKU.
             tags:
                 -   ReplenishmentItem
-servers:
-    -   description:
-            "Liferay Commerce API server"
-        url: https://commerce.{environment}.liferay.com/commerce-admin-inventory/{basePath}
-        variables:
-            basePath:
-                default: v1.0
-            environment:
-                default: api
-                enum:
-                    -   api
-                    -   api.dev
-                    -   api.uat
-    -   description:
-            "Liferay Commerce Local Development (Hosts file)"
-        url: "{protocol}://{host}:{port}/o/commerce-admin-inventory/{basePath}"
-        variables:
-            basePath:
-                default: v1.0
-            host:
-                default: test.dev
-            port:
-                default: "8080"
-                enum:
-                    -   "443"
-                    -   "8080"
-                    -   "8443"
-            protocol:
-                default: http
-                enum:
-                    -   http
-                    -   https
-    -   description:
-            "Liferay Commerce Local Development with Ngrok"
-        url: "{protocol}://{host}.ngrok.io/o/commerce-admin-inventory/{basePath}"
-        variables:
-            basePath:
-                default: v1.0
-            host:
-                default: commerce
-            protocol:
-                default: http
-                enum:
-                    -   http
-                    -   https
-    -   description:
-            "SwaggerHub API Auto Mocking"
-        url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-inventory/v1.0

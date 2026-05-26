@@ -303,9 +303,6 @@ components:
                     tokenUrl: /oauth/token
             type: oauth2
 info:
-    contact:
-        email: team-commerce@liferay.com
-        name: Commerce Team
     description:
         "Liferay Commerce Admin Admin Shipment API. A Java client JAR is available for use with the group ID
         'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.shipment.client', and version '1.0.41'."
@@ -2097,7 +2094,3 @@ paths:
                                 $ref: "#/components/schemas/Shipment"
             tags:
                 -   Shipment
-servers:
-    -   description:
-            SwaggerHub API Auto Mocking
-        url: https://virtserver.swaggerhub.com/liferayinc/commerce-admin-shipment-api/v1.0

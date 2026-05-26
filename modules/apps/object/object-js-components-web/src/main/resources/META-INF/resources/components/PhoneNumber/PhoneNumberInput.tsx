@@ -49,6 +49,7 @@ export function PhoneNumberInput({
 
 	const fixedCountry = countries.find((c) => c.a2 === country);
 	const fixedFlagSymbol = getFlagSymbol(country ?? '');
+
 	const fixedPrefix = fixedCountry ? `+${fixedCountry.idd}` : '';
 
 	const handleValueChange = (nextCountry: CountryInfo, number: string) => {
@@ -70,7 +71,9 @@ export function PhoneNumberInput({
 		}
 	};
 
-	/** Parse the phone value to set the initial states. */
+	/**
+	 * Parse the phone value to set the initial states.
+	 */
 	useEffect(() => {
 		if (countrySource === COUNTRY_SOURCE.FIXED) {
 			if (fixedPrefix && value.startsWith(fixedPrefix)) {

@@ -13,7 +13,7 @@
 String homeURL = themeDisplay.getURLHome();
 %>
 
-<div class="alert alert-info align-items-center d-flex justify-content-between mb-3">
+<div class="alert alert-info align-items-center d-flex gap-3 justify-content-between mb-3">
 	<span>
 		<liferay-ui:message key="cookies-banner-preview-description" />
 	</span>

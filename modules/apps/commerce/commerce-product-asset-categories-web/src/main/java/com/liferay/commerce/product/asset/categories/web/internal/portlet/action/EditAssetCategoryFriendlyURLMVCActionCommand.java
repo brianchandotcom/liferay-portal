@@ -6,12 +6,14 @@
 package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesPortletKeys;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -82,12 +84,35 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 				_log.debug(exception);
 			}
 
-			_friendlyURLEntryLocalService.addFriendlyURLEntry(
-				assetCategory.getGroupId(),
-				_portal.getClassNameId(AssetCategory.class), categoryId,
-				_getUniqueUrlTitles(assetCategory, urlTitleMap),
-				serviceContext);
+			if (FeatureFlagManagerUtil.isEnabled(
+					assetCategory.getCompanyId(), "LPD-70396")) {
+
+				_friendlyURLEntryLocalService.addFriendlyURLEntry(
+					assetCategory.getGroupId(),
+					_portal.getClassNameId(AssetCategory.class),
+					_getParentClassPK(assetCategory), categoryId,
+					assetCategory.getDefaultLanguageId(),
+					_getUniqueUrlTitles(assetCategory, urlTitleMap),
+					serviceContext);
+			}
+			else {
+				_friendlyURLEntryLocalService.addFriendlyURLEntry(
+					assetCategory.getGroupId(),
+					_portal.getClassNameId(AssetCategory.class), categoryId,
+					_getUniqueUrlTitles(assetCategory, urlTitleMap),
+					serviceContext);
+			}
 		}
+	}
+
+	private long _getParentClassPK(AssetCategory assetCategory) {
+		if (assetCategory.getParentCategoryId() ==
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			return assetCategory.getVocabularyId();
+		}
+
+		return assetCategory.getParentCategoryId();
 	}
 
 	private Map<String, String> _getUniqueUrlTitles(
@@ -98,6 +123,9 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
+		boolean featureFlagEnabled = FeatureFlagManagerUtil.isEnabled(
+			assetCategory.getCompanyId(), "LPD-70396");
+
 		for (Map.Entry<Locale, String> entry : urlTitleMap.entrySet()) {
 			Locale locale = entry.getKey();
 
@@ -106,9 +134,17 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 			if (Validator.isNotNull(urlTitle) ||
 				((urlTitle != null) && urlTitle.equals(StringPool.BLANK))) {
 
-				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
-					assetCategory.getGroupId(), classNameId,
-					assetCategory.getCategoryId(), urlTitle, null);
+				if (featureFlagEnabled) {
+					urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+						assetCategory.getGroupId(), classNameId,
+						_getParentClassPK(assetCategory),
+						assetCategory.getCategoryId(), urlTitle, null);
+				}
+				else {
+					urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+						assetCategory.getGroupId(), classNameId,
+						assetCategory.getCategoryId(), urlTitle, null);
+				}
 
 				newUrlTitleMap.put(LocaleUtil.toLanguageId(locale), urlTitle);
 			}

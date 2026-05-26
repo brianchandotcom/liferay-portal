@@ -14,6 +14,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetConsentManagerConfiguration,
+	saveOrUpdateConfiguration,
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
@@ -33,6 +34,45 @@ test.afterEach(async ({systemSettingsPage}) => {
 		await clearConsentCookies(systemSettingsPage.page);
 	});
 });
+
+test(
+	'Activate button stays disabled until the Enabled checkbox is saved',
+	{tag: ['@LPD-86660', '@LPD-86661']},
+	async ({consentManagerConfigurationPage, page}) => {
+		await test.step('Ensure Consent Manager is saved as disabled', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: false,
+				forceReload: true,
+			});
+		});
+
+		await test.step('Verify the Activate button is initially disabled', async () => {
+			await consentManagerConfigurationPage.goTo();
+
+			await expect(
+				consentManagerConfigurationPage.toggleActivateButton
+			).toHaveClass(/disabled/);
+		});
+
+		await test.step('Check the Enabled checkbox without saving and verify the Activate button is still disabled', async () => {
+			await consentManagerConfigurationPage.enabledCheckbox.setChecked(
+				true
+			);
+
+			await expect(
+				consentManagerConfigurationPage.toggleActivateButton
+			).toHaveClass(/disabled/);
+		});
+
+		await test.step('Save and verify the Activate button becomes enabled', async () => {
+			await saveOrUpdateConfiguration(page);
+
+			await expect(
+				consentManagerConfigurationPage.toggleActivateButton
+			).not.toHaveClass(/disabled/);
+		});
+	}
+);
 
 test(
 	'Activation warning is visible on Consent Manager, Cookie Banner, and Cookie Panel pages',

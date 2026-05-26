@@ -74,7 +74,7 @@ describe('IncrementalInteractions', () => {
 		fireEvent.change(input, {target: {value: '2019-04-10'}});
 
 		expect(input.value).toBe('2019-04-10');
-		expect(dayNumber.classList).toContain('active');
+		expect(dayNumber).toHaveClass('active');
 		expect(monthSelect.value).toBe('3');
 		expect(yearSelect.value).toBe('2019');
 		expect(document.body).toMatchSnapshot();
@@ -93,7 +93,7 @@ describe('IncrementalInteractions', () => {
 
 		fireEvent.click(getByTestId('date-button'), {});
 
-		expect(dropdown.classList).toContain('show');
+		expect(dropdown).toHaveClass('show');
 		expect(document.body).toMatchSnapshot();
 	});
 
@@ -111,7 +111,7 @@ describe('IncrementalInteractions', () => {
 
 		fireEvent.click(getByTestId('date-button'), {});
 
-		expect(dropdown.classList).not.toContain('show');
+		expect(dropdown).not.toHaveClass('show');
 		expect(document.body).toMatchSnapshot();
 	});
 
@@ -133,7 +133,7 @@ describe('IncrementalInteractions', () => {
 
 		userEvent.click(getByTestId('outsideElement'));
 
-		expect(dropdown.classList).not.toContain('show');
+		expect(dropdown).not.toHaveClass('show');
 		expect(document.body).toMatchSnapshot();
 	});
 
@@ -231,7 +231,7 @@ describe('IncrementalInteractions', () => {
 		expect(input.value).toBe(formatDate(currentDate, 'yyyy-MM-dd'));
 
 		const dayNumber = getByLabelText(currentDate.toDateString());
-		expect(dayNumber.classList).toContain('active');
+		expect(dayNumber).toHaveClass('active');
 	});
 
 	it('clicking on the next arrow button the content must be updated with the corresponding month', () => {
@@ -340,7 +340,7 @@ describe('IncrementalInteractions', () => {
 		expect(input.value).toBe('2019-04-28');
 		expect(yearSelect.value).toBe('2019');
 		expect(monthSelect.value).toBe('3');
-		expect(dayNumber.classList).toContain('active');
+		expect(dayNumber).toHaveClass('active');
 	});
 
 	it('clicking on the days number previous-month or next-month should change the date and the input value', () => {
@@ -524,8 +524,8 @@ describe('IncrementalInteractions', () => {
 
 			fireEvent.click(dayNumber);
 
-			expect(dayNumber.classList).toContain('active');
-			expect(endDate.classList).toContain('active');
+			expect(dayNumber).toHaveClass('active');
+			expect(endDate).toHaveClass('active');
 		});
 
 		it('clicking on the day later the start date sets the end date for the selected date', () => {
@@ -548,8 +548,8 @@ describe('IncrementalInteractions', () => {
 
 			fireEvent.click(dayNumber);
 
-			expect(startDate.classList).toContain('active');
-			expect(dayNumber.classList).toContain('active');
+			expect(startDate).toHaveClass('active');
+			expect(dayNumber).toHaveClass('active');
 		});
 
 		it.each(['2019 04 23', '2019 04 10', '2019 04 30'])(
@@ -574,16 +574,16 @@ describe('IncrementalInteractions', () => {
 
 				fireEvent.click(endDate);
 
-				expect(startDate.classList).toContain('active');
-				expect(endDate.classList).toContain('active');
+				expect(startDate).toHaveClass('active');
+				expect(endDate).toHaveClass('active');
 
 				const dayNumber = getByLabelText(new Date(date).toDateString());
 
 				fireEvent.click(dayNumber);
 
-				expect(dayNumber.classList).toContain('active');
-				expect(startDate.classList).not.toContain('active');
-				expect(endDate.classList).not.toContain('active');
+				expect(dayNumber).toHaveClass('active');
+				expect(startDate).not.toHaveClass('active');
+				expect(endDate).not.toHaveClass('active');
 			}
 		);
 	});
@@ -691,7 +691,7 @@ describe('IncrementalInteractions', () => {
 		expect(input.value).toBe(formatDate(currentDate, 'yyyy-MM-dd'));
 
 		const dayNumber = getByLabelText(currentDate.toDateString());
-		expect(dayNumber.classList).toContain('active');
+		expect(dayNumber).toHaveClass('active');
 	});
 
 	it('updates date state when resetting input value using the controlled mode', () => {
@@ -728,8 +728,8 @@ describe('IncrementalInteractions', () => {
 		const dayNumber = getByLabelText(new Date('2019 04 10').toDateString());
 		const endDate = getByLabelText(new Date('2019 04 15').toDateString());
 
-		expect(dayNumber.classList).toContain('active');
-		expect(endDate.classList).toContain('active');
+		expect(dayNumber).toHaveClass('active');
+		expect(endDate).toHaveClass('active');
 
 		fireEvent.click(resetButton);
 
@@ -740,9 +740,9 @@ describe('IncrementalInteractions', () => {
 		);
 
 		expect(input.value).toBe('');
-		expect(defaultDate.classList).toContain('active');
-		expect(dayNumber.classList).not.toContain('active');
-		expect(endDate.classList).not.toContain('active');
+		expect(defaultDate).toHaveClass('active');
+		expect(dayNumber).not.toHaveClass('active');
+		expect(endDate).not.toHaveClass('active');
 	});
 
 	it('clicking the dot button should set the current time when the button is clicked', () => {

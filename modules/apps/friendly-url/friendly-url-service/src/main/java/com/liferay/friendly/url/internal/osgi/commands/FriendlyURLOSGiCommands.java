@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FriendlyURLOSGiCommands implements OSGiCommands {
 
 	@Descriptor(
-		"Report friendly URL conflicts that would surface if layout.friendly.url.public.servlet.mapping.enabled=false"
+		"Report friendly URL conflicts that would surface if the portal property \"layout.friendly.url.public.servlet.mapping.enabled\" is set to false"
 	)
 	public String checkPublicMappingConflicts() {
 		StringBundler sb = new StringBundler(1);
@@ -45,7 +45,7 @@ public class FriendlyURLOSGiCommands implements OSGiCommands {
 	}
 
 	@Descriptor(
-		"Report friendly URL conflicts for a single company that would surface if layout.friendly.url.public.servlet.mapping.enabled=false"
+		"Report friendly URL conflicts for a single company that would surface if the portal property \"layout.friendly.url.public.servlet.mapping.enabled\" is set to false"
 	)
 	public String checkPublicMappingConflicts(long companyId) {
 		return _checkPublicMappingConflicts(companyId);

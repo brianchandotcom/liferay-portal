@@ -5,9 +5,12 @@
 
 package com.liferay.exportimport.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -47,6 +50,142 @@ public class ImportRequest implements Serializable {
 	public static ImportRequest unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(ImportRequest.class, json);
 	}
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("dataStrategy")
+	@Valid
+	public DataStrategy getDataStrategy() {
+		if (_dataStrategySupplier != null) {
+			dataStrategy = _dataStrategySupplier.get();
+
+			_dataStrategySupplier = null;
+		}
+
+		return dataStrategy;
+	}
+
+	@JsonIgnore
+	public String getDataStrategyAsString() {
+		DataStrategy dataStrategy = getDataStrategy();
+
+		if (dataStrategy == null) {
+			return null;
+		}
+
+		return dataStrategy.toString();
+	}
+
+	public void setDataStrategy(DataStrategy dataStrategy) {
+		this.dataStrategy = dataStrategy;
+
+		_dataStrategySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDataStrategy(
+		UnsafeSupplier<DataStrategy, Exception> dataStrategyUnsafeSupplier) {
+
+		_dataStrategySupplier = () -> {
+			try {
+				return dataStrategyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DataStrategy dataStrategy;
+
+	@JsonIgnore
+	private Supplier<DataStrategy> _dataStrategySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getDeletions() {
+		if (_deletionsSupplier != null) {
+			deletions = _deletionsSupplier.get();
+
+			_deletionsSupplier = null;
+		}
+
+		return deletions;
+	}
+
+	public void setDeletions(Boolean deletions) {
+		this.deletions = deletions;
+
+		_deletionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeletions(
+		UnsafeSupplier<Boolean, Exception> deletionsUnsafeSupplier) {
+
+		_deletionsSupplier = () -> {
+			try {
+				return deletionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean deletions;
+
+	@JsonIgnore
+	private Supplier<Boolean> _deletionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
+
+			_permissionsSupplier = null;
+		}
+
+		return permissions;
+	}
+
+	public void setPermissions(Boolean permissions) {
+		this.permissions = permissions;
+
+		_permissionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPermissions(
+		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
+
+		_permissionsSupplier = () -> {
+			try {
+				return permissionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean permissions;
+
+	@JsonIgnore
+	private Supplier<Boolean> _permissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -95,6 +234,61 @@ public class ImportRequest implements Serializable {
 	private Supplier<RequestPortletDataHandler[]>
 		_requestPortletDataHandlersSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("userIdStrategy")
+	@Valid
+	public UserIdStrategy getUserIdStrategy() {
+		if (_userIdStrategySupplier != null) {
+			userIdStrategy = _userIdStrategySupplier.get();
+
+			_userIdStrategySupplier = null;
+		}
+
+		return userIdStrategy;
+	}
+
+	@JsonIgnore
+	public String getUserIdStrategyAsString() {
+		UserIdStrategy userIdStrategy = getUserIdStrategy();
+
+		if (userIdStrategy == null) {
+			return null;
+		}
+
+		return userIdStrategy.toString();
+	}
+
+	public void setUserIdStrategy(UserIdStrategy userIdStrategy) {
+		this.userIdStrategy = userIdStrategy;
+
+		_userIdStrategySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserIdStrategy(
+		UnsafeSupplier<UserIdStrategy, Exception>
+			userIdStrategyUnsafeSupplier) {
+
+		_userIdStrategySupplier = () -> {
+			try {
+				return userIdStrategyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected UserIdStrategy userIdStrategy;
+
+	@JsonIgnore
+	private Supplier<UserIdStrategy> _userIdStrategySupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -122,6 +316,44 @@ public class ImportRequest implements Serializable {
 
 		sb.append("{");
 
+		DataStrategy dataStrategy = getDataStrategy();
+
+		if (dataStrategy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataStrategy\": ");
+
+			sb.append("\"");
+			sb.append(dataStrategy);
+			sb.append("\"");
+		}
+
+		Boolean deletions = getDeletions();
+
+		if (deletions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deletions\": ");
+
+			sb.append(deletions);
+		}
+
+		Boolean permissions = getPermissions();
+
+		if (permissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append(permissions);
+		}
+
 		RequestPortletDataHandler[] requestPortletDataHandlers =
 			getRequestPortletDataHandlers();
 
@@ -145,6 +377,20 @@ public class ImportRequest implements Serializable {
 			sb.append("]");
 		}
 
+		UserIdStrategy userIdStrategy = getUserIdStrategy();
+
+		if (userIdStrategy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userIdStrategy\": ");
+
+			sb.append("\"");
+			sb.append(userIdStrategy);
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -156,6 +402,84 @@ public class ImportRequest implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("DataStrategy")
+	public static enum DataStrategy {
+
+		MIRROR("MIRROR"), MIRROR_OVERWRITE("MIRROR_OVERWRITE"),
+		COPY_AS_NEW("COPY_AS_NEW");
+
+		@JsonCreator
+		public static DataStrategy create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (DataStrategy dataStrategy : values()) {
+				if (Objects.equals(dataStrategy.getValue(), value)) {
+					return dataStrategy;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DataStrategy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("UserIdStrategy")
+	public static enum UserIdStrategy {
+
+		CURRENT_USER_ID("CURRENT_USER_ID"),
+		ALWAYS_CURRENT_USER_ID("ALWAYS_CURRENT_USER_ID");
+
+		@JsonCreator
+		public static UserIdStrategy create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (UserIdStrategy userIdStrategy : values()) {
+				if (Objects.equals(userIdStrategy.getValue(), value)) {
+					return userIdStrategy;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private UserIdStrategy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -246,4 +570,4 @@ public class ImportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:596775765
+// LIFERAY-REST-BUILDER-HASH:94521741

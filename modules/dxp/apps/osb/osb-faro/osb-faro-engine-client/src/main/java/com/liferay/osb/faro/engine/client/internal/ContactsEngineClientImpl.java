@@ -3212,13 +3212,13 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public DataSource patchDataSource(
-		FaroProject faroProject, String id, Credentials credentials,
-		long userId, String name, String url, Provider provider, Event event,
-		String status) {
+		Credentials credentials, Event event, FaroProject faroProject,
+		String id, String name, Provider provider, String status, String url,
+		long userId) {
 
 		return _patchDataSource(
-			Rels.DATA_SOURCE, faroProject, id, credentials, userId, name, url,
-			provider, event, status);
+			credentials, event, faroProject, id, name, provider, status,
+			Rels.DATA_SOURCE, url, userId);
 	}
 
 	@Override
@@ -3278,13 +3278,13 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public DataSource reconnectDataSource(
-		FaroProject faroProject, String id, Credentials credentials,
-		long userId, String name, String url, Provider provider, Event event,
-		String status) {
+		Credentials credentials, Event event, FaroProject faroProject,
+		String id, String name, Provider provider, String status, String url,
+		long userId) {
 
 		return _patchDataSource(
-			Rels.DATA_SOURCE_RECONNECT, faroProject, id, credentials, userId,
-			name, url, provider, event, status);
+			credentials, event, faroProject, id, name, provider, status,
+			Rels.DATA_SOURCE_RECONNECT, url, userId);
 	}
 
 	@Override
@@ -3585,9 +3585,9 @@ public class ContactsEngineClientImpl
 	}
 
 	private DataSource _patchDataSource(
-		String rel, FaroProject faroProject, String id, Credentials credentials,
-		long userId, String name, String url, Provider provider, Event event,
-		String status) {
+		Credentials credentials, Event event, FaroProject faroProject,
+		String id, String name, Provider provider, String status, String rel,
+		String url, long userId) {
 
 		Map<String, Object> dataSourcePatch = new HashMap<>();
 

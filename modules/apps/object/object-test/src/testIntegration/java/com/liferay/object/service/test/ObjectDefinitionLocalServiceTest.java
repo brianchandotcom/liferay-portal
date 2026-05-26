@@ -16,6 +16,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
@@ -1046,6 +1047,38 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionSettingNameException.NotAllowedNames.class,
 			StringBundler.concat(
+				"The settings ", ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_DOMAIN
+					).value(
+						RandomTestUtil.randomString()
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingNameException.NotAllowedNames.class,
+			StringBundler.concat(
+				"The settings ", ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_SITE,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_DOMAIN
+					).value(
+						RandomTestUtil.randomString()
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingNameException.NotAllowedNames.class,
+			StringBundler.concat(
 				"The settings ", ObjectDefinitionSettingConstants.NAME_VISIBLE,
 				" are not allowed for object definition ",
 				randomObjectDefinitionName),
@@ -1122,6 +1155,24 @@ public class ObjectDefinitionLocalServiceTest {
 						StringBundler.concat(
 							depotEntry1.getGroupId(), StringPool.COMMA,
 							TestPropsValues.getGroupId())
+					).build())));
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ", objectDefinitionSettingValue, " of setting \"",
+				ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				"\" is invalid for object definition \"",
+				randomObjectDefinitionName, "\""),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_DOMAIN
+					).value(
+						objectDefinitionSettingValue
 					).build())));
 
 		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition(
@@ -1251,8 +1302,44 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry3.getObjectEntryId()));
 
+		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.NAME_DOMAIN
+				).value(
+					DepotRolesConstants.SUBTYPE_PROJECT
+				).build()));
+
+		_assertObjectDefinitionSettingsValues(
+			objectDefinition3.getObjectDefinitionSettings(),
+			Collections.singletonMap(
+				ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				DepotRolesConstants.SUBTYPE_PROJECT));
+
+		ObjectDefinition objectDefinition4 = _publishCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.NAME_DOMAIN
+				).value(
+					DepotRolesConstants.SUBTYPE_SPACE
+				).build()));
+
+		_assertObjectDefinitionSettingsValues(
+			objectDefinition4.getObjectDefinitionSettings(),
+			Collections.singletonMap(
+				ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				DepotRolesConstants.SUBTYPE_SPACE));
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
 	}
 
 	@FeatureFlag("LPD-17564")

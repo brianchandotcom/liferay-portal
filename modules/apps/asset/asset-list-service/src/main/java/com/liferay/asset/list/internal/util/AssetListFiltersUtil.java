@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,6 +60,14 @@ public class AssetListFiltersUtil {
 		return new BooleanClause[] {
 			new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 		};
+	}
+
+	private static String _emptyToNull(String value) {
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return value;
 	}
 
 	private static ObjectDefinition _fetchObjectDefinition(
@@ -167,7 +176,8 @@ public class AssetListFiltersUtil {
 
 		String subfield = _getSubfield(locale, objectField);
 
-		Query valueQuery = _toValueQuery(subfield, operatorName, value);
+		Query valueQuery = _toValueQuery(
+			jsonObject, subfield, operatorName, value);
 
 		if (valueQuery == null) {
 			return null;
@@ -186,8 +196,59 @@ public class AssetListFiltersUtil {
 		return new NestedQuery("nestedFieldArray", booleanQuery);
 	}
 
+	private static Query _toRangeQuery(
+		JSONObject filterJSONObject, String subfield, String operatorName) {
+
+		if (operatorName.equals("between")) {
+			JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
+
+			if ((valueJSONArray == null) || (valueJSONArray.length() < 2)) {
+				return null;
+			}
+
+			String lowerTerm = valueJSONArray.getString(0);
+			String upperTerm = valueJSONArray.getString(1);
+
+			return new TermRangeQuery(
+				subfield, _emptyToNull(lowerTerm), _emptyToNull(upperTerm),
+				true, true);
+		}
+
+		String value = filterJSONObject.getString("value");
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		if (operatorName.equals("gt")) {
+			return new TermRangeQuery(subfield, value, null, false, false);
+		}
+
+		if (operatorName.equals("ge")) {
+			return new TermRangeQuery(subfield, value, null, true, false);
+		}
+
+		if (operatorName.equals("lt")) {
+			return new TermRangeQuery(subfield, null, value, false, false);
+		}
+
+		if (operatorName.equals("le")) {
+			return new TermRangeQuery(subfield, null, value, false, true);
+		}
+
+		return null;
+	}
+
 	private static Query _toValueQuery(
-		String subfield, String operatorName, String value) {
+		JSONObject filterJSONObject, String subfield, String operatorName,
+		String value) {
+
+		if (operatorName.equals("between") || operatorName.equals("gt") ||
+			operatorName.equals("ge") || operatorName.equals("lt") ||
+			operatorName.equals("le")) {
+
+			return _toRangeQuery(filterJSONObject, subfield, operatorName);
+		}
 
 		if (subfield.endsWith(".value_boolean") ||
 			subfield.endsWith(".value_date") ||

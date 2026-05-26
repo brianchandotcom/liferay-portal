@@ -862,7 +862,7 @@ describe('Autocomplete incremental interactions', () => {
 	});
 
 	describe('keyboard arrows indicator', () => {
-		it('does not render the indicator by default', () => {
+		it('does not render the indicator by default', async () => {
 			const {getByRole} = render(
 				<ClayAutocomplete messages={messages}>
 					{['one', 'two', 'three'].map((item) => (
@@ -873,14 +873,14 @@ describe('Autocomplete incremental interactions', () => {
 				</ClayAutocomplete>
 			);
 
-			userEvent.type(getByRole('combobox'), 'o');
+			await userEvent.type(getByRole('combobox'), 'o');
 
 			expect(
 				document.body.querySelector('.clay-keyboard-arrows-indicator')
 			).not.toBeInTheDocument();
 		});
 
-		it('renders the floating indicator alongside the input when enabled', () => {
+		it('renders the floating indicator alongside the input when enabled', async () => {
 			const {getByRole} = render(
 				<ClayAutocomplete
 					displayKeyboardArrowsIndicator
@@ -894,7 +894,7 @@ describe('Autocomplete incremental interactions', () => {
 				</ClayAutocomplete>
 			);
 
-			userEvent.type(getByRole('combobox'), 'o');
+			await userEvent.type(getByRole('combobox'), 'o');
 
 			const indicator = document.body.querySelector(
 				'.clay-keyboard-arrows-indicator'

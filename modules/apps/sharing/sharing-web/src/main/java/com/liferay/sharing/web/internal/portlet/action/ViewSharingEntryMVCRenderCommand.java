@@ -87,6 +87,10 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 			SharingEntryViewRenderer sharingEntryViewRenderer =
 				sharingEntryInterpreter.getSharingEntryViewRenderer();
 
+			if (sharingEntryViewRenderer == null) {
+				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+			}
+
 			sharingEntryViewRenderer.render(
 				sharingEntry, _portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse));

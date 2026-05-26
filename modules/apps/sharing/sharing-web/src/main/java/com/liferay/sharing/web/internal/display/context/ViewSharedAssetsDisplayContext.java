@@ -257,7 +257,36 @@ public class ViewSharedAssetsDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String sharingEntryRowPortletURL = PortletURLBuilder.createRenderURL(
+		AssetRenderer<?> assetRenderer =
+			AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
+
+		if (assetRenderer != null) {
+			String entryRowPortletURL =
+				assetRenderer.getSharingEntryRowPortletURL(
+					_hasEditPermission(
+						sharingEntry.getClassNameId(),
+						sharingEntry.getClassPK()),
+					_themeDisplay);
+
+			if (!Validator.isBlank(entryRowPortletURL)) {
+				return entryRowPortletURL;
+			}
+		}
+
+		// Fall back to the sharing entry view only when the interpreter has
+		// a view renderer. A null view renderer signals that the entry has
+		// no standalone preview surface, so the row should not link anywhere.
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
+
+		if ((sharingEntryInterpreter == null) ||
+			(sharingEntryInterpreter.getSharingEntryViewRenderer() == null)) {
+
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/sharing/view_sharing_entry"
@@ -266,24 +295,6 @@ public class ViewSharedAssetsDisplayContext {
 		).setParameter(
 			"sharingEntryId", sharingEntry.getSharingEntryId()
 		).buildString();
-
-		AssetRenderer<?> assetRenderer =
-			AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
-
-		if (assetRenderer == null) {
-			return sharingEntryRowPortletURL;
-		}
-
-		String entryRowPortletURL = assetRenderer.getSharingEntryRowPortletURL(
-			_hasEditPermission(
-				sharingEntry.getClassNameId(), sharingEntry.getClassPK()),
-			_themeDisplay);
-
-		if (Validator.isBlank(entryRowPortletURL)) {
-			return sharingEntryRowPortletURL;
-		}
-
-		return entryRowPortletURL;
 	}
 
 	public String getSharingEntryTitle(SharingEntry sharingEntry) {

@@ -53,8 +53,12 @@ public class DataSetSnapshotSharingEntryInterpreter
 
 	@Override
 	public SharingEntryViewRenderer getSharingEntryViewRenderer() {
-		return (sharingEntry, httpServletRequest, httpServletResponse) -> {
-		};
+
+		// A data set user view has no standalone preview surface, so it has
+		// no view renderer. See ViewSharedAssetsDisplayContext, which drops
+		// the row link when the view renderer is null.
+
+		return null;
 	}
 
 	@Override

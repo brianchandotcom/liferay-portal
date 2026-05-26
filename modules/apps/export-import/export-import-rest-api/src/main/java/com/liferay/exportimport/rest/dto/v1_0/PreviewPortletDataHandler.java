@@ -208,7 +208,7 @@ public class PreviewPortletDataHandler implements Serializable {
 	}
 
 	@GraphQLField(description = "The handler's portlet ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
@@ -473,4 +473,4 @@ public class PreviewPortletDataHandler implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-235738329
+// LIFERAY-REST-BUILDER-HASH:-1763922148

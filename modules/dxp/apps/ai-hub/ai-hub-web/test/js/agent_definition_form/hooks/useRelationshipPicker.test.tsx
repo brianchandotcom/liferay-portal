@@ -30,13 +30,6 @@ function setup({items = [] as TestItem[]} = {}) {
 
 describe('useRelationshipPicker', () => {
 	describe('initial state', () => {
-		it('starts with empty selected and inputValue', () => {
-			const {result} = setup();
-
-			expect(result.current.selected).toEqual([]);
-			expect(result.current.inputValue).toBe('');
-		});
-
 		it('loads the source list from the fetcher on mount', async () => {
 			const {fetchSourceList, result} = setup({
 				items: [
@@ -50,6 +43,13 @@ describe('useRelationshipPicker', () => {
 			);
 
 			expect(fetchSourceList).toHaveBeenCalledTimes(1);
+		});
+
+		it('starts with empty selected and inputValue', () => {
+			const {result} = setup();
+
+			expect(result.current.selected).toEqual([]);
+			expect(result.current.inputValue).toBe('');
 		});
 	});
 
@@ -72,29 +72,6 @@ describe('useRelationshipPicker', () => {
 	});
 
 	describe('sync', () => {
-		it('puts only the additions relative to the baseline', async () => {
-			const {putRelationship, deleteRelationship, result} = setup();
-
-			act(() => {
-				result.current.reset([{externalReferenceCode: 'A'}]);
-			});
-
-			act(() => {
-				result.current.setSelected([
-					{externalReferenceCode: 'A'},
-					{externalReferenceCode: 'B'},
-				]);
-			});
-
-			await act(async () => {
-				await result.current.sync('AGENT');
-			});
-
-			expect(putRelationship).toHaveBeenCalledTimes(1);
-			expect(putRelationship).toHaveBeenCalledWith('AGENT', 'B');
-			expect(deleteRelationship).not.toHaveBeenCalled();
-		});
-
 		it('deletes only the removals relative to the baseline', async () => {
 			const {putRelationship, deleteRelationship, result} = setup();
 
@@ -181,6 +158,29 @@ describe('useRelationshipPicker', () => {
 			});
 
 			expect(putRelationship).toHaveBeenCalledTimes(1);
+		});
+
+		it('puts only the additions relative to the baseline', async () => {
+			const {putRelationship, deleteRelationship, result} = setup();
+
+			act(() => {
+				result.current.reset([{externalReferenceCode: 'A'}]);
+			});
+
+			act(() => {
+				result.current.setSelected([
+					{externalReferenceCode: 'A'},
+					{externalReferenceCode: 'B'},
+				]);
+			});
+
+			await act(async () => {
+				await result.current.sync('AGENT');
+			});
+
+			expect(putRelationship).toHaveBeenCalledTimes(1);
+			expect(putRelationship).toHaveBeenCalledWith('AGENT', 'B');
+			expect(deleteRelationship).not.toHaveBeenCalled();
 		});
 	});
 

@@ -91,7 +91,7 @@ public class CreateAccountUserMVCActionCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			_company.getCompanyId(), Group.class.getName(), _group.getGroupId(),
-			TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress,
+			TicketConstants.TYPE_INVITE_COLLABORATOR, null, emailAddress,
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
 

@@ -48,11 +48,11 @@ components:
                 endDate:
                     format: date-time
                     type: string
-                fileName:
-                    type: string
                 last:
                     format: int32
                     type: integer
+                name:
+                    type: string
                 permissions:
                     default: false
                     type: boolean
@@ -68,7 +68,7 @@ components:
                     format: date-time
                     type: string
             required:
-                -   fileName
+                -   name
             type: object
         ImportPreview:
             properties:
@@ -143,6 +143,8 @@ components:
                 deletions:
                     default: false
                     type: boolean
+                name:
+                    type: string
                 permissions:
                     default: false
                     type: boolean

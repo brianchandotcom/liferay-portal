@@ -1,3 +1,5 @@
+[#assign preferredDomains=(input.attributes.preferredDomains)!["@gmail.com", "@hotmail.com", "@liferay.com", "@outlook.com"]/]
+
 <div class="email-input">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentElementId}-form-group">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentElementId}-email-input" id="${fragmentElementId}-email-input-label">${htmlUtil.escape(input.label)}
@@ -6,7 +8,19 @@
 
 			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 		<div class="d-flex">
-			<input aria-describedby="${fragmentElementId}-email-input-help-text" aria-labelledby="${fragmentElementId}-email-input-label [#if input.errorMessage?has_content]${fragmentElementId}-email-input-error-message[/#if]" class="form-control" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentElementId}-email-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="email" [#if input.value??]value="${input.value}"[/#if] />
+			<div class="dropdown w-100">
+				<input aria-autocomplete="list" aria-controls="${fragmentElementId}-dropdown" aria-describedby="${fragmentElementId}-email-input-help-text" aria-expanded="false" aria-labelledby="${fragmentElementId}-email-input-label [#if input.errorMessage?has_content]${fragmentElementId}-email-input-error-message[/#if]" autocomplete="off" class="form-control" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentElementId}-email-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} role="combobox" type="email" [#if input.value??]value="${input.value}"[/#if] />
+
+				[#if preferredDomains?has_content]
+					<ul aria-labelledby="${fragmentElementId}-email-input-label" class="d-none dropdown-menu w-100" id="${fragmentElementId}-dropdown" role="listbox">
+						[#list preferredDomains as preferredDomain]
+							<li role="presentation">
+								<button class="dropdown-item" data-domain="${htmlUtil.escape(preferredDomain)}" role="option" tabindex="-1" type="button">${htmlUtil.escape(preferredDomain)}</button>
+							</li>
+						[/#list]
+					</ul>
+				[/#if]
+			</div>
 
 			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
 				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentElementId}-unlocalized-info" role="tooltip" tabindex="0">

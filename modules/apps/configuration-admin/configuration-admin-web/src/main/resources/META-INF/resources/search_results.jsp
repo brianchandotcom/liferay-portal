@@ -39,7 +39,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 	}
 </aui:style>
 
-<div class="configuration-admin--search-results sticky-top">
+<div class="configuration-admin--search-results">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= new ConfigurationScopeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, configurationEntryIterator.getTotal()) %>"
 	/>

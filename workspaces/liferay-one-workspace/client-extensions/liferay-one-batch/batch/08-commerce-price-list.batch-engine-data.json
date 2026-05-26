@@ -1,0 +1,110 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "AUD",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_AUD",
+			"name": "Salesforce AUD",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "BRL",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_BRL",
+			"name": "Salesforce BRL",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "CAD",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_CAD",
+			"name": "Salesforce CAD",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "CNY",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_CNY",
+			"name": "Salesforce CNY",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "EUR",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_EUR",
+			"name": "Salesforce EUR",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "GBP",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_GBP",
+			"name": "Salesforce GBP",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "HUF",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_HUF",
+			"name": "Salesforce HUF",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "INR",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_INR",
+			"name": "Salesforce INR",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "JPY",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_JPY",
+			"name": "Salesforce JPY",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "NZD",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_NZD",
+			"name": "Salesforce NZD",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "SGD",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_SGD",
+			"name": "Salesforce SGD",
+			"type": "price-list"
+		},
+		{
+			"active": true,
+			"catalogExternalReferenceCode": "SALESFORCE_CATALOG",
+			"currencyCode": "USD",
+			"externalReferenceCode": "SALESFORCE_PRICE_LIST_USD",
+			"name": "Salesforce USD",
+			"type": "price-list"
+		}
+	]
+}

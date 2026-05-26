@@ -49,6 +49,7 @@ import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
 import {ObjectEntryFolderApiHelper} from './ObjectEntryFolderApiHelper';
 import {SCIMApiHelper} from './SCIMApiHelper';
+import {SEOStudioApiHelper} from './SEOStudioApiHelper';
 import {SearchExperiencesApiHelper} from './SearchExperiencesApiHelper';
 import {JSONWebServicesAnnouncementsEntryApiHelper} from './json-web-services/JSONWebServicesAnnouncementsEntryApiHelper';
 import {JSONWebServicesAssetDisplayPageEntryApiHelper} from './json-web-services/JSONWebServicesAssetDisplayPageEntryApiHelper';
@@ -188,6 +189,7 @@ export class ApiHelpers {
 	readonly page: Page;
 	readonly scim: SCIMApiHelper;
 	readonly searchExperiences: SearchExperiencesApiHelper;
+	readonly seoStudio: SEOStudioApiHelper;
 
 	private static readonly _authorization = `Basic ${btoa(
 		`test@liferay.com:test`
@@ -300,6 +302,7 @@ export class ApiHelpers {
 		this.page = page;
 		this.scim = new SCIMApiHelper(this);
 		this.searchExperiences = new SearchExperiencesApiHelper(this);
+		this.seoStudio = new SEOStudioApiHelper(this);
 	}
 
 	async buildRestClient<

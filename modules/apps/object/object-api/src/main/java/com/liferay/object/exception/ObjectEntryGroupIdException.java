@@ -16,6 +16,19 @@ public class ObjectEntryGroupIdException extends PortalException {
 		return _messageKey;
 	}
 
+	public static class InvalidGroupIdForDomain
+		extends ObjectEntryGroupIdException {
+
+		public InvalidGroupIdForDomain(long groupId, String domain) {
+			super(
+				String.format(
+					"Group ID %d is not valid for domain \"%s\"", groupId,
+					domain),
+				"group-id-x-is-not-valid-for-domain-x");
+		}
+
+	}
+
 	public static class InvalidGroupIdForScope
 		extends ObjectEntryGroupIdException {
 

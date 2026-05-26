@@ -1018,11 +1018,11 @@ describe('IncrementalInteractions', () => {
 
 			const calls = onChange.mock.calls
 				.map((call: Array<string>) => call[0])
-				.filter(Boolean);
+				.filter((value): value is string => Boolean(value));
 
 			expect(calls.length).toBeGreaterThan(0);
 
-			calls.forEach((value: string) => {
+			calls.forEach((value) => {
 				const [, hh] = value.split(' ');
 
 				expect(Number(hh!.split(':')[0])).toBeGreaterThanOrEqual(10);

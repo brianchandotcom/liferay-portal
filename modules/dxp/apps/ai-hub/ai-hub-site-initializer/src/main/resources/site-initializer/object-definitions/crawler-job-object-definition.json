@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_CRAWLER_JOB",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Crawler Job"
+		"en_US": "AI Hub Crawler Job"
 	},
 	"modifiable": true,
 	"name": "AIHubCrawlerJob",
@@ -163,7 +163,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Crawler Jobs"
+		"en_US": "AI Hub Crawler Jobs"
 	},
 	"portlet": true,
 	"scope": "company",

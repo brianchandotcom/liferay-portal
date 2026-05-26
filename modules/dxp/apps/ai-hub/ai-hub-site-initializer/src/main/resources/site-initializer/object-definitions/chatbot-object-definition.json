@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_CHATBOT",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Chatbot"
+		"en_US": "AI Hub Chatbot"
 	},
 	"modifiable": true,
 	"name": "AIHubChatbot",
@@ -193,7 +193,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Chatbots"
+		"en_US": "AI Hub Chatbots"
 	},
 	"portlet": true,
 	"scope": "company",

@@ -12,7 +12,7 @@
 	"externalReferenceCode": "L_AI_HUB_MCP_SERVER",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "MCP Server"
+		"en_US": "AI Hub MCP Server"
 	},
 	"modifiable": true,
 	"name": "AIHubMCPServer",
@@ -93,7 +93,7 @@
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "MCP Servers"
+		"en_US": "AI Hub MCP Servers"
 	},
 	"portlet": true,
 	"scope": "company",

@@ -149,10 +149,11 @@ public class IndividualFaroController extends BaseFaroController {
 		throws Exception {
 
 		return search(
-			groupId, null, null, null, null, null, null, null, null,
-			faroSearchContext.getQuery(), null, null, null, null, false,
-			Collections.emptyList(), faroSearchContext.getCur(),
-			faroSearchContext.getDelta(), faroSearchContext.getOrderByFields());
+			groupId, null, null, null, null, null, false,
+			Collections.emptyList(), null, null, null, null,
+			faroSearchContext.getQuery(), null, null, null,
+			faroSearchContext.getCur(), faroSearchContext.getDelta(),
+			faroSearchContext.getOrderByFields());
 	}
 
 	@GET
@@ -160,36 +161,36 @@ public class IndividualFaroController extends BaseFaroController {
 	public FaroResultsDisplay search(
 			@PathParam("groupId") long groupId,
 			@QueryParam("accountId") String accountId,
+			@QueryParam("activityStatus") String activityStatus,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("dataSourceId") String dataSourceId,
-			@QueryParam("individualSegmentId") String individualSegmentId,
-			@QueryParam("notIndividualSegmentId") String notIndividualSegmentId,
-			@QueryParam("interestName") String interestName,
 			@QueryParam("filter") String filterString,
+			@QueryParam("includeAnonymousUsers") boolean includeAnonymousUsers,
+			@QueryParam("includePropertyNames") FaroParam<List<String>>
+				includePropertyNamesFaroParam,
+			@QueryParam("individualSegmentId") String individualSegmentId,
+			@QueryParam("interestName") String interestName,
+			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)
+			@QueryParam("notIndividualSegmentId")
+			String notIndividualSegmentId,
+			@DefaultValue(StringPool.BLANK) @QueryParam("profileTypes")
+				FaroParam<List<String>> profileTypesFaroParam,
 			@QueryParam("query") String query,
-			@QueryParam("activityStatus") String activityStatus,
 			@QueryParam("rangeEnd") String rangeEnd,
 			@QueryParam("rangeKey") Integer rangeKey,
 			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("includeAnonymousUsers") boolean includeAnonymousUsers,
-			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)
-			@QueryParam("includePropertyNames")
-			FaroParam
-				<List<String>> includePropertyNamesFaroParam,
-			@DefaultValue(StringPool.BLANK) @QueryParam("profileTypes")
-				FaroParam<List<String>> profileTypesFaroParam,
 			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		return search(
-			groupId, accountId, channelId, dataSourceId, individualSegmentId,
-			notIndividualSegmentId, interestName, filterString,
-			profileTypesFaroParam.getValue(), query, activityStatus, rangeEnd,
-			rangeKey, rangeStart, includeAnonymousUsers,
-			includePropertyNamesFaroParam.getValue(), cur, delta,
-			orderByFieldsFaroParam.getValue());
+			groupId, accountId, activityStatus, channelId, dataSourceId,
+			filterString, includeAnonymousUsers,
+			includePropertyNamesFaroParam.getValue(), individualSegmentId,
+			interestName, notIndividualSegmentId,
+			profileTypesFaroParam.getValue(), query, rangeEnd, rangeKey,
+			rangeStart, cur, delta, orderByFieldsFaroParam.getValue());
 	}
 
 	@Path("/search")
@@ -198,36 +199,36 @@ public class IndividualFaroController extends BaseFaroController {
 	public FaroResultsDisplay searchByForm(
 			@PathParam("groupId") long groupId,
 			@FormParam("accountId") String accountId,
+			@FormParam("activityStatus") String activityStatus,
 			@FormParam("channelId") String channelId,
 			@FormParam("dataSourceId") String dataSourceId,
-			@FormParam("individualSegmentId") String individualSegmentId,
-			@FormParam("notIndividualSegmentId") String notIndividualSegmentId,
-			@FormParam("interestName") String interestName,
 			@FormParam("filter") String filterString,
-			@DefaultValue(StringPool.BLANK) @FormParam("profileTypes") FaroParam
-				<List<String>> profileTypesFaroParam,
-			@FormParam("query") String query,
-			@FormParam("activityStatus") String activityStatus,
-			@FormParam("rangeEnd") String rangeEnd,
-			@FormParam("rangeKey") Integer rangeKey,
-			@FormParam("rangeStart") String rangeStart,
 			@FormParam("includeAnonymousUsers") boolean includeAnonymousUsers,
 			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)
 			@FormParam("includePropertyNames")
 			FaroParam
 				<List<String>> includePropertyNamesFaroParam,
+			@FormParam("individualSegmentId") String individualSegmentId,
+			@FormParam("interestName") String interestName,
+			@FormParam("notIndividualSegmentId") String notIndividualSegmentId,
+			@DefaultValue(StringPool.BLANK) @FormParam("profileTypes") FaroParam
+				<List<String>> profileTypesFaroParam,
+			@FormParam("query") String query,
+			@FormParam("rangeEnd") String rangeEnd,
+			@FormParam("rangeKey") Integer rangeKey,
+			@FormParam("rangeStart") String rangeStart,
 			@FormParam("cur") int cur, @FormParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @FormParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		return search(
-			groupId, accountId, channelId, dataSourceId, individualSegmentId,
-			notIndividualSegmentId, interestName, filterString,
-			profileTypesFaroParam.getValue(), query, activityStatus, rangeEnd,
-			rangeKey, rangeStart, includeAnonymousUsers,
-			includePropertyNamesFaroParam.getValue(), cur, delta,
-			orderByFieldsFaroParam.getValue());
+			groupId, accountId, activityStatus, channelId, dataSourceId,
+			filterString, includeAnonymousUsers,
+			includePropertyNamesFaroParam.getValue(), individualSegmentId,
+			interestName, notIndividualSegmentId,
+			profileTypesFaroParam.getValue(), query, rangeEnd, rangeKey,
+			rangeStart, cur, delta, orderByFieldsFaroParam.getValue());
 	}
 
 	@GET
@@ -251,14 +252,13 @@ public class IndividualFaroController extends BaseFaroController {
 
 	@SuppressWarnings("unchecked")
 	protected FaroResultsDisplay search(
-			long groupId, String accountId, String channelId,
-			String dataSourceId, String individualSegmentId,
-			String notIndividualSegmentId, String interestName,
-			String filterString, List<String> profileTypes, String query,
-			String activityStatus, String rangeEnd, Integer rangeKey,
-			String rangeStart, boolean includeAnonymousUsers,
-			List<String> includePropertyNames, int cur, int delta,
-			List<OrderByField> orderByFields)
+			long groupId, String accountId, String activityStatus,
+			String channelId, String dataSourceId, String filterString,
+			boolean includeAnonymousUsers, List<String> includePropertyNames,
+			String individualSegmentId, String interestName,
+			String notIndividualSegmentId, List<String> profileTypes,
+			String query, String rangeEnd, Integer rangeKey, String rangeStart,
+			int cur, int delta, List<OrderByField> orderByFields)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -266,10 +266,10 @@ public class IndividualFaroController extends BaseFaroController {
 
 		Results<Individual> results = contactsEngineClient.getIndividuals(
 			faroProject, accountId, activityStatus, channelId, dataSourceId,
-			individualSegmentId, notIndividualSegmentId, interestName,
-			filterString, profileTypes, query, rangeEnd, rangeKey, rangeStart,
-			FieldMappingConstants.getSearchFieldMappingNames(),
-			includeAnonymousUsers, cur, delta, orderByFields);
+			FieldMappingConstants.getSearchFieldMappingNames(), filterString,
+			includeAnonymousUsers, individualSegmentId, interestName,
+			notIndividualSegmentId, profileTypes, query, rangeEnd, rangeKey,
+			rangeStart, cur, delta, orderByFields);
 
 		Function<Individual, IndividualDisplay> function = individual -> {
 			IndividualDisplay individualDisplay = new IndividualDisplay(

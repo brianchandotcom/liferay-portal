@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -36,15 +37,10 @@ import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
 
-import java.net.URI;
-
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -105,7 +101,7 @@ public class ToolSetUtil {
 
 	public static Response invokeTool(
 			HttpServletRequest httpServletRequest, Object inputObject,
-			String toolName, String toolSetName, UriInfo uriInfo)
+			String toolName, String toolSetName)
 		throws Exception {
 
 		JSONObject inputJSONObject = null;
@@ -145,13 +141,12 @@ public class ToolSetUtil {
 				return invokeTool(
 					httpServletRequest, inputJSONObject.opt("body"),
 					inputJSONObject.getString("toolName"),
-					inputJSONObject.getString("toolSetName"), uriInfo);
+					inputJSONObject.getString("toolSetName"));
 			}
 		}
 
 		Http.Options options = _getOptions(
-			httpServletRequest, inputJSONObject, toolName, toolSetName,
-			uriInfo);
+			httpServletRequest, inputJSONObject, toolName, toolSetName);
 
 		String content = _getContent(HttpUtil.URLtoString(options));
 
@@ -167,15 +162,15 @@ public class ToolSetUtil {
 	}
 
 	private static String _get(
-			String url, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, String url)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
 
-		Map<String, String> forwardedHeaders = _getHeaders(httpServletRequest);
+		Map<String, String> headers = _getHeaders(httpServletRequest);
 
-		if (!forwardedHeaders.isEmpty()) {
-			options.setHeaders(forwardedHeaders);
+		if (!headers.isEmpty()) {
+			options.setHeaders(headers);
 		}
 
 		options.setLocation(url);
@@ -194,6 +189,11 @@ public class ToolSetUtil {
 		}
 
 		return content;
+	}
+
+	private static String _getBaseURL(HttpServletRequest httpServletRequest) {
+		return PortalUtil.getPortalURL(httpServletRequest) +
+			PortalUtil.getPathContext() + Portal.PATH_MODULE;
 	}
 
 	private static String _getContent(String content) {
@@ -251,26 +251,24 @@ public class ToolSetUtil {
 	private static Map<String, String> _getHeaders(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> headers = new HashMap<>();
+		String liferayAIHubCellOnBehalfOf = httpServletRequest.getHeader(
+			"Liferay-AI-Hub-Cell-On-Behalf-Of");
 
-		Enumeration<String> headerNamesEnumeration =
-			httpServletRequest.getHeaderNames();
-
-		while (headerNamesEnumeration.hasMoreElements()) {
-			String name = headerNamesEnumeration.nextElement();
-
-			if (_skippedHeaderNames.contains(StringUtil.toLowerCase(name))) {
-				continue;
-			}
-
-			String value = httpServletRequest.getHeader(name);
-
-			if (Validator.isNotNull(value)) {
-				headers.put(name, value);
-			}
+		if (liferayAIHubCellOnBehalfOf != null) {
+			return HashMapBuilder.put(
+				"Liferay-AI-Hub-Cell-On-Behalf-Of", liferayAIHubCellOnBehalfOf
+			).build();
 		}
 
-		return headers;
+		String authorization = httpServletRequest.getHeader("Authorization");
+
+		if (authorization != null) {
+			return HashMapBuilder.put(
+				"Authorization", authorization
+			).build();
+		}
+
+		return new HashMap<>();
 	}
 
 	private static OpenAPIBrief _getOpenAPIBrief(String toolSetName) {
@@ -329,11 +327,12 @@ public class ToolSetUtil {
 		OpenAPIBrief openAPIBrief, HttpServletRequest httpServletRequest) {
 
 		return _openAPIJSONObjectCache.computeIfAbsent(
-			_getOpenAPIURL(openAPIBrief, httpServletRequest),
+			_getBaseURL(httpServletRequest) + openAPIBrief._basePath +
+				openAPIBrief._openAPIPath,
 			url -> {
 				try {
 					return JSONFactoryUtil.createJSONObject(
-						_get(url, httpServletRequest));
+						_get(httpServletRequest, url));
 				}
 				catch (Exception exception) {
 					throw new RuntimeException(exception);
@@ -373,27 +372,14 @@ public class ToolSetUtil {
 		return null;
 	}
 
-	private static String _getOpenAPIURL(
-		OpenAPIBrief openAPIBrief, HttpServletRequest httpServletRequest) {
-
-		String serverURL =
-			PortalUtil.getPortalURL(httpServletRequest) +
-				PortalUtil.getPathContext() + Portal.PATH_MODULE;
-
-		return serverURL + openAPIBrief._basePath + openAPIBrief._openAPIPath;
-	}
-
 	private static Http.Options _getOptions(
 		HttpServletRequest httpServletRequest, JSONObject inputJSONObject,
-		String toolName, String toolSetName, UriInfo uriInfo) {
-
-		URI uri = uriInfo.getBaseUri();
+		String toolName, String toolSetName) {
 
 		OpenAPIBrief openAPIBrief = _getOpenAPIBrief(toolSetName);
 
 		Http.Options options = OpenAPIUtil.getOptions(
-			String.valueOf(
-				uri.resolve(Portal.PATH_MODULE + openAPIBrief._basePath)),
+			_getBaseURL(httpServletRequest) + openAPIBrief._basePath,
 			inputJSONObject,
 			_getOpenAPIJSONObject(openAPIBrief, httpServletRequest), toolName);
 
@@ -487,9 +473,6 @@ public class ToolSetUtil {
 			ToolSetUtil.class, JaxrsServiceRuntime.class);
 	private static final Map<String, JSONObject> _openAPIJSONObjectCache =
 		new ConcurrentHashMap<>();
-	private static final Set<String> _skippedHeaderNames = Set.of(
-		"connection", "content-length", "content-type", "host",
-		"transfer-encoding");
 
 	private static class OpenAPIBrief {
 

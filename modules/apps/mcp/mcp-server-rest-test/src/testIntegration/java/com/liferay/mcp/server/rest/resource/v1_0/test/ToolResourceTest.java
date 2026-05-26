@@ -91,6 +91,36 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 			).has(
 				"xClassName"
 			));
+
+		httpResponse =
+			toolResource.postToolSetToolSetNameToolInvokeHttpResponse(
+				"headless-delivery-v1.0", "getSiteDocumentsPage",
+				JSONUtil.put(
+					"fields", "id"
+				).put(
+					"siteId", testGroup.getGroupId()
+				).toString());
+
+		Assert.assertTrue(
+			JSONFactoryUtil.createJSONObject(
+				httpResponse.getContent()
+			).getJSONArray(
+				"items"
+			).getJSONObject(
+				0
+			).has(
+				"id"
+			));
+		Assert.assertFalse(
+			JSONFactoryUtil.createJSONObject(
+				httpResponse.getContent()
+			).getJSONArray(
+				"items"
+			).getJSONObject(
+				0
+			).has(
+				"title"
+			));
 	}
 
 }

@@ -1,0 +1,19 @@
+{
+	"properties": {
+		"filter": {
+			"description": "This is the description",
+			"type": "string"
+		},
+		"page": {
+			"description": "This is the description",
+			"type": "integer"
+		},
+		"pageSize": {
+			"description": "This is the description",
+			"type": "integer"
+		}
+	},
+	"required": [
+	],
+	"type": "object"
+}

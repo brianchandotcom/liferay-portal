@@ -57,9 +57,15 @@ public class OpenAPIUtilTest {
 			JSONFactoryUtil.createJSONObject(), "getItems");
 		_testGetOptions(
 			null, null, Http.Method.GET,
-			"http://localhost/test/v1.0/items?page=1&pageSize=20" +
+			"http://localhost/test/v1.0/items?restrictFields=actions",
+			JSONUtil.put("fields", ""), "getItems");
+		_testGetOptions(
+			null, null, Http.Method.GET,
+			"http://localhost/test/v1.0/items?page=1&pageSize=20&fields=name" +
 				"&restrictFields=actions",
 			JSONUtil.put(
+				"fields", "name"
+			).put(
 				"page", "1"
 			).put(
 				"pageSize", "20"
@@ -72,12 +78,20 @@ public class OpenAPIUtilTest {
 			JSONUtil.put("filter", "name eq 'John Doe'"), "getItems");
 		_testGetOptions(
 			null, null, Http.Method.GET,
-			"http://localhost/test/v1.0/items?restrictFields=actions",
-			JSONUtil.put("fields", "name"), "getItems");
+			"http://localhost/test/v1.0/items?fields=name%2Cinteger" +
+				"&restrictFields=actions",
+			JSONUtil.put("fields", JSONUtil.putAll("name", "integer")),
+			"getItems");
 		_testGetOptions(
 			null, null, Http.Method.GET,
-			"http://localhost/test/v1.0/items?restrictFields=actions",
-			JSONUtil.put("restrictFields", "name"), "getItems");
+			"http://localhost/test/v1.0/items/123?fields=name" +
+				"&restrictFields=actions",
+			JSONUtil.put(
+				"fields", "name"
+			).put(
+				"itemId", "123"
+			),
+			"getItem");
 		_testGetOptions(
 			null, null, Http.Method.GET,
 			"http://localhost/test/v1.0/items/123?restrictFields=actions",
@@ -192,12 +206,12 @@ public class OpenAPIUtilTest {
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"OpenAPI document has no tool with name \"missing\"",
-			() -> OpenAPIUtil.getTool(_openAPIJSONObject, "missing"));
+			() -> OpenAPIUtil.getTool(true, _openAPIJSONObject, "missing"));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"OpenAPI document has no \"paths\" object",
 			() -> OpenAPIUtil.getTool(
-				JSONFactoryUtil.createJSONObject(),
+				true, JSONFactoryUtil.createJSONObject(),
 				RandomTestUtil.randomString()));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class, "Request body has no content",
@@ -213,6 +227,9 @@ public class OpenAPIUtilTest {
 		_testGetTool(
 			"This is the summary. This is the description",
 			"get_test_v1.0_items.json", "getItems");
+		_testGetTool(
+			"This is the summary. This is the description",
+			"get_test_v1.0_items_no_inject.json", false, "getItems");
 		_testGetTool("This is the summary", "get_c_test.json", "getItemsPage");
 		_testGetTool(
 			"PATCH /v1.0/items/{itemId}", "patch_test_v1.0_items_itemId.json",
@@ -308,7 +325,7 @@ public class OpenAPIUtilTest {
 	private Map<String, ?> _getInputSchema(
 		JSONObject openAPIJSONObject, String toolName) {
 
-		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, toolName);
+		Tool tool = OpenAPIUtil.getTool(true, openAPIJSONObject, toolName);
 
 		return tool.getInputSchema();
 	}
@@ -347,10 +364,11 @@ public class OpenAPIUtilTest {
 
 	private void _testGetTool(
 			String expectedDescription, String expectedSchemaFileName,
-			String toolName)
+			boolean injectVulcanParameters, String toolName)
 		throws Exception {
 
-		Tool tool = OpenAPIUtil.getTool(_openAPIJSONObject, toolName);
+		Tool tool = OpenAPIUtil.getTool(
+			injectVulcanParameters, _openAPIJSONObject, toolName);
 
 		Assert.assertEquals(expectedDescription, tool.getDescription());
 		Assert.assertEquals(toolName, tool.getName());
@@ -362,6 +380,15 @@ public class OpenAPIUtilTest {
 				tool.getInputSchema()
 			),
 			true);
+	}
+
+	private void _testGetTool(
+			String expectedDescription, String expectedSchemaFileName,
+			String toolName)
+		throws Exception {
+
+		_testGetTool(
+			expectedDescription, expectedSchemaFileName, true, toolName);
 	}
 
 	private JSONObject _openAPIJSONObject;

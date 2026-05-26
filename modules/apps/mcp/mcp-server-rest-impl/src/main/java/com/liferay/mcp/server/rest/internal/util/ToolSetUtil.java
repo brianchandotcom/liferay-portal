@@ -65,6 +65,7 @@ public class ToolSetUtil {
 		String toolSetName) {
 
 		return OpenAPIUtil.getTool(
+			!Objects.equals(toolSetName, _MCP_SERVER_TOOL_SET_NAME),
 			_getOpenAPIJSONObject(
 				_getOpenAPIBrief(toolSetName), httpServletRequest),
 			toolName);
@@ -117,7 +118,7 @@ public class ToolSetUtil {
 			inputJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
-		if (Objects.equals(toolSetName, "mcp-server-v1.0")) {
+		if (Objects.equals(toolSetName, _MCP_SERVER_TOOL_SET_NAME)) {
 			if (Objects.equals(toolName, "getToolSetToolSetNameTool")) {
 				return _getResponse(
 					getTool(
@@ -472,6 +473,8 @@ public class ToolSetUtil {
 
 		return openAPIPath.substring(0, index);
 	}
+
+	private static final String _MCP_SERVER_TOOL_SET_NAME = "mcp-server-v1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(ToolSetUtil.class);
 

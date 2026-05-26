@@ -36,7 +36,10 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 
 		document.body.appendChild(element);
 
-		setURLs(widgetConfiguration.aiHubURL, widgetConfiguration.liferayDXPURL);
+		setURLs(
+			widgetConfiguration.aiHubURL,
+			widgetConfiguration.liferayDXPURL
+		);
 
 		createRoot(element).render(
 			<ChatbotWidget widgetConfiguration={widgetConfiguration} />

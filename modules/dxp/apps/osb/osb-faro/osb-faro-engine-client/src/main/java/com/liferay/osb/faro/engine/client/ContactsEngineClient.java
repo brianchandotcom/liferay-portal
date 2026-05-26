@@ -176,11 +176,11 @@ public interface ContactsEngineClient {
 		throws Exception;
 
 	public Account getAccount(
-			FaroProject faroProject, Long channelId, String id)
+			FaroProject faroProject, String id, Long channelId)
 		throws FaroEngineClientException;
 
 	public AccountDetails getAccountDetails(
-			FaroProject faroProject, Long channelId, String id)
+			FaroProject faroProject, String id, Long channelId)
 		throws FaroEngineClientException;
 
 	public Results<Object> getAccountFieldValues(

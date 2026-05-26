@@ -586,7 +586,7 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Account getAccount(
-			FaroProject faroProject, Long channelId, String id)
+			FaroProject faroProject, String id, Long channelId)
 		throws FaroEngineClientException {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
@@ -600,7 +600,7 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public AccountDetails getAccountDetails(
-			FaroProject faroProject, Long channelId, String id)
+			FaroProject faroProject, String id, Long channelId)
 		throws FaroEngineClientException {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject, id);

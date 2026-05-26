@@ -7,8 +7,8 @@ package com.liferay.exportimport.rest.internal.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
-import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
-import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandlerControl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -22,14 +22,14 @@ import java.util.Map;
 public class ParameterMapUtil {
 
 	public static Map<String, String[]> toParameterMap(
-		ExportRequest exportRequest) {
+		ExportProcessRequest exportProcessRequest) {
 
 		Map<String, String[]> parameterMap = _getDefaultParameterMap();
 
 		_addRequestPortletDataHandlers(
-			exportRequest.getRequestPortletDataHandlers(), parameterMap);
+			exportProcessRequest.getRequestPortletDataHandlers(), parameterMap);
 
-		Boolean deletions = exportRequest.getDeletions();
+		Boolean deletions = exportProcessRequest.getDeletions();
 
 		if (deletions != null) {
 			parameterMap.put(
@@ -37,7 +37,7 @@ public class ParameterMapUtil {
 				new String[] {deletions.toString()});
 		}
 
-		Boolean permissions = exportRequest.getPermissions();
+		Boolean permissions = exportProcessRequest.getPermissions();
 
 		if (permissions != null) {
 			parameterMap.put(
@@ -49,15 +49,15 @@ public class ParameterMapUtil {
 	}
 
 	public static Map<String, String[]> toParameterMap(
-		ImportRequest importRequest) {
+		ImportProcessRequest importProcessRequest) {
 
 		Map<String, String[]> parameterMap = _getDefaultParameterMap();
 
 		_addRequestPortletDataHandlers(
-			importRequest.getRequestPortletDataHandlers(), parameterMap);
+			importProcessRequest.getRequestPortletDataHandlers(), parameterMap);
 
-		ImportRequest.DataStrategy dataStrategy =
-			importRequest.getDataStrategy();
+		ImportProcessRequest.DataStrategy dataStrategy =
+			importProcessRequest.getDataStrategy();
 
 		if (dataStrategy != null) {
 			parameterMap.put(
@@ -65,7 +65,7 @@ public class ParameterMapUtil {
 				new String[] {"DATA_STRATEGY_" + dataStrategy});
 		}
 
-		Boolean deletions = importRequest.getDeletions();
+		Boolean deletions = importProcessRequest.getDeletions();
 
 		if (deletions != null) {
 			parameterMap.put(
@@ -73,7 +73,7 @@ public class ParameterMapUtil {
 				new String[] {deletions.toString()});
 		}
 
-		Boolean permissions = importRequest.getPermissions();
+		Boolean permissions = importProcessRequest.getPermissions();
 
 		if (permissions != null) {
 			parameterMap.put(
@@ -81,8 +81,8 @@ public class ParameterMapUtil {
 				new String[] {permissions.toString()});
 		}
 
-		ImportRequest.UserIdStrategy userIdStrategy =
-			importRequest.getUserIdStrategy();
+		ImportProcessRequest.UserIdStrategy userIdStrategy =
+			importProcessRequest.getUserIdStrategy();
 
 		if (userIdStrategy != null) {
 			parameterMap.put(

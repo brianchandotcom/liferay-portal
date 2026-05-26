@@ -87,7 +87,7 @@ export function NewImport({
 					}
 
 					const result = await postImportProcess({
-						importRequest: {
+						importProcessRequest: {
 							dataStrategy: values.dataStrategy as DataStrategy,
 							deletions: !!values.deletions,
 							name: values.name,

@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.client.dto.v1_0;
 
 import com.liferay.exportimport.rest.client.function.UnsafeSupplier;
-import com.liferay.exportimport.rest.client.serdes.v1_0.ImportRequestSerDes;
+import com.liferay.exportimport.rest.client.serdes.v1_0.ImportProcessRequestSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ImportRequest implements Cloneable, Serializable {
+public class ImportProcessRequest implements Cloneable, Serializable {
 
-	public static ImportRequest toDTO(String json) {
-		return ImportRequestSerDes.toDTO(json);
+	public static ImportProcessRequest toDTO(String json) {
+		return ImportProcessRequestSerDes.toDTO(json);
 	}
 
 	public DataStrategy getDataStrategy() {
@@ -171,8 +171,8 @@ public class ImportRequest implements Cloneable, Serializable {
 	protected UserIdStrategy userIdStrategy;
 
 	@Override
-	public ImportRequest clone() throws CloneNotSupportedException {
-		return (ImportRequest)super.clone();
+	public ImportProcessRequest clone() throws CloneNotSupportedException {
+		return (ImportProcessRequest)super.clone();
 	}
 
 	@Override
@@ -181,13 +181,14 @@ public class ImportRequest implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ImportRequest)) {
+		if (!(object instanceof ImportProcessRequest)) {
 			return false;
 		}
 
-		ImportRequest importRequest = (ImportRequest)object;
+		ImportProcessRequest importProcessRequest =
+			(ImportProcessRequest)object;
 
-		return Objects.equals(toString(), importRequest.toString());
+		return Objects.equals(toString(), importProcessRequest.toString());
 	}
 
 	@Override
@@ -198,7 +199,7 @@ public class ImportRequest implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ImportRequestSerDes.toJSON(this);
+		return ImportProcessRequestSerDes.toJSON(this);
 	}
 
 	public static enum DataStrategy {
@@ -270,4 +271,4 @@ public class ImportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1344546348
+// LIFERAY-REST-BUILDER-HASH:1910214743

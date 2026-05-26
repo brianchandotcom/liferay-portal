@@ -7,7 +7,7 @@ package com.liferay.exportimport.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
-import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.resource.v1_0.ImportProcessResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -381,7 +381,7 @@ public abstract class BaseImportProcessResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		return new ImportProcess();
@@ -421,7 +421,7 @@ public abstract class BaseImportProcessResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest,
+			ImportProcessRequest importProcessRequest,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -559,7 +559,8 @@ public abstract class BaseImportProcessResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ImportProcess postImportProcess(ImportRequest importRequest)
+	public ImportProcess postImportProcess(
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		return new ImportProcess();
@@ -589,7 +590,7 @@ public abstract class BaseImportProcessResourceImpl
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postImportProcessBatch(
-			ImportRequest importRequest,
+			ImportProcessRequest importProcessRequest,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -730,7 +731,7 @@ public abstract class BaseImportProcessResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		return new ImportProcess();
@@ -770,7 +771,7 @@ public abstract class BaseImportProcessResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
-			ImportRequest importRequest,
+			ImportProcessRequest importProcessRequest,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -910,18 +911,21 @@ public abstract class BaseImportProcessResourceImpl
 					importProcess -> postAssetLibraryImportProcess(
 						(String)parameters.get(
 							"assetLibraryExternalReferenceCode"),
-						(ImportRequest)parameters.get("importRequest"));
+						(ImportProcessRequest)parameters.get(
+							"importProcessRequest"));
 			}
 			else if (parameters.containsKey("siteExternalReferenceCode")) {
 				importProcessUnsafeFunction =
 					importProcess -> postSiteImportProcess(
 						(String)parameters.get("siteExternalReferenceCode"),
-						(ImportRequest)parameters.get("importRequest"));
+						(ImportProcessRequest)parameters.get(
+							"importProcessRequest"));
 			}
 			else {
 				importProcessUnsafeFunction =
 					importProcess -> postImportProcess(
-						(ImportRequest)parameters.get("importRequest"));
+						(ImportProcessRequest)parameters.get(
+							"importProcessRequest"));
 			}
 		}
 
@@ -1634,4 +1638,4 @@ public abstract class BaseImportProcessResourceImpl
 		LogFactoryUtil.getLog(BaseImportProcessResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1140373867
+// LIFERAY-REST-BUILDER-HASH:-2001736544

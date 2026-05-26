@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.client.resource.v1_0;
 
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
-import com.liferay.exportimport.rest.client.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.pagination.Page;
 import com.liferay.exportimport.rest.client.pagination.Pagination;
@@ -75,23 +75,25 @@ public interface ImportProcessResource {
 
 	public ImportProcess postAssetLibraryImportProcess(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAssetLibraryImportProcessHttpResponse(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public void postAssetLibraryImportProcessBatch(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest, String callbackURL, Object object)
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAssetLibraryImportProcessBatchHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				ImportRequest importRequest, String callbackURL, Object object)
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 		throws Exception;
 
 	public void postAssetLibraryImportProcessesPageExportBatch(
@@ -107,19 +109,22 @@ public interface ImportProcessResource {
 				String contentType, String fieldNames)
 		throws Exception;
 
-	public ImportProcess postImportProcess(ImportRequest importRequest)
+	public ImportProcess postImportProcess(
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postImportProcessHttpResponse(
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public void postImportProcessBatch(
-			ImportRequest importRequest, String callbackURL, Object object)
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postImportProcessBatchHttpResponse(
-			ImportRequest importRequest, String callbackURL, Object object)
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public void postImportProcessesPageExportBatch(
@@ -135,21 +140,25 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public ImportProcess postSiteImportProcess(
-			String siteExternalReferenceCode, ImportRequest importRequest)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteImportProcessHttpResponse(
-			String siteExternalReferenceCode, ImportRequest importRequest)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public void postSiteImportProcessBatch(
-			String siteExternalReferenceCode, ImportRequest importRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteImportProcessBatchHttpResponse(
-			String siteExternalReferenceCode, ImportRequest importRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public void postSiteImportProcessesPageExportBatch(
@@ -777,12 +786,12 @@ public interface ImportProcessResource {
 
 		public ImportProcess postAssetLibraryImportProcess(
 				String assetLibraryExternalReferenceCode,
-				ImportRequest importRequest)
+				ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryImportProcessHttpResponse(
-					assetLibraryExternalReferenceCode, importRequest);
+					assetLibraryExternalReferenceCode, importProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -846,12 +855,13 @@ public interface ImportProcessResource {
 		public HttpInvoker.HttpResponse
 				postAssetLibraryImportProcessHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					ImportRequest importRequest)
+					ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(importRequest.toString(), "application/json");
+			httpInvoker.body(
+				importProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -891,12 +901,13 @@ public interface ImportProcessResource {
 
 		public void postAssetLibraryImportProcessBatch(
 				String assetLibraryExternalReferenceCode,
-				ImportRequest importRequest, String callbackURL, Object object)
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryImportProcessBatchHttpResponse(
-					assetLibraryExternalReferenceCode, importRequest,
+					assetLibraryExternalReferenceCode, importProcessRequest,
 					callbackURL, object);
 
 			String content = httpResponse.getContent();
@@ -950,8 +961,8 @@ public interface ImportProcessResource {
 		public HttpInvoker.HttpResponse
 				postAssetLibraryImportProcessBatchHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					ImportRequest importRequest, String callbackURL,
-					Object object)
+					ImportProcessRequest importProcessRequest,
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1133,11 +1144,12 @@ public interface ImportProcessResource {
 			return httpInvoker.invoke();
 		}
 
-		public ImportProcess postImportProcess(ImportRequest importRequest)
+		public ImportProcess postImportProcess(
+				ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postImportProcessHttpResponse(importRequest);
+				postImportProcessHttpResponse(importProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -1199,12 +1211,13 @@ public interface ImportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postImportProcessHttpResponse(
-				ImportRequest importRequest)
+				ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(importRequest.toString(), "application/json");
+			httpInvoker.body(
+				importProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1239,12 +1252,13 @@ public interface ImportProcessResource {
 		}
 
 		public void postImportProcessBatch(
-				ImportRequest importRequest, String callbackURL, Object object)
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postImportProcessBatchHttpResponse(
-					importRequest, callbackURL, object);
+					importProcessRequest, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1295,7 +1309,8 @@ public interface ImportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postImportProcessBatchHttpResponse(
-				ImportRequest importRequest, String callbackURL, Object object)
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1472,12 +1487,13 @@ public interface ImportProcessResource {
 		}
 
 		public ImportProcess postSiteImportProcess(
-				String siteExternalReferenceCode, ImportRequest importRequest)
+				String siteExternalReferenceCode,
+				ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteImportProcessHttpResponse(
-					siteExternalReferenceCode, importRequest);
+					siteExternalReferenceCode, importProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -1539,12 +1555,14 @@ public interface ImportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteImportProcessHttpResponse(
-				String siteExternalReferenceCode, ImportRequest importRequest)
+				String siteExternalReferenceCode,
+				ImportProcessRequest importProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(importRequest.toString(), "application/json");
+			httpInvoker.body(
+				importProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1582,14 +1600,15 @@ public interface ImportProcessResource {
 		}
 
 		public void postSiteImportProcessBatch(
-				String siteExternalReferenceCode, ImportRequest importRequest,
-				String callbackURL, Object object)
+				String siteExternalReferenceCode,
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteImportProcessBatchHttpResponse(
-					siteExternalReferenceCode, importRequest, callbackURL,
-					object);
+					siteExternalReferenceCode, importProcessRequest,
+					callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1640,8 +1659,9 @@ public interface ImportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteImportProcessBatchHttpResponse(
-				String siteExternalReferenceCode, ImportRequest importRequest,
-				String callbackURL, Object object)
+				String siteExternalReferenceCode,
+				ImportProcessRequest importProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1834,4 +1854,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1283806301
+// LIFERAY-REST-BUILDER-HASH:-1743775649

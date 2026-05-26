@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.rest.client.serdes.v1_0;
 
-import com.liferay.exportimport.rest.client.dto.v1_0.ExportRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.client.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
@@ -25,24 +25,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ExportRequestSerDes {
+public class ExportProcessRequestSerDes {
 
-	public static ExportRequest toDTO(String json) {
-		ExportRequestJSONParser exportRequestJSONParser =
-			new ExportRequestJSONParser();
+	public static ExportProcessRequest toDTO(String json) {
+		ExportProcessRequestJSONParser exportProcessRequestJSONParser =
+			new ExportProcessRequestJSONParser();
 
-		return exportRequestJSONParser.parseToDTO(json);
+		return exportProcessRequestJSONParser.parseToDTO(json);
 	}
 
-	public static ExportRequest[] toDTOs(String json) {
-		ExportRequestJSONParser exportRequestJSONParser =
-			new ExportRequestJSONParser();
+	public static ExportProcessRequest[] toDTOs(String json) {
+		ExportProcessRequestJSONParser exportProcessRequestJSONParser =
+			new ExportProcessRequestJSONParser();
 
-		return exportRequestJSONParser.parseToDTOs(json);
+		return exportProcessRequestJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ExportRequest exportRequest) {
-		if (exportRequest == null) {
+	public static String toJSON(ExportProcessRequest exportProcessRequest) {
+		if (exportProcessRequest == null) {
 			return "null";
 		}
 
@@ -53,17 +53,17 @@ public class ExportRequestSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (exportRequest.getDeletions() != null) {
+		if (exportProcessRequest.getDeletions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"deletions\": ");
 
-			sb.append(exportRequest.getDeletions());
+			sb.append(exportProcessRequest.getDeletions());
 		}
 
-		if (exportRequest.getEndDate() != null) {
+		if (exportProcessRequest.getEndDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -73,22 +73,23 @@ public class ExportRequestSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(exportRequest.getEndDate()));
+				liferayToJSONDateFormat.format(
+					exportProcessRequest.getEndDate()));
 
 			sb.append("\"");
 		}
 
-		if (exportRequest.getLast() != null) {
+		if (exportProcessRequest.getLast() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"last\": ");
 
-			sb.append(exportRequest.getLast());
+			sb.append(exportProcessRequest.getLast());
 		}
 
-		if (exportRequest.getName() != null) {
+		if (exportProcessRequest.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -97,22 +98,22 @@ public class ExportRequestSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(exportRequest.getName()));
+			sb.append(_escape(exportProcessRequest.getName()));
 
 			sb.append("\"");
 		}
 
-		if (exportRequest.getPermissions() != null) {
+		if (exportProcessRequest.getPermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"permissions\": ");
 
-			sb.append(exportRequest.getPermissions());
+			sb.append(exportProcessRequest.getPermissions());
 		}
 
-		if (exportRequest.getRange() != null) {
+		if (exportProcessRequest.getRange() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -120,11 +121,11 @@ public class ExportRequestSerDes {
 			sb.append("\"range\": ");
 
 			sb.append("\"");
-			sb.append(exportRequest.getRange());
+			sb.append(exportProcessRequest.getRange());
 			sb.append("\"");
 		}
 
-		if (exportRequest.getRequestPortletDataHandlers() != null) {
+		if (exportProcessRequest.getRequestPortletDataHandlers() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -134,15 +135,18 @@ public class ExportRequestSerDes {
 			sb.append("[");
 
 			for (int i = 0;
-				 i < exportRequest.getRequestPortletDataHandlers().length;
+				 i <
+					 exportProcessRequest.
+						 getRequestPortletDataHandlers().length;
 				 i++) {
 
 				sb.append(
 					String.valueOf(
-						exportRequest.getRequestPortletDataHandlers()[i]));
+						exportProcessRequest.getRequestPortletDataHandlers()
+							[i]));
 
-				if ((i + 1) <
-						exportRequest.getRequestPortletDataHandlers().length) {
+				if ((i + 1) < exportProcessRequest.
+						getRequestPortletDataHandlers().length) {
 
 					sb.append(", ");
 				}
@@ -151,7 +155,7 @@ public class ExportRequestSerDes {
 			sb.append("]");
 		}
 
-		if (exportRequest.getStartDate() != null) {
+		if (exportProcessRequest.getStartDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -161,7 +165,8 @@ public class ExportRequestSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(exportRequest.getStartDate()));
+				liferayToJSONDateFormat.format(
+					exportProcessRequest.getStartDate()));
 
 			sb.append("\"");
 		}
@@ -172,14 +177,16 @@ public class ExportRequestSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ExportRequestJSONParser exportRequestJSONParser =
-			new ExportRequestJSONParser();
+		ExportProcessRequestJSONParser exportProcessRequestJSONParser =
+			new ExportProcessRequestJSONParser();
 
-		return exportRequestJSONParser.parseToMap(json);
+		return exportProcessRequestJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ExportRequest exportRequest) {
-		if (exportRequest == null) {
+	public static Map<String, String> toMap(
+		ExportProcessRequest exportProcessRequest) {
+
+		if (exportProcessRequest == null) {
 			return null;
 		}
 
@@ -188,83 +195,89 @@ public class ExportRequestSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (exportRequest.getDeletions() == null) {
+		if (exportProcessRequest.getDeletions() == null) {
 			map.put("deletions", null);
 		}
 		else {
-			map.put("deletions", String.valueOf(exportRequest.getDeletions()));
+			map.put(
+				"deletions",
+				String.valueOf(exportProcessRequest.getDeletions()));
 		}
 
-		if (exportRequest.getEndDate() == null) {
+		if (exportProcessRequest.getEndDate() == null) {
 			map.put("endDate", null);
 		}
 		else {
 			map.put(
 				"endDate",
-				liferayToJSONDateFormat.format(exportRequest.getEndDate()));
+				liferayToJSONDateFormat.format(
+					exportProcessRequest.getEndDate()));
 		}
 
-		if (exportRequest.getLast() == null) {
+		if (exportProcessRequest.getLast() == null) {
 			map.put("last", null);
 		}
 		else {
-			map.put("last", String.valueOf(exportRequest.getLast()));
+			map.put("last", String.valueOf(exportProcessRequest.getLast()));
 		}
 
-		if (exportRequest.getName() == null) {
+		if (exportProcessRequest.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(exportRequest.getName()));
+			map.put("name", String.valueOf(exportProcessRequest.getName()));
 		}
 
-		if (exportRequest.getPermissions() == null) {
+		if (exportProcessRequest.getPermissions() == null) {
 			map.put("permissions", null);
 		}
 		else {
 			map.put(
-				"permissions", String.valueOf(exportRequest.getPermissions()));
+				"permissions",
+				String.valueOf(exportProcessRequest.getPermissions()));
 		}
 
-		if (exportRequest.getRange() == null) {
+		if (exportProcessRequest.getRange() == null) {
 			map.put("range", null);
 		}
 		else {
-			map.put("range", String.valueOf(exportRequest.getRange()));
+			map.put("range", String.valueOf(exportProcessRequest.getRange()));
 		}
 
-		if (exportRequest.getRequestPortletDataHandlers() == null) {
+		if (exportProcessRequest.getRequestPortletDataHandlers() == null) {
 			map.put("requestPortletDataHandlers", null);
 		}
 		else {
 			map.put(
 				"requestPortletDataHandlers",
-				String.valueOf(exportRequest.getRequestPortletDataHandlers()));
+				String.valueOf(
+					exportProcessRequest.getRequestPortletDataHandlers()));
 		}
 
-		if (exportRequest.getStartDate() == null) {
+		if (exportProcessRequest.getStartDate() == null) {
 			map.put("startDate", null);
 		}
 		else {
 			map.put(
 				"startDate",
-				liferayToJSONDateFormat.format(exportRequest.getStartDate()));
+				liferayToJSONDateFormat.format(
+					exportProcessRequest.getStartDate()));
 		}
 
 		return map;
 	}
 
-	public static class ExportRequestJSONParser
-		extends BaseJSONParser<ExportRequest> {
+	public static class ExportProcessRequestJSONParser
+		extends BaseJSONParser<ExportProcessRequest> {
 
 		@Override
-		protected ExportRequest createDTO() {
-			return new ExportRequest();
+		protected ExportProcessRequest createDTO() {
+			return new ExportProcessRequest();
 		}
 
 		@Override
-		protected ExportRequest[] createDTOArray(int size) {
-			return new ExportRequest[size];
+		protected ExportProcessRequest[] createDTOArray(int size) {
+			return new ExportProcessRequest[size];
 		}
 
 		@Override
@@ -301,40 +314,42 @@ public class ExportRequestSerDes {
 
 		@Override
 		protected void setField(
-			ExportRequest exportRequest, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			ExportProcessRequest exportProcessRequest,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "deletions")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setDeletions((Boolean)jsonParserFieldValue);
+					exportProcessRequest.setDeletions(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "endDate")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setEndDate(
+					exportProcessRequest.setEndDate(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "last")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setLast(
+					exportProcessRequest.setLast(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setName((String)jsonParserFieldValue);
+					exportProcessRequest.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setPermissions((Boolean)jsonParserFieldValue);
+					exportProcessRequest.setPermissions(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "range")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setRange(
-						ExportRequest.Range.create(
+					exportProcessRequest.setRange(
+						ExportProcessRequest.Range.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -358,13 +373,13 @@ public class ExportRequestSerDes {
 								(String)jsonParserFieldValues[i]);
 					}
 
-					exportRequest.setRequestPortletDataHandlers(
+					exportProcessRequest.setRequestPortletDataHandlers(
 						requestPortletDataHandlersArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "startDate")) {
 				if (jsonParserFieldValue != null) {
-					exportRequest.setStartDate(
+					exportProcessRequest.setStartDate(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
@@ -449,4 +464,4 @@ public class ExportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:881442338
+// LIFERAY-REST-BUILDER-HASH:1211673737

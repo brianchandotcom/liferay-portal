@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.resource.v1_0;
 
 import com.liferay.exportimport.rest.dto.v1_0.ExportProcess;
-import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -47,28 +47,33 @@ public interface ExportProcessResource {
 
 	public ExportProcess postAssetLibraryExportProcess(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest)
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public Response postAssetLibraryExportProcessBatch(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest, String callbackURL, Object object)
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public ExportProcess postExportProcess(ExportRequest exportRequest)
+	public ExportProcess postExportProcess(
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public Response postExportProcessBatch(
-			ExportRequest exportRequest, String callbackURL, Object object)
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public ExportProcess postSiteExportProcess(
-			String siteExternalReferenceCode, ExportRequest exportRequest)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public Response postSiteExportProcessBatch(
-			String siteExternalReferenceCode, ExportRequest exportRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -167,4 +172,4 @@ public interface ExportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1729129687
+// LIFERAY-REST-BUILDER-HASH:-273621494

@@ -29,7 +29,7 @@
 			"DBType": "Long",
 			"businessType": "Attachment",
 			"defaultValue": "null",
-			"externalReferenceCode": "COMPANY_LOGO",
+			"externalReferenceCode": "AVATAR",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",

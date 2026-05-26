@@ -17,6 +17,7 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
+import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.definition.Recipient;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
@@ -32,6 +33,7 @@ import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -67,7 +69,7 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 		if (!_scriptManagementConfigurationHelper.
 				isAllowScriptContentToBeExecutedOrIncluded()) {
 
-			_validateScriptLanguages(definition);
+			_validateScriptLanguage(definition);
 		}
 
 		if (definition.getForksCount() != definition.getJoinsCount()) {
@@ -101,129 +103,131 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 		_serviceTrackerMap.close();
 	}
 
-	private void _validateScriptLanguage(
-			Definition definition, ScriptLanguage scriptLanguage)
-		throws KaleoDefinitionValidationException {
+	private void _validateScriptLanguage(Definition definition)
+		throws WorkflowException {
 
-		if (scriptLanguage == ScriptLanguage.GROOVY) {
+		String name = definition.getName();
+
+		for (Node node : definition.getNodes()) {
+			if (node instanceof Condition condition) {
+				_validateScriptLanguage(name, condition.getScriptLanguage());
+			}
+
+			if (node instanceof Task task) {
+				_validateScriptLanguageInAssignments(
+					task.getAssignments(), name);
+			}
+
+			_validateScriptLanguageInActions(node.getActions(), name);
+			_validateScriptLanguageInNotifications(
+				name, node.getNotifications());
+
+			Map<String, Transition> outgoingTransitions =
+				node.getOutgoingTransitions();
+
+			for (Transition transition : outgoingTransitions.values()) {
+				_validateScriptLanguageInTimer(name, transition.getTimer());
+			}
+
+			for (Timer timer : node.getTimers()) {
+				_validateScriptLanguageInTimer(name, timer);
+			}
+		}
+	}
+
+	private void _validateScriptLanguage(
+			String name, ScriptLanguage scriptLanguage)
+		throws WorkflowException {
+
+		if (scriptLanguage == null) {
+			return;
+		}
+
+		String value = scriptLanguage.getValue();
+
+		if (Objects.equals(value, ScriptLanguage.GROOVY.getValue())) {
 			throw new KaleoDefinitionValidationException.
 				NotAllowedScriptLanguage("Groovy is not allowed");
 		}
 
-		if ((scriptLanguage == ScriptLanguage.JAVA) &&
-			!Objects.equals(
-				definition.getName(),
-				"Message Board Threads and Comments Reputation Approver")) {
+		if (!Objects.equals(
+				name,
+				"Message Board Threads and Comments Reputation Approver") &&
+			Objects.equals(value, ScriptLanguage.JAVA.getValue())) {
 
 			throw new KaleoDefinitionValidationException.
 				NotAllowedScriptLanguage("Java is not allowed");
 		}
 	}
 
-	private void _validateScriptLanguages(Definition definition)
-		throws KaleoDefinitionValidationException {
-
-		for (Node node : definition.getNodes()) {
-			_validateScriptLanguagesInActions(node.getActions(), definition);
-			_validateScriptLanguagesInNotifications(
-				definition, node.getNotifications());
-
-			for (Timer timer : node.getTimers()) {
-				_validateScriptLanguagesInActions(
-					timer.getActions(), definition);
-				_validateScriptLanguagesInAssignments(
-					timer.getReassignments(), definition);
-				_validateScriptLanguagesInNotifications(
-					definition, timer.getNotifications());
-			}
-
-			for (Transition transition :
-					node.getOutgoingTransitions(
-					).values()) {
-
-				Timer timer = transition.getTimer();
-
-				if (timer == null) {
-					continue;
-				}
-
-				_validateScriptLanguagesInActions(
-					timer.getActions(), definition);
-				_validateScriptLanguagesInAssignments(
-					timer.getReassignments(), definition);
-				_validateScriptLanguagesInNotifications(
-					definition, timer.getNotifications());
-			}
-
-			if (node instanceof Condition) {
-				Condition condition = (Condition)node;
-
-				_validateScriptLanguage(
-					definition, condition.getScriptLanguage());
-			}
-
-			if (node instanceof Task) {
-				Task task = (Task)node;
-
-				_validateScriptLanguagesInAssignments(
-					task.getAssignments(), definition);
-			}
-		}
-	}
-
-	private void _validateScriptLanguagesInActions(
-			Set<Action> actions, Definition definition)
-		throws KaleoDefinitionValidationException {
+	private void _validateScriptLanguageInActions(
+			Set<Action> actions, String name)
+		throws WorkflowException {
 
 		for (Action action : actions) {
-			if (action instanceof ScriptAction) {
-				ScriptAction scriptAction = (ScriptAction)action;
-
-				_validateScriptLanguage(
-					definition, scriptAction.getScriptLanguage());
+			if (action instanceof ScriptAction scriptAction) {
+				_validateScriptLanguage(name, scriptAction.getScriptLanguage());
 			}
 		}
 	}
 
-	private void _validateScriptLanguagesInAssignments(
-			Set<Assignment> assignments, Definition definition)
-		throws KaleoDefinitionValidationException {
+	private void _validateScriptLanguageInAssignments(
+			Set<Assignment> assignments, String name)
+		throws WorkflowException {
 
 		if (assignments == null) {
 			return;
 		}
 
 		for (Assignment assignment : assignments) {
-			if (assignment instanceof ScriptAssignment) {
-				ScriptAssignment scriptAssignment =
-					(ScriptAssignment)assignment;
-
+			if (assignment instanceof ScriptAssignment scriptAssignment) {
 				_validateScriptLanguage(
-					definition, scriptAssignment.getScriptLanguage());
+					name, scriptAssignment.getScriptLanguage());
 			}
 		}
 	}
 
-	private void _validateScriptLanguagesInNotifications(
-			Definition definition, Set<Notification> notifications)
-		throws KaleoDefinitionValidationException {
+	private void _validateScriptLanguageInNotifications(
+			String name, Set<Notification> notifications)
+		throws WorkflowException {
 
 		for (Notification notification : notifications) {
-			for (Set<Recipient> recipients :
-					notification.getRecipientsMap(
-					).values()) {
+			Map<NotificationReceptionType, Set<Recipient>> recipientsMap =
+				notification.getRecipientsMap();
 
-				for (Recipient recipient : recipients) {
-					if (recipient instanceof ScriptRecipient) {
-						ScriptRecipient scriptRecipient =
-							(ScriptRecipient)recipient;
+			if (recipientsMap == null) {
+				continue;
+			}
 
-						_validateScriptLanguage(
-							definition, scriptRecipient.getScriptLanguage());
-					}
-				}
+			for (Set<Recipient> recipients : recipientsMap.values()) {
+				_validateScriptLanguageInRecipients(name, recipients);
 			}
 		}
+	}
+
+	private void _validateScriptLanguageInRecipients(
+			String name, Set<Recipient> recipients)
+		throws WorkflowException {
+
+		for (Recipient recipient : recipients) {
+			if (!(recipient instanceof ScriptRecipient scriptRecipient)) {
+				continue;
+			}
+
+			_validateScriptLanguage(name, scriptRecipient.getScriptLanguage());
+		}
+	}
+
+	private void _validateScriptLanguageInTimer(String name, Timer timer)
+		throws WorkflowException {
+
+		if (timer == null) {
+			return;
+		}
+
+		_validateScriptLanguageInActions(timer.getActions(), name);
+		_validateScriptLanguageInAssignments(timer.getReassignments(), name);
+		_validateScriptLanguageInNotifications(name, timer.getNotifications());
 	}
 
 	@Reference

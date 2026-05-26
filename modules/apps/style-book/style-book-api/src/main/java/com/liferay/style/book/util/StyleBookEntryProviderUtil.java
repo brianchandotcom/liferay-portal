@@ -49,36 +49,28 @@ public class StyleBookEntryProviderUtil {
 			return null;
 		}
 
+		StyleBookEntry styleBookEntry = null;
+
 		Long itemGroupId = ScopeUtil.getItemGroupId(
 			layout.getCompanyId(), layout.getStyleBookEntryScopeERC(),
 			layout.getGroupId());
 
-		if (itemGroupId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to resolve Style Book scope group with ERC ",
-						layout.getStyleBookEntryScopeERC(), " for Layout ",
-						layout.getPlid(),
-						"; falling back to site default Style Book"));
-			}
-
-			return null;
+		if (itemGroupId != null) {
+			styleBookEntry =
+				StyleBookEntryLocalServiceUtil.
+					fetchStyleBookEntryByExternalReferenceCode(
+						layout.getStyleBookEntryERC(),
+						StagingUtil.getLiveGroupId(itemGroupId));
 		}
-
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.
-				fetchStyleBookEntryByExternalReferenceCode(
-					layout.getStyleBookEntryERC(),
-					StagingUtil.getLiveGroupId(itemGroupId));
 
 		if ((styleBookEntry == null) && _log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
-					"Unable to resolve Style Book entry with ERC ",
-					layout.getStyleBookEntryERC(), " in scope group ",
-					itemGroupId, " for Layout ", layout.getPlid(),
-					"; falling back to site default Style Book"));
+					"Unable to find Style Book entry with external reference ",
+					"code ", layout.getStyleBookEntryERC(),
+					" and scope external reference code ",
+					layout.getStyleBookEntryScopeERC(), " for Layout ",
+					layout.getPlid()));
 		}
 
 		return styleBookEntry;

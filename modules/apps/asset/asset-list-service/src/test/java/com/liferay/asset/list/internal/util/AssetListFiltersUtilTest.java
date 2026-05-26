@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -80,6 +82,23 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testDecimalBetweenBuildsRangeQuery() {
+		_stubObjectField(
+			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE);
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"between", "priority", JSONUtil.putAll("1.0", "5.0"));
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"priority", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_double", "1.0", "5.0", true,
+			true);
+	}
+
+	@Test
 	public void testDecimalEqBuildsTermQuery() {
 		_stubObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
@@ -93,6 +112,38 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testDecimalGtBuildsRangeQuery() {
+		_stubObjectField(
+			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"priority", _buildFilter("gt", "priority", "3.14"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_double", "3.14", null, false,
+			false);
+	}
+
+	@Test
+	public void testIntegerBetweenBuildsRangeQueryWithBothBounds() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"between", "viewCount", JSONUtil.putAll("5", "10"));
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_integer", "5", "10", true,
+			true);
+	}
+
+	@Test
 	public void testIntegerEqBuildsTermQuery() {
 		_stubObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
@@ -103,6 +154,66 @@ public class AssetListFiltersUtilTest {
 			BooleanClauseOccur.MUST);
 
 		_assertTermQuery(valueQuery, "nestedFieldArray.value_integer", "5");
+	}
+
+	@Test
+	public void testIntegerGeBuildsRangeQueryWithInclusiveLowerBound() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("ge", "viewCount", "5"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_integer", "5", null, true,
+			false);
+	}
+
+	@Test
+	public void testIntegerGtBuildsRangeQuery() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("gt", "viewCount", "5"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_integer", "5", null, false,
+			false);
+	}
+
+	@Test
+	public void testIntegerLeBuildsRangeQueryWithInclusiveUpperBound() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("le", "viewCount", "5"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_integer", null, "5", false,
+			true);
+	}
+
+	@Test
+	public void testIntegerLtBuildsRangeQuery() {
+		_stubObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"viewCount", _buildFilter("lt", "viewCount", "5"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_integer", null, "5", false,
+			false);
 	}
 
 	@Test
@@ -135,6 +246,23 @@ public class AssetListFiltersUtilTest {
 			BooleanClauseOccur.MUST);
 
 		_assertTermQuery(valueQuery, "nestedFieldArray.value_en_US", "keyword");
+	}
+
+	@Test
+	public void testLongIntegerBetweenBuildsRangeQuery() {
+		_stubObjectField(
+			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG);
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"between", "externalId", JSONUtil.putAll("100", "200"));
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"externalId", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_long", "100", "200", true,
+			true);
 	}
 
 	@Test
@@ -335,6 +463,24 @@ public class AssetListFiltersUtilTest {
 			).getValue());
 	}
 
+	private void _assertTermRangeQuery(
+		Query query, String expectedField, String expectedLower,
+		String expectedUpper, boolean expectedIncludesLower,
+		boolean expectedIncludesUpper) {
+
+		Assert.assertTrue(query.toString(), query instanceof TermRangeQuery);
+
+		TermRangeQuery termRangeQuery = (TermRangeQuery)query;
+
+		Assert.assertEquals(expectedField, termRangeQuery.getField());
+		Assert.assertEquals(expectedLower, termRangeQuery.getLowerTerm());
+		Assert.assertEquals(expectedUpper, termRangeQuery.getUpperTerm());
+		Assert.assertEquals(
+			expectedIncludesLower, termRangeQuery.includesLower());
+		Assert.assertEquals(
+			expectedIncludesUpper, termRangeQuery.includesUpper());
+	}
+
 	private JSONObject _buildFilter(
 		String operatorName, String propertyName, String value) {
 
@@ -348,6 +494,22 @@ public class AssetListFiltersUtilTest {
 			"propertyName", propertyName
 		).put(
 			"value", value
+		);
+	}
+
+	private JSONObject _buildFilterWithJSONArrayValue(
+		String operatorName, String propertyName, JSONArray valueJSONArray) {
+
+		return JSONUtil.put(
+			"classNameId", _CLASS_NAME_ID
+		).put(
+			"classTypeId", _CLASS_TYPE_ID
+		).put(
+			"operatorName", operatorName
+		).put(
+			"propertyName", propertyName
+		).put(
+			"value", valueJSONArray
 		);
 	}
 

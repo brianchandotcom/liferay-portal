@@ -24,6 +24,7 @@ import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -1867,6 +1868,80 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertNotNull(
 			_dlAppLocalService.fetchFileEntry(persistedFileEntryId));
+	}
+
+	@Test
+	public void testAddObjectEntryWithDomain() throws Exception {
+		_domainObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			_domainObjectDefinition.getUserId(),
+			_domainObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				_domainObjectDefinition.getUserId(),
+				_domainObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				DepotRolesConstants.SUBTYPE_SPACE);
+
+		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		_addObjectEntry(
+			depotEntry1.getGroupId(),
+			_domainObjectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_PROJECT,
+			ServiceContextTestUtil.getServiceContext());
+
+		AssertUtils.assertFailure(
+			ObjectEntryGroupIdException.InvalidGroupIdForDomain.class,
+			StringBundler.concat(
+				"Group ID ", depotEntry2.getGroupId(),
+				" is not valid for domain \"",
+				DepotRolesConstants.SUBTYPE_SPACE, "\""),
+			() -> _addObjectEntry(
+				depotEntry2.getGroupId(),
+				_domainObjectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap()));
+
+		objectDefinitionSetting.setValue(DepotRolesConstants.SUBTYPE_PROJECT);
+
+		_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
+			objectDefinitionSetting);
+
+		_addObjectEntry(
+			depotEntry2.getGroupId(),
+			_domainObjectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		AssertUtils.assertFailure(
+			ObjectEntryGroupIdException.InvalidGroupIdForDomain.class,
+			StringBundler.concat(
+				"Group ID ", depotEntry1.getGroupId(),
+				" is not valid for domain \"",
+				DepotRolesConstants.SUBTYPE_PROJECT, "\""),
+			() -> _addObjectEntry(
+				depotEntry1.getGroupId(),
+				_domainObjectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap()));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -10454,6 +10529,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _domainObjectDefinition;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _draftObjectDefinition;

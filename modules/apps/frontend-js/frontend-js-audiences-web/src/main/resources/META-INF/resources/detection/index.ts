@@ -17,6 +17,7 @@ import {getSearchParam} from './attributes/search_param';
 import {getSegments} from './attributes/segments';
 import {getUrl} from './attributes/url';
 import {getUserAgent} from './attributes/user_agent';
+import {check} from './check';
 import {between} from './operators/between';
 import {eq} from './operators/eq';
 import {include} from './operators/include';
@@ -47,6 +48,8 @@ export class Detection {
 	private _audiencesDefinition: AudiencesDefinition;
 
 	constructor(audiencesDefinition: AudiencesDefinition) {
+		check(audiencesDefinition);
+
 		this._audiencesDefinition = audiencesDefinition;
 	}
 

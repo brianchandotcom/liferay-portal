@@ -6,7 +6,15 @@
 import {Range} from '../components/date_filter';
 import {RequestPortletDataHandler} from './portletDataHandler';
 
-export interface ExportRequest {
+export interface ExportProcess {
+	dateCreated?: string;
+	dateModified?: string;
+	id?: number;
+	name?: string;
+	status?: {code: number; label: string};
+}
+
+export interface ExportProcessRequest {
 	deletions?: boolean;
 	endDate?: string;
 	last?: number;
@@ -17,26 +25,9 @@ export interface ExportRequest {
 	startDate?: string;
 }
 
-export interface ExportProcess {
-	dateCreated?: string;
-	dateModified?: string;
-	id?: number;
-	name?: string;
-	status?: {code: number; label: string};
-}
-
 export type DataStrategy = 'MIRROR' | 'MIRROR_OVERWRITE' | 'COPY_AS_NEW';
 
 export type UserIdStrategy = 'CURRENT_USER_ID' | 'ALWAYS_CURRENT_USER_ID';
-
-export interface ImportRequest {
-	dataStrategy?: DataStrategy;
-	deletions?: boolean;
-	name?: string;
-	permissions?: boolean;
-	requestPortletDataHandlers?: RequestPortletDataHandler[];
-	userIdStrategy?: UserIdStrategy;
-}
 
 export interface ImportProcess {
 	dateCreated?: string;
@@ -44,4 +35,13 @@ export interface ImportProcess {
 	id?: number;
 	name?: string;
 	status?: {code: number; label: string};
+}
+
+export interface ImportProcessRequest {
+	dataStrategy?: DataStrategy;
+	deletions?: boolean;
+	name?: string;
+	permissions?: boolean;
+	requestPortletDataHandlers?: RequestPortletDataHandler[];
+	userIdStrategy?: UserIdStrategy;
 }

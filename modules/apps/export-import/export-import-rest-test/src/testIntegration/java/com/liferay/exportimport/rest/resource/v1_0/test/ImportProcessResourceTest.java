@@ -17,7 +17,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
-import com.liferay.exportimport.rest.client.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.client.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.resource.v1_0.ImportPreviewResource;
@@ -132,7 +132,7 @@ public class ImportProcessResourceTest
 			403,
 			_importProcessResource.postAssetLibraryImportProcessHttpResponse(
 				testDepotEntryGroup.getExternalReferenceCode(),
-				new ImportRequest()));
+				new ImportProcessRequest()));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_DEPOT);
@@ -144,10 +144,10 @@ public class ImportProcessResourceTest
 					HashMapBuilder.put(
 						"file", file
 					).build()),
-				importRequest ->
+				importProcessRequest ->
 					importProcessResource.postAssetLibraryImportProcess(
 						testDepotEntryGroup.getExternalReferenceCode(),
-						importRequest),
+						importProcessRequest),
 				testDepotEntryGroup.getGroupId(),
 				testDepotEntryGroup.getGroupId(), objectDefinition);
 		}
@@ -162,10 +162,10 @@ public class ImportProcessResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importRequest ->
+			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcessHttpResponse(
 					testDepotEntryGroup.getExternalReferenceCode(),
-					importRequest),
+					importProcessRequest),
 			testGroup.getGroupId());
 		_testPostImportProcessWithSettings(
 			file -> _importPreviewResource.postAssetLibraryImportPreview(
@@ -173,16 +173,16 @@ public class ImportProcessResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importRequest ->
+			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcess(
 					testDepotEntryGroup.getExternalReferenceCode(),
-					importRequest),
+					importProcessRequest),
 			testDepotEntryGroup.getGroupId());
 		_testPostImportProcessWithoutPreview(
-			importRequest ->
+			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcessHttpResponse(
 					testDepotEntryGroup.getExternalReferenceCode(),
-					importRequest));
+					importProcessRequest));
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class ImportProcessResourceTest
 		assertHttpResponseStatusCode(
 			403,
 			_importProcessResource.postImportProcessHttpResponse(
-				new ImportRequest()));
+				new ImportProcessRequest()));
 
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 			testCompany.getCompanyId());
@@ -242,7 +242,8 @@ public class ImportProcessResourceTest
 		assertHttpResponseStatusCode(
 			403,
 			_importProcessResource.postSiteImportProcessHttpResponse(
-				testGroup.getExternalReferenceCode(), new ImportRequest()));
+				testGroup.getExternalReferenceCode(),
+				new ImportProcessRequest()));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
@@ -254,8 +255,10 @@ public class ImportProcessResourceTest
 					HashMapBuilder.put(
 						"file", file
 					).build()),
-				importRequest -> importProcessResource.postSiteImportProcess(
-					testGroup.getExternalReferenceCode(), importRequest),
+				importProcessRequest ->
+					importProcessResource.postSiteImportProcess(
+						testGroup.getExternalReferenceCode(),
+						importProcessRequest),
 				testGroup.getGroupId(), testGroup.getGroupId(),
 				objectDefinition);
 		}
@@ -270,9 +273,9 @@ public class ImportProcessResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importRequest ->
+			importProcessRequest ->
 				importProcessResource.postSiteImportProcessHttpResponse(
-					testGroup.getExternalReferenceCode(), importRequest),
+					testGroup.getExternalReferenceCode(), importProcessRequest),
 			testDepotEntryGroup.getGroupId());
 		_testPostImportProcessWithSettings(
 			file -> _importPreviewResource.postSiteImportPreview(
@@ -280,13 +283,14 @@ public class ImportProcessResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importRequest -> importProcessResource.postSiteImportProcess(
-				testGroup.getExternalReferenceCode(), importRequest),
+			importProcessRequest -> importProcessResource.postSiteImportProcess(
+				testGroup.getExternalReferenceCode(), importProcessRequest),
 			testGroup.getGroupId());
 		_testPostImportProcessWithoutPreview(
-			importRequest ->
+			importProcessRequest ->
 				importProcessResource.postSiteImportProcessHttpResponse(
-					testGroup.getExternalReferenceCode(), importRequest));
+					testGroup.getExternalReferenceCode(),
+					importProcessRequest));
 	}
 
 	@Override
@@ -426,7 +430,7 @@ public class ImportProcessResourceTest
 	private void _testPostImportProcessWithObjectDefinition(
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
-			UnsafeFunction<ImportRequest, ImportProcess, Exception>
+			UnsafeFunction<ImportProcessRequest, ImportProcess, Exception>
 				postImportProcessUnsafeFunction,
 			long objectEntryGroupId, long exportImportGroupId,
 			ObjectDefinition objectDefinition)
@@ -445,9 +449,9 @@ public class ImportProcessResourceTest
 
 		postImportPreviewUnsafeFunction.apply(file);
 
-		ImportRequest importRequest = new ImportRequest();
+		ImportProcessRequest importProcessRequest = new ImportProcessRequest();
 
-		importRequest.setRequestPortletDataHandlers(
+		importProcessRequest.setRequestPortletDataHandlers(
 			new RequestPortletDataHandler[] {
 				new RequestPortletDataHandler() {
 					{
@@ -458,7 +462,7 @@ public class ImportProcessResourceTest
 			});
 
 		ImportProcess importProcess = postImportProcessUnsafeFunction.apply(
-			importRequest);
+			importProcessRequest);
 
 		assertValid(importProcess);
 
@@ -481,8 +485,9 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostImportProcessWithoutPreview(
-			UnsafeFunction<ImportRequest, HttpInvoker.HttpResponse, Exception>
-				unsafeFunction)
+			UnsafeFunction
+				<ImportProcessRequest, HttpInvoker.HttpResponse, Exception>
+					unsafeFunction)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -491,15 +496,16 @@ public class ImportProcessResourceTest
 				LoggerTestUtil.WARN)) {
 
 			assertHttpResponseStatusCode(
-				404, unsafeFunction.apply(new ImportRequest()));
+				404, unsafeFunction.apply(new ImportProcessRequest()));
 		}
 	}
 
 	private void _testPostImportProcessWithPreviewForOtherGroup(
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
-			UnsafeFunction<ImportRequest, HttpInvoker.HttpResponse, Exception>
-				postImportProcessUnsafeFunction,
+			UnsafeFunction
+				<ImportProcessRequest, HttpInvoker.HttpResponse, Exception>
+					postImportProcessUnsafeFunction,
 			long exportImportGroupId)
 		throws Exception {
 
@@ -514,7 +520,8 @@ public class ImportProcessResourceTest
 
 				assertHttpResponseStatusCode(
 					404,
-					postImportProcessUnsafeFunction.apply(new ImportRequest()));
+					postImportProcessUnsafeFunction.apply(
+						new ImportProcessRequest()));
 			}
 			finally {
 				_deleteTempFileEntries(exportImportGroupId);
@@ -525,7 +532,7 @@ public class ImportProcessResourceTest
 	private void _testPostImportProcessWithSettings(
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
-			UnsafeFunction<ImportRequest, ImportProcess, Exception>
+			UnsafeFunction<ImportProcessRequest, ImportProcess, Exception>
 				postImportProcessUnsafeFunction,
 			long exportImportGroupId)
 		throws Exception {
@@ -534,7 +541,7 @@ public class ImportProcessResourceTest
 
 		postImportPreviewUnsafeFunction.apply(file);
 
-		ImportRequest importRequest = new ImportRequest() {
+		ImportProcessRequest importProcessRequest = new ImportProcessRequest() {
 			{
 				dataStrategy = DataStrategy.COPY_AS_NEW;
 				deletions = true;
@@ -544,7 +551,7 @@ public class ImportProcessResourceTest
 		};
 
 		ImportProcess importProcess = postImportProcessUnsafeFunction.apply(
-			importRequest);
+			importProcessRequest);
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.getBackgroundTask(

@@ -108,7 +108,7 @@ export function NewExport({
 			}}
 			onSubmit={async (values) => {
 				const result = await postExportProcess({
-					exportRequest: {
+					exportProcessRequest: {
 						...normalizeDateFilter(values.dateFilter),
 						deletions: !!values.deletions,
 						name: values.name,

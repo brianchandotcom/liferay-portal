@@ -12,7 +12,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.rest.dto.v1_0.ExportProcess;
-import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
@@ -55,7 +55,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 	@Override
 	public ExportProcess postAssetLibraryExportProcess(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest)
+			ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -65,22 +65,24 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postExportProcess(group, exportRequest);
+		return _postExportProcess(group, exportProcessRequest);
 	}
 
 	@Override
-	public ExportProcess postExportProcess(ExportRequest exportRequest)
+	public ExportProcess postExportProcess(
+			ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
-		return _postExportProcess(group, exportRequest);
+		return _postExportProcess(group, exportProcessRequest);
 	}
 
 	@Override
 	public ExportProcess postSiteExportProcess(
-			String siteExternalReferenceCode, ExportRequest exportRequest)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -90,11 +92,11 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postExportProcess(group, exportRequest);
+		return _postExportProcess(group, exportProcessRequest);
 	}
 
 	private ExportProcess _postExportProcess(
-			Group group, ExportRequest exportRequest)
+			Group group, ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
 		long groupId = group.getGroupId();
@@ -103,7 +105,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			contextCompany.getCompanyId(), groupId);
 
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			exportRequest);
+			exportProcessRequest);
 
 		long[] layoutIds = GetterUtil.getLongValues(
 			parameterMap.get("layoutIds"));
@@ -126,12 +128,12 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 					parameterMap, contextAcceptLanguage.getPreferredLocale(),
 					contextUser.getTimeZone());
 
-		_putDateRange(exportRequest, settingsMap);
+		_putDateRange(exportProcessRequest, settingsMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					contextUser.getUserId(), exportRequest.getName(),
+					contextUser.getUserId(), exportProcessRequest.getName(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					settingsMap);
 
@@ -144,11 +146,13 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 	}
 
 	private void _putDateRange(
-		ExportRequest exportRequest, Map<String, Serializable> settingsMap) {
+		ExportProcessRequest exportProcessRequest,
+		Map<String, Serializable> settingsMap) {
 
 		DateRange dateRange = DateRangeUtil.toDateRange(
-			exportRequest.getEndDate(), exportRequest.getLast(),
-			exportRequest.getRangeAsString(), exportRequest.getStartDate());
+			exportProcessRequest.getEndDate(), exportProcessRequest.getLast(),
+			exportProcessRequest.getRangeAsString(),
+			exportProcessRequest.getStartDate());
 
 		if (dateRange.getStartDate() == null) {
 			return;

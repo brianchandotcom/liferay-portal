@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 import {cleanup, render, screen} from '@testing-library/react';
 import React from 'react';
 
+import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import MostActiveVisitors from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/MostActiveVisitors';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
@@ -73,6 +74,32 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('150')).toBeInTheDocument();
 		expect(screen.getByText('actions')).toBeInTheDocument();
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
+	});
+
+	it('does not render the literal "Undefined" when visitor fields are missing', () => {
+		(useAnalyticsQuery as jest.Mock).mockReturnValueOnce({
+			isLoading: false,
+			response: {
+				mostActiveVisitors: {
+					mostActiveVisitors: [
+						{
+							activitiesCount: 12,
+							emailAddress: undefined,
+							firstName: undefined,
+							id: '2',
+							lastName: undefined,
+						},
+					],
+					total: 1,
+				},
+			},
+			sendRequest: jest.fn(),
+		});
+
+		render(<MostActiveVisitors namespace="test-namespace" />);
+
+		expect(screen.queryByText(/^Undefined$/)).not.toBeInTheDocument();
+		expect(screen.queryByText(/^undefined$/)).not.toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

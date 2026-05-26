@@ -11,12 +11,26 @@ const AGENT_DEFINITION_BASE_URI = '/o/ai-hub/agent-definitions';
 
 const AGENT_DEFINITION_BY_ERC_URI = `${AGENT_DEFINITION_BASE_URI}/by-external-reference-code/`;
 
-async function getAgentDefinitions() {
-	const response = await fetch(AGENT_DEFINITION_BASE_URI, {
-		method: 'GET',
-	});
+async function deleteAgentDefinitionToContentRetrievers(
+	agentDefinitionERC: string,
+	contentRetrieverERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}`,
+		{method: 'DELETE'}
+	);
+}
 
-	return response.json();
+async function deleteAgentDefinitionToModelArmorTemplates(
+	agentDefinitionERC: string,
+	modelArmorTemplateERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
+		{method: 'DELETE'}
+	);
 }
 
 async function getAgentDefinition(externalReferenceCode: string) {
@@ -27,6 +41,14 @@ async function getAgentDefinition(externalReferenceCode: string) {
 			method: 'GET',
 		}
 	);
+
+	return response.json();
+}
+
+async function getAgentDefinitions() {
+	const response = await fetch(AGENT_DEFINITION_BASE_URI, {
+		method: 'GET',
+	});
 
 	return response.json();
 }
@@ -57,17 +79,6 @@ async function putAgentDefinitionToContentRetrievers(
 	);
 }
 
-async function deleteAgentDefinitionToContentRetrievers(
-	agentDefinitionERC: string,
-	contentRetrieverERC: string
-) {
-	return fetch(
-		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}`,
-		{method: 'DELETE'}
-	);
-}
-
 async function putAgentDefinitionToModelArmorTemplates(
 	agentDefinitionERC: string,
 	modelArmorTemplateERC: string
@@ -76,17 +87,6 @@ async function putAgentDefinitionToModelArmorTemplates(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
 			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
 		{method: 'PUT'}
-	);
-}
-
-async function deleteAgentDefinitionToModelArmorTemplates(
-	agentDefinitionERC: string,
-	modelArmorTemplateERC: string
-) {
-	return fetch(
-		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
-		{method: 'DELETE'}
 	);
 }
 

@@ -3,7 +3,13 @@ import TopCategoriesAndTags, {
 	ITopCategory,
 	ITopTag
 } from '../TopCategoriesAndTags';
-import {cleanup, fireEvent, render, screen, within} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	within
+} from '@testing-library/react';
 import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
@@ -131,8 +137,10 @@ describe('TopCategoriesAndTags', () => {
 		it('should render the Group By dropdown with the default metric (Impressions)', () => {
 			render(<TopCategoriesAndTags />);
 
-			expect(screen.getAllByText('Group by').length).toBeGreaterThan(0);
-			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(
+				0
+			);
 		});
 	});
 
@@ -143,9 +151,9 @@ describe('TopCategoriesAndTags', () => {
 			expect(
 				screen.getAllByText('Department Names').length
 			).toBeGreaterThan(0);
-			expect(
-				screen.getAllByText('Specialties').length
-			).toBeGreaterThan(0);
+			expect(screen.getAllByText('Specialties').length).toBeGreaterThan(
+				0
+			);
 			expect(
 				screen.getAllByText('Document Types').length
 			).toBeGreaterThan(0);
@@ -183,10 +191,12 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group by/})[0]
+				screen.getAllByRole('button', {name: /Group By/})[0]
 			);
 
-			fireEvent.click(screen.getAllByRole('menuitem', {name: 'Views'})[0]);
+			fireEvent.click(
+				screen.getAllByRole('menuitem', {name: 'Views'})[0]
+			);
 
 			const lastCall =
 				mockedUseRequest.mock.calls[
@@ -200,7 +210,7 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group by/})[0]
+				screen.getAllByRole('button', {name: /Group By/})[0]
 			);
 
 			fireEvent.click(
@@ -241,9 +251,7 @@ describe('TopCategoriesAndTags', () => {
 					mockedUseRequest.mock.calls.length - 1
 				][0];
 
-			expect(lastCall.dataSourceFn).toBe(
-				API.tags.fetchAccountTopTags
-			);
+			expect(lastCall.dataSourceFn).toBe(API.tags.fetchAccountTopTags);
 		});
 
 		it('should render tag items after switching to the Tag tab', () => {

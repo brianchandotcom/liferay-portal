@@ -60,9 +60,9 @@ public class OfflineOpenIdConnectSessionManagerTest {
 	public void testExtendOpenIdConnectSession() throws Exception {
 		Assert.assertEquals(Long.valueOf(0), CompanyThreadLocal.getCompanyId());
 
-		long oAuthClientEntryCompanyId = RandomTestUtil.randomLong();
 		String authServerWellKnownURI = RandomTestUtil.randomString();
 		String clientId = RandomTestUtil.randomString();
+		long oAuthClientEntryCompanyId = RandomTestUtil.randomLong();
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);

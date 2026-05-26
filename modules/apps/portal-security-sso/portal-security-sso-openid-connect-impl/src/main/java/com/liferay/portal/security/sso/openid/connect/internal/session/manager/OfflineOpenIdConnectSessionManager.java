@@ -249,6 +249,8 @@ public class OfflineOpenIdConnectSessionManager {
 						oAuthClientEntry.getMetadataCacheInSeconds(),
 						oAuthClientEntry.getOAuthClientEntryId());
 
+			int tokenConnectionTimeout = 0;
+
 			Dictionary<String, Object> properties =
 				OpenIdConnectProviderUtil.
 					getOpenIdConnectProviderConfigurationProperties(
@@ -258,8 +260,6 @@ public class OfflineOpenIdConnectSessionManager {
 						String.valueOf(oidcProviderMetadata.getIssuer()),
 						String.valueOf(
 							oidcProviderMetadata.getTokenEndpointURI()));
-
-			int tokenConnectionTimeout = 0;
 
 			if (properties != null) {
 				tokenConnectionTimeout = GetterUtil.getInteger(

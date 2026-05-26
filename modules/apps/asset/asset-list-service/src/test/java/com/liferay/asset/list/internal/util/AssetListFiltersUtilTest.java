@@ -82,6 +82,113 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testDateBetweenNormalizesBothBounds() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
+			"between", "dueDate", JSONUtil.putAll("2026-01-15", "2026-01-20"));
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", filterJSONObject, BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", "20260115000000",
+			"20260120235959", true, true);
+	}
+
+	@Test
+	public void testDateEqBuildsOneDayRangeQuery() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("eq", "dueDate", "2026-01-15"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", "20260115000000",
+			"20260115235959", true, true);
+	}
+
+	@Test
+	public void testDateGeNormalizesValueToStartOfDay() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("ge", "dueDate", "2026-01-15"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", "20260115000000", null,
+			true, false);
+	}
+
+	@Test
+	public void testDateGtNormalizesValueToEndOfDay() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("gt", "dueDate", "2026-01-15"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", "20260115235959", null,
+			false, false);
+	}
+
+	@Test
+	public void testDateLeNormalizesValueToEndOfDay() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("le", "dueDate", "2026-01-15"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", null, "20260115235959",
+			false, true);
+	}
+
+	@Test
+	public void testDateLtNormalizesValueToStartOfDay() {
+		_stubObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("lt", "dueDate", "2026-01-15"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", null, "20260115000000",
+			false, false);
+	}
+
+	@Test
+	public void testDateTimeEqBuildsOneMinuteRangeQuery() {
+		_stubObjectField(
+			"reminderAt", ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
+			ObjectFieldConstants.DB_TYPE_DATE_TIME);
+
+		Query valueQuery = _runAndAssertNestedRow(
+			"reminderAt", _buildFilter("eq", "reminderAt", "2026-01-15 10:30"),
+			BooleanClauseOccur.MUST);
+
+		_assertTermRangeQuery(
+			valueQuery, "nestedFieldArray.value_date", "20260115103000",
+			"20260115103059", true, true);
+	}
+
+	@Test
 	public void testDecimalBetweenBuildsRangeQuery() {
 		_stubObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,

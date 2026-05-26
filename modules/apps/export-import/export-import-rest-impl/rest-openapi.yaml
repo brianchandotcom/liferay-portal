@@ -397,8 +397,6 @@ components:
                             items:
                                 $ref: "#/components/schemas/RequestPortletDataHandlerControl"
                             type: array
-                        value:
-                            type: string
                         values:
                             items:
                                 type: string

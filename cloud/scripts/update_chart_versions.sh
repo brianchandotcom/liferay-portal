@@ -11,9 +11,15 @@ _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 function main {
 	if [ "${#}" -eq 0 ]
 	then
-		echo "Usage: ${0} <chart-dir> [<chart-dir> ...]" >&2
+		for chart_dir in "${_ROOT_CLOUD_DIR}"/helm/*/
+		do
+			if [ -f "${chart_dir}Chart.yaml" ]
+			then
+				_check_chart_yaml "${chart_dir%/}"
+			fi
+		done
 
-		exit 1
+		return
 	fi
 
 	for chart_dir in "${@}"

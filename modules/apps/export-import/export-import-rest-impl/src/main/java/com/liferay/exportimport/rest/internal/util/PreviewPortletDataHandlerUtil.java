@@ -35,9 +35,9 @@ import java.util.Map;
 /**
  * @author Daniel Raposo
  */
-public class PortletDataHandlerSectionUtil {
+public class PreviewPortletDataHandlerUtil {
 
-	public static void addPortletDataHandlerSection(
+	public static void addPreviewPortletDataHandler(
 			long companyId, Locale locale, ManifestSummary manifestSummary,
 			Portlet portlet, PortletDataHandler portletDataHandler,
 			UnsafeFunction
@@ -121,7 +121,7 @@ public class PortletDataHandlerSectionUtil {
 	}
 
 	public static PreviewPortletDataHandlerSection[]
-		toPortletDataHandlerSections(
+		toPreviewPortletDataHandlerSections(
 			Locale locale,
 			Map<String, List<PreviewPortletDataHandler>>
 				previewPortletDataHandlersMap) {

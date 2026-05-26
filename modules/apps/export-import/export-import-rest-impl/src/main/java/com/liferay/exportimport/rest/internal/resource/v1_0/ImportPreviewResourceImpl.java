@@ -17,7 +17,7 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.rest.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
-import com.liferay.exportimport.rest.internal.util.PortletDataHandlerSectionUtil;
+import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -137,7 +137,7 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 			previewPortletDataHandlers = new LinkedHashMap<>();
 
 		for (Portlet portlet : manifestSummary.getDataPortlets()) {
-			PortletDataHandlerSectionUtil.addPortletDataHandlerSection(
+			PreviewPortletDataHandlerUtil.addPreviewPortletDataHandler(
 				contextCompany.getCompanyId(), locale, manifestSummary, portlet,
 				portlet.getPortletDataHandlerInstance(),
 				PortletDataHandler::getImportPortletDataHandlerControls,
@@ -147,19 +147,19 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 		return new ImportPreview() {
 			{
 				setAdditionCount(
-					() -> PortletDataHandlerSectionUtil.getAdditionCount(
+					() -> PreviewPortletDataHandlerUtil.getAdditionCount(
 						previewPortletDataHandlers));
 				setAuthor(fileEntry::getUserName);
 				setDeletionCount(
-					() -> PortletDataHandlerSectionUtil.getDeletionCount(
+					() -> PreviewPortletDataHandlerUtil.getDeletionCount(
 						previewPortletDataHandlers));
 				setExportDate(manifestSummary::getExportDate);
 				setFileName(fileEntry::getFileName);
 				setFileSize(fileEntry::getSize);
 				setPreviewPortletDataHandlerSections(
 					() ->
-						PortletDataHandlerSectionUtil.
-							toPortletDataHandlerSections(
+						PreviewPortletDataHandlerUtil.
+							toPreviewPortletDataHandlerSections(
 								locale, previewPortletDataHandlers));
 			}
 		};

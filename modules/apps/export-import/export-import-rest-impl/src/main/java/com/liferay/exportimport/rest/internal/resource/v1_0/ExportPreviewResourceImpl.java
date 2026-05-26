@@ -14,7 +14,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
 import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
-import com.liferay.exportimport.rest.internal.util.PortletDataHandlerSectionUtil;
+import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -122,7 +122,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 			portletDataHandler.prepareManifestSummary(portletDataContext);
 
-			PortletDataHandlerSectionUtil.addPortletDataHandlerSection(
+			PreviewPortletDataHandlerUtil.addPreviewPortletDataHandler(
 				contextCompany.getCompanyId(), locale,
 				portletDataContext.getManifestSummary(), portlet,
 				portletDataHandler,
@@ -133,15 +133,15 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		return new ExportPreview() {
 			{
 				setAdditionCount(
-					() -> PortletDataHandlerSectionUtil.getAdditionCount(
+					() -> PreviewPortletDataHandlerUtil.getAdditionCount(
 						previewPortletDataHandlers));
 				setDeletionCount(
-					() -> PortletDataHandlerSectionUtil.getDeletionCount(
+					() -> PreviewPortletDataHandlerUtil.getDeletionCount(
 						previewPortletDataHandlers));
 				setPreviewPortletDataHandlerSections(
 					() ->
-						PortletDataHandlerSectionUtil.
-							toPortletDataHandlerSections(
+						PreviewPortletDataHandlerUtil.
+							toPreviewPortletDataHandlerSections(
 								locale, previewPortletDataHandlers));
 			}
 		};

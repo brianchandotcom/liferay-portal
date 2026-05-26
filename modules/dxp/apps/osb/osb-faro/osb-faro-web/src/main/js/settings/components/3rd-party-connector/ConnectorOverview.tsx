@@ -9,7 +9,7 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import ConnectorEntities from './ConnectorEntities';
 import Loading from 'shared/components/Loading';
-import React, {ComponentType, useEffect, useRef, useState} from 'react';
+import React, {ComponentType, useEffect, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -25,8 +25,7 @@ import {
 import {ConnectorConfig, ConnectorStatus} from './types';
 import {
 	ConnectorStatusItem,
-	getInitialLogEntries,
-	getTransitionEntry
+	getInitialLogEntries
 } from './getConnectorStatusItems';
 import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
@@ -479,49 +478,14 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 
 	const connectorStatus = getConnectorStatus(dataSource);
 
-	const prevCountRef = useRef(totalCount);
-
-	const prevStatusRef = useRef(connectorStatus);
-
-	const seededRef = useRef(false);
-
-	const [logEntries, setLogEntries] = useState<ConnectorStatusItem[]>([]);
-
-	useEffect(() => {
-		if (countResponse.loading) {
-			return;
-		}
-
-		if (!seededRef.current) {
-			seededRef.current = true;
-
-			prevStatusRef.current = connectorStatus;
-			prevCountRef.current = totalCount;
-
-			setLogEntries(getInitialLogEntries(connectorStatus, totalCount));
-
-			return;
-		}
-
-		if (
-			prevStatusRef.current === connectorStatus &&
-			prevCountRef.current === totalCount
-		) {
-			return;
-		}
-
-		prevStatusRef.current = connectorStatus;
-		prevCountRef.current = totalCount;
-
-		setLogEntries(prev => [
-			getTransitionEntry(connectorStatus, totalCount),
-			...prev
-		]);
-	}, [countResponse.loading, connectorStatus, totalCount]);
-
 	if (countResponse.loading) {
 		return <Loading spacer />;
 	}
+
+	const logEntries: ConnectorStatusItem[] = getInitialLogEntries(
+		connectorStatus,
+		totalCount
+	);
 
 	const connectionStatusAlert = getConnectorConnectionStatusAlert(
 		dataSource,

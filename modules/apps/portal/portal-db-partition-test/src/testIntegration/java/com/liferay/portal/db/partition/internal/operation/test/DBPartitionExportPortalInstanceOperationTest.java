@@ -124,7 +124,7 @@ public class DBPartitionExportPortalInstanceOperationTest
 	}
 
 	@Test
-	public void testIsApplicableWhenGroupDoesNotExist() throws Exception {
+	public void testIsApplicable() throws Exception {
 		Bundle bundle = BundleUtil.getBundle(
 			SystemBundleUtil.getBundleContext(),
 			"com.liferay.portal.instances.service");

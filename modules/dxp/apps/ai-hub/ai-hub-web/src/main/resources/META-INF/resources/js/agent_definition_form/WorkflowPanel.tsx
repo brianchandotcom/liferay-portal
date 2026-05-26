@@ -79,6 +79,7 @@ const WorkflowPanel: React.FC<IProps> = ({
 					<Picker
 						className="agent-definition-form-picker"
 						disabled={readOnly}
+						id="workflowDefinitionName"
 						items={workflowDefinitions.map(
 							(workflowDefinition) => ({
 								label: workflowDefinition.title,

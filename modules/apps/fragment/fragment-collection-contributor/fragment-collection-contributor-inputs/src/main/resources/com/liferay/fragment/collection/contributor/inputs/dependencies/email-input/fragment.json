@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "email-input",
+	"icon": "envelope-closed",
+	"name": "email",
+	"thumbnail": "text.svg",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"text"
+		]
+	}
+}

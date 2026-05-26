@@ -879,7 +879,7 @@ describe('IncrementalInteractions', () => {
 				/>
 			);
 
-			const input: any = getByLabelText(ariaLabels.input);
+			const input = getByLabelText(ariaLabels.input) as HTMLInputElement;
 			const dayNumber = getByLabelText(
 				new Date('2019 04 15').toDateString()
 			);
@@ -927,7 +927,7 @@ describe('IncrementalInteractions', () => {
 				/>
 			);
 
-			const input: any = getByLabelText(ariaLabels.input);
+			const input = getByLabelText(ariaLabels.input) as HTMLInputElement;
 
 			await userEvent.type(input, '2019-04-05');
 

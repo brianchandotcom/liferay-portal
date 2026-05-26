@@ -22,11 +22,16 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -38,72 +43,20 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ImportRequest")
+@GraphQLName("ExportProcessRequest")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ImportRequest")
-public class ImportRequest implements Serializable {
+@XmlRootElement(name = "ExportProcessRequest")
+public class ExportProcessRequest implements Serializable {
 
-	public static ImportRequest toDTO(String json) {
-		return ObjectMapperUtil.readValue(ImportRequest.class, json);
+	public static ExportProcessRequest toDTO(String json) {
+		return ObjectMapperUtil.readValue(ExportProcessRequest.class, json);
 	}
 
-	public static ImportRequest unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ImportRequest.class, json);
+	public static ExportProcessRequest unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			ExportProcessRequest.class, json);
 	}
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("dataStrategy")
-	@Valid
-	public DataStrategy getDataStrategy() {
-		if (_dataStrategySupplier != null) {
-			dataStrategy = _dataStrategySupplier.get();
-
-			_dataStrategySupplier = null;
-		}
-
-		return dataStrategy;
-	}
-
-	@JsonIgnore
-	public String getDataStrategyAsString() {
-		DataStrategy dataStrategy = getDataStrategy();
-
-		if (dataStrategy == null) {
-			return null;
-		}
-
-		return dataStrategy.toString();
-	}
-
-	public void setDataStrategy(DataStrategy dataStrategy) {
-		this.dataStrategy = dataStrategy;
-
-		_dataStrategySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDataStrategy(
-		UnsafeSupplier<DataStrategy, Exception> dataStrategyUnsafeSupplier) {
-
-		_dataStrategySupplier = () -> {
-			try {
-				return dataStrategyUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DataStrategy dataStrategy;
-
-	@JsonIgnore
-	private Supplier<DataStrategy> _dataStrategySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDeletions() {
@@ -147,6 +100,86 @@ public class ImportRequest implements Serializable {
 	private Supplier<Boolean> _deletionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Date getEndDate() {
+		if (_endDateSupplier != null) {
+			endDate = _endDateSupplier.get();
+
+			_endDateSupplier = null;
+		}
+
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+
+		_endDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEndDate(
+		UnsafeSupplier<Date, Exception> endDateUnsafeSupplier) {
+
+		_endDateSupplier = () -> {
+			try {
+				return endDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date endDate;
+
+	@JsonIgnore
+	private Supplier<Date> _endDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Integer getLast() {
+		if (_lastSupplier != null) {
+			last = _lastSupplier.get();
+
+			_lastSupplier = null;
+		}
+
+		return last;
+	}
+
+	public void setLast(Integer last) {
+		this.last = last;
+
+		_lastSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLast(UnsafeSupplier<Integer, Exception> lastUnsafeSupplier) {
+		_lastSupplier = () -> {
+			try {
+				return lastUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer last;
+
+	@JsonIgnore
+	private Supplier<Integer> _lastSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -180,6 +213,7 @@ public class ImportRequest implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String name;
 
 	@JsonIgnore
@@ -225,6 +259,58 @@ public class ImportRequest implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Boolean> _permissionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("range")
+	@Valid
+	public Range getRange() {
+		if (_rangeSupplier != null) {
+			range = _rangeSupplier.get();
+
+			_rangeSupplier = null;
+		}
+
+		return range;
+	}
+
+	@JsonIgnore
+	public String getRangeAsString() {
+		Range range = getRange();
+
+		if (range == null) {
+			return null;
+		}
+
+		return range.toString();
+	}
+
+	public void setRange(Range range) {
+		this.range = range;
+
+		_rangeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRange(UnsafeSupplier<Range, Exception> rangeUnsafeSupplier) {
+		_rangeSupplier = () -> {
+			try {
+				return rangeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Range range;
+
+	@JsonIgnore
+	private Supplier<Range> _rangeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -274,43 +360,29 @@ public class ImportRequest implements Serializable {
 		_requestPortletDataHandlersSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("userIdStrategy")
-	@Valid
-	public UserIdStrategy getUserIdStrategy() {
-		if (_userIdStrategySupplier != null) {
-			userIdStrategy = _userIdStrategySupplier.get();
+	public Date getStartDate() {
+		if (_startDateSupplier != null) {
+			startDate = _startDateSupplier.get();
 
-			_userIdStrategySupplier = null;
+			_startDateSupplier = null;
 		}
 
-		return userIdStrategy;
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+
+		_startDateSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getUserIdStrategyAsString() {
-		UserIdStrategy userIdStrategy = getUserIdStrategy();
+	public void setStartDate(
+		UnsafeSupplier<Date, Exception> startDateUnsafeSupplier) {
 
-		if (userIdStrategy == null) {
-			return null;
-		}
-
-		return userIdStrategy.toString();
-	}
-
-	public void setUserIdStrategy(UserIdStrategy userIdStrategy) {
-		this.userIdStrategy = userIdStrategy;
-
-		_userIdStrategySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setUserIdStrategy(
-		UnsafeSupplier<UserIdStrategy, Exception>
-			userIdStrategyUnsafeSupplier) {
-
-		_userIdStrategySupplier = () -> {
+		_startDateSupplier = () -> {
 			try {
-				return userIdStrategyUnsafeSupplier.get();
+				return startDateUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -323,10 +395,10 @@ public class ImportRequest implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected UserIdStrategy userIdStrategy;
+	protected Date startDate;
 
 	@JsonIgnore
-	private Supplier<UserIdStrategy> _userIdStrategySupplier;
+	private Supplier<Date> _startDateSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -334,13 +406,14 @@ public class ImportRequest implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ImportRequest)) {
+		if (!(object instanceof ExportProcessRequest)) {
 			return false;
 		}
 
-		ImportRequest importRequest = (ImportRequest)object;
+		ExportProcessRequest exportProcessRequest =
+			(ExportProcessRequest)object;
 
-		return Objects.equals(toString(), importRequest.toString());
+		return Objects.equals(toString(), exportProcessRequest.toString());
 	}
 
 	@Override
@@ -355,19 +428,8 @@ public class ImportRequest implements Serializable {
 
 		sb.append("{");
 
-		DataStrategy dataStrategy = getDataStrategy();
-
-		if (dataStrategy != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dataStrategy\": ");
-
-			sb.append("\"");
-			sb.append(dataStrategy);
-			sb.append("\"");
-		}
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 		Boolean deletions = getDeletions();
 
@@ -379,6 +441,34 @@ public class ImportRequest implements Serializable {
 			sb.append("\"deletions\": ");
 
 			sb.append(deletions);
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"endDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(endDate));
+
+			sb.append("\"");
+		}
+
+		Integer last = getLast();
+
+		if (last != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"last\": ");
+
+			sb.append(last);
 		}
 
 		String name = getName();
@@ -409,6 +499,20 @@ public class ImportRequest implements Serializable {
 			sb.append(permissions);
 		}
 
+		Range range = getRange();
+
+		if (range != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"range\": ");
+
+			sb.append("\"");
+			sb.append(range);
+			sb.append("\"");
+		}
+
 		RequestPortletDataHandler[] requestPortletDataHandlers =
 			getRequestPortletDataHandlers();
 
@@ -432,17 +536,19 @@ public class ImportRequest implements Serializable {
 			sb.append("]");
 		}
 
-		UserIdStrategy userIdStrategy = getUserIdStrategy();
+		Date startDate = getStartDate();
 
-		if (userIdStrategy != null) {
+		if (startDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"userIdStrategy\": ");
+			sb.append("\"startDate\": ");
 
 			sb.append("\"");
-			sb.append(userIdStrategy);
+
+			sb.append(liferayToJSONDateFormat.format(startDate));
+
 			sb.append("\"");
 		}
 
@@ -453,26 +559,25 @@ public class ImportRequest implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.ImportRequest",
+		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("DataStrategy")
-	public static enum DataStrategy {
+	@GraphQLName("Range")
+	public static enum Range {
 
-		MIRROR("MIRROR"), MIRROR_OVERWRITE("MIRROR_OVERWRITE"),
-		COPY_AS_NEW("COPY_AS_NEW");
+		ALL("all"), DATE_RANGE("dateRange"), LAST("last");
 
 		@JsonCreator
-		public static DataStrategy create(String value) {
+		public static Range create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (DataStrategy dataStrategy : values()) {
-				if (Objects.equals(dataStrategy.getValue(), value)) {
-					return dataStrategy;
+			for (Range range : values()) {
+				if (Objects.equals(range.getValue(), value)) {
+					return range;
 				}
 			}
 
@@ -489,46 +594,7 @@ public class ImportRequest implements Serializable {
 			return _value;
 		}
 
-		private DataStrategy(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("UserIdStrategy")
-	public static enum UserIdStrategy {
-
-		CURRENT_USER_ID("CURRENT_USER_ID"),
-		ALWAYS_CURRENT_USER_ID("ALWAYS_CURRENT_USER_ID");
-
-		@JsonCreator
-		public static UserIdStrategy create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (UserIdStrategy userIdStrategy : values()) {
-				if (Objects.equals(userIdStrategy.getValue(), value)) {
-					return userIdStrategy;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private UserIdStrategy(String value) {
+		private Range(String value) {
 			_value = value;
 		}
 
@@ -625,4 +691,4 @@ public class ImportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:834924027
+// LIFERAY-REST-BUILDER-HASH:533579518

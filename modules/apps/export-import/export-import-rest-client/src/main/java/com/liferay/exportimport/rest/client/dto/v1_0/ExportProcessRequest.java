@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.client.dto.v1_0;
 
 import com.liferay.exportimport.rest.client.function.UnsafeSupplier;
-import com.liferay.exportimport.rest.client.serdes.v1_0.ExportRequestSerDes;
+import com.liferay.exportimport.rest.client.serdes.v1_0.ExportProcessRequestSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ExportRequest implements Cloneable, Serializable {
+public class ExportProcessRequest implements Cloneable, Serializable {
 
-	public static ExportRequest toDTO(String json) {
-		return ExportRequestSerDes.toDTO(json);
+	public static ExportProcessRequest toDTO(String json) {
+		return ExportProcessRequestSerDes.toDTO(json);
 	}
 
 	public Boolean getDeletions() {
@@ -201,8 +201,8 @@ public class ExportRequest implements Cloneable, Serializable {
 	protected Date startDate;
 
 	@Override
-	public ExportRequest clone() throws CloneNotSupportedException {
-		return (ExportRequest)super.clone();
+	public ExportProcessRequest clone() throws CloneNotSupportedException {
+		return (ExportProcessRequest)super.clone();
 	}
 
 	@Override
@@ -211,13 +211,14 @@ public class ExportRequest implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ExportRequest)) {
+		if (!(object instanceof ExportProcessRequest)) {
 			return false;
 		}
 
-		ExportRequest exportRequest = (ExportRequest)object;
+		ExportProcessRequest exportProcessRequest =
+			(ExportProcessRequest)object;
 
-		return Objects.equals(toString(), exportRequest.toString());
+		return Objects.equals(toString(), exportProcessRequest.toString());
 	}
 
 	@Override
@@ -228,7 +229,7 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ExportRequestSerDes.toJSON(this);
+		return ExportProcessRequestSerDes.toJSON(this);
 	}
 
 	public static enum Range {
@@ -265,4 +266,4 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1542603122
+// LIFERAY-REST-BUILDER-HASH:922683815

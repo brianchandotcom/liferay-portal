@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.resource.v1_0;
 
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
-import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -70,12 +70,13 @@ public interface ImportProcessResource {
 
 	public ImportProcess postAssetLibraryImportProcess(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public Response postAssetLibraryImportProcessBatch(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest, String callbackURL, Object object)
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public Response postAssetLibraryImportProcessesPageExportBatch(
@@ -84,11 +85,13 @@ public interface ImportProcessResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public ImportProcess postImportProcess(ImportRequest importRequest)
+	public ImportProcess postImportProcess(
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public Response postImportProcessBatch(
-			ImportRequest importRequest, String callbackURL, Object object)
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public Response postImportProcessesPageExportBatch(
@@ -98,12 +101,14 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public ImportProcess postSiteImportProcess(
-			String siteExternalReferenceCode, ImportRequest importRequest)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest)
 		throws Exception;
 
 	public Response postSiteImportProcessBatch(
-			String siteExternalReferenceCode, ImportRequest importRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public Response postSiteImportProcessesPageExportBatch(
@@ -208,4 +213,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1256521923
+// LIFERAY-REST-BUILDER-HASH:862013812

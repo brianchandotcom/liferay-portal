@@ -83,7 +83,7 @@ For each matched validation, spawn one subagent. **Pass it only the `## Command`
 When the validation's **Command** is a build (gradle, ant, npm, jest), bound the output:
 
 ```bash
-<command> 2>&1 | tail -n 100
+<command> 2>&1 | tail --lines=100
 ```
 
 Decide PASS/FAIL from the build tool's success markers in the captured output (`BUILD SUCCESSFUL` / `BUILD FAILED`, `Tests: N passed, M failed`, etc.). Apply only to build commands. Leave inert commands like `git status --porcelain` and `git diff --quiet` untouched.

@@ -13,12 +13,12 @@ Fetch a bearer token once per run via the OAuth2 client credentials grant and re
 ```bash
 export ACCESS_TOKEN=$(curl \
 	--data "grant_type=client_credentials" \
-	--header "Authorization: Basic $(printf '%s:%s' "${TESTRAY_CLIENT_ID}" "${TESTRAY_CLIENT_SECRET}" | base64 --wrap 0)" \
+	--header "Authorization: Basic $(printf "%s:%s" "${TESTRAY_CLIENT_ID}" "${TESTRAY_CLIENT_SECRET}" | base64 --wrap 0)" \
 	--header "Content-Type: application/x-www-form-urlencoded" \
 	--request POST \
 	--silent \
 	--url "https://testray.liferay.com/o/oauth2/token" \
-	| jq --raw-output '.access_token')
+	| jq --raw-output .access_token)
 ```
 
 ## Resolve a Test Name to a Case Result ID
@@ -147,11 +147,11 @@ curl \
 
 ### Error Trace
 
-The `errors` field of the case result.
+Return the `errors` field of the case result.
 
 ### Failure Date
 
-The `dateCreated` field of the case result.
+Return the `dateCreated` field of the case result.
 
 ### Last Pass SHA and First Fail SHA
 

@@ -766,14 +766,17 @@ Separate must-be-first or must-be-last items from the sorted block:
 
 ### Rule 38: Bash Scripts Exit on First Failure
 
-**Why:** Without an explicit fail-fast directive, a failing command silently passes through to the next; either `set -e` at the top of the script or `|| exit 1` on each command makes the failure surface immediately.
+**Why:** Without an explicit fail-fast directive, a failing command silently passes through to the next; the `set -o errexit` / `set -o nounset` / `set -o pipefail` block at the top of the script makes failures, unset variables, and broken pipeline stages surface immediately.
 
 **Examples:**
 
 ```diff
- #!/bin/bash
+-#!/bin/bash
++#!/usr/bin/env bash
 +
-+set -e
++set -o errexit
++set -o nounset
++set -o pipefail
 
  _execute "step-1"
  _execute "step-2"

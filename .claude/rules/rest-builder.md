@@ -108,7 +108,7 @@ Endpoints land at `/o/<baseURI>/v1.0/...` — do not collide with existing servl
 
 #### `<name>-rest-impl/rest-openapi.yaml`
 
-Standard OpenAPI 3.0.1. Minimum shape:
+The file is standard OpenAPI 3.0.1, with the following minimum shape:
 
 - `info`: set `title`, `description`, `version: "v1.0"`. Title and description are not validator-required, but tooling (including the MCP `/discover` endpoint) relies on them.
 - `paths`: each operation needs `operationId`, `description`, and `tags: [<Tag>]`. The first tag becomes the resource name (`<Tag>Resource`); use one tag per resource.

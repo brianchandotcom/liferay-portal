@@ -80,7 +80,7 @@ When the change affects many modules (for example, a framework change), do not a
 Delete any existing `test.sh` at the repository root, then write a new one. The script must be self-contained and runnable via `bash test.sh`. Use this structure:
 
 ```bash
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Test plan for branch: <branch-name>
 # Generated: <date>
@@ -90,20 +90,25 @@ Delete any existing `test.sh` at the repository root, then write a new one. The 
 # Affected areas: <list of module groups or components>
 #
 
-REPO_ROOT="$(cd "$(dirname "${0}")" && pwd)"
-EXIT_CODE=0
+set -o errexit
+set -o nounset
+set -o pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+_EXIT_CODE=0
 
 <test commands — one per line, no blank lines between them>
 
-exit ${EXIT_CODE}
+exit ${_EXIT_CODE}
 ```
 
 **Critical rules for the script:**
 
 - Replace `<test commands>` with the actual commands discovered during selection.
-- Suffix every command with `|| EXIT_CODE=1` so failures are recorded without halting execution. The script exits with `${EXIT_CODE}` at the end — `0` when all tests pass, `1` when any fail.
-- Use `"${REPO_ROOT}/gradlew" --project-dir "${REPO_ROOT}/modules"` for Gradle tasks (the `gradlew` wrapper lives at the repository root).
-- Use `npx --prefix "${REPO_ROOT}/modules/test/playwright" playwright test` for Playwright.
+- Suffix every command with `|| _EXIT_CODE=1` so failures are recorded without halting execution. The `||` recovery neutralizes `errexit` on test failures while keeping the strict-mode block in place for unrecovered errors. The script exits with `${_EXIT_CODE}` at the end — `0` when all tests pass, `1` when any fail.
+- Use `./gradlew --project-dir ./modules` for Gradle tasks (the script's `cd` puts the repository root as the working directory).
+- Use `npx --prefix ./modules/test/playwright playwright test` for Playwright.
 - All test types (Unit, Integration, Playwright, Poshi) run directly — the portal is assumed to be running.
 - Precede each command with a single-line comment explaining why it was selected. State the rationale; do not restate the test name or module.
 

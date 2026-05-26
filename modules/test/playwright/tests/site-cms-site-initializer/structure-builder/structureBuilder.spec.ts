@@ -215,7 +215,7 @@ test(
 		// Assert correct label style
 
 		await expect(
-			page.locator('.label-info', {hasText: 'Text'})
+			page.locator('.label-inverse-info', {hasText: 'Text'})
 		).toBeVisible();
 
 		// Configure the field

@@ -73,7 +73,7 @@ test(
 		// Assert correct label style
 
 		await expect(
-			page.locator('.label-warning', {
+			page.locator('.label-inverse-warning', {
 				hasText: 'Referenced Content Structure',
 			})
 		).toBeVisible();

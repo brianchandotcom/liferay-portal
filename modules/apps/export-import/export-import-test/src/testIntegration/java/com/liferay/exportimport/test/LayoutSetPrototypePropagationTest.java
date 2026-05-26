@@ -23,7 +23,6 @@ import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -154,32 +153,9 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
-	public void testLayoutPermissionPropagationWithLinkEnabled()
-		throws Exception {
-
-		setLinkEnabled(true);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.POWER_USER);
-
-		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-			prototypeLayout.getGroupId(), prototypeLayout.getCompanyId(),
-			Layout.class.getName(),
-			String.valueOf(prototypeLayout.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.CUSTOMIZE});
-
-		prototypeLayout = updateModifiedDate(
-			prototypeLayout,
-			new Date(System.currentTimeMillis() + Time.MINUTE));
-
-		propagateChanges(group);
-
-		Assert.assertTrue(
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
-				layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
-				ActionKeys.CUSTOMIZE));
+	public void testLayoutPermissionPropagation() throws Exception {
+		_testLayoutPermissionPropagation(false);
+		_testLayoutPermissionPropagation(true);
 	}
 
 	@Test
@@ -1066,29 +1042,27 @@ public class LayoutSetPrototypePropagationTest
 		return LayoutLocalServiceUtil.getLayoutsCount(group, false);
 	}
 
-	protected void propagateChanges(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+	protected void propagateChanges(boolean initial, Group group)
+		throws Exception {
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
-
-		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
-
-		Thread.sleep(2000);
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.
 				getLayoutSetPrototypeByUuidAndCompanyId(
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
+
+		if (initial) {
+			_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
+		}
+		else {
+			_sites.mergeLayoutSetPrototypeLayouts(
+				layoutSetPrototype, TestPropsValues.getUserId());
+		}
+
+		Thread.sleep(2000);
 
 		LayoutSet layoutSetPrototypeLayoutSet =
 			layoutSetPrototype.getLayoutSet();
@@ -1101,6 +1075,10 @@ public class LayoutSetPrototypePropagationTest
 				Sites.MERGE_FAIL_COUNT));
 
 		Assert.assertEquals(0, mergeFailCount);
+	}
+
+	protected void propagateChanges(Group group) throws Exception {
+		propagateChanges(false, group);
 	}
 
 	protected void setLayoutsUpdateable(boolean layoutsUpdateable)
@@ -1266,6 +1244,35 @@ public class LayoutSetPrototypePropagationTest
 			).build());
 	}
 
+	private void _testLayoutPermissionPropagation(boolean initial)
+		throws Exception {
+
+		setLinkEnabled(true);
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.POWER_USER);
+
+		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+			prototypeLayout.getGroupId(), prototypeLayout.getCompanyId(),
+			Layout.class.getName(),
+			String.valueOf(prototypeLayout.getPrimaryKey()), role.getRoleId(),
+			new String[] {ActionKeys.CUSTOMIZE});
+
+		prototypeLayout = updateModifiedDate(
+			prototypeLayout,
+			new Date(System.currentTimeMillis() + Time.MINUTE));
+
+		propagateChanges(initial, group);
+
+		Assert.assertEquals(
+			initial,
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
+				ActionKeys.CUSTOMIZE));
+	}
+
 	private void _verifyPortletPreferenceValue(
 		Layout layout, String portletId, String key, String expectedValue) {
 
@@ -1317,10 +1324,6 @@ public class LayoutSetPrototypePropagationTest
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	private Group _layoutSetPrototypeGroup;
-
-	@Inject
-	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
-
 	private JournalArticle _layoutSetPrototypeJournalArticle;
 
 	@DeleteAfterTestRun

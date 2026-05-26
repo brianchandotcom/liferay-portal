@@ -66,10 +66,10 @@ public class PhoneNumberObjectFieldBusinessType
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.NAME_COUNTRY,
+			ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE,
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
-			ObjectFieldSettingConstants.NAME_PREFIX,
-			ObjectFieldSettingConstants.NAME_PREFIX_TYPE,
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}
 
@@ -116,7 +116,7 @@ public class PhoneNumberObjectFieldBusinessType
 		ObjectField objectField) {
 
 		return Collections.singleton(
-			ObjectFieldSettingConstants.NAME_PREFIX_TYPE);
+			ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE);
 	}
 
 	@Override
@@ -146,11 +146,23 @@ public class PhoneNumberObjectFieldBusinessType
 
 		if (!Objects.equals(
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE, objectField),
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE,
+					objectField),
 				ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER)) {
 
-			String prefix = ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.NAME_PREFIX, objectField);
+			Country country = _countryLocalService.fetchCountryByA2(
+				objectField.getCompanyId(),
+				StringUtil.toUpperCase(
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_COUNTRY,
+						objectField)));
+
+			if (country == null) {
+				throw new ObjectEntryValuesException.InvalidPhoneNumber(
+					objectField.getName(), value);
+			}
+
+			String prefix = StringPool.PLUS + country.getIdd();
 
 			if (StringUtil.startsWith(normalizedValue, StringPool.PLUS)) {
 				if (!StringUtil.startsWith(normalizedValue, prefix) ||
@@ -189,43 +201,44 @@ public class PhoneNumberObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
 			objectFieldSettingsValues);
 
-		String prefixType = objectFieldSettingsValues.get(
-			ObjectFieldSettingConstants.NAME_PREFIX_TYPE);
+		String countrySource = objectFieldSettingsValues.get(
+			ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE);
 
 		if (Objects.equals(
-				prefixType,
+				countrySource,
 				ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER)) {
 
 			validateNotAllowedObjectFieldSettingNames(
-				SetUtil.fromArray(ObjectFieldSettingConstants.NAME_PREFIX),
+				SetUtil.fromArray(ObjectFieldSettingConstants.NAME_COUNTRY),
 				objectField.getName(), objectFieldSettingsValues);
 		}
 		else if (Objects.equals(
-					prefixType, ObjectFieldSettingConstants.VALUE_FIXED)) {
+					countrySource, ObjectFieldSettingConstants.VALUE_FIXED)) {
 
-			String prefix = objectFieldSettingsValues.get(
-				ObjectFieldSettingConstants.NAME_PREFIX);
+			String countryA2 = objectFieldSettingsValues.get(
+				ObjectFieldSettingConstants.NAME_COUNTRY);
 
-			if (Validator.isNull(prefix)) {
+			if (Validator.isNull(countryA2)) {
 				throw new ObjectFieldSettingValueException.
 					MissingRequiredValues(
 						objectField.getName(),
 						Collections.singleton(
-							ObjectFieldSettingConstants.NAME_PREFIX));
+							ObjectFieldSettingConstants.NAME_COUNTRY));
 			}
 
-			Matcher matcher = _prefixPattern.matcher(prefix);
+			Country country = _countryLocalService.fetchCountryByA2(
+				objectField.getCompanyId(), StringUtil.toUpperCase(countryA2));
 
-			if (!matcher.matches()) {
+			if ((country == null) || Validator.isNull(country.getIdd())) {
 				throw new ObjectFieldSettingValueException.InvalidValue(
 					objectField.getName(),
-					ObjectFieldSettingConstants.NAME_PREFIX, prefix);
+					ObjectFieldSettingConstants.NAME_COUNTRY, countryA2);
 			}
 		}
 		else {
 			throw new ObjectFieldSettingValueException.InvalidValue(
 				objectField.getName(),
-				ObjectFieldSettingConstants.NAME_PREFIX_TYPE, prefixType);
+				ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE, countrySource);
 		}
 	}
 
@@ -253,11 +266,23 @@ public class PhoneNumberObjectFieldBusinessType
 
 		if (Objects.equals(
 				objectFieldSettingsValuesMap.get(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE),
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE),
 				ObjectFieldSettingConstants.VALUE_FIXED)) {
 
-			String prefix = objectFieldSettingsValuesMap.get(
-				ObjectFieldSettingConstants.NAME_PREFIX);
+			Country country = _countryLocalService.fetchCountryByA2(
+				objectField.getCompanyId(),
+				StringUtil.toUpperCase(
+					objectFieldSettingsValuesMap.get(
+						ObjectFieldSettingConstants.NAME_COUNTRY)));
+
+			if (country == null) {
+				throw new ObjectFieldSettingValueException.InvalidValue(
+					objectField.getName(),
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+					defaultValue);
+			}
+
+			String prefix = StringPool.PLUS + country.getIdd();
 
 			if (StringUtil.startsWith(
 					normalizedDefaultValue, StringPool.PLUS)) {
@@ -386,8 +411,6 @@ public class PhoneNumberObjectFieldBusinessType
 
 	private static final Pattern _phoneNumberPattern = Pattern.compile(
 		"^\\+[0-9]{7,15}$");
-	private static final Pattern _prefixPattern = Pattern.compile(
-		"^\\+[1-9][0-9]{0,2}$");
 
 	private Set<String> _a2s;
 

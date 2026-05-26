@@ -40,7 +40,7 @@ components:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
             type: object
-        ExportRequest:
+        ExportProcessRequest:
             properties:
                 deletions:
                     default: false
@@ -134,7 +134,7 @@ components:
                         The import process's end status.
                     readOnly: true
             type: object
-        ImportRequest:
+        ImportProcessRequest:
             properties:
                 dataStrategy:
                     default: MIRROR
@@ -484,10 +484,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
             responses:
                 200:
                     content:
@@ -539,10 +539,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
             responses:
                 200:
                     content:
@@ -658,10 +658,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
             responses:
                 200:
                     content:
@@ -757,10 +757,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
             responses:
                 200:
                     content:
@@ -950,10 +950,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ExportRequest"
+                            $ref: "#/components/schemas/ExportProcessRequest"
             responses:
                 200:
                     content:
@@ -1005,10 +1005,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ImportRequest"
+                            $ref: "#/components/schemas/ImportProcessRequest"
             responses:
                 200:
                     content:

@@ -25,11 +25,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Thin template-facing wrapper around {@link
- * AssetAnalyticsAttributesProvider} so custom Asset Publisher display
- * templates (FTL / VM) can render analytics attributes with a single call,
- * without having to construct the asset renderer themselves.
- *
  * @author Georgel Pop
  */
 public class AssetAnalyticsAttributesHelper {

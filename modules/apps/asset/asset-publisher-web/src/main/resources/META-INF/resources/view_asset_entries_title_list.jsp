@@ -53,15 +53,13 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		request.setAttribute("view.jsp-assetEntry", assetEntry);
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 		Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 			"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
 		).put(
 			"fragments-editor-item-type", "fragments-editor-mapped-item"
 		).build();
-
 		boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
-
-		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 	%>
 
 		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

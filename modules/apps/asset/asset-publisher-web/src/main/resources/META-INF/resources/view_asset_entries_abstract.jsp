@@ -51,17 +51,15 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
 	try {
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 		String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
+		boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
 		String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 		Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 			"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
 		).put(
 			"fragments-editor-item-type", "fragments-editor-mapped-item"
 		).build();
-
-		boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
-
-		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 %>
 
 		<div class="asset-abstract mb-5 <%= assetPublisherWebHelper.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

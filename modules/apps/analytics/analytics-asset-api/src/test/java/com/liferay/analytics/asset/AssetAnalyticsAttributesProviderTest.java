@@ -216,6 +216,7 @@ public class AssetAnalyticsAttributesProviderTest {
 
 	private void _testBuildAttributesForJournalArticle() {
 		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
+
 		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
 
 		String structureKey = RandomTestUtil.randomString();

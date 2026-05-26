@@ -85,22 +85,18 @@ if (stageableGroup.isLayout()) {
 					continue;
 				}
 
-				String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
-
 				request.setAttribute("view.jsp-assetEntry", assetEntry);
 				request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
+				AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 				Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 					"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
 				).put(
 					"fragments-editor-item-type", "fragments-editor-mapped-item"
 				).build();
-
 				String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
-
 				boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
-
-				AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
+				String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 			%>
 
 				<tr class="<%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "table-active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

@@ -40,6 +40,13 @@ assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
+AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
+
+Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
+	"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
+).put(
+	"fragments-editor-item-type", "fragments-editor-mapped-item"
+).build();
 String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
 
 PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry);
@@ -50,15 +57,7 @@ if (print) {
 
 String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpComponentsUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL));
 
-Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
-	"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
-).put(
-	"fragments-editor-item-type", "fragments-editor-mapped-item"
-).build();
-
 boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
-
-AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 %>
 
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

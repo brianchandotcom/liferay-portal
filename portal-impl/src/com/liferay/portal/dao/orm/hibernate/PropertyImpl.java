@@ -122,7 +122,8 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection group() {
-		return new ProjectionImpl(ProjectionType.GROUP_PROPERTY, getPropertyName());
+		return new ProjectionImpl(
+			ProjectionType.GROUP_PROPERTY, getPropertyName());
 	}
 
 	@Override

@@ -20,17 +20,17 @@ public class ProjectionImpl implements Projection {
 		_projectionType = projectionType;
 	}
 
+	public ProjectionImpl(ProjectionType projectionType, String propertyName) {
+		_projectionType = projectionType;
+		_propertyName = propertyName;
+	}
+
 	public ProjectionImpl(
 		String alias, Projection projection, ProjectionType projectionType) {
 
 		_alias = alias;
 		_projection = projection;
 		_projectionType = projectionType;
-	}
-
-	public ProjectionImpl(ProjectionType projectionType, String propertyName) {
-		_projectionType = projectionType;
-		_propertyName = propertyName;
 	}
 
 	public ProjectionImpl(

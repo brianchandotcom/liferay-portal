@@ -6,6 +6,11 @@ import {TrendClassification} from 'segment/types';
 
 jest.unmock('react-dom');
 
+jest.mock('react-router', () => ({
+	...jest.requireActual('react-router'),
+	useParams: () => ({channelId: '456'})
+}));
+
 describe('TotalAccounts', () => {
 	it('should render', () => {
 		const useRequest = require('shared/hooks/useRequest');

@@ -63,7 +63,8 @@ function ClayDatePickerDayNumber({
 				// Out-of-range days use `aria-disabled` rather than the HTML
 				// `disabled` attribute so they remain focusable, which keeps
 				// the grid's arrow-key navigation continuous across them. The
-				// click and Space handlers no-op when `outOfRange` is true.
+				// click still propagates so the parent can short-circuit
+				// uniformly and surface the rejection to assistive tech.
 
 				aria-disabled={outOfRange ? true : undefined}
 				aria-label={setDate(date, {
@@ -85,13 +86,7 @@ function ClayDatePickerDayNumber({
 				)}
 				data-index={index}
 				disabled={disabled}
-				onClick={() => {
-					if (outOfRange) {
-						return;
-					}
-
-					onClick(date);
-				}}
+				onClick={() => onClick(date)}
 				onKeyDown={(event) => {
 
 					// When tabbing and selecting a DayNumber using
@@ -103,7 +98,7 @@ function ClayDatePickerDayNumber({
 					}
 				}}
 				onKeyUp={(event) => {
-					if (event.key === Keys.Spacebar && !outOfRange) {
+					if (event.key === Keys.Spacebar) {
 						onClick(date);
 					}
 				}}

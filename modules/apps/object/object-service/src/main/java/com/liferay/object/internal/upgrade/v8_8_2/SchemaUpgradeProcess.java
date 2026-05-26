@@ -37,13 +37,22 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					alterColumnType(
+					_alterColumnType(
 						resultSet.getString("dbTableName"),
-						resultSet.getString("dbColumnName"),
-						"VARCHAR(75) null");
+						resultSet.getString("dbColumnName"));
 				}
 			}
 		}
+	}
+
+	private void _alterColumnType(String dbTableName, String dbColumnName)
+		throws Exception {
+
+		if (!hasColumn(dbTableName, dbColumnName)) {
+			return;
+		}
+
+		alterColumnType(dbTableName, dbColumnName, "VARCHAR(75) null");
 	}
 
 }

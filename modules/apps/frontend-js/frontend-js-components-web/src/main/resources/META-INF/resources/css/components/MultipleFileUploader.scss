@@ -1,8 +1,16 @@
 @import 'atlas-variables';
 
 .multiple-file-uploader {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+
 	.modal-body.inline-scroller {
 		max-height: min(600px, calc(100vh - 14rem));
+	}
+
+	.modal-footer {
+		margin-top: auto;
 	}
 
 	.dropzone {

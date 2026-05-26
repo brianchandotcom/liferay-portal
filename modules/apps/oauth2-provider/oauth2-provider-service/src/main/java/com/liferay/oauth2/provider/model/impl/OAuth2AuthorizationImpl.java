@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 
+	@Override
 	public List<String> getAudiencesList() {
 		return StringUtil.split(getAudiences(), CharPool.NEW_LINE);
 	}
@@ -43,6 +44,7 @@ public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 		}
 	}
 
+	@Override
 	public void setAudiencesList(List<String> audiencesList) {
 		setAudiences(StringUtil.merge(audiencesList, StringPool.NEW_LINE));
 	}

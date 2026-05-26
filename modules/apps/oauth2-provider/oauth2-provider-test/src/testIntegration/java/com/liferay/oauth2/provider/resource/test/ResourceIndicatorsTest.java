@@ -9,19 +9,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.client.test.BaseClientTestCase;
 import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Arrays;
@@ -39,7 +41,7 @@ import org.osgi.framework.BundleActivator;
  * @author Jorge García Jiménez
  */
 @RunWith(Arquillian.class)
-public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
+public class ResourceIndicatorsTest extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,19 +50,22 @@ public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
 
 	@Test
 	public void testIntrospectionEmitsAudAsJSONArray() throws Exception {
-		MultivaluedMap<String, String> tokenFormData =
-			new MultivaluedHashMap<>();
+		WebTarget tokenWebTarget = getTokenWebTarget();
 
-		tokenFormData.add("client_id", _CLIENT_ID);
-		tokenFormData.add("client_secret", _CLIENT_SECRET);
-		tokenFormData.add("grant_type", "client_credentials");
-		tokenFormData.add("resource", _RESOURCE_URI);
-
-		Invocation.Builder tokenInvocationBuilder =
-			getTokenWebTarget().request();
+		Invocation.Builder tokenInvocationBuilder = tokenWebTarget.request();
 
 		Response tokenResponse = tokenInvocationBuilder.post(
-			Entity.form(tokenFormData));
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", _CLIENT_ID
+					).put(
+						"client_secret", _CLIENT_SECRET
+					).put(
+						"grant_type", "client_credentials"
+					).put(
+						"resource", _RESOURCE_URI
+					).build())));
 
 		Assert.assertEquals(200, tokenResponse.getStatus());
 
@@ -68,18 +73,21 @@ public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
 
 		Assert.assertNotNull(accessToken);
 
-		MultivaluedMap<String, String> introspectFormData =
-			new MultivaluedHashMap<>();
-
-		introspectFormData.add("client_id", _CLIENT_ID);
-		introspectFormData.add("client_secret", _CLIENT_SECRET);
-		introspectFormData.add("token", accessToken);
+		WebTarget introspectWebTarget = getIntrospectWebTarget();
 
 		Invocation.Builder introspectInvocationBuilder =
-			_getIntrospectionWebTarget().request();
+			introspectWebTarget.request();
 
 		Response introspectResponse = introspectInvocationBuilder.post(
-			Entity.form(introspectFormData));
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", _CLIENT_ID
+					).put(
+						"client_secret", _CLIENT_SECRET
+					).put(
+						"token", accessToken
+					).build())));
 
 		Assert.assertEquals(200, introspectResponse.getStatus());
 
@@ -99,16 +107,25 @@ public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
 	public void testTokenWithMalformedResourceReturnsInvalidTarget()
 		throws Exception {
 
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+		WebTarget tokenWebTarget = getTokenWebTarget();
 
-		formData.add("client_id", _CLIENT_ID);
-		formData.add("client_secret", _CLIENT_SECRET);
-		formData.add("grant_type", "client_credentials");
-		formData.add("resource", "https://mcp.example.com/#fragment");
+		Invocation.Builder invocationBuilder = tokenWebTarget.request();
 
-		Invocation.Builder invocationBuilder = getTokenWebTarget().request();
-
-		Response response = invocationBuilder.post(Entity.form(formData));
+		Response response = invocationBuilder.post(
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", _CLIENT_ID
+					).put(
+						"client_secret", _CLIENT_SECRET
+					).put(
+						"grant_type", "client_credentials"
+					).put(
+						"resource",
+						StringBundler.concat(
+							"https://", RandomTestUtil.randomString(), "/#",
+							RandomTestUtil.randomString())
+					).build())));
 
 		Assert.assertEquals(400, response.getStatus());
 		Assert.assertEquals("invalid_target", parseError(response));
@@ -116,16 +133,7 @@ public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
 
 	@Override
 	protected BundleActivator getBundleActivator() {
-		return new OAuth2ResourceIndicatorsTestPreparatorBundleActivator();
-	}
-
-	private WebTarget _getIntrospectionWebTarget() {
-		WebTarget webTarget = getWebTarget();
-
-		webTarget = webTarget.path("o");
-		webTarget = webTarget.path("oauth2");
-
-		return webTarget.path("introspect");
+		return new ResourceIndicatorsTestPreparatorBundleActivator();
 	}
 
 	private static final String _CLIENT_ID =
@@ -136,7 +144,7 @@ public class OAuth2ResourceIndicatorsTest extends BaseClientTestCase {
 
 	private static final String _RESOURCE_URI = "https://mcp.example.com/o/mcp";
 
-	private class OAuth2ResourceIndicatorsTestPreparatorBundleActivator
+	private class ResourceIndicatorsTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override

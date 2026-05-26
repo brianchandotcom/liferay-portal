@@ -97,6 +97,12 @@ public abstract class BaseClientTestCase {
 		_bundleActivator.stop(_bundleContext);
 	}
 
+	protected static WebTarget getIntrospectWebTarget() {
+		WebTarget webTarget = getOAuth2WebTarget();
+
+		return webTarget.path("introspect");
+	}
+
 	protected static Invocation.Builder getInvocationBuilder(
 		String hostname, WebTarget webTarget,
 		Function<Invocation.Builder, Invocation.Builder>

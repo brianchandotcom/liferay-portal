@@ -104,10 +104,6 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 			audience.removeIf(String::isEmpty);
 
 			if (!audience.isEmpty()) {
-
-				// Always emit as a JSON array, even for a single audience,
-				// so resource servers (MCP) can rely on a stable shape.
-
 				StringBundler audienceSB = new StringBundler(5);
 
 				_append(audienceSB, "aud", audience);

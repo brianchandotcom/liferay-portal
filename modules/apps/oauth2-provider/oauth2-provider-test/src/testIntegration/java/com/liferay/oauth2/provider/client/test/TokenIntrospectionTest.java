@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -20,7 +21,6 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Collections;
@@ -57,18 +57,22 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		Assert.assertNotNull(token);
 
-		Invocation.Builder invocationBuilder =
-			_getTokenIntrospectionWebTarget().request();
+		WebTarget webTarget = getIntrospectWebTarget();
 
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
-
-		formData.add("client_id", applicationClientId);
-		formData.add("client_secret", "oauthTestApplicationSecret");
-		formData.add("token", token);
+		Invocation.Builder invocationBuilder = webTarget.request();
 
 		invocationBuilder.header("Origin", RandomTestUtil.randomString());
 
-		Response response = invocationBuilder.post(Entity.form(formData));
+		Response response = invocationBuilder.post(
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", applicationClientId
+					).put(
+						"client_secret", "oauthTestApplicationSecret"
+					).put(
+						"token", token
+					).build())));
 
 		Assert.assertEquals(
 			Response.Status.OK.getStatusCode(), response.getStatus());
@@ -93,16 +97,20 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		Assert.assertNotNull(token);
 
-		Invocation.Builder invocationBuilder =
-			_getTokenIntrospectionWebTarget().request();
+		WebTarget webTarget = getIntrospectWebTarget();
 
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+		Invocation.Builder invocationBuilder = webTarget.request();
 
-		formData.add("client_id", applicationClientId);
-		formData.add("client_secret", StringPool.BLANK);
-		formData.add("token", token);
-
-		Response response = invocationBuilder.post(Entity.form(formData));
+		Response response = invocationBuilder.post(
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", applicationClientId
+					).put(
+						"client_secret", StringPool.BLANK
+					).put(
+						"token", token
+					).build())));
 
 		Assert.assertEquals(
 			Response.Status.OK.getStatusCode(), response.getStatus());
@@ -115,16 +123,6 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new TokenIntrospectionTest.
 			TokenIntrospectionTestPreparatorBundleActivator();
-	}
-
-	private WebTarget _getTokenIntrospectionWebTarget() {
-		WebTarget webTarget = getWebTarget();
-
-		webTarget = webTarget.path("o");
-		webTarget = webTarget.path("oauth2");
-		webTarget = webTarget.path("introspect");
-
-		return webTarget;
 	}
 
 	private User _user;

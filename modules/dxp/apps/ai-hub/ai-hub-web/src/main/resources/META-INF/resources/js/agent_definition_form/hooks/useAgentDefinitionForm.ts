@@ -21,7 +21,7 @@ import {getModelArmorTemplates} from '../services/ModelArmorTemplateService';
 import {AgentDefinition} from '../types/AgentDefinition';
 import {ContentRetriever} from '../types/ContentRetriever';
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
-import {required, requiredLocalized, validate} from '../utils/validations';
+import {required, requiredLocalized, validate} from '../../utils/validations';
 import {useRelationshipPicker} from './useRelationshipPicker';
 
 interface UseAgentDefinitionFormProps {

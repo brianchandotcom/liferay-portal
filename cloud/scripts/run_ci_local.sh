@@ -4,7 +4,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-_REPO_ROOT="$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
+_SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+_REPO_ROOT=$(cd "${_SCRIPTS_DIR}/../.." && pwd)
+_ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
 function main {
 	local command="${1:-all}"
@@ -88,11 +91,12 @@ EOF
 }
 
 function _run_helm {
+	local chart
 	local charts=()
+	local charts_list
 
 	if [ "${#}" -eq 0 ]
 	then
-		local charts_list
 		charts_list="$(_list_helm_charts)"
 
 		if [ -z "${charts_list}" ]
@@ -101,7 +105,6 @@ function _run_helm {
 			exit 1
 		fi
 
-		local chart
 		while IFS= read -r chart
 		do
 			charts+=("${chart}")
@@ -110,7 +113,6 @@ function _run_helm {
 		charts=("${@}")
 	fi
 
-	local chart
 	for chart in "${charts[@]}"
 	do
 		_log "=== helm: ${chart} ==="
@@ -120,7 +122,7 @@ function _run_helm {
 
 function _run_helm_one {
 	local chart="${1}"
-	local chart_dir="${_REPO_ROOT}/cloud/helm/${chart}"
+	local chart_dir="${_ROOT_CLOUD_DIR}/helm/${chart}"
 
 	pushd "${chart_dir}" > /dev/null
 
@@ -138,11 +140,12 @@ function _run_helm_one {
 }
 
 function _run_terraform {
+	local stack
 	local stacks=()
+	local stacks_list
 
 	if [ "${#}" -eq 0 ]
 	then
-		local stacks_list
 		stacks_list="$(_list_terraform_stacks)"
 
 		if [ -z "${stacks_list}" ]
@@ -151,7 +154,6 @@ function _run_terraform {
 			exit 1
 		fi
 
-		local stack
 		while IFS= read -r stack
 		do
 			stacks+=("${stack}")
@@ -160,7 +162,6 @@ function _run_terraform {
 		stacks=("${@}")
 	fi
 
-	local stack
 	for stack in "${stacks[@]}"
 	do
 		_log "=== terraform: ${stack} ==="
@@ -169,10 +170,9 @@ function _run_terraform {
 }
 
 function _run_terraform_one {
+	local config="${_ROOT_CLOUD_DIR}/terraform/${1%%/*}/.tflint.hcl"
 	local stack="${1}"
-	local stack_dir="${_REPO_ROOT}/cloud/terraform/${stack}"
-	local cloud="${stack%%/*}"
-	local config="${_REPO_ROOT}/cloud/terraform/${cloud}/.tflint.hcl"
+	local stack_dir="${_ROOT_CLOUD_DIR}/terraform/${stack}"
 
 	pushd "${stack_dir}" > /dev/null
 

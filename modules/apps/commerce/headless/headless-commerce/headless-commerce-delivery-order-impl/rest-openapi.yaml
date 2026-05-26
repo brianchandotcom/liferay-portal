@@ -3388,5 +3388,3 @@ paths:
                     description:
                         Unexpected error
             tags: ["Shipment"]
-servers:
-    -   url: /

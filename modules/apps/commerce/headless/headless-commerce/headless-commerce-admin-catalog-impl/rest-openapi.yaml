@@ -4350,9 +4350,6 @@ components:
                     tokenUrl: /oauth/token
             type: oauth2
 info:
-    contact:
-        email: team-commerce@liferay.com
-        name: Commerce Team
     description:
         "Administrative REST API for the Liferay Commerce catalog. It manages every entity that defines what is for sale
         -- catalogs, currencies, categories, products, SKUs, options and option values, specifications, attachments,
@@ -24556,10 +24553,6 @@ paths:
             summary: Gets a list of skus with unit of measure.
             tags:
             -   Sku
-servers:
--   description:
-        SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/liferayinc/commerce-admin-catalog/v1.0
 tags:
 -   description:
         File attachments associated with products (images, documents, virtual files). Upload via multipart, base64, or

@@ -11,6 +11,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandlerControl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -112,12 +113,8 @@ public class ParameterMapUtil {
 
 			String[] values = requestPortletDataHandlerControl.getValues();
 
-			if (values == null) {
-				String value = requestPortletDataHandlerControl.getValue();
-
-				values = new String[] {
-					(value != null) ? value : Boolean.TRUE.toString()
-				};
+			if (ArrayUtil.isEmpty(values)) {
+				values = new String[] {Boolean.TRUE.toString()};
 			}
 
 			parameterMap.put(name, values);

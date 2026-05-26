@@ -18,6 +18,7 @@ import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 interface IProps {
 	errors: FormikErrors<ModelArmorTemplate>;
 	handleBlur: FocusEventHandler;
+	readOnly: boolean;
 	setField: <K extends keyof ModelArmorTemplate>(
 		field: K,
 		value: ModelArmorTemplate[K]
@@ -30,6 +31,7 @@ interface IProps {
 const DetailsPanel: React.FC<IProps> = ({
 	errors,
 	handleBlur,
+	readOnly,
 	setField,
 	setFieldTouched,
 	touched,
@@ -45,6 +47,7 @@ const DetailsPanel: React.FC<IProps> = ({
 					<h2>{Liferay.Language.get('details')}</h2>
 
 					<ClayToggle
+						disabled={readOnly}
 						label={Liferay.Language.get('active')}
 						onToggle={(toggled) => setField('active', toggled)}
 						toggled={values.active}
@@ -52,6 +55,7 @@ const DetailsPanel: React.FC<IProps> = ({
 				</div>
 
 				<InputLocalized
+					disabled={readOnly}
 					error={
 						touched.title_i18n
 							? (errors.title_i18n as string | undefined)
@@ -84,6 +88,7 @@ const DetailsPanel: React.FC<IProps> = ({
 								? 'is-invalid'
 								: ''
 						}
+						disabled={readOnly}
 						id="externalReferenceCode"
 						name="externalReferenceCode"
 						onBlur={handleBlur}
@@ -106,6 +111,7 @@ const DetailsPanel: React.FC<IProps> = ({
 
 					<textarea
 						className="form-control"
+						disabled={readOnly}
 						id="description"
 						onChange={(event) =>
 							setField('description', event.target.value)
@@ -133,6 +139,7 @@ const DetailsPanel: React.FC<IProps> = ({
 
 					<Picker
 						className="model-armor-template-form-picker"
+						disabled={readOnly}
 						id="guardrailType"
 						items={GUARDRAIL_TYPE_OPTIONS}
 						onSelectionChange={(value) =>
@@ -149,6 +156,7 @@ const DetailsPanel: React.FC<IProps> = ({
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={values.multilanguageDetectionEnabled}
+						disabled={readOnly}
 						label={Liferay.Language.get('multilanguage-detection')}
 						onChange={(event) =>
 							setField(

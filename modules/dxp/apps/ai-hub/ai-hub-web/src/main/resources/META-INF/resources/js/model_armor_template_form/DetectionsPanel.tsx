@@ -11,6 +11,7 @@ import {DETECTIONS} from './constants';
 import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 
 interface IProps {
+	readOnly: boolean;
 	setField: <K extends keyof ModelArmorTemplate>(
 		field: K,
 		value: ModelArmorTemplate[K]
@@ -18,7 +19,7 @@ interface IProps {
 	values: ModelArmorTemplate;
 }
 
-const DetectionsPanel: React.FC<IProps> = ({setField, values}) => {
+const DetectionsPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 	return (
 		<ClayPanel
 			className="model-armor-template-form-detections"
@@ -33,6 +34,7 @@ const DetectionsPanel: React.FC<IProps> = ({setField, values}) => {
 					<ClayForm.Group key={field}>
 						<ClayCheckbox
 							checked={values[field]}
+							disabled={readOnly}
 							label={label}
 							onChange={(event) =>
 								setField(field, event.target.checked)

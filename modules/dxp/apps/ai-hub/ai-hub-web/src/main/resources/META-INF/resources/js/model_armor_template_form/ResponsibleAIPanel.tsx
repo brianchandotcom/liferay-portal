@@ -12,6 +12,7 @@ import {RAI_FILTERS, RAI_LEVEL_OPTIONS} from './constants';
 import {ModelArmorTemplate, RAILevel} from './types/ModelArmorTemplate';
 
 interface IProps {
+	readOnly: boolean;
 	setField: <K extends keyof ModelArmorTemplate>(
 		field: K,
 		value: ModelArmorTemplate[K]
@@ -19,7 +20,7 @@ interface IProps {
 	values: ModelArmorTemplate;
 }
 
-const ResponsibleAIPanel: React.FC<IProps> = ({setField, values}) => {
+const ResponsibleAIPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 	return (
 		<ClayPanel
 			className="model-armor-template-form-rai"
@@ -50,6 +51,7 @@ const ResponsibleAIPanel: React.FC<IProps> = ({setField, values}) => {
 
 						<Picker
 							className="model-armor-template-form-picker"
+							disabled={readOnly}
 							id={field}
 							items={RAI_LEVEL_OPTIONS}
 							onSelectionChange={(value) =>

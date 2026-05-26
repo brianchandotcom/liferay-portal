@@ -9,7 +9,7 @@ import React from 'react';
 interface SectionHeaderProps {
 	className?: string;
 	id?: string;
-	subtitle: string;
+	subtitle?: string;
 	title: string;
 }
 
@@ -25,7 +25,9 @@ export default function SectionHeader({
 				{title}
 			</div>
 
-			<p className="sheet-text text-secondary">{subtitle}</p>
+			{subtitle && (
+				<p className="sheet-text text-secondary">{subtitle}</p>
+			)}
 		</div>
 	);
 }

@@ -6,10 +6,7 @@
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {
-	CountryCodePicker,
-	CountryInfo,
-} from '@liferay/object-js-components-web';
+import {CountryCodePicker} from '@liferay/object-js-components-web';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -18,7 +15,7 @@ import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {Field, PhoneNumberField} from '../../utils/field';
 
-const PREFIX_TYPE_OPTIONS = [
+const COUNTRY_SOURCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('defined-by-user'),
 		value: 'definedByUser',
@@ -50,14 +47,14 @@ function FirstSectionComponent({
 
 	const dispatch = useStateDispatch();
 
-	const prefixTypeId = useId();
-	const prefixId = useId();
+	const countryId = useId();
+	const countrySourceId = useId();
 
 	return (
 		<>
 			<ClayForm.Group className="mb-3">
-				<label htmlFor={prefixTypeId}>
-					{Liferay.Language.get('prefix-type')}
+				<label htmlFor={countrySourceId}>
+					{Liferay.Language.get('country-source')}
 
 					<ClayIcon
 						className="ml-1 reference-mark"
@@ -68,22 +65,22 @@ function FirstSectionComponent({
 				</label>
 
 				<Picker
-					aria-label={Liferay.Language.get('prefix-type')}
+					aria-label={Liferay.Language.get('country-source')}
 					disabled={disabled}
-					id={prefixTypeId}
-					items={PREFIX_TYPE_OPTIONS}
+					id={countrySourceId}
+					items={COUNTRY_SOURCE_OPTIONS}
 					onSelectionChange={(value: React.Key) => {
 						const settings: PhoneNumberField['settings'] = {
 							...phoneNumberField.settings,
-							prefixType:
-								value as PhoneNumberField['settings']['prefixType'],
+							countrySource:
+								value as PhoneNumberField['settings']['countrySource'],
 						};
 
-						if (value === 'fixed' && !settings.prefix) {
-							settings.prefix = buildPrefix(config.countries[0]);
+						if (value === 'fixed' && !settings.country) {
+							settings.country = config.countries[0]?.a2;
 						}
 						else if (value === 'definedByUser') {
-							delete settings.prefix;
+							delete settings.country;
 						}
 
 						dispatch({
@@ -92,17 +89,17 @@ function FirstSectionComponent({
 							uuid: field.uuid,
 						});
 					}}
-					selectedKey={phoneNumberField.settings.prefixType}
+					selectedKey={phoneNumberField.settings.countrySource}
 				>
 					{(item) => <Option key={item.value}>{item.label}</Option>}
 				</Picker>
 			</ClayForm.Group>
 
-			{phoneNumberField.settings.prefixType === 'fixed' && (
+			{phoneNumberField.settings.countrySource === 'fixed' && (
 				<div className="form-group-autofit">
 					<ClayForm.Group className="form-group-item-shrink mb-3">
-						<label htmlFor={prefixId}>
-							{Liferay.Language.get('prefix')}
+						<label htmlFor={countryId}>
+							{Liferay.Language.get('country')}
 
 							<ClayIcon
 								className="ml-1 reference-mark"
@@ -115,24 +112,18 @@ function FirstSectionComponent({
 						<CountryCodePicker
 							countries={config.countries}
 							disabled={disabled}
-							id={prefixId}
+							id={countryId}
 							onSelectionChange={(country) => {
 								dispatch({
 									settings: {
 										...phoneNumberField.settings,
-										prefix: buildPrefix(country),
+										country: country.a2,
 									},
 									type: 'update-field',
 									uuid: field.uuid,
 								});
 							}}
-							selectedKey={
-								config.countries.find(
-									(country) =>
-										buildPrefix(country) ===
-										phoneNumberField.settings.prefix
-								)?.a2
-							}
+							selectedKey={phoneNumberField.settings.country}
 						/>
 					</ClayForm.Group>
 				</div>
@@ -174,8 +165,4 @@ function SecondSectionComponent({
 			/>
 		</ClayForm.Group>
 	);
-}
-
-function buildPrefix(country?: CountryInfo) {
-	return `+${country?.idd}`;
 }

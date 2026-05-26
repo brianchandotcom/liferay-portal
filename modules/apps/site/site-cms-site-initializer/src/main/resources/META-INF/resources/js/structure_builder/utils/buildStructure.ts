@@ -349,10 +349,10 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 		}
 	}
 	else if (objectField.businessType === 'PhoneNumber') {
-		settings.prefixType = objectFieldSettings.prefixType;
+		settings.countrySource = objectFieldSettings.countrySource;
 
-		if (objectFieldSettings.prefix) {
-			settings.prefix = objectFieldSettings.prefix;
+		if (objectFieldSettings.country) {
+			settings.country = objectFieldSettings.country;
 		}
 
 		if (objectFieldSettings.uniqueValues) {

@@ -11,6 +11,7 @@ import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.OptionInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -47,17 +48,7 @@ public class MappingContentUtil {
 		InfoField<?> infoField, Locale locale) {
 
 		return JSONUtil.put(
-			"attributes",
-			() -> {
-				JSONArray optionsJSONArray = _getOptionsJSONArray(
-					infoField, locale);
-
-				if (optionsJSONArray == null) {
-					return null;
-				}
-
-				return JSONUtil.put("options", optionsJSONArray);
-			}
+			"attributes", () -> _getAttributesJSONObject(infoField, locale)
 		).put(
 			"externalKey", infoField.getExternalUniqueId()
 		).put(
@@ -107,6 +98,30 @@ public class MappingContentUtil {
 		return _getMappingFieldsJSONArray(
 			formVariationKey, groupId, false, infoItemServiceRegistry,
 			itemClassName, locale);
+	}
+
+	private static JSONObject _getAttributesJSONObject(
+		InfoField infoField, Locale locale) {
+
+		InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+		if (infoFieldType instanceof PhoneNumberInfoFieldType) {
+			return JSONUtil.put(
+				"country",
+				infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY)
+			).put(
+				"countrySource",
+				infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY_SOURCE)
+			);
+		}
+
+		JSONArray optionsJSONArray = _getOptionsJSONArray(infoField, locale);
+
+		if (optionsJSONArray == null) {
+			return null;
+		}
+
+		return JSONUtil.put("options", optionsJSONArray);
 	}
 
 	private static JSONObject _getInfoFieldSetJSONObject(

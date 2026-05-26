@@ -13,7 +13,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
-import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
@@ -139,7 +139,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	@Override
 	public ImportProcess postAssetLibraryImportProcess(
 			String assetLibraryExternalReferenceCode,
-			ImportRequest importRequest)
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -149,22 +149,24 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postImportProcess(group, importRequest);
+		return _postImportProcess(group, importProcessRequest);
 	}
 
 	@Override
-	public ImportProcess postImportProcess(ImportRequest importRequest)
+	public ImportProcess postImportProcess(
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
-		return _postImportProcess(group, importRequest);
+		return _postImportProcess(group, importProcessRequest);
 	}
 
 	@Override
 	public ImportProcess postSiteImportProcess(
-			String siteExternalReferenceCode, ImportRequest importRequest)
+			String siteExternalReferenceCode,
+			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -174,7 +176,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postImportProcess(group, importRequest);
+		return _postImportProcess(group, importProcessRequest);
 	}
 
 	private List<BackgroundTask> _getBackgroundTasks(
@@ -238,7 +240,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	}
 
 	private ImportProcess _postImportProcess(
-			Group group, ImportRequest importRequest)
+			Group group, ImportProcessRequest importProcessRequest)
 		throws Exception {
 
 		long groupId = group.getGroupId();
@@ -255,7 +257,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		}
 
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			importRequest);
+			importProcessRequest);
 
 		Map<String, Serializable> settingsMap =
 			_exportImportConfigurationSettingsMapFactory.
@@ -265,7 +267,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 					parameterMap, contextAcceptLanguage.getPreferredLocale(),
 					contextUser.getTimeZone());
 
-		String name = importRequest.getName();
+		String name = importProcessRequest.getName();
 
 		if (Validator.isBlank(name)) {
 			name = fileEntry.getFileName();

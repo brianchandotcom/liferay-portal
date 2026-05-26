@@ -347,17 +347,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		return oAuthClientASLocalMetadata;
 	}
 
-	private String _deriveIntrospectionEndpoint(String tokenEndpoint) {
-		if ((tokenEndpoint == null) || !tokenEndpoint.endsWith("/token")) {
-			return null;
-		}
-
-		String basePath = tokenEndpoint.substring(
-			0, tokenEndpoint.length() - "/token".length());
-
-		return basePath + "/introspect";
-	}
-
 	private String _generateAuthorizationServerMetadataJSON(
 			String authorizationEndpoint, String issuer, String jwksURI,
 			String registrationEndpoint, String[] supportedScopes,
@@ -376,7 +365,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				TransformUtil.transformToList(
 					supportedGrantTypes, GrantType::parse));
 
-			String introspectionEndpoint = _deriveIntrospectionEndpoint(
+			String introspectionEndpoint = _resolveIntrospectionEndpoint(
 				tokenEndpoint);
 
 			if (introspectionEndpoint != null) {
@@ -458,7 +447,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				TransformUtil.transformToList(
 					supportedGrantTypes, GrantType::parse));
 
-			String introspectionEndpoint = _deriveIntrospectionEndpoint(
+			String introspectionEndpoint = _resolveIntrospectionEndpoint(
 				tokenEndpoint);
 
 			if (introspectionEndpoint != null) {
@@ -526,6 +515,17 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
+	}
+
+	private String _resolveIntrospectionEndpoint(String tokenEndpoint) {
+		if ((tokenEndpoint == null) || !tokenEndpoint.endsWith("/token")) {
+			return null;
+		}
+
+		String basePath = tokenEndpoint.substring(
+			0, tokenEndpoint.length() - "/token".length());
+
+		return basePath + "/introspect";
 	}
 
 	private void _validate(

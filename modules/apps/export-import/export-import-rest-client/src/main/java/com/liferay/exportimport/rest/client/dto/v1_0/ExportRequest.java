@@ -68,27 +68,6 @@ public class ExportRequest implements Cloneable, Serializable {
 
 	protected Date endDate;
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public void setFileName(
-		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
-
-		try {
-			fileName = fileNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String fileName;
-
 	public Integer getLast() {
 		return last;
 	}
@@ -107,6 +86,25 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 	protected Integer last;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
 
 	public Boolean getPermissions() {
 		return permissions;
@@ -267,4 +265,4 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1417290082
+// LIFERAY-REST-BUILDER-HASH:1542603122

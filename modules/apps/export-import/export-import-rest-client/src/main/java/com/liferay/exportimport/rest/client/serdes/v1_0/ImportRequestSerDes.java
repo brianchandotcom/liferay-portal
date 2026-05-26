@@ -69,6 +69,20 @@ public class ImportRequestSerDes {
 			sb.append(importRequest.getDeletions());
 		}
 
+		if (importRequest.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(importRequest.getName()));
+
+			sb.append("\"");
+		}
+
 		if (importRequest.getPermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -153,6 +167,13 @@ public class ImportRequestSerDes {
 			map.put("deletions", String.valueOf(importRequest.getDeletions()));
 		}
 
+		if (importRequest.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(importRequest.getName()));
+		}
+
 		if (importRequest.getPermissions() == null) {
 			map.put("permissions", null);
 		}
@@ -203,6 +224,9 @@ public class ImportRequestSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deletions")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
@@ -233,6 +257,11 @@ public class ImportRequestSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deletions")) {
 				if (jsonParserFieldValue != null) {
 					importRequest.setDeletions((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					importRequest.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
@@ -352,4 +381,4 @@ public class ImportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2047373549
+// LIFERAY-REST-BUILDER-HASH:-1112630329

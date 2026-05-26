@@ -164,6 +164,7 @@ public class ObjectDefinitionUtil {
 	}
 
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.account.service",
 		"com.liferay.ai.hub.pricing.site.initializer",
 		"com.liferay.ai.hub.site.initializer", "com.liferay.commerce.service",
 		"com.liferay.content.site.generator.impl", "com.liferay.cookies.impl",
@@ -178,6 +179,8 @@ public class ObjectDefinitionUtil {
 
 	private static final Map<String, String>
 		_allowedModifiableSystemObjectDefinitionNames = HashMapBuilder.put(
+			"AccountValidatorResult", "/account/validator-results"
+		).put(
 			"AIHubAgentDefinition", "/ai-hub/agent-definitions"
 		).put(
 			"AIHubChatbot", "/ai-hub/chatbots"

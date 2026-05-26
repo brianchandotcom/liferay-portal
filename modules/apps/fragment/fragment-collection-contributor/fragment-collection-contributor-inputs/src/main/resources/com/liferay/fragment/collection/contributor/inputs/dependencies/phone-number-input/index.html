@@ -66,12 +66,12 @@
 [#assign disabled = (input.attributes.disabled)?? && input.attributes.disabled /]
 [#assign prefix = (input.attributes.prefix)!"" /]
 [#assign prefixType = (input.attributes.prefixType)!"definedByUser" /]
-[#assign isFixed = prefixType == "fixed" /]
+[#assign fixed = prefixType == "fixed" /]
 [#assign showFlag = configuration.showCountryFlag /]
 [#assign showPrefixPicker = configuration.showPrefix /]
 [#assign selectedCountry = {} /]
 
-[#if isFixed && prefix?has_content]
+[#if fixed && prefix?has_content]
 	[#list countries as country]
 		[#if "+" + country.prefix == prefix]
 			[#assign selectedCountry = country /]
@@ -87,7 +87,7 @@
 	[/#list]
 [/#if]
 
-[#if !(selectedCountry.a2??) && !isFixed && defaultLanguageId?contains("_")]
+[#if !(selectedCountry.a2??) && !fixed && defaultLanguageId?contains("_")]
 	[#assign defaultCountryA2 = defaultLanguageId?keep_after("_") /]
 
 	[#list countries as country]
@@ -98,15 +98,15 @@
 	[/#list]
 [/#if]
 
-[#if !(selectedCountry.a2??) && countries?has_content && !isFixed]
+[#if !(selectedCountry.a2??) && countries?has_content && !fixed]
 	[#assign selectedCountry = countries?first /]
 [/#if]
 
 [#assign displayValue = (input.value)!"" /]
 
-[#if isFixed && prefix?has_content && displayValue?starts_with(prefix)]
+[#if fixed && prefix?has_content && displayValue?starts_with(prefix)]
 	[#assign displayValue = displayValue?remove_beginning(prefix) /]
-[#elseif !isFixed && selectedCountry.prefix?? && displayValue?starts_with("+" + selectedCountry.prefix)]
+[#elseif !fixed && selectedCountry.prefix?? && displayValue?starts_with("+" + selectedCountry.prefix)]
 	[#assign displayValue = displayValue?remove_beginning("+" + selectedCountry.prefix) /]
 [/#if]
 
@@ -124,7 +124,7 @@
 
 		<div class="input-group">
 			[#if showPrefixPicker]
-				[#if isFixed]
+				[#if fixed]
 					<div class="input-group-item input-group-item-shrink input-group-prepend">
 						<div class="input-group-text p-3">
 							[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]

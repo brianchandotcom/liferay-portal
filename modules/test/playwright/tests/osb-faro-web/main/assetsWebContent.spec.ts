@@ -15,9 +15,12 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
+import {searchByTerm} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -96,5 +99,156 @@ test(
 				})
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Web content asset list supports searching by partial title',
+	{
+		tag: '@LRAC-8441',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const webContentTitles = [
+			'Web Content AC Title 1',
+			'Web Content AC Title 2',
+			'Web Content AC Title 3',
+		];
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			webContentTitles.map((title, index) => ({
+				applicationId: 'WebContent',
+				assetId: String(index + 1),
+				assetTitle: title,
+				canonicalUrl: `/web/my-site/${index + 1}`,
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'webContentViewed',
+				title: `AC Page ${index + 1}`,
+				userId: 'user1',
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// Searching by the shared run id prefix returns all three entries
+
+		await searchByTerm({page, searchTerm: 'Web Content AC Title'});
+
+		for (const title of webContentTitles) {
+			await expect(
+				page.getByRole('link', {exact: true, name: title})
+			).toBeVisible();
+		}
+
+		// Narrowing the search to a single suffix returns only that entry
+
+		await searchByTerm({page, searchTerm: webContentTitles[1]});
+
+		await expect(
+			page.getByRole('link', {exact: true, name: webContentTitles[1]})
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', {exact: true, name: webContentTitles[0]})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('link', {exact: true, name: webContentTitles[2]})
+		).not.toBeVisible();
+
+		await searchByTerm({page, searchTerm: webContentTitles[2]});
+
+		await expect(
+			page.getByRole('link', {exact: true, name: webContentTitles[2]})
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', {exact: true, name: webContentTitles[1]})
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Web content known individuals tab shows the users who interacted with the asset',
+	{
+		tag: '@LRAC-8131',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const interactingIndividuals = [
+			generateIndividual({name: 'ac'}),
+			generateIndividual({name: 'liferay'}),
+			generateIndividual({name: 'dxp'}),
+		];
+
+		const nonInteractingIndividual = generateIndividual({
+			name: 'userac',
+		});
+
+		await createIndividuals({
+			apiHelpers,
+			individuals: [...interactingIndividuals, nonInteractingIndividual],
+		});
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			interactingIndividuals.map((individual) => ({
+				applicationId: 'WebContent',
+				assetId: '1',
+				assetTitle: 'Web Content AC Title',
+				canonicalUrl: '/web/my-site',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'webContentViewed',
+				title: 'AC Page',
+				userId: individual.id,
+			}))
+		);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+			interactingIndividuals.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('link', {name: 'Known Individuals'}),
+			trigger: page.getByRole('link', {
+				exact: true,
+				name: 'Web Content AC Title',
+			}),
+		});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		for (const individual of interactingIndividuals) {
+			await expect(
+				page.getByText(`${individual.name} Smith`).first()
+			).toBeVisible();
+		}
+
+		await expect(
+			page.getByText(`${nonInteractingIndividual.name} Smith`)
+		).toHaveCount(0);
 	}
 );

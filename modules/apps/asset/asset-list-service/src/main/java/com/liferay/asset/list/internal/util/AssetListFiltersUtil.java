@@ -150,6 +150,30 @@ public class AssetListFiltersUtil {
 		return false;
 	}
 
+	private static String _normalizeDateValue(
+		String value, boolean dateTime, boolean endOfBound) {
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		String digits = value.replaceAll("[^0-9]", "");
+
+		if (dateTime) {
+			String padded = digits + "000000000000";
+
+			String paddedDigits = padded.substring(0, 12);
+
+			return paddedDigits + (endOfBound ? "59" : "00");
+		}
+
+		String padded = digits + "00000000";
+
+		String paddedDigits = padded.substring(0, 8);
+
+		return paddedDigits + (endOfBound ? "235959" : "000000");
+	}
+
 	private static NestedQuery _toNestedQuery(
 		long companyId, JSONObject jsonObject, Locale locale) {
 
@@ -177,7 +201,7 @@ public class AssetListFiltersUtil {
 		String subfield = _getSubfield(locale, objectField);
 
 		Query valueQuery = _toValueQuery(
-			jsonObject, subfield, operatorName, value);
+			jsonObject, subfield, operatorName, value, objectField);
 
 		if (valueQuery == null) {
 			return null;
@@ -197,7 +221,19 @@ public class AssetListFiltersUtil {
 	}
 
 	private static Query _toRangeQuery(
-		JSONObject filterJSONObject, String subfield, String operatorName) {
+		JSONObject filterJSONObject, String subfield, String operatorName,
+		ObjectField objectField) {
+
+		boolean dateSubfield = subfield.endsWith(".value_date");
+
+		boolean dateTime = false;
+
+		if (dateSubfield &&
+			ObjectFieldConstants.DB_TYPE_DATE_TIME.equals(
+				objectField.getDBType())) {
+
+			dateTime = true;
+		}
 
 		if (operatorName.equals("between")) {
 			JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
@@ -206,12 +242,16 @@ public class AssetListFiltersUtil {
 				return null;
 			}
 
-			String lowerTerm = valueJSONArray.getString(0);
-			String upperTerm = valueJSONArray.getString(1);
+			String lowerTerm = _emptyToNull(valueJSONArray.getString(0));
+			String upperTerm = _emptyToNull(valueJSONArray.getString(1));
+
+			if (dateSubfield) {
+				lowerTerm = _normalizeDateValue(lowerTerm, dateTime, false);
+				upperTerm = _normalizeDateValue(upperTerm, dateTime, true);
+			}
 
 			return new TermRangeQuery(
-				subfield, _emptyToNull(lowerTerm), _emptyToNull(upperTerm),
-				true, true);
+				subfield, lowerTerm, upperTerm, true, true);
 		}
 
 		String value = filterJSONObject.getString("value");
@@ -221,19 +261,35 @@ public class AssetListFiltersUtil {
 		}
 
 		if (operatorName.equals("gt")) {
-			return new TermRangeQuery(subfield, value, null, false, false);
+			String lowerTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, true) :
+					value;
+
+			return new TermRangeQuery(subfield, lowerTerm, null, false, false);
 		}
 
 		if (operatorName.equals("ge")) {
-			return new TermRangeQuery(subfield, value, null, true, false);
+			String lowerTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, false) :
+					value;
+
+			return new TermRangeQuery(subfield, lowerTerm, null, true, false);
 		}
 
 		if (operatorName.equals("lt")) {
-			return new TermRangeQuery(subfield, null, value, false, false);
+			String upperTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, false) :
+					value;
+
+			return new TermRangeQuery(subfield, null, upperTerm, false, false);
 		}
 
 		if (operatorName.equals("le")) {
-			return new TermRangeQuery(subfield, null, value, false, true);
+			String upperTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, true) :
+					value;
+
+			return new TermRangeQuery(subfield, null, upperTerm, false, true);
 		}
 
 		return null;
@@ -241,13 +297,25 @@ public class AssetListFiltersUtil {
 
 	private static Query _toValueQuery(
 		JSONObject filterJSONObject, String subfield, String operatorName,
-		String value) {
+		String value, ObjectField objectField) {
 
 		if (operatorName.equals("between") || operatorName.equals("gt") ||
 			operatorName.equals("ge") || operatorName.equals("lt") ||
 			operatorName.equals("le")) {
 
-			return _toRangeQuery(filterJSONObject, subfield, operatorName);
+			return _toRangeQuery(
+				filterJSONObject, subfield, operatorName, objectField);
+		}
+
+		if (subfield.endsWith(".value_date") &&
+			(operatorName.equals("eq") || operatorName.equals("not-eq"))) {
+
+			boolean dateTime = ObjectFieldConstants.DB_TYPE_DATE_TIME.equals(
+				objectField.getDBType());
+
+			return new TermRangeQuery(
+				subfield, _normalizeDateValue(value, dateTime, false),
+				_normalizeDateValue(value, dateTime, true), true, true);
 		}
 
 		if (subfield.endsWith(".value_boolean") ||

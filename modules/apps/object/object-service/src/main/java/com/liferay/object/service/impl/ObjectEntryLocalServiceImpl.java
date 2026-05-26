@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.link.constants.AssetLinkConstants;
 import com.liferay.asset.link.service.AssetLinkLocalService;
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -7468,6 +7469,19 @@ public class ObjectEntryLocalServiceImpl
 		if (!objectScopeProvider.isValidGroupId(groupId)) {
 			throw new ObjectEntryGroupIdException.InvalidGroupIdForScope(
 				groupId, scope);
+		}
+
+		if (StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT)) {
+			String domain = ObjectDefinitionSettingUtil.getValue(
+				ObjectDefinitionSettingConstants.NAME_DOMAIN,
+				objectDefinition.getObjectDefinitionSettings());
+
+			if (Validator.isNotNull(domain) &&
+				!StringUtil.equals(domain, DepotRoleUtil.getSubtype(groupId))) {
+
+				throw new ObjectEntryGroupIdException.InvalidGroupIdForDomain(
+					groupId, domain);
+			}
 		}
 
 		if (!StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT) ||

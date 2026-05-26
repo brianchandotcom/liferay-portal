@@ -5,6 +5,7 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -16,14 +17,27 @@ public class ObjectEntryGroupIdException extends PortalException {
 		return _messageKey;
 	}
 
+	public static class InvalidGroupIdForDomain
+		extends ObjectEntryGroupIdException {
+
+		public InvalidGroupIdForDomain(long groupId, String domain) {
+			super(
+				StringBundler.concat(
+					"Group ID ", groupId, " is not valid for domain \"", domain,
+					"\""),
+				"group-id-x-is-not-valid-for-domain-x");
+		}
+
+	}
+
 	public static class InvalidGroupIdForScope
 		extends ObjectEntryGroupIdException {
 
 		public InvalidGroupIdForScope(long groupId, String scope) {
 			super(
-				String.format(
-					"Group ID %d is not valid for scope \"%s\"", groupId,
-					scope),
+				StringBundler.concat(
+					"Group ID ", groupId, " is not valid for scope \"", scope,
+					"\""),
 				"group-id-x-is-not-valid-for-scope-x");
 		}
 

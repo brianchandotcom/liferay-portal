@@ -47,12 +47,14 @@ public class DataSetSnapshotSharingEntryInterpreter
 
 	@Override
 	public SharingEntryEditRenderer getSharingEntryEditRenderer() {
-		return _EDIT_RENDERER;
+		return (sharingEntry, liferayPortletRequest, liferayPortletResponse) ->
+			null;
 	}
 
 	@Override
 	public SharingEntryViewRenderer getSharingEntryViewRenderer() {
-		return _VIEW_RENDERER;
+		return (sharingEntry, httpServletRequest, httpServletResponse) -> {
+		};
 	}
 
 	@Override
@@ -113,13 +115,6 @@ public class DataSetSnapshotSharingEntryInterpreter
 
 		return String.valueOf(label);
 	}
-
-	private static final SharingEntryEditRenderer _EDIT_RENDERER =
-		(sharingEntry, liferayPortletRequest, liferayPortletResponse) -> null;
-
-	private static final SharingEntryViewRenderer _VIEW_RENDERER =
-		(sharingEntry, httpServletRequest, httpServletResponse) -> {
-		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSetSnapshotSharingEntryInterpreter.class);

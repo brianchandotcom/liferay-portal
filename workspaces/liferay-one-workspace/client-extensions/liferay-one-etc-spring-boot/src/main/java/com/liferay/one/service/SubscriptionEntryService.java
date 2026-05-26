@@ -12,7 +12,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
-import com.liferay.one.constants.ClassNames;
+import com.liferay.one.constants.ClassNameConstants;
 import com.liferay.one.constants.ProductGroupConstants;
 import com.liferay.one.model.LicenseKey;
 import com.liferay.one.model.SubscriptionEntry;
@@ -338,7 +338,7 @@ public class SubscriptionEntryService extends BaseService {
 			List<SubscriptionEntry> subscriptionEntries =
 				getSubscriptionEntries(
 					StringBundler.concat(
-						"(className eq '", ClassNames.LICENSE_KEY,
+						"(className eq '", ClassNameConstants.LICENSE_KEY,
 						"') and (classPK eq ", licenseKey.getLicenseKeyId(),
 						")"));
 

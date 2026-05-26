@@ -3003,13 +3003,11 @@ public class ContactsEngineClientImpl
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject);
 
-		if (!Validator.isBlank(dataSourceId)) {
-			uriVariables.put("dataSourceId", dataSourceId);
-		}
+		uriVariables.put("dataSourceId", dataSourceId);
 
 		ResponseEntity<Long> responseEntity = restTemplate.exchange(
 			getTemplatedURL(
-				faroProject, Rels.SALESFORCE_ENTITIES_ACCOUNTS_COUNT),
+				faroProject, Rels.DATA_SOURCE_METRICS_ACCOUNTS_COUNT),
 			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
 
 		if (responseEntity.getBody() == null) {
@@ -3027,12 +3025,10 @@ public class ContactsEngineClientImpl
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject);
 
-		if (!Validator.isBlank(dataSourceId)) {
-			uriVariables.put("dataSourceId", dataSourceId);
-		}
+		uriVariables.put("dataSourceId", dataSourceId);
 
 		ResponseEntity<Long> responseEntity = restTemplate.exchange(
-			getTemplatedURL(faroProject, Rels.SALESFORCE_ENTITIES_USERS_COUNT),
+			getTemplatedURL(faroProject, Rels.DATA_SOURCE_METRICS_USERS_COUNT),
 			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
 
 		if (responseEntity.getBody() == null) {

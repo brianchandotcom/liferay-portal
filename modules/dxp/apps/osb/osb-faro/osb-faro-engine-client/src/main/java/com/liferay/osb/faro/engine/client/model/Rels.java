@@ -124,6 +124,12 @@ public interface Rels {
 	public static final String DATA_SOURCE_DXP_USERS_TOTAL =
 		"data-source-dxp-users-total";
 
+	public static final String DATA_SOURCE_METRICS_ACCOUNTS_COUNT =
+		"data-source-metrics-accounts-count";
+
+	public static final String DATA_SOURCE_METRICS_USERS_COUNT =
+		"data-source-metrics-users-count";
+
 	public static final String DATA_SOURCE_PROGRESS = "data-source-progress";
 
 	public static final String DATA_SOURCE_REFRESH_LIFERAY =
@@ -259,12 +265,6 @@ public interface Rels {
 
 	public static final String REPORTS_EXPORT_CSV_COUNT =
 		"reports-export-csv-count";
-
-	public static final String SALESFORCE_ENTITIES_ACCOUNTS_COUNT =
-		"salesforce-entities-accounts-count";
-
-	public static final String SALESFORCE_ENTITIES_USERS_COUNT =
-		"salesforce-entities-users-count";
 
 	public static final String SESSION_VALUES = "session-values";
 

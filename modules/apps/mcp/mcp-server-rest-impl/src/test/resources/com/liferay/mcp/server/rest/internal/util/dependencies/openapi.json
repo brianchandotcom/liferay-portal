@@ -135,6 +135,23 @@
 				},
 				"type": "object"
 			},
+			"PageItem": {
+				"properties": {
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/Item"
+						},
+						"type": "array"
+					},
+					"page": {
+						"type": "integer"
+					},
+					"totalCount": {
+						"type": "integer"
+					}
+				},
+				"type": "object"
+			},
 			"Parent": {
 				"discriminator": {
 					"propertyName": "kind"
@@ -159,6 +176,17 @@
 		"/": {
 			"get": {
 				"operationId": "getItemsPage",
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageItem"
+								}
+							}
+						}
+					}
+				},
 				"summary": "This is the summary"
 			}
 		},
@@ -231,6 +259,20 @@
 						}
 					}
 				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Item"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
 				"summary": "This is the summary"
 			},
 			"post": {
@@ -283,7 +325,18 @@
 							"type": "integer"
 						}
 					}
-				]
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Item"
+								}
+							}
+						}
+					}
+				}
 			},
 			"parameters": [
 				{

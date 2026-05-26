@@ -7834,19 +7834,12 @@ public class ObjectEntryResourceTest {
 
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
-				RandomTestUtil.randomBytes(),
-				RandomTestUtil.randomString() + ".txt",
-				ContentTypes.TEXT_PLAIN),
-			null, null);
-
-		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
-			_addFileEntry(
 				FileUtil.getBytes(
-					getClass(), "dependencies/sample_small_wide_400x300.jpg"),
+					getClass(),
+					"dependencies/sample_large_square_1500x1500.jpg"),
 				RandomTestUtil.randomString() + ".jpg",
 				ContentTypes.IMAGE_JPEG),
-			"Wide", "Small (Up to 400x300)");
-
+			"Square", "Large (Bigger Than 1024)");
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
 				FileUtil.getBytes(
@@ -7854,15 +7847,19 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString() + ".jpg",
 				ContentTypes.IMAGE_JPEG),
 			"Tall", "Medium (Up to 1024x768)");
-
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
 				FileUtil.getBytes(
-					getClass(),
-					"dependencies/sample_large_square_1500x1500.jpg"),
+					getClass(), "dependencies/sample_small_wide_400x300.jpg"),
 				RandomTestUtil.randomString() + ".jpg",
 				ContentTypes.IMAGE_JPEG),
-			"Square", "Large (Bigger Than 1024)");
+			"Wide", "Small (Up to 400x300)");
+		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
+			_addFileEntry(
+				RandomTestUtil.randomBytes(),
+				RandomTestUtil.randomString() + ".txt",
+				ContentTypes.TEXT_PLAIN),
+			null, null);
 	}
 
 	@Test

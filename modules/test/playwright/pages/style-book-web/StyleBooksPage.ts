@@ -65,7 +65,7 @@ export class StyleBooksPage {
 		await waitForAlert(this.page);
 
 		await expect(
-			this.page.locator('.style-book-editor__sidebar-content').first()
+			this.page.getByTestId('styleBookEditorSidebarContent')
 		).toBeVisible();
 	}
 

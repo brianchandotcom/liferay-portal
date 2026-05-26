@@ -214,29 +214,27 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		throws Exception {
 
 		long companyGroupId = _themeDisplay.getCompanyGroupId();
-		long scopeGroupId = _themeDisplay.getScopeGroupId();
 
 		Group companyGroup = GroupLocalServiceUtil.fetchGroup(companyGroupId);
-		Group scopeGroup = _themeDisplay.getScopeGroup();
 
-		String companyExternalReferenceCode;
+		String companyExternalReferenceCode = StringPool.BLANK;
 
-		if (companyGroup == null) {
-			companyExternalReferenceCode = StringPool.BLANK;
-		}
-		else {
+		if (companyGroup != null) {
 			companyExternalReferenceCode = GetterUtil.getString(
 				companyGroup.getExternalReferenceCode());
 		}
 
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
 		return HashMapBuilder.<String, Object>put(
-			"assetLibraries", _getConnectedAssetLibrariesJSONArray(scopeGroupId)
+			"assetLibraries",
+			_getConnectedAssetLibrariesJSONArray(scopeGroup.getGroupId())
 		).put(
 			"companyExternalReferenceCode", companyExternalReferenceCode
 		).put(
 			"companyGroupId", String.valueOf(companyGroupId)
 		).put(
-			"currentSiteId", String.valueOf(scopeGroupId)
+			"currentSiteId", String.valueOf(scopeGroup.getGroupId())
 		).put(
 			"getAssetVocabularyDetailsURL",
 			() -> {

@@ -114,10 +114,9 @@ public class AIHubSiteInitializerTest {
 			"r_accountToAIHubAgentDefinitions_accountEntryId", "title",
 			"workflowDefinitionName");
 		_assertObjectFieldsExist(
-			"L_AI_HUB_CHATBOT", "active", "companyLogo", "description",
+			"L_AI_HUB_CHATBOT", "active", "avatar", "description",
 			"introMessage", "notificationMessage", "placeholderMessage",
-			"r_accountToAIHubChatbots_accountEntryId", "showCompanyLogo",
-			"title");
+			"r_accountToAIHubChatbots_accountEntryId", "title");
 		_assertObjectFieldsExist(
 			"L_AI_HUB_CONTENT_RETRIEVER", "crawlDate", "description",
 			"indexName", "r_accountToAIHubContentRetrievers_accountEntryId",

@@ -457,13 +457,13 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await userEvent.click(screen.getByLabelText('prefix-type'));
+		await userEvent.click(screen.getByLabelText('country-source'));
 		await userEvent.click(screen.getByText('fixed'));
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				prefix: '+1',
-				prefixType: 'fixed',
+				country: 'US',
+				countrySource: 'fixed',
 			},
 			type: 'update-field',
 			uuid,
@@ -475,7 +475,7 @@ describe('StructureFieldSettings', () => {
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				prefixType: 'definedByUser',
+				countrySource: 'definedByUser',
 				uniqueValues: true,
 			},
 			type: 'update-field',
@@ -500,8 +500,8 @@ describe('StructureFieldSettings', () => {
 									type: 'phone-number',
 								}),
 								settings: {
-									prefix: '+1',
-									prefixType: 'fixed',
+									country: 'US',
+									countrySource: 'fixed',
 								},
 								uuid,
 							},
@@ -512,13 +512,13 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await userEvent.click(screen.getByLabelText('prefix'));
+		await userEvent.click(screen.getByLabelText('country'));
 		await userEvent.click(screen.getByRole('option', {name: /Spain/}));
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				prefix: '+34',
-				prefixType: 'fixed',
+				country: 'ES',
+				countrySource: 'fixed',
 			},
 			type: 'update-field',
 			uuid,

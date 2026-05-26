@@ -186,8 +186,8 @@ export type NumericField = BaseField & {
 
 export type PhoneNumberField = BaseField & {
 	settings: {
-		prefix?: string;
-		prefixType: 'definedByUser' | 'fixed';
+		country?: string;
+		countrySource: 'definedByUser' | 'fixed';
 	};
 	type: 'phone-number';
 } & UniqueValuesSettingsField;
@@ -303,7 +303,7 @@ export function getDefaultField({
 		return {
 			...base,
 			settings: {
-				prefixType: 'definedByUser',
+				countrySource: 'definedByUser',
 			},
 			type: 'phone-number',
 		};

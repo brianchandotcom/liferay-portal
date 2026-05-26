@@ -46,13 +46,13 @@ public class ContentSecurityPolicyFilterTest {
 
 	@Test
 	public void testIsExcludedURIPath() {
-		_testIsExcludedURIPath("/group/guest/home", "/c/portal/layout", true);
-		_testIsExcludedURIPath(null, "/group/guest/home", true);
-		_testIsExcludedURIPath(null, "/c/portal/layout", false);
+		_testIsExcludedURIPath(false, null, "/c/portal/layout");
+		_testIsExcludedURIPath(true, "/group/guest/home", "/c/portal/layout");
+		_testIsExcludedURIPath(true, null, "/group/guest/home");
 	}
 
 	private void _testIsExcludedURIPath(
-		String forwardRequestURI, String requestURI, boolean expected) {
+		boolean excludedURIPath, String forwardRequestURI, String requestURI) {
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
@@ -70,15 +70,15 @@ public class ContentSecurityPolicyFilterTest {
 			requestURI
 		);
 
-		boolean actual = ReflectionTestUtil.invoke(
-			_contentSecurityPolicyFilter, "_isExcludedURIPath",
-			new Class<?>[] {
-				ContentSecurityPolicyConfiguration.class,
-				HttpServletRequest.class
-			},
-			_contentSecurityPolicyConfiguration, httpServletRequest);
-
-		Assert.assertEquals(expected, actual);
+		Assert.assertEquals(
+			excludedURIPath,
+			ReflectionTestUtil.invoke(
+				_contentSecurityPolicyFilter, "_isExcludedURIPath",
+				new Class<?>[] {
+					ContentSecurityPolicyConfiguration.class,
+					HttpServletRequest.class
+				},
+				_contentSecurityPolicyConfiguration, httpServletRequest));
 	}
 
 	private ContentSecurityPolicyConfiguration

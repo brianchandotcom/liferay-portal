@@ -39,12 +39,12 @@ public class AssistantHandlerUtil {
 
 		Assistant assistant = aiServices.inputGuardrails(
 			assistantHandlerContext.getInputGuardrails()
+		).maxSequentialToolsInvocations(
+			7
 		).outputGuardrails(
 			assistantHandlerContext.getOutputGuardrails()
 		).streamingChatModel(
 			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
-		).maxSequentialToolsInvocations(
-			7
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProviderFunction()
 		).toolProvider(

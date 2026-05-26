@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.internal.guardrail;
 
-import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.modelarmor.v1.DataItem;
 import com.google.cloud.modelarmor.v1.DetectionConfidenceLevel;
 import com.google.cloud.modelarmor.v1.FilterMatchState;
@@ -21,15 +20,12 @@ import com.google.cloud.modelarmor.v1.Template;
 import com.google.cloud.modelarmor.v1.TemplateName;
 import com.google.protobuf.FieldMask;
 
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -38,6 +34,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,9 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-@Component(service = ModelArmorTemplateHandler.class)
-public class ModelArmorTemplateHandlerImpl
-	implements ModelArmorTemplateHandler {
+@Component(service = ModelArmorHandler.class)
+public class ModelArmorHandlerImpl implements ModelArmorHandler {
 
 	@Override
 	public void createModelArmorTemplate(
@@ -92,78 +88,53 @@ public class ModelArmorTemplateHandlerImpl
 	}
 
 	@Override
-	public boolean isMatchFound(
+	public boolean hasModelResponseViolation(
 			long companyId, String externalReferenceCode, String location,
-			String guardrailType, String text)
+			String text)
 		throws Exception {
 
-		VertexAIConfiguration vertexAIConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				VertexAIConfiguration.class, companyId);
+		return _hasViolation(
+			companyId, externalReferenceCode, location,
+			(modelArmorClient, templateName) -> {
+				SanitizeModelResponseResponse sanitizeModelResponseResponse =
+					modelArmorClient.sanitizeModelResponse(
+						SanitizeModelResponseRequest.newBuilder(
+						).setModelResponseData(
+							DataItem.newBuilder(
+							).setText(
+								text
+							).build()
+						).setName(
+							templateName
+						).build());
 
-		ModelArmorClient modelArmorClient = _getModelArmorClient(location);
+				return sanitizeModelResponseResponse.getSanitizationResult();
+			});
+	}
 
-		Template template;
+	@Override
+	public boolean hasUserPromptViolation(
+			long companyId, String externalReferenceCode, String location,
+			String text)
+		throws Exception {
 
-		try {
-			template = modelArmorClient.getTemplate(
-				StringBundler.concat(
-					"projects/", vertexAIConfiguration.projectId(),
-					"/locations/", location, "/templates/",
-					externalReferenceCode));
-		}
-		catch (NotFoundException notFoundException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Model Armor template not found: " + externalReferenceCode,
-					notFoundException);
-			}
+		return _hasViolation(
+			companyId, externalReferenceCode, location,
+			(modelArmorClient, templateName) -> {
+				SanitizeUserPromptResponse sanitizeUserPromptResponse =
+					modelArmorClient.sanitizeUserPrompt(
+						SanitizeUserPromptRequest.newBuilder(
+						).setName(
+							templateName
+						).setUserPromptData(
+							DataItem.newBuilder(
+							).setText(
+								text
+							).build()
+						).build());
 
-			return false;
-		}
-
-		SanitizationResult sanitizationResult;
-
-		if (Objects.equals(guardrailType, "output")) {
-			SanitizeModelResponseResponse sanitizeModelResponseResponse =
-				modelArmorClient.sanitizeModelResponse(
-					SanitizeModelResponseRequest.newBuilder(
-					).setName(
-						template.getName()
-					).setModelResponseData(
-						DataItem.newBuilder(
-						).setText(
-							text
-						).build()
-					).build());
-
-			sanitizationResult =
-				sanitizeModelResponseResponse.getSanitizationResult();
-		}
-		else {
-			SanitizeUserPromptResponse sanitizeUserPromptResponse =
-				modelArmorClient.sanitizeUserPrompt(
-					SanitizeUserPromptRequest.newBuilder(
-					).setName(
-						template.getName()
-					).setUserPromptData(
-						DataItem.newBuilder(
-						).setText(
-							text
-						).build()
-					).build());
-
-			sanitizationResult =
-				sanitizeUserPromptResponse.getSanitizationResult();
-		}
-
-		if (sanitizationResult.getFilterMatchState() ==
-				FilterMatchState.MATCH_FOUND) {
-
-			return true;
-		}
-
-		return false;
+				return sanitizeUserPromptResponse.getSanitizationResult();
+			});
 	}
 
 	@Override
@@ -192,10 +163,11 @@ public class ModelArmorTemplateHandlerImpl
 			Template.newBuilder(
 				modelArmorTemplate.getTemplate()
 			).setName(
-				StringBundler.concat(
-					"projects/", vertexAIConfiguration.projectId(),
-					"/locations/", modelArmorTemplate.getLocation(),
-					"/templates/", modelArmorTemplate.getTemplateId())
+				TemplateName.of(
+					vertexAIConfiguration.projectId(),
+					modelArmorTemplate.getLocation(),
+					modelArmorTemplate.getTemplateId()
+				).toString()
 			).build(),
 			FieldMask.newBuilder(
 			).addPaths(
@@ -265,6 +237,27 @@ public class ModelArmorTemplateHandlerImpl
 		).build();
 	}
 
+	private boolean _hasViolation(
+			long companyId, String externalReferenceCode, String location,
+			BiFunction<ModelArmorClient, String, SanitizationResult> biFunction)
+		throws Exception {
+
+		VertexAIConfiguration vertexAIConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				VertexAIConfiguration.class, companyId);
+
+		SanitizationResult sanitizationResult = biFunction.apply(
+			_getModelArmorClient(location),
+			TemplateName.of(
+				vertexAIConfiguration.projectId(), location,
+				externalReferenceCode
+			).toString());
+
+		return Objects.equals(
+			sanitizationResult.getFilterMatchState(),
+			FilterMatchState.MATCH_FOUND);
+	}
+
 	private DetectionConfidenceLevel _toDetectionConfidenceLevel(
 		Object property) {
 
@@ -291,9 +284,6 @@ public class ModelArmorTemplateHandlerImpl
 			throw new RuntimeException(jsonException);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModelArmorTemplateHandlerImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

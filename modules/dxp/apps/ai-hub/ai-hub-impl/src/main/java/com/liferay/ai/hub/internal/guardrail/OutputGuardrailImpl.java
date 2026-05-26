@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.guardrail;
+package com.liferay.ai.hub.internal.guardrail;
 
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -16,23 +16,23 @@ import dev.langchain4j.guardrail.OutputGuardrailResult;
 /**
  * @author João Victor Alves
  */
-public class ModelArmorOutputGuardrail implements OutputGuardrail {
+public class OutputGuardrailImpl implements OutputGuardrail {
 
-	public ModelArmorOutputGuardrail(
+	public OutputGuardrailImpl(
 		long companyId, String externalReferenceCode, String location,
-		ModelArmorTemplateHandler modelArmorTemplateHandler) {
+		ModelArmorHandler modelArmorHandler) {
 
 		_companyId = companyId;
 		_externalReferenceCode = externalReferenceCode;
 		_location = location;
-		_modelArmorTemplateHandler = modelArmorTemplateHandler;
+		_modelArmorHandler = modelArmorHandler;
 	}
 
 	@Override
 	public OutputGuardrailResult validate(AiMessage aiMessage) {
 		try {
-			if (_modelArmorTemplateHandler.isMatchFound(
-					_companyId, _externalReferenceCode, _location, "output",
+			if (_modelArmorHandler.hasModelResponseViolation(
+					_companyId, _externalReferenceCode, _location,
 					aiMessage.text())) {
 
 				return fatal("Response blocked: Contains restricted content.");
@@ -50,11 +50,11 @@ public class ModelArmorOutputGuardrail implements OutputGuardrail {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ModelArmorOutputGuardrail.class);
+		OutputGuardrailImpl.class);
 
 	private final long _companyId;
 	private final String _externalReferenceCode;
 	private final String _location;
-	private final ModelArmorTemplateHandler _modelArmorTemplateHandler;
+	private final ModelArmorHandler _modelArmorHandler;
 
 }

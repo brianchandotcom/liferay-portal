@@ -397,6 +397,27 @@
 				}
 			],
 			"name": "Trial Extension Request Status"
+		},
+		{
+			"externalReferenceCode": "LT_PRODUCT_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_PRODUCT_TYPE_ADD_ON",
+					"key": "addOn",
+					"name": "Add-on"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_TYPE_PRIMARY",
+					"key": "primary",
+					"name": "Primary"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_TYPE_REGULAR",
+					"key": "regular",
+					"name": "Regular"
+				}
+			],
+			"name": "Product Type"
 		}
 	]
 }

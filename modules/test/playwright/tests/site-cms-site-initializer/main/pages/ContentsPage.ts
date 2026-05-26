@@ -140,8 +140,12 @@ export class ContentsPage {
 		await this.page.getByLabel('NameRequired').fill(folderName);
 
 		if (spaceName) {
-			await this.page.getByLabel('SpaceMandatory').click();
-			await this.page.getByRole('option', {name: spaceName}).click();
+			const spaceSelector = this.page.getByLabel('SpaceMandatory');
+
+			if (await spaceSelector.isVisible()) {
+				await spaceSelector.click();
+				await this.page.getByRole('option', {name: spaceName}).click();
+			}
 		}
 
 		await this.page.getByRole('button', {name: 'Save'}).click();

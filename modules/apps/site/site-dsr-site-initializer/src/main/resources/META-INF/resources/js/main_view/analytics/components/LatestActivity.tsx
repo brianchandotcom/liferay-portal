@@ -92,9 +92,7 @@ const LatestActivity = ({
 													/>
 
 													<p className="font-weight-semi-bold inline-item-after mb-0">
-														{Liferay.Language.get(
-															itemData.name
-														)}
+														{itemData.name}
 													</p>
 												</div>
 											),

@@ -44,12 +44,9 @@ function AccountSticker({
 			}
 		>
 			{logoURL ? (
-				<ClaySticker.Image
-					alt={Liferay.Language.get(name)}
-					src={logoURL}
-				/>
+				<ClaySticker.Image alt={name} src={logoURL} />
 			) : (
-				getInitial(Liferay.Language.get(name))
+				getInitial(name)
 			)}
 		</ClaySticker>
 	);

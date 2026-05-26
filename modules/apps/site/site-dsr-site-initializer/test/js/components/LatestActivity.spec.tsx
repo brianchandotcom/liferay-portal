@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 import {cleanup, render, screen} from '@testing-library/react';
 import React from 'react';
 
+import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
@@ -103,6 +104,29 @@ describe('LatestActivity', () => {
 		);
 
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
+	});
+
+	it('does not render the literal "Undefined" when the event has no individualName', () => {
+		(useAnalyticsQuery as jest.Mock).mockReturnValueOnce({
+			isLoading: false,
+			response: {
+				events: {
+					eventEntries: [
+						{
+							createDate: '2026-03-26T14:30:00Z',
+							individualName: undefined,
+							name: 'pageViewed',
+						},
+					],
+				},
+			},
+			sendRequest: jest.fn(),
+		});
+
+		render(<LatestActivity namespace="test-namespace" />);
+
+		expect(screen.queryByText(/^Undefined$/)).not.toBeInTheDocument();
+		expect(screen.queryByText(/^undefined$/)).not.toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

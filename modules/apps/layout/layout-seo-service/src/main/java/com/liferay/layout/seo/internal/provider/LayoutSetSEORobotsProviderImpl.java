@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeSet;
 

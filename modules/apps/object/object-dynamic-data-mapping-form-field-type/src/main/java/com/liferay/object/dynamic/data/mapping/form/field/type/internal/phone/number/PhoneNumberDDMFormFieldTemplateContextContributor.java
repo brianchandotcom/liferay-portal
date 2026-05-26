@@ -48,6 +48,11 @@ public class PhoneNumberDDMFormFieldTemplateContextContributor
 				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER);
 
 		return HashMapBuilder.<String, Object>put(
+			"country", GetterUtil.getString(ddmFormField.getProperty("country"))
+		).put(
+			"countrySource",
+			GetterUtil.getString(ddmFormField.getProperty("countrySource"))
+		).put(
 			"localizedObjectField", localizedObjectField
 		).put(
 			"predefinedValue",
@@ -63,11 +68,6 @@ public class PhoneNumberDDMFormFieldTemplateContextContributor
 					predefinedValue.getString(
 						ddmFormFieldRenderingContext.getLocale()));
 			}
-		).put(
-			"prefix", GetterUtil.getString(ddmFormField.getProperty("prefix"))
-		).put(
-			"prefixType",
-			GetterUtil.getString(ddmFormField.getProperty("prefixType"))
 		).put(
 			"value",
 			() -> {

@@ -95,20 +95,6 @@ public class RequestPortletDataHandlerControlSerDes {
 			sb.append("]");
 		}
 
-		if (requestPortletDataHandlerControl.getValue() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(requestPortletDataHandlerControl.getValue()));
-
-			sb.append("\"");
-		}
-
 		if (requestPortletDataHandlerControl.getValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -178,15 +164,6 @@ public class RequestPortletDataHandlerControlSerDes {
 						getRequestPortletDataHandlerControls()));
 		}
 
-		if (requestPortletDataHandlerControl.getValue() == null) {
-			map.put("value", null);
-		}
-		else {
-			map.put(
-				"value",
-				String.valueOf(requestPortletDataHandlerControl.getValue()));
-		}
-
 		if (requestPortletDataHandlerControl.getValues() == null) {
 			map.put("values", null);
 		}
@@ -221,9 +198,6 @@ public class RequestPortletDataHandlerControlSerDes {
 						jsonParserFieldName,
 						"requestPortletDataHandlerControls")) {
 
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "values")) {
@@ -269,12 +243,6 @@ public class RequestPortletDataHandlerControlSerDes {
 					requestPortletDataHandlerControl.
 						setRequestPortletDataHandlerControls(
 							requestPortletDataHandlerControlsArray);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					requestPortletDataHandlerControl.setValue(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "values")) {
@@ -364,4 +332,4 @@ public class RequestPortletDataHandlerControlSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-4331324
+// LIFERAY-REST-BUILDER-HASH:1293140856

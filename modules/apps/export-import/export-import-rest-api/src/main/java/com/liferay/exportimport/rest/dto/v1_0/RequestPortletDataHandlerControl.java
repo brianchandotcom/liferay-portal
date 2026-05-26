@@ -141,47 +141,6 @@ public class RequestPortletDataHandlerControl implements Serializable {
 		_requestPortletDataHandlerControlsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getValue() {
-		if (_valueSupplier != null) {
-			value = _valueSupplier.get();
-
-			_valueSupplier = null;
-		}
-
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-
-		_valueSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		_valueSupplier = () -> {
-			try {
-				return valueUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
-
-	@JsonIgnore
-	private Supplier<String> _valueSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getValues() {
 		if (_valuesSupplier != null) {
 			values = _valuesSupplier.get();
@@ -288,22 +247,6 @@ public class RequestPortletDataHandlerControl implements Serializable {
 			}
 
 			sb.append("]");
-		}
-
-		String value = getValue();
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
 		}
 
 		String[] values = getValues();
@@ -433,4 +376,4 @@ public class RequestPortletDataHandlerControl implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1685767291
+// LIFERAY-REST-BUILDER-HASH:-791704979

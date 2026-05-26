@@ -4,6 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+_REPO_ROOT="$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
+
 function main {
 	local command="${1:-all}"
 	shift || true
@@ -19,7 +21,7 @@ function main {
 			_run_helm ${1+"$@"}
 			;;
 		shell)
-			_log_error "shell subcommand not yet implemented (tracked by LCD-51737)"
+			_log_error "shell subcommand not yet implemented"
 			exit 1
 			;;
 		terraform)
@@ -51,12 +53,12 @@ function _check_utils {
 
 function _list_helm_charts {
 	yq '.jobs.test-cloud-helm-chart.strategy.matrix.chart[]' \
-		"${REPO_ROOT}/.github/workflows/ci-test-cloud-helm-chart.yaml"
+		"${_REPO_ROOT}/.github/workflows/ci-test-cloud-helm-chart.yaml"
 }
 
 function _list_terraform_stacks {
 	yq '.jobs.test-cloud-terraform.strategy.matrix.stack[]' \
-		"${REPO_ROOT}/.github/workflows/ci-test-cloud-terraform.yaml"
+		"${_REPO_ROOT}/.github/workflows/ci-test-cloud-terraform.yaml"
 }
 
 function _log {
@@ -118,17 +120,19 @@ function _run_helm {
 
 function _run_helm_one {
 	local chart="${1}"
-	local chart_dir="${REPO_ROOT}/cloud/helm/${chart}"
+	local chart_dir="${_REPO_ROOT}/cloud/helm/${chart}"
 
 	pushd "${chart_dir}" > /dev/null
 
 	helm dependency update --skip-refresh
 	helm lint .
 	helm template liferay . \
-		| kubeconform --strict --summary \
+		| kubeconform \
 			-schema-location default \
 			-schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
-			-skip ClusterProviderConfig,LiferayInfrastructure
+			-skip ClusterProviderConfig,LiferayInfrastructure \
+			--strict \
+			--summary
 
 	popd > /dev/null
 }
@@ -166,9 +170,9 @@ function _run_terraform {
 
 function _run_terraform_one {
 	local stack="${1}"
-	local stack_dir="${REPO_ROOT}/cloud/terraform/${stack}"
+	local stack_dir="${_REPO_ROOT}/cloud/terraform/${stack}"
 	local cloud="${stack%%/*}"
-	local config="${REPO_ROOT}/cloud/terraform/${cloud}/.tflint.hcl"
+	local config="${_REPO_ROOT}/cloud/terraform/${cloud}/.tflint.hcl"
 
 	pushd "${stack_dir}" > /dev/null
 
@@ -180,7 +184,5 @@ function _run_terraform_one {
 
 	popd > /dev/null
 }
-
-REPO_ROOT="$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
 
 main ${1+"$@"}

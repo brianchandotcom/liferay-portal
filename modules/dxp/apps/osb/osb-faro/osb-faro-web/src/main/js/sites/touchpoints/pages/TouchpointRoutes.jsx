@@ -14,7 +14,7 @@ import TextTruncate from 'shared/components/TextTruncate';
 import {CSVType} from 'shared/components/download-report/utils';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {getMatchedRoute, Routes} from 'shared/util/router';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
+import {getSafeDecodedURIComponent, getSafeTouchpoint} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
@@ -171,7 +171,7 @@ function TouchpointRoutes({className, router}) {
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							assetId={decodedTouchpoint}
+							assetId={getSafeTouchpoint(touchpoint)}
 							assetType='page'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}

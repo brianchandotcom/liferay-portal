@@ -17,7 +17,7 @@
 			{
 				"definition": {
 					"cssClasses": [
-						"bg-gradient--blue-white"
+						"ai-hub bg-gradient--blue-white"
 					],
 					"indexed": true,
 					"layout": {

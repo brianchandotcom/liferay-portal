@@ -1484,4 +1484,4 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		_modelArmorTemplateResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:402076337
+// LIFERAY-REST-BUILDER-HASH:266374056

@@ -74,33 +74,45 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 				ScriptManagementConfigurationTestUtil.saveWithCloseable(
 					false)) {
 
-			String content = StringUtil.read(
+			String content1 = StringUtil.read(
 				getResourceInputStream(
 					"single-approver-site-member-workflow-definition.xml"));
 
-			_assertDeployRejects(content, "Groovy");
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Groovy is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					content1.getBytes(), TestPropsValues.getCompanyId(), null,
+					WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
+					StringPool.BLANK, TestPropsValues.getUserId()));
 
-			content = StringUtil.replace(
-				content, "<script-language>groovy</script-language>",
+			String content2 = StringUtil.replace(
+				content1, "<script-language>groovy</script-language>",
 				"<script-language><![CDATA[groovy]]></script-language>");
 
-			_assertDeployRejects(content, "Groovy");
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Groovy is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					content2.getBytes(), TestPropsValues.getCompanyId(), null,
+					WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
+					StringPool.BLANK, TestPropsValues.getUserId()));
 
-			content = StringUtil.replace(
-				StringUtil.read(
-					getResourceInputStream(
-						"multiple-timer-workflow-definition.xml")),
-				"<script-language>groovy</script-language>\n\t\t\t\t" +
-					"<execution-type>",
-				"<script-language>drl</script-language>\n\t\t\t\t" +
-					"<execution-type>");
+			String content3 = StringUtil.replace(
+				content1, "<name>Site Member Single Approver</name>",
+				"<name>Message Board Threads and Comments Reputation " +
+					"Approver</name>");
 
-			Assert.assertEquals(
-				2,
-				StringUtil.count(
-					content, "<script-language>groovy</script-language>"));
-
-			_assertDeployRejects(content, "Groovy");
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Groovy is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					content3.getBytes(), TestPropsValues.getCompanyId(), null,
+					"Message Board Threads and Comments Reputation Approver",
+					StringPool.BLANK, TestPropsValues.getUserId()));
 		}
 	}
 
@@ -110,14 +122,44 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 				ScriptManagementConfigurationTestUtil.saveWithCloseable(
 					false)) {
 
-			String content = StringUtil.replace(
+			String content1 = StringUtil.replace(
 				StringUtil.read(
 					getResourceInputStream(
 						"single-approver-site-member-workflow-definition.xml")),
 				"<script-language>groovy</script-language>",
 				"<script-language>java</script-language>");
 
-			_assertDeployRejects(content, "Java");
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Java is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					content1.getBytes(), TestPropsValues.getCompanyId(), null,
+					WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
+					StringPool.BLANK, TestPropsValues.getUserId()));
+
+			String content2 = StringUtil.replace(
+				content1, "<script-language>java</script-language>",
+				"<script-language><![CDATA[java]]></script-language>");
+
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Java is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					content2.getBytes(), TestPropsValues.getCompanyId(), null,
+					WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
+					StringPool.BLANK, TestPropsValues.getUserId()));
+
+			String content3 = StringUtil.replace(
+				content1, "<name>Site Member Single Approver</name>",
+				"<name>Message Board Threads and Comments Reputation " +
+					"Approver</name>");
+
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				content3.getBytes(), TestPropsValues.getCompanyId(), null,
+				"Message Board Threads and Comments Reputation Approver",
+				StringPool.BLANK, TestPropsValues.getUserId());
 		}
 	}
 
@@ -712,18 +754,6 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			"valid-workflow-definition.xml");
 
 		_assertValid(inputStream);
-	}
-
-	private void _assertDeployRejects(
-		String content, String scriptLanguageLabel) {
-
-		AssertUtils.assertFailure(
-			KaleoDefinitionValidationException.NotAllowedScriptLanguage.class,
-			scriptLanguageLabel + " is not allowed",
-			() -> _workflowDefinitionManager.deployWorkflowDefinition(
-				content.getBytes(), TestPropsValues.getCompanyId(), null,
-				WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
-				StringPool.BLANK, TestPropsValues.getUserId()));
 	}
 
 	private void _assertEquals(

@@ -25,6 +25,77 @@ public class ImportRequest implements Cloneable, Serializable {
 		return ImportRequestSerDes.toDTO(json);
 	}
 
+	public DataStrategy getDataStrategy() {
+		return dataStrategy;
+	}
+
+	public String getDataStrategyAsString() {
+		if (dataStrategy == null) {
+			return null;
+		}
+
+		return dataStrategy.toString();
+	}
+
+	public void setDataStrategy(DataStrategy dataStrategy) {
+		this.dataStrategy = dataStrategy;
+	}
+
+	public void setDataStrategy(
+		UnsafeSupplier<DataStrategy, Exception> dataStrategyUnsafeSupplier) {
+
+		try {
+			dataStrategy = dataStrategyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DataStrategy dataStrategy;
+
+	public Boolean getDeletions() {
+		return deletions;
+	}
+
+	public void setDeletions(Boolean deletions) {
+		this.deletions = deletions;
+	}
+
+	public void setDeletions(
+		UnsafeSupplier<Boolean, Exception> deletionsUnsafeSupplier) {
+
+		try {
+			deletions = deletionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean deletions;
+
+	public Boolean getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Boolean permissions) {
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean permissions;
+
 	public RequestPortletDataHandler[] getRequestPortletDataHandlers() {
 		return requestPortletDataHandlers;
 	}
@@ -49,6 +120,36 @@ public class ImportRequest implements Cloneable, Serializable {
 	}
 
 	protected RequestPortletDataHandler[] requestPortletDataHandlers;
+
+	public UserIdStrategy getUserIdStrategy() {
+		return userIdStrategy;
+	}
+
+	public String getUserIdStrategyAsString() {
+		if (userIdStrategy == null) {
+			return null;
+		}
+
+		return userIdStrategy.toString();
+	}
+
+	public void setUserIdStrategy(UserIdStrategy userIdStrategy) {
+		this.userIdStrategy = userIdStrategy;
+	}
+
+	public void setUserIdStrategy(
+		UnsafeSupplier<UserIdStrategy, Exception>
+			userIdStrategyUnsafeSupplier) {
+
+		try {
+			userIdStrategy = userIdStrategyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserIdStrategy userIdStrategy;
 
 	@Override
 	public ImportRequest clone() throws CloneNotSupportedException {
@@ -81,5 +182,73 @@ public class ImportRequest implements Cloneable, Serializable {
 		return ImportRequestSerDes.toJSON(this);
 	}
 
+	public static enum DataStrategy {
+
+		MIRROR("MIRROR"), MIRROR_OVERWRITE("MIRROR_OVERWRITE"),
+		COPY_AS_NEW("COPY_AS_NEW");
+
+		public static DataStrategy create(String value) {
+			for (DataStrategy dataStrategy : values()) {
+				if (Objects.equals(dataStrategy.getValue(), value) ||
+					Objects.equals(dataStrategy.name(), value)) {
+
+					return dataStrategy;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DataStrategy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum UserIdStrategy {
+
+		CURRENT_USER_ID("CURRENT_USER_ID"),
+		ALWAYS_CURRENT_USER_ID("ALWAYS_CURRENT_USER_ID");
+
+		public static UserIdStrategy create(String value) {
+			for (UserIdStrategy userIdStrategy : values()) {
+				if (Objects.equals(userIdStrategy.getValue(), value) ||
+					Objects.equals(userIdStrategy.name(), value)) {
+
+					return userIdStrategy;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private UserIdStrategy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:838738253
+// LIFERAY-REST-BUILDER-HASH:-240863058

@@ -47,6 +47,38 @@ public class ImportRequestSerDes {
 
 		sb.append("{");
 
+		if (importRequest.getDataStrategy() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataStrategy\": ");
+
+			sb.append("\"");
+			sb.append(importRequest.getDataStrategy());
+			sb.append("\"");
+		}
+
+		if (importRequest.getDeletions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deletions\": ");
+
+			sb.append(importRequest.getDeletions());
+		}
+
+		if (importRequest.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append(importRequest.getPermissions());
+		}
+
 		if (importRequest.getRequestPortletDataHandlers() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -74,6 +106,18 @@ public class ImportRequestSerDes {
 			sb.append("]");
 		}
 
+		if (importRequest.getUserIdStrategy() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userIdStrategy\": ");
+
+			sb.append("\"");
+			sb.append(importRequest.getUserIdStrategy());
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -93,6 +137,30 @@ public class ImportRequestSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (importRequest.getDataStrategy() == null) {
+			map.put("dataStrategy", null);
+		}
+		else {
+			map.put(
+				"dataStrategy",
+				String.valueOf(importRequest.getDataStrategy()));
+		}
+
+		if (importRequest.getDeletions() == null) {
+			map.put("deletions", null);
+		}
+		else {
+			map.put("deletions", String.valueOf(importRequest.getDeletions()));
+		}
+
+		if (importRequest.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(importRequest.getPermissions()));
+		}
+
 		if (importRequest.getRequestPortletDataHandlers() == null) {
 			map.put("requestPortletDataHandlers", null);
 		}
@@ -100,6 +168,15 @@ public class ImportRequestSerDes {
 			map.put(
 				"requestPortletDataHandlers",
 				String.valueOf(importRequest.getRequestPortletDataHandlers()));
+		}
+
+		if (importRequest.getUserIdStrategy() == null) {
+			map.put("userIdStrategy", null);
+		}
+		else {
+			map.put(
+				"userIdStrategy",
+				String.valueOf(importRequest.getUserIdStrategy()));
 		}
 
 		return map;
@@ -120,9 +197,21 @@ public class ImportRequestSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "requestPortletDataHandlers")) {
+			if (Objects.equals(jsonParserFieldName, "dataStrategy")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "deletions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "requestPortletDataHandlers")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userIdStrategy")) {
 				return false;
 			}
 
@@ -134,8 +223,25 @@ public class ImportRequestSerDes {
 			ImportRequest importRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "requestPortletDataHandlers")) {
+			if (Objects.equals(jsonParserFieldName, "dataStrategy")) {
+				if (jsonParserFieldValue != null) {
+					importRequest.setDataStrategy(
+						ImportRequest.DataStrategy.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deletions")) {
+				if (jsonParserFieldValue != null) {
+					importRequest.setDeletions((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					importRequest.setPermissions((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "requestPortletDataHandlers")) {
 
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -156,6 +262,13 @@ public class ImportRequestSerDes {
 
 					importRequest.setRequestPortletDataHandlers(
 						requestPortletDataHandlersArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userIdStrategy")) {
+				if (jsonParserFieldValue != null) {
+					importRequest.setUserIdStrategy(
+						ImportRequest.UserIdStrategy.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -239,4 +352,4 @@ public class ImportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1289026677
+// LIFERAY-REST-BUILDER-HASH:-2047373549

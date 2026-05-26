@@ -26,6 +26,27 @@ public class ExportRequest implements Cloneable, Serializable {
 		return ExportRequestSerDes.toDTO(json);
 	}
 
+	public Boolean getDeletions() {
+		return deletions;
+	}
+
+	public void setDeletions(Boolean deletions) {
+		this.deletions = deletions;
+	}
+
+	public void setDeletions(
+		UnsafeSupplier<Boolean, Exception> deletionsUnsafeSupplier) {
+
+		try {
+			deletions = deletionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean deletions;
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -86,6 +107,27 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 	protected Integer last;
+
+	public Boolean getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Boolean permissions) {
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean permissions;
 
 	public Range getRange() {
 		return range;
@@ -225,4 +267,4 @@ public class ExportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1154537979
+// LIFERAY-REST-BUILDER-HASH:-1417290082

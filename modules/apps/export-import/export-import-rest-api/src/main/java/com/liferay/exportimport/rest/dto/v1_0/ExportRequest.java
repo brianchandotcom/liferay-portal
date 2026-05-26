@@ -58,6 +58,47 @@ public class ExportRequest implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getDeletions() {
+		if (_deletionsSupplier != null) {
+			deletions = _deletionsSupplier.get();
+
+			_deletionsSupplier = null;
+		}
+
+		return deletions;
+	}
+
+	public void setDeletions(Boolean deletions) {
+		this.deletions = deletions;
+
+		_deletionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeletions(
+		UnsafeSupplier<Boolean, Exception> deletionsUnsafeSupplier) {
+
+		_deletionsSupplier = () -> {
+			try {
+				return deletionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean deletions;
+
+	@JsonIgnore
+	private Supplier<Boolean> _deletionsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getEndDate() {
 		if (_endDateSupplier != null) {
 			endDate = _endDateSupplier.get();
@@ -178,6 +219,47 @@ public class ExportRequest implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Integer> _lastSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
+
+			_permissionsSupplier = null;
+		}
+
+		return permissions;
+	}
+
+	public void setPermissions(Boolean permissions) {
+		this.permissions = permissions;
+
+		_permissionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPermissions(
+		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
+
+		_permissionsSupplier = () -> {
+			try {
+				return permissionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean permissions;
+
+	@JsonIgnore
+	private Supplier<Boolean> _permissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("range")
@@ -349,6 +431,18 @@ public class ExportRequest implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Boolean deletions = getDeletions();
+
+		if (deletions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deletions\": ");
+
+			sb.append(deletions);
+		}
+
 		Date endDate = getEndDate();
 
 		if (endDate != null) {
@@ -391,6 +485,18 @@ public class ExportRequest implements Serializable {
 			sb.append("\"last\": ");
 
 			sb.append(last);
+		}
+
+		Boolean permissions = getPermissions();
+
+		if (permissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append(permissions);
 		}
 
 		Range range = getRange();
@@ -585,4 +691,4 @@ public class ExportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-639160641
+// LIFERAY-REST-BUILDER-HASH:-1389794527

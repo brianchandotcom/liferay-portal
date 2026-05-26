@@ -58,10 +58,10 @@ const buildHistory = (path = '/workspace/23/123/accounts') => {
 
 const store = mockStore();
 
-// `useRequest` is consumed by both `List` (data source search, expects an
-// object with `total`) and `TotalAccounts` (account metrics, expects an array
-// of `IAccountMetric`). Differentiate by `variables.delta`, which is only
-// present in the data source search call.
+// `useRequest` is consumed by both `List` (fetchChannels, expects an object
+// with `total`) and `TotalAccounts` (account metrics, expects an array of
+// `IAccountMetric`). Differentiate by `variables.channelIds`, which is only
+// present in the fetchChannels call.
 
 const accountMetricsMock = [
 	{
@@ -84,7 +84,7 @@ const accountMetricsMock = [
 const useRequestImpl =
 	({total = 1}: {total?: number} = {}) =>
 	({variables}: {variables: {[key: string]: any}}) =>
-		variables?.delta !== undefined
+		variables?.channelIds !== undefined
 			? {data: {total}}
 			: {data: accountMetricsMock};
 

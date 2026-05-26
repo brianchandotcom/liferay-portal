@@ -623,6 +623,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		 */
 		const handleDayClicked = (date: Date) => {
 			if (isDayDisabled(date)) {
+				announceOutOfRange();
+
 				return;
 			}
 
@@ -785,6 +787,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			const currentDateTime = getDefaultMonth();
 
 			if (isDayDisabled(currentDateTime)) {
+				announceOutOfRange();
+
 				return;
 			}
 

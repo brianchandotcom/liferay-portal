@@ -11,13 +11,13 @@ type ConfigMaxMin = {
 	min: number;
 };
 
-type ConfigAmpm = {
+type ConfigAmPm = {
 	am: string;
 	pm: string;
 };
 
 type TimePickerConfig = {
-	ampm: ConfigAmpm;
+	ampm: ConfigAmPm;
 	hours: ConfigMaxMin;
 	minutes: ConfigMaxMin;
 };

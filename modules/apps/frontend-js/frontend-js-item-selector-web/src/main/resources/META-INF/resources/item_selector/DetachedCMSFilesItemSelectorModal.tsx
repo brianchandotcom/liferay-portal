@@ -255,12 +255,15 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 												event.stopPropagation();
 
 												navigateToFolder({
-													id: itemData.embedded.id,
-													label: itemData.embedded
-														.title,
+													id:
+														itemData.embedded.id ??
+														'',
+													label:
+														itemData.embedded
+															.title ?? '',
 													scopeId:
 														itemData.embedded
-															.scopeId,
+															.scopeId ?? 0,
 												});
 											}}
 										>
@@ -344,27 +347,31 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 						item: any;
 						props: any;
 					}) => {
+						const effectiveProps = original
+							? original({item, props})
+							: props;
+
 						if (isFolder(item)) {
 							return {
-								...props,
+								...effectiveProps,
 								onClick: () =>
 									navigateToFolder({
-										id: item.embedded.id,
-										label: item.embedded.title,
-										scopeId: item.embedded.scopeId,
+										id: item?.embedded?.id ?? 0,
+										label: item?.embedded?.title ?? '',
+										scopeId: item.embedded.scopeId ?? 0,
 									}),
 								...(view.contentRenderer === 'cards'
 									? {onSelectChange: null, symbol: 'folder'}
 									: {
 											className: classNames(
-												props.className,
+												effectiveProps.className,
 												'cms-item-selector-folder-row'
 											),
 										}),
 							};
 						}
 
-						return original ? original({item, props}) : props;
+						return effectiveProps;
 					},
 				};
 			}),

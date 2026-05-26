@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.client.resource.v1_0;
 
 import com.liferay.exportimport.rest.client.dto.v1_0.ExportProcess;
-import com.liferay.exportimport.rest.client.dto.v1_0.ExportRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.problem.Problem;
 import com.liferay.exportimport.rest.client.serdes.v1_0.ExportProcessSerDes;
@@ -35,56 +35,65 @@ public interface ExportProcessResource {
 
 	public ExportProcess postAssetLibraryExportProcess(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest)
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAssetLibraryExportProcessHttpResponse(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest)
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public void postAssetLibraryExportProcessBatch(
 			String assetLibraryExternalReferenceCode,
-			ExportRequest exportRequest, String callbackURL, Object object)
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAssetLibraryExportProcessBatchHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				ExportRequest exportRequest, String callbackURL, Object object)
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 		throws Exception;
 
-	public ExportProcess postExportProcess(ExportRequest exportRequest)
+	public ExportProcess postExportProcess(
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExportProcessHttpResponse(
-			ExportRequest exportRequest)
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public void postExportProcessBatch(
-			ExportRequest exportRequest, String callbackURL, Object object)
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExportProcessBatchHttpResponse(
-			ExportRequest exportRequest, String callbackURL, Object object)
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public ExportProcess postSiteExportProcess(
-			String siteExternalReferenceCode, ExportRequest exportRequest)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteExportProcessHttpResponse(
-			String siteExternalReferenceCode, ExportRequest exportRequest)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest)
 		throws Exception;
 
 	public void postSiteExportProcessBatch(
-			String siteExternalReferenceCode, ExportRequest exportRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteExportProcessBatchHttpResponse(
-			String siteExternalReferenceCode, ExportRequest exportRequest,
-			String callbackURL, Object object)
+			String siteExternalReferenceCode,
+			ExportProcessRequest exportProcessRequest, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -198,12 +207,12 @@ public interface ExportProcessResource {
 
 		public ExportProcess postAssetLibraryExportProcess(
 				String assetLibraryExternalReferenceCode,
-				ExportRequest exportRequest)
+				ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryExportProcessHttpResponse(
-					assetLibraryExternalReferenceCode, exportRequest);
+					assetLibraryExternalReferenceCode, exportProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -267,12 +276,13 @@ public interface ExportProcessResource {
 		public HttpInvoker.HttpResponse
 				postAssetLibraryExportProcessHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					ExportRequest exportRequest)
+					ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(exportRequest.toString(), "application/json");
+			httpInvoker.body(
+				exportProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -312,12 +322,13 @@ public interface ExportProcessResource {
 
 		public void postAssetLibraryExportProcessBatch(
 				String assetLibraryExternalReferenceCode,
-				ExportRequest exportRequest, String callbackURL, Object object)
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryExportProcessBatchHttpResponse(
-					assetLibraryExternalReferenceCode, exportRequest,
+					assetLibraryExternalReferenceCode, exportProcessRequest,
 					callbackURL, object);
 
 			String content = httpResponse.getContent();
@@ -371,8 +382,8 @@ public interface ExportProcessResource {
 		public HttpInvoker.HttpResponse
 				postAssetLibraryExportProcessBatchHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					ExportRequest exportRequest, String callbackURL,
-					Object object)
+					ExportProcessRequest exportProcessRequest,
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -420,11 +431,12 @@ public interface ExportProcessResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExportProcess postExportProcess(ExportRequest exportRequest)
+		public ExportProcess postExportProcess(
+				ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postExportProcessHttpResponse(exportRequest);
+				postExportProcessHttpResponse(exportProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -486,12 +498,13 @@ public interface ExportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postExportProcessHttpResponse(
-				ExportRequest exportRequest)
+				ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(exportRequest.toString(), "application/json");
+			httpInvoker.body(
+				exportProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -526,12 +539,13 @@ public interface ExportProcessResource {
 		}
 
 		public void postExportProcessBatch(
-				ExportRequest exportRequest, String callbackURL, Object object)
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postExportProcessBatchHttpResponse(
-					exportRequest, callbackURL, object);
+					exportProcessRequest, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -582,7 +596,8 @@ public interface ExportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postExportProcessBatchHttpResponse(
-				ExportRequest exportRequest, String callbackURL, Object object)
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -627,12 +642,13 @@ public interface ExportProcessResource {
 		}
 
 		public ExportProcess postSiteExportProcess(
-				String siteExternalReferenceCode, ExportRequest exportRequest)
+				String siteExternalReferenceCode,
+				ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteExportProcessHttpResponse(
-					siteExternalReferenceCode, exportRequest);
+					siteExternalReferenceCode, exportProcessRequest);
 
 			String content = httpResponse.getContent();
 
@@ -694,12 +710,14 @@ public interface ExportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteExportProcessHttpResponse(
-				String siteExternalReferenceCode, ExportRequest exportRequest)
+				String siteExternalReferenceCode,
+				ExportProcessRequest exportProcessRequest)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(exportRequest.toString(), "application/json");
+			httpInvoker.body(
+				exportProcessRequest.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -737,14 +755,15 @@ public interface ExportProcessResource {
 		}
 
 		public void postSiteExportProcessBatch(
-				String siteExternalReferenceCode, ExportRequest exportRequest,
-				String callbackURL, Object object)
+				String siteExternalReferenceCode,
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteExportProcessBatchHttpResponse(
-					siteExternalReferenceCode, exportRequest, callbackURL,
-					object);
+					siteExternalReferenceCode, exportProcessRequest,
+					callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -795,8 +814,9 @@ public interface ExportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteExportProcessBatchHttpResponse(
-				String siteExternalReferenceCode, ExportRequest exportRequest,
-				String callbackURL, Object object)
+				String siteExternalReferenceCode,
+				ExportProcessRequest exportProcessRequest, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -855,4 +875,4 @@ public interface ExportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1705637144
+// LIFERAY-REST-BUILDER-HASH:1230329694

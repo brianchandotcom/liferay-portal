@@ -204,7 +204,7 @@ describe('validateSegmentEditor', () => {
 
 	it('should block save when sequential is enabled and criteria exceed the limit', () => {
 		expect(validateSegmentEditor(criteriaWith6Items, true)).toBe(
-			'Maximum of 5 sequential criteria has been exceeded. Remove some criteria to save.'
+			'The maximum number of sequential criteria has been exceeded. Remove items to save the segment.'
 		);
 	});
 
@@ -237,7 +237,7 @@ describe('validateSegmentEditor', () => {
 		};
 
 		expect(validateSegmentEditor(criteriaWithExceededNestedOr, true)).toBe(
-			'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.'
+			'The maximum number of OR conditions has been exceeded. Remove items to save the segment.'
 		);
 	});
 
@@ -259,7 +259,7 @@ describe('validateSegmentEditor', () => {
 		};
 
 		expect(validateSegmentEditor(both, true)).toBe(
-			'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.'
+			'The maximum number of OR conditions has been exceeded. Remove items to save the segment.'
 		);
 	});
 

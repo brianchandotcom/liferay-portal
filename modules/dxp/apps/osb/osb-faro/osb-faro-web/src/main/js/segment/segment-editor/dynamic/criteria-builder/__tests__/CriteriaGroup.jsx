@@ -21,12 +21,14 @@ jest.mock('../DropZone', () => props => (
 
 jest.unmock('react-dom');
 
-const LIMIT_MESSAGE = 'Maximum of 5 sequential criteria has been reached.';
+const LIMIT_MESSAGE =
+	'The maximum number of sequential criteria has been reached.';
 const EXCEEDED_MESSAGE =
-	'Maximum of 5 sequential criteria has been exceeded. Remove some criteria to save.';
-const OR_LIMIT_MESSAGE = 'Maximum of 2 OR conditions has been reached.';
+	'The maximum number of sequential criteria has been exceeded. Remove items to save the segment.';
+const OR_LIMIT_MESSAGE =
+	'The maximum number of OR conditions has been reached.';
 const OR_EXCEEDED_MESSAGE =
-	'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.';
+	'The maximum number of OR conditions has been exceeded. Remove items to save the segment.';
 
 const ALL_MESSAGES = [
 	EXCEEDED_MESSAGE,

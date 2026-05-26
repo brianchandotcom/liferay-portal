@@ -15,13 +15,13 @@ export const NESTED_OR_LIMIT_ALERT = {
 	exceedsLimit: {
 		color: 'danger',
 		text: Liferay.Language.get(
-			'maximum-of-2-or-conditions-has-been-exceeded-remove-some-criteria-to-save'
+			'the-maximum-number-of-or-conditions-has-been-exceeded-remove-items-to-save-the-segment'
 		)
 	},
 	reachedLimit: {
 		color: 'warning',
 		text: Liferay.Language.get(
-			'maximum-of-2-or-conditions-has-been-reached'
+			'the-maximum-number-of-or-conditions-has-been-reached'
 		)
 	}
 } as const;
@@ -30,13 +30,13 @@ export const SEQUENTIAL_LIMIT_ALERT = {
 	exceedsLimit: {
 		color: 'danger',
 		text: Liferay.Language.get(
-			'maximum-of-5-sequential-criteria-has-been-exceeded-remove-some-criteria-to-save'
+			'the-maximum-number-of-sequential-criteria-has-been-exceeded-remove-items-to-save-the-segment'
 		)
 	},
 	reachedLimit: {
 		color: 'warning',
 		text: Liferay.Language.get(
-			'maximum-of-5-sequential-criteria-has-been-reached'
+			'the-maximum-number-of-sequential-criteria-has-been-reached'
 		)
 	}
 } as const;

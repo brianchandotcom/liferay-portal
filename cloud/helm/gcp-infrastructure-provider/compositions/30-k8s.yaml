@@ -71,15 +71,22 @@ spec:
 
                                                 psql --dbname {{ $databaseName }} --host 127.0.0.1 --set ON_ERROR_STOP=1 --username postgres <<EOF
                                             DO \$\$
+
                                             BEGIN
-                                                IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'liferay_shared_owner') THEN
+                                                IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'liferay_shared_owner')
+                                                THEN
                                                     CREATE ROLE liferay_shared_owner NOLOGIN;
                                                 END IF;
                                             END \$\$;
+
                                             GRANT liferay_shared_owner TO postgres;
+
                                             ALTER DATABASE "{{ $databaseName }}" OWNER TO liferay_shared_owner;
+
                                             GRANT CONNECT, TEMPORARY ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
+
                                             GRANT liferay_shared_owner TO "{{ $databaseIamUser }}";
+
                                             ALTER ROLE "{{ $databaseIamUser }}" SET ROLE liferay_shared_owner;
                                             EOF
 

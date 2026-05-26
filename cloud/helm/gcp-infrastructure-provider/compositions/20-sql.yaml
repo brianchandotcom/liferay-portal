@@ -61,7 +61,7 @@ spec:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
     managementPolicies: ["Create", "Observe", "Update"]
-{{- if not (and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane)) }}
+{{- if not (and (eq $dataPlane $targetActiveDataPlane) (eq $restorePhase "provisioning")) }}
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: User

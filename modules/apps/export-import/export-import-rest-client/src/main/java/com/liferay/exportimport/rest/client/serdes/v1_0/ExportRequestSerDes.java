@@ -53,6 +53,16 @@ public class ExportRequestSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (exportRequest.getDeletions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deletions\": ");
+
+			sb.append(exportRequest.getDeletions());
+		}
+
 		if (exportRequest.getEndDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -90,6 +100,16 @@ public class ExportRequestSerDes {
 			sb.append("\"last\": ");
 
 			sb.append(exportRequest.getLast());
+		}
+
+		if (exportRequest.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append(exportRequest.getPermissions());
 		}
 
 		if (exportRequest.getRange() != null) {
@@ -168,6 +188,13 @@ public class ExportRequestSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (exportRequest.getDeletions() == null) {
+			map.put("deletions", null);
+		}
+		else {
+			map.put("deletions", String.valueOf(exportRequest.getDeletions()));
+		}
+
 		if (exportRequest.getEndDate() == null) {
 			map.put("endDate", null);
 		}
@@ -189,6 +216,14 @@ public class ExportRequestSerDes {
 		}
 		else {
 			map.put("last", String.valueOf(exportRequest.getLast()));
+		}
+
+		if (exportRequest.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(exportRequest.getPermissions()));
 		}
 
 		if (exportRequest.getRange() == null) {
@@ -234,13 +269,19 @@ public class ExportRequestSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "endDate")) {
+			if (Objects.equals(jsonParserFieldName, "deletions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "endDate")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fileName")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "last")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "range")) {
@@ -263,7 +304,12 @@ public class ExportRequestSerDes {
 			ExportRequest exportRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "endDate")) {
+			if (Objects.equals(jsonParserFieldName, "deletions")) {
+				if (jsonParserFieldValue != null) {
+					exportRequest.setDeletions((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "endDate")) {
 				if (jsonParserFieldValue != null) {
 					exportRequest.setEndDate(
 						toDate((String)jsonParserFieldValue));
@@ -278,6 +324,11 @@ public class ExportRequestSerDes {
 				if (jsonParserFieldValue != null) {
 					exportRequest.setLast(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					exportRequest.setPermissions((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "range")) {
@@ -398,4 +449,4 @@ public class ExportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:826140568
+// LIFERAY-REST-BUILDER-HASH:696058832

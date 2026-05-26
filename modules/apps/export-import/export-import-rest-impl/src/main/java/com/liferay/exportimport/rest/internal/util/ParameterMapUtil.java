@@ -6,11 +6,14 @@
 package com.liferay.exportimport.rest.internal.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandlerControl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,109 +22,174 @@ import java.util.Map;
 public class ParameterMapUtil {
 
 	public static Map<String, String[]> toParameterMap(
-		RequestPortletDataHandler[] requestPortletDataHandlers) {
+		ExportRequest exportRequest) {
 
-		Map<String, String[]> parameterMap = new HashMap<>();
+		Map<String, String[]> parameterMap = _getDefaultParameterMap();
 
-		if (requestPortletDataHandlers != null) {
-			for (RequestPortletDataHandler requestPortletDataHandler :
-					requestPortletDataHandlers) {
+		_addRequestPortletDataHandlers(
+			exportRequest.getRequestPortletDataHandlers(), parameterMap);
 
-				_addToParameterMap(requestPortletDataHandler, parameterMap);
-			}
+		Boolean deletions = exportRequest.getDeletions();
+
+		if (deletions != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.DELETIONS,
+				new String[] {deletions.toString()});
 		}
 
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.DELETIONS,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.putIfAbsent(
-			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
-			new String[] {Boolean.TRUE.toString()});
+		Boolean permissions = exportRequest.getPermissions();
+
+		if (permissions != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.PERMISSIONS,
+				new String[] {permissions.toString()});
+		}
 
 		return parameterMap;
 	}
 
-	private static void _addToParameterMap(
-		RequestPortletDataHandler requestPortletDataHandler,
+	public static Map<String, String[]> toParameterMap(
+		ImportRequest importRequest) {
+
+		Map<String, String[]> parameterMap = _getDefaultParameterMap();
+
+		_addRequestPortletDataHandlers(
+			importRequest.getRequestPortletDataHandlers(), parameterMap);
+
+		ImportRequest.DataStrategy dataStrategy =
+			importRequest.getDataStrategy();
+
+		if (dataStrategy != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.DATA_STRATEGY,
+				new String[] {"DATA_STRATEGY_" + dataStrategy});
+		}
+
+		Boolean deletions = importRequest.getDeletions();
+
+		if (deletions != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.DELETIONS,
+				new String[] {deletions.toString()});
+		}
+
+		Boolean permissions = importRequest.getPermissions();
+
+		if (permissions != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.PERMISSIONS,
+				new String[] {permissions.toString()});
+		}
+
+		ImportRequest.UserIdStrategy userIdStrategy =
+			importRequest.getUserIdStrategy();
+
+		if (userIdStrategy != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.USER_ID_STRATEGY,
+				new String[] {userIdStrategy.toString()});
+		}
+
+		return parameterMap;
+	}
+
+	private static void _addRequestPortletDataHandlerControls(
+		RequestPortletDataHandlerControl[] requestPortletDataHandlerControls,
 		Map<String, String[]> parameterMap) {
 
-		String name = requestPortletDataHandler.getName();
-
-		if (Validator.isBlank(name)) {
+		if (requestPortletDataHandlerControls == null) {
 			return;
 		}
 
-		parameterMap.put(name, new String[] {Boolean.TRUE.toString()});
+		for (RequestPortletDataHandlerControl requestPortletDataHandlerControl :
+				requestPortletDataHandlerControls) {
 
-		RequestPortletDataHandlerControl[] requestPortletDataHandlerControls =
-			requestPortletDataHandler.getRequestPortletDataHandlerControls();
+			String name = requestPortletDataHandlerControl.getName();
 
-		if (requestPortletDataHandlerControls != null) {
-			for (RequestPortletDataHandlerControl
-					requestPortletDataHandlerControl :
-						requestPortletDataHandlerControls) {
-
-				_addToParameterMap(
-					requestPortletDataHandlerControl, parameterMap);
+			if (Validator.isBlank(name)) {
+				continue;
 			}
+
+			String[] values = requestPortletDataHandlerControl.getValues();
+
+			if (values == null) {
+				String value = requestPortletDataHandlerControl.getValue();
+
+				values = new String[] {
+					(value != null) ? value : Boolean.TRUE.toString()
+				};
+			}
+
+			parameterMap.put(name, values);
+
+			_addRequestPortletDataHandlerControls(
+				requestPortletDataHandlerControl.
+					getRequestPortletDataHandlerControls(),
+				parameterMap);
 		}
 	}
 
-	private static void _addToParameterMap(
-		RequestPortletDataHandlerControl requestPortletDataHandlerControl,
+	private static void _addRequestPortletDataHandlers(
+		RequestPortletDataHandler[] requestPortletDataHandlers,
 		Map<String, String[]> parameterMap) {
 
-		String name = requestPortletDataHandlerControl.getName();
-
-		if (Validator.isBlank(name)) {
+		if (requestPortletDataHandlers == null) {
 			return;
 		}
 
-		String[] values = requestPortletDataHandlerControl.getValues();
+		for (RequestPortletDataHandler requestPortletDataHandler :
+				requestPortletDataHandlers) {
 
-		if (values == null) {
-			String value = requestPortletDataHandlerControl.getValue();
+			String name = requestPortletDataHandler.getName();
 
-			if (value == null) {
-				value = Boolean.TRUE.toString();
+			if (Validator.isBlank(name)) {
+				continue;
 			}
 
-			values = new String[] {value};
+			parameterMap.put(name, new String[] {Boolean.TRUE.toString()});
+
+			_addRequestPortletDataHandlerControls(
+				requestPortletDataHandler.
+					getRequestPortletDataHandlerControls(),
+				parameterMap);
 		}
+	}
 
-		parameterMap.put(name, values);
-
-		RequestPortletDataHandlerControl[] requestPortletDataHandlerControls =
-			requestPortletDataHandlerControl.
-				getRequestPortletDataHandlerControls();
-
-		if (requestPortletDataHandlerControls != null) {
-			for (RequestPortletDataHandlerControl
-					nestedRequestPortletDataHandlerControl :
-						requestPortletDataHandlerControls) {
-
-				_addToParameterMap(
-					nestedRequestPortletDataHandlerControl, parameterMap);
-			}
-		}
+	private static Map<String, String[]> _getDefaultParameterMap() {
+		return HashMapBuilder.put(
+			PortletDataHandlerKeys.DATA_STRATEGY,
+			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
+		).put(
+			PortletDataHandlerKeys.DELETIONS,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.USER_ID_STRATEGY,
+			new String[] {UserIdStrategy.CURRENT_USER_ID}
+		).build();
 	}
 
 }

@@ -10,8 +10,8 @@ import React from 'react';
 import {FormikFieldRadioGroup} from '../../../components/forms/formik';
 
 export const SETTINGS_STEP_INITIAL_VALUES = {
-	authorshipStrategy: 'useOriginalAuthor',
-	updateDataStrategy: 'mirror',
+	dataStrategy: 'MIRROR',
+	userIdStrategy: 'CURRENT_USER_ID',
 };
 
 export default function SettingsStep() {
@@ -19,14 +19,14 @@ export default function SettingsStep() {
 		<>
 			<ClayLayout.Sheet>
 				<SectionHeader
-					name="authorshipStrategy"
+					name="userIdStrategy"
 					symbol="pencil"
 					title={Liferay.Language.get('authorship-of-the-content')}
 				/>
 
 				<FormikFieldRadioGroup
-					aria-labelledby="authorshipStrategy-label"
-					name="authorshipStrategy"
+					aria-labelledby="userIdStrategy-label"
+					name="userIdStrategy"
 					options={[
 						{
 							description: Liferay.Language.get(
@@ -35,7 +35,7 @@ export default function SettingsStep() {
 							label: Liferay.Language.get(
 								'use-the-original-author'
 							),
-							value: 'useOriginalAuthor',
+							value: 'CURRENT_USER_ID',
 						},
 						{
 							description: Liferay.Language.get(
@@ -44,7 +44,7 @@ export default function SettingsStep() {
 							label: Liferay.Language.get(
 								'use-the-current-user-as-author'
 							),
-							value: 'useCurrentUserAsAuthor',
+							value: 'ALWAYS_CURRENT_USER_ID',
 						},
 					]}
 				/>
@@ -52,21 +52,21 @@ export default function SettingsStep() {
 
 			<ClayLayout.Sheet>
 				<SectionHeader
-					name="updateDataStrategy"
+					name="dataStrategy"
 					symbol="restore"
 					title={Liferay.Language.get('update-data')}
 				/>
 
 				<FormikFieldRadioGroup
-					aria-labelledby="updateDataStrategy-label"
-					name="updateDataStrategy"
+					aria-labelledby="dataStrategy-label"
+					name="dataStrategy"
 					options={[
 						{
 							description: Liferay.Language.get(
 								'import-data-strategy-mirror-help'
 							),
 							label: Liferay.Language.get('mirror'),
-							value: 'mirror',
+							value: 'MIRROR',
 						},
 						{
 							description: Liferay.Language.get(
@@ -75,14 +75,14 @@ export default function SettingsStep() {
 							label: Liferay.Language.get(
 								'mirror-with-overwriting'
 							),
-							value: 'mirrorWithOverwriting',
+							value: 'MIRROR_OVERWRITE',
 						},
 						{
 							description: Liferay.Language.get(
 								'import-data-strategy-copy-as-new-help'
 							),
 							label: Liferay.Language.get('copy-as-new'),
-							value: 'copyAsNew',
+							value: 'COPY_AS_NEW',
 						},
 					]}
 				/>

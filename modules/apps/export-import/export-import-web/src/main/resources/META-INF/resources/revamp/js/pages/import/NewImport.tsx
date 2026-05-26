@@ -10,6 +10,7 @@ import React, {useState} from 'react';
 import {Wizard, WizardStep} from '../../components/Wizard';
 import {postImportProcess} from '../../services/postImportProcess';
 import {ImportPreview} from '../../types/exportImportPreview';
+import {DataStrategy, UserIdStrategy} from '../../types/exportImportProcess';
 import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelectionStep from './steps/DataSelectionStep';
 import FileSelectionStep from './steps/FileSelectionStep';
@@ -58,7 +59,7 @@ export function NewImport({
 				initialValues={{
 					contentSelection: undefined,
 					deletions: false,
-					importPermissions: false,
+					permissions: false,
 				}}
 				isStepValid={(values) => !!values.contentSelection}
 				title={Liferay.Language.get('data-selection')}
@@ -87,12 +88,17 @@ export function NewImport({
 
 					const result = await postImportProcess({
 						importRequest: {
+							dataStrategy: values.dataStrategy as DataStrategy,
+							deletions: !!values.deletions,
+							permissions: !!values.permissions,
 							requestPortletDataHandlers:
 								toRequestPortletDataHandlers(
 									importPreview.previewPortletDataHandlerSections ??
 										[],
 									values.contentSelection
 								),
+							userIdStrategy:
+								values.userIdStrategy as UserIdStrategy,
 						},
 						url: importProcessAPIURL,
 					});

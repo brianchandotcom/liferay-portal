@@ -10,6 +10,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
@@ -3714,6 +3715,42 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			if (StringUtil.equals(
+					ObjectDefinitionSettingConstants.NAME_DOMAIN,
+					objectDefinitionSettingsValue.getKey())) {
+
+				if (!StringUtil.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+					_handleException(
+						new ObjectDefinitionSettingNameException.
+							NotAllowedNames(
+								objectDefinition.getShortName(),
+								objectDefinitionSettingsValuesMap.keySet()),
+						"objectDefinitionSettings", null);
+
+					continue;
+				}
+
+				String domain = objectDefinitionSettingsValue.getValue();
+
+				if (!StringUtil.equals(
+						domain, DepotRolesConstants.SUBTYPE_PROJECT) &&
+					!StringUtil.equals(
+						domain, DepotRolesConstants.SUBTYPE_SPACE)) {
+
+					_handleException(
+						new ObjectDefinitionSettingValueException.InvalidValue(
+							objectDefinition.getShortName(),
+							ObjectDefinitionSettingConstants.NAME_DOMAIN,
+							domain),
+						"objectDefinitionSettings", null);
+				}
+
+				continue;
+			}
+
+			if (StringUtil.equals(
 					ObjectDefinitionSettingConstants.
 						NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES,
 					objectDefinitionSettingsValue.getKey()) ||
@@ -3996,6 +4033,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
 		ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
 		ObjectDefinitionSettingConstants.NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+		ObjectDefinitionSettingConstants.NAME_DOMAIN,
 		ObjectDefinitionSettingConstants.
 			NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
 

@@ -184,14 +184,18 @@ describe('useAgentDefinitionForm', () => {
 			});
 
 			expect(result.current.modelArmorTemplates.selected).toHaveLength(1);
-			expect(result.current.contentRetrievers.diff()).toEqual({
-				toAdd: [],
-				toRemove: [],
+
+			await act(async () => {
+				await result.current.contentRetrievers.sync('AGENT_X');
+				await result.current.modelArmorTemplates.sync('AGENT_X');
 			});
-			expect(result.current.modelArmorTemplates.diff()).toEqual({
-				toAdd: [],
-				toRemove: [],
-			});
+
+			expect(
+				mockPutAgentDefinitionToContentRetrievers
+			).not.toHaveBeenCalled();
+			expect(
+				mockDeleteAgentDefinitionToContentRetrievers
+			).not.toHaveBeenCalled();
 		});
 
 		it('shows an error toast when the agent fetch rejects', async () => {

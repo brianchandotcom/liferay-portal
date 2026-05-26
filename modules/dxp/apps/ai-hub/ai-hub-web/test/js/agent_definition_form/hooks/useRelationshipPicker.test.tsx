@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, renderHook} from '@testing-library/react';
+import {act, renderHook, waitFor} from '@testing-library/react';
 
 import {useRelationshipPicker} from '../../../../src/main/resources/META-INF/resources/js/agent_definition_form/hooks/useRelationshipPicker';
 
@@ -12,24 +12,50 @@ interface TestItem {
 	title?: string;
 }
 
+function setup({items = [] as TestItem[]} = {}) {
+	const deleteRelationship = jest.fn().mockResolvedValue(undefined);
+	const fetchSourceList = jest.fn().mockResolvedValue({items});
+	const putRelationship = jest.fn().mockResolvedValue(undefined);
+
+	const renderResult = renderHook(() =>
+		useRelationshipPicker<TestItem>({
+			deleteRelationship,
+			fetchSourceList,
+			putRelationship,
+		})
+	);
+
+	return {deleteRelationship, fetchSourceList, putRelationship, ...renderResult};
+}
+
 describe('useRelationshipPicker', () => {
 	describe('initial state', () => {
-		it('starts with empty selected, sourceList, and inputValue', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+		it('starts with empty selected and inputValue', () => {
+			const {result} = setup();
 
 			expect(result.current.selected).toEqual([]);
-			expect(result.current.sourceList).toEqual([]);
 			expect(result.current.inputValue).toBe('');
+		});
+
+		it('loads the source list from the fetcher on mount', async () => {
+			const {fetchSourceList, result} = setup({
+				items: [
+					{externalReferenceCode: 'A', title: 'Alpha'},
+					{externalReferenceCode: 'B', title: 'Beta'},
+				],
+			});
+
+			await waitFor(() =>
+				expect(result.current.sourceList).toHaveLength(2)
+			);
+
+			expect(fetchSourceList).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	describe('reset', () => {
 		it('replaces selected with the passed-in initial list', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+			const {result} = setup();
 
 			act(() => {
 				result.current.reset([
@@ -43,49 +69,11 @@ describe('useRelationshipPicker', () => {
 				{externalReferenceCode: 'B'},
 			]);
 		});
-
-		it('seeds the baseline so diff is empty immediately after reset', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
-
-			act(() => {
-				result.current.reset([
-					{externalReferenceCode: 'A'},
-					{externalReferenceCode: 'B'},
-				]);
-			});
-
-			expect(result.current.diff()).toEqual({toAdd: [], toRemove: []});
-		});
 	});
 
-	describe('diff', () => {
-		it('returns selected as toAdd when there is no baseline', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
-
-			act(() => {
-				result.current.setSelected([
-					{externalReferenceCode: 'A'},
-					{externalReferenceCode: 'B'},
-				]);
-			});
-
-			expect(result.current.diff()).toEqual({
-				toAdd: [
-					{externalReferenceCode: 'A'},
-					{externalReferenceCode: 'B'},
-				],
-				toRemove: [],
-			});
-		});
-
-		it('flags only the additions relative to the baseline', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+	describe('sync', () => {
+		it('puts only the additions relative to the baseline', async () => {
+			const {putRelationship, deleteRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([{externalReferenceCode: 'A'}]);
@@ -98,16 +86,17 @@ describe('useRelationshipPicker', () => {
 				]);
 			});
 
-			expect(result.current.diff()).toEqual({
-				toAdd: [{externalReferenceCode: 'B'}],
-				toRemove: [],
+			await act(async () => {
+				await result.current.sync('AGENT');
 			});
+
+			expect(putRelationship).toHaveBeenCalledTimes(1);
+			expect(putRelationship).toHaveBeenCalledWith('AGENT', 'B');
+			expect(deleteRelationship).not.toHaveBeenCalled();
 		});
 
-		it('flags only the removals relative to the baseline', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+		it('deletes only the removals relative to the baseline', async () => {
+			const {putRelationship, deleteRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([
@@ -120,16 +109,17 @@ describe('useRelationshipPicker', () => {
 				result.current.setSelected([{externalReferenceCode: 'A'}]);
 			});
 
-			expect(result.current.diff()).toEqual({
-				toAdd: [],
-				toRemove: [{externalReferenceCode: 'B'}],
+			await act(async () => {
+				await result.current.sync('AGENT');
 			});
+
+			expect(deleteRelationship).toHaveBeenCalledTimes(1);
+			expect(deleteRelationship).toHaveBeenCalledWith('AGENT', 'B');
+			expect(putRelationship).not.toHaveBeenCalled();
 		});
 
-		it('reports both additions and removals when selection diverges from baseline', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+		it('issues both additions and removals when selection diverges', async () => {
+			const {putRelationship, deleteRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([
@@ -145,18 +135,31 @@ describe('useRelationshipPicker', () => {
 				]);
 			});
 
-			expect(result.current.diff()).toEqual({
-				toAdd: [{externalReferenceCode: 'C'}],
-				toRemove: [{externalReferenceCode: 'A'}],
+			await act(async () => {
+				await result.current.sync('AGENT');
 			});
-		});
-	});
 
-	describe('syncToInitial', () => {
-		it('promotes the current selection to be the new baseline', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+			expect(putRelationship).toHaveBeenCalledWith('AGENT', 'C');
+			expect(deleteRelationship).toHaveBeenCalledWith('AGENT', 'A');
+		});
+
+		it('issues no requests when the selection matches the baseline', async () => {
+			const {putRelationship, deleteRelationship, result} = setup();
+
+			act(() => {
+				result.current.reset([{externalReferenceCode: 'A'}]);
+			});
+
+			await act(async () => {
+				await result.current.sync('AGENT');
+			});
+
+			expect(putRelationship).not.toHaveBeenCalled();
+			expect(deleteRelationship).not.toHaveBeenCalled();
+		});
+
+		it('promotes the selection to the baseline so a second sync is a no-op', async () => {
+			const {putRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([{externalReferenceCode: 'A'}]);
@@ -169,40 +172,21 @@ describe('useRelationshipPicker', () => {
 				]);
 			});
 
-			act(() => {
-				result.current.syncToInitial();
+			await act(async () => {
+				await result.current.sync('AGENT');
 			});
 
-			expect(result.current.diff()).toEqual({toAdd: [], toRemove: []});
-		});
-	});
-
-	describe('setSourceList', () => {
-		it('updates the source list without touching selected', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
-
-			act(() => {
-				result.current.setSelected([{externalReferenceCode: 'A'}]);
-				result.current.setSourceList([
-					{externalReferenceCode: 'A', title: 'Alpha'},
-					{externalReferenceCode: 'B', title: 'Beta'},
-				]);
+			await act(async () => {
+				await result.current.sync('AGENT');
 			});
 
-			expect(result.current.sourceList).toHaveLength(2);
-			expect(result.current.selected).toEqual([
-				{externalReferenceCode: 'A'},
-			]);
+			expect(putRelationship).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	describe('setInputValue', () => {
 		it('stores the typed value verbatim', () => {
-			const {result} = renderHook(() =>
-				useRelationshipPicker<TestItem>()
-			);
+			const {result} = setup();
 
 			act(() => {
 				result.current.setInputValue('alpha');

@@ -98,15 +98,13 @@ function buildPicker(
 	overrides: Partial<RelationshipPicker<ContentRetriever>> = {}
 ): RelationshipPicker<ContentRetriever> {
 	return {
-		diff: jest.fn(() => ({toAdd: [], toRemove: []})),
 		inputValue: '',
 		reset: jest.fn(),
 		selected: [],
 		setInputValue: jest.fn(),
 		setSelected: jest.fn(),
-		setSourceList: jest.fn(),
 		sourceList: [],
-		syncToInitial: jest.fn(),
+		sync: jest.fn(),
 		...overrides,
 	};
 }

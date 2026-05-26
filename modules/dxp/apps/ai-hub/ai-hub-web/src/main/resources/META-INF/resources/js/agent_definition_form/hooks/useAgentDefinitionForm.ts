@@ -21,6 +21,7 @@ import {getModelArmorTemplates} from '../services/ModelArmorTemplateService';
 import {AgentDefinition} from '../types/AgentDefinition';
 import {ContentRetriever} from '../types/ContentRetriever';
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
+import {required, requiredLocalized, validate} from '../utils/validations';
 import {useRelationshipPicker} from './useRelationshipPicker';
 
 interface UseAgentDefinitionFormProps {
@@ -32,52 +33,17 @@ interface UseAgentDefinitionFormProps {
 export function useAgentDefinitionForm({
 	accountEntryExternalReferenceCode,
 	externalReferenceCode,
-	readOnly,
 }: UseAgentDefinitionFormProps) {
-	const contentRetrievers = useRelationshipPicker<ContentRetriever>();
-	const modelArmorTemplates = useRelationshipPicker<ModelArmorTemplate>();
-
-	const syncRelationships = useCallback(
-		async (agentDefinitionERC: string) => {
-			const contentRetrieverDiff = contentRetrievers.diff();
-			const modelArmorTemplateDiff = modelArmorTemplates.diff();
-
-			const requests = [
-				...contentRetrieverDiff.toAdd.map((item) =>
-					putAgentDefinitionToContentRetrievers(
-						agentDefinitionERC,
-						item.externalReferenceCode
-					)
-				),
-				...contentRetrieverDiff.toRemove.map((item) =>
-					deleteAgentDefinitionToContentRetrievers(
-						agentDefinitionERC,
-						item.externalReferenceCode
-					)
-				),
-				...modelArmorTemplateDiff.toAdd.map((item) =>
-					putAgentDefinitionToModelArmorTemplates(
-						agentDefinitionERC,
-						item.externalReferenceCode
-					)
-				),
-				...modelArmorTemplateDiff.toRemove.map((item) =>
-					deleteAgentDefinitionToModelArmorTemplates(
-						agentDefinitionERC,
-						item.externalReferenceCode
-					)
-				),
-			];
-
-			if (requests.length) {
-				await Promise.all(requests);
-
-				contentRetrievers.syncToInitial();
-				modelArmorTemplates.syncToInitial();
-			}
-		},
-		[contentRetrievers, modelArmorTemplates]
-	);
+	const contentRetrievers = useRelationshipPicker<ContentRetriever>({
+		deleteRelationship: deleteAgentDefinitionToContentRetrievers,
+		fetchSourceList: getContentRetrievers,
+		putRelationship: putAgentDefinitionToContentRetrievers,
+	});
+	const modelArmorTemplates = useRelationshipPicker<ModelArmorTemplate>({
+		deleteRelationship: deleteAgentDefinitionToModelArmorTemplates,
+		fetchSourceList: getModelArmorTemplates,
+		putRelationship: putAgentDefinitionToModelArmorTemplates,
+	});
 
 	const {
 		errors,
@@ -100,7 +66,14 @@ export function useAgentDefinitionForm({
 				const response = await putAgentDefinition(formValues);
 
 				if (formValues.externalReferenceCode) {
-					await syncRelationships(formValues.externalReferenceCode);
+					await Promise.all([
+						contentRetrievers.sync(
+							formValues.externalReferenceCode
+						),
+						modelArmorTemplates.sync(
+							formValues.externalReferenceCode
+						),
+					]);
 				}
 
 				if (response?.status?.label === 'approved') {
@@ -129,44 +102,18 @@ export function useAgentDefinitionForm({
 				});
 			}
 		},
-		validate: (formValues) => {
-			const validationErrors: Partial<
-				Record<keyof AgentDefinition, string>
-			> = {};
-
-			if (
-				!formValues.title_i18n ||
-				!Object.values(formValues.title_i18n).some(Boolean)
-			) {
-				validationErrors.title_i18n = Liferay.Language.get('required');
-			}
-
-			if (!formValues.externalReferenceCode) {
-				validationErrors.externalReferenceCode =
-					Liferay.Language.get('required');
-			}
-
-			if (!formValues.description) {
-				validationErrors.description = Liferay.Language.get('required');
-			}
-
-			if (!formValues.inputVariables) {
-				validationErrors.inputVariables =
-					Liferay.Language.get('required');
-			}
-
-			if (!formValues.outputVariable) {
-				validationErrors.outputVariable =
-					Liferay.Language.get('required');
-			}
-
-			if (!formValues.workflowDefinitionName) {
-				validationErrors.workflowDefinitionName =
-					Liferay.Language.get('required');
-			}
-
-			return validationErrors;
-		},
+		validate: (formValues) =>
+			validate(
+				{
+					description: [required],
+					externalReferenceCode: [required],
+					inputVariables: [required],
+					outputVariable: [required],
+					title_i18n: [requiredLocalized],
+					workflowDefinitionName: [required],
+				},
+				formValues
+			),
 	});
 
 	const setField = useCallback(
@@ -179,41 +126,8 @@ export function useAgentDefinitionForm({
 		[setFieldValue]
 	);
 
-	const {
-		reset: resetContentRetrievers,
-		setSourceList: setContentRetrieversSourceList,
-	} = contentRetrievers;
-	const {
-		reset: resetModelArmorTemplates,
-		setSourceList: setModelArmorTemplatesSourceList,
-	} = modelArmorTemplates;
-
-	useEffect(() => {
-		async function fetchContentRetrieversList() {
-			try {
-				const response = await getContentRetrievers();
-
-				setContentRetrieversSourceList(response.items || []);
-			}
-			catch (error) {
-				console.error(error);
-			}
-		}
-
-		async function fetchModelArmorTemplatesList() {
-			try {
-				const response = await getModelArmorTemplates();
-
-				setModelArmorTemplatesSourceList(response.items || []);
-			}
-			catch (error) {
-				console.error(error);
-			}
-		}
-
-		fetchContentRetrieversList();
-		fetchModelArmorTemplatesList();
-	}, [setContentRetrieversSourceList, setModelArmorTemplatesSourceList]);
+	const {reset: resetContentRetrievers} = contentRetrievers;
+	const {reset: resetModelArmorTemplates} = modelArmorTemplates;
 
 	useEffect(() => {
 		async function fetchFormData() {
@@ -257,9 +171,7 @@ export function useAgentDefinitionForm({
 
 		fetchFormData();
 	}, [
-		accountEntryExternalReferenceCode,
 		externalReferenceCode,
-		readOnly,
 		resetContentRetrievers,
 		resetModelArmorTemplates,
 		setValues,

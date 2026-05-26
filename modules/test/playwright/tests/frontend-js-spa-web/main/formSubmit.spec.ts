@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -14,11 +15,13 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import isSPAEnabled from '../../../utils/isSPAEnabled';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	loginTest(),
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	pageEditorPagesTest,
@@ -61,17 +64,21 @@ test(
 
 			await widgetPagePage.addPortlet('Web Content Display');
 
-			const addButton = page
+			await page
+				.locator(
+					'[id^="portlet_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE"]'
+				)
+				.hover();
+
+			await page
 				.locator(
 					'[id^="_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]'
 				)
-				.and(page.getByRole('button'));
-
-			await addButton.hover();
-			await addButton.click();
+				.and(page.getByRole('button'))
+				.click();
 
 			await page
-				.getByRole('menuitem',  {exact: true, name: 'Basic Web Content'})
+				.getByRole('menuitem', {name: 'Basic Web Content'})
 				.click();
 
 			const title = getRandomString();
@@ -80,30 +87,24 @@ test(
 
 			await page.getByLabel('Source', {exact: true}).click();
 
+			await page.locator('.CodeMirror-scroll').click();
+
 			const content =
-				'<form action="" method="post"><input type="submit" value="Button A" /> <input type="submit" value="Button B" /></form>';
+				'<form action="" method="post"><input type="submit" value="Button A" /> <input type="submit" value="Button B" /></form><p><span id="capturedFormButtonElement"></span></p><script>Liferay.once("beforeNavigate", function(){buttonValue = Liferay.SPA.__capturedFormButtonElement__.value});Liferay.once("endNavigate", function(){document.getElementById("capturedFormButtonElement").textContent = buttonValue;})</script>';
 
 			await page
-				.locator('.ck-source-editing-area')
+				.getByLabel('Content', {exact: true})
 				.getByRole('textbox')
 				.fill(content);
 
-			await page.getByLabel('Source', {exact: true}).click();
-
-			await journalEditArticlePage.publishArticle(true);
-
-			await waitForAlert(page, `Success:Your request completed successfully.`);
-
+			await journalEditArticlePage.publishArticle();
 		});
 
 		await test.step('Set Safari as the browser and check submit buttons in form', async () => {
 			const browser = await webkit.launch();
 
-			const baseURL = new URL(page.url()).origin;
-
 			const context = await browser.newContext({
 				...safari,
-				baseURL,
 			});
 
 			const incognitoPage = await context.newPage();
@@ -112,27 +113,13 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 			);
 
-			await incognitoPage.evaluate(() => {
-				(window as any).__capturedButtonValue = null;
-
-				(window as any).Liferay.once('beforeNavigate', function () {
-					(window as any).__capturedButtonValue =
-						(window as any).Liferay.SPA
-							.__capturedFormButtonElement__?.value ?? null;
-				});
-			});
-
 			await incognitoPage.getByRole('button', {name: 'Button B'}).click();
 
-			await incognitoPage.waitForFunction(
-				() => (window as any).__capturedButtonValue !== null
+			const capturedFormButtonElement = incognitoPage.locator(
+				'#capturedFormButtonElement'
 			);
 
-			const capturedValue = await incognitoPage.evaluate(
-				() => (window as any).__capturedButtonValue
-			);
-
-			expect(capturedValue).toBe('Button B');
+			await expect(capturedFormButtonElement).toHaveText('Button B');
 
 			// Dispose context once it's no longer needed.
 

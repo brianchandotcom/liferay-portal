@@ -481,7 +481,7 @@ Update the call sites at the same time.
 
 ### Rule 21: Avoid `iterator().next()` for First-Element Access
 
-**Why:** A multi-method chain to reach the first element hides the intent behind two calls; pick the most direct accessor the type already offers so the call site reads as a single lookup.
+**Why:** A multimethod chain to reach the first element hides the intent behind two calls; pick the most direct accessor the type already offers so the call site reads as a single lookup.
 
 **Examples:**
 
@@ -600,7 +600,7 @@ The noun form belongs in identifiers and section headers.
 
 **Examples:**
 
-When a block of locals feeds straight into a multi-arg call, declare them in the call's argument order.
+When a block of locals feeds straight into a multiarg call, declare them in the call's argument order.
 
 ```diff
 -String beta = computeBeta();
@@ -848,7 +848,7 @@ Separate must-be-first or must-be-last items from the sorted block:
 
 ### Rule 43: Blank Line Between Dependent Resources in `try`-With-Resources
 
-**Why:** When a multi-resource `try` mixes independent resources with one that consumes them, a blank line between the independent group and the consumer makes the dependency visible at the resource declaration level instead of forcing the reader to trace it through the body.
+**Why:** When a multiresource `try` mixes independent resources with one that consumes them, a blank line between the independent group and the consumer makes the dependency visible at the resource declaration level instead of forcing the reader to trace it through the body.
 
 **Examples:**
 

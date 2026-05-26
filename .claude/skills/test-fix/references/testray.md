@@ -77,7 +77,7 @@ Skip when the input is not a Testray build URL. Otherwise, pick the first unclai
 
 Parse `<buildId>` from the URL path and read `<teamIds>` from `filter.testrayTeamIds` when present in the query string. Print the resulting `<buildId>` and `<teamIds>` before running any query, so the parse is auditable rather than asserted.
 
-1. List failed case results on the build, newest first. Append the team predicate only when `<teamIds>` is non-empty, joining multiple IDs with `or`:
+1. List failed case results on the build, newest first. Append the team predicate only when `<teamIds>` is nonempty, joining multiple IDs with `or`:
 
 	```bash
 	curl \

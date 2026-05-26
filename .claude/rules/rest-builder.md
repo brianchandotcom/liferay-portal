@@ -114,7 +114,7 @@ Standard OpenAPI 3.0.1. Minimum shape:
 - `paths`: each operation needs `operationId`, `description`, and `tags: [<Tag>]`. The first tag becomes the resource name (`<Tag>Resource`); use one tag per resource.
 - `components.schemas`: each schema needs `description`, typed `properties`, and `required`.
 
-Response shape drives the generated return type. The two cases worth knowing:
+Response shape drives the generated return type. Two cases are worth knowing:
 
 - `application/json` with `{type: array, items: {$ref: ...}}` → `Page<DTO>`.
 - `application/json` with `$ref` → the DTO.

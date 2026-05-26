@@ -10,7 +10,7 @@ name: test-plan
 
 Produce a runnable shell script that executes the tests most likely to regress given the current branch's changes compared to master.
 
-The full test suite takes hours to run, so the team merges aggressively and relies on a daily full-suite run that delivers results within 24 hours of merge. This skill produces a focused pre-merge script (under 20 minutes) that mitigates risk without attempting full coverage — its goal is to catch the most likely regressions, not every possible one.
+The full test suite takes hours to run, so the team merges aggressively and relies on a daily full-suite run that delivers results within 24 hours of merge. This skill produces a focused premerge script (under 20 minutes) that mitigates risk without attempting full coverage — its goal is to catch the most likely regressions, not every possible one.
 
 ## How This Project Organizes Tests
 

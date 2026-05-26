@@ -94,7 +94,7 @@ test('does something', {tag: '@LPD-12345'}, async ({site, page}) => {
 
 Other variants follow the same pattern for different resources — for example `isolatedLayoutTest({type: 'content'})` for a fresh page.
 
-**Default to an isolated fixture unless a dependency forbids it.** A test cannot use one when it relies on preseeded content from another resource — for example the `cmsSite` or `pageManagementSite` projects, which provision shared fixtures the test reads from. Those tests must run against the resource their project provides. Anything else — small UI checks, isolated flows, tests that build their own data — should run on an isolated fixture.
+**Default to an isolated fixture unless a dependency forbids it.** A test cannot use one when it relies on preseeded content from another resource — for example, the `cmsSite` or `pageManagementSite` projects, which provision shared fixtures the test reads from. Those tests must run against the resource their project provides. Anything else — small UI checks, isolated flows, tests that build their own data — should run on an isolated fixture.
 
 ## Flaky-Proofing
 
@@ -104,9 +104,9 @@ Use these utilities from `modules/test/playwright/utils`:
 
 - `clickAndExpectToBeHidden({trigger, target})` — clicks `trigger`, retries until `target` becomes hidden.
 - `clickAndExpectToBeVisible({trigger, target})` — clicks `trigger`, retries until `target` becomes visible.
-- `hoverAndExpectToBeVisible(...)` — hover-triggered visibility with retry.
-- `waitForAlert(page, message)` — waits for a Liferay alert.
-- `waitForPageToBeLoaded`, `waitForSPAToBeLoaded` — wait for full JS readiness.
+- `hoverAndExpectToBeVisible(...)` — triggers visibility via hover with retry.
+- `waitForAlert(page, message)` — waits for a Liferay alert to appear.
+- `waitForPageToBeLoaded`, `waitForSPAToBeLoaded` — waits for full JS readiness.
 
 For arbitrary retry, wrap a block in `expect(async () => { ... }).toPass()` (built into Playwright, not custom). Use it when no canned helper fits. Always pass an explicit `timeout` to every action and assertion inside the block — otherwise each call uses Playwright's 30s default and the retry never kicks in.
 

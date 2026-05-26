@@ -318,7 +318,7 @@ function _set_playwright_port {
 	local file="${WORKTREE_DIR}/modules/test/playwright/.env.local"
 	local http_port=$((8080 + OFFSET))
 
-	mkdir -p "$(dirname "${file}")"
+	mkdir --parents "$(dirname "${file}")"
 
 	_atomic_write "${file}" <<EOF
 PORTAL_URL=http://localhost:${http_port}

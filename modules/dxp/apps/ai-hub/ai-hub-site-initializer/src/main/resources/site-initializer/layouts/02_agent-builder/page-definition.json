@@ -63,6 +63,9 @@
 					},
 					{
 						"definition": {
+							"cssClasses": [
+								"ai-hub-tabs"
+							],
 							"fragment": {
 								"key": "BASIC_COMPONENT-tabs"
 							},

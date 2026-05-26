@@ -68,6 +68,7 @@ export default function useAnalyticsQuery({
 	const isMounted = useIsMounted();
 	const isVisible = useIsInViewport(element);
 
+	const lastFetchedFiltersRef = useRef<string | null>(null);
 	const queryRef = useRef(query);
 	const settingsRef = useRef(settings);
 	const variablesRef = useRef(variables);
@@ -152,6 +153,18 @@ export default function useAnalyticsQuery({
 	}, [isMounted]);
 
 	useEffect(() => {
+		if (settingsRef.current.checkViewportVisibility && !isVisible) {
+			return;
+		}
+
+		const serializedFilters = JSON.stringify(filters);
+
+		if (lastFetchedFiltersRef.current === serializedFilters) {
+			return;
+		}
+
+		lastFetchedFiltersRef.current = serializedFilters;
+
 		sendRequest(filters);
 	}, [filters, isVisible, sendRequest]);
 

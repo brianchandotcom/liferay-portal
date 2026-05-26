@@ -370,6 +370,8 @@ interface ObjectFieldSetting {
 
 type ObjectFieldSettingName =
 	| 'acceptedFileExtensions'
+	| 'country'
+	| 'countrySource'
 	| 'defaultValue'
 	| 'defaultValueType'
 	| 'fileSource'
@@ -383,7 +385,6 @@ type ObjectFieldSettingName =
 	| 'objectRelationshipName'
 	| 'output'
 	| 'prefix'
-	| 'prefixType'
 	| 'script'
 	| 'showCounter'
 	| 'showFilesInLibrary'

@@ -9,9 +9,9 @@ import React, {useEffect, useState} from 'react';
 
 import {CountryCodePicker} from './CountryCodePicker';
 import {
+	COUNTRY_SOURCE,
 	CountryInfo,
-	PREFIX_TYPE,
-	PrefixType,
+	CountrySource,
 	getDefaultCountry,
 	getFlagSymbol,
 	parsePhoneValue,
@@ -19,27 +19,27 @@ import {
 
 interface PhoneNumberInputProps {
 	countries?: CountryInfo[];
+	country?: CountryInfo['a2'];
+	countrySource?: CountrySource;
 	disabled?: boolean;
 	id?: string;
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
 	onChange?: (event: {target: {value: string}}) => void;
 	onFocus?: (event: React.FocusEvent) => void;
-	prefix?: string;
-	prefixType?: PrefixType;
 	value?: string;
 }
 
 export function PhoneNumberInput({
 	countries = [],
+	country,
+	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	disabled,
 	id,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
-	prefix,
-	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	value = '',
 }: PhoneNumberInputProps) {
 	const [localNumber, setLocalNumber] = useState('');
@@ -47,19 +47,16 @@ export function PhoneNumberInput({
 		getDefaultCountry(countries)
 	);
 
-	const fixedCountry =
-		prefixType === PREFIX_TYPE.FIXED
-			? countries.find((country) => `+${country.idd}` === prefix)
-			: null;
+	const fixedCountry = countries.find((c) => c.a2 === country);
+	const fixedFlagSymbol = getFlagSymbol(country ?? '');
+	const fixedPrefix = fixedCountry ? `+${fixedCountry.idd}` : '';
 
-	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
-
-	const handleValueChange = (country: CountryInfo, number: string) => {
+	const handleValueChange = (nextCountry: CountryInfo, number: string) => {
 		if (onChange) {
 			const resolvedPrefix =
-				prefixType === PREFIX_TYPE.FIXED
-					? prefix || ''
-					: `+${country.idd}`;
+				countrySource === COUNTRY_SOURCE.FIXED
+					? fixedPrefix
+					: `+${nextCountry.idd}`;
 
 			const sanitizedNumber = number.replace(/\D/g, '');
 
@@ -75,9 +72,9 @@ export function PhoneNumberInput({
 
 	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
-		if (prefixType === PREFIX_TYPE.FIXED) {
-			if (prefix && value.startsWith(prefix)) {
-				setLocalNumber(value.substring(prefix.length));
+		if (countrySource === COUNTRY_SOURCE.FIXED) {
+			if (fixedPrefix && value.startsWith(fixedPrefix)) {
+				setLocalNumber(value.substring(fixedPrefix.length));
 			}
 			else {
 				const {localNumber: parsedLocalNumber} = parsePhoneValue(
@@ -109,10 +106,10 @@ export function PhoneNumberInput({
 	return (
 		<>
 			<ClayInput.GroupItem
-				prepend={prefixType === PREFIX_TYPE.FIXED}
+				prepend={countrySource === COUNTRY_SOURCE.FIXED}
 				shrink
 			>
-				{prefixType === PREFIX_TYPE.FIXED ? (
+				{countrySource === COUNTRY_SOURCE.FIXED ? (
 					<ClayInput.GroupText>
 						{fixedFlagSymbol && (
 							<span className="inline-item inline-item-before">
@@ -120,7 +117,7 @@ export function PhoneNumberInput({
 							</span>
 						)}
 
-						{prefix}
+						{fixedPrefix}
 					</ClayInput.GroupText>
 				) : (
 					<CountryCodePicker
@@ -135,7 +132,9 @@ export function PhoneNumberInput({
 				)}
 			</ClayInput.GroupItem>
 
-			<ClayInput.GroupItem prepend={prefixType === PREFIX_TYPE.FIXED}>
+			<ClayInput.GroupItem
+				prepend={countrySource === COUNTRY_SOURCE.FIXED}
+			>
 				<ClayInput
 					aria-label={Liferay.Language.get('phone-number')}
 					className="ddm-field-text form-control"

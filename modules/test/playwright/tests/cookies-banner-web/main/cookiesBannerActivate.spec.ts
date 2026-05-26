@@ -51,7 +51,7 @@ test(
 
 			await expect(
 				consentManagerConfigurationPage.toggleActivateButton
-			).toHaveClass(/disabled/);
+			).toBeDisabled();
 		});
 
 		await test.step('Check the Enabled checkbox without saving and verify the Activate button is still disabled', async () => {
@@ -61,7 +61,7 @@ test(
 
 			await expect(
 				consentManagerConfigurationPage.toggleActivateButton
-			).toHaveClass(/disabled/);
+			).toBeDisabled();
 		});
 
 		await test.step('Save and verify the Activate button becomes enabled', async () => {
@@ -69,7 +69,7 @@ test(
 
 			await expect(
 				consentManagerConfigurationPage.toggleActivateButton
-			).not.toHaveClass(/disabled/);
+			).toBeEnabled();
 		});
 	}
 );

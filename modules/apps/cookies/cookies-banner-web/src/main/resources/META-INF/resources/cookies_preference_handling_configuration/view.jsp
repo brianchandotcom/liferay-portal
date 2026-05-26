@@ -23,7 +23,7 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
 		</span>
 
-		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActiveButton" type="button">
+		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %> id="<portlet:namespace />toggleActiveButton" type="button">
 			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "deactivate" : "activate" %>' />
 		</button>
 	</div>

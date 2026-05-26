@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import PermissionsOptions from '../PermissionsOptions';
 import ScheduleOptions from '../ScheduleOptions';
@@ -42,6 +42,16 @@ export default function PublishModal({
 	const [dateError, setDateError] = useState('');
 	const [showErrorAlert, setShowErrorAlert] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	useEffect(() => {
+		const handler = Liferay.on('ddmFormError', (event) => {
+			if (event.error?.statusCode) {
+				onClose();
+			}
+		});
+
+		return () => handler.detach();
+	}, [onClose]);
 
 	const handleButtonClick = () => {
 		if (isSubmitting) {

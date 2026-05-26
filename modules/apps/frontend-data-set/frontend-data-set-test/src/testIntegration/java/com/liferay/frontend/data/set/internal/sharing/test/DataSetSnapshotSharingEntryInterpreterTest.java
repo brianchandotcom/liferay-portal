@@ -100,7 +100,7 @@ public class DataSetSnapshotSharingEntryInterpreterTest {
 
 			Assert.assertNotNull(sharingEntryInterpreter);
 			Assert.assertEquals(
-				label,
+				"'" + label + "'",
 				sharingEntryInterpreter.getTitle(sharingEntry, LocaleUtil.US));
 			Assert.assertEquals(
 				"Data Set User View",

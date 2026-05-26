@@ -831,7 +831,7 @@ test(
 			await expect(
 				notificationsPage.sharingNotificationMessage(
 					'Test Test',
-					sharedSnapshotName
+					`'${sharedSnapshotName}'`
 				)
 			).toBeVisible();
 		});

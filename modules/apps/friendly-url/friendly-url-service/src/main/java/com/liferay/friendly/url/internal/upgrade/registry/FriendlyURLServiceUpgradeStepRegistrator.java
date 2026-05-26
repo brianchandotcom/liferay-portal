@@ -73,7 +73,13 @@ public class FriendlyURLServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"FriendlyURLEntry", "parentClassPK LONG"),
 			UpgradeProcessFactory.addColumns(
-				"FriendlyURLEntryLocalization", "parentClassPK LONG"));
+				"FriendlyURLEntryLocalization", "parentClassPK LONG"),
+			UpgradeProcessFactory.runSQL(
+				"update FriendlyURLEntry set parentClassPK = 0 where " +
+					"parentClassPK is null"),
+			UpgradeProcessFactory.runSQL(
+				"update FriendlyURLEntryLocalization set parentClassPK = 0 " +
+					"where parentClassPK is null"));
 	}
 
 	@Reference

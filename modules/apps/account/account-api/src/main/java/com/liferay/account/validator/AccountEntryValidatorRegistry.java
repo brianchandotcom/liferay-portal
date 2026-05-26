@@ -21,7 +21,7 @@ public interface AccountEntryValidatorRegistry {
 	public List<AccountEntryValidator> getAccountEntryValidators();
 
 	public List<AccountEntryValidatorResult> validate(
-			AccountEntry accountEntry, Map<String, Object> values)
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException;
 
 }

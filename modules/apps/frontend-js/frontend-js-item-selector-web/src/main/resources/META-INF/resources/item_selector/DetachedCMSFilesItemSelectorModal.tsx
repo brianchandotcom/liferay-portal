@@ -145,6 +145,7 @@ type DetachedCMSFilesItemSelectorModalProps<T extends Record<string, any>> =
 type FolderCrumb = {
 	id: number | null;
 	label: string;
+	scopeId?: number | null;
 };
 
 const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
@@ -185,6 +186,8 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	}, [isBrowserTabVisible, open, props.apiURL]);
 
 	const activeFolderId = currentFolder[currentFolder.length - 1].id;
+	const activeScopeId =
+		currentFolder[currentFolder.length - 1].scopeId ?? null;
 
 	const apiURL = useMemo(
 		() => buildApiURL(activeFolderId),
@@ -214,7 +217,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	);
 
 	const navigateToFolder = useCallback(
-		(folder: {id: number; label: string}) => {
+		(folder: {id: number; label: string; scopeId?: number | null}) => {
 			setCurrentFolder((path) => [...path, folder]);
 		},
 		[]
@@ -255,6 +258,9 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 													id: itemData.embedded.id,
 													label: itemData.embedded
 														.title,
+													scopeId:
+														itemData.embedded
+															.scopeId,
 												});
 											}}
 										>
@@ -345,6 +351,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 									navigateToFolder({
 										id: item.embedded.id,
 										label: item.embedded.title,
+										scopeId: item.embedded.scopeId,
 									}),
 								...(view.contentRenderer === 'cards'
 									? {onSelectChange: null, symbol: 'folder'}
@@ -374,6 +381,26 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		[customRenderers, restProps.fdsProps, views]
 	);
 
+	const filesUploaderComponent = useMemo(() => {
+		const InitialFileUploaderComponent = restProps.filesUploaderComponent;
+
+		if (!InitialFileUploaderComponent) {
+			return undefined;
+		}
+
+		return (
+			uploaderProps: React.ComponentProps<
+				typeof InitialFileUploaderComponent
+			>
+		) => (
+			<InitialFileUploaderComponent
+				{...uploaderProps}
+				groupId={activeScopeId ?? uploaderProps.groupId}
+				{...({parentObjectEntryFolderId: activeFolderId} as any)}
+			/>
+		);
+	}, [activeFolderId, activeScopeId, restProps.filesUploaderComponent]);
+
 	return (
 		<NotificationContext.Provider
 			value={{
@@ -389,6 +416,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 					breadcrumbs={breadcrumbs}
 					breadcrumbsLabel={false}
 					fdsProps={fdsProps}
+					filesUploaderComponent={filesUploaderComponent}
 					observer={observer}
 					onOpenChange={onOpenChange}
 					open={open}

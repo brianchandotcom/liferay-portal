@@ -16,6 +16,11 @@ import React, {useId, useState} from 'react';
 import ItemSelector from '../item_selector/ItemSelector';
 import {FilesUploaderComponent} from '../item_selector/ItemSelectorModal';
 
+type CMSFileUploaderComponentProps =
+	React.ComponentProps<FilesUploaderComponent> & {
+		parentObjectEntryFolderId?: number | null;
+	};
+
 type AssetLibrary = {
 	externalReferenceCode: string;
 	id: number;
@@ -64,13 +69,14 @@ const SpaceInput = React.forwardRef<HTMLInputElement, ISpaceInputProps>(
 
 const ASSET_LIBRARIES_API_URL = `${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`;
 
-const CMSFileUploaderComponent: FilesUploaderComponent = function ({
+const CMSFileUploaderComponent = function ({
 	allowedExtensions,
 	files,
 	groupId: externalGroupId,
 	maxFileSize,
 	onCloseUploadView,
-}) {
+	parentObjectEntryFolderId,
+}: CMSFileUploaderComponentProps) {
 	const [assetLibrary, setAssetLibrary] = useState<
 		AssetLibrary | undefined
 	>();
@@ -97,6 +103,10 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 
 		const fileBase64 = await getFileAsBase64(fileData.file);
 
+		const folderRef = parentObjectEntryFolderId
+			? {objectEntryFolderId: parentObjectEntryFolderId}
+			: {objectEntryFolderExternalReferenceCode: 'L_FILES'};
+
 		const response = await Liferay.Util.fetch(
 			`/o/cms/basic-documents/scopes/${resolvedGroupId}`,
 			{
@@ -105,7 +115,7 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 						fileBase64,
 						name: fileData.name,
 					},
-					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					...folderRef,
 					title: fileData.name,
 				}),
 				headers: {

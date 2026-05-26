@@ -10,6 +10,16 @@ import ClayLabel, {ContentLabel} from '../src';
 
 export default {
 	argTypes: {
+		displayType: {
+			control: {type: 'select'},
+			options: [
+				'danger',
+				'info',
+				'secondary',
+				'success',
+				'warning',
+			] as const,
+		},
 		inverse: {
 			control: {type: 'boolean'},
 		},
@@ -30,6 +40,35 @@ const displayTypes = [
 ] as const;
 
 export function Default(args: typeof Default.args) {
+	return (
+		<ClayLabel
+			closeButtonProps={
+				args.closeable
+					? {
+							onClick: () => alert('close callback'),
+						}
+					: undefined
+			}
+			displayType={args.displayType as 'secondary'}
+			href={args.href}
+			inverse={args.inverse}
+			large={args.large}
+		>
+			{args.label}
+		</ClayLabel>
+	);
+}
+
+Default.args = {
+	closeable: false,
+	displayType: 'secondary',
+	href: '',
+	inverse: false,
+	label: 'Label',
+	large: false,
+};
+
+export function SeeAll(args: typeof Default.args) {
 	const closeButtonProps = args.closeable
 		? {
 				onClick: () => alert('close callback'),
@@ -57,7 +96,7 @@ export function Default(args: typeof Default.args) {
 	);
 }
 
-Default.args = {
+SeeAll.args = {
 	closeable: false,
 	href: '',
 	inverse: false,

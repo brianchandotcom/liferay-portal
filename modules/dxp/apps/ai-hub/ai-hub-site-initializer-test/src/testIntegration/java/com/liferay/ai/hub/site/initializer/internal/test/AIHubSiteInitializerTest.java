@@ -6,7 +6,9 @@
 package com.liferay.ai.hub.site.initializer.internal.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -24,7 +26,10 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -80,6 +85,58 @@ public class AIHubSiteInitializerTest {
 				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
+
+		_assertAccountRoleExists(
+			"L_AI_HUB_ADMINISTRATOR", "AI Hub Administrator");
+		_assertAccountRoleExists(
+			"L_AI_HUB_AGENT_ADMINISTRATOR", "AI Hub Agent Administrator");
+		_assertAccountRoleExists(
+			"L_AI_HUB_AGENT_VIEWER", "AI Hub Agent Viewer");
+
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_ADMINISTRATOR", "DELETE",
+			"PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_CHATBOT", "L_AI_HUB_ADMINISTRATOR", "DELETE",
+			"PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_CONTENT_RETRIEVER", "L_AI_HUB_ADMINISTRATOR", "DELETE",
+			"PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_CRAWLER_JOB", "L_AI_HUB_ADMINISTRATOR", "DELETE",
+			"PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_ADMINISTRATOR",
+			"DELETE", "PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_MCP_SERVER", "L_AI_HUB_ADMINISTRATOR", "DELETE",
+			"PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_ADMINISTRATOR",
+			"DELETE", "PERMISSIONS", "UPDATE", "VIEW");
+		_assertAccountRoleObjectEntryResourcePermission(
+			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_VIEWER", "VIEW");
+
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_CHATBOT", "L_AI_HUB_ADMINISTRATOR", "ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_CONTENT_RETRIEVER", "L_AI_HUB_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_CRAWLER_JOB", "L_AI_HUB_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_MCP_SERVER", "L_AI_HUB_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
+		_assertAccountRolePortletResourcePermission(
+			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_ADMINISTRATOR",
+			"ADD_OBJECT_ENTRY");
 
 		_assertLayoutExists("/account-management");
 		_assertLayoutUtilityPageEntryExists(
@@ -197,6 +254,69 @@ public class AIHubSiteInitializerTest {
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
+	}
+
+	private void _assertAccountRoleExists(
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		AccountRole accountRole =
+			_accountRoleLocalService.fetchAccountRoleByExternalReferenceCode(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(name, accountRole.getRoleName());
+	}
+
+	private void _assertAccountRoleObjectEntryResourcePermission(
+			String objectDefinitionExternalReferenceCode,
+			String roleExternalReferenceCode, String... actionIds)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		_assertAccountRoleResourcePermission(
+			roleExternalReferenceCode, objectDefinition.getClassName(),
+			actionIds);
+	}
+
+	private void _assertAccountRolePortletResourcePermission(
+			String objectDefinitionExternalReferenceCode,
+			String roleExternalReferenceCode, String... actionIds)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		_assertAccountRoleResourcePermission(
+			roleExternalReferenceCode, objectDefinition.getResourceName(),
+			actionIds);
+	}
+
+	private void _assertAccountRoleResourcePermission(
+			String externalReferenceCode, String resourceName,
+			String... actionIds)
+		throws Exception {
+
+		AccountRole accountRole =
+			_accountRoleLocalService.fetchAccountRoleByExternalReferenceCode(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				TestPropsValues.getCompanyId(), resourceName,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+				accountRole.getRoleId());
+
+		for (String actionId : actionIds) {
+			Assert.assertTrue(resourcePermission.hasActionId(actionId));
+		}
 	}
 
 	private void _assertLayoutExists(String friendlyURL) throws Exception {
@@ -324,6 +444,9 @@ public class AIHubSiteInitializerTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
@@ -347,6 +470,9 @@ public class AIHubSiteInitializerTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

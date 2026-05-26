@@ -83,7 +83,7 @@ function toRequestControls(
 		}
 
 		if (typeof value === 'string') {
-			result.push({name: control.name, value});
+			result.push({name: control.name, values: [value]});
 
 			continue;
 		}
@@ -132,7 +132,7 @@ function toLayoutSetRequestHandler(
 	if (privateLayout !== undefined) {
 		requestPortletDataHandlerControls.push({
 			name: 'privateLayout',
-			value: String(privateLayout),
+			values: [String(privateLayout)],
 		});
 	}
 

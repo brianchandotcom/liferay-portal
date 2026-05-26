@@ -412,8 +412,8 @@ public class UpgradeLogProgressTracker {
 	private static ResultSet _wrap(
 		ResultSet resultSet,
 		Queue<ResultSetInvocationHandler> resultSetInvocationHandlers,
-		String sql, Statement statementProxy,
-		Supplier<Long> totalRowCountSupplier, String upgradeProcessClassName) {
+		String sql, Statement statement, Supplier<Long> totalRowCountSupplier,
+		String upgradeProcessClassName) {
 
 		if (resultSet == null) {
 			return null;
@@ -423,7 +423,7 @@ public class UpgradeLogProgressTracker {
 			UpgradeLogProgressTracker.class.getClassLoader(),
 			new Class<?>[] {ResultSet.class},
 			new ResultSetInvocationHandler(
-				resultSet, resultSetInvocationHandlers, sql, statementProxy,
+				resultSet, resultSetInvocationHandlers, sql, statement,
 				totalRowCountSupplier, upgradeProcessClassName));
 	}
 
@@ -456,7 +456,7 @@ public class UpgradeLogProgressTracker {
 			String methodName = method.getName();
 
 			if (Objects.equals(methodName, "getStatement")) {
-				return _statementProxy;
+				return _statement;
 			}
 
 			Object result = null;
@@ -496,14 +496,14 @@ public class UpgradeLogProgressTracker {
 		private ResultSetInvocationHandler(
 			ResultSet resultSet,
 			Queue<ResultSetInvocationHandler> resultSetInvocationHandlers,
-			String sql, Statement statementProxy,
+			String sql, Statement statement,
 			Supplier<Long> totalRowCountSupplier,
 			String upgradeProcessClassName) {
 
 			_resultSet = resultSet;
 			_resultSetInvocationHandlers = resultSetInvocationHandlers;
 			_sql = sql;
-			_statementProxy = statementProxy;
+			_statement = statement;
 			_totalRowCountSupplier = totalRowCountSupplier;
 
 			long queryId = _queryCounter.incrementAndGet();
@@ -640,7 +640,7 @@ public class UpgradeLogProgressTracker {
 			_resultSetInvocationHandlers;
 		private long _rowCount;
 		private final String _sql;
-		private final Statement _statementProxy;
+		private final Statement _statement;
 		private long _totalRowCount;
 		private boolean _totalRowCountComputed;
 		private final Supplier<Long> _totalRowCountSupplier;
@@ -825,16 +825,16 @@ public class UpgradeLogProgressTracker {
 				sql = (String)args[0];
 			}
 
-			ResultSet wrappedResultSet = _wrap(
+			ResultSet resultSet = _wrap(
 				(ResultSet)result, _resultSetInvocationHandlers, sql,
 				(Statement)proxy, totalRowCountSupplier,
 				_upgradeProcessClassName);
 
 			_resultSetInvocationHandlers.add(
 				(ResultSetInvocationHandler)ProxyUtil.getInvocationHandler(
-					wrappedResultSet));
+					resultSet));
 
-			return wrappedResultSet;
+			return resultSet;
 		}
 
 		private final Connection _connection;

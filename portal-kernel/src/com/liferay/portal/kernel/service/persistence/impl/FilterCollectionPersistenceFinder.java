@@ -41,15 +41,18 @@ public class FilterCollectionPersistenceFinder
 			orderByEntityAlias, where, finderColumns);
 
 		String entityAlias = basePersistenceImpl.getEntityAlias();
-		String tableName = basePersistenceImpl.getTableName();
-		String pkColumnName = basePersistenceImpl.getPKColumnName();
 
 		_filterPKColumn = StringBundler.concat(
 			entityAlias, ".", basePersistenceImpl.getFilterPKColumnName());
 
+		String tableName = basePersistenceImpl.getTableName();
+
 		_filterSqlSelectWhere = StringBundler.concat(
 			"SELECT DISTINCT {", entityAlias, ".*} FROM ", tableName, " ",
 			entityAlias, " WHERE ");
+
+		String pkColumnName = basePersistenceImpl.getPKColumnName();
+
 		_filterSqlSelectNoInlineDistinctWhere1 = StringBundler.concat(
 			"SELECT {", tableName, ".*} FROM (SELECT DISTINCT ", entityAlias,
 			".", pkColumnName, " FROM ", tableName, " ", entityAlias,

@@ -8,7 +8,7 @@ package com.liferay.one.constants;
 /**
  * @author Amos Fong
  */
-public class ClassNames {
+public class ClassNameConstants {
 
 	public static final String LICENSE_KEY =
 		"com.liferay.object.model.ObjectDefinition#C_LICENSE_KEY";

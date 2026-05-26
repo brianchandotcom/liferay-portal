@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: "-100"
+        argocd.argoproj.io/sync-wave: "-120"
     name: cluster-bootstrap
     namespace: cluster-bootstrap-system
 spec:

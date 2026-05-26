@@ -35,9 +35,9 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search,
+		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
-			delta: 1,
+			channelIds: [channelId],
 			groupId
 		}
 	});

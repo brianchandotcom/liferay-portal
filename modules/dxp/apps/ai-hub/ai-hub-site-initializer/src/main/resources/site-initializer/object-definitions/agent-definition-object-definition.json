@@ -75,6 +75,19 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": false,
+			"externalReferenceCode": "SYSTEM",
+			"indexed": true,
+			"label": {
+				"en_US": "System"
+			},
+			"name": "system",
+			"system": true,
+			"type": "Boolean"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "null",

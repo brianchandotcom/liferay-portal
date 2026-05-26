@@ -371,6 +371,7 @@ function VerticalNav<T extends Record<string, any> | string>({
 					<KeyboardArrowsIndicator
 						anchorRef={containerRef}
 						direction="all"
+						placement="tooltip-top"
 					/>
 				</ClayPortal>
 			)}

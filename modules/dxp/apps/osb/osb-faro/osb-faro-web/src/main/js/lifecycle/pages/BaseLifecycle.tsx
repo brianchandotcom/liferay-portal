@@ -75,6 +75,7 @@ const LifecycleAccounts = () => {
 			/>
 
 			<AccountsDataSet
+				accountLifecycleId={lifecycleId}
 				apiURL={`/o/faro/contacts/${groupId!}/account-lifecycle/${lifecycleId}/accounts`}
 				channelId={channelId!}
 				countryFilter={filters.countryFilter}

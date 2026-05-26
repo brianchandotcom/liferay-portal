@@ -93,10 +93,11 @@ EOF
 function _run_helm {
 	local chart
 	local charts=()
-	local charts_list
 
 	if [ "${#}" -eq 0 ]
 	then
+		local charts_list
+
 		charts_list="$(_list_helm_charts)"
 
 		if [ -z "${charts_list}" ]
@@ -142,10 +143,11 @@ function _run_helm_one {
 function _run_terraform {
 	local stack
 	local stacks=()
-	local stacks_list
 
 	if [ "${#}" -eq 0 ]
 	then
+		local stacks_list
+
 		stacks_list="$(_list_terraform_stacks)"
 
 		if [ -z "${stacks_list}" ]

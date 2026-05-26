@@ -13,7 +13,7 @@ HomeDashboardDisplayContext homeDashboardDisplayContext = (HomeDashboardDisplayC
 
 <c:if test="<%= themeDisplay.isSignedIn() %>">
 	<aui:style type="text/css">
-		.bg-gradient--blue-white {
+		.ai-hub {
 			display: none;
 		}
 	</aui:style>

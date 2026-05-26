@@ -12,3 +12,8 @@ liferay-one-etc-spring-boot-oaua:
     name: Liferay One Etc Spring Boot OAuth Application User Agent
     scopes: []
     type: oAuthApplicationUserAgent
+liferay-one-etc-spring-boot-object-action-user-delete:
+    name: Liferay One Etc Spring Boot Object Action User Delete
+    oAuth2ApplicationExternalReferenceCode: liferay-one-etc-spring-boot-oaua
+    resourcePath: /object/action/user/delete
+    type: objectAction

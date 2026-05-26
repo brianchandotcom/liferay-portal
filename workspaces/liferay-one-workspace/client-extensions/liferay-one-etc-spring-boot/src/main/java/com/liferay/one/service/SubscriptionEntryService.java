@@ -83,6 +83,16 @@ public class SubscriptionEntryService extends BaseService {
 		return new SubscriptionEntry(new JSONObject(response));
 	}
 
+	public void deleteSubscriptionEntries(long userId) throws Exception {
+		List<SubscriptionEntry> subscriptionEntries = getSubscriptionEntries(
+			"(customUserId eq " + userId + ")");
+
+		for (SubscriptionEntry subscriptionEntry : subscriptionEntries) {
+			_deleteSubscriptionEntry(
+				subscriptionEntry.getSubscriptionEntryId());
+		}
+	}
+
 	public void deleteSubscriptionEntry(
 			String className, long classPK, long userId)
 		throws Exception {
@@ -94,13 +104,7 @@ public class SubscriptionEntryService extends BaseService {
 			return;
 		}
 
-		delete(
-			_getAuthorization(), "",
-			UriComponentsBuilder.fromPath(
-				"/o/c/subscriptionentries/" +
-					subscriptionEntry.getSubscriptionEntryId()
-			).build(
-			).toUri());
+		_deleteSubscriptionEntry(subscriptionEntry.getSubscriptionEntryId());
 	}
 
 	public SubscriptionEntry fetchSubscriptionEntry(
@@ -164,6 +168,17 @@ public class SubscriptionEntryService extends BaseService {
 		_sendExpiringLicenseKeyEmails(30);
 		_sendExpiringLicenseKeyEmails(14);
 		_sendExpiringLicenseKeyEmails(0);
+	}
+
+	private void _deleteSubscriptionEntry(long subscriptionEntryId)
+		throws Exception {
+
+		delete(
+			_getAuthorization(), "",
+			UriComponentsBuilder.fromPath(
+				"/o/c/subscriptionentries/" + subscriptionEntryId
+			).build(
+			).toUri());
 	}
 
 	private Account _fetchAccount(long accountEntryId) throws Exception {

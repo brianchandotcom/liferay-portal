@@ -15,20 +15,16 @@ import com.google.cloud.modelarmor.v1.SdpBasicConfig;
 import com.google.cloud.modelarmor.v1.SdpFilterSettings;
 import com.google.cloud.modelarmor.v1.Template;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.Objects;
 
 /**
+ * @author Feliphe Marinho
  * @author João Victor Alves
  */
 public class ModelArmorTemplate {
 
 	public static Builder builder(String templateId) {
 		return new Builder(templateId);
-	}
-
-	public FilterConfig getFilterConfig() {
-		return _filterConfig;
 	}
 
 	public String getGuardrailType() {
@@ -72,7 +68,14 @@ public class ModelArmorTemplate {
 		public Builder maliciousUriFilterEnabled(
 			boolean maliciousUriFilterEnabled) {
 
-			_maliciousUriFilterEnabled = maliciousUriFilterEnabled;
+			if (maliciousUriFilterEnabled) {
+				_filterConfigBuilder.setMaliciousUriFilterSettings(
+					MaliciousUriFilterSettings.newBuilder(
+					).setFilterEnforcement(
+						MaliciousUriFilterSettings.
+							MaliciousUriFilterEnforcement.ENABLED
+					));
+			}
 
 			return this;
 		}
@@ -102,54 +105,63 @@ public class ModelArmorTemplate {
 		public Builder piAndJailbreakFilterEnabled(
 			boolean piAndJailbreakFilterEnabled) {
 
-			_piAndJailbreakFilterEnabled = piAndJailbreakFilterEnabled;
+			if (piAndJailbreakFilterEnabled) {
+				_filterConfigBuilder.setPiAndJailbreakFilterSettings(
+					PiAndJailbreakFilterSettings.newBuilder(
+					).setConfidenceLevel(
+						_piAndJailbreakConfidenceLevel
+					).setFilterEnforcement(
+						PiAndJailbreakFilterSettings.
+							PiAndJailbreakFilterEnforcement.ENABLED
+					));
+			}
 
 			return this;
 		}
 
-		public Builder raiFilters(
-			Map<RaiFilterType, DetectionConfidenceLevel> raiFilters) {
+		public Builder raiDangerousDetectionConfidenceLevel(
+			DetectionConfidenceLevel raiDangerousDetectionConfidenceLevel) {
 
-			_raiFilters = raiFilters;
+			_addRaiFilter(
+				raiDangerousDetectionConfidenceLevel, RaiFilterType.DANGEROUS);
+
+			return this;
+		}
+
+		public Builder raiHarassmentDetectionConfidenceLevel(
+			DetectionConfidenceLevel raiHarassmentDetectionConfidenceLevel) {
+
+			_addRaiFilter(
+				raiHarassmentDetectionConfidenceLevel,
+				RaiFilterType.HARASSMENT);
+
+			return this;
+		}
+
+		public Builder raiHateSpeechDetectionConfidenceLevel(
+			DetectionConfidenceLevel raiHateSpeechDetectionConfidenceLevel) {
+
+			_addRaiFilter(
+				raiHateSpeechDetectionConfidenceLevel,
+				RaiFilterType.HATE_SPEECH);
+
+			return this;
+		}
+
+		public Builder raiSexuallyExplicitDetectionConfidenceLevel(
+			DetectionConfidenceLevel
+				raiSexuallyExplicitDetectionConfidenceLevel) {
+
+			_addRaiFilter(
+				raiSexuallyExplicitDetectionConfidenceLevel,
+				RaiFilterType.SEXUALLY_EXPLICIT);
 
 			return this;
 		}
 
 		public Builder sdpFilterEnabled(boolean sdpFilterEnabled) {
-			_sdpFilterEnabled = sdpFilterEnabled;
-
-			return this;
-		}
-
-		private Builder(String templateId) {
-			_templateId = templateId;
-		}
-
-		private FilterConfig _toFilterConfig() {
-			FilterConfig.Builder builder = FilterConfig.newBuilder();
-
-			if (_maliciousUriFilterEnabled) {
-				builder.setMaliciousUriFilterSettings(
-					MaliciousUriFilterSettings.newBuilder(
-					).setFilterEnforcement(
-						MaliciousUriFilterSettings.
-							MaliciousUriFilterEnforcement.ENABLED
-					));
-			}
-
-			if (_piAndJailbreakFilterEnabled) {
-				builder.setPiAndJailbreakFilterSettings(
-					PiAndJailbreakFilterSettings.newBuilder(
-					).setFilterEnforcement(
-						PiAndJailbreakFilterSettings.
-							PiAndJailbreakFilterEnforcement.ENABLED
-					).setConfidenceLevel(
-						_piAndJailbreakConfidenceLevel
-					));
-			}
-
-			if (_sdpFilterEnabled) {
-				builder.setSdpSettings(
+			if (sdpFilterEnabled) {
+				_filterConfigBuilder.setSdpSettings(
 					SdpFilterSettings.newBuilder(
 					).setBasicConfig(
 						SdpBasicConfig.newBuilder(
@@ -159,70 +171,76 @@ public class ModelArmorTemplate {
 					));
 			}
 
-			if (_raiFilters.isEmpty()) {
-				return builder.build();
-			}
-
-			RaiFilterSettings.Builder raiFilterSettingsBuilder =
-				RaiFilterSettings.newBuilder();
-
-			for (Map.Entry<RaiFilterType, DetectionConfidenceLevel> entry :
-					_raiFilters.entrySet()) {
-
-				raiFilterSettingsBuilder.addRaiFilters(
-					RaiFilterSettings.RaiFilter.newBuilder(
-					).setConfidenceLevel(
-						entry.getValue()
-					).setFilterType(
-						entry.getKey()
-					));
-			}
-
-			builder.setRaiSettings(raiFilterSettingsBuilder);
-
-			return builder.build();
+			return this;
 		}
 
-		private Template _toTemplate(FilterConfig filterConfig) {
-			return Template.newBuilder(
-			).setFilterConfig(
-				filterConfig
-			).setTemplateMetadata(
-				Template.TemplateMetadata.newBuilder(
-				).setMultiLanguageDetection(
-					Template.TemplateMetadata.MultiLanguageDetection.newBuilder(
-					).setEnableMultiLanguageDetection(
-						_multiLanguageDetectionEnabled
-					)
-				).build()
-			).build();
+		private Builder(String templateId) {
+			_templateId = templateId;
 		}
 
-		private String _guardrailType = "input";
+		private void _addRaiFilter(
+			DetectionConfidenceLevel detectionConfidenceLevel,
+			RaiFilterType raiFilterType) {
+
+			if (Objects.equals(
+					detectionConfidenceLevel,
+					DetectionConfidenceLevel.
+						DETECTION_CONFIDENCE_LEVEL_UNSPECIFIED)) {
+
+				return;
+			}
+
+			_raiFilterSettingsBuilder.addRaiFilters(
+				RaiFilterSettings.RaiFilter.newBuilder(
+				).setConfidenceLevel(
+					detectionConfidenceLevel
+				).setFilterType(
+					raiFilterType
+				));
+		}
+
+		private FilterConfig _toFilterConfig() {
+			if (_raiFilterSettingsBuilder.getRaiFiltersCount() > 0) {
+				_filterConfigBuilder.setRaiSettings(_raiFilterSettingsBuilder);
+			}
+
+			return _filterConfigBuilder.build();
+		}
+
+		private final FilterConfig.Builder _filterConfigBuilder =
+			FilterConfig.newBuilder();
+		private String _guardrailType;
 		private String _location;
-		private boolean _maliciousUriFilterEnabled;
 		private boolean _multiLanguageDetectionEnabled;
 		private String _name;
-		private DetectionConfidenceLevel _piAndJailbreakConfidenceLevel =
-			DetectionConfidenceLevel.MEDIUM_AND_ABOVE;
-		private boolean _piAndJailbreakFilterEnabled;
-		private Map<RaiFilterType, DetectionConfidenceLevel> _raiFilters =
-			Collections.emptyMap();
-		private boolean _sdpFilterEnabled;
+		private DetectionConfidenceLevel _piAndJailbreakConfidenceLevel;
+		private final RaiFilterSettings.Builder _raiFilterSettingsBuilder =
+			RaiFilterSettings.newBuilder();
 		private final String _templateId;
 
 	}
 
 	private ModelArmorTemplate(Builder builder) {
-		_filterConfig = builder._toFilterConfig();
 		_guardrailType = builder._guardrailType;
 		_location = builder._location;
 		_name = builder._name;
-		_template = builder._toTemplate(_filterConfig);
+
+		_template = Template.newBuilder(
+		).setFilterConfig(
+			builder._toFilterConfig()
+		).setTemplateMetadata(
+			Template.TemplateMetadata.newBuilder(
+			).setMultiLanguageDetection(
+				Template.TemplateMetadata.MultiLanguageDetection.newBuilder(
+				).setEnableMultiLanguageDetection(
+					builder._multiLanguageDetectionEnabled
+				)
+			).build()
+		).build();
+
 		_templateId = builder._templateId;
 	}
 
-	private final FilterConfig _filterConfig;
 	private final String _guardrailType;
 	private final String _location;
 	private final String _name;

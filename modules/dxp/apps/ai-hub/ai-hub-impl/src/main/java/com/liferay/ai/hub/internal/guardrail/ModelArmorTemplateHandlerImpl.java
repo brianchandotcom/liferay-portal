@@ -9,24 +9,22 @@ import com.google.cloud.modelarmor.v1.DetectionConfidenceLevel;
 import com.google.cloud.modelarmor.v1.LocationName;
 import com.google.cloud.modelarmor.v1.ModelArmorClient;
 import com.google.cloud.modelarmor.v1.ModelArmorSettings;
-import com.google.cloud.modelarmor.v1.RaiFilterType;
 import com.google.cloud.modelarmor.v1.Template;
 import com.google.cloud.modelarmor.v1.TemplateName;
 import com.google.protobuf.FieldMask;
 
 import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
 import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -150,26 +148,10 @@ public class ModelArmorTemplateHandlerImpl
 	private ModelArmorTemplate _getModelArmorTemplate(
 		String externalReferenceCode, Map<String, Object> properties) {
 
-		Map<RaiFilterType, DetectionConfidenceLevel> raiFilters = new EnumMap<>(
-			RaiFilterType.class);
-
-		_putRaiFilter(
-			raiFilters, RaiFilterType.DANGEROUS,
-			Objects.toString(properties.get("raiDangerousLevel"), null));
-		_putRaiFilter(
-			raiFilters, RaiFilterType.HARASSMENT,
-			Objects.toString(properties.get("raiHarassmentLevel"), null));
-		_putRaiFilter(
-			raiFilters, RaiFilterType.HATE_SPEECH,
-			Objects.toString(properties.get("raiHateSpeechLevel"), null));
-		_putRaiFilter(
-			raiFilters, RaiFilterType.SEXUALLY_EXPLICIT,
-			Objects.toString(properties.get("raiSexuallyExplicitLevel"), null));
-
 		return ModelArmorTemplate.builder(
 			externalReferenceCode
 		).guardrailType(
-			Objects.toString(properties.get("guardrailType"), null)
+			Objects.toString(properties.get("guardrailType"), "input")
 		).location(
 			GetterUtil.getString(properties.get("location"))
 		).maliciousUriFilterEnabled(
@@ -179,44 +161,57 @@ public class ModelArmorTemplateHandlerImpl
 				properties.get("multiLanguageDetectionEnabled"))
 		).name(
 			GetterUtil.getString(properties.get("name"))
-		).piAndJailbreakFilterEnabled(
-			GetterUtil.getBoolean(properties.get("piAndJailbreakFilterEnabled"))
 		).piAndJailbreakConfidenceLevel(
 			_toDetectionConfidenceLevel(
-				Objects.toString(
-					properties.get("piAndJailbreakConfidenceLevel"), null))
-		).raiFilters(
-			raiFilters
+				properties.get("piAndJailbreakConfidenceLevel"))
+		).piAndJailbreakFilterEnabled(
+			GetterUtil.getBoolean(properties.get("piAndJailbreakFilterEnabled"))
+		).raiDangerousDetectionConfidenceLevel(
+			_toDetectionConfidenceLevel(properties.get("raiDangerousLevel"))
+		).raiHarassmentDetectionConfidenceLevel(
+			_toDetectionConfidenceLevel(properties.get("raiHarassmentLevel"))
+		).raiHateSpeechDetectionConfidenceLevel(
+			_toDetectionConfidenceLevel(properties.get("raiHateSpeechLevel"))
+		).raiSexuallyExplicitDetectionConfidenceLevel(
+			_toDetectionConfidenceLevel(
+				properties.get("raiSexuallyExplicitLevel"))
 		).sdpFilterEnabled(
 			GetterUtil.getBoolean(properties.get("sdpFilterEnabled"))
 		).build();
 	}
 
-	private void _putRaiFilter(
-		Map<RaiFilterType, DetectionConfidenceLevel> raiFilters,
-		RaiFilterType raiFilterType, Object levelProperty) {
+	private DetectionConfidenceLevel _toDetectionConfidenceLevel(
+		Object property) {
 
-		if (!Objects.equals(GetterUtil.getString(levelProperty), "none")) {
-			raiFilters.put(
-				raiFilterType,
-				_toDetectionConfidenceLevel(
-					GetterUtil.getString(levelProperty)));
-		}
-	}
-
-	private DetectionConfidenceLevel _toDetectionConfidenceLevel(String key) {
 		try {
-			return DetectionConfidenceLevel.valueOf(
-				StringUtil.toUpperCase(
-					CamelCaseUtil.fromCamelCase(key, CharPool.UNDERLINE)));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				String.valueOf(property));
+
+			String key = jsonObject.getString("key");
+
+			if (Objects.equals(key, "high")) {
+				return DetectionConfidenceLevel.HIGH;
+			}
+			else if (Objects.equals(key, "lowAndAbove")) {
+				return DetectionConfidenceLevel.LOW_AND_ABOVE;
+			}
+			else if (Objects.equals(key, "mediumAndAbove")) {
+				return DetectionConfidenceLevel.MEDIUM_AND_ABOVE;
+			}
+
+			return DetectionConfidenceLevel.
+				DETECTION_CONFIDENCE_LEVEL_UNSPECIFIED;
 		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			return DetectionConfidenceLevel.MEDIUM_AND_ABOVE;
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
 		}
 	}
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private final Map<String, ModelArmorClient> _modelArmorClients =
 		new ConcurrentHashMap<>();

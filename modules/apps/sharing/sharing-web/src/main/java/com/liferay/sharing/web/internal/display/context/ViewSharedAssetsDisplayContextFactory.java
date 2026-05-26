@@ -6,6 +6,7 @@
 package com.liferay.sharing.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
@@ -32,7 +33,7 @@ public class ViewSharedAssetsDisplayContextFactory {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return new ViewSharedAssetsDisplayContext(
-			_groupLocalService, _itemSelector,
+			_companyLocalService, _groupLocalService, _itemSelector,
 			_portal.getLiferayPortletRequest(renderRequest),
 			_portal.getLiferayPortletResponse(renderResponse),
 			_sharedAssetsFilterItemRegistry, _sharingConfigurationFactory,
@@ -41,6 +42,9 @@ public class ViewSharedAssetsDisplayContextFactory {
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingEntryLocalService, _sharingPermission);
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

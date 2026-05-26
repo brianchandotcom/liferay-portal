@@ -6,7 +6,7 @@
 package com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants;
 
 /**
- * @author Julien Castelain
+ * @author Miguel Arroyo
  */
 public class CKEditor5SamplePortletKeys {
 

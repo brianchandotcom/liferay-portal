@@ -2,7 +2,7 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="CSPIllegalTagsCheck" files="frontend-editor-ckeditor-sample-web/src/main/resources/META-INF/resources/ckeditor4/view_xss\.jsp" />
+		<suppress checks="CSPIllegalTagsCheck" files="frontend-editor-ckeditor4-sample-web/src/main/resources/META-INF/resources/ckeditor4/view_xss\.jsp" />
 		<suppress checks="CSPTagIllegalAttributesCheck" files="frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/ckeditor\.jsp" />
 	</source-check>
 </suppressions>

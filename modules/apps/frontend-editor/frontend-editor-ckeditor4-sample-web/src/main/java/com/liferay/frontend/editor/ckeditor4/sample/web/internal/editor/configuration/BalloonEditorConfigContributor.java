@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.editor.ckeditor5.sample.web.internal.editor.configuration;
+package com.liferay.frontend.editor.ckeditor4.sample.web.internal.editor.configuration;
 
-import com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants.CKEditor5SamplePortletKeys;
+import com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditorSamplePortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -17,16 +17,16 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Miguel Arroyo
+ * @author Marko Cikos
  */
 @Component(
 	property = {
-		"editor.config.key=advancedClassicCKEditor5Editor",
-		"jakarta.portlet.name=" + CKEditor5SamplePortletKeys.CKEDITOR5_SAMPLE
+		"editor.config.key=sampleBalloonEditor",
+		"jakarta.portlet.name=" + CKEditorSamplePortletKeys.CKEDITOR_SAMPLE
 	},
 	service = EditorConfigContributor.class
 )
-public class AdvancedClassicCKEditor5SampleEditorConfigContributor
+public class BalloonEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -35,9 +35,7 @@ public class AdvancedClassicCKEditor5SampleEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put(
-			"placeholder",
-			"This placeholder is set from EditorConfigContributor.");
+		jsonObject.put("balloonEditorEnabled", true);
 	}
 
 }

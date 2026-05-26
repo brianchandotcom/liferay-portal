@@ -3,18 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.editor.ckeditor5.sample.web.internal.display.context;
+package com.liferay.frontend.editor.ckeditor4.sample.web.internal.display.context;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -22,34 +18,18 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.portlet.RenderRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * @author Miguel Arroyo
+ * @author Marko Cikos
  */
-public class CKEditor5SampleDisplayContext {
+public class CKEditorSampleDisplayContext {
 
-	public CKEditor5SampleDisplayContext(
+	public CKEditorSampleDisplayContext(
 		CETManager cetManager, RenderRequest renderRequest) {
 
 		_cetManager = cetManager;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public Object getCKEditor5ClassicEditorConfig() throws Exception {
-		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				StringPool.BLANK, StringPool.BLANK, "ckeditor5_classic",
-				new HashMap<String, Object>(), _themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(
-					_themeDisplay.getRequest()));
-
-		Map<String, Object> data = editorConfiguration.getData();
-
-		return data.get("editorConfig");
 	}
 
 	public JSONArray getEditorTransformerURLsJSONArray() throws Exception {
@@ -64,7 +44,7 @@ public class CKEditor5SampleDisplayContext {
 
 				if (StringUtil.matches(
 						editorConfigContributorCET.getEditorConfigKeys(),
-						"sampleReactCKEditor5ClassicEditor")) {
+						"sampleReactClassicEditor")) {
 
 					return editorConfigContributorCET.getURL();
 				}

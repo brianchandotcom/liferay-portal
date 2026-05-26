@@ -83,8 +83,8 @@ public class ViewContentRetrieversDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "sync-now"), "put", null,
 				"async"),
 			new FDSActionDropdownItem(
-				getAPIURL() +
-					"/by-external-reference-code/{externalReferenceCode}",
+				"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
+					"/{externalReferenceCode}",
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "async"),

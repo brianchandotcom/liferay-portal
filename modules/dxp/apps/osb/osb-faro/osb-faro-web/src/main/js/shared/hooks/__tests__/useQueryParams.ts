@@ -1,4 +1,6 @@
-import {renderHook} from '@testing-library/react-hooks';
+jest.unmock('react-dom');
+
+import {renderHook} from '@testing-library/react';
 import {useLocation} from 'react-router-dom';
 import {useQueryParams} from '../useQueryParams';
 

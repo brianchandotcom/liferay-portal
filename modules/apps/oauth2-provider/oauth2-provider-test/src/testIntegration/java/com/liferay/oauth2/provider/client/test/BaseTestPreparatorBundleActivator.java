@@ -129,7 +129,7 @@ public abstract class BaseTestPreparatorBundleActivator
 				oAuth2Application.getOAuth2ApplicationId(),
 				oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
 				accessTokenContent, accessTokenCreateDate,
-				accessTokenExpirationDate, "localhost", "127.0.0.1",
+				accessTokenExpirationDate, null, "localhost", "127.0.0.1",
 				refreshTokenContent, refreshTokenCreateDate,
 				refreshTokenExpirationDate);
 

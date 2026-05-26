@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.rest.internal.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate;
 import com.liferay.ai.hub.rest.manager.v1_0.ModelArmorTemplateManager;
 import com.liferay.ai.hub.util.AccountEntryUtil;
@@ -42,7 +42,7 @@ public class ModelArmorTemplateManagerImpl
 			companyId, dtoConverterContext, externalReferenceCode,
 			_getObjectDefinition(companyId), null);
 
-		_modelArmorTemplateHandler.deleteModelArmorTemplate(
+		_modelArmorHandler.deleteModelArmorTemplate(
 			companyId, externalReferenceCode,
 			GetterUtil.getString(objectEntry.getPropertyValue("location")));
 
@@ -74,11 +74,11 @@ public class ModelArmorTemplateManagerImpl
 			externalReferenceCode, modelArmorTemplate, objectDefinition);
 
 		if (existingObjectEntry == null) {
-			_modelArmorTemplateHandler.createModelArmorTemplate(
+			_modelArmorHandler.createModelArmorTemplate(
 				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 		else {
-			_modelArmorTemplateHandler.updateModelArmorTemplate(
+			_modelArmorHandler.updateModelArmorTemplate(
 				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 
@@ -246,7 +246,7 @@ public class ModelArmorTemplateManagerImpl
 	}
 
 	@Reference
-	private ModelArmorTemplateHandler _modelArmorTemplateHandler;
+	private ModelArmorHandler _modelArmorHandler;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
@@ -169,7 +169,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		List<OutputGuardrail> outputGuardrails = new ArrayList<>();
 
 		GuardrailsUtil.populate(
-			_dtoConverterRegistry, inputGuardrails, _modelArmorTemplateHandler,
+			_dtoConverterRegistry, inputGuardrails, _modelArmorHandler,
 			_objectEntryManager, outputGuardrails, serviceContext,
 			workflowContext);
 
@@ -177,8 +177,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			AssistantHandlerContext.builder(
 			).inputGuardrails(
 				inputGuardrails
-			).outputGuardrails(
-				outputGuardrails
 			).invocationParameters(
 				InvocationParameters.from(
 					Map.of(
@@ -208,6 +206,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 					_log.error(throwable);
 				}
+			).outputGuardrails(
+				outputGuardrails
 			).retrievalAugmentor(
 				RetrievalAugmentorUtil.createRetrievalAugmentor(
 					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
@@ -278,7 +278,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
-	private ModelArmorTemplateHandler _modelArmorTemplateHandler;
+	private ModelArmorHandler _modelArmorHandler;
 
 	@Reference(
 		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

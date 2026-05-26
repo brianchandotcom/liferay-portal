@@ -28,11 +28,11 @@ public class AssistantHandlerContext {
 
 	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
 		_inputGuardrails = builder._inputGuardrails;
-		_outputGuardrails = builder._outputGuardrails;
 		_invocationParameters = builder._invocationParameters;
 		_memoryId = builder._memoryId;
 		_onCompleteResponseConsumer = builder._onCompleteResponseConsumer;
 		_onErrorConsumer = builder._onErrorConsumer;
+		_outputGuardrails = builder._outputGuardrails;
 		_retrievalAugmentor = builder._retrievalAugmentor;
 		_systemMessageProviderFunction = builder._systemMessageProviderFunction;
 		_tools = builder._tools;

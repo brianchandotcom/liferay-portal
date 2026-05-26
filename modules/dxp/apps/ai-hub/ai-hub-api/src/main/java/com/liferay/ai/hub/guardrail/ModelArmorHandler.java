@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-public interface ModelArmorTemplateHandler {
+public interface ModelArmorHandler {
 
 	public void createModelArmorTemplate(
 			long companyId, String externalReferenceCode,
@@ -22,9 +22,14 @@ public interface ModelArmorTemplateHandler {
 			long companyId, String externalReferenceCode, String location)
 		throws Exception;
 
-	public boolean isMatchFound(
+	public boolean hasModelResponseViolation(
 			long companyId, String externalReferenceCode, String location,
-			String guardrailType, String text)
+			String text)
+		throws Exception;
+
+	public boolean hasUserPromptViolation(
+			long companyId, String externalReferenceCode, String location,
+			String text)
 		throws Exception;
 
 	public void updateModelArmorTemplate(

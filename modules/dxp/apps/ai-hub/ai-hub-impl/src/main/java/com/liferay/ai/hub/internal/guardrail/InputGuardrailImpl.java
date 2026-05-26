@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.guardrail;
+package com.liferay.ai.hub.internal.guardrail;
 
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -16,23 +16,23 @@ import dev.langchain4j.guardrail.InputGuardrailResult;
 /**
  * @author João Victor Alves
  */
-public class ModelArmorInputGuardrail implements InputGuardrail {
+public class InputGuardrailImpl implements InputGuardrail {
 
-	public ModelArmorInputGuardrail(
+	public InputGuardrailImpl(
 		long companyId, String externalReferenceCode, String location,
-		ModelArmorTemplateHandler modelArmorTemplateHandler) {
+		ModelArmorHandler modelArmorHandler) {
 
 		_companyId = companyId;
 		_externalReferenceCode = externalReferenceCode;
 		_location = location;
-		_modelArmorTemplateHandler = modelArmorTemplateHandler;
+		_modelArmorHandler = modelArmorHandler;
 	}
 
 	@Override
 	public InputGuardrailResult validate(UserMessage userMessage) {
 		try {
-			if (_modelArmorTemplateHandler.isMatchFound(
-					_companyId, _externalReferenceCode, _location, "input",
+			if (_modelArmorHandler.hasUserPromptViolation(
+					_companyId, _externalReferenceCode, _location,
 					userMessage.singleText())) {
 
 				return fatal(
@@ -50,11 +50,11 @@ public class ModelArmorInputGuardrail implements InputGuardrail {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ModelArmorInputGuardrail.class);
+		InputGuardrailImpl.class);
 
 	private final long _companyId;
 	private final String _externalReferenceCode;
 	private final String _location;
-	private final ModelArmorTemplateHandler _modelArmorTemplateHandler;
+	private final ModelArmorHandler _modelArmorHandler;
 
 }

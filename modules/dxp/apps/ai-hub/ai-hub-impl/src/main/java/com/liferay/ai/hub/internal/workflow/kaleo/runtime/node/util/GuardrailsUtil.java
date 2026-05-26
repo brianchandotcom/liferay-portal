@@ -5,9 +5,9 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
-import com.liferay.ai.hub.guardrail.ModelArmorTemplateHandler;
-import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.guardrail.ModelArmorInputGuardrail;
-import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.guardrail.ModelArmorOutputGuardrail;
+import com.liferay.ai.hub.guardrail.ModelArmorHandler;
+import com.liferay.ai.hub.internal.guardrail.InputGuardrailImpl;
+import com.liferay.ai.hub.internal.guardrail.OutputGuardrailImpl;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
@@ -41,47 +40,39 @@ public class GuardrailsUtil {
 	public static void populate(
 		DTOConverterRegistry dtoConverterRegistry,
 		List<InputGuardrail> inputGuardrails,
-		ModelArmorTemplateHandler modelArmorTemplateHandler,
+		ModelArmorHandler modelArmorHandler,
 		ObjectEntryManager objectEntryManager,
 		List<OutputGuardrail> outputGuardrails, ServiceContext serviceContext,
 		Map<String, Serializable> workflowContext) {
 
-		String agentDefinitionExternalReferenceCode = GetterUtil.getString(
-			workflowContext.get("agentDefinitionExternalReferenceCode"));
-
-		if (Validator.isNull(agentDefinitionExternalReferenceCode)) {
-			return;
-		}
-
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
 				new NestedFieldsContext(
-					1, List.of("agentDefinitionsToModelArmorTemplates")));
+					1,
+					List.of(
+						"aiHubAgentDefinitionsToAIHubModelArmorTemplates")));
 
 		try {
-			long companyId = serviceContext.getCompanyId();
-
 			ObjectEntry agentDefinitionObjectEntry =
 				objectEntryManager.getObjectEntry(
-					companyId,
+					serviceContext.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, Map.of(), dtoConverterRegistry, null,
 						serviceContext.getLocale(), null,
 						UserLocalServiceUtil.getUserById(
 							serviceContext.getUserId())),
-					agentDefinitionExternalReferenceCode,
+					GetterUtil.getString(
+						workflowContext.get(
+							"agentDefinitionExternalReferenceCode")),
 					ObjectDefinitionLocalServiceUtil.
 						fetchObjectDefinitionByExternalReferenceCode(
-							"L_AI_HUB_AGENT_DEFINITION", companyId),
+							"L_AI_HUB_AGENT_DEFINITION",
+							serviceContext.getCompanyId()),
 					null);
-
-			if (agentDefinitionObjectEntry == null) {
-				return;
-			}
 
 			ObjectEntry[] modelArmorTemplateObjectEntries =
 				(ObjectEntry[])agentDefinitionObjectEntry.getPropertyValue(
-					"agentDefinitionsToModelArmorTemplates");
+					"aiHubAgentDefinitionsToAIHubModelArmorTemplates");
 
 			if (ArrayUtil.isEmpty(modelArmorTemplateObjectEntries)) {
 				return;
@@ -97,37 +88,31 @@ public class GuardrailsUtil {
 					continue;
 				}
 
-				ListEntry guardrailType =
+				ListEntry listEntry =
 					(ListEntry)modelArmorTemplateObjectEntry.getPropertyValue(
 						"guardrailType");
 
-				if (guardrailType == null) {
-					continue;
-				}
-
-				String guardrailTypeKey = guardrailType.getKey();
-
-				if (Objects.equals(guardrailTypeKey, "input")) {
+				if (Objects.equals(listEntry.getKey(), "input")) {
 					inputGuardrails.add(
-						new ModelArmorInputGuardrail(
-							companyId,
+						new InputGuardrailImpl(
+							serviceContext.getCompanyId(),
 							modelArmorTemplateObjectEntry.
 								getExternalReferenceCode(),
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorTemplateHandler));
+							modelArmorHandler));
 				}
-				else if (Objects.equals(guardrailTypeKey, "output")) {
+				else if (Objects.equals(listEntry.getKey(), "output")) {
 					outputGuardrails.add(
-						new ModelArmorOutputGuardrail(
-							companyId,
+						new OutputGuardrailImpl(
+							serviceContext.getCompanyId(),
 							modelArmorTemplateObjectEntry.
 								getExternalReferenceCode(),
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorTemplateHandler));
+							modelArmorHandler));
 				}
 			}
 		}

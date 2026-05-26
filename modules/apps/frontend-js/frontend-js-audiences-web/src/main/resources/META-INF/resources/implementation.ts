@@ -26,15 +26,49 @@ export function get(): Set<string> {
 export async function runDetection(
 	audiencesDefinitionURL: string
 ): Promise<void> {
+	let response;
 
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const result = await fetch(audiencesDefinitionURL);
+	try {
 
-	const audiencesDefinition: AudiencesDefinition = await result.json();
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		response = await fetch(audiencesDefinitionURL);
+	}
+	catch (error) {
+		throw new Error(
+			`Unable to fetch '${audiencesDefinitionURL}': ${getErrorMessage(error)}`
+		);
+	}
+
+	if (!response.ok) {
+		throw new Error(
+			`Request to fetch ${audiencesDefinitionURL} returned an error: ` +
+				`${response.status} ${response.statusText}`
+		);
+	}
+
+	let audiencesDefinition: AudiencesDefinition;
+
+	try {
+		audiencesDefinition = await response.json();
+	}
+	catch (error) {
+		throw new Error(
+			`Unable to parse '${audiencesDefinitionURL}': ${getErrorMessage(error)}`
+		);
+	}
 
 	const detection = new Detection(audiencesDefinition);
 
-	const matches = await detection.run();
+	let matches;
+
+	try {
+		matches = await detection.run();
+	}
+	catch (error) {
+		throw new Error(
+			`There was an error running audiences detection: ${getErrorMessage(error)}`
+		);
+	}
 
 	const browserAudienceIds = store.getBrowserAudienceIds();
 	const pageAudienceIds = store.getPageAudienceIds();
@@ -58,7 +92,9 @@ export async function runDetection(
 			}
 
 			default: {
-				throw new Error(`Unsupported retention: ${match.retention}`);
+				throw new Error(
+					`Unsupported retention '${match.retention}' for audience '${match.id}'`
+				);
 			}
 		}
 	}
@@ -89,15 +125,33 @@ export async function runHandlers(): Promise<void> {
 		}
 
 		for (const handler of handlers[audienceId]) {
+			const handlerName = handler.name ?? 'anonymous';
+
 			log(
-				`Running handler '${handler.name ?? 'anonymous'}' for audience '${audienceId}'`
+				`Running handler '${handlerName}' for audience '${audienceId}'`
 			);
 
-			await handler.apply(handler);
+			try {
+				await handler();
+			}
+			catch (error) {
+				throw new Error(
+					`There was an error running handler '${handlerName}' of audience ` +
+						`'${audienceId}': ${getErrorMessage(error)}`
+				);
+			}
 		}
 	}
 }
 
 export function setLogEnabled(enabled: boolean) {
 	log.enabled = enabled;
+}
+
+function getErrorMessage(error: unknown): string {
+	if (error instanceof Error) {
+		return error.message;
+	}
+
+	return String(error);
 }

@@ -4,6 +4,7 @@ import GeoMapLangKey from './geo-map-lang-key';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {Colors} from 'shared/util/charts';
+import {createRoot} from 'react-dom/client';
 import {toThousands} from 'shared/util/numbers';
 
 const OTHERS = 'others';
@@ -138,30 +139,28 @@ const mergeData = (countries: ICountry[]) => {
 	};
 };
 
-const escapeHTML = (value: string) =>
-	value.replace(
-		/[&<>"']/g,
-		char =>
-			({
-				'"': '&quot;',
-				'&': '&amp;',
-				"'": '&#39;',
-				'<': '&lt;',
-				'>': '&gt;'
-			}[char] as string)
-	);
+interface ITooltipProps {
+	metricLabel: string;
+	payload: IFeature;
+}
 
-const renderTooltip = (payload: IFeature, metricLabel: string) =>
-	'<div class="arrow"></div>' +
-	`<div class="popover-header">${escapeHTML(
-		geoMapLangKey[payload.properties.name] || ''
-	)}</div>` +
-	'<div class="d-flex justify-content-between popover-body">' +
-	`<div class="mr-4">${payload.properties.total} <span>${escapeHTML(
-		metricLabel
-	)}</span></div>` +
-	`<div>${payload.properties.value}%</div>` +
-	'</div>';
+const Tooltip = ({metricLabel, payload}: ITooltipProps) => (
+	<>
+		<div className='arrow' />
+
+		<div className='popover-header'>
+			{geoMapLangKey[payload.properties.name]}
+		</div>
+
+		<div className='d-flex justify-content-between popover-body'>
+			<div className='mr-4'>
+				{payload.properties.total} <span>{metricLabel}</span>
+			</div>
+
+			<div>{`${payload.properties.value}%`}</div>
+		</div>
+	</>
+);
 
 interface IGeomapCardProps {
 	data: {
@@ -212,6 +211,8 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			.style('position', 'absolute')
 			.style('display', 'none');
 
+		const tooltipRoot = createRoot(tooltip.node() as HTMLElement);
+
 		const handleMouseOver = (
 			_feature: IFeature,
 			index: number,
@@ -221,9 +222,11 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 
 			d3.select(node).style('fill', chartRef.current._color.selected);
 
-			tooltip
-				.html(renderTooltip(_feature, metricLabel))
-				.style('display', null);
+			tooltipRoot.render(
+				<Tooltip metricLabel={metricLabel} payload={_feature} />
+			);
+
+			tooltip.style('display', null);
 		};
 
 		const handleMouseOut = (
@@ -281,6 +284,10 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			.on('mouseover', handleMouseOver);
 
 		chartRef.current._fillFn = fillFn;
+
+		return () => {
+			tooltipRoot.unmount();
+		};
 	}, []);
 
 	useEffect(() => {

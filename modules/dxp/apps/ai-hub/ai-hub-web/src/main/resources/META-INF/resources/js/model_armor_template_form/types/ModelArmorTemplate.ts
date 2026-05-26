@@ -17,7 +17,6 @@ export type ModelArmorTemplate = {
 	multiLanguageDetectionEnabled: boolean;
 	piAndJailbreakConfidenceLevel: FilterLevel;
 	piAndJailbreakFilterEnabled: boolean;
-	r_accountToAIHubModelArmorTemplates_accountEntryERC: string;
 	raiDangerousLevel: RAILevel;
 	raiHarassmentLevel: RAILevel;
 	raiHateSpeechLevel: RAILevel;

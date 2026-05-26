@@ -60,9 +60,8 @@ public class ViewModelArmorTemplatesDisplayContext {
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				StringBundler.concat(
-					getAPIURL(), "/by-external-reference-code",
-					"/{externalReferenceCode}"),
+				"/o/ai-hub/v1.0/model-armor-templates" +
+					"/by-external-reference-code/{externalReferenceCode}",
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "async"));

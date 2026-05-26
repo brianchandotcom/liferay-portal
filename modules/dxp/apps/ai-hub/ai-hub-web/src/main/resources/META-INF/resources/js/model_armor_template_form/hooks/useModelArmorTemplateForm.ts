@@ -15,12 +15,10 @@ import {
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
 
 interface UseModelArmorTemplateFormProps {
-	accountEntryExternalReferenceCode: string;
 	externalReferenceCode: string;
 }
 
 export function useModelArmorTemplateForm({
-	accountEntryExternalReferenceCode,
 	externalReferenceCode,
 }: UseModelArmorTemplateFormProps) {
 	const {
@@ -34,11 +32,7 @@ export function useModelArmorTemplateForm({
 		touched,
 		values,
 	} = useFormik<ModelArmorTemplate>({
-		initialValues: {
-			...DEFAULT_MODEL_ARMOR_TEMPLATE,
-			r_accountToAIHubModelArmorTemplates_accountEntryERC:
-				accountEntryExternalReferenceCode,
-		},
+		initialValues: DEFAULT_MODEL_ARMOR_TEMPLATE,
 		onSubmit: async (formValues) => {
 			try {
 				await putModelArmorTemplate(formValues);
@@ -106,7 +100,29 @@ export function useModelArmorTemplateForm({
 					externalReferenceCode
 				);
 
-				setValues(modelArmorTemplate);
+				setValues({
+					active: modelArmorTemplate.active,
+					description: modelArmorTemplate.description,
+					externalReferenceCode:
+						modelArmorTemplate.externalReferenceCode,
+					guardrailType: modelArmorTemplate.guardrailType,
+					location: modelArmorTemplate.location,
+					maliciousUriFilterEnabled:
+						modelArmorTemplate.maliciousUriFilterEnabled,
+					multiLanguageDetectionEnabled:
+						modelArmorTemplate.multiLanguageDetectionEnabled,
+					piAndJailbreakConfidenceLevel:
+						modelArmorTemplate.piAndJailbreakConfidenceLevel,
+					piAndJailbreakFilterEnabled:
+						modelArmorTemplate.piAndJailbreakFilterEnabled,
+					raiDangerousLevel: modelArmorTemplate.raiDangerousLevel,
+					raiHarassmentLevel: modelArmorTemplate.raiHarassmentLevel,
+					raiHateSpeechLevel: modelArmorTemplate.raiHateSpeechLevel,
+					raiSexuallyExplicitLevel:
+						modelArmorTemplate.raiSexuallyExplicitLevel,
+					sdpFilterEnabled: modelArmorTemplate.sdpFilterEnabled,
+					title_i18n: modelArmorTemplate.title_i18n,
+				});
 			}
 			catch (error) {
 				openToast({

@@ -21,6 +21,7 @@ import com.liferay.journal.model.JournalArticleResourceTable;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
+import com.liferay.message.boards.model.MBDiscussionTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.LayoutTable;
@@ -50,6 +51,9 @@ public class JournalArticleTableReferenceDefinition
 		).classNameReference(
 			JournalArticleTable.INSTANCE.id,
 			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id, MBDiscussionTable.INSTANCE.classPK,
+			JournalArticle.class
 		).classNameReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey,
 			TranslationEntryTable.INSTANCE.classPK, JournalArticle.class

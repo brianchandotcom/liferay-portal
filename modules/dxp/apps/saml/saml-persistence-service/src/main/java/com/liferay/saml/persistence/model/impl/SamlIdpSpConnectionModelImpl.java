@@ -1267,4 +1267,4 @@ public class SamlIdpSpConnectionModelImpl
 	private SamlIdpSpConnection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1812860586
+// LIFERAY-SERVICE-BUILDER-HASH:1774470966

@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Diagram")
+@GraphQLName(
+	description = "A shop-by-diagram setting that turns a product into an interactive image with clickable pins. Created and updated by the admin catalog write surface, which first uploads the diagram image as a diagram-type attachment and then persists the diagram setting.",
+	value = "Diagram"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Diagram")
 public class Diagram implements Serializable {
@@ -92,7 +95,10 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<AttachmentBase64> _attachmentBase64Supplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Hex or CSS color string used to render the diagram background or overlay. No server-side validation; maximum length is 75 characters.",
+		example = "black"
+	)
 	public String getColor() {
 		if (_colorSupplier != null) {
 			color = _colorSupplier.get();
@@ -126,7 +132,9 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Hex or CSS color string used to render the diagram background or overlay. No server-side validation; maximum length is 75 characters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String color;
 
@@ -134,7 +142,10 @@ public class Diagram implements Serializable {
 	private Supplier<String> _colorSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the diagram setting. Assigned by the server.",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -166,7 +177,9 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the diagram setting. Assigned by the server."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -174,7 +187,10 @@ public class Diagram implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33132")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the attachment that holds the diagram image. Populated from the uploaded `attachmentBase64`; can also be set explicitly to point at an existing diagram-type attachment.",
+		example = "33132"
+	)
 	public Long getImageId() {
 		if (_imageIdSupplier != null) {
 			imageId = _imageIdSupplier.get();
@@ -208,14 +224,19 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the attachment that holds the diagram image. Populated from the uploaded `attachmentBase64`; can also be set explicitly to point at an existing diagram-type attachment."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
 	@JsonIgnore
 	private Supplier<Long> _imageIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Name 1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Public download URL for the diagram image. Read-only; returns null when the underlying attachment has no document-library file.",
+		example = "Name 1"
+	)
 	public String getImageURL() {
 		if (_imageURLSupplier != null) {
 			imageURL = _imageURLSupplier.get();
@@ -249,14 +270,19 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Public download URL for the diagram image. Read-only; returns null when the underlying attachment has no document-library file."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String imageURL;
 
 	@JsonIgnore
 	private Supplier<String> _imageURLSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent product the diagram belongs to. Read-only; populated from the linked product.",
+		example = "exampleERC"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -294,7 +320,9 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent product the diagram belongs to. Read-only; populated from the linked product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
@@ -302,7 +330,10 @@ public class Diagram implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent product. Read-only; populated from the linked product.",
+		example = "33131"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -336,14 +367,19 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent product. Read-only; populated from the linked product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Pixel radius used by the storefront to compute the click area around each pin.",
+		example = "33.54"
+	)
 	public Double getRadius() {
 		if (_radiusSupplier != null) {
 			radius = _radiusSupplier.get();
@@ -377,14 +413,19 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Pixel radius used by the storefront to compute the click area around each pin."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double radius;
 
 	@JsonIgnore
 	private Supplier<Double> _radiusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "default")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Diagram type key resolved against the registered diagram types. Defaults to `diagram.type.default` on add when omitted; patch preserves the previous value when omitted.",
+		example = "default"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -416,7 +457,9 @@ public class Diagram implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Diagram type key resolved against the registered diagram types. Defaults to `diagram.type.default` on add when omitted; patch preserves the previous value when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
@@ -675,4 +718,4 @@ public class Diagram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-574944074
+// LIFERAY-REST-BUILDER-HASH:1285464076

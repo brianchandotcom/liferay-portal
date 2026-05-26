@@ -90,7 +90,7 @@ public class DDLRecordSetPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDLRecordSet>
+	private CollectionPersistenceFinder<DDLRecordSet, NoSuchRecordSetException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -131,15 +131,8 @@ public class DDLRecordSetPersistenceImpl
 			String uuid, OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByUuid_First(uuid, orderByComparator);
-
-		if (ddlRecordSet != null) {
-			return ddlRecordSet;
-		}
-
-		throw new NoSuchRecordSetException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,7 +173,7 @@ public class DDLRecordSetPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DDLRecordSet>
+	private UniquePersistenceFinder<DDLRecordSet, NoSuchRecordSetException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -195,21 +188,8 @@ public class DDLRecordSetPersistenceImpl
 	public DDLRecordSet findByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByUUID_G(uuid, groupId);
-
-		if (ddlRecordSet == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRecordSetException(message);
-		}
-
-		return ddlRecordSet;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -257,7 +237,7 @@ public class DDLRecordSetPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecordSet>
+	private CollectionPersistenceFinder<DDLRecordSet, NoSuchRecordSetException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -301,16 +281,8 @@ public class DDLRecordSetPersistenceImpl
 			OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddlRecordSet != null) {
-			return ddlRecordSet;
-		}
-
-		throw new NoSuchRecordSetException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +327,9 @@ public class DDLRecordSetPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<DDLRecordSet>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<DDLRecordSet, NoSuchRecordSetException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the ddl record sets where groupId = &#63;.
@@ -565,7 +538,7 @@ public class DDLRecordSetPersistenceImpl
 			finderCache, new Object[] {groupIds}, groupIds);
 	}
 
-	private CollectionPersistenceFinder<DDLRecordSet>
+	private CollectionPersistenceFinder<DDLRecordSet, NoSuchRecordSetException>
 		_collectionPersistenceFinderByDDMStructureId;
 
 	/**
@@ -704,7 +677,8 @@ public class DDLRecordSetPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(DDMStructureIds)});
 	}
 
-	private UniquePersistenceFinder<DDLRecordSet> _uniquePersistenceFinderByG_R;
+	private UniquePersistenceFinder<DDLRecordSet, NoSuchRecordSetException>
+		_uniquePersistenceFinderByG_R;
 
 	/**
 	 * Returns the ddl record set where groupId = &#63; and recordSetKey = &#63; or throws a <code>NoSuchRecordSetException</code> if it could not be found.
@@ -718,22 +692,8 @@ public class DDLRecordSetPersistenceImpl
 	public DDLRecordSet findByG_R(long groupId, String recordSetKey)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByG_R(groupId, recordSetKey);
-
-		if (ddlRecordSet == null) {
-			String message =
-				_uniquePersistenceFinderByG_R.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, recordSetKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRecordSetException(message);
-		}
-
-		return ddlRecordSet;
+		return _uniquePersistenceFinderByG_R.find(
+			finderCache, new Object[] {groupId, recordSetKey});
 	}
 
 	/**
@@ -1176,15 +1136,6 @@ public class DDLRecordSetPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DDLRECORDSET_WHERE, _SQL_COUNT_DDLRECORDSET_WHERE,
 				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDLRecordSetImpl.class, DDLRecordSet.class, "ddlRecordSet",
-					"DDLRecordSet", "ddlRecordSet.recordSetId",
-					"SELECT DISTINCT {ddlRecordSet.*} FROM DDLRecordSet ddlRecordSet WHERE ",
-					"SELECT {DDLRecordSet.*} FROM (SELECT DISTINCT ddlRecordSet.recordSetId FROM DDLRecordSet ddlRecordSet WHERE ",
-					") TEMP_TABLE INNER JOIN DDLRecordSet ON TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId",
-					"SELECT COUNT(DISTINCT ddlRecordSet.recordSetId) AS COUNT_VALUE FROM DDLRecordSet ddlRecordSet WHERE ",
-					DDLRecordSetModelImpl.ORDER_BY_SQL,
-					DDLRecordSetModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddlRecordSet.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDLRecordSet::getGroupId));
@@ -1304,4 +1255,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1771103554
+// LIFERAY-SERVICE-BUILDER-HASH:-1235042077

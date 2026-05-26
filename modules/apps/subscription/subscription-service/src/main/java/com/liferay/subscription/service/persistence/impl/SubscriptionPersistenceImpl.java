@@ -84,8 +84,9 @@ public class SubscriptionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where groupId = &#63;.
@@ -125,16 +126,8 @@ public class SubscriptionPersistenceImpl
 			long groupId, OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -175,8 +168,9 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where userId = &#63;.
@@ -216,16 +210,8 @@ public class SubscriptionPersistenceImpl
 			long userId, OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -266,8 +252,9 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByG_U;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByG_U;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where groupId = &#63; and userId = &#63;.
@@ -310,16 +297,8 @@ public class SubscriptionPersistenceImpl
 			OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByG_U_First(
-			groupId, userId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
+		return _collectionPersistenceFinderByG_U.findFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -364,8 +343,9 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where companyId = &#63; and classNameId = &#63;.
@@ -408,17 +388,9 @@ public class SubscriptionPersistenceImpl
 			OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -464,8 +436,9 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByU_C;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByU_C;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where userId = &#63; and classNameId = &#63;.
@@ -508,16 +481,8 @@ public class SubscriptionPersistenceImpl
 			OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByU_C_First(
-			userId, classNameId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByU_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, classNameId}));
+		return _collectionPersistenceFinderByU_C.findFirst(
+			finderCache, new Object[] {userId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -562,8 +527,9 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {userId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByC_C_C;
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByC_C_C;
 
 	/**
 	 * Returns an ordered range of all the subscriptions where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -608,17 +574,9 @@ public class SubscriptionPersistenceImpl
 			OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		throw new NoSuchSubscriptionException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			finderCache, new Object[] {companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -667,9 +625,10 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<Subscription>
-		_collectionPersistenceFinderByC_U_C_C;
-	private UniquePersistenceFinder<Subscription>
+	private CollectionPersistenceFinder
+		<Subscription, NoSuchSubscriptionException>
+			_collectionPersistenceFinderByC_U_C_C;
+	private UniquePersistenceFinder<Subscription, NoSuchSubscriptionException>
 		_uniquePersistenceFinderByC_U_C_C;
 
 	/**
@@ -734,23 +693,9 @@ public class SubscriptionPersistenceImpl
 			long companyId, long userId, long classNameId, long classPK)
 		throws NoSuchSubscriptionException {
 
-		Subscription subscription = fetchByC_U_C_C(
-			companyId, userId, classNameId, classPK);
-
-		if (subscription == null) {
-			String message =
-				_uniquePersistenceFinderByC_U_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, userId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSubscriptionException(message);
-		}
-
-		return subscription;
+		return _uniquePersistenceFinderByC_U_C_C.find(
+			finderCache,
+			new Object[] {companyId, userId, classNameId, classPK});
 	}
 
 	/**
@@ -1420,4 +1365,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:978453651
+// LIFERAY-SERVICE-BUILDER-HASH:-1541786478

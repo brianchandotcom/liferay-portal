@@ -85,8 +85,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63;.
@@ -127,16 +128,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
 		throws NoSuchMLForecastAlertEntryException {
 
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceMLForecastAlertEntry != null) {
-			return commerceMLForecastAlertEntry;
-		}
-
-		throw new NoSuchMLForecastAlertEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +171,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
@@ -222,16 +216,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
 		throws NoSuchMLForecastAlertEntryException {
 
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceMLForecastAlertEntry != null) {
-			return commerceMLForecastAlertEntry;
-		}
-
-		throw new NoSuchMLForecastAlertEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -276,8 +262,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<CommerceMLForecastAlertEntry>
-		_uniquePersistenceFinderByC_C_T;
+	private UniquePersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_uniquePersistenceFinderByC_C_T;
 
 	/**
 	 * Returns the commerce ml forecast alert entry where companyId = &#63; and commerceAccountId = &#63; and timestamp = &#63; or throws a <code>NoSuchMLForecastAlertEntryException</code> if it could not be found.
@@ -293,23 +280,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			long companyId, long commerceAccountId, Date timestamp)
 		throws NoSuchMLForecastAlertEntryException {
 
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			fetchByC_C_T(companyId, commerceAccountId, timestamp);
-
-		if (commerceMLForecastAlertEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, commerceAccountId, timestamp});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMLForecastAlertEntryException(message);
-		}
-
-		return commerceMLForecastAlertEntry;
+		return _uniquePersistenceFinderByC_C_T.find(
+			finderCache,
+			new Object[] {companyId, commerceAccountId, timestamp});
 	}
 
 	/**
@@ -367,8 +340,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			new Object[] {companyId, commerceAccountId, timestamp});
 	}
 
-	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
-		_collectionPersistenceFinderByC_C_S;
+	private CollectionPersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_collectionPersistenceFinderByC_C_S;
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
@@ -543,8 +517,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
-		_collectionPersistenceFinderByC_C_GtRc_S;
+	private CollectionPersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_collectionPersistenceFinderByC_C_GtRc_S;
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and relativeChange &gt; &#63; and status = &#63;.
@@ -896,8 +871,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
-		_collectionPersistenceFinderByC_C_LtRc_S;
+	private CollectionPersistenceFinder
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
+			_collectionPersistenceFinderByC_C_LtRc_S;
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and relativeChange &lt; &#63; and status = &#63;.
@@ -1798,4 +1774,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1638818213
+// LIFERAY-SERVICE-BUILDER-HASH:-430824598

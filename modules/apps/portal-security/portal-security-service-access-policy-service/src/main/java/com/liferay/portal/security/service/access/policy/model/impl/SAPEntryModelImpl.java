@@ -105,6 +105,8 @@ public class SAPEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "sapEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME = "sapEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sapEntry.sapEntryId ASC";
 
@@ -1187,4 +1189,4 @@ public class SAPEntryModelImpl
 	private SAPEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1509767972
+// LIFERAY-SERVICE-BUILDER-HASH:993573900

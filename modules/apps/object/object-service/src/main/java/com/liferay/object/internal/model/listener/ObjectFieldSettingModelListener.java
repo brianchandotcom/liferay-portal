@@ -52,8 +52,9 @@ public class ObjectFieldSettingModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectFieldSetting.class.getName(),
+					ObjectFieldSetting.class.getName(),
 					objectFieldSetting.getObjectFieldSettingId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalOObjectFieldSetting, objectFieldSetting)));
 		}
@@ -81,8 +82,8 @@ public class ObjectFieldSettingModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectFieldSetting.class.getName(),
-				objectFieldSetting.getObjectFieldSettingId(), null);
+				ObjectFieldSetting.class.getName(),
+				objectFieldSetting.getObjectFieldSettingId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

@@ -1177,4 +1177,4 @@ public class CommerceVirtualOrderItemModelImpl
 	private CommerceVirtualOrderItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1315505354
+// LIFERAY-SERVICE-BUILDER-HASH:-890541644

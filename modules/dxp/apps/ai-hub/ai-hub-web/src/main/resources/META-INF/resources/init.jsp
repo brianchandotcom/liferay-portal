@@ -23,11 +23,14 @@ page import="com.liferay.ai.hub.web.internal.display.context.EditAgentDefinition
 page import="com.liferay.ai.hub.web.internal.display.context.EditChatbotDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditContentRetrieverDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditInstructionDefinitionDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.EditModelArmorTemplateDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.HomeDashboardDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.ViewActivityDashboardDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewChatbotsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewContentRetrieversDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewInstructionDefinitionsDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.ViewModelArmorTemplatesDisplayContext" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %>
 
 <liferay-frontend:defineObjects />

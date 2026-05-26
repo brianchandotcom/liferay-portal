@@ -60,7 +60,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.NavigableMap;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -1044,12 +1043,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			layoutSet = group.getPublicLayoutSet();
 		}
 
-		NavigableMap<String, String> virtualHostnames =
-			layoutSet.getVirtualHostnames();
-
 		return _portal.getPortalURL(
-			virtualHostnames.firstKey(), _portal.getPortalServerPort(false),
-			false);
+			_portal.getDefaultVirtualHostname(false, layoutSet),
+			_portal.getPortalServerPort(false), false);
 	}
 
 	private static final String _CONTENT_POSTFIX = "\">link</a>";

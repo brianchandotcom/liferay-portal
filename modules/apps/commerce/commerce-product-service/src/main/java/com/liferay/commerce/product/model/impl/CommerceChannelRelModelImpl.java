@@ -960,4 +960,4 @@ public class CommerceChannelRelModelImpl
 	private CommerceChannelRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1337858503
+// LIFERAY-SERVICE-BUILDER-HASH:-802661935

@@ -75,8 +75,9 @@ public class BatchPlannerPlanPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63;.
@@ -117,16 +118,8 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -202,8 +195,9 @@ public class BatchPlannerPlanPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByC_U;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63; and userId = &#63;.
@@ -246,16 +240,8 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -337,8 +323,9 @@ public class BatchPlannerPlanPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByC_E;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByC_E;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63; and export = &#63;.
@@ -381,16 +368,8 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByC_E_First(
-			companyId, export, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByC_E.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, export}));
+		return _collectionPersistenceFinderByC_E.findFirst(
+			finderCache, new Object[] {companyId, export}, orderByComparator);
 	}
 
 	/**
@@ -472,8 +451,9 @@ public class BatchPlannerPlanPersistenceImpl
 			finderCache, new Object[] {companyId, export}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByC_N;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByC_N;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63; and name = &#63;.
@@ -516,16 +496,8 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByC_N_First(
-			companyId, name, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
+		return _collectionPersistenceFinderByC_N.findFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -607,8 +579,9 @@ public class BatchPlannerPlanPersistenceImpl
 			finderCache, new Object[] {companyId, name}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByC_T;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63; and template = &#63;.
@@ -651,16 +624,8 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByC_T_First(
-			companyId, template, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, template}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {companyId, template}, orderByComparator);
 	}
 
 	/**
@@ -742,8 +707,9 @@ public class BatchPlannerPlanPersistenceImpl
 			finderCache, new Object[] {companyId, template}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<BatchPlannerPlan>
-		_collectionPersistenceFinderByC_E_T;
+	private FilterCollectionPersistenceFinder
+		<BatchPlannerPlan, NoSuchPlanException>
+			_collectionPersistenceFinderByC_E_T;
 
 	/**
 	 * Returns an ordered range of all the batch planner plans where companyId = &#63; and export = &#63; and template = &#63;.
@@ -788,17 +754,9 @@ public class BatchPlannerPlanPersistenceImpl
 			OrderByComparator<BatchPlannerPlan> orderByComparator)
 		throws NoSuchPlanException {
 
-		BatchPlannerPlan batchPlannerPlan = fetchByC_E_T_First(
-			companyId, export, template, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		throw new NoSuchPlanException(
-			_collectionPersistenceFinderByC_E_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, export, template}));
+		return _collectionPersistenceFinderByC_E_T.findFirst(
+			finderCache, new Object[] {companyId, export, template},
+			orderByComparator);
 	}
 
 	/**
@@ -1128,16 +1086,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId));
@@ -1165,16 +1113,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1209,16 +1147,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1249,16 +1177,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1293,16 +1211,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1340,16 +1248,6 @@ public class BatchPlannerPlanPersistenceImpl
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BatchPlannerPlanImpl.class, BatchPlannerPlan.class,
-					"batchPlannerPlan", "BatchPlannerPlan",
-					"batchPlannerPlan.batchPlannerPlanId",
-					"SELECT DISTINCT {batchPlannerPlan.*} FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					"SELECT {BatchPlannerPlan.*} FROM (SELECT DISTINCT batchPlannerPlan.batchPlannerPlanId FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					") TEMP_TABLE INNER JOIN BatchPlannerPlan ON TEMP_TABLE.batchPlannerPlanId = BatchPlannerPlan.batchPlannerPlanId",
-					"SELECT COUNT(DISTINCT batchPlannerPlan.batchPlannerPlanId) AS COUNT_VALUE FROM BatchPlannerPlan batchPlannerPlan WHERE ",
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL,
-					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId),
@@ -1426,4 +1324,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1278515785
+// LIFERAY-SERVICE-BUILDER-HASH:1814597708

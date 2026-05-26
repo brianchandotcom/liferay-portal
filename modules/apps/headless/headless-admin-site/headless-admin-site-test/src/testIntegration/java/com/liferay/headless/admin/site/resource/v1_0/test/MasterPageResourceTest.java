@@ -23,6 +23,7 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -77,6 +79,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -177,12 +180,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		MasterPage randomMasterPage = randomMasterPage();
 
-		Repository repository = _portletFileRepository.addPortletRepository(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
-
-		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+		FileEntry fileEntry = FileEntryTestUtil.addPreviewFileEntry(
+			testGroup, _portletFileRepository, getClass());
 
 		randomMasterPage.setThumbnailURLReference(
 			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
@@ -192,6 +191,21 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			randomMasterPage);
 
 		MasterPageResource masterPageResource = _getMasterPageResource();
+
+		IdempotentRetryAssert.retryAssert(
+			30, TimeUnit.SECONDS, 500, TimeUnit.MILLISECONDS,
+			() -> {
+				MasterPage getMasterPage = masterPageResource.getSiteMasterPage(
+					testGroup.getExternalReferenceCode(),
+					postMasterPage.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getMasterPage.getThumbnailURLReference();
+
+				Assert.assertNotNull(thumbnailURLReference);
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<MasterPage> page = masterPageResource.getSiteMasterPagesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);
@@ -293,7 +307,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			Boolean.FALSE,
 			_getMasterPage(
 				Boolean.FALSE, masterPage.getExternalReferenceCode(),
-				StringPool.BLANK, thumbnailURL));
+				StringPool.BLANK, StringPool.BLANK));
 
 		_testPatchSiteMasterPageWithPageSpecifications();
 		_testPatchSiteMasterPageWithThumbnail();
@@ -738,7 +752,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "pageSpecifications,thumbnail"
+			"nestedFields", "pageSpecifications,thumbnailURLReference"
 		).build();
 	}
 

@@ -40,7 +40,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConfigurationList")
+@GraphQLName(
+	description = "Container that groups product configuration entries under a single inventory, shipping, and tax template; each catalog has one master configuration list used as the catalog-level default, and additional sub-templates can inherit from a parent and be qualified by account, account group, channel, or order type.",
+	value = "ProductConfigurationList"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductConfigurationList")
 public class ProductConfigurationList implements Serializable {
@@ -54,7 +57,9 @@ public class ProductConfigurationList implements Serializable {
 			ProductConfigurationList.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name; each entry carries the URL template and HTTP method; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -90,14 +95,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name; each entry carries the URL template and HTTP method; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the catalog whose site owns this configuration list; on create, it is resolved first and falls back to `catalogId`; write-only.",
+		example = "AB-34098-789-N"
+	)
 	public String getCatalogExternalReferenceCode() {
 		if (_catalogExternalReferenceCodeSupplier != null) {
 			catalogExternalReferenceCode =
@@ -135,7 +145,9 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the catalog whose site owns this configuration list; on create, it is resolved first and falls back to `catalogId`; write-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String catalogExternalReferenceCode;
 
@@ -143,7 +155,10 @@ public class ProductConfigurationList implements Serializable {
 	private Supplier<String> _catalogExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the catalog whose site owns this configuration list; used on create to derive the owning site when `catalogExternalReferenceCode` does not resolve; write-only.",
+		example = "30130"
+	)
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -177,14 +192,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the catalog whose site owns this configuration list; used on create to derive the owning site when `catalogExternalReferenceCode` does not resolve; write-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Timestamp when the configuration list was created; set by the service on persist; read-only.",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -218,14 +238,18 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Timestamp when the configuration list was created; set by the service on persist; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom field values defined for the configuration list; serialized for the request locale."
+	)
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -266,7 +290,9 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom field values defined for the configuration list; serialized for the request locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected com.liferay.portal.vulcan.custom.field.CustomField[] customFields;
 
@@ -274,7 +300,10 @@ public class ProductConfigurationList implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.custom.field.CustomField[]>
 		_customFieldsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date at which the configuration list becomes effective; interpreted in the requesting user's time zone; rejected when invalid.",
+		example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -308,14 +337,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date at which the configuration list becomes effective; interpreted in the requesting user's time zone; rejected when invalid."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date after which the configuration list is no longer effective; ignored when `neverExpire` is true; rejected when invalid.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -349,14 +383,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date after which the configuration list is no longer effective; ignored when `neverExpire` is true; rejected when invalid."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per product configuration list within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -390,7 +429,9 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per product configuration list within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -398,7 +439,10 @@ public class ProductConfigurationList implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the product configuration list; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -430,14 +474,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the product configuration list; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether this is the catalog-level default configuration list; a catalog has exactly one master list (a duplicate is rejected), the master cannot be deleted, and it seeds the default product configuration entry on creation.",
+		example = "true"
+	)
 	public Boolean getMaster() {
 		if (_masterSupplier != null) {
 			master = _masterSupplier.get();
@@ -471,14 +520,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether this is the catalog-level default configuration list; a catalog has exactly one master list (a duplicate is rejected), the master cannot be deleted, and it seeds the default product configuration entry on creation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean master;
 
 	@JsonIgnore
 	private Supplier<Boolean> _masterSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Hand Saw")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Administrative display name shown in the Commerce control panel; sortable.",
+		example = "Hand Saw"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -510,14 +564,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Administrative display name shown in the Commerce control panel; sortable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the expiration date is ignored and the configuration list never expires; defaults to true on create or update when the field is omitted.",
+		example = "true"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -551,7 +610,9 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the expiration date is ignored and the configuration list never expires; defaults to true on create or update when the field is omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
@@ -559,7 +620,10 @@ public class ProductConfigurationList implements Serializable {
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent configuration list; enables inheritance, with child lists copying parent entry snapshots on creation; the parent must belong to the same site as the child.",
+		example = "30130"
+	)
 	public Long getParentProductConfigurationListId() {
 		if (_parentProductConfigurationListIdSupplier != null) {
 			parentProductConfigurationListId =
@@ -598,14 +662,19 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent configuration list; enables inheritance, with child lists copying parent entry snapshots on creation; the parent must belong to the same site as the child."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentProductConfigurationListId;
 
 	@JsonIgnore
 	private Supplier<Long> _parentProductConfigurationListIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display weight used to order qualified lists ascending before applying account, account group, channel, and order-type tie-breakers.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -639,14 +708,18 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display weight used to order qualified lists ascending before applying account, account group, channel, and order-type tie-breakers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Nested product configuration entries associated with this list; supplying entries on create or update triggers nested calls to create or update each entry."
+	)
 	@Valid
 	public ProductConfiguration[] getProductConfigurations() {
 		if (_productConfigurationsSupplier != null) {
@@ -684,7 +757,9 @@ public class ProductConfigurationList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Nested product configuration entries associated with this list; supplying entries on create or update triggers nested calls to create or update each entry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductConfiguration[] productConfigurations;
 
@@ -1050,4 +1125,4 @@ public class ProductConfigurationList implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1944823383
+// LIFERAY-REST-BUILDER-HASH:-1362019932

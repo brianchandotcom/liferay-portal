@@ -109,6 +109,8 @@ public class CPOptionCategoryModelImpl
 
 	public static final String ENTITY_ALIAS = "cpOptionCategory";
 
+	public static final String FILTER_PK_COLUMN_NAME = "CPOptionCategoryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpOptionCategory.title ASC, cpOptionCategory.priority ASC";
 
@@ -1454,4 +1456,4 @@ public class CPOptionCategoryModelImpl
 	private CPOptionCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1021149552
+// LIFERAY-SERVICE-BUILDER-HASH:1583643408

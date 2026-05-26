@@ -139,29 +139,31 @@ public class IPAddressHeadlessMFAChecker implements HeadlessMFAChecker {
 			long companyId, long userId, String mfaCheckerClassName) {
 
 			return new AuditMessage(
+				companyId, userId, "Nonexistent",
+				JSONUtil.put("reason", "Nonexistent User"), mfaCheckerClassName,
+				String.valueOf(userId),
 				MFAIPAddressEventTypes.MFA_IP_ADDRESS_VERIFICATION_FAILURE,
-				companyId, userId, "Nonexistent", mfaCheckerClassName,
-				String.valueOf(userId), null,
-				JSONUtil.put("reason", "Nonexistent User"));
+				null);
 		}
 
 		public AuditMessage buildVerificationFailureAuditMessage(
 			User user, String mfaCheckerClassName, String reason) {
 
 			return new AuditMessage(
-				MFAIPAddressEventTypes.MFA_IP_ADDRESS_VERIFICATION_FAILURE,
 				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				mfaCheckerClassName, String.valueOf(user.getPrimaryKey()), null,
-				JSONUtil.put("reason", reason));
+				JSONUtil.put("reason", reason), mfaCheckerClassName,
+				String.valueOf(user.getPrimaryKey()),
+				MFAIPAddressEventTypes.MFA_IP_ADDRESS_VERIFICATION_FAILURE,
+				null);
 		}
 
 		public AuditMessage buildVerificationSuccessAuditMessage(
 			User user, String mfaCheckerClassName) {
 
 			return new AuditMessage(
+				user.getCompanyId(), user.getUserId(), user.getFullName(), null,
+				mfaCheckerClassName, String.valueOf(user.getPrimaryKey()),
 				MFAIPAddressEventTypes.MFA_IP_ADDRESS_VERIFICATION_SUCCESS,
-				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				mfaCheckerClassName, String.valueOf(user.getPrimaryKey()), null,
 				null);
 		}
 

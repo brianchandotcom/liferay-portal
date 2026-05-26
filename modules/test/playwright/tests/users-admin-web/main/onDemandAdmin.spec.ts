@@ -29,7 +29,7 @@ test(
 	'On demand admin',
 	{tag: ['@LPD-70297', '@LPS-150388', '@LPS-156154']},
 	async ({onDemandAdminPage, page, virtualInstancesPage}) => {
-		test.setTimeout(240000);
+		test.setTimeout(90000);
 
 		const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
@@ -141,9 +141,22 @@ test(
 				await newPage.close();
 			}
 
-			await virtualInstancesPage.deleteVirtualInstance(
-				DEFAULT_VIRTUAL_INSTANCE_NAME
-			);
+			await Promise.all([
+				page.waitForResponse(
+					(response) =>
+						response.url().includes('delete_instance') &&
+						response.status() === 200
+				),
+				virtualInstancesPage.deleteVirtualInstance(
+					DEFAULT_VIRTUAL_INSTANCE_NAME
+				),
+			]);
+
+			await expect(
+				page.getByRole('row').filter({
+					hasText: DEFAULT_VIRTUAL_INSTANCE_NAME,
+				})
+			).toHaveCount(0);
 		}
 	}
 );

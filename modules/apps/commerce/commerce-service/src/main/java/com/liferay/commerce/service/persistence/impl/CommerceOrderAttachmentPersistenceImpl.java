@@ -90,8 +90,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceOrderAttachment>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
@@ -132,16 +133,8 @@ public class CommerceOrderAttachmentPersistenceImpl
 			OrderByComparator<CommerceOrderAttachment> orderByComparator)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceOrderAttachment != null) {
-			return commerceOrderAttachment;
-		}
-
-		throw new NoSuchOrderAttachmentException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -183,8 +176,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderAttachment>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchOrderAttachmentException</code> if it could not be found.
@@ -198,22 +192,8 @@ public class CommerceOrderAttachmentPersistenceImpl
 	public CommerceOrderAttachment findByUUID_G(String uuid, long groupId)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment = fetchByUUID_G(
-			uuid, groupId);
-
-		if (commerceOrderAttachment == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderAttachmentException(message);
-		}
-
-		return commerceOrderAttachment;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -262,8 +242,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderAttachment>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
@@ -306,16 +287,8 @@ public class CommerceOrderAttachmentPersistenceImpl
 			OrderByComparator<CommerceOrderAttachment> orderByComparator)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderAttachment != null) {
-			return commerceOrderAttachment;
-		}
-
-		throw new NoSuchOrderAttachmentException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -360,8 +333,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderAttachment>
-		_collectionPersistenceFinderByCommerceOrderId;
+	private CollectionPersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_collectionPersistenceFinderByCommerceOrderId;
 
 	/**
 	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
@@ -402,16 +376,8 @@ public class CommerceOrderAttachmentPersistenceImpl
 			OrderByComparator<CommerceOrderAttachment> orderByComparator)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment =
-			fetchByCommerceOrderId_First(commerceOrderId, orderByComparator);
-
-		if (commerceOrderAttachment != null) {
-			return commerceOrderAttachment;
-		}
-
-		throw new NoSuchOrderAttachmentException(
-			_collectionPersistenceFinderByCommerceOrderId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {commerceOrderId}));
+		return _collectionPersistenceFinderByCommerceOrderId.findFirst(
+			finderCache, new Object[] {commerceOrderId}, orderByComparator);
 	}
 
 	/**
@@ -453,8 +419,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {commerceOrderId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderAttachment>
-		_collectionPersistenceFinderByC_R;
+	private CollectionPersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_collectionPersistenceFinderByC_R;
 
 	/**
 	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
@@ -497,17 +464,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			OrderByComparator<CommerceOrderAttachment> orderByComparator)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment = fetchByC_R_First(
-			commerceOrderId, restricted, orderByComparator);
-
-		if (commerceOrderAttachment != null) {
-			return commerceOrderAttachment;
-		}
-
-		throw new NoSuchOrderAttachmentException(
-			_collectionPersistenceFinderByC_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceOrderId, restricted}));
+		return _collectionPersistenceFinderByC_R.findFirst(
+			finderCache, new Object[] {commerceOrderId, restricted},
+			orderByComparator);
 	}
 
 	/**
@@ -553,8 +512,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {commerceOrderId, restricted});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderAttachment>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderAttachmentException</code> if it could not be found.
@@ -569,23 +529,8 @@ public class CommerceOrderAttachmentPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchOrderAttachmentException {
 
-		CommerceOrderAttachment commerceOrderAttachment = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceOrderAttachment == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderAttachmentException(message);
-		}
-
-		return commerceOrderAttachment;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1165,4 +1110,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1177647661
+// LIFERAY-SERVICE-BUILDER-HASH:-1241384751

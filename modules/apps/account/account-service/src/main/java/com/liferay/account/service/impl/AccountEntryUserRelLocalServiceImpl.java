@@ -271,6 +271,17 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public Ticket addUserInvitationTicket(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _addTicket(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException {
@@ -394,7 +405,10 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 		else {
 			_sendEmail(
-				accountEntryId, accountRoleIds, emailAddress, inviter,
+				accountEntryId, emailAddress, inviter,
+				_addTicket(
+					accountEntryId, accountRoleIds, emailAddress, inviter,
+					serviceContext),
 				serviceContext);
 		}
 	}
@@ -510,6 +524,36 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 	}
 
+	private Ticket _addTicket(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		_validateEmailAddress(
+			_accountEntryEmailAddressValidatorFactory.create(
+				inviter.getCompanyId(), _getAccountDomains(accountEntryId)),
+			emailAddress);
+
+		AccountEntryEmailConfiguration accountEntryEmailConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AccountEntryEmailConfiguration.class, inviter.getCompanyId());
+
+		return _ticketLocalService.addTicket(
+			inviter.getCompanyId(), AccountEntry.class.getName(),
+			accountEntryId, AccountTicketConstants.TYPE_USER_INVITATION, null,
+			JSONUtil.put(
+				"accountRoleIds", accountRoleIds
+			).put(
+				"emailAddress", emailAddress
+			).toString(),
+			new Date(
+				System.currentTimeMillis() +
+					TimeUnit.HOURS.toMillis(
+						accountEntryEmailConfiguration.
+							invitationTokenExpirationTime())),
+			serviceContext);
+	}
+
 	private String[] _getAccountDomains(long accountEntryId) {
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
@@ -522,36 +566,14 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	private void _sendEmail(
-			long accountEntryId, long[] accountRoleIds, String emailAddress,
-			User inviter, ServiceContext serviceContext)
-		throws PortalException {
-
-		_validateEmailAddress(
-			_accountEntryEmailAddressValidatorFactory.create(
-				inviter.getCompanyId(), _getAccountDomains(accountEntryId)),
-			emailAddress);
+		long accountEntryId, String emailAddress, User inviter, Ticket ticket,
+		ServiceContext serviceContext) {
 
 		try {
 			AccountEntryEmailConfiguration accountEntryEmailConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					AccountEntryEmailConfiguration.class,
 					inviter.getCompanyId());
-
-			int invitationTokenExpirationTime =
-				accountEntryEmailConfiguration.invitationTokenExpirationTime();
-
-			Ticket ticket = _ticketLocalService.addTicket(
-				inviter.getCompanyId(), AccountEntry.class.getName(),
-				accountEntryId, AccountTicketConstants.TYPE_USER_INVITATION,
-				JSONUtil.put(
-					"accountRoleIds", accountRoleIds
-				).put(
-					"emailAddress", emailAddress
-				).toString(),
-				new Date(
-					System.currentTimeMillis() +
-						TimeUnit.HOURS.toMillis(invitationTokenExpirationTime)),
-				serviceContext);
 
 			Group guestGroup = _groupLocalService.getGroup(
 				inviter.getCompanyId(), GroupConstants.GUEST);

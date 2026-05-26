@@ -2,25 +2,25 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_STATES",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_DISMISSED",
+			"externalReferenceCode": "DISMISSED",
 			"key": "dismissed",
 			"name": "Dismissed",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_OPEN",
+			"externalReferenceCode": "OPEN",
 			"key": "open",
 			"name": "Open",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_RECURRED",
+			"externalReferenceCode": "RECURRED",
 			"key": "recurred",
 			"name": "Recurred",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_RESOLVED",
+			"externalReferenceCode": "RESOLVED",
 			"key": "resolved",
 			"name": "Resolved",
 			"system": true

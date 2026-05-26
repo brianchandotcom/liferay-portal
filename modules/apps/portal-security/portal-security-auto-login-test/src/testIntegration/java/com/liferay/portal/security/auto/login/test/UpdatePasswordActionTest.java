@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
@@ -89,9 +90,9 @@ public class UpdatePasswordActionTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:8080/c/portal/update_password?languageId=",
-				user.getLanguageId(), "&ticketId=", _ticketId, "&ticketKey=",
-				_ticketKey));
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/c/portal/update_password?languageId=", user.getLanguageId(),
+				"&ticketId=", _ticketId, "&ticketKey=", _ticketKey));
 
 		String content = URLUtil.toString(url);
 

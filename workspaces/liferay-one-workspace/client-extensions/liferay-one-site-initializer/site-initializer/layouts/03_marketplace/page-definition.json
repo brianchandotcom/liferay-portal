@@ -1,4 +1,7 @@
 {
+	"masterPage": {
+		"key": "liferay-one"
+	},
 	"pageElement": {
 		"pageElements": [
 		],

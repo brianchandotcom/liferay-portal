@@ -4032,13 +4032,30 @@ components:
                     type: string
             type: object
         ThumbnailURLReference:
-            # @review
             description:
-                A unique reference to a URL which remains constant across environments.
+                A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the
+                underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in
+                the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` →
+                `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a
+                new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent),
+                carrying the supplied or server-generated `externalReferenceCode`.
             properties:
                 externalReferenceCode:
+                    description:
+                        The thumbnail file's external reference code. On write, the canonical identifier of the file to
+                        bind.
                     type: string
+                fileBase64:
+                    description:
+                        Base64-encoded file content. Used to create a new file when `externalReferenceCode` does not
+                        resolve in the destination.
+                    type: string
+                    writeOnly: true
                 url:
+                    description:
+                        A URL the thumbnail can be fetched from. On read, the canonical URL of the stored file. On
+                        write, used to download bytes (supports `http://`, `https://` and `lar://`) when
+                        `externalReferenceCode` does not resolve and `fileBase64` is absent.
                     type: string
             type: object
         URLActionInteraction:

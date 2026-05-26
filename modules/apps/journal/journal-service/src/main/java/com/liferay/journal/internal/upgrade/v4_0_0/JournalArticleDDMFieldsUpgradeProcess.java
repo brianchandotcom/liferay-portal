@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -128,12 +127,6 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 			Node node = nodeList.item(i);
 
 			NamedNodeMap namedNodeMap = node.getAttributes();
-
-			Node instanceIdNode = namedNodeMap.getNamedItem("instance-id");
-
-			if (instanceIdNode != null) {
-				instanceIdNode.setTextContent(StringUtil.randomString());
-			}
 
 			Node nameNode = namedNodeMap.getNamedItem("name");
 

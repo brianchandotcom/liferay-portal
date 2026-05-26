@@ -60,7 +60,10 @@ describe('MostActiveVisitors', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<MostActiveVisitors namespace="test-namespace" />
+			<MostActiveVisitors
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
@@ -70,5 +73,18 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('150')).toBeInTheDocument();
 		expect(screen.getByText('actions')).toBeInTheDocument();
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
+	});
+
+	it('renders the not-configured message when analytics cloud is not configured', () => {
+		render(
+			<MostActiveVisitors
+				isAnalyticsEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

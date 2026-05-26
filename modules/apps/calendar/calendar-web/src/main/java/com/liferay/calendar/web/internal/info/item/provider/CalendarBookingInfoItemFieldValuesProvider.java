@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import jakarta.portlet.WindowState;
 
@@ -72,6 +73,9 @@ public class CalendarBookingInfoItemFieldValuesProvider
 						calendarBooking.getCalendarBookingId()),
 					StringPool.BLANK, CalendarBooking.class.getSimpleName(),
 					calendarBooking, _getThemeDisplay())
+			).infoFieldValues(
+				_templateInfoItemFieldSetProvider.getInfoFieldValues(
+					CalendarBooking.class.getName(), calendarBooking)
 			).infoItemReference(
 				new InfoItemReference(
 					CalendarBooking.class.getName(),
@@ -293,5 +297,8 @@ public class CalendarBookingInfoItemFieldValuesProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

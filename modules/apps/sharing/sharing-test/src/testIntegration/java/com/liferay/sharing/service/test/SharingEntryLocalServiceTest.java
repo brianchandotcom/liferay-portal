@@ -15,7 +15,9 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
@@ -29,7 +31,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.mail.MailMessage;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -61,6 +70,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Sergio González
@@ -491,6 +502,63 @@ public class SharingEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			externalReferenceCode, sharingEntry.getExternalReferenceCode());
+	}
+
+	@FeatureFlag("LPD-52006")
+	@Test
+	@TestInfo("LPD-48130")
+	public void testAddSharingEntryWithInviteCollaboratorTicket()
+		throws Exception {
+
+		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+
+		Ticket ticket = _ticketLocalService.addTicket(
+			TestPropsValues.getCompanyId(), Group.class.getName(),
+			_group.getGroupId(), TicketConstants.TYPE_INVITE_COLLABORATOR, null,
+			emailAddress,
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
+			new ServiceContext());
+
+		MailServiceTestUtil.clearMessages();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _fromUser.getUserId());
+
+		serviceContext.setRequest(_getMockHttpServletRequest());
+
+		_sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), ticket.getTicketId(), 0, 0,
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+		String body = mailMessage.getBody();
+
+		String fromAddress = PrefsPropsUtil.getString(
+			_group.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		String fromName = PrefsPropsUtil.getString(
+			_group.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		Assert.assertTrue(body.contains("create_account_user"));
+		Assert.assertTrue(body.contains(fromAddress));
+		Assert.assertTrue(body.contains(fromName));
+		Assert.assertTrue(body.contains(ticket.getKey()));
+
+		String from = mailMessage.getFirstHeaderValue("From");
+
+		Assert.assertTrue(from.contains(fromAddress));
+
+		String subject = mailMessage.getFirstHeaderValue("Subject");
+
+		Assert.assertTrue(subject.contains(fromName));
+
+		String to = mailMessage.getFirstHeaderValue("To");
+
+		Assert.assertTrue(to.contains(emailAddress));
 	}
 
 	@Test(expected = NoSuchTicketException.class)
@@ -1445,7 +1513,7 @@ public class SharingEntryLocalServiceTest {
 	private Ticket _addTicket() throws Exception {
 		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
+			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS, null,
 			JSONUtil.put(
 				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
 			).toString(),
@@ -1462,10 +1530,35 @@ public class SharingEntryLocalServiceTest {
 		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_fromUser));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(_fromUser);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
 	private long _classNameId;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private User _fromUser;

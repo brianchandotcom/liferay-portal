@@ -1329,4 +1329,4 @@ public class DDMFormInstanceRecordVersionModelImpl
 	private DDMFormInstanceRecordVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1630738164
+// LIFERAY-SERVICE-BUILDER-HASH:1949422478

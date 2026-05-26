@@ -3,12 +3,17 @@ import React from 'react';
 import {Text} from '@clayui/core';
 
 interface ISectionHeader {
+	className?: string;
 	icon: string;
 	title: string;
 }
 
-const SectionHeader: React.FC<ISectionHeader> = ({icon, title}) => (
-	<div className='mb-3'>
+const SectionHeader: React.FC<ISectionHeader> = ({
+	className = 'mb-3',
+	icon,
+	title
+}) => (
+	<div className={className}>
 		<span className='mr-2'>
 			<Text color='secondary' size={4}>
 				<ClayIcon symbol={icon} />

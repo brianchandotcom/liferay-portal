@@ -91,8 +91,9 @@ public class CommerceTermEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
@@ -132,16 +133,8 @@ public class CommerceTermEntryPersistenceImpl
 			String uuid, OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -216,8 +209,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
@@ -260,16 +254,8 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,8 +337,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByC_A;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByC_A;
 
 	/**
 	 * Returns an ordered range of all the commerce term entries where companyId = &#63; and active = &#63;.
@@ -395,16 +382,8 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByC_A_First(
-			companyId, active, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -486,7 +465,7 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {companyId, active}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommerceTermEntry>
+	private UniquePersistenceFinder<CommerceTermEntry, NoSuchTermEntryException>
 		_uniquePersistenceFinderByC_N;
 
 	/**
@@ -501,21 +480,8 @@ public class CommerceTermEntryPersistenceImpl
 	public CommerceTermEntry findByC_N(long companyId, String name)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByC_N(companyId, name);
-
-		if (commerceTermEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTermEntryException(message);
-		}
-
-		return commerceTermEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -563,8 +529,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByC_LikeType;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByC_LikeType;
 
 	/**
 	 * Returns all the commerce term entries where companyId = &#63; and type LIKE &#63;.
@@ -665,16 +632,8 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByC_LikeType_First(
-			companyId, type, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByC_LikeType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_LikeType.findFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -791,8 +750,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByLtD_S;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByLtD_S;
 
 	/**
 	 * Returns all the commerce term entries where displayDate &lt; &#63; and status = &#63;.
@@ -891,16 +851,8 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1017,8 +969,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByLtE_S;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByLtE_S;
 
 	/**
 	 * Returns all the commerce term entries where expirationDate &lt; &#63; and status = &#63;.
@@ -1119,17 +1072,9 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {expirationDate, status}));
+		return _collectionPersistenceFinderByLtE_S.findFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1247,8 +1192,9 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {expirationDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceTermEntry>
-		_collectionPersistenceFinderByC_A_LikeType;
+	private FilterCollectionPersistenceFinder
+		<CommerceTermEntry, NoSuchTermEntryException>
+			_collectionPersistenceFinderByC_A_LikeType;
 
 	/**
 	 * Returns all the commerce term entries where companyId = &#63; and active = &#63; and type LIKE &#63;.
@@ -1355,17 +1301,9 @@ public class CommerceTermEntryPersistenceImpl
 			OrderByComparator<CommerceTermEntry> orderByComparator)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByC_A_LikeType_First(
-			companyId, active, type, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		throw new NoSuchTermEntryException(
-			_collectionPersistenceFinderByC_A_LikeType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, type}));
+		return _collectionPersistenceFinderByC_A_LikeType.findFirst(
+			finderCache, new Object[] {companyId, active, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1498,7 +1436,7 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {companyId, active, type}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommerceTermEntry>
+	private UniquePersistenceFinder<CommerceTermEntry, NoSuchTermEntryException>
 		_uniquePersistenceFinderByC_P_T;
 
 	/**
@@ -1515,23 +1453,8 @@ public class CommerceTermEntryPersistenceImpl
 			long companyId, double priority, String type)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByC_P_T(
-			companyId, priority, type);
-
-		if (commerceTermEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_P_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, priority, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTermEntryException(message);
-		}
-
-		return commerceTermEntry;
+		return _uniquePersistenceFinderByC_P_T.find(
+			finderCache, new Object[] {companyId, priority, type});
 	}
 
 	/**
@@ -1585,7 +1508,7 @@ public class CommerceTermEntryPersistenceImpl
 			finderCache, new Object[] {companyId, priority, type});
 	}
 
-	private UniquePersistenceFinder<CommerceTermEntry>
+	private UniquePersistenceFinder<CommerceTermEntry, NoSuchTermEntryException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1601,23 +1524,8 @@ public class CommerceTermEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchTermEntryException {
 
-		CommerceTermEntry commerceTermEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceTermEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTermEntryException(message);
-		}
-
-		return commerceTermEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1987,16 +1895,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceTermEntry::getUuid));
@@ -2024,16 +1922,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceTermEntry::getUuid),
@@ -2068,16 +1956,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2121,16 +1999,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2160,16 +2028,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "displayDate", FinderColumn.Type.DATE,
 					"<", true, true, CommerceTermEntry::getDisplayDate),
@@ -2199,16 +2057,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "expirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -2243,16 +2091,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2377,4 +2215,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1144458006
+// LIFERAY-SERVICE-BUILDER-HASH:847475961

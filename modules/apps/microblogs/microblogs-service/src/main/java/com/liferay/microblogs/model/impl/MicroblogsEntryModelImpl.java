@@ -97,6 +97,8 @@ public class MicroblogsEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "microblogsEntry";
 
+	public static final String FILTER_PK_COLUMN_NAME = "microblogsEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY microblogsEntry.createDate DESC";
 
@@ -1058,4 +1060,4 @@ public class MicroblogsEntryModelImpl
 	private MicroblogsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1878481838
+// LIFERAY-SERVICE-BUILDER-HASH:1219096589

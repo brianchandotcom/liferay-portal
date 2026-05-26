@@ -639,4 +639,4 @@ public class MVCCEntryModelImpl
 	private MVCCEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:72007808
+// LIFERAY-SERVICE-BUILDER-HASH:870760812

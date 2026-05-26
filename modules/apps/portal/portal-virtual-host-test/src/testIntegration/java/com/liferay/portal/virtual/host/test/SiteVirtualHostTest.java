@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -209,7 +210,8 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 					body.contains(layout.getName(LocaleUtil.getDefault())));
 			},
 			StringBundler.concat(
-				"http://", virtualHostName, ":8080/web",
+				"http://", virtualHostName, ":",
+				PortalUtil.getPortalServerPort(false), "/web",
 				group.getFriendlyURL()));
 	}
 

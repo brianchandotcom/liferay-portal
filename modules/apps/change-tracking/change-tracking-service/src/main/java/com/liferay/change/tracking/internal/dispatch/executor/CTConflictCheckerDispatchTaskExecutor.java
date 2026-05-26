@@ -7,7 +7,7 @@ package com.liferay.change.tracking.internal.dispatch.executor;
 
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
-import com.liferay.change.tracking.internal.helper.CTUserNotificationHelper;
+import com.liferay.change.tracking.internal.notification.CTUserNotificationSender;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
@@ -65,7 +65,7 @@ public class CTConflictCheckerDispatchTaskExecutor
 					return;
 				}
 
-				_publicationRoleUserHelper.sendUserNotificationEvents(
+				_ctUserNotificationSender.sendUserNotificationEvents(
 					ctCollection,
 					JSONUtil.put(
 						"ctCollectionId", ctCollection.getCtCollectionId()
@@ -81,7 +81,7 @@ public class CTConflictCheckerDispatchTaskExecutor
 					).put(
 						"showConflicts", true
 					),
-					_publicationRoleUserHelper.getPublicationRoleUserIds(
+					_ctUserNotificationSender.getPublicationRoleUserIds(
 						ctCollection, true, PublicationRoleConstants.NAME_ADMIN,
 						PublicationRoleConstants.NAME_EDITOR,
 						PublicationRoleConstants.NAME_PUBLISHER));
@@ -104,6 +104,6 @@ public class CTConflictCheckerDispatchTaskExecutor
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTUserNotificationHelper _publicationRoleUserHelper;
+	private CTUserNotificationSender _ctUserNotificationSender;
 
 }

@@ -92,8 +92,9 @@ public class DispatchTriggerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where uuid = &#63;.
@@ -133,16 +134,8 @@ public class DispatchTriggerPersistenceImpl
 			String uuid, OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -217,8 +210,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where uuid = &#63; and companyId = &#63;.
@@ -261,16 +255,8 @@ public class DispatchTriggerPersistenceImpl
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,8 +338,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where companyId = &#63;.
@@ -394,16 +381,8 @@ public class DispatchTriggerPersistenceImpl
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -479,8 +458,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByActive;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByActive;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where active = &#63;.
@@ -521,16 +501,8 @@ public class DispatchTriggerPersistenceImpl
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByActive_First(
-			active, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
+		return _collectionPersistenceFinderByActive.findFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -605,8 +577,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {active});
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByC_U;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and userId = &#63;.
@@ -649,16 +622,8 @@ public class DispatchTriggerPersistenceImpl
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -740,8 +705,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByC_DTET;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByC_DTET;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
@@ -784,17 +750,9 @@ public class DispatchTriggerPersistenceImpl
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByC_DTET_First(
-			companyId, dispatchTaskExecutorType, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		throw new NoSuchTriggerException(
-			_collectionPersistenceFinderByC_DTET.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, dispatchTaskExecutorType}));
+		return _collectionPersistenceFinderByC_DTET.findFirst(
+			finderCache, new Object[] {companyId, dispatchTaskExecutorType},
+			orderByComparator);
 	}
 
 	/**
@@ -882,7 +840,7 @@ public class DispatchTriggerPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<DispatchTrigger>
+	private UniquePersistenceFinder<DispatchTrigger, NoSuchTriggerException>
 		_uniquePersistenceFinderByC_N;
 
 	/**
@@ -897,21 +855,8 @@ public class DispatchTriggerPersistenceImpl
 	public DispatchTrigger findByC_N(long companyId, String name)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByC_N(companyId, name);
-
-		if (dispatchTrigger == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTriggerException(message);
-		}
-
-		return dispatchTrigger;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -959,8 +904,9 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<DispatchTrigger>
-		_collectionPersistenceFinderByA_DTCM;
+	private FilterCollectionPersistenceFinder
+		<DispatchTrigger, NoSuchTriggerException>
+			_collectionPersistenceFinderByA_DTCM;
 
 	/**
 	 * Returns an ordered range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
@@ -1203,7 +1149,7 @@ public class DispatchTriggerPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<DispatchTrigger>
+	private UniquePersistenceFinder<DispatchTrigger, NoSuchTriggerException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1219,23 +1165,8 @@ public class DispatchTriggerPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (dispatchTrigger == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTriggerException(message);
-		}
-
-		return dispatchTrigger;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1599,16 +1530,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, DispatchTrigger::getUuid));
@@ -1636,16 +1557,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, DispatchTrigger::getUuid),
@@ -1676,16 +1587,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
@@ -1713,16 +1614,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, DispatchTrigger::isActive));
@@ -1750,16 +1641,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId),
@@ -1793,16 +1674,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId),
@@ -1854,16 +1725,6 @@ public class DispatchTriggerPersistenceImpl
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					"dispatchTrigger", "DispatchTrigger",
-					"dispatchTrigger.dispatchTriggerId",
-					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
-					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
-					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
-					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, DispatchTrigger::isActive),
@@ -1959,4 +1820,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1434772223
+// LIFERAY-SERVICE-BUILDER-HASH:1286656684

@@ -66,6 +66,8 @@ public class KoroneikiService {
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			new URL(_koroneikiAuthURL)
+		).parameters(
+			"nestedFields", "contactRoles"
 		).build();
 	}
 

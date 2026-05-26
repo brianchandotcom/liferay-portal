@@ -349,6 +349,7 @@ export default {
 	'go-to-dashboard': 'Go to Dashboard',
 	'go-to-download': 'Go to Download',
 	'go-to-dxp': 'Go to DXP',
+	'go-to-liferay-data-platform': 'Go to Liferay Data Platform',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',

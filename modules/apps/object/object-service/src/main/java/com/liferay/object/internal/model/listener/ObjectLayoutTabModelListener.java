@@ -52,8 +52,8 @@ public class ObjectLayoutTabModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectLayoutTab.class.getName(),
-					objectLayoutTab.getObjectLayoutTabId(),
+					ObjectLayoutTab.class.getName(),
+					objectLayoutTab.getObjectLayoutTabId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectLayoutTab, objectLayoutTab)));
 		}
@@ -82,8 +82,8 @@ public class ObjectLayoutTabModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectLayoutTab.class.getName(),
-				objectLayoutTab.getObjectLayoutTabId(), null);
+				ObjectLayoutTab.class.getName(),
+				objectLayoutTab.getObjectLayoutTabId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

@@ -74,7 +74,7 @@ public class ImagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Image>
+	private CollectionPersistenceFinder<Image, NoSuchImageException>
 		_collectionPersistenceFinderByLtSize;
 
 	/**
@@ -163,15 +163,9 @@ public class ImagePersistenceImpl
 			int size, OrderByComparator<Image> orderByComparator)
 		throws NoSuchImageException {
 
-		Image image = fetchByLtSize_First(size, orderByComparator);
-
-		if (image != null) {
-			return image;
-		}
-
-		throw new NoSuchImageException(
-			_collectionPersistenceFinderByLtSize.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {size}));
+		return _collectionPersistenceFinderByLtSize.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {size},
+			orderByComparator);
 	}
 
 	/**
@@ -528,4 +522,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296534998
+// LIFERAY-SERVICE-BUILDER-HASH:-460896741

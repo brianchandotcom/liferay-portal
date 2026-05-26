@@ -362,32 +362,32 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
-		${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}_First(
-
-		<#list entityColumns as entityColumn>
-			${entityColumn.name},
-		</#list>
-
-		orderByComparator);
-
-		if (${entity.variableName} != null) {
-			return ${entity.variableName};
-		}
-
 		<#if entityFinder.collectionPersistenceFinderEnabled && !entityFinder.hasArrayableOperator()>
-			throw new ${noSuchEntity}Exception(
-				_collectionPersistenceFinderBy${entityFinder.name}.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						<#list entityColumns as entityColumn>
-							${entityColumn.name}
+			return _collectionPersistenceFinderBy${entityFinder.name}.findFirst(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						${entityColumn.name}
 
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					}));
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				},
+				orderByComparator);
 		<#else>
+			${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}_First(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
+
+			orderByComparator);
+
+			if (${entity.variableName} != null) {
+				return ${entity.variableName};
+			}
+
 			StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
@@ -2402,38 +2402,32 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	) throws ${noSuchEntity}Exception {
-		${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}(
+		<#if entityFinder.uniquePersistenceFinderEnabled>
+			return _uniquePersistenceFinderBy${entityFinder.name}.find(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						${entityColumn.name}
 
-		<#list entityColumns as entityColumn>
-			${entityColumn.name}
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				});
+		<#else>
+			${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}(
 
-			<#if entityColumn_has_next>
-				,
-			</#if>
-		</#list>
+			<#list entityColumns as entityColumn>
+				${entityColumn.name}
 
-		);
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
 
-		if ( ${entity.variableName} == null) {
-			<#if entityFinder.uniquePersistenceFinderEnabled>
-				String message = _uniquePersistenceFinderBy${entityFinder.name}.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						<#list entityColumns as entityColumn>
-							${entityColumn.name}
+			);
 
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					});
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message);
-				}
-
-				throw new ${noSuchEntity}Exception(message);
-			<#else>
+			if ( ${entity.variableName} == null) {
 				StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
 				sb.append(_NO_SUCH_ENTITY_WITH_KEY);
@@ -2452,10 +2446,10 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 
 				throw new ${noSuchEntity}Exception(sb.toString());
-			</#if>
-		}
+			}
 
-		return ${entity.variableName};
+			return ${entity.variableName};
+		</#if>
 	}
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>

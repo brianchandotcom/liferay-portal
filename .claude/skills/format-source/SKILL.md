@@ -481,7 +481,7 @@ Update the call sites at the same time.
 
 ### Rule 21: Avoid `iterator().next()` for First-Element Access
 
-**Why:** A multi-method chain to reach the first element hides the intent behind two calls; pick the most direct accessor the type already offers so the call site reads as a single lookup.
+**Why:** A multimethod chain to reach the first element hides the intent behind two calls; pick the most direct accessor the type already offers so the call site reads as a single lookup.
 
 **Examples:**
 
@@ -600,7 +600,7 @@ The noun form belongs in identifiers and section headers.
 
 **Examples:**
 
-When a block of locals feeds straight into a multi-arg call, declare them in the call's argument order.
+When a block of locals feeds straight into a multiarg call, declare them in the call's argument order.
 
 ```diff
 -String beta = computeBeta();
@@ -766,14 +766,17 @@ Separate must-be-first or must-be-last items from the sorted block:
 
 ### Rule 38: Bash Scripts Exit on First Failure
 
-**Why:** Without an explicit fail-fast directive, a failing command silently passes through to the next; either `set -e` at the top of the script or `|| exit 1` on each command makes the failure surface immediately.
+**Why:** Without an explicit fail-fast directive, a failing command silently passes through to the next; the `set -o errexit` / `set -o nounset` / `set -o pipefail` block at the top of the script makes failures, unset variables, and broken pipeline stages surface immediately.
 
 **Examples:**
 
 ```diff
- #!/bin/bash
+-#!/bin/bash
++#!/usr/bin/env bash
 +
-+set -e
++set -o errexit
++set -o nounset
++set -o pipefail
 
  _execute "step-1"
  _execute "step-2"
@@ -848,7 +851,7 @@ Separate must-be-first or must-be-last items from the sorted block:
 
 ### Rule 43: Blank Line Between Dependent Resources in `try`-With-Resources
 
-**Why:** When a multi-resource `try` mixes independent resources with one that consumes them, a blank line between the independent group and the consumer makes the dependency visible at the resource declaration level instead of forcing the reader to trace it through the body.
+**Why:** When a multiresource `try` mixes independent resources with one that consumes them, a blank line between the independent group and the consumer makes the dependency visible at the resource declaration level instead of forcing the reader to trace it through the body.
 
 **Examples:**
 
@@ -1000,3 +1003,14 @@ The same applies when renaming a method or its parameter to match the vocabulary
 ```
 
 When you rename a local, propagate the new name to every call site, every parameter that passes it on, and every private helper that receives it.
+
+### Rule 48: Chicago Title Case for Titles in Language Properties
+
+**Why:** Titles in `Language.properties` — labels, headings, button text, dropdown options, filter values — follow the Chicago Manual of Style: capitalize the first word, the last word, and every major word (nouns, verbs, adjectives, adverbs, pronouns), and keep articles, coordinating conjunctions, and prepositions lowercase. Sentences and inline phrases stay in sentence case; full sentences fall under Rule 18.
+
+**Examples:**
+
+```diff
+-some-key=Alpha of the bravo
++some-key=Alpha of the Bravo
+```

@@ -1910,4 +1910,4 @@ public abstract class BaseSiteResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1850103652
+// LIFERAY-REST-BUILDER-HASH:-408433705

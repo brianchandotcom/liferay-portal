@@ -81,8 +81,9 @@ public class ObjectFieldSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectFieldSetting>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectFieldSetting, NoSuchObjectFieldSettingException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object field settings where uuid = &#63;.
@@ -123,16 +124,8 @@ public class ObjectFieldSettingPersistenceImpl
 			OrderByComparator<ObjectFieldSetting> orderByComparator)
 		throws NoSuchObjectFieldSettingException {
 
-		ObjectFieldSetting objectFieldSetting = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		throw new NoSuchObjectFieldSettingException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -173,8 +166,9 @@ public class ObjectFieldSettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectFieldSetting>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectFieldSetting, NoSuchObjectFieldSettingException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object field settings where uuid = &#63; and companyId = &#63;.
@@ -217,16 +211,8 @@ public class ObjectFieldSettingPersistenceImpl
 			OrderByComparator<ObjectFieldSetting> orderByComparator)
 		throws NoSuchObjectFieldSettingException {
 
-		ObjectFieldSetting objectFieldSetting = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		throw new NoSuchObjectFieldSettingException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -271,8 +257,9 @@ public class ObjectFieldSettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectFieldSetting>
-		_collectionPersistenceFinderByObjectFieldId;
+	private CollectionPersistenceFinder
+		<ObjectFieldSetting, NoSuchObjectFieldSettingException>
+			_collectionPersistenceFinderByObjectFieldId;
 
 	/**
 	 * Returns an ordered range of all the object field settings where objectFieldId = &#63;.
@@ -313,16 +300,8 @@ public class ObjectFieldSettingPersistenceImpl
 			OrderByComparator<ObjectFieldSetting> orderByComparator)
 		throws NoSuchObjectFieldSettingException {
 
-		ObjectFieldSetting objectFieldSetting = fetchByObjectFieldId_First(
-			objectFieldId, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		throw new NoSuchObjectFieldSettingException(
-			_collectionPersistenceFinderByObjectFieldId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFieldId}));
+		return _collectionPersistenceFinderByObjectFieldId.findFirst(
+			finderCache, new Object[] {objectFieldId}, orderByComparator);
 	}
 
 	/**
@@ -364,8 +343,9 @@ public class ObjectFieldSettingPersistenceImpl
 			finderCache, new Object[] {objectFieldId});
 	}
 
-	private UniquePersistenceFinder<ObjectFieldSetting>
-		_uniquePersistenceFinderByOFI_N;
+	private UniquePersistenceFinder
+		<ObjectFieldSetting, NoSuchObjectFieldSettingException>
+			_uniquePersistenceFinderByOFI_N;
 
 	/**
 	 * Returns the object field setting where objectFieldId = &#63; and name = &#63; or throws a <code>NoSuchObjectFieldSettingException</code> if it could not be found.
@@ -379,23 +359,8 @@ public class ObjectFieldSettingPersistenceImpl
 	public ObjectFieldSetting findByOFI_N(long objectFieldId, String name)
 		throws NoSuchObjectFieldSettingException {
 
-		ObjectFieldSetting objectFieldSetting = fetchByOFI_N(
-			objectFieldId, name);
-
-		if (objectFieldSetting == null) {
-			String message =
-				_uniquePersistenceFinderByOFI_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectFieldId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectFieldSettingException(message);
-		}
-
-		return objectFieldSetting;
+		return _uniquePersistenceFinderByOFI_N.find(
+			finderCache, new Object[] {objectFieldId, name});
 	}
 
 	/**
@@ -839,4 +804,4 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-916665855
+// LIFERAY-SERVICE-BUILDER-HASH:1279859873

@@ -81,8 +81,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63;.
@@ -123,16 +124,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		throw new NoSuchCPDefinitionGroupedEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp definition grouped entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionGroupedEntryException</code> if it could not be found.
@@ -189,22 +183,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	public CPDefinitionGroupedEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (cpDefinitionGroupedEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionGroupedEntryException(message);
-		}
-
-		return cpDefinitionGroupedEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,8 +233,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
@@ -297,16 +278,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		throw new NoSuchCPDefinitionGroupedEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,8 +324,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
-		_collectionPersistenceFinderByCPDefinitionId;
+	private CollectionPersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where CPDefinitionId = &#63;.
@@ -393,16 +367,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			fetchByCPDefinitionId_First(CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		throw new NoSuchCPDefinitionGroupedEntryException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -444,8 +410,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
-		_collectionPersistenceFinderByEntryCProductId;
+	private CollectionPersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_collectionPersistenceFinderByEntryCProductId;
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where entryCProductId = &#63;.
@@ -486,16 +453,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			fetchByEntryCProductId_First(entryCProductId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		throw new NoSuchCPDefinitionGroupedEntryException(
-			_collectionPersistenceFinderByEntryCProductId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryCProductId}));
+		return _collectionPersistenceFinderByEntryCProductId.findFirst(
+			finderCache, new Object[] {entryCProductId}, orderByComparator);
 	}
 
 	/**
@@ -537,8 +496,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {entryCProductId});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
-		_uniquePersistenceFinderByC_E;
+	private UniquePersistenceFinder
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
+			_uniquePersistenceFinderByC_E;
 
 	/**
 	 * Returns the cp definition grouped entry where CPDefinitionId = &#63; and entryCProductId = &#63; or throws a <code>NoSuchCPDefinitionGroupedEntryException</code> if it could not be found.
@@ -553,23 +513,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			long CPDefinitionId, long entryCProductId)
 		throws NoSuchCPDefinitionGroupedEntryException {
 
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByC_E(
-			CPDefinitionId, entryCProductId);
-
-		if (cpDefinitionGroupedEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_E.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionId, entryCProductId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionGroupedEntryException(message);
-		}
-
-		return cpDefinitionGroupedEntry;
+		return _uniquePersistenceFinderByC_E.find(
+			finderCache, new Object[] {CPDefinitionId, entryCProductId});
 	}
 
 	/**
@@ -1077,4 +1022,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:701062024
+// LIFERAY-SERVICE-BUILDER-HASH:-97979810

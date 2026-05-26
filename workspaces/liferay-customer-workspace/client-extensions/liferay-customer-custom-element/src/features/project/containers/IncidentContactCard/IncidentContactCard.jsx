@@ -116,8 +116,8 @@ const IncidentContactCard = ({
 
 	const [currentHighPriorityContacts, setCurrentHighPriorityContacts] =
 		useState({
-			cloudNative: [],
 			criticalIncident: [],
+			paasUser: [],
 			privacyBreach: [],
 			securityBreach: [],
 		});
@@ -145,7 +145,7 @@ const IncidentContactCard = ({
 		(name) => name === PRODUCT_TYPES.cloudNative
 	);
 
-	const showCloudNativeCard = hasPaaSExperience && !isLXCEnvironment;
+	const showPaaSUserCard = hasPaaSExperience && !isLXCEnvironment;
 
 	useEffect(() => {
 		if (!userAccountsData) {
@@ -175,8 +175,8 @@ const IncidentContactCard = ({
 		}
 	}, [userAccountsData]);
 
-	const hasCloudNativeContact =
-		!!currentHighPriorityContacts.cloudNative?.length;
+	const hasPaaSUserContact =
+		!!currentHighPriorityContacts.paasUser?.length;
 	const hasCriticalIncidentContact =
 		!!currentHighPriorityContacts.criticalIncident?.length;
 	const hasPrivacyBreachContact =
@@ -299,20 +299,16 @@ const IncidentContactCard = ({
 							</div>
 						)}
 
-						{showCloudNativeCard && (
+						{showPaaSUserCard && (
 							<div className="customer-portal-card-footer customer-portal-card-footer-style-ac">
 								<div className="customer-portal-card-footer-title">
-									<h1>
-										{i18n.translate(
-											'cloud-native-contacts'
-										)}
-									</h1>
+									<h1>{i18n.translate('paas-users')}</h1>
 								</div>
 
 								<div className="customer-portal-card-footer-description">
 									<p>
 										{i18n.translate(
-											'team-members-who-will-have-access-to-cloud-native'
+											'paas-users-will-have-access-to-paas-experience-applications'
 										)}
 									</p>
 								</div>
@@ -322,18 +318,18 @@ const IncidentContactCard = ({
 										<div className="col customer-portal-card-description">
 											<ContactSection
 												contacts={
-													currentHighPriorityContacts.cloudNative
+													currentHighPriorityContacts.paasUser
 												}
 												hasAdministratorRole={
 													hasAdministratorRole
 												}
 												onEdit={() =>
 													handleOnClick(
-														HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
+														HIGH_PRIORITY_CONTACT_CATEGORIES.paasUser
 													)
 												}
 												title={i18n.translate(
-													'cloud-native-contacts'
+													'paas-users'
 												)}
 											/>
 										</div>
@@ -351,8 +347,8 @@ const IncidentContactCard = ({
 							>
 								<IncidentContactEditForm
 									close={closeModal}
-									hasCloudNativeContact={
-										hasCloudNativeContact
+									hasPaaSUserContact={
+										hasPaaSUserContact
 									}
 									hasCriticalIncidentContact={
 										hasCriticalIncidentContact

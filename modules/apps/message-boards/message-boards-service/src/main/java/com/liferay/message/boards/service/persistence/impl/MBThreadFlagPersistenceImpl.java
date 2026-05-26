@@ -86,7 +86,7 @@ public class MBThreadFlagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBThreadFlag>
+	private CollectionPersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,8 @@ public class MBThreadFlagPersistenceImpl
 			String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByUuid_First(uuid, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		throw new NoSuchThreadFlagException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +169,7 @@ public class MBThreadFlagPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBThreadFlag>
+	private UniquePersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -191,21 +184,8 @@ public class MBThreadFlagPersistenceImpl
 	public MBThreadFlag findByUUID_G(String uuid, long groupId)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByUUID_G(uuid, groupId);
-
-		if (mbThreadFlag == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchThreadFlagException(message);
-		}
-
-		return mbThreadFlag;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,7 +233,7 @@ public class MBThreadFlagPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBThreadFlag>
+	private CollectionPersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -297,16 +277,8 @@ public class MBThreadFlagPersistenceImpl
 			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		throw new NoSuchThreadFlagException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,7 +323,7 @@ public class MBThreadFlagPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<MBThreadFlag>
+	private CollectionPersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -392,16 +364,8 @@ public class MBThreadFlagPersistenceImpl
 			long userId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		throw new NoSuchThreadFlagException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -442,7 +406,7 @@ public class MBThreadFlagPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<MBThreadFlag>
+	private CollectionPersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
 		_collectionPersistenceFinderByThreadId;
 
 	/**
@@ -483,16 +447,8 @@ public class MBThreadFlagPersistenceImpl
 			long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByThreadId_First(
-			threadId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		throw new NoSuchThreadFlagException(
-			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
+		return _collectionPersistenceFinderByThreadId.findFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -533,7 +489,8 @@ public class MBThreadFlagPersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private UniquePersistenceFinder<MBThreadFlag> _uniquePersistenceFinderByU_T;
+	private UniquePersistenceFinder<MBThreadFlag, NoSuchThreadFlagException>
+		_uniquePersistenceFinderByU_T;
 
 	/**
 	 * Returns the message boards thread flag where userId = &#63; and threadId = &#63; or throws a <code>NoSuchThreadFlagException</code> if it could not be found.
@@ -547,21 +504,8 @@ public class MBThreadFlagPersistenceImpl
 	public MBThreadFlag findByU_T(long userId, long threadId)
 		throws NoSuchThreadFlagException {
 
-		MBThreadFlag mbThreadFlag = fetchByU_T(userId, threadId);
-
-		if (mbThreadFlag == null) {
-			String message =
-				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, threadId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchThreadFlagException(message);
-		}
-
-		return mbThreadFlag;
+		return _uniquePersistenceFinderByU_T.find(
+			finderCache, new Object[] {userId, threadId});
 	}
 
 	/**
@@ -1110,4 +1054,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:125405493
+// LIFERAY-SERVICE-BUILDER-HASH:583916997

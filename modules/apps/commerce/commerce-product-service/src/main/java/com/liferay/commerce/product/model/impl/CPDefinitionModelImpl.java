@@ -165,6 +165,8 @@ public class CPDefinitionModelImpl
 
 	public static final String ENTITY_ALIAS = "cpDefinition";
 
+	public static final String FILTER_PK_COLUMN_NAME = "CPDefinitionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 
@@ -2968,4 +2970,4 @@ public class CPDefinitionModelImpl
 	private CPDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-143300548
+// LIFERAY-SERVICE-BUILDER-HASH:2120794716

@@ -9,15 +9,18 @@ import IndividualsList from './IndividualsList';
 import Loading from 'shared/components/Loading';
 import MetricCard from 'shared/components/MetricCard';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
+import React, {useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {Text as ClayText} from '@clayui/core';
 import {CSVType} from 'shared/components/download-report/utils';
 import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {isNil} from 'lodash';
 import {RangeKeyTimeRanges, Sizes} from 'shared/util/constants';
+import {RangeSelectors} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
+import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
 import {toThousands} from 'shared/util/numbers';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
@@ -131,6 +134,12 @@ const IndividualsOverviewCDP = () => {
 
 	const authorized = currentUser.isAdmin();
 
+	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>({
+		rangeEnd: null,
+		rangeKey: RangeKeyTimeRanges.Last30Days,
+		rangeStart: null
+	});
+
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.search,
 		variables: {
@@ -237,7 +246,21 @@ const IndividualsOverviewCDP = () => {
 							</ClayLayout.Col>
 						</ClayLayout.Row>
 
-						<IndividualsList />
+						<div className='align-items-center d-flex justify-content-between mb-3'>
+							<SectionHeader
+								className='mb-0'
+								icon='box-container'
+								title={Liferay.Language.get('individuals')}
+							/>
+
+							<DropdownRangeKey
+								legacy={false}
+								onRangeSelectorChange={setRangeSelectors}
+								rangeSelectors={rangeSelectors}
+							/>
+						</div>
+
+						<IndividualsList rangeSelectors={rangeSelectors} />
 					</>
 				)}
 			</BasePage.Body>

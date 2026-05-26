@@ -74,8 +74,9 @@ public class SequenceEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SequenceEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<SequenceEntry, NoSuchSequenceEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the sequence entries where uuid = &#63;.
@@ -115,16 +116,8 @@ public class SequenceEntryPersistenceImpl
 			String uuid, OrderByComparator<SequenceEntry> orderByComparator)
 		throws NoSuchSequenceEntryException {
 
-		SequenceEntry sequenceEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (sequenceEntry != null) {
-			return sequenceEntry;
-		}
-
-		throw new NoSuchSequenceEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -165,8 +158,9 @@ public class SequenceEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<SequenceEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<SequenceEntry, NoSuchSequenceEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the sequence entries where uuid = &#63; and companyId = &#63;.
@@ -209,16 +203,8 @@ public class SequenceEntryPersistenceImpl
 			OrderByComparator<SequenceEntry> orderByComparator)
 		throws NoSuchSequenceEntryException {
 
-		SequenceEntry sequenceEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (sequenceEntry != null) {
-			return sequenceEntry;
-		}
-
-		throw new NoSuchSequenceEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -576,4 +562,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1738657982
+// LIFERAY-SERVICE-BUILDER-HASH:-820930783

@@ -65,8 +65,9 @@ public class EagerBlobEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<EagerBlobEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<EagerBlobEntry, NoSuchEagerBlobEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the eager blob entries where uuid = &#63;.
@@ -106,16 +107,8 @@ public class EagerBlobEntryPersistenceImpl
 			String uuid, OrderByComparator<EagerBlobEntry> orderByComparator)
 		throws NoSuchEagerBlobEntryException {
 
-		EagerBlobEntry eagerBlobEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (eagerBlobEntry != null) {
-			return eagerBlobEntry;
-		}
-
-		throw new NoSuchEagerBlobEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			dummyFinderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -156,8 +149,9 @@ public class EagerBlobEntryPersistenceImpl
 			dummyFinderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<EagerBlobEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<EagerBlobEntry, NoSuchEagerBlobEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the eager blob entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEagerBlobEntryException</code> if it could not be found.
@@ -171,21 +165,8 @@ public class EagerBlobEntryPersistenceImpl
 	public EagerBlobEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEagerBlobEntryException {
 
-		EagerBlobEntry eagerBlobEntry = fetchByUUID_G(uuid, groupId);
-
-		if (eagerBlobEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEagerBlobEntryException(message);
-		}
-
-		return eagerBlobEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			dummyFinderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -503,4 +484,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:709915183
+// LIFERAY-SERVICE-BUILDER-HASH:-578433806

@@ -13,15 +13,12 @@ import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,11 +38,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		DepotEntryLocalService depotEntryLocalService,
 		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
-		Portal portal, FDSCreationMenu viewAllSectionFDSCreationMenu,
+		ObjectDefinitionService objectDefinitionService, Portal portal,
+		FDSCreationMenu viewAllSectionFDSCreationMenu,
 		FDSItemsActions viewAllSectionFDSItemsActions,
 		SystemFDSEntry viewAllSectionSystemFDSEntry,
 		TranslationInfoItemFieldValuesExporterRegistry
@@ -53,9 +47,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal,
+			httpServletRequest, language, objectDefinitionService, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 
 		_httpServletRequest = httpServletRequest;
@@ -89,7 +81,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return sectionDisplayContextHelper.getAllSectionBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getAllSectionBulkActionDropdownItems(
 			httpServletRequest);
 	}
 

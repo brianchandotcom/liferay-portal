@@ -8,8 +8,10 @@ package com.liferay.osb.faro.web.internal.model.display.contacts;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Shinn Lok
@@ -27,7 +29,16 @@ public class AccountDisplay {
 		_id = account.getId();
 		_industry = account.getIndustry();
 		_lastActivityDate = account.getLastActivityDate();
-		_lifecycleStage = account.getLifecycleStage();
+
+		List<Account.LifecycleStage> lifecycleStages =
+			account.getLifecycleStages();
+
+		if (ListUtil.isNotEmpty(lifecycleStages)) {
+			Account.LifecycleStage lifecycleStage = lifecycleStages.get(0);
+
+			_lifecycleStage = lifecycleStage.getStageType();
+		}
+
 		_modifiedDate = account.getModifiedDate();
 		_numberOfEmployees = account.getNumberOfEmployees();
 		_website = account.getWebsite();

@@ -139,7 +139,7 @@ public class InviteMemberMVCActionCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER, null,
 			JSONUtil.put(
 				"accountEntryId", accountEntry.getAccountEntryId()
 			).put(

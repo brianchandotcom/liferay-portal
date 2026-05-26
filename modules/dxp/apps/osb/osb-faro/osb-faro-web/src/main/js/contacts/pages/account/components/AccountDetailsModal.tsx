@@ -44,7 +44,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 		variables: {accountId, channelId, groupId}
 	});
 
-	const items: IAccountDetailsField[] = data?.fields ?? [];
+	const items: IAccountDetailsField[] = data?.items ?? [];
 
 	return (
 		<ClayModal observer={observer} size='lg'>
@@ -129,7 +129,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 									},
 									{
 										contentRenderer: 'lastModifiedRenderer',
-										fieldName: 'lastModified',
+										fieldName: 'modifiedDate',
 										label: Liferay.Language.get(
 											'last-modified'
 										)

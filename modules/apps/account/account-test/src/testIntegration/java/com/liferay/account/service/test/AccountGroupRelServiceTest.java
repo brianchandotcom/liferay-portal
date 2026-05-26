@@ -13,6 +13,7 @@ import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountGroupRelService;
+import com.liferay.account.service.persistence.AccountGroupPersistence;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.account.service.test.util.UserRoleTestUtil;
@@ -377,8 +378,7 @@ public class AccountGroupRelServiceTest {
 	private void _updateAccountGroup(long companyId) {
 		_accountGroup.setCompanyId(companyId);
 
-		_accountGroup = _accountGroupLocalService.updateAccountGroup(
-			_accountGroup);
+		_accountGroup = _accountGroupPersistence.update(_accountGroup);
 	}
 
 	private AccountEntry _accountEntry;
@@ -386,6 +386,9 @@ public class AccountGroupRelServiceTest {
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Inject
+	private AccountGroupPersistence _accountGroupPersistence;
 
 	@Inject
 	private AccountGroupRelLocalService _accountGroupRelLocalService;

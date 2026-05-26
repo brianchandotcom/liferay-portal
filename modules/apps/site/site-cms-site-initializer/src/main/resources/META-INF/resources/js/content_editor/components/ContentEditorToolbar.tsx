@@ -23,8 +23,10 @@ import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
 import {
+	PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
 	PREVIEW_CHANNEL_SESSION_KEY,
 	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	PREVIEW_EXTERNAL_URL_SESSION_KEY,
 	PREVIEW_VISIBLE_SESSION_KEY,
 	PREVIEW_WIDTH_SESSION_KEY,
 } from './preview/sessionKeys';
@@ -425,6 +427,8 @@ function clearSessionStates() {
 		PREVIEW_VISIBLE_SESSION_KEY,
 		PREVIEW_CHANNEL_SESSION_KEY,
 		PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+		PREVIEW_EXTERNAL_URL_SESSION_KEY,
+		PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
 		PREVIEW_WIDTH_SESSION_KEY,
 	].forEach((key) => sessionStorage.removeItem(key));
 }

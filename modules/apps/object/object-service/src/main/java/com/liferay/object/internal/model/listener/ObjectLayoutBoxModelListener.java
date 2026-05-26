@@ -52,8 +52,8 @@ public class ObjectLayoutBoxModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectLayoutBox.class.getName(),
-					objectLayoutBox.getObjectLayoutBoxId(),
+					ObjectLayoutBox.class.getName(),
+					objectLayoutBox.getObjectLayoutBoxId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectLayoutBox, objectLayoutBox)));
 		}
@@ -82,8 +82,8 @@ public class ObjectLayoutBoxModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectLayoutBox.class.getName(),
-				objectLayoutBox.getObjectLayoutBoxId(), null);
+				ObjectLayoutBox.class.getName(),
+				objectLayoutBox.getObjectLayoutBoxId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

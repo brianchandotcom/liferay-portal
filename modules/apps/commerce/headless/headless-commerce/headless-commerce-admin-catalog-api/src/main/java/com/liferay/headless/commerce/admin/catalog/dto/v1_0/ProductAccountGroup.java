@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductAccountGroup")
+@GraphQLName(
+	description = "Association between a product and an account group; admin catalog write view used to manage which account groups can see a product when `productAccountGroupFilter` is enabled on the parent product.",
+	value = "ProductAccountGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductAccountGroup")
 public class ProductAccountGroup implements Serializable {
@@ -50,7 +53,10 @@ public class ProductAccountGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the account group; required to associate the product with an existing account group.",
+		example = "31130"
+	)
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -84,14 +90,19 @@ public class ProductAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the account group; required to associate the product with an existing account group."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountGroupId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per product account group within the company; persisted on the underlying account group, not on the relation itself.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -125,7 +136,9 @@ public class ProductAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per product account group within the company; persisted on the underlying account group, not on the relation itself."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -133,7 +146,10 @@ public class ProductAccountGroup implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key of the row that links the product to the account group.",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -165,7 +181,9 @@ public class ProductAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key of the row that links the product to the account group."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -173,6 +191,7 @@ public class ProductAccountGroup implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the associated account group; read-only.",
 		example = "Alessio Antonio Rendina"
 	)
 	public String getName() {
@@ -206,7 +225,9 @@ public class ProductAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the associated account group; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -397,4 +418,4 @@ public class ProductAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-784751742
+// LIFERAY-REST-BUILDER-HASH:-482279082

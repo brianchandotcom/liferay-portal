@@ -67,7 +67,7 @@ test.beforeEach(async ({page}) => {
 
 test(
 	'Consent Renewal Period configuration field validation',
-	{tag: '@LPD-68505'},
+	{tag: ['@LPD-68505', '@LPD-87281']},
 	async ({consentManagerConfigurationPage}) => {
 		await test.step('Validate Consent Renewal Period field', async () => {
 			await test.step('Validate default value of 12 months', async () => {
@@ -116,20 +116,7 @@ test(
 			});
 		});
 
-		await test.step('Verify alert appears if changing the value', async () => {
-			consentManagerConfigurationPage.page.once(
-				'dialog',
-				async (dialogWindow) => {
-					expect(dialogWindow.message()).toContain(
-						'You are about to change the consent renewal period'
-					);
-
-					await dialogWindow.dismiss();
-				}
-			);
-		});
-
-		await test.step('Verify dismissing the dialog does not change configuration value', async () => {
+		await test.step('Verify dismissing the confirmation modal does not change configuration value', async () => {
 			await validateConsentRenewalPeriodValue(
 				consentManagerConfigurationPage,
 				false,
@@ -138,13 +125,7 @@ test(
 			);
 		});
 
-		await test.step('Verify accepting dialog updates configuration value and Cookies Banner appears again', async () => {
-			consentManagerConfigurationPage.page.once(
-				'dialog',
-				async (dialogWindow) => {
-					await dialogWindow.accept();
-				}
-			);
+		await test.step('Verify accepting the confirmation modal updates configuration value and Cookies Banner appears again', async () => {
 			await validateConsentRenewalPeriodValue(
 				consentManagerConfigurationPage,
 				false,
@@ -156,46 +137,60 @@ test(
 );
 
 test(
-	'Verify alert only appears if changing the value',
-	{tag: '@LPD-79710'},
+	'Verify confirmation modal only appears if changing the value',
+	{tag: ['@LPD-79710', '@LPD-87281']},
 	async ({consentManagerConfigurationPage, page}) => {
-		await consentManagerConfigurationPage.enabledCheckbox.setChecked(true);
+		const cookiesBanner = page.locator('.cookies-banner');
+		const modal = page.getByRole('alertdialog');
 
-		await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
-			'12'
-		);
-
-		await consentManagerConfigurationPage.updateButton.click();
-
-		await page.waitForTimeout(1000);
-
-		const cookiesBanner = page.locator(
-			'div[role="dialog"][aria-modal="true"]'
-		);
-
-		await expect(cookiesBanner).not.toBeVisible();
-
-		await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
-			'11'
-		);
-
-		page.once('dialog', async (dialogWindow) => {
-			expect(dialogWindow.message()).toContain(
-				'You are about to change the consent renewal period'
+		await test.step('Save without changes does not show the confirmation modal', async () => {
+			await consentManagerConfigurationPage.enabledCheckbox.setChecked(
+				true
 			);
 
-			await dialogWindow.accept();
+			await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+				'12'
+			);
+
+			await consentManagerConfigurationPage.updateButton.click();
+
+			await expect(modal).not.toBeVisible();
+
+			await waitForAlert(page);
+
+			await expect(cookiesBanner).not.toBeVisible();
 		});
 
-		await consentManagerConfigurationPage.updateButton.click();
+		await test.step('Changing the value shows the confirmation modal with checkbox auto-checked and disabled', async () => {
+			await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+				'11'
+			);
 
-		await expect(cookiesBanner).toBeVisible();
+			await consentManagerConfigurationPage.updateButton.click();
+
+			await expect(modal).toContainText(
+				'These changes will take effect immediately'
+			);
+
+			const checkbox = modal.getByRole('checkbox', {
+				name: /force re-consent/i,
+			});
+
+			await expect(checkbox).toBeChecked();
+			await expect(checkbox).toBeDisabled();
+
+			await modal.getByRole('button', {name: 'OK'}).click();
+
+			await waitForAlert(page);
+
+			await expect(cookiesBanner).toBeVisible();
+		});
 	}
 );
 
 test(
 	'Verify clicking Forced Re-Consent button retriggers the Cookies Banner',
-	{tag: '@LPD-86096'},
+	{tag: ['@LPD-86096', '@LPD-87281']},
 	async ({consentManagerConfigurationPage, page}) => {
 		const cookiesBanner = page.locator(
 			'div[role="dialog"][aria-modal="true"]'
@@ -208,7 +203,7 @@ test(
 		await test.step('Click Forced Re-Consent and accept the confirmation dialog', async () => {
 			page.once('dialog', async (dialogWindow) => {
 				expect(dialogWindow.message()).toContain(
-					'You are about to force the re-consent'
+					'You are about to force the re-consent of consent preference cookies. By performing this action, every user will have to give their consent again. Are you sure you want to continue'
 				);
 
 				await dialogWindow.accept();
@@ -218,8 +213,6 @@ test(
 		});
 
 		await test.step('Verify success alert and reappearance of Cookies Banner', async () => {
-			await waitForAlert(page);
-
 			await expect(cookiesBanner).toBeVisible();
 		});
 
@@ -321,7 +314,7 @@ test(
 
 test(
 	'Verify updating Consent Renewal Period removes consent cookies',
-	{tag: '@LPD-68505'},
+	{tag: ['@LPD-68505', '@LPD-87281']},
 	async ({page}) => {
 		await test.step('Verify all consent cookies are set', async () => {
 			const cookies = await page.context().cookies();
@@ -372,12 +365,6 @@ async function validateConsentRenewalPeriodCookieExpiration(
 	const dateBeforeCookiesSet = new Date().getTime();
 
 	await test.step(`Set Consent Renewal Period to ${newValue} ${unit}`, async () => {
-		consentManagerConfigurationPage.page.once(
-			'dialog',
-			async (dialogWindow) => {
-				await dialogWindow.accept();
-			}
-		);
 		await validateConsentRenewalPeriodValue(
 			consentManagerConfigurationPage,
 			dissent,
@@ -479,30 +466,60 @@ async function validateConsentRenewalPeriodValue(
 
 	await consentManagerConfigurationPage.updateButton.click();
 
-	if (saveSuccessful) {
-		expectedValue = newValue;
+	const page = consentManagerConfigurationPage.page;
+	const modal = page.getByRole('alertdialog');
 
-		await waitForAlert(consentManagerConfigurationPage.page);
+	let modalAppeared = false;
 
-		await consentManagerConfigurationPage.page
-			.locator('div[role="dialog"][aria-modal="true"]')
-			.waitFor({state: 'visible'});
+	try {
+		await modal.waitFor({state: 'visible', timeout: 2000});
 
-		if (dissent) {
-			await consentManagerConfigurationPage.page
-				.getByRole('button', {name: 'Decline All'})
-				.click();
+		modalAppeared = true;
+	}
+	catch {
+
+		// HTML5 validation prevented submit, or value matched current and no
+		// modal was triggered.
+
+	}
+
+	if (modalAppeared) {
+		if (saveSuccessful) {
+			await modal.getByRole('button', {name: 'OK'}).click();
+
+			expectedValue = newValue;
+
+			await waitForAlert(page);
+
+			const cookiesBanner = page.locator('.cookies-banner');
+
+			await cookiesBanner.waitFor({state: 'visible'});
+
+			if (dissent) {
+				await cookiesBanner
+					.getByRole('button', {name: 'Decline All'})
+					.click();
+			}
+			else {
+				await cookiesBanner
+					.getByRole('button', {name: 'Accept All'})
+					.click();
+			}
 		}
 		else {
-			await consentManagerConfigurationPage.page
-				.getByRole('button', {name: 'Accept All'})
-				.click();
+			await modal.getByRole('button', {name: 'Cancel'}).click();
+
+			await modal.waitFor({state: 'hidden'});
+
+			await page.reload();
+
+			await page.waitForLoadState();
 		}
 	}
 	else {
-		await consentManagerConfigurationPage.page.reload();
+		await page.reload();
 
-		await consentManagerConfigurationPage.page.waitForLoadState();
+		await page.waitForLoadState();
 	}
 
 	await expect(consentRenewalPeriodField).toHaveValue(expectedValue);

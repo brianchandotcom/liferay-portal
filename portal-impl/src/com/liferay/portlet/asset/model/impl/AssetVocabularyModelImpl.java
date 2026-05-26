@@ -113,6 +113,8 @@ public class AssetVocabularyModelImpl
 
 	public static final String ENTITY_ALIAS = "assetVocabulary";
 
+	public static final String FILTER_PK_COLUMN_NAME = "vocabularyId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetVocabulary.name ASC";
 
@@ -1563,4 +1565,4 @@ public class AssetVocabularyModelImpl
 	private AssetVocabulary _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1624424846
+// LIFERAY-SERVICE-BUILDER-HASH:1598540392

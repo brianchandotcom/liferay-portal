@@ -75,8 +75,9 @@ public class BatchPlannerPolicyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BatchPlannerPolicy>
-		_collectionPersistenceFinderByBatchPlannerPlanId;
+	private CollectionPersistenceFinder
+		<BatchPlannerPolicy, NoSuchPolicyException>
+			_collectionPersistenceFinderByBatchPlannerPlanId;
 
 	/**
 	 * Returns an ordered range of all the batch planner policies where batchPlannerPlanId = &#63;.
@@ -117,18 +118,8 @@ public class BatchPlannerPolicyPersistenceImpl
 			OrderByComparator<BatchPlannerPolicy> orderByComparator)
 		throws NoSuchPolicyException {
 
-		BatchPlannerPolicy batchPlannerPolicy = fetchByBatchPlannerPlanId_First(
-			batchPlannerPlanId, orderByComparator);
-
-		if (batchPlannerPolicy != null) {
-			return batchPlannerPolicy;
-		}
-
-		throw new NoSuchPolicyException(
-			_collectionPersistenceFinderByBatchPlannerPlanId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {batchPlannerPlanId}));
+		return _collectionPersistenceFinderByBatchPlannerPlanId.findFirst(
+			finderCache, new Object[] {batchPlannerPlanId}, orderByComparator);
 	}
 
 	/**
@@ -170,7 +161,7 @@ public class BatchPlannerPolicyPersistenceImpl
 			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
-	private UniquePersistenceFinder<BatchPlannerPolicy>
+	private UniquePersistenceFinder<BatchPlannerPolicy, NoSuchPolicyException>
 		_uniquePersistenceFinderByBPPI_N;
 
 	/**
@@ -185,23 +176,8 @@ public class BatchPlannerPolicyPersistenceImpl
 	public BatchPlannerPolicy findByBPPI_N(long batchPlannerPlanId, String name)
 		throws NoSuchPolicyException {
 
-		BatchPlannerPolicy batchPlannerPolicy = fetchByBPPI_N(
-			batchPlannerPlanId, name);
-
-		if (batchPlannerPolicy == null) {
-			String message =
-				_uniquePersistenceFinderByBPPI_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {batchPlannerPlanId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPolicyException(message);
-		}
-
-		return batchPlannerPolicy;
+		return _uniquePersistenceFinderByBPPI_N.find(
+			finderCache, new Object[] {batchPlannerPlanId, name});
 	}
 
 	/**
@@ -572,4 +548,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:99918095
+// LIFERAY-SERVICE-BUILDER-HASH:1633985075

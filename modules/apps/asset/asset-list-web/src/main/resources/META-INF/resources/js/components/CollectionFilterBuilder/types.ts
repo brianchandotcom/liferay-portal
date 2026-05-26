@@ -48,3 +48,11 @@ export interface FilterCondition {
 	quantifier?: string;
 	value?: string | Array<string | object>;
 }
+
+export function getPropertyKey(
+	classNameId: number | undefined,
+	classTypeId: number | undefined,
+	name: string | undefined
+): string {
+	return `${classNameId ?? ''}|${classTypeId ?? ''}|${name ?? ''}`;
+}

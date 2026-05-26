@@ -11,12 +11,9 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -38,25 +35,19 @@ public abstract class BaseFilesSectionDisplayContext
 		DepotEntryLocalService depotEntryLocalService,
 		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
-		Portal portal,
+		ObjectDefinitionService objectDefinitionService, Portal portal,
 		TranslationInfoItemFieldValuesExporterRegistry
 			translationInfoItemFieldValuesExporterRegistry) {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal,
+			httpServletRequest, language, objectDefinitionService, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 	}
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return sectionDisplayContextHelper.getFilesBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesBulkActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -80,7 +71,7 @@ public abstract class BaseFilesSectionDisplayContext
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return sectionDisplayContextHelper.getFilesFDSActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesFDSActionDropdownItems(
 			httpServletRequest);
 	}
 

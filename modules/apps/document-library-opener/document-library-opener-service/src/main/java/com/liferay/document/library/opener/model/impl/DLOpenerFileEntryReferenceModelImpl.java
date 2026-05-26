@@ -958,4 +958,4 @@ public class DLOpenerFileEntryReferenceModelImpl
 	private DLOpenerFileEntryReference _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1101879337
+// LIFERAY-SERVICE-BUILDER-HASH:-1565514181

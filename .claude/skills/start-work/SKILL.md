@@ -27,7 +27,7 @@ Fetch the ticket (issue type, current assignee, subtasks) and resolve the **targ
 
 ## Start Work on the Parent
 
-Assign the parent to the user and apply the transitions below. If the parent is already in an in-progress status by a different user, refuse to continue.
+Assign the parent to the user and apply the transitions below. When the parent is already in an in-progress status by a different user, refuse to continue.
 
 | Parent Type | Destination | Transition IDs |
 | --- | --- | --- |

@@ -39,16 +39,18 @@ public class AuditEventWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("eventType", getEventType());
+		attributes.put("accountEntryId", getAccountEntryId());
+		attributes.put("additionalInfo", getAdditionalInfo());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("message", getMessage());
 		attributes.put("clientHost", getClientHost());
 		attributes.put("clientIP", getClientIP());
+		attributes.put("contextName", getContextName());
+		attributes.put("eventType", getEventType());
+		attributes.put("message", getMessage());
 		attributes.put("serverName", getServerName());
 		attributes.put("serverPort", getServerPort());
 		attributes.put("sessionID", getSessionID());
-		attributes.put("additionalInfo", getAdditionalInfo());
 
 		return attributes;
 	}
@@ -91,10 +93,16 @@ public class AuditEventWrapper
 			setCreateDate(createDate);
 		}
 
-		String eventType = (String)attributes.get("eventType");
+		Long accountEntryId = (Long)attributes.get("accountEntryId");
 
-		if (eventType != null) {
-			setEventType(eventType);
+		if (accountEntryId != null) {
+			setAccountEntryId(accountEntryId);
+		}
+
+		String additionalInfo = (String)attributes.get("additionalInfo");
+
+		if (additionalInfo != null) {
+			setAdditionalInfo(additionalInfo);
 		}
 
 		String className = (String)attributes.get("className");
@@ -109,12 +117,6 @@ public class AuditEventWrapper
 			setClassPK(classPK);
 		}
 
-		String message = (String)attributes.get("message");
-
-		if (message != null) {
-			setMessage(message);
-		}
-
 		String clientHost = (String)attributes.get("clientHost");
 
 		if (clientHost != null) {
@@ -125,6 +127,24 @@ public class AuditEventWrapper
 
 		if (clientIP != null) {
 			setClientIP(clientIP);
+		}
+
+		String contextName = (String)attributes.get("contextName");
+
+		if (contextName != null) {
+			setContextName(contextName);
+		}
+
+		String eventType = (String)attributes.get("eventType");
+
+		if (eventType != null) {
+			setEventType(eventType);
+		}
+
+		String message = (String)attributes.get("message");
+
+		if (message != null) {
+			setMessage(message);
 		}
 
 		String serverName = (String)attributes.get("serverName");
@@ -144,17 +164,21 @@ public class AuditEventWrapper
 		if (sessionID != null) {
 			setSessionID(sessionID);
 		}
-
-		String additionalInfo = (String)attributes.get("additionalInfo");
-
-		if (additionalInfo != null) {
-			setAdditionalInfo(additionalInfo);
-		}
 	}
 
 	@Override
 	public AuditEvent cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the account entry ID of this audit event.
+	 *
+	 * @return the account entry ID of this audit event
+	 */
+	@Override
+	public long getAccountEntryId() {
+		return model.getAccountEntryId();
 	}
 
 	/**
@@ -225,6 +249,16 @@ public class AuditEventWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the context name of this audit event.
+	 *
+	 * @return the context name of this audit event
+	 */
+	@Override
+	public String getContextName() {
+		return model.getContextName();
 	}
 
 	/**
@@ -343,6 +377,16 @@ public class AuditEventWrapper
 	}
 
 	/**
+	 * Sets the account entry ID of this audit event.
+	 *
+	 * @param accountEntryId the account entry ID of this audit event
+	 */
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		model.setAccountEntryId(accountEntryId);
+	}
+
+	/**
 	 * Sets the additional info of this audit event.
 	 *
 	 * @param additionalInfo the additional info of this audit event
@@ -410,6 +454,16 @@ public class AuditEventWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the context name of this audit event.
+	 *
+	 * @param contextName the context name of this audit event
+	 */
+	@Override
+	public void setContextName(String contextName) {
+		model.setContextName(contextName);
 	}
 
 	/**
@@ -533,4 +587,4 @@ public class AuditEventWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1416724512
+// LIFERAY-SERVICE-BUILDER-HASH:-358961658

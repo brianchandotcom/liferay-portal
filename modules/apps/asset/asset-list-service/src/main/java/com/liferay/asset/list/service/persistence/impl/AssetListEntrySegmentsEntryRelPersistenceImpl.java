@@ -90,8 +90,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset list entry segments entry rels where uuid = &#63;.
@@ -132,16 +133,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		throw new NoSuchEntrySegmentsEntryRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -183,8 +176,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset list entry segments entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
@@ -199,22 +193,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			String uuid, long groupId)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByUUID_G(uuid, groupId);
-
-		if (assetListEntrySegmentsEntryRel == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntrySegmentsEntryRelException(message);
-		}
-
-		return assetListEntrySegmentsEntryRel;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -264,8 +244,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset list entry segments entry rels where uuid = &#63; and companyId = &#63;.
@@ -308,16 +289,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		throw new NoSuchEntrySegmentsEntryRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -362,8 +335,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_collectionPersistenceFinderByAssetListEntryId;
+	private CollectionPersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_collectionPersistenceFinderByAssetListEntryId;
 
 	/**
 	 * Returns an ordered range of all the asset list entry segments entry rels where assetListEntryId = &#63;.
@@ -404,17 +378,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByAssetListEntryId_First(assetListEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		throw new NoSuchEntrySegmentsEntryRelException(
-			_collectionPersistenceFinderByAssetListEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetListEntryId}));
+		return _collectionPersistenceFinderByAssetListEntryId.findFirst(
+			finderCache, new Object[] {assetListEntryId}, orderByComparator);
 	}
 
 	/**
@@ -456,8 +421,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {assetListEntryId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_collectionPersistenceFinderBySegmentsEntryId;
+	private CollectionPersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_collectionPersistenceFinderBySegmentsEntryId;
 
 	/**
 	 * Returns an ordered range of all the asset list entry segments entry rels where segmentsEntryId = &#63;.
@@ -498,16 +464,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchBySegmentsEntryId_First(segmentsEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		throw new NoSuchEntrySegmentsEntryRelException(
-			_collectionPersistenceFinderBySegmentsEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {segmentsEntryId}));
+		return _collectionPersistenceFinderBySegmentsEntryId.findFirst(
+			finderCache, new Object[] {segmentsEntryId}, orderByComparator);
 	}
 
 	/**
@@ -549,8 +507,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {segmentsEntryId});
 	}
 
-	private UniquePersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_uniquePersistenceFinderByA_S;
+	private UniquePersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_uniquePersistenceFinderByA_S;
 
 	/**
 	 * Returns the asset list entry segments entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
@@ -565,23 +524,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			long assetListEntryId, long segmentsEntryId)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByA_S(assetListEntryId, segmentsEntryId);
-
-		if (assetListEntrySegmentsEntryRel == null) {
-			String message =
-				_uniquePersistenceFinderByA_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {assetListEntryId, segmentsEntryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntrySegmentsEntryRelException(message);
-		}
-
-		return assetListEntrySegmentsEntryRel;
+		return _uniquePersistenceFinderByA_S.find(
+			finderCache, new Object[] {assetListEntryId, segmentsEntryId});
 	}
 
 	/**
@@ -632,8 +576,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			finderCache, new Object[] {assetListEntryId, segmentsEntryId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntrySegmentsEntryRel>
-		_collectionPersistenceFinderByA_S_C;
+	private CollectionPersistenceFinder
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
+			_collectionPersistenceFinderByA_S_C;
 
 	/**
 	 * Returns an ordered range of all the asset list entry segments entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -1382,4 +1327,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886856412
+// LIFERAY-SERVICE-BUILDER-HASH:138992605

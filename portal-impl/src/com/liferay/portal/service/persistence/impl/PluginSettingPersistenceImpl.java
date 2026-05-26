@@ -66,8 +66,9 @@ public class PluginSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<PluginSetting>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<PluginSetting, NoSuchPluginSettingException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the plugin settings where companyId = &#63;.
@@ -107,16 +108,9 @@ public class PluginSettingPersistenceImpl
 			long companyId, OrderByComparator<PluginSetting> orderByComparator)
 		throws NoSuchPluginSettingException {
 
-		PluginSetting pluginSetting = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (pluginSetting != null) {
-			return pluginSetting;
-		}
-
-		throw new NoSuchPluginSettingException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -158,7 +152,7 @@ public class PluginSettingPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<PluginSetting>
+	private UniquePersistenceFinder<PluginSetting, NoSuchPluginSettingException>
 		_uniquePersistenceFinderByC_P_P;
 
 	/**
@@ -175,23 +169,9 @@ public class PluginSettingPersistenceImpl
 			long companyId, String pluginId, String pluginType)
 		throws NoSuchPluginSettingException {
 
-		PluginSetting pluginSetting = fetchByC_P_P(
-			companyId, pluginId, pluginType);
-
-		if (pluginSetting == null) {
-			String message =
-				_uniquePersistenceFinderByC_P_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, pluginId, pluginType});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPluginSettingException(message);
-		}
-
-		return pluginSetting;
+		return _uniquePersistenceFinderByC_P_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, pluginId, pluginType});
 	}
 
 	/**
@@ -518,4 +498,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:141921137
+// LIFERAY-SERVICE-BUILDER-HASH:179500535

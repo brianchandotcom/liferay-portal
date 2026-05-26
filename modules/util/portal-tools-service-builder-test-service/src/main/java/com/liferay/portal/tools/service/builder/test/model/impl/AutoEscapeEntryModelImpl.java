@@ -615,4 +615,4 @@ public class AutoEscapeEntryModelImpl
 	private AutoEscapeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089485368
+// LIFERAY-SERVICE-BUILDER-HASH:1966341154

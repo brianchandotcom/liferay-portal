@@ -474,14 +474,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					FileEntry fileEntry = entry.getValue();
 
 					if (fragmentServiceConfiguration.propagateChanges()) {
-						PortletFileRepositoryUtil.deletePortletFileEntry(
-							fileEntry.getFileEntryId());
-
-						_addFileEntry(
-							folderIdsMap,
-							fragmentCollection.getFragmentCollectionId(),
-							groupId, fileEntryPath, repository, userId,
-							zipEntryNames.get(fileEntryPath), zipFile);
+						_updateFileEntry(
+							fileEntry, userId, zipEntryNames.get(fileEntryPath),
+							zipFile);
 
 						zipEntryNames.remove(fileEntryPath);
 					}
@@ -1192,6 +1187,32 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 
 		return input;
+	}
+
+	private void _updateFileEntry(
+			FileEntry fileEntry, long userId, String zipEntryName,
+			ZipFile zipFile)
+		throws Exception {
+
+		ZipEntry zipEntry = zipFile.getEntry(zipEntryName);
+
+		if (zipEntry == null) {
+			return;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+			PortletFileRepositoryUtil.updatePortletFileEntry(
+				userId, fileEntry.getFileEntryId(), inputStream,
+				fileEntry.getFileName(), fileEntry.getMimeType(),
+				serviceContext);
+		}
 	}
 
 	private boolean _validateFragmentCompositions(

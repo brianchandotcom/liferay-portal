@@ -958,4 +958,4 @@ public class CommerceOrderPaymentModelImpl
 	private CommerceOrderPayment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1125922356
+// LIFERAY-SERVICE-BUILDER-HASH:816562340

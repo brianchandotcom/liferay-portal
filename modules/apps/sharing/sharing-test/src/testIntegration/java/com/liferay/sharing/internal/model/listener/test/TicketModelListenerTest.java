@@ -106,7 +106,7 @@ public class TicketModelListenerTest {
 	private Ticket _addTicket() throws Exception {
 		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
+			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS, null,
 			JSONUtil.put(
 				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
 			).toString(),

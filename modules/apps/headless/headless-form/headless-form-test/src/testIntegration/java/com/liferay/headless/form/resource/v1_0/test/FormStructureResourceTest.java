@@ -39,7 +39,8 @@ public class FormStructureResourceTest
 		FormStructureResource formStructureResource =
 			FormStructureResource.builder(
 			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
+				testCompany.getVirtualHostname(),
+				_portal.getPortalServerPort(false), "http"
 			).build();
 
 		AssertUtils.assertFailure(

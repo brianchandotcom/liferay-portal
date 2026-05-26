@@ -251,7 +251,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			companyId, Group.class.getName(), group.getGroupId(),
-			DSRTicketConstants.TYPE_INVITE_MEMBER,
+			DSRTicketConstants.TYPE_INVITE_MEMBER, null,
 			JSONUtil.put(
 				"accountEntryId", accountEntryId
 			).put(

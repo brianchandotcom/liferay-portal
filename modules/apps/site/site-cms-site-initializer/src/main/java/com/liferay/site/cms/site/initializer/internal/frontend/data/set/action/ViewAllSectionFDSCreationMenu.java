@@ -5,26 +5,16 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.action;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
-import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
+import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextUtil;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Sanz
@@ -37,7 +27,7 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {
-		return _sectionDisplayContextHelper.getCreationMenu(
+		return SectionDisplayContextUtil.getCreationMenu(
 			ActionUtil.getAllSectionCreationMenuDropdownItems(
 				httpServletRequest),
 			httpServletRequest, null);
@@ -47,37 +37,5 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
 		return FDSEntryItemImportPolicy.GROUP_PROXY;
 	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_sectionDisplayContextHelper = new SectionDisplayContextHelper(
-			_depotEntryLocalService, _groupLocalService, _language,
-			_objectDefinitionSettingLocalService,
-			_objectEntryFolderModelResourcePermission, _portal);
-	}
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
-
-	@Reference
-	private Portal _portal;
-
-	private SectionDisplayContextHelper _sectionDisplayContextHelper;
 
 }

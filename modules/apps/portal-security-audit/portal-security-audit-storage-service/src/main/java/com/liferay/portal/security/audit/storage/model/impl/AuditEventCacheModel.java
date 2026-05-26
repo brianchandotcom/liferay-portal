@@ -53,7 +53,7 @@ public class AuditEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{auditEventId=");
 		sb.append(auditEventId);
@@ -67,26 +67,30 @@ public class AuditEventCacheModel
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", eventType=");
-		sb.append(eventType);
+		sb.append(", accountEntryId=");
+		sb.append(accountEntryId);
+		sb.append(", additionalInfo=");
+		sb.append(additionalInfo);
 		sb.append(", className=");
 		sb.append(className);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", message=");
-		sb.append(message);
 		sb.append(", clientHost=");
 		sb.append(clientHost);
 		sb.append(", clientIP=");
 		sb.append(clientIP);
+		sb.append(", contextName=");
+		sb.append(contextName);
+		sb.append(", eventType=");
+		sb.append(eventType);
+		sb.append(", message=");
+		sb.append(message);
 		sb.append(", serverName=");
 		sb.append(serverName);
 		sb.append(", serverPort=");
 		sb.append(serverPort);
 		sb.append(", sessionID=");
 		sb.append(sessionID);
-		sb.append(", additionalInfo=");
-		sb.append(additionalInfo);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,11 +119,13 @@ public class AuditEventCacheModel
 			auditEventImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (eventType == null) {
-			auditEventImpl.setEventType("");
+		auditEventImpl.setAccountEntryId(accountEntryId);
+
+		if (additionalInfo == null) {
+			auditEventImpl.setAdditionalInfo("");
 		}
 		else {
-			auditEventImpl.setEventType(eventType);
+			auditEventImpl.setAdditionalInfo(additionalInfo);
 		}
 
 		if (className == null) {
@@ -136,13 +142,6 @@ public class AuditEventCacheModel
 			auditEventImpl.setClassPK(classPK);
 		}
 
-		if (message == null) {
-			auditEventImpl.setMessage("");
-		}
-		else {
-			auditEventImpl.setMessage(message);
-		}
-
 		if (clientHost == null) {
 			auditEventImpl.setClientHost("");
 		}
@@ -155,6 +154,27 @@ public class AuditEventCacheModel
 		}
 		else {
 			auditEventImpl.setClientIP(clientIP);
+		}
+
+		if (contextName == null) {
+			auditEventImpl.setContextName("");
+		}
+		else {
+			auditEventImpl.setContextName(contextName);
+		}
+
+		if (eventType == null) {
+			auditEventImpl.setEventType("");
+		}
+		else {
+			auditEventImpl.setEventType(eventType);
+		}
+
+		if (message == null) {
+			auditEventImpl.setMessage("");
+		}
+		else {
+			auditEventImpl.setMessage(message);
 		}
 
 		if (serverName == null) {
@@ -171,13 +191,6 @@ public class AuditEventCacheModel
 		}
 		else {
 			auditEventImpl.setSessionID(sessionID);
-		}
-
-		if (additionalInfo == null) {
-			auditEventImpl.setAdditionalInfo("");
-		}
-		else {
-			auditEventImpl.setAdditionalInfo(additionalInfo);
 		}
 
 		auditEventImpl.resetOriginalValues();
@@ -198,17 +211,20 @@ public class AuditEventCacheModel
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
-		eventType = objectInput.readUTF();
+
+		accountEntryId = objectInput.readLong();
+		additionalInfo = (String)objectInput.readObject();
 		className = objectInput.readUTF();
 		classPK = objectInput.readUTF();
-		message = objectInput.readUTF();
 		clientHost = objectInput.readUTF();
 		clientIP = objectInput.readUTF();
+		contextName = objectInput.readUTF();
+		eventType = objectInput.readUTF();
+		message = objectInput.readUTF();
 		serverName = objectInput.readUTF();
 
 		serverPort = objectInput.readInt();
 		sessionID = objectInput.readUTF();
-		additionalInfo = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -230,11 +246,13 @@ public class AuditEventCacheModel
 
 		objectOutput.writeLong(createDate);
 
-		if (eventType == null) {
-			objectOutput.writeUTF("");
+		objectOutput.writeLong(accountEntryId);
+
+		if (additionalInfo == null) {
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(eventType);
+			objectOutput.writeObject(additionalInfo);
 		}
 
 		if (className == null) {
@@ -251,13 +269,6 @@ public class AuditEventCacheModel
 			objectOutput.writeUTF(classPK);
 		}
 
-		if (message == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(message);
-		}
-
 		if (clientHost == null) {
 			objectOutput.writeUTF("");
 		}
@@ -270,6 +281,27 @@ public class AuditEventCacheModel
 		}
 		else {
 			objectOutput.writeUTF(clientIP);
+		}
+
+		if (contextName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contextName);
+		}
+
+		if (eventType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(eventType);
+		}
+
+		if (message == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(message);
 		}
 
 		if (serverName == null) {
@@ -287,13 +319,6 @@ public class AuditEventCacheModel
 		else {
 			objectOutput.writeUTF(sessionID);
 		}
-
-		if (additionalInfo == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(additionalInfo);
-		}
 	}
 
 	public long auditEventId;
@@ -302,16 +327,18 @@ public class AuditEventCacheModel
 	public long userId;
 	public String userName;
 	public long createDate;
-	public String eventType;
+	public long accountEntryId;
+	public String additionalInfo;
 	public String className;
 	public String classPK;
-	public String message;
 	public String clientHost;
 	public String clientIP;
+	public String contextName;
+	public String eventType;
+	public String message;
 	public String serverName;
 	public int serverPort;
 	public String sessionID;
-	public String additionalInfo;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2002660291
+// LIFERAY-SERVICE-BUILDER-HASH:1387982496

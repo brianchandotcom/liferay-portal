@@ -26,7 +26,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
+import com.liferay.portal.workflow.kaleo.runtime.notification.KaleoNotificationSender;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
@@ -120,7 +120,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		_notificationHelper.sendKaleoNotifications(
+		_kaleoNotificationSender.sendNotifications(
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
@@ -176,6 +176,9 @@ public class UserModelListener extends BaseModelListener<User> {
 	private KaleoLogLocalService _kaleoLogLocalService;
 
 	@Reference
+	private KaleoNotificationSender _kaleoNotificationSender;
+
+	@Reference
 	private KaleoTaskAssignmentInstanceLocalService
 		_kaleoTaskAssignmentInstanceLocalService;
 
@@ -185,8 +188,5 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private KaleoTaskLocalService _kaleoTaskLocalService;
-
-	@Reference
-	private NotificationHelper _notificationHelper;
 
 }

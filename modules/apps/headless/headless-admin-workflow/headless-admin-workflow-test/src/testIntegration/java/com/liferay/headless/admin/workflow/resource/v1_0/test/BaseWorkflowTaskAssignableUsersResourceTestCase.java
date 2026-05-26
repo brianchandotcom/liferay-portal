@@ -853,4 +853,4 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 			_workflowTaskAssignableUsersResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1843375699
+// LIFERAY-REST-BUILDER-HASH:-1115107166

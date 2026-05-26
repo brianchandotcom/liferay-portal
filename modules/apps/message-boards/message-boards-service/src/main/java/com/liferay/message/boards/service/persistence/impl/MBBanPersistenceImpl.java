@@ -86,7 +86,7 @@ public class MBBanPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBBan>
+	private CollectionPersistenceFinder<MBBan, NoSuchBanException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -126,15 +126,8 @@ public class MBBanPersistenceImpl
 			String uuid, OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByUuid_First(uuid, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		throw new NoSuchBanException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -175,7 +168,8 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBBan> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<MBBan, NoSuchBanException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the message boards ban where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.
@@ -189,21 +183,8 @@ public class MBBanPersistenceImpl
 	public MBBan findByUUID_G(String uuid, long groupId)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByUUID_G(uuid, groupId);
-
-		if (mbBan == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBanException(message);
-		}
-
-		return mbBan;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -251,7 +232,7 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBBan>
+	private CollectionPersistenceFinder<MBBan, NoSuchBanException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -294,15 +275,8 @@ public class MBBanPersistenceImpl
 			OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		throw new NoSuchBanException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -347,7 +321,7 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<MBBan>
+	private CollectionPersistenceFinder<MBBan, NoSuchBanException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -387,15 +361,8 @@ public class MBBanPersistenceImpl
 			long groupId, OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		throw new NoSuchBanException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -436,7 +403,7 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<MBBan>
+	private CollectionPersistenceFinder<MBBan, NoSuchBanException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -476,15 +443,8 @@ public class MBBanPersistenceImpl
 			long userId, OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByUserId_First(userId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		throw new NoSuchBanException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -525,7 +485,7 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<MBBan>
+	private CollectionPersistenceFinder<MBBan, NoSuchBanException>
 		_collectionPersistenceFinderByBanUserId;
 
 	/**
@@ -565,15 +525,8 @@ public class MBBanPersistenceImpl
 			long banUserId, OrderByComparator<MBBan> orderByComparator)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByBanUserId_First(banUserId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		throw new NoSuchBanException(
-			_collectionPersistenceFinderByBanUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {banUserId}));
+		return _collectionPersistenceFinderByBanUserId.findFirst(
+			finderCache, new Object[] {banUserId}, orderByComparator);
 	}
 
 	/**
@@ -614,7 +567,8 @@ public class MBBanPersistenceImpl
 			finderCache, new Object[] {banUserId});
 	}
 
-	private UniquePersistenceFinder<MBBan> _uniquePersistenceFinderByG_B;
+	private UniquePersistenceFinder<MBBan, NoSuchBanException>
+		_uniquePersistenceFinderByG_B;
 
 	/**
 	 * Returns the message boards ban where groupId = &#63; and banUserId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.
@@ -628,22 +582,8 @@ public class MBBanPersistenceImpl
 	public MBBan findByG_B(long groupId, long banUserId)
 		throws NoSuchBanException {
 
-		MBBan mbBan = fetchByG_B(groupId, banUserId);
-
-		if (mbBan == null) {
-			String message =
-				_uniquePersistenceFinderByG_B.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, banUserId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBanException(message);
-		}
-
-		return mbBan;
+		return _uniquePersistenceFinderByG_B.find(
+			finderCache, new Object[] {groupId, banUserId});
 	}
 
 	/**
@@ -1205,4 +1145,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160750362
+// LIFERAY-SERVICE-BUILDER-HASH:1239784870

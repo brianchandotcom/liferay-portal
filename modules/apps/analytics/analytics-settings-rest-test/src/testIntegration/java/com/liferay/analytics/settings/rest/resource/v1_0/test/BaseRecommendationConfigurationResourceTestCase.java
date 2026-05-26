@@ -889,4 +889,4 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 			_recommendationConfigurationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:684716919
+// LIFERAY-REST-BUILDER-HASH:-708628558

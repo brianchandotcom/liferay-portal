@@ -91,8 +91,9 @@ public class CalendarResourcePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where uuid = &#63;.
@@ -132,16 +133,8 @@ public class CalendarResourcePersistenceImpl
 			String uuid, OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -182,7 +175,7 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CalendarResource>
+	private UniquePersistenceFinder<CalendarResource, NoSuchResourceException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -197,21 +190,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource findByUUID_G(String uuid, long groupId)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByUUID_G(uuid, groupId);
-
-		if (calendarResource == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchResourceException(message);
-		}
-
-		return calendarResource;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class CalendarResourcePersistenceImpl
 			OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where groupId = &#63;.
@@ -398,16 +372,8 @@ public class CalendarResourcePersistenceImpl
 			long groupId, OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -483,8 +449,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByActive;
+	private CollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByActive;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where active = &#63;.
@@ -525,16 +492,8 @@ public class CalendarResourcePersistenceImpl
 			OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByActive_First(
-			active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
+		return _collectionPersistenceFinderByActive.findFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -575,8 +534,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {active});
 	}
 
-	private FilterCollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByG_C;
+	private FilterCollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByG_C;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where groupId = &#63; and code = &#63;.
@@ -801,8 +761,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {groupIds, code}, groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByG_A;
+	private FilterCollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns an ordered range of all the calendar resources where groupId = &#63; and active = &#63;.
@@ -845,16 +806,8 @@ public class CalendarResourcePersistenceImpl
 			OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByG_A_First(
-			groupId, active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, active}));
+		return _collectionPersistenceFinderByG_A.findFirst(
+			finderCache, new Object[] {groupId, active}, orderByComparator);
 	}
 
 	/**
@@ -936,7 +889,7 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {groupId, active}, groupId);
 	}
 
-	private UniquePersistenceFinder<CalendarResource>
+	private UniquePersistenceFinder<CalendarResource, NoSuchResourceException>
 		_uniquePersistenceFinderByC_C;
 
 	/**
@@ -951,22 +904,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource findByC_C(long classNameId, long classPK)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByC_C(classNameId, classPK);
-
-		if (calendarResource == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchResourceException(message);
-		}
-
-		return calendarResource;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1014,8 +953,9 @@ public class CalendarResourcePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<CalendarResource>
-		_collectionPersistenceFinderByC_LikeC_A;
+	private CollectionPersistenceFinder
+		<CalendarResource, NoSuchResourceException>
+			_collectionPersistenceFinderByC_LikeC_A;
 
 	/**
 	 * Returns all the calendar resources where companyId = &#63; and code LIKE &#63; and active = &#63;.
@@ -1122,17 +1062,9 @@ public class CalendarResourcePersistenceImpl
 			OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
 
-		CalendarResource calendarResource = fetchByC_LikeC_A_First(
-			companyId, code, active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		throw new NoSuchResourceException(
-			_collectionPersistenceFinderByC_LikeC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, code, active}));
+		return _collectionPersistenceFinderByC_LikeC_A.findFirst(
+			finderCache, new Object[] {companyId, code, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1583,16 +1515,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId));
@@ -1647,16 +1569,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CalendarResource::getGroupId),
@@ -1691,16 +1603,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId),
@@ -1829,4 +1731,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-719566531
+// LIFERAY-SERVICE-BUILDER-HASH:2024190667

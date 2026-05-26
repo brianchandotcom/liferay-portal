@@ -11,7 +11,10 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
@@ -20,7 +23,7 @@ import getFragmentDefinition from '../../layout-content-page-editor-web/main/uti
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {faroConfig} from '../../osb-faro-web/main/faro.config';
 import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
-import {openABTesSidebar} from './utils/ab-test';
+import {createABTest, createVariant, openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -48,6 +51,10 @@ test(
 		await expect(
 			page.getByText('Sync to Liferay Analytics Cloud')
 		).toBeVisible();
+
+		await expect(
+			page.getByText('Do not show me this again')
+		).not.toBeVisible();
 
 		const tagA = await page.locator(
 			'#_com_liferay_segments_experiment_web_internal_portlet_SegmentsExperimentPortlet_-segments-experiment-root a'
@@ -179,6 +186,417 @@ test(
 						project.groupId
 					);
 				});
+			}
+		}
+	}
+);
+
+test(
+	'AB Test edit modal only persists when the user saves the changes',
+	{tag: '@LPS-97882'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			const originalName = 'AB Test ' + getRandomString();
+
+			await createABTest({name: originalName, page});
+
+			// Create a variant so the AB Test kebab becomes available.
+
+			await createVariant({name: 'V1', page});
+
+			// Open the edit modal, change values, and cancel
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			const updatedName = originalName + ' updated';
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByLabel('Test Name'),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(page.getByText(originalName)).toBeVisible();
+			await expect(page.getByText('Bounce Rate')).toBeVisible();
+
+			// Open the edit modal, change values, and close
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByLabel('Test Name'),
+				trigger: page
+					.locator('.modal-header')
+					.getByRole('button', {name: 'Close'}),
+			});
+
+			await expect(page.getByText(originalName)).toBeVisible();
+			await expect(page.getByText('Bounce Rate')).toBeVisible();
+
+			// Open the edit modal, change values, and save
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await page.locator('.modal-footer').getByText('Save').click();
+
+			await expect(page.getByText(updatedName)).toBeVisible();
+			await expect(page.getByText('Click', {exact: true})).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'Cancelling delete, review, and delete-variant actions preserves the AB Test draft',
+	{tag: ['@LPS-97195', '@LPS-97196', '@LPS-99421']},
+	async ({apiHelpers, page, site}) => {
+		const abTestName = 'AB Test ' + getRandomString();
+
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({name: abTestName, page});
+
+			await createVariant({name: 'V1', page});
+
+			// Cancel the delete-variant action and assert the variant survives
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.locator('table', {hasText: 'V1'})
+					.locator('button.dropdown-toggle'),
+			});
+
+			await expect(page.getByText('Delete variant?')).toBeVisible();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText('Delete variant?'),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(page.locator('[data-title="V1"]')).toBeVisible();
+
+			// Cancel the Review and Run Test modal and assert the button is back
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'Review and Run Test',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Review and Run Test'})
+			).toBeVisible();
+
+			// Close the Review and Run Test modal and assert the button is back
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'Review and Run Test',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page
+					.locator('.modal-header')
+					.getByRole('button', {name: 'Close'}),
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Review and Run Test'})
+			).toBeVisible();
+
+			// Cancel the delete-AB-Test action and assert the draft survives
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByRole('button', {name: 'Show Actions'}),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(abTestName),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'AB Test by Click goal shows an error when the element ID is invalid',
+	{tag: '@LPS-119475'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-button',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({
+				goal: 'Click',
+				name: 'AB Test ' + getRandomString(),
+				page,
+			});
+
+			// Type an invalid ID and try to run the test
+
+			await page.locator('#clickableElement').fill('invalidID');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByText('ID was not found.'),
+				trigger: page.getByText('Review and Run Test'),
+			});
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'AB Test cannot be run when all variants have been deleted',
+	{tag: '@LPS-86285'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({name: 'AB Test ' + getRandomString(), page});
+
+			await createVariant({name: 'V1', page});
+
+			// Delete the variant
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.locator('table', {hasText: 'V1'})
+					.locator('button.dropdown-toggle'),
+			});
+
+			await page.locator('.modal-footer').getByText('Delete').click();
+
+			await waitForAlert(page);
+
+			await expect(
+				page.getByText('Create at least one variant to run the test.')
+			).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'AB Test panel shows the empty state image when no tests exist',
+	{tag: '@LPS-101167'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await expect(
+				page.locator('.segments-experiments-empty-state__image')
+			).toBeVisible();
+
+			await expect(page.getByText('Create Test')).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
 			}
 		}
 	}

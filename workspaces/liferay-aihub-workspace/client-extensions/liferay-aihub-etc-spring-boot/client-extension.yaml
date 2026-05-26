@@ -1,7 +1,14 @@
 assemble:
     -   fromTask: bootJar
+liferay-aihub-etc-spring-boot-oahs:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay AI Hub Etc Spring Boot OAuth Application Headless Server
+    scopes:
+        -   c_aihubcrawlerjob.everything
+    type: oAuthApplicationHeadlessServer
 liferay-aihub-etc-spring-boot-oaua:
-    .serviceAddress: localhost:8080
+    .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay AI Hub Etc Spring Boot OAuth Application User Agent
     type: oAuthApplicationUserAgent

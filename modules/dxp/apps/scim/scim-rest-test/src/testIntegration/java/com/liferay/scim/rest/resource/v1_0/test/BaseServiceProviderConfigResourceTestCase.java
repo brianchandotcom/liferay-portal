@@ -1077,4 +1077,4 @@ public abstract class BaseServiceProviderConfigResourceTestCase {
 		_serviceProviderConfigResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1345038022
+// LIFERAY-REST-BUILDER-HASH:1787809041

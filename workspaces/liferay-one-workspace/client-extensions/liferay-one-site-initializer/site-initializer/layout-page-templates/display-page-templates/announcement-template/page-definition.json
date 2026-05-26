@@ -1,0 +1,244 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorBrandPrimaryDarken3",
+						"paddingBottom": "3",
+						"paddingLeft": "5",
+						"paddingRight": "5",
+						"paddingTop": "4",
+						"textColor": "colorNeutral0"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 1,
+						"paddingLeft": 4,
+						"paddingRight": 4,
+						"paddingTop": 2
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"maxWidth": "var(--container-max-xl)"
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h1"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Announcements",
+														"es_ES": "Anuncios",
+														"ja_JP": "アナウンスメント",
+														"pt_BR": "Avisos"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"maxWidth": "var(--container-max-lg)",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-button"
+							},
+							"fragmentConfig": {
+								"buttonSize": "nm",
+								"buttonType": "link",
+								"type": "link"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/support/announcements"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "One"
+																}
+															]
+														}
+													}
+												}
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "← Back to Announcements",
+												"es_ES": "← Volver a Anuncios",
+												"ja_JP": "← アナウンスメントに戻る",
+												"pt_BR": "← Voltar para Avisos"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "3"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "JournalArticle_title",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-date"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-date",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "JournalArticle_publishDate",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "3"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-paragraph"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "content",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main"
+		}
+	}
+}

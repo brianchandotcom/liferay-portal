@@ -33,7 +33,7 @@ modules/apps/{module-group}/
 ### Integration Tests
 
 - **Location**: `{module-group}/{module}-test/src/testIntegration/java/**/*Test.java`.
-- **Also In**: `{module-group}/{module}-web-test/src/testIntegration/java/` for web tests.
+- **Also In**: `{module-group}/{module}-web-test/src/testIntegration/java` for web tests.
 - **Framework**: Arquillian with the JUnit bridge (`@RunWith(Arquillian.class)`).
 - **Note**: Integration tests require a running Liferay instance or will bootstrap one.
 - **Run All in a Module**: `cd modules && ../gradlew :apps:{module-group}:{module}-test:testIntegration`.
@@ -45,20 +45,20 @@ modules/apps/{module-group}/
 - **Location**: `modules/test/playwright/tests/{module-web}/**/*.spec.ts`.
 - **Config**: `modules/test/playwright/playwright.config.ts` (imports per-module configs).
 - **Coverage**: Approximately 131 module directories and 630 spec files.
-- **Run All for a Module**: `cd modules/test/playwright && npx playwright test tests/{module-web}/`.
+- **Run All for a Module**: `cd modules/test/playwright && npx playwright test tests/{module-web}`.
 - **Run a Specific File**: `cd modules/test/playwright && npx playwright test tests/{module-web}/main/someTest.spec.ts`.
 - **Speed**: Approximately 1–3 minutes per spec file.
 - **Structure**: Each module directory typically contains `main/config.ts` and `main/*.spec.ts`.
 
 ### Poshi Functional Tests
 
-- **Location**: `portal-web/test/functional/com/liferay/portalweb/`.
+- **Location**: `portal-web/test/functional/com/liferay/portalweb`.
 - **Annotations**:
 	- `@component-name` — links to a component (e.g., `"portal-headless"`).
 	- `@priority` — ranges from 1 to 5, with 5 denoting the most critical.
 	- `testray.main.component.name` — the component used for test reporting.
 - **Macros**: `macros/*.macro` (approximately 516 files).
-- **Organization**: `tests/enduser/{category}/{subcategory}/` with categories such as `abtest`, `collaboration`, `contentdashboard`, `documentmanagement`, `exportimport`, `publications`, `staging`, and `wem`.
+- **Organization**: `tests/enduser/{category}/{subcategory}` with categories such as `abtest`, `collaboration`, `contentdashboard`, `documentmanagement`, `exportimport`, `publications`, `staging`, and `wem`.
 - **Speed**: Approximately 2–5 minutes per test method.
 - **Test Files**: `tests/enduser/**/*.testcase` (approximately 514 files).
 
@@ -72,9 +72,9 @@ A change to `modules/apps/blogs/blogs-service/src/main/java/com/liferay/blogs/in
 
 ### Cross-Module Mapping (Test Module)
 
-A change to `modules/apps/blogs/blogs-service/` maps to:
+A change to `modules/apps/blogs/blogs-service` maps to:
 
-- Integration tests in `modules/apps/blogs/blogs-test/src/testIntegration/java/`.
+- Integration tests in `modules/apps/blogs/blogs-test/src/testIntegration/java`.
 
 ### Using test.properties for Broader Mapping
 
@@ -98,7 +98,7 @@ Use `testray.main.component.name` to locate related Poshi `.testcase` files by s
 
 ### Playwright Mapping
 
-Map the module's web component name to its Playwright directory. The directory name under `modules/test/playwright/tests/` mirrors the `-web` module name:
+Map the module's web component name to its Playwright directory. The directory name under `modules/test/playwright/tests` mirrors the `-web` module name:
 
-- A change in `modules/apps/blogs/blogs-web/` maps to tests in `modules/test/playwright/tests/blogs-web/`.
-- A change in `modules/apps/document-library/document-library-web/` maps to tests in `modules/test/playwright/tests/document-library-web/`.
+- A change in `modules/apps/blogs/blogs-web` maps to tests in `modules/test/playwright/tests/blogs-web`.
+- A change in `modules/apps/document-library/document-library-web` maps to tests in `modules/test/playwright/tests/document-library-web`.

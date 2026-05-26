@@ -3,7 +3,6 @@
 html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 	&-card-item {
 		cursor: grab;
-		transition: transform ease 0.3s;
 
 		&:focus-visible,
 		&--active {
@@ -15,42 +14,15 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		&:hover:not(.disabled),
 		&:focus-visible,
 		&--active {
-			box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
-			outline: none;
-			transform: translateY(-4px);
-
-			.card {
-				border-radius: 4px;
-				box-shadow: none;
-
-				&::after {
-					border-radius: 4px;
-					box-shadow: inset 0 0 0 2px $cadmin-primary-l1;
-					content: '';
-					height: 100%;
-					left: 0;
-					pointer-events: none;
-					position: absolute;
-					top: 0;
-					width: 100%;
-				}
-
-				.page-editor__fragments-widgets__tab__highlight-button {
-					opacity: 1;
-				}
+			.card .page-editor__fragments-widgets__tab__highlight-button {
+				opacity: 1;
 			}
 		}
 
-		.file-card .card {
+		.aspect-ratio {
 			background-color: $cadmin-light;
-		}
+			padding-bottom: 70%;
 
-		.card {
-			aspect-ratio: 1;
-			box-shadow: 0 0 0 1px $cadmin-gray-300;
-		}
-
-		.card-item-first {
 			.card-type-asset-icon {
 				width: 32px;
 			}
@@ -58,14 +30,9 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			.lexicon-icon {
 				color: $cadmin-secondary;
 			}
-
-			height: 70%;
 		}
 
 		.card-body {
-			background-color: $cadmin-white;
-			height: 30%;
-
 			.card-title {
 				font-size: 12px;
 				width: 100%;
@@ -80,13 +47,23 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		&.disabled {
 			cursor: default;
 
-			.image-card .card-item-first {
+			.card-type-asset {
+				&:hover {
+					transform: none;
+
+					.card {
+						border-color: $cadmin-card-border-color;
+						box-shadow: none;
+						outline-color: transparent;
+					}
+				}
+			}
+
+			.image-card .aspect-ratio {
 				opacity: 0.5;
 			}
 
 			.card {
-				box-shadow: 0 0 0 1px $cadmin-gray-300;
-
 				.lexicon-icon {
 					color: $cadmin-secondary-l1;
 				}

@@ -82,8 +82,9 @@ public class DDMFormInstanceReportPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<DDMFormInstanceReport>
-		_uniquePersistenceFinderByFormInstanceId;
+	private UniquePersistenceFinder
+		<DDMFormInstanceReport, NoSuchFormInstanceReportException>
+			_uniquePersistenceFinderByFormInstanceId;
 
 	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or throws a <code>NoSuchFormInstanceReportException</code> if it could not be found.
@@ -96,22 +97,8 @@ public class DDMFormInstanceReportPersistenceImpl
 	public DDMFormInstanceReport findByFormInstanceId(long formInstanceId)
 		throws NoSuchFormInstanceReportException {
 
-		DDMFormInstanceReport ddmFormInstanceReport = fetchByFormInstanceId(
-			formInstanceId);
-
-		if (ddmFormInstanceReport == null) {
-			String message =
-				_uniquePersistenceFinderByFormInstanceId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {formInstanceId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFormInstanceReportException(message);
-		}
-
-		return ddmFormInstanceReport;
+		return _uniquePersistenceFinderByFormInstanceId.find(
+			finderCache, new Object[] {formInstanceId});
 	}
 
 	/**
@@ -528,4 +515,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-206635778
+// LIFERAY-SERVICE-BUILDER-HASH:2049139138

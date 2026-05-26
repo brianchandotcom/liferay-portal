@@ -814,6 +814,54 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/roles":
+        get:
+            description:
+                Get the asset library scoped roles that can be assigned to its members. Accessible to any asset library
+                administrator or member.
+            operationId: getAssetLibraryRolesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
+                    description:
+                        default response
+            tags: ["Role"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts":
         get:
             description:

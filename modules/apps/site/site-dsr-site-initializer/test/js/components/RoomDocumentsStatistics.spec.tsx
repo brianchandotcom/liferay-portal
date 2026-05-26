@@ -90,7 +90,10 @@ describe('RoomDocumentsStatistics', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<DocumentsStatistics namespace="test-namespace" />
+			<DocumentsStatistics
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
@@ -101,10 +104,28 @@ describe('RoomDocumentsStatistics', () => {
 	});
 
 	it('renders the user involved count from userInvolvedMetric', () => {
-		render(<DocumentsStatistics namespace="test-namespace" />);
+		render(
+			<DocumentsStatistics
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
 
 		expect(screen.getAllByText('4').length).toBe(3);
 		expect(screen.getAllByText('3').length).toBe(2);
 		expect(screen.getByText('2')).toBeInTheDocument();
+	});
+
+	it('renders the not-configured message when analytics cloud is not configured', () => {
+		render(
+			<DocumentsStatistics
+				isAnalyticsEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

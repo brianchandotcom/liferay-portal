@@ -90,8 +90,9 @@ public class NotificationTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<NotificationTemplate>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<NotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the notification templates where uuid = &#63;.
@@ -132,16 +133,8 @@ public class NotificationTemplatePersistenceImpl
 			OrderByComparator<NotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		NotificationTemplate notificationTemplate = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -217,8 +210,9 @@ public class NotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<NotificationTemplate>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<NotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the notification templates where uuid = &#63; and companyId = &#63;.
@@ -261,16 +255,8 @@ public class NotificationTemplatePersistenceImpl
 			OrderByComparator<NotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		NotificationTemplate notificationTemplate = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,8 +338,9 @@ public class NotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<NotificationTemplate>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<NotificationTemplate, NoSuchNotificationTemplateException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the notification templates where companyId = &#63;.
@@ -394,16 +381,8 @@ public class NotificationTemplatePersistenceImpl
 			OrderByComparator<NotificationTemplate> orderByComparator)
 		throws NoSuchNotificationTemplateException {
 
-		NotificationTemplate notificationTemplate = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		throw new NoSuchNotificationTemplateException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -480,8 +459,9 @@ public class NotificationTemplatePersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<NotificationTemplate>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<NotificationTemplate, NoSuchNotificationTemplateException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
@@ -496,23 +476,8 @@ public class NotificationTemplatePersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchNotificationTemplateException {
 
-		NotificationTemplate notificationTemplate = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (notificationTemplate == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotificationTemplateException(message);
-		}
-
-		return notificationTemplate;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -882,16 +847,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, NotificationTemplate::getUuid));
@@ -919,16 +874,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, NotificationTemplate::getUuid),
@@ -960,16 +905,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1063,4 +998,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1287262656
+// LIFERAY-SERVICE-BUILDER-HASH:82613853

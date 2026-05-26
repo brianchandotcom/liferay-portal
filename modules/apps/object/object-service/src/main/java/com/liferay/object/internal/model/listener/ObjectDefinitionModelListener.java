@@ -97,8 +97,8 @@ public class ObjectDefinitionModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectDefinition.class.getName(),
-					objectDefinition.getObjectDefinitionId(),
+					ObjectDefinition.class.getName(),
+					objectDefinition.getObjectDefinitionId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectDefinition, objectDefinition)));
 		}
@@ -133,8 +133,8 @@ public class ObjectDefinitionModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectDefinition.class.getName(),
-				objectDefinition.getObjectDefinitionId(), null);
+				ObjectDefinition.class.getName(),
+				objectDefinition.getObjectDefinitionId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

@@ -404,50 +404,48 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 			long companyId, long userId, String checkerClassName) {
 
 			return new AuditMessage(
-				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_FAILURE,
-				companyId, userId, "Nonexistent", checkerClassName,
-				String.valueOf(userId), null,
-				JSONUtil.put("reason", "Nonexistent User"));
+				companyId, userId, "Nonexistent",
+				JSONUtil.put("reason", "Nonexistent User"), checkerClassName,
+				String.valueOf(userId),
+				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_FAILURE, null);
 		}
 
 		public AuditMessage buildNotVerifiedAuditMessage(
 			User user, String checkerClassName, String reason) {
 
 			return new AuditMessage(
-				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_NOT_VERIFIED,
 				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				checkerClassName, String.valueOf(user.getPrimaryKey()), null,
-				JSONUtil.put("reason", reason));
+				JSONUtil.put("reason", reason), checkerClassName,
+				String.valueOf(user.getPrimaryKey()),
+				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_NOT_VERIFIED, null);
 		}
 
 		public AuditMessage buildVerificationFailureAuditMessage(
 			User user, String checkerClassName, String reason) {
 
 			return new AuditMessage(
-				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_FAILURE,
 				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				checkerClassName, String.valueOf(user.getPrimaryKey()), null,
-				JSONUtil.put("reason", reason));
+				JSONUtil.put("reason", reason), checkerClassName,
+				String.valueOf(user.getPrimaryKey()),
+				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_FAILURE, null);
 		}
 
 		public AuditMessage buildVerificationSuccessAuditMessage(
 			User user, String checkerClassName) {
 
 			return new AuditMessage(
-				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_SUCCESS,
-				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				checkerClassName, String.valueOf(user.getPrimaryKey()), null,
-				null);
+				user.getCompanyId(), user.getUserId(), user.getFullName(), null,
+				checkerClassName, String.valueOf(user.getPrimaryKey()),
+				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFICATION_SUCCESS, null);
 		}
 
 		public AuditMessage buildVerifiedAuditMessage(
 			User user, String checkerClassName) {
 
 			return new AuditMessage(
-				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFIED,
-				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				checkerClassName, String.valueOf(user.getPrimaryKey()), null,
-				null);
+				user.getCompanyId(), user.getUserId(), user.getFullName(), null,
+				checkerClassName, String.valueOf(user.getPrimaryKey()),
+				MFAEmailOTPEventTypes.MFA_EMAIL_OTP_VERIFIED, null);
 		}
 
 		public void routeAuditMessage(AuditMessage auditMessage) {

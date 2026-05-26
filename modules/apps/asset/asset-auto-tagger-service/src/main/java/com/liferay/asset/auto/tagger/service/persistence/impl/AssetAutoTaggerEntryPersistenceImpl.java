@@ -82,8 +82,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetAutoTaggerEntry>
-		_collectionPersistenceFinderByAssetEntryId;
+	private CollectionPersistenceFinder
+		<AssetAutoTaggerEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByAssetEntryId;
 
 	/**
 	 * Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
@@ -124,16 +125,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetEntryId_First(
-			assetEntryId, orderByComparator);
-
-		if (assetAutoTaggerEntry != null) {
-			return assetAutoTaggerEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByAssetEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetEntryId}));
+		return _collectionPersistenceFinderByAssetEntryId.findFirst(
+			finderCache, new Object[] {assetEntryId}, orderByComparator);
 	}
 
 	/**
@@ -175,8 +168,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			finderCache, new Object[] {assetEntryId});
 	}
 
-	private CollectionPersistenceFinder<AssetAutoTaggerEntry>
-		_collectionPersistenceFinderByAssetTagId;
+	private CollectionPersistenceFinder
+		<AssetAutoTaggerEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByAssetTagId;
 
 	/**
 	 * Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
@@ -217,16 +211,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetTagId_First(
-			assetTagId, orderByComparator);
-
-		if (assetAutoTaggerEntry != null) {
-			return assetAutoTaggerEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByAssetTagId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetTagId}));
+		return _collectionPersistenceFinderByAssetTagId.findFirst(
+			finderCache, new Object[] {assetTagId}, orderByComparator);
 	}
 
 	/**
@@ -268,7 +254,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			finderCache, new Object[] {assetTagId});
 	}
 
-	private UniquePersistenceFinder<AssetAutoTaggerEntry>
+	private UniquePersistenceFinder<AssetAutoTaggerEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByA_A;
 
 	/**
@@ -283,23 +269,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public AssetAutoTaggerEntry findByA_A(long assetEntryId, long assetTagId)
 		throws NoSuchEntryException {
 
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByA_A(
-			assetEntryId, assetTagId);
-
-		if (assetAutoTaggerEntry == null) {
-			String message =
-				_uniquePersistenceFinderByA_A.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {assetEntryId, assetTagId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return assetAutoTaggerEntry;
+		return _uniquePersistenceFinderByA_A.find(
+			finderCache, new Object[] {assetEntryId, assetTagId});
 	}
 
 	/**
@@ -772,4 +743,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-199745540
+// LIFERAY-SERVICE-BUILDER-HASH:-990798810

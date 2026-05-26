@@ -64,8 +64,9 @@ public class RecentLayoutBranchPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<RecentLayoutBranch>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<RecentLayoutBranch, NoSuchRecentLayoutBranchException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the recent layout branches where groupId = &#63;.
@@ -106,16 +107,9 @@ public class RecentLayoutBranchPersistenceImpl
 			OrderByComparator<RecentLayoutBranch> orderByComparator)
 		throws NoSuchRecentLayoutBranchException {
 
-		RecentLayoutBranch recentLayoutBranch = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (recentLayoutBranch != null) {
-			return recentLayoutBranch;
-		}
-
-		throw new NoSuchRecentLayoutBranchException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -157,8 +151,9 @@ public class RecentLayoutBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<RecentLayoutBranch>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<RecentLayoutBranch, NoSuchRecentLayoutBranchException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the recent layout branches where userId = &#63;.
@@ -199,16 +194,9 @@ public class RecentLayoutBranchPersistenceImpl
 			OrderByComparator<RecentLayoutBranch> orderByComparator)
 		throws NoSuchRecentLayoutBranchException {
 
-		RecentLayoutBranch recentLayoutBranch = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (recentLayoutBranch != null) {
-			return recentLayoutBranch;
-		}
-
-		throw new NoSuchRecentLayoutBranchException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -250,8 +238,9 @@ public class RecentLayoutBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<RecentLayoutBranch>
-		_collectionPersistenceFinderByLayoutBranchId;
+	private CollectionPersistenceFinder
+		<RecentLayoutBranch, NoSuchRecentLayoutBranchException>
+			_collectionPersistenceFinderByLayoutBranchId;
 
 	/**
 	 * Returns an ordered range of all the recent layout branches where layoutBranchId = &#63;.
@@ -292,16 +281,9 @@ public class RecentLayoutBranchPersistenceImpl
 			OrderByComparator<RecentLayoutBranch> orderByComparator)
 		throws NoSuchRecentLayoutBranchException {
 
-		RecentLayoutBranch recentLayoutBranch = fetchByLayoutBranchId_First(
-			layoutBranchId, orderByComparator);
-
-		if (recentLayoutBranch != null) {
-			return recentLayoutBranch;
-		}
-
-		throw new NoSuchRecentLayoutBranchException(
-			_collectionPersistenceFinderByLayoutBranchId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {layoutBranchId}));
+		return _collectionPersistenceFinderByLayoutBranchId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutBranchId},
+			orderByComparator);
 	}
 
 	/**
@@ -344,8 +326,9 @@ public class RecentLayoutBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {layoutBranchId});
 	}
 
-	private UniquePersistenceFinder<RecentLayoutBranch>
-		_uniquePersistenceFinderByU_L_P;
+	private UniquePersistenceFinder
+		<RecentLayoutBranch, NoSuchRecentLayoutBranchException>
+			_uniquePersistenceFinderByU_L_P;
 
 	/**
 	 * Returns the recent layout branch where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or throws a <code>NoSuchRecentLayoutBranchException</code> if it could not be found.
@@ -361,23 +344,9 @@ public class RecentLayoutBranchPersistenceImpl
 			long userId, long layoutSetBranchId, long plid)
 		throws NoSuchRecentLayoutBranchException {
 
-		RecentLayoutBranch recentLayoutBranch = fetchByU_L_P(
-			userId, layoutSetBranchId, plid);
-
-		if (recentLayoutBranch == null) {
-			String message =
-				_uniquePersistenceFinderByU_L_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, layoutSetBranchId, plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRecentLayoutBranchException(message);
-		}
-
-		return recentLayoutBranch;
+		return _uniquePersistenceFinderByU_L_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, layoutSetBranchId, plid});
 	}
 
 	/**
@@ -754,4 +723,4 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1192540140
+// LIFERAY-SERVICE-BUILDER-HASH:230078675

@@ -234,6 +234,12 @@ liferay-default:
                             cidr: 0.0.0.0/0
                             except:
                                 -   169.254.169.254/32
+    podSecurityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
     resources:
         limits:
             cpu: 4000m
@@ -244,6 +250,15 @@ liferay-default:
     search:
         engine: opensearch
         opensearch2DownloadBaseURL: https://releases.liferay.com/opensearch2
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

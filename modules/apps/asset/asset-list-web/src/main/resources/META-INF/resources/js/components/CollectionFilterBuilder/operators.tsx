@@ -63,3 +63,18 @@ export function getCollectionQuantifierOptions(
 			return null;
 	}
 }
+
+export const RELATIVE_DATE_OPTIONS: FilterOperator[] = [
+	{label: Liferay.Language.get('now'), value: 'now'},
+	{label: Liferay.Language.get('past-day'), value: 'past-day'},
+	{label: Liferay.Language.get('past-24-hours'), value: 'past-24-hours'},
+	{label: Liferay.Language.get('past-week'), value: 'past-week'},
+	{label: Liferay.Language.get('past-month'), value: 'past-month'},
+	{label: Liferay.Language.get('past-year'), value: 'past-year'},
+	{label: Liferay.Language.get('next-month'), value: 'next-month'},
+	{label: Liferay.Language.get('last-year'), value: 'last-year'},
+];
+
+export const RELATIVE_DATE_VALUES = RELATIVE_DATE_OPTIONS.map(
+	(option) => option.value
+);

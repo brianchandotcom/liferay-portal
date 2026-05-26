@@ -13,7 +13,6 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -50,10 +48,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
 		Portal portal,
 		TranslationInfoItemFieldValuesExporterRegistry
 			translationInfoItemFieldValuesExporterRegistry,
@@ -61,9 +56,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal,
+			httpServletRequest, language, objectDefinitionService, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
@@ -170,11 +163,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		if (_isContentsFolder()) {
-			return sectionDisplayContextHelper.
-				getContentsBulkActionDropdownItems(httpServletRequest);
+			return SectionDisplayContextUtil.getContentsBulkActionDropdownItems(
+				httpServletRequest);
 		}
 
-		return sectionDisplayContextHelper.getFilesBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesBulkActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -241,11 +234,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		if (_isContentsFolder()) {
-			return sectionDisplayContextHelper.
-				getContentsFDSActionDropdownItems(httpServletRequest);
+			return SectionDisplayContextUtil.getContentsFDSActionDropdownItems(
+				httpServletRequest);
 		}
 
-		return sectionDisplayContextHelper.getFilesFDSActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesFDSActionDropdownItems(
 			httpServletRequest);
 	}
 

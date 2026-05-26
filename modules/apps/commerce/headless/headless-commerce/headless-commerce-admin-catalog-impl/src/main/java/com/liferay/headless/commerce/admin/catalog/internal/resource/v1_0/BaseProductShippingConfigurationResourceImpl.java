@@ -48,6 +48,9 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the shipping configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductShippingConfigurationDTOConverter. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -85,6 +88,9 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/shippingConfiguration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the shipping configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductShippingConfigurationDTOConverter. Validation -- NoSuchCPDefinitionException -> 404 when product id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -119,6 +125,9 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration' -d $'{"depth": ___, "freeShipping": ___, "height": ___, "shippable": ___, "shippingExtraPrice": ___, "shippingSeparately": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the shipping configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductShippingConfigurationUtil.updateCPDefinitionShippingInfo. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the CPDefinition shipping fields (weight, width, height, depth, etc.)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -159,6 +168,9 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/shippingConfiguration' -d $'{"depth": ___, "freeShipping": ___, "height": ___, "shippable": ___, "shippingExtraPrice": ___, "shippingSeparately": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the shipping configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductShippingConfigurationUtil.updateCPDefinitionShippingInfo. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the CPDefinition shipping fields."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -638,4 +650,4 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 			BaseProductShippingConfigurationResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:795212142
+// LIFERAY-REST-BUILDER-HASH:-2107576973

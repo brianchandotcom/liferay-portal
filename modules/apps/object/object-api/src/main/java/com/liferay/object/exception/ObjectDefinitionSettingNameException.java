@@ -34,6 +34,24 @@ public class ObjectDefinitionSettingNameException extends PortalException {
 
 	}
 
+	public static class RequiredNames
+		extends ObjectDefinitionSettingNameException {
+
+		public RequiredNames(
+			String objectDefinitionName,
+			Set<String> objectDefinitionSettingsNames) {
+
+			super(
+				String.format(
+					"The settings %s are required for object definition %s",
+					StringUtil.merge(
+						objectDefinitionSettingsNames,
+						StringPool.COMMA_AND_SPACE),
+					objectDefinitionName));
+		}
+
+	}
+
 	private ObjectDefinitionSettingNameException(String msg) {
 		super(msg);
 	}

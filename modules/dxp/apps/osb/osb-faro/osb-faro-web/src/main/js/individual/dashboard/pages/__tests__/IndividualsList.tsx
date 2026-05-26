@@ -1,11 +1,21 @@
 import * as API from 'shared/api';
+import * as useStatefulPaginationModule from 'shared/hooks/useStatefulPagination';
 
 import IndividualsList from '../IndividualsList';
 import React from 'react';
 import {createMemoryHistory} from 'history';
+import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {Map, Set} from 'immutable';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
 import {Router} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
+
+const defaultRangeSelectors = {
+	rangeEnd: null,
+	rangeKey: RangeKeyTimeRanges.Last30Days,
+	rangeStart: null
+};
 
 jest.unmock('react-dom');
 
@@ -77,7 +87,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList />
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
 			</Router>
 		);
 
@@ -97,7 +107,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList />
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
 			</Router>
 		);
 
@@ -114,5 +124,94 @@ describe('Individuals List', () => {
 		expect(
 			getByText('Access our documentation to learn more.')
 		).toBeInTheDocument();
+	});
+
+	it('passes range params to the search API', async () => {
+		// @ts-ignore
+		API.individuals.search.mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		// @ts-ignore
+		expect(API.individuals.search).toHaveBeenCalledWith(
+			expect.objectContaining({
+				rangeEnd: null,
+				rangeKey: 30,
+				rangeStart: null
+			})
+		);
+	});
+
+	it('passes activityStatus ACTIVE to the search API by default', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				activityStatus: 'ACTIVE'
+			})
+		);
+	});
+
+	it('passes undefined activityStatus when both active and inactive are selected', async () => {
+		(API.individuals.search as jest.Mock).mockClear();
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const spy = jest
+			.spyOn(useStatefulPaginationModule, 'useStatefulPagination')
+			.mockReturnValue({
+				delta: 20,
+				filterBy: Map({
+					activityStatus: Set(['ACTIVE', 'INACTIVE'])
+				}) as any,
+				onDeltaChange: jest.fn(),
+				onFilterByChange: jest.fn(),
+				onOrderIOMapChange: jest.fn(),
+				onPageChange: jest.fn(),
+				onQueryChange: jest.fn(),
+				orderIOMap: createOrderIOMap(NAME),
+				page: 1,
+				query: '',
+				resetPage: jest.fn()
+			});
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		const callArgs = (API.individuals.search as jest.Mock).mock.calls[0][0];
+
+		expect(callArgs.activityStatus).toBeUndefined();
+
+		spy.mockRestore();
 	});
 });

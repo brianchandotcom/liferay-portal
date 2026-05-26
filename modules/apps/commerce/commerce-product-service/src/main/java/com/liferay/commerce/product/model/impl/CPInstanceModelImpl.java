@@ -163,6 +163,8 @@ public class CPInstanceModelImpl
 
 	public static final String ENTITY_ALIAS = "cpInstance";
 
+	public static final String FILTER_PK_COLUMN_NAME = "CPInstanceId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 
@@ -2562,4 +2564,4 @@ public class CPInstanceModelImpl
 	private CPInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:72251342
+// LIFERAY-SERVICE-BUILDER-HASH:694605808

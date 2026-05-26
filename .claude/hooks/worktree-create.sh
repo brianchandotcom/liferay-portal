@@ -47,7 +47,7 @@ function _collect_claimed_offsets {
 
 		worktree_path="${line#worktree }"
 
-		[[ ${worktree_path} != "${WORKTREE_DIR}" ]] || continue
+		[[ ${worktree_path} != ${WORKTREE_DIR} ]] || continue
 
 		bundles="$(_find_app_server_parent_dir "${worktree_path}" 2>/dev/null)" || continue
 
@@ -64,12 +64,14 @@ function _create_worktree {
 
 	input="$(cat)"
 
-	cwd="$(jq --exit-status --raw-output ".cwd" <<< "${input}")" || _die "The cwd field is missing from the hook input ${input}."
-	name="$(jq --exit-status --raw-output ".name" <<< "${input}")" || _die "The name field is missing from the hook input ${input}."
+	cwd="$(jq --exit-status --raw-output .cwd <<< "${input}")" || _die "The cwd field is missing from the hook input ${input}."
+	name="$(jq --exit-status --raw-output .name <<< "${input}")" || _die "The name field is missing from the hook input ${input}."
 
-	local target_path
+	local main_worktree target_path
 
-	target_path="$(dirname "$(git -C "${cwd}" rev-parse --show-toplevel)")/liferay-portal-${name}"
+	main_worktree="$(git -C "${cwd}" worktree list --porcelain | grep --extended-regexp "^worktree " | head --lines=1 | sed "s/^worktree //")"
+
+	target_path="$(dirname "${main_worktree}")/$(basename "${main_worktree}")-${name}"
 
 	if ! git -C "${cwd}" worktree list --porcelain | grep --fixed-strings --line-regexp --quiet "worktree ${target_path}"
 	then
@@ -95,7 +97,7 @@ function _resolve_main_worktree_dir {
 function _reuse_worktree {
 	MAIN_WORKTREE_DIR="$(_resolve_main_worktree_dir)"
 
-	if [[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != "${WORKTREE_DIR}" ]]
+	if [[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != ${WORKTREE_DIR} ]]
 	then
 		rsync \
 			--archive \
@@ -118,7 +120,7 @@ function _reuse_worktree {
 
 	if ! _bundle_exists "${BUNDLES_DIR}"
 	then
-		[[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != "${WORKTREE_DIR}" ]] || _die "Unable to locate the main worktree to copy the bundle from."
+		[[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != ${WORKTREE_DIR} ]] || _die "Unable to locate the main worktree to copy the bundle from."
 
 		local main_bundles
 
@@ -128,7 +130,7 @@ function _reuse_worktree {
 
 		mkdir --parents "${BUNDLES_DIR}"
 
-		cp --archive "${main_bundles}/." "${BUNDLES_DIR}/"
+		cp --archive "${main_bundles}/." "${BUNDLES_DIR}"
 
 		_bundle_exists "${BUNDLES_DIR}" || _die "Bundle copy finished but no tomcat-* directory exists under ${BUNDLES_DIR}."
 	fi
@@ -185,11 +187,12 @@ function _set_database {
 	db_name="$(_derive_db_name "$(basename "${WORKTREE_DIR}")")"
 
 	local file="${BUNDLES_DIR}/portal-ext.properties"
+	local wizard_file="${BUNDLES_DIR}/portal-setup-wizard.properties"
 
 	local existing_user existing_password
 
-	existing_user="$(_get_property "${file}" "jdbc\.default\.username" root)"
-	existing_password="$(_get_property "${file}" "jdbc\.default\.password")"
+	existing_user="$(_get_property_from_files "jdbc\.default\.username" root "${file}" "${wizard_file}")"
+	existing_password="$(_get_property_from_files "jdbc\.default\.password" "" "${file}" "${wizard_file}")"
 
 	_set_property "${file}" jdbc.default.driverClassName com.mysql.cj.jdbc.Driver
 	_set_property "${file}" jdbc.default.url "jdbc:mysql://localhost/${db_name}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true"
@@ -262,9 +265,9 @@ function _set_glowroot_port {
 
 	local current
 
-	current="$(jq ".web.port" "${file}" 2>/dev/null || echo null)"
+	current="$(jq .web.port "${file}" 2>/dev/null || echo null)"
 
-	if [[ ${current} == "${target}" ]]
+	if [[ ${current} == ${target} ]]
 	then
 		return
 	fi
@@ -296,7 +299,7 @@ function _set_gradle_paths {
 
 	main_worktree="$(_resolve_main_worktree_dir)"
 
-	[[ -n ${main_worktree} && ${main_worktree} != "${WORKTREE_DIR}" ]] || return 0
+	[[ -n ${main_worktree} && ${main_worktree} != ${WORKTREE_DIR} ]] || return 0
 
 	local main_bundles_literal
 
@@ -315,7 +318,7 @@ function _set_playwright_port {
 	local file="${WORKTREE_DIR}/modules/test/playwright/.env.local"
 	local http_port=$((8080 + OFFSET))
 
-	mkdir -p "$(dirname "${file}")"
+	mkdir --parents "$(dirname "${file}")"
 
 	_atomic_write "${file}" <<EOF
 PORTAL_URL=http://localhost:${http_port}
@@ -377,7 +380,7 @@ function _set_property {
 
 	local escaped="${key//./\\.}"
 
-	_sed_inplace --expression "/^[[:space:]]*${escaped}=/d" --regexp-extended "${file}"
+	_sed_inplace --regexp-extended --expression "/^[[:space:]]*${escaped}=/d" "${file}"
 
 	if [[ -s ${file} ]] && [[ -n $(tail --bytes=1 "${file}") ]]
 	then
@@ -418,12 +421,12 @@ function _set_tomcat_ports {
 	local target_https=$((8443 + OFFSET))
 
 	_sed_inplace \
+		--regexp-extended \
 		--expression "/<Server/s/port=\"[0-9]+\"/port=\"${target_shutdown}\"/" \
 		--expression "/protocol=\"HTTP\\/1\\.1\"/s/port=\"[0-9]+\"/port=\"${target_http}\"/" \
 		--expression "/protocol=\"org\\.apache\\.coyote\\.http11\\.Http11NioProtocol\"/s/port=\"[0-9]+\"/port=\"${target_https}\"/" \
 		--expression "/<Connector protocol=\"AJP\\/1\\.3\"/,/\\/>/s/^([[:space:]]+)port=\"[0-9]+\"/\\1port=\"${target_ajp}\"/" \
 		--expression "s/redirectPort=\"[0-9]+\"/redirectPort=\"${target_https}\"/g" \
-		--regexp-extended \
 		"${file}"
 }
 
@@ -434,7 +437,7 @@ function _set_worktree_paths {
 
 	main_worktree="$(_resolve_main_worktree_dir)"
 
-	[[ -n ${main_worktree} && ${main_worktree} != "${WORKTREE_DIR}" ]] || return 0
+	[[ -n ${main_worktree} && ${main_worktree} != ${WORKTREE_DIR} ]] || return 0
 
 	main_bundles="$(_find_app_server_parent_dir "${main_worktree}" 2>/dev/null)" || return 0
 	main_tomcat="$(_find_tomcat_dir "${main_bundles}" 2>/dev/null)" || return 0

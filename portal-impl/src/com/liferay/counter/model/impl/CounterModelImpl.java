@@ -519,4 +519,4 @@ public class CounterModelImpl
 	private Counter _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1062406228
+// LIFERAY-SERVICE-BUILDER-HASH:927976806

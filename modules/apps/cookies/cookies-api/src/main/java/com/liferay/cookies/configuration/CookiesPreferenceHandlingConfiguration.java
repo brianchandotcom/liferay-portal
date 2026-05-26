@@ -23,6 +23,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CookiesPreferenceHandlingConfiguration {
 
 	@Meta.AD(
+		deflt = "false", description = "cookie-active-help", name = "active",
+		required = false
+	)
+	public boolean active();
+
+	@Meta.AD(
 		deflt = "12", description = "cookie-consent-renewal-period-help",
 		max = "365", min = "1", name = "cookie-consent-renewal-period",
 		required = false

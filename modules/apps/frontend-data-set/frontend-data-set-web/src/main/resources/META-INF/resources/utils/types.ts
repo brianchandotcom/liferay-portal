@@ -542,7 +542,7 @@ export interface IBaseFilterState {
 	preloadedData: Record<string, unknown>;
 	selectedData?: Record<string, unknown>;
 	selectedItemsLabel: string;
-	type: 'clientExtension' | 'dateRange' | 'selection';
+	type: 'clientExtension' | 'dateRange' | 'dateTimeRange' | 'selection';
 }
 
 export interface IClientExtensionFilterState extends IBaseFilterState {

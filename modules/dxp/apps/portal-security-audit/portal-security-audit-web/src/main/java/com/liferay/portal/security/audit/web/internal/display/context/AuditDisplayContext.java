@@ -239,16 +239,16 @@ public class AuditDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> AuditEventManagerUtil.getAuditEvents(
 					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
-					getUserName(), startDate, endDate, getEventType(),
-					getClassName(), getClassPK(), getClientHost(),
-					getClientIP(), getServerName(), getServerPort(), null,
+					getUserName(), startDate, endDate, getClassName(),
+					getClassPK(), getClientHost(), getClientIP(),
+					getEventType(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator(), range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
-					getUserName(), startDate, endDate, getEventType(),
-					getClassName(), getClassPK(), getClientHost(),
-					getClientIP(), getServerName(), getServerPort(), null,
+					getUserName(), startDate, endDate, getClassName(),
+					getClassPK(), getClientHost(), getClientIP(),
+					getEventType(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator()));
 		}
 		else {

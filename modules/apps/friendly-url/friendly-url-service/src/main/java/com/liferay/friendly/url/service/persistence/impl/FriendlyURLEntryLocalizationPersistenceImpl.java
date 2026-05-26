@@ -82,8 +82,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
-		_collectionPersistenceFinderByFriendlyURLEntryId;
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_collectionPersistenceFinderByFriendlyURLEntryId;
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
@@ -124,19 +126,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByFriendlyURLEntryId_First(
-				friendlyURLEntryId, orderByComparator);
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryLocalization;
-		}
-
-		throw new NoSuchFriendlyURLEntryLocalizationException(
-			_collectionPersistenceFinderByFriendlyURLEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {friendlyURLEntryId}));
+		return _collectionPersistenceFinderByFriendlyURLEntryId.findFirst(
+			finderCache, new Object[] {friendlyURLEntryId}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +169,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {friendlyURLEntryId});
 	}
 
-	private UniquePersistenceFinder<FriendlyURLEntryLocalization>
-		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId;
+	private UniquePersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId;
 
 	/**
 	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
@@ -194,25 +187,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			long friendlyURLEntryId, String languageId)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByFriendlyURLEntryId_LanguageId(
-				friendlyURLEntryId, languageId);
-
-		if (friendlyURLEntryLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {friendlyURLEntryId, languageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFriendlyURLEntryLocalizationException(message);
-		}
-
-		return friendlyURLEntryLocalization;
+		return _uniquePersistenceFinderByFriendlyURLEntryId_LanguageId.find(
+			finderCache, new Object[] {friendlyURLEntryId, languageId});
 	}
 
 	/**
@@ -265,8 +241,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {friendlyURLEntryId, languageId});
 	}
 
-	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
-		_collectionPersistenceFinderByG_C_U;
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_collectionPersistenceFinderByG_C_U;
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -311,18 +289,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByG_C_U_First(
-				groupId, classNameId, urlTitle, orderByComparator);
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryLocalization;
-		}
-
-		throw new NoSuchFriendlyURLEntryLocalizationException(
-			_collectionPersistenceFinderByG_C_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, urlTitle}));
+		return _collectionPersistenceFinderByG_C_U.findFirst(
+			finderCache, new Object[] {groupId, classNameId, urlTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -371,8 +340,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, urlTitle});
 	}
 
-	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
-		_collectionPersistenceFinderByC_C_U_C;
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_collectionPersistenceFinderByC_C_U_C;
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
@@ -422,21 +393,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByC_C_U_C_First(
-				companyId, classNameId, urlTitle, ctCollectionId,
-				orderByComparator);
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryLocalization;
-		}
-
-		throw new NoSuchFriendlyURLEntryLocalizationException(
-			_collectionPersistenceFinderByC_C_U_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, classNameId, urlTitle, ctCollectionId
-				}));
+		return _collectionPersistenceFinderByC_C_U_C.findFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, urlTitle, ctCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -497,8 +457,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {companyId, classNameId, urlTitle, ctCollectionId});
 	}
 
-	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
-		_collectionPersistenceFinderByG_C_C_L;
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_collectionPersistenceFinderByG_C_C_L;
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
@@ -547,18 +509,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByG_C_C_L_First(
-				groupId, classNameId, classPK, languageId, orderByComparator);
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryLocalization;
-		}
-
-		throw new NoSuchFriendlyURLEntryLocalizationException(
-			_collectionPersistenceFinderByG_C_C_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classPK, languageId}));
+		return _collectionPersistenceFinderByG_C_C_L.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, languageId},
+			orderByComparator);
 	}
 
 	/**
@@ -617,8 +571,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {groupId, classNameId, classPK, languageId});
 	}
 
-	private UniquePersistenceFinder<FriendlyURLEntryLocalization>
-		_uniquePersistenceFinderByG_C_L_U;
+	private UniquePersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_uniquePersistenceFinderByG_C_L_U;
 
 	/**
 	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
@@ -635,23 +591,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			long groupId, long classNameId, String languageId, String urlTitle)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle);
-
-		if (friendlyURLEntryLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_L_U.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, languageId, urlTitle});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFriendlyURLEntryLocalizationException(message);
-		}
-
-		return friendlyURLEntryLocalization;
+		return _uniquePersistenceFinderByG_C_L_U.find(
+			finderCache,
+			new Object[] {groupId, classNameId, languageId, urlTitle});
 	}
 
 	/**
@@ -713,8 +655,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {groupId, classNameId, languageId, urlTitle});
 	}
 
-	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
-		_collectionPersistenceFinderByG_C_NotL_U;
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
+			_collectionPersistenceFinderByG_C_NotL_U;
 
 	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63;.
@@ -832,18 +776,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByG_C_NotL_U_First(
-				groupId, classNameId, languageId, urlTitle, orderByComparator);
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryLocalization;
-		}
-
-		throw new NoSuchFriendlyURLEntryLocalizationException(
-			_collectionPersistenceFinderByG_C_NotL_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, languageId, urlTitle}));
+		return _collectionPersistenceFinderByG_C_NotL_U.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, languageId, urlTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -1533,4 +1469,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1652867850
+// LIFERAY-SERVICE-BUILDER-HASH:-1669770123

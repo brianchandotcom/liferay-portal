@@ -72,8 +72,9 @@ public class FaroPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FaroPreferences>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<FaroPreferences, NoSuchFaroPreferencesException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the faro preferenceses where groupId = &#63;.
@@ -113,16 +114,8 @@ public class FaroPreferencesPersistenceImpl
 			long groupId, OrderByComparator<FaroPreferences> orderByComparator)
 		throws NoSuchFaroPreferencesException {
 
-		FaroPreferences faroPreferences = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (faroPreferences != null) {
-			return faroPreferences;
-		}
-
-		throw new NoSuchFaroPreferencesException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -163,8 +156,9 @@ public class FaroPreferencesPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private UniquePersistenceFinder<FaroPreferences>
-		_uniquePersistenceFinderByG_O;
+	private UniquePersistenceFinder
+		<FaroPreferences, NoSuchFaroPreferencesException>
+			_uniquePersistenceFinderByG_O;
 
 	/**
 	 * Returns the faro preferences where groupId = &#63; and ownerId = &#63; or throws a <code>NoSuchFaroPreferencesException</code> if it could not be found.
@@ -178,21 +172,8 @@ public class FaroPreferencesPersistenceImpl
 	public FaroPreferences findByG_O(long groupId, long ownerId)
 		throws NoSuchFaroPreferencesException {
 
-		FaroPreferences faroPreferences = fetchByG_O(groupId, ownerId);
-
-		if (faroPreferences == null) {
-			String message =
-				_uniquePersistenceFinderByG_O.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, ownerId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFaroPreferencesException(message);
-		}
-
-		return faroPreferences;
+		return _uniquePersistenceFinderByG_O.find(
+			finderCache, new Object[] {groupId, ownerId});
 	}
 
 	/**
@@ -525,4 +506,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1705474000
+// LIFERAY-SERVICE-BUILDER-HASH:900688436

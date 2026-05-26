@@ -81,7 +81,7 @@ public class DefinitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Definition>
+	private CollectionPersistenceFinder<Definition, NoSuchDefinitionException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -122,15 +122,8 @@ public class DefinitionPersistenceImpl
 			String uuid, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
 
-		Definition definition = fetchByUuid_First(uuid, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		throw new NoSuchDefinitionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +164,7 @@ public class DefinitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Definition>
+	private UniquePersistenceFinder<Definition, NoSuchDefinitionException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -186,21 +179,8 @@ public class DefinitionPersistenceImpl
 	public Definition findByUUID_G(String uuid, long groupId)
 		throws NoSuchDefinitionException {
 
-		Definition definition = fetchByUUID_G(uuid, groupId);
-
-		if (definition == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDefinitionException(message);
-		}
-
-		return definition;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -248,7 +228,7 @@ public class DefinitionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<Definition>
+	private CollectionPersistenceFinder<Definition, NoSuchDefinitionException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -292,16 +272,8 @@ public class DefinitionPersistenceImpl
 			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
 
-		Definition definition = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		throw new NoSuchDefinitionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -346,8 +318,9 @@ public class DefinitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<Definition>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<Definition, NoSuchDefinitionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the definitions where groupId = &#63;.
@@ -387,16 +360,8 @@ public class DefinitionPersistenceImpl
 			long groupId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
 
-		Definition definition = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		throw new NoSuchDefinitionException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -472,7 +437,7 @@ public class DefinitionPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<Definition>
+	private CollectionPersistenceFinder<Definition, NoSuchDefinitionException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -513,16 +478,8 @@ public class DefinitionPersistenceImpl
 			long companyId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
 
-		Definition definition = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		throw new NoSuchDefinitionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -870,15 +827,6 @@ public class DefinitionPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DefinitionImpl.class, Definition.class, "definition",
-					"Reports_Definition", "definition.definitionId",
-					"SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ",
-					"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ",
-					") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId",
-					"SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ",
-					DefinitionModelImpl.ORDER_BY_SQL,
-					DefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Definition::getGroupId));
@@ -977,4 +925,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-862966520
+// LIFERAY-SERVICE-BUILDER-HASH:1433901856

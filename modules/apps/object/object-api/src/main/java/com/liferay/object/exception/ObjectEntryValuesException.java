@@ -339,6 +339,18 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class NotAllowedStandaloneObjectEntry
+		extends ObjectEntryValuesException {
+
+		public NotAllowedStandaloneObjectEntry(String objectDefinitionName) {
+			super(
+				StringBundler.concat(
+					"Standalone object entry is not allowed for object ",
+					"definition \"", objectDefinitionName, "\""));
+		}
+
+	}
+
 	public static class OneToOneConstraintViolation
 		extends ObjectEntryValuesException {
 
@@ -368,7 +380,7 @@ public class ObjectEntryValuesException extends PortalException {
 			return _objectFieldName;
 		}
 
-		private String _objectFieldName;
+		private final String _objectFieldName;
 
 	}
 

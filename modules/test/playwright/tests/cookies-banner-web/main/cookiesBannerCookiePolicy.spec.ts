@@ -8,10 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetAllConsentManagerConfigurations,
+	saveOrUpdateConfiguration,
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
@@ -112,9 +112,6 @@ test(
 	'Consent Manager Adjustments',
 	{tag: '@LPD-60002'},
 	async ({browser, page, systemSettingsPage}) => {
-		const saveButton = page.getByRole('button', {name: 'Save'});
-		const updateButton = page.getByRole('button', {name: 'Update'});
-
 		await test.step('Enable Preference Handling Cookies', async () => {
 			await updateConsentManagerConfiguration(page, {
 				enabled: true,
@@ -159,14 +156,7 @@ test(
 
 			await cookiePolicyLink.fill('http://www.liferay.com');
 
-			if (await saveButton.isVisible()) {
-				await saveButton.dispatchEvent('click');
-			}
-			else if (await updateButton.isVisible()) {
-				await updateButton.dispatchEvent('click');
-			}
-
-			await waitForAlert(page);
+			await saveOrUpdateConfiguration(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
 				await expect(hideFromEndUserCheckbox).toBeChecked();
@@ -180,9 +170,7 @@ test(
 				await hideFromEndUserCheckbox.uncheck();
 			}
 
-			await page.getByRole('button', {name: 'Update'}).click();
-
-			await waitForAlert(page);
+			await saveOrUpdateConfiguration(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
 				await expect(hideFromEndUserCheckbox).not.toBeChecked();

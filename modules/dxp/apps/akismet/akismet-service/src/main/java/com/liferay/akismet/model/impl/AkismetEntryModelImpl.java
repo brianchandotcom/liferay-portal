@@ -929,4 +929,4 @@ public class AkismetEntryModelImpl
 	private AkismetEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1451014127
+// LIFERAY-SERVICE-BUILDER-HASH:1235305775

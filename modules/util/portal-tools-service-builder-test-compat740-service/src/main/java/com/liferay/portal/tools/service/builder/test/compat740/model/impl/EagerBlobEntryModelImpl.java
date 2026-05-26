@@ -580,4 +580,4 @@ public class EagerBlobEntryModelImpl
 	private EagerBlobEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1226687026
+// LIFERAY-SERVICE-BUILDER-HASH:636302550

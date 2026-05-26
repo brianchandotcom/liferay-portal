@@ -61,6 +61,20 @@ public class ThumbnailURLReferenceSerDes {
 			sb.append("\"");
 		}
 
+		if (thumbnailURLReference.getFileBase64() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileBase64\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(thumbnailURLReference.getFileBase64()));
+
+			sb.append("\"");
+		}
+
 		if (thumbnailURLReference.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -106,6 +120,15 @@ public class ThumbnailURLReferenceSerDes {
 					thumbnailURLReference.getExternalReferenceCode()));
 		}
 
+		if (thumbnailURLReference.getFileBase64() == null) {
+			map.put("fileBase64", null);
+		}
+		else {
+			map.put(
+				"fileBase64",
+				String.valueOf(thumbnailURLReference.getFileBase64()));
+		}
+
 		if (thumbnailURLReference.getUrl() == null) {
 			map.put("url", null);
 		}
@@ -134,6 +157,9 @@ public class ThumbnailURLReferenceSerDes {
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
 				return false;
 			}
@@ -149,6 +175,12 @@ public class ThumbnailURLReferenceSerDes {
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				if (jsonParserFieldValue != null) {
 					thumbnailURLReference.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
+				if (jsonParserFieldValue != null) {
+					thumbnailURLReference.setFileBase64(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -238,4 +270,4 @@ public class ThumbnailURLReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1329564606
+// LIFERAY-REST-BUILDER-HASH:2070593850

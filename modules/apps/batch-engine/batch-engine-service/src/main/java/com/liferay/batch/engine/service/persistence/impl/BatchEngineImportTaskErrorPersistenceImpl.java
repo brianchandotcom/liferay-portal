@@ -73,8 +73,9 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BatchEngineImportTaskError>
-		_collectionPersistenceFinderByBatchEngineImportTaskId;
+	private CollectionPersistenceFinder
+		<BatchEngineImportTaskError, NoSuchImportTaskErrorException>
+			_collectionPersistenceFinderByBatchEngineImportTaskId;
 
 	/**
 	 * Returns an ordered range of all the batch engine import task errors where batchEngineImportTaskId = &#63;.
@@ -115,19 +116,9 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 			OrderByComparator<BatchEngineImportTaskError> orderByComparator)
 		throws NoSuchImportTaskErrorException {
 
-		BatchEngineImportTaskError batchEngineImportTaskError =
-			fetchByBatchEngineImportTaskId_First(
-				batchEngineImportTaskId, orderByComparator);
-
-		if (batchEngineImportTaskError != null) {
-			return batchEngineImportTaskError;
-		}
-
-		throw new NoSuchImportTaskErrorException(
-			_collectionPersistenceFinderByBatchEngineImportTaskId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {batchEngineImportTaskId}));
+		return _collectionPersistenceFinderByBatchEngineImportTaskId.findFirst(
+			finderCache, new Object[] {batchEngineImportTaskId},
+			orderByComparator);
 	}
 
 	/**
@@ -482,4 +473,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1503368490
+// LIFERAY-SERVICE-BUILDER-HASH:1122189924

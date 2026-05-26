@@ -9,8 +9,15 @@ import {
 	LifecycleStages,
 	lifecycleStagesLabelMap
 } from 'contacts/pages/account/utils/constants';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {RangeSelectors} from 'shared/types';
 import {Routes} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
+
+const activityStatusItems = [
+	{label: Liferay.Language.get('active'), value: 'ACTIVE'},
+	{label: Liferay.Language.get('inactive'), value: 'INACTIVE'}
+];
 
 const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
 	([stage]) => ({
@@ -20,12 +27,14 @@ const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
 );
 
 interface IAccountsDataSetProps {
+	activityStatusFilter?: string;
 	apiURL: string;
 	channelId: string;
 	countryFilter?: string;
 	groupId: string;
 	industryFilter?: string;
 	lifecycleStageFilter?: LifecycleStages;
+	rangeSelectors?: RangeSelectors;
 }
 
 const buildSelectionPreloadedData = (value?: string, label?: string) =>
@@ -37,19 +46,37 @@ const buildSelectionPreloadedData = (value?: string, label?: string) =>
 		: undefined;
 
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
+	activityStatusFilter,
 	apiURL,
 	channelId,
 	countryFilter,
 	groupId,
 	industryFilter,
-	lifecycleStageFilter
+	lifecycleStageFilter,
+	rangeSelectors = {
+		rangeEnd: null,
+		rangeKey: RangeKeyTimeRanges.Last30Days,
+		rangeStart: null
+	}
 }) => {
 	const snapshots = useSnapshots('accounts-list-dataset');
+
+	let rangeSelectorParams = `rangeKey=${rangeSelectors.rangeKey}`;
+
+	if (rangeSelectors.rangeEnd) {
+		rangeSelectorParams += `&rangeEnd=${rangeSelectors.rangeEnd}`;
+	}
+
+	if (rangeSelectors.rangeStart) {
+		rangeSelectorParams += `&rangeStart=${rangeSelectors.rangeStart}`;
+	}
+
+	const rangeApiURL = `${apiURL}&${rangeSelectorParams}`;
 
 	return (
 		<Card>
 			<FrontendDataSet
-				apiURL={apiURL}
+				apiURL={rangeApiURL}
 				configInURLBehavior={EConfigInURLBehavior.OFF}
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({
@@ -92,6 +119,19 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				}}
 				filters={[
 					{
+						id: 'activityStatus',
+						items: activityStatusItems,
+						label: Liferay.Language.get('activity-status'),
+						name: 'activityStatus',
+						preloadedData: buildSelectionPreloadedData(
+							activityStatusFilter,
+							activityStatusItems.find(
+								({value}) => value === activityStatusFilter
+							)?.label
+						),
+						type: 'selection'
+					},
+					{
 						id: 'lifecycleStatus',
 						items: lifecycleStageItems,
 						label: Liferay.Language.get('status'),
@@ -131,9 +171,13 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 					}
 				]}
 				id='accounts-list-dataset'
-				key={`${countryFilter ?? ''}|${industryFilter ?? ''}|${
-					lifecycleStageFilter ?? ''
-				}`}
+				key={[
+					activityStatusFilter,
+					countryFilter,
+					industryFilter,
+					lifecycleStageFilter,
+					...Object.values(rangeSelectors)
+				].join()}
 				pagination={pagination}
 				showPagination
 				snapshots={snapshots}

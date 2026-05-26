@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
@@ -18,12 +19,13 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class UniquePersistenceFinder<T extends BaseModel<T>>
-	extends BasePersistenceFinder<T> {
+public class UniquePersistenceFinder
+	<T extends BaseModel<T>, E extends NoSuchModelException>
+		extends BasePersistenceFinder<T, E> {
 
 	@SafeVarargs
 	public UniquePersistenceFinder(
-		BasePersistenceImpl<T, ?> basePersistenceImpl, FinderPath fetchPath,
+		BasePersistenceImpl<T, E> basePersistenceImpl, FinderPath fetchPath,
 		String sqlSelectWhere, String where, FinderColumn<T>... finderColumns) {
 
 		super(basePersistenceImpl, sqlSelectWhere, where, finderColumns);
@@ -112,6 +114,17 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 
 			return (T)result;
 		}
+	}
+
+	public T find(FinderCache finderCache, Object[] values) throws E {
+		T entity = fetch(finderCache, values, true);
+
+		if (entity != null) {
+			return entity;
+		}
+
+		throw basePersistenceImpl.newNoSuchModelException(
+			buildNoSuchKeyMessage(values));
 	}
 
 	private final FinderPath _fetchPath;

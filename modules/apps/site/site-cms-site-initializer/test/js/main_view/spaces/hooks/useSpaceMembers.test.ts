@@ -6,7 +6,6 @@
 import {act, renderHook, waitFor} from '@testing-library/react';
 import {openToast} from 'frontend-js-components-web';
 
-import AdminUserService from '../../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {
 	UserAccount,
@@ -19,10 +18,6 @@ import {useSpaceMembers} from '../../../../../src/main/resources/META-INF/resour
 jest.mock('frontend-js-components-web', () => ({
 	openToast: jest.fn(),
 }));
-
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
-);
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService'
@@ -118,15 +113,14 @@ describe('useSpaceMembers', () => {
 
 	const mockRoles = {
 		items: testRoles,
-		lastPage: 1,
+		lastPage: 3,
 		page: 1,
-		pageSize: 1,
 		totalCount: testRoles.length,
 	};
 
 	let getSpaceUsersSpy: jest.SpyInstance;
 	let getSpaceUserGroupsSpy: jest.SpyInstance;
-	let getUserRolesSpy: jest.SpyInstance;
+	let getSpaceRolesSpy: jest.SpyInstance;
 
 	beforeEach(() => {
 		getSpaceUsersSpy = jest
@@ -135,8 +129,8 @@ describe('useSpaceMembers', () => {
 		getSpaceUserGroupsSpy = jest
 			.spyOn(SpaceService, 'getSpaceUserGroups')
 			.mockResolvedValue(mockGroups);
-		getUserRolesSpy = jest
-			.spyOn(AdminUserService, 'getUserRoles')
+		getSpaceRolesSpy = jest
+			.spyOn(SpaceService, 'getSpaceRoles')
 			.mockResolvedValue(mockRoles);
 	});
 
@@ -165,7 +159,11 @@ describe('useSpaceMembers', () => {
 					page: 1,
 				})
 			);
-			expect(getUserRolesSpy).toHaveBeenCalled();
+			expect(getSpaceRolesSpy).toHaveBeenCalledWith(
+				expect.objectContaining({
+					externalReferenceCode,
+				})
+			);
 		});
 
 		await waitFor(() => {

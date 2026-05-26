@@ -30,6 +30,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.dto.v1_0.util.URLUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;

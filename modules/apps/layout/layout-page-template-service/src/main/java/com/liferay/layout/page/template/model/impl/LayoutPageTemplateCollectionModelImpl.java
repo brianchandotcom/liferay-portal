@@ -108,6 +108,9 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	public static final String ENTITY_ALIAS = "layoutPageTemplateCollection";
 
+	public static final String FILTER_PK_COLUMN_NAME =
+		"layoutPageTemplateCollectionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPageTemplateCollection.name ASC";
 
@@ -1343,4 +1346,4 @@ public class LayoutPageTemplateCollectionModelImpl
 	private LayoutPageTemplateCollection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704994375
+// LIFERAY-SERVICE-BUILDER-HASH:844387370

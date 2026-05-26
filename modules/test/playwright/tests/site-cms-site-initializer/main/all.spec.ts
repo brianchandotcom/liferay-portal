@@ -10,6 +10,7 @@ import path from 'path';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {applyFDSSelectionFilter} from '../../../utils/applyFDSSelectionFilter';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitchViaApi, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -324,6 +325,54 @@ test(
 		await expect(assetsPage.modal.body).toContainText(
 			'file_upload_image_1.jpeg'
 		);
+	}
+);
+
+test(
+	'Upload button stays in viewport when many files are queued on a short screen',
+	{tag: '@LPD-90005'},
+	async ({assetsPage, page}) => {
+		await page.setViewportSize({height: 500, width: 1024});
+
+		await assetsPage.gotoAll();
+
+		const dataSetWrapper = page.locator('div.data-set-wrapper').first();
+		const dataTransfer = await page.evaluateHandle(
+			(data) => {
+				const dt = new DataTransfer();
+
+				for (let i = 1; i <= 10; i++) {
+					const file = new File(
+						[data.toString('hex')],
+						`file_upload_image_${i}.jpeg`,
+						{
+							type: 'image/jpg',
+						}
+					);
+					dt.items.add(file);
+				}
+
+				return dt;
+			},
+			readFileSync(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			)
+		);
+
+		await dataSetWrapper.dispatchEvent('dragstart', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragenter', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragover', {dataTransfer});
+
+		await dataSetWrapper.dispatchEvent('drop', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragend', {dataTransfer});
+
+		await expect(assetsPage.modal.container).toBeVisible();
+
+		await expect(
+			assetsPage.modal.footer.getByRole('button', {
+				name: 'Upload (10)',
+			})
+		).toBeInViewport();
 	}
 );
 
@@ -1075,6 +1124,120 @@ test(
 
 			await expect(assetsPage.getItem(insideTitle)).toBeHidden();
 			await expect(assetsPage.getItem(outsideTitle)).toBeHidden();
+		});
+	}
+);
+
+test(
+	'All section can be filtered by Space',
+	{tag: '@LPD-91933'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const space1Name = `Space ${getRandomString()}`;
+		const space2Name = `Space ${getRandomString()}`;
+		const space1ContentTitle = `Content ${getRandomString()}`;
+		const space2ContentTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create two Spaces with one content each', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: space1Name,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: space2Name,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: space1ContentTitle,
+				},
+				applicationName,
+				space1Name
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: space2ContentTitle,
+				},
+				applicationName,
+				space2Name
+			);
+		});
+
+		await test.step('Both contents are visible before filtering', async () => {
+			await assetsPage.gotoAll();
+
+			await expect(assetsPage.getItem(space1ContentTitle)).toBeVisible();
+			await expect(assetsPage.getItem(space2ContentTitle)).toBeVisible();
+		});
+
+		await test.step('Filter by Space and check only the matching content is visible', async () => {
+			await applyFDSSelectionFilter(page, {
+				filter: 'Space',
+				value: space1Name,
+			});
+
+			await expect(assetsPage.getItem(space1ContentTitle)).toBeVisible();
+			await expect(assetsPage.getItem(space2ContentTitle)).toBeHidden();
+		});
+	}
+);
+
+test(
+	'All section can be filtered by Status',
+	{tag: '@LPD-91933'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const approvedTitle = `Content A ${getRandomString()}`;
+		const expiredTitle = `Content B ${getRandomString()}`;
+
+		await test.step('Create one approved and one expired content in the Default Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: approvedTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			const expiredEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: expiredTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			await apiHelpers.objectEntry.expireObjectEntryByExternalReferenceCode(
+				applicationName,
+				'Default',
+				expiredEntry.externalReferenceCode
+			);
+		});
+
+		await test.step('Both contents are visible before filtering', async () => {
+			await assetsPage.gotoAll();
+
+			await expect(assetsPage.getItem(approvedTitle)).toBeVisible();
+			await expect(assetsPage.getItem(expiredTitle)).toBeVisible();
+		});
+
+		await test.step('Filter by Status Approved and check only the approved content is visible', async () => {
+			await applyFDSSelectionFilter(page, {
+				filter: 'Status',
+				value: 'Approved',
+			});
+
+			await expect(assetsPage.getItem(approvedTitle)).toBeVisible();
+			await expect(assetsPage.getItem(expiredTitle)).toBeHidden();
 		});
 	}
 );

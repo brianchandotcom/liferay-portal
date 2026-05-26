@@ -981,4 +981,4 @@ public abstract class BaseObjectEntryAcquisitionChannelResourceTestCase {
 			_objectEntryAcquisitionChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:94201892
+// LIFERAY-REST-BUILDER-HASH:-316893055

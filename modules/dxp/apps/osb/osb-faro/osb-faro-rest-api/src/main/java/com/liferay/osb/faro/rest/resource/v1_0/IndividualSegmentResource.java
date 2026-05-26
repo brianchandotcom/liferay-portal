@@ -43,13 +43,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface IndividualSegmentResource {
 
-	public IndividualSegment getWorkspaceGroupIndividualSegment(
-			Long groupId, String individualSegmentId)
+	public Page<IndividualSegment>
+			getWorkspaceGroupChannelIndividualSegmentsPage(
+				Long groupId, String channelId, String name, String search,
+				String status, Pagination pagination)
 		throws Exception;
 
-	public Page<IndividualSegment> getWorkspaceGroupIndividualSegmentsPage(
-			Long groupId, String channelId, String name, String search,
-			String status, Pagination pagination)
+	public IndividualSegment getWorkspaceGroupIndividualSegment(
+			Long groupId, String individualSegmentId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -140,4 +141,4 @@ public interface IndividualSegmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1961663522
+// LIFERAY-REST-BUILDER-HASH:1650608003

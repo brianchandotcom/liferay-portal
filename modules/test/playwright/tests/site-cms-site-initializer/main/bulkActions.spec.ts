@@ -19,6 +19,9 @@ import {PermissionsPage} from '../permissions/pages/PermissionsPage';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
+const imageFileBase64 =
+	'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';
+
 const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
@@ -987,7 +990,7 @@ test(
 		await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					fileBase64: imageFileBase64,
 					name: fileNameImg,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -1315,7 +1318,7 @@ test(
 		await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					fileBase64: imageFileBase64,
 					name: fileNameImg,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -1653,7 +1656,7 @@ test(
 		const fileObjectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					fileBase64: imageFileBase64,
 					name: fileNameImg,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -1666,7 +1669,7 @@ test(
 		const fileObjectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					fileBase64: imageFileBase64,
 					name: fileNameImg,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -1676,25 +1679,20 @@ test(
 			'Default'
 		);
 
-		await test.step('Go to All section and try to download a content asset from the bulk action, un unexpected error occurred', async () => {
-			await assetsPage.gotoAll();
+		await assetsPage.gotoAll();
+
+		await test.step('Download bulk action is hidden when a content asset is selected', async () => {
 			await assetsPage.selectItems([content1]);
-			await assetsPage.execBulkItemAction('Download');
 
-			await waitForAlert(
-				page,
-				'Error:Unable to process the bulk download. Please check your selection and try again.',
-				{
-					type: 'danger',
-				}
-			);
-		});
+			await assetsPage.expectBulkItemActionHidden('Download');
 
-		await test.step('Download a file asset from the bulk action', async () => {
 			await assetsPage
 				.getItem(content1)
 				.locator('input[title="Select Item"]')
 				.uncheck();
+		});
+
+		await test.step('Download a file asset from the bulk action', async () => {
 			await assetsPage.selectItems([fileAssetTitle1]);
 
 			const downloadPromise = page.waitForEvent('download');
@@ -1716,12 +1714,19 @@ test(
 			expect(download.suggestedFilename()).toBeDefined();
 		});
 
-		await test.step('Download both content and files assets from the bulk action, a message will inform the user that content assets will be skipped from the download', async () => {
-			await assetsPage.selectItems([
-				content1,
-				fileAssetTitle1,
-				fileAssetTitle2,
-			]);
+		await test.step('Download bulk action is hidden when a content asset and a file are selected together', async () => {
+			await assetsPage.selectItems([content1, fileAssetTitle1]);
+
+			await assetsPage.expectBulkItemActionHidden('Download');
+
+			await assetsPage
+				.getItem(content1)
+				.locator('input[title="Select Item"]')
+				.uncheck();
+		});
+
+		await test.step('Download multiple file assets from the bulk action', async () => {
+			await assetsPage.selectItems([fileAssetTitle1, fileAssetTitle2]);
 
 			const downloadPromise = page.waitForEvent('download');
 
@@ -1729,18 +1734,12 @@ test(
 
 			await waitForAlert(
 				page,
-				'Warning:You have selected both content and file assets. Only file assets can be downloaded. Content assets will be skipped.',
-				{
-					type: 'warning',
-				}
-			);
-			await waitForAlert(
-				page,
 				'Warning:The download of 2 files is being prepared. Please do not close this window or navigate to another section.',
 				{
 					type: 'warning',
 				}
 			);
+
 			await waitForAlert(page, 'Success:The download will begin shortly');
 
 			const download = await downloadPromise;
@@ -1809,14 +1808,14 @@ test(
 			);
 		});
 
-		await test.step('Navigate to history page and bulk delete all versions', async () => {
-			await assetsPage.gotoAll();
+		await assetsPage.gotoAll();
 
-			await assetsPage.execItemAction({
-				action: 'View History',
-				filter: webContentNames[2],
-			});
+		await assetsPage.execItemAction({
+			action: 'View History',
+			filter: webContentNames[2],
+		});
 
+		await test.step('Bulk Delete is hidden when the current version is included in the selection', async () => {
 			for (const webContentName of webContentNames) {
 				await assetsPage
 					.getItem(webContentName)
@@ -1824,6 +1823,15 @@ test(
 					.check();
 			}
 
+			await assetsPage.expectBulkItemActionHidden('Delete');
+
+			await assetsPage
+				.getItem(webContentNames[2])
+				.locator('input[title="Select Item"]')
+				.uncheck();
+		});
+
+		await test.step('Bulk delete the non-current versions', async () => {
 			await assetsPage.execBulkItemAction('Delete');
 
 			await waitForModal({
@@ -1837,7 +1845,7 @@ test(
 
 			await waitForAlert(
 				page,
-				'Info:Delete asset versions action started for 3 versions.',
+				'Info:Delete asset versions action started for 2 versions.',
 				{
 					autoClose: true,
 					type: 'info',
@@ -1845,7 +1853,7 @@ test(
 			);
 		});
 
-		await test.step('All versions are removed excluding the current one', async () => {
+		await test.step('Deleted versions are removed and the current version remains', async () => {
 			await page.reload();
 
 			await expect(
@@ -1859,24 +1867,13 @@ test(
 			await expect(assetsPage.getItem(webContentNames[2])).toBeVisible();
 		});
 
-		await test.step('Assert that current version cannot be deleted', async () => {
+		await test.step('Bulk Delete is hidden when only the current version is selected', async () => {
 			await assetsPage
 				.getItem(webContentNames[2])
 				.locator('input[title="Select Item"]')
 				.check();
 
-			await assetsPage.execBulkItemAction('Delete');
-
-			await waitForModal({
-				page,
-			});
-
-			await page
-				.locator('.modal')
-				.getByRole('button', {name: 'Ok'})
-				.click();
-
-			await expect(assetsPage.getItem(webContentNames[2])).toBeVisible();
+			await assetsPage.expectBulkItemActionHidden('Delete');
 		});
 	}
 );
@@ -1894,7 +1891,7 @@ test(
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						fileBase64: imageFileBase64,
 						name: `file_${getRandomString()}.png`,
 					},
 					objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -2006,7 +2003,7 @@ test(
 				const entry = await apiHelpers.objectEntry.postObjectEntry(
 					{
 						file: {
-							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							fileBase64: imageFileBase64,
 							name: `${titlePrefix}_${i}.gif`,
 						},
 						objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -2061,7 +2058,7 @@ test(
 				const entry = await apiHelpers.objectEntry.postObjectEntry(
 					{
 						file: {
-							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							fileBase64: imageFileBase64,
 							name: `${titlePrefix}_${i}.gif`,
 						},
 						objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -2125,7 +2122,7 @@ test(
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						fileBase64: imageFileBase64,
 						name: `file_${getRandomString()}.png`,
 					},
 					objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -2506,7 +2503,7 @@ test(
 				await apiHelpers.objectEntry.postObjectEntry(
 					{
 						file: {
-							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							fileBase64: imageFileBase64,
 							name: `file_${getRandomString()}.png`,
 						},
 						objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -2611,7 +2608,7 @@ test(
 			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						fileBase64: imageFileBase64,
 						name: `file_${getRandomString()}.png`,
 					},
 					objectEntryFolderExternalReferenceCode: 'L_FILES',

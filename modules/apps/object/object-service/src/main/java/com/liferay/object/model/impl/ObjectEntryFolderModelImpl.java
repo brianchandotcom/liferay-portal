@@ -112,6 +112,8 @@ public class ObjectEntryFolderModelImpl
 
 	public static final String ENTITY_ALIAS = "objectEntryFolder";
 
+	public static final String FILTER_PK_COLUMN_NAME = "objectEntryFolderId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectEntryFolder.objectEntryFolderId ASC";
 
@@ -1452,4 +1454,4 @@ public class ObjectEntryFolderModelImpl
 	private ObjectEntryFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:286391771
+// LIFERAY-SERVICE-BUILDER-HASH:-119267696

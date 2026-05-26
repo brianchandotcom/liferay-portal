@@ -10,6 +10,7 @@ import './styles.scss';
 import React from 'react';
 
 type InlineTextInputProps = {
+	disabled?: boolean;
 	error?: string | boolean;
 	name: string;
 	onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -19,6 +20,7 @@ type InlineTextInputProps = {
 };
 
 export default function InlineTextInput({
+	disabled,
 	error,
 	name,
 	onBlur,
@@ -30,6 +32,7 @@ export default function InlineTextInput({
 		<div className="inline-text-border">
 			<InputLocalized
 				className={`form-control form-control-inline${error ? ' is-invalid' : ''}`}
+				disabled={disabled}
 				label=""
 				name={name}
 				onBlur={onBlur}

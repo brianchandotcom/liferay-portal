@@ -75,8 +75,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<WorkflowInstanceLink>
-		_uniquePersistenceFinderByWorkflowInstanceId;
+	private UniquePersistenceFinder
+		<WorkflowInstanceLink, NoSuchWorkflowInstanceLinkException>
+			_uniquePersistenceFinderByWorkflowInstanceId;
 
 	/**
 	 * Returns the workflow instance link where workflowInstanceId = &#63; or throws a <code>NoSuchWorkflowInstanceLinkException</code> if it could not be found.
@@ -90,24 +91,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			long workflowInstanceId)
 		throws NoSuchWorkflowInstanceLinkException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchByWorkflowInstanceId(
-			workflowInstanceId);
-
-		if (workflowInstanceLink == null) {
-			String message =
-				_uniquePersistenceFinderByWorkflowInstanceId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {workflowInstanceId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchWorkflowInstanceLinkException(message);
-		}
-
-		return workflowInstanceLink;
+		return _uniquePersistenceFinderByWorkflowInstanceId.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {workflowInstanceId});
 	}
 
 	/**
@@ -156,8 +142,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			new Object[] {workflowInstanceId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowInstanceLink>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<WorkflowInstanceLink, NoSuchWorkflowInstanceLinkException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the workflow instance links where companyId = &#63; and classNameId = &#63;.
@@ -201,17 +188,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		throw new NoSuchWorkflowInstanceLinkException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -259,8 +238,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowInstanceLink>
-		_collectionPersistenceFinderByG_C_C;
+	private CollectionPersistenceFinder
+		<WorkflowInstanceLink, NoSuchWorkflowInstanceLinkException>
+			_collectionPersistenceFinderByG_C_C;
 
 	/**
 	 * Returns an ordered range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -306,17 +286,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_First(
-			groupId, companyId, classNameId, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		throw new NoSuchWorkflowInstanceLinkException(
-			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classNameId}));
+		return _collectionPersistenceFinderByG_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -367,8 +339,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowInstanceLink>
-		_collectionPersistenceFinderByG_C_C_C;
+	private CollectionPersistenceFinder
+		<WorkflowInstanceLink, NoSuchWorkflowInstanceLinkException>
+			_collectionPersistenceFinderByG_C_C_C;
 
 	/**
 	 * Returns an ordered range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -416,17 +389,10 @@ public class WorkflowInstanceLinkPersistenceImpl
 			OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_C_First(
-			groupId, companyId, classNameId, classPK, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		throw new NoSuchWorkflowInstanceLinkException(
-			_collectionPersistenceFinderByG_C_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByG_C_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -935,4 +901,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2068069249
+// LIFERAY-SERVICE-BUILDER-HASH:943337793

@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Pin")
+@GraphQLName(
+	description = "A clickable hot-spot on a shop-by-diagram image, identified within the product by its sequence. Created and updated by the admin catalog write surface; deleting the last pin for a sequence cascades into the matching mapped product.",
+	value = "Pin"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Pin")
 public class Pin implements Serializable {
@@ -50,7 +53,10 @@ public class Pin implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the pin. Assigned by the server.",
+		example = "33130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,7 +88,9 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the pin. Assigned by the server."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -131,7 +139,10 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<MappedProduct> _mappedProductSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Horizontal coordinate of the pin on the diagram image, in pixels.",
+		example = "33.54"
+	)
 	public Double getPositionX() {
 		if (_positionXSupplier != null) {
 			positionX = _positionXSupplier.get();
@@ -165,14 +176,19 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Horizontal coordinate of the pin on the diagram image, in pixels."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionX;
 
 	@JsonIgnore
 	private Supplier<Double> _positionXSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Vertical coordinate of the pin on the diagram image, in pixels.",
+		example = "33.54"
+	)
 	public Double getPositionY() {
 		if (_positionYSupplier != null) {
 			positionY = _positionYSupplier.get();
@@ -206,14 +222,19 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Vertical coordinate of the pin on the diagram image, in pixels."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionY;
 
 	@JsonIgnore
 	private Supplier<Double> _positionYSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier used to match this pin to a mapped product on the same parent product; the pair of parent product and sequence is the lookup key. Maximum length is 75 characters.",
+		example = "1"
+	)
 	public String getSequence() {
 		if (_sequenceSupplier != null) {
 			sequence = _sequenceSupplier.get();
@@ -247,7 +268,9 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier used to match this pin to a mapped product on the same parent product; the pair of parent product and sequence is the lookup key. Maximum length is 75 characters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
@@ -446,4 +469,4 @@ public class Pin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1521295652
+// LIFERAY-REST-BUILDER-HASH:-1962224796

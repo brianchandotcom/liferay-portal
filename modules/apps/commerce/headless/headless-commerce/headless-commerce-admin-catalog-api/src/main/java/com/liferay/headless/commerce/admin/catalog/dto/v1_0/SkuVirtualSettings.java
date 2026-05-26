@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SkuVirtualSettings")
+@GraphQLName(
+	description = "Per-SKU override for digital-download settings of a virtual product; only meaningful when the parent product type is virtual.",
+	value = "SkuVirtualSettings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuVirtualSettings")
 public class SkuVirtualSettings implements Serializable {
@@ -50,7 +53,10 @@ public class SkuVirtualSettings implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Order status at which the virtual asset becomes downloadable. Common values are 0 (Completed, the default), 17 (Pending), and 10 (Processing).",
+		example = "0"
+	)
 	public Integer getActivationStatus() {
 		if (_activationStatusSupplier != null) {
 			activationStatus = _activationStatusSupplier.get();
@@ -84,14 +90,18 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Order status at which the virtual asset becomes downloadable. Common values are 0 (Completed, the default), 17 (Pending), and 10 (Processing)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer activationStatus;
 
 	@JsonIgnore
 	private Supplier<Integer> _activationStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized label for `activationStatus`; read-only."
+	)
 	@Valid
 	public Status getActivationStatusInfo() {
 		if (_activationStatusInfoSupplier != null) {
@@ -126,7 +136,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized label for `activationStatus`; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status activationStatusInfo;
 
@@ -134,7 +146,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Status> _activationStatusInfoSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded file"
+		description = "Base64-encoded file uploaded as the main virtual download asset on create or update; write-only and not returned on read. The resolved download URL is exposed through `src`.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
@@ -169,7 +182,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded file")
+	@GraphQLField(
+		description = "Base64-encoded file uploaded as the main virtual download asset on create or update; write-only and not returned on read. The resolved download URL is exposed through `src`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
@@ -177,7 +192,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Number of days to download the attachment"
+		description = "Number of days during which a customer can download the virtual asset after activation.",
+		example = "30"
 	)
 	public Long getDuration() {
 		if (_durationSupplier != null) {
@@ -212,7 +228,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Number of days to download the attachment")
+	@GraphQLField(
+		description = "Number of days during which a customer can download the virtual asset after activation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
@@ -220,7 +238,10 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Long> _durationSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the virtual settings entry.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -252,7 +273,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the virtual settings entry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -260,7 +283,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Number of downloads available for attachment"
+		description = "Maximum number of times a customer can download the virtual asset; zero means unlimited.",
+		example = "0"
 	)
 	public Integer getMaxUsages() {
 		if (_maxUsagesSupplier != null) {
@@ -295,7 +319,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Number of downloads available for attachment")
+	@GraphQLField(
+		description = "Maximum number of times a customer can download the virtual asset; zero means unlimited."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxUsages;
 
@@ -303,7 +329,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Integer> _maxUsagesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Override product virtual settings"
+		description = "When true the service uses these per-SKU virtual settings instead of the parent product's virtual settings.",
+		example = "true"
 	)
 	public Boolean getOverride() {
 		if (_overrideSupplier != null) {
@@ -338,7 +365,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Override product virtual settings")
+	@GraphQLField(
+		description = "When true the service uses these per-SKU virtual settings instead of the parent product's virtual settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean override;
 
@@ -346,7 +375,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Boolean> _overrideSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded sample file"
+		description = "Base64-encoded sample file uploaded on create or update so customers can preview the virtual product before purchase; write-only and not returned on read. The resolved sample download URL is exposed through `sampleSrc`.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getSampleAttachment() {
 		if (_sampleAttachmentSupplier != null) {
@@ -381,7 +411,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded sample file")
+	@GraphQLField(
+		description = "Base64-encoded sample file uploaded on create or update so customers can preview the virtual product before purchase; write-only and not returned on read. The resolved sample download URL is exposed through `sampleSrc`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleAttachment;
 
@@ -389,7 +421,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<String> _sampleAttachmentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the sample file"
+		description = "Resolved internal sample download URL for the uploaded sample file; null when no sample file is attached. Read-only.",
+		example = "https://example.com/sample.pdf"
 	)
 	public String getSampleSrc() {
 		if (_sampleSrcSupplier != null) {
@@ -424,7 +457,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the sample file")
+	@GraphQLField(
+		description = "Resolved internal sample download URL for the uploaded sample file; null when no sample file is attached. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sampleSrc;
 
@@ -432,7 +467,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<String> _sampleSrcSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL of the sample file"
+		description = "External URL pointing at a sample of the virtual product, used when the sample is hosted outside the portal; when `useSample` is true and no sample file is provided the URL must be a syntactically valid URL.",
+		example = "https://example.com/sample.pdf"
 	)
 	public String getSampleURL() {
 		if (_sampleURLSupplier != null) {
@@ -467,14 +503,18 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the sample file")
+	@GraphQLField(
+		description = "External URL pointing at a sample of the virtual product, used when the sample is hosted outside the portal; when `useSample` is true and no sample file is provided the URL must be a syntactically valid URL."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleURL;
 
 	@JsonIgnore
 	private Supplier<String> _sampleURLSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Additional file attachments associated with this SKU's virtual settings."
+	)
 	@Valid
 	public SkuVirtualSettingsFileEntry[] getSkuVirtualSettingsFileEntries() {
 		if (_skuVirtualSettingsFileEntriesSupplier != null) {
@@ -513,7 +553,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Additional file attachments associated with this SKU's virtual settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries;
 
@@ -522,7 +564,8 @@ public class SkuVirtualSettings implements Serializable {
 		_skuVirtualSettingsFileEntriesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the file"
+		description = "Resolved internal download URL for the first attached file entry; null when no file is attached. Read-only.",
+		example = "https://example.com/download.zip"
 	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
@@ -555,7 +598,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the file")
+	@GraphQLField(
+		description = "Resolved internal download URL for the first attached file entry; null when no file is attached. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String src;
 
@@ -563,8 +608,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<String> _srcSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use content",
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Used as inline terms of use content when `termsOfUseRequired` is true and no `termsOfUseJournalArticleId` is supplied; at least one non-null entry is required.",
+		example = "{en_US=By downloading you accept the license terms., hr_HR=Preuzimanjem prihvacate uvjete licence., hu_HU=A letoltessel elfogadja a licencfelteteleket.}"
 	)
 	@Valid
 	public Map<String, String> getTermsOfUseContent() {
@@ -601,7 +646,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use content")
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Used as inline terms of use content when `termsOfUseRequired` is true and no `termsOfUseJournalArticleId` is supplied; at least one non-null entry is required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> termsOfUseContent;
 
@@ -609,7 +656,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Map<String, String>> _termsOfUseContentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use related Article Id"
+		description = "Internal identifier of a web content article that supplies the terms of use a customer must accept before download; when set and `termsOfUseRequired` is true the inline `termsOfUseContent` is cleared. The article must exist.",
+		example = "30130"
 	)
 	public Long getTermsOfUseJournalArticleId() {
 		if (_termsOfUseJournalArticleIdSupplier != null) {
@@ -646,7 +694,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use related Article Id")
+	@GraphQLField(
+		description = "Internal identifier of a web content article that supplies the terms of use a customer must accept before download; when set and `termsOfUseRequired` is true the inline `termsOfUseContent` is cleared. The article must exist."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long termsOfUseJournalArticleId;
 
@@ -654,7 +704,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<Long> _termsOfUseJournalArticleIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use required"
+		description = "Whether the customer must accept terms of use before downloading; when true the service requires either `termsOfUseJournalArticleId` or non-empty `termsOfUseContent`.",
+		example = "true"
 	)
 	public Boolean getTermsOfUseRequired() {
 		if (_termsOfUseRequiredSupplier != null) {
@@ -689,14 +740,19 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use required")
+	@GraphQLField(
+		description = "Whether the customer must accept terms of use before downloading; when true the service requires either `termsOfUseJournalArticleId` or non-empty `termsOfUseContent`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean termsOfUseRequired;
 
 	@JsonIgnore
 	private Supplier<Boolean> _termsOfUseRequiredSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External URL pointing at the virtual asset when the file is hosted outside the portal; on read the value is the URL of the first attached file entry when present.",
+		example = "https://example.com/download.zip"
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -728,7 +784,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the file")
+	@GraphQLField(
+		description = "External URL pointing at the virtual asset when the file is hosted outside the portal; on read the value is the URL of the first attached file entry when present."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
@@ -736,7 +794,8 @@ public class SkuVirtualSettings implements Serializable {
 	private Supplier<String> _urlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Enable sample file"
+		description = "Whether a sample preview is offered to customers before purchase; when true the service requires either a `sampleAttachment` or a syntactically valid `sampleURL`.",
+		example = "true"
 	)
 	public Boolean getUseSample() {
 		if (_useSampleSupplier != null) {
@@ -771,7 +830,9 @@ public class SkuVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Enable sample file")
+	@GraphQLField(
+		description = "Whether a sample preview is offered to customers before purchase; when true the service requires either a `sampleAttachment` or a syntactically valid `sampleURL`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useSample;
 
@@ -1145,4 +1206,4 @@ public class SkuVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1698998123
+// LIFERAY-REST-BUILDER-HASH:398426289

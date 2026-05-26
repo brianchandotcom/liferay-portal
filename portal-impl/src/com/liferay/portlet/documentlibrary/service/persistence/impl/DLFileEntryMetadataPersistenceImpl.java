@@ -85,8 +85,9 @@ public class DLFileEntryMetadataPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DLFileEntryMetadata>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
@@ -127,16 +128,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		throw new NoSuchFileEntryMetadataException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -178,8 +172,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<DLFileEntryMetadata>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
@@ -222,16 +217,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		throw new NoSuchFileEntryMetadataException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -277,8 +265,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DLFileEntryMetadata>
-		_collectionPersistenceFinderByFileEntryId;
+	private CollectionPersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_collectionPersistenceFinderByFileEntryId;
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
@@ -319,16 +308,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryId_First(
-			fileEntryId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		throw new NoSuchFileEntryMetadataException(
-			_collectionPersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId}));
+		return _collectionPersistenceFinderByFileEntryId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -371,8 +353,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
 	}
 
-	private CollectionPersistenceFinder<DLFileEntryMetadata>
-		_collectionPersistenceFinderByFileVersionId;
+	private CollectionPersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_collectionPersistenceFinderByFileVersionId;
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where fileVersionId = &#63;.
@@ -413,16 +396,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			OrderByComparator<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileVersionId_First(
-			fileVersionId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		throw new NoSuchFileEntryMetadataException(
-			_collectionPersistenceFinderByFileVersionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileVersionId}));
+		return _collectionPersistenceFinderByFileVersionId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -465,8 +441,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId});
 	}
 
-	private UniquePersistenceFinder<DLFileEntryMetadata>
-		_uniquePersistenceFinderByD_F;
+	private UniquePersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_uniquePersistenceFinderByD_F;
 
 	/**
 	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileEntryMetadataException</code> if it could not be found.
@@ -481,23 +458,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			long DDMStructureId, long fileVersionId)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByD_F(
-			DDMStructureId, fileVersionId);
-
-		if (dlFileEntryMetadata == null) {
-			String message =
-				_uniquePersistenceFinderByD_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {DDMStructureId, fileVersionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileEntryMetadataException(message);
-		}
-
-		return dlFileEntryMetadata;
+		return _uniquePersistenceFinderByD_F.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {DDMStructureId, fileVersionId});
 	}
 
 	/**
@@ -549,8 +512,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			new Object[] {DDMStructureId, fileVersionId});
 	}
 
-	private UniquePersistenceFinder<DLFileEntryMetadata>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the document library file entry metadata where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchFileEntryMetadataException</code> if it could not be found.
@@ -565,23 +529,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchFileEntryMetadataException {
 
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (dlFileEntryMetadata == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileEntryMetadataException(message);
-		}
-
-		return dlFileEntryMetadata;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1159,4 +1109,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:219294226
+// LIFERAY-SERVICE-BUILDER-HASH:-1720836281

@@ -29,8 +29,9 @@ export default function PreviewModal({
 }: Props) {
 	const {
 		displayPageTemplates,
+		isDisplayPageTemplatesListEmpty,
 		previewURL,
-		showDisplayPageTemplateAlert,
+		setExternalURL,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
@@ -48,11 +49,12 @@ export default function PreviewModal({
 				<PreviewSelectors
 					{...selectorProps}
 					displayPageTemplates={displayPageTemplates}
+					onBlurExternalURLInput={setExternalURL}
 					previewURL={previewURL}
 					vertical
 				/>
 
-				{showDisplayPageTemplateAlert ? (
+				{isDisplayPageTemplatesListEmpty ? (
 					<ClayAlert
 						className="mb-0 mt-3"
 						displayType="info"

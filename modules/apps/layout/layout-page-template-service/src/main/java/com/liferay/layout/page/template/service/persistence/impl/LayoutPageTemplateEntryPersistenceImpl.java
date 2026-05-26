@@ -101,8 +101,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63;.
@@ -143,16 +144,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -194,8 +187,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutPageTemplateEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -209,22 +203,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	public LayoutPageTemplateEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (layoutPageTemplateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageTemplateEntryException(message);
-		}
-
-		return layoutPageTemplateEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -273,8 +253,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63; and companyId = &#63;.
@@ -317,16 +298,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -371,8 +344,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63;.
@@ -413,16 +387,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -499,8 +465,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByLayoutPrototypeId;
+	private CollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByLayoutPrototypeId;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where layoutPrototypeId = &#63;.
@@ -541,19 +508,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByLayoutPrototypeId_First(
-				layoutPrototypeId, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByLayoutPrototypeId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutPrototypeId}));
+		return _collectionPersistenceFinderByLayoutPrototypeId.findFirst(
+			finderCache, new Object[] {layoutPrototypeId}, orderByComparator);
 	}
 
 	/**
@@ -595,8 +551,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {layoutPrototypeId});
 	}
 
-	private UniquePersistenceFinder<LayoutPageTemplateEntry>
-		_uniquePersistenceFinderByPlid;
+	private UniquePersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_uniquePersistenceFinderByPlid;
 
 	/**
 	 * Returns the layout page template entry where plid = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -609,21 +566,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	public LayoutPageTemplateEntry findByPlid(long plid)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByPlid(plid);
-
-		if (layoutPageTemplateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByPlid.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageTemplateEntryException(message);
-		}
-
-		return layoutPageTemplateEntry;
+		return _uniquePersistenceFinderByPlid.find(
+			finderCache, new Object[] {plid});
 	}
 
 	/**
@@ -668,8 +612,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_L;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_L;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -712,17 +657,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_First(
-			groupId, layoutPageTemplateCollectionId, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, layoutPageTemplateCollectionId}));
+		return _collectionPersistenceFinderByG_L.findFirst(
+			finderCache, new Object[] {groupId, layoutPageTemplateCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -810,8 +747,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutPageTemplateEntry>
-		_uniquePersistenceFinderByG_LPTEK;
+	private UniquePersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_uniquePersistenceFinderByG_LPTEK;
 
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -826,23 +764,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			long groupId, String layoutPageTemplateEntryKey)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_LPTEK(
-			groupId, layoutPageTemplateEntryKey);
-
-		if (layoutPageTemplateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_LPTEK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, layoutPageTemplateEntryKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageTemplateEntryException(message);
-		}
-
-		return layoutPageTemplateEntry;
+		return _uniquePersistenceFinderByG_LPTEK.find(
+			finderCache, new Object[] {groupId, layoutPageTemplateEntryKey});
 	}
 
 	/**
@@ -894,8 +817,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, layoutPageTemplateEntryKey});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_N;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_N;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63;.
@@ -938,16 +862,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_N_First(
-			groupId, name, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
+		return _collectionPersistenceFinderByG_N.findFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -1029,8 +945,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_T;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63;.
@@ -1252,8 +1169,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and status = &#63;.
@@ -1296,16 +1214,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1387,8 +1297,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_L_LikeN;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_L_LikeN;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1501,19 +1412,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_L_LikeN_First(
-				groupId, layoutPageTemplateCollectionId, name,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_L_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, layoutPageTemplateCollectionId, name}));
+		return _collectionPersistenceFinderByG_L_LikeN.findFirst(
+			finderCache,
+			new Object[] {groupId, layoutPageTemplateCollectionId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1654,8 +1556,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_L_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_L_T;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1701,17 +1604,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_T_First(
-			groupId, layoutPageTemplateCollectionId, type, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_L_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, layoutPageTemplateCollectionId, type}));
+		return _collectionPersistenceFinderByG_L_T.findFirst(
+			finderCache,
+			new Object[] {groupId, layoutPageTemplateCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1811,8 +1707,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_L_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_L_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1859,19 +1756,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_S_First(
-			groupId, layoutPageTemplateCollectionId, status, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_L_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, layoutPageTemplateCollectionId, status
-				}));
+		return _collectionPersistenceFinderByG_L_S.findFirst(
+			finderCache,
+			new Object[] {groupId, layoutPageTemplateCollectionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1972,8 +1860,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_N_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_N_T;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63; and type = &#63;.
@@ -2018,16 +1907,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_N_T_First(
-			groupId, name, type, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_N_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name, type}));
+		return _collectionPersistenceFinderByG_N_T.findFirst(
+			finderCache, new Object[] {groupId, name, type}, orderByComparator);
 	}
 
 	/**
@@ -2114,8 +1995,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, type}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_T_LikeN;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_T_LikeN;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2556,8 +2438,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_T_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_T_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2798,8 +2681,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutPageTemplateEntry>
-		_uniquePersistenceFinderByG_L_N_T;
+	private UniquePersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_uniquePersistenceFinderByG_L_N_T;
 
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -2817,25 +2701,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			int type)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_N_T(
-			groupId, layoutPageTemplateCollectionId, name, type);
-
-		if (layoutPageTemplateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_L_N_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, layoutPageTemplateCollectionId, name, type
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageTemplateEntryException(message);
-		}
-
-		return layoutPageTemplateEntry;
+		return _uniquePersistenceFinderByG_L_N_T.find(
+			finderCache,
+			new Object[] {groupId, layoutPageTemplateCollectionId, name, type});
 	}
 
 	/**
@@ -2899,8 +2767,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			new Object[] {groupId, layoutPageTemplateCollectionId, name, type});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_L_LikeN_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_L_LikeN_S;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -3023,21 +2892,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_L_LikeN_S_First(
-				groupId, layoutPageTemplateCollectionId, name, status,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_L_LikeN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, layoutPageTemplateCollectionId, name, status
-				}));
+		return _collectionPersistenceFinderByG_L_LikeN_S.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, layoutPageTemplateCollectionId, name, status
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -3201,8 +3061,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
@@ -3251,17 +3112,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_T_First(
-			groupId, classNameId, classTypeKey, type, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classTypeKey, type}));
+		return _collectionPersistenceFinderByG_C_C_T.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, classTypeKey, type},
+			orderByComparator);
 	}
 
 	/**
@@ -3366,8 +3220,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			new Object[] {groupId, classNameId, classTypeKey, type}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_D;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_D;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
@@ -3417,20 +3272,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_D_First(
-			groupId, classNameId, classTypeKey, defaultTemplate,
+		return _collectionPersistenceFinderByG_C_C_D.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, classTypeKey, defaultTemplate},
 			orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, classNameId, classTypeKey, defaultTemplate
-				}));
 	}
 
 	/**
@@ -3540,8 +3385,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_T_D;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_T_D;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3590,17 +3436,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_T_D_First(
-			groupId, classNameId, type, defaultTemplate, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_T_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, type, defaultTemplate}));
+		return _collectionPersistenceFinderByG_C_T_D.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, type, defaultTemplate},
+			orderByComparator);
 	}
 
 	/**
@@ -3706,8 +3545,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_T_LikeN_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_T_LikeN_S;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4196,8 +4036,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_T_D_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_T_D_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4244,17 +4085,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_T_D_S_First(
-			groupId, type, defaultTemplate, status, orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_T_D_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, type, defaultTemplate, status}));
+		return _collectionPersistenceFinderByG_T_D_S.findFirst(
+			finderCache, new Object[] {groupId, type, defaultTemplate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4354,8 +4187,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_LikeN_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_LikeN_T;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63;.
@@ -4480,19 +4314,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_C_C_LikeN_T_First(
-				groupId, classNameId, classTypeKey, name, type,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_LikeN_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classTypeKey, name, type}));
+		return _collectionPersistenceFinderByG_C_C_LikeN_T.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, classTypeKey, name, type},
+			orderByComparator);
 	}
 
 	/**
@@ -4652,8 +4477,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_T_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_T_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
@@ -4705,21 +4531,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_C_C_T_S_First(
-				groupId, classNameId, classTypeKey, type, status,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, classNameId, classTypeKey, type, status
-				}));
+		return _collectionPersistenceFinderByG_C_C_T_S.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, classTypeKey, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4834,8 +4649,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_D_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_D_S;
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4889,21 +4705,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_C_C_D_S_First(
-				groupId, classNameId, classTypeKey, defaultTemplate, status,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_D_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, classNameId, classTypeKey, defaultTemplate, status
-				}));
+		return _collectionPersistenceFinderByG_C_C_D_S.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, classNameId, classTypeKey, defaultTemplate, status
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -5028,8 +4835,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
-		_collectionPersistenceFinderByG_C_C_LikeN_T_S;
+	private FilterCollectionPersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_collectionPersistenceFinderByG_C_C_LikeN_T_S;
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -5162,21 +4970,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchByG_C_C_LikeN_T_S_First(
-				groupId, classNameId, classTypeKey, name, type, status,
-				orderByComparator);
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		throw new NoSuchPageTemplateEntryException(
-			_collectionPersistenceFinderByG_C_C_LikeN_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, classNameId, classTypeKey, name, type, status
-				}));
+		return _collectionPersistenceFinderByG_C_C_LikeN_T_S.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, classNameId, classTypeKey, name, type, status
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -5354,8 +5153,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutPageTemplateEntry>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the layout page template entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -5370,23 +5170,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchPageTemplateEntryException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (layoutPageTemplateEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageTemplateEntryException(message);
-		}
-
-		return layoutPageTemplateEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -5943,18 +5728,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6028,18 +5801,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6092,18 +5853,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6140,18 +5889,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6188,18 +5925,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6239,18 +5964,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6304,18 +6017,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6369,18 +6070,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6427,18 +6116,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6476,18 +6153,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6531,18 +6196,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6619,18 +6272,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6688,18 +6329,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6759,18 +6388,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6827,18 +6444,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6881,18 +6486,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6949,18 +6542,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7014,18 +6595,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7094,18 +6663,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7174,18 +6731,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7243,18 +6788,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
-					"LayoutPageTemplateEntry",
-					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
-					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
-					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
-					LayoutPageTemplateEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPageTemplateEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7370,4 +6903,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-812807616
+// LIFERAY-SERVICE-BUILDER-HASH:857180519

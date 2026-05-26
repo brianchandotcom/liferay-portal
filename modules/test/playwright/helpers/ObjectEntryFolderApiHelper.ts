@@ -39,7 +39,7 @@ export class ObjectEntryFolderApiHelper {
 		scopeKey,
 		title,
 	}: {
-		parentObjectEntryFolderExternalReferenceCode?: 'L_FILES' | 'L_CONTENTS';
+		parentObjectEntryFolderExternalReferenceCode?: string;
 		scopeKey: string;
 		title: string;
 	}) {

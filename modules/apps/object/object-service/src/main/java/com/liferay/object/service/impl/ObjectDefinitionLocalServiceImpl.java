@@ -1330,9 +1330,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 
-		objectDefinition.setObjectFolderId(
-			_getObjectFolderId(
-				objectDefinition.getCompanyId(), objectFolderId));
+		if (objectFolderId == oldObjectFolderId) {
+			return objectDefinition;
+		}
+
+		long newObjectFolderId = _getObjectFolderId(
+			objectDefinition.getCompanyId(), objectFolderId);
+
+		if (newObjectFolderId == oldObjectFolderId) {
+			return objectDefinition;
+		}
+
+		objectDefinition.setObjectFolderId(newObjectFolderId);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
@@ -3583,6 +3592,23 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<String, String> objectDefinitionSettingsValuesMap)
 		throws PortalException {
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-69877") &&
+			!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			objectDefinition.isRootDescendantNode() &&
+			!objectDefinitionSettingsValuesMap.containsKey(
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY)) {
+
+			_handleException(
+				new ObjectDefinitionSettingNameException.RequiredNames(
+					objectDefinition.getShortName(),
+					Set.of(
+						ObjectDefinitionSettingConstants.
+							NAME_ALLOW_STANDALONE_OBJECT_ENTRY)),
+				"objectDefinitionSettings", null);
+		}
+
 		if (objectDefinitionSettingsValuesMap.isEmpty()) {
 			return;
 		}
@@ -3630,19 +3656,40 @@ public class ObjectDefinitionLocalServiceImpl
 				String allowStandaloneObjectEntry =
 					objectDefinitionSettingsValue.getValue();
 
-				if (Objects.equals(allowStandaloneObjectEntry, "false") ||
-					Objects.equals(allowStandaloneObjectEntry, "true")) {
+				if (!Objects.equals(allowStandaloneObjectEntry, "false") &&
+					!Objects.equals(allowStandaloneObjectEntry, "true")) {
+
+					_handleException(
+						new ObjectDefinitionSettingValueException.InvalidValue(
+							objectDefinition.getShortName(),
+							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+							allowStandaloneObjectEntry),
+						"objectDefinitionSettings", null);
 
 					continue;
 				}
 
-				_handleException(
-					new ObjectDefinitionSettingValueException.InvalidValue(
-						objectDefinition.getShortName(),
-						ObjectDefinitionSettingConstants.
-							NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
-						allowStandaloneObjectEntry),
-					"objectDefinitionSettings", null);
+				if (FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-69877") &&
+					objectDefinition.isAllowStandaloneObjectEntry() &&
+					objectDefinition.isApproved() &&
+					Objects.equals(allowStandaloneObjectEntry, "false")) {
+
+					long count = _objectEntryLocalService.getObjectEntriesCount(
+						0, null, objectDefinition,
+						ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(0L));
+
+					if (count > 0) {
+						_handleException(
+							new ObjectDefinitionSettingValueException.
+								StandaloneObjectEntriesAlreadyExist(
+									objectDefinition.getShortName()),
+							"objectDefinitionSettings", null);
+					}
+				}
+
+				continue;
 			}
 
 			if (StringUtil.equals(

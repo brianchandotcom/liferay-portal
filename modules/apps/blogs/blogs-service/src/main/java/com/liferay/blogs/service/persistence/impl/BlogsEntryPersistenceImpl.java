@@ -100,7 +100,7 @@ public class BlogsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -141,15 +141,8 @@ public class BlogsEntryPersistenceImpl
 			String uuid, OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -190,7 +183,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<BlogsEntry>
+	private UniquePersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -205,21 +198,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByUUID_G(uuid, groupId);
-
-		if (blogsEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return blogsEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -267,7 +247,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -311,16 +291,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -365,7 +337,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -406,16 +378,8 @@ public class BlogsEntryPersistenceImpl
 			long groupId, OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -491,7 +455,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -532,16 +496,8 @@ public class BlogsEntryPersistenceImpl
 			long companyId, OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -582,7 +538,8 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<BlogsEntry> _uniquePersistenceFinderByG_UT;
+	private UniquePersistenceFinder<BlogsEntry, NoSuchEntryException>
+		_uniquePersistenceFinderByG_UT;
 
 	/**
 	 * Returns the blogs entry where groupId = &#63; and urlTitle = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -596,21 +553,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry findByG_UT(long groupId, String urlTitle)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_UT(groupId, urlTitle);
-
-		if (blogsEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_UT.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, urlTitle});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return blogsEntry;
+		return _uniquePersistenceFinderByG_UT.find(
+			finderCache, new Object[] {groupId, urlTitle});
 	}
 
 	/**
@@ -658,7 +602,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, urlTitle});
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LtD;
 
 	/**
@@ -758,16 +702,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_LtD_First(
-			groupId, displayDate, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LtD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, displayDate}));
+		return _collectionPersistenceFinderByG_LtD.findFirst(
+			finderCache, new Object[] {groupId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -883,7 +820,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, displayDate}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_S;
 
 	/**
@@ -927,16 +864,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1018,7 +947,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_NotS;
 
 	/**
@@ -1118,16 +1047,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_NotS_First(
-			groupId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_NotS.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1242,7 +1163,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_U;
 
 	/**
@@ -1286,16 +1207,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1340,7 +1253,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_LtD;
 
 	/**
@@ -1440,17 +1353,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_LtD_First(
-			companyId, displayDate, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_LtD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, displayDate}));
+		return _collectionPersistenceFinderByC_LtD.findFirst(
+			finderCache, new Object[] {companyId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -1496,7 +1401,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, displayDate});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -1540,16 +1445,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1594,7 +1491,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_NotS;
 
 	/**
@@ -1694,16 +1591,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_NotS_First(
-			companyId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_NotS.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1748,7 +1637,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByLtD_S;
 
 	/**
@@ -1848,16 +1737,8 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1902,7 +1783,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_U_LtD;
 
 	/**
@@ -2010,17 +1891,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_U_LtD_First(
-			groupId, userId, displayDate, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_U_LtD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, displayDate}));
+		return _collectionPersistenceFinderByG_U_LtD.findFirst(
+			finderCache, new Object[] {groupId, userId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -2149,7 +2022,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, userId, displayDate}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_U_S;
 
 	/**
@@ -2391,7 +2264,7 @@ public class BlogsEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_U_NotS;
 
 	/**
@@ -2499,17 +2372,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_U_NotS_First(
-			groupId, userId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_U_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, status}));
+		return _collectionPersistenceFinderByG_U_NotS.findFirst(
+			finderCache, new Object[] {groupId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2635,7 +2500,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, userId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_D_S;
 
 	/**
@@ -2681,17 +2546,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_D_S_First(
-			groupId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, displayDate, status}));
+		return _collectionPersistenceFinderByG_D_S.findFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2779,7 +2636,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, displayDate, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_GtD_S;
 
 	/**
@@ -2887,17 +2744,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_GtD_S_First(
-			groupId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_GtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, displayDate, status}));
+		return _collectionPersistenceFinderByG_GtD_S.findFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3026,7 +2875,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, displayDate, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LtD_S;
 
 	/**
@@ -3134,17 +2983,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_LtD_S_First(
-			groupId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, displayDate, status}));
+		return _collectionPersistenceFinderByG_LtD_S.findFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3273,7 +3114,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, displayDate, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LtD_NotS;
 
 	/**
@@ -3381,17 +3222,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_LtD_NotS_First(
-			groupId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LtD_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, displayDate, status}));
+		return _collectionPersistenceFinderByG_LtD_NotS.findFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3520,7 +3353,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, displayDate, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_U_S;
 
 	/**
@@ -3566,17 +3399,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_U_S_First(
-			companyId, userId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_U_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, userId, status}));
+		return _collectionPersistenceFinderByC_U_S.findFirst(
+			finderCache, new Object[] {companyId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3625,7 +3450,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, userId, status});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_U_NotS;
 
 	/**
@@ -3733,17 +3558,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_U_NotS_First(
-			companyId, userId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_U_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, userId, status}));
+		return _collectionPersistenceFinderByC_U_NotS.findFirst(
+			finderCache, new Object[] {companyId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3792,7 +3609,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, userId, status});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_LtD_S;
 
 	/**
@@ -3901,17 +3718,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_LtD_S_First(
-			companyId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_LtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, displayDate, status}));
+		return _collectionPersistenceFinderByC_LtD_S.findFirst(
+			finderCache, new Object[] {companyId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3960,7 +3769,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<BlogsEntry>
+	private CollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_LtD_NotS;
 
 	/**
@@ -4070,17 +3879,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByC_LtD_NotS_First(
-			companyId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_LtD_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, displayDate, status}));
+		return _collectionPersistenceFinderByC_LtD_NotS.findFirst(
+			finderCache, new Object[] {companyId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4131,7 +3932,7 @@ public class BlogsEntryPersistenceImpl
 			finderCache, new Object[] {companyId, displayDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_U_LtD_S;
 
 	/**
@@ -4247,17 +4048,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_U_LtD_S_First(
-			groupId, userId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_U_LtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, displayDate, status}));
+		return _collectionPersistenceFinderByG_U_LtD_S.findFirst(
+			finderCache, new Object[] {groupId, userId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4399,7 +4192,7 @@ public class BlogsEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<BlogsEntry>
+	private FilterCollectionPersistenceFinder<BlogsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_U_LtD_NotS;
 
 	/**
@@ -4515,17 +4308,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_U_LtD_NotS_First(
-			groupId, userId, displayDate, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_U_LtD_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, displayDate, status}));
+		return _collectionPersistenceFinderByG_U_LtD_NotS.findFirst(
+			finderCache, new Object[] {groupId, userId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4667,7 +4452,8 @@ public class BlogsEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<BlogsEntry> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<BlogsEntry, NoSuchEntryException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the blogs entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -4681,22 +4467,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (blogsEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return blogsEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -5246,15 +5018,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId));
@@ -5318,15 +5081,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5359,15 +5113,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5395,15 +5140,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5562,15 +5298,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5609,15 +5336,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5650,15 +5368,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5697,15 +5406,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5738,15 +5438,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5779,15 +5470,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5820,15 +5502,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5995,15 +5668,6 @@ public class BlogsEntryPersistenceImpl
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -6043,15 +5707,6 @@ public class BlogsEntryPersistenceImpl
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -6154,4 +5809,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-370665846
+// LIFERAY-SERVICE-BUILDER-HASH:-2015417595

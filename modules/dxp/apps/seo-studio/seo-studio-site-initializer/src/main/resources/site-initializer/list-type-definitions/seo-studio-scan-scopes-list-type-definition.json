@@ -2,37 +2,37 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_SCOPES",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_CONTENT_TYPE",
+			"externalReferenceCode": "CONTENT_TYPE",
 			"key": "contentType",
 			"name": "Content Type",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_ENTIRE_DOMAIN",
+			"externalReferenceCode": "ENTIRE_DOMAIN",
 			"key": "entireDomain",
 			"name": "Entire Domain",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_SITEMAP",
+			"externalReferenceCode": "SITEMAP",
 			"key": "sitemap",
 			"name": "Sitemap",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_SPECIFIC_SITES",
+			"externalReferenceCode": "SPECIFIC_SITES",
 			"key": "specificSites",
 			"name": "Specific Sites",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_TEMPLATE",
+			"externalReferenceCode": "TEMPLATE",
 			"key": "template",
 			"name": "Template",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_URL_PATTERN",
+			"externalReferenceCode": "URL_PATTERN",
 			"key": "urlPattern",
 			"name": "URL Pattern",
 			"system": true

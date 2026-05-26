@@ -101,6 +101,8 @@ public class ViewRecycleBinSectionDisplayContextTest
 					))
 			).put(
 				"hideSpace", true
+			).put(
+				"showEmptyRecycleBinAction", false
 			).build(),
 			_getBreadcrumbProps(displayContext));
 	}

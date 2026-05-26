@@ -86,7 +86,7 @@ public class DDLRecordPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,8 @@ public class DDLRecordPersistenceImpl
 			String uuid, OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByUuid_First(uuid, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +169,8 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DDLRecord> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<DDLRecord, NoSuchRecordException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the ddl record where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRecordException</code> if it could not be found.
@@ -190,21 +184,8 @@ public class DDLRecordPersistenceImpl
 	public DDLRecord findByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByUUID_G(uuid, groupId);
-
-		if (ddlRecord == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRecordException(message);
-		}
-
-		return ddlRecord;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -252,7 +233,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -296,16 +277,8 @@ public class DDLRecordPersistenceImpl
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -350,7 +323,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -391,16 +364,8 @@ public class DDLRecordPersistenceImpl
 			long companyId, OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -441,7 +406,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByRecordSetId;
 
 	/**
@@ -482,16 +447,8 @@ public class DDLRecordPersistenceImpl
 			long recordSetId, OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByRecordSetId_First(
-			recordSetId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByRecordSetId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId}));
+		return _collectionPersistenceFinderByRecordSetId.findFirst(
+			finderCache, new Object[] {recordSetId}, orderByComparator);
 	}
 
 	/**
@@ -532,7 +489,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByR_U;
 
 	/**
@@ -576,16 +533,8 @@ public class DDLRecordPersistenceImpl
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByR_U_First(
-			recordSetId, userId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByR_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId, userId}));
+		return _collectionPersistenceFinderByR_U.findFirst(
+			finderCache, new Object[] {recordSetId, userId}, orderByComparator);
 	}
 
 	/**
@@ -630,7 +579,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId, userId});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByR_R;
 
 	/**
@@ -674,17 +623,9 @@ public class DDLRecordPersistenceImpl
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByR_R_First(
-			recordSetId, recordSetVersion, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByR_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {recordSetId, recordSetVersion}));
+		return _collectionPersistenceFinderByR_R.findFirst(
+			finderCache, new Object[] {recordSetId, recordSetVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -730,7 +671,7 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
-	private CollectionPersistenceFinder<DDLRecord>
+	private CollectionPersistenceFinder<DDLRecord, NoSuchRecordException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -774,16 +715,8 @@ public class DDLRecordPersistenceImpl
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws NoSuchRecordException {
 
-		DDLRecord ddlRecord = fetchByC_C_First(
-			className, classPK, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		throw new NoSuchRecordException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {className, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {className, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1396,4 +1329,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:55350310
+// LIFERAY-SERVICE-BUILDER-HASH:-40590516

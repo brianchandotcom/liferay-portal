@@ -99,7 +99,7 @@ public class JournalArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByResourcePrimKey;
 
 	/**
@@ -141,16 +141,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByResourcePrimKey_First(
-			resourcePrimKey, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByResourcePrimKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {resourcePrimKey}));
+		return _collectionPersistenceFinderByResourcePrimKey.findFirst(
+			finderCache, new Object[] {resourcePrimKey}, orderByComparator);
 	}
 
 	/**
@@ -192,7 +184,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -233,16 +225,8 @@ public class JournalArticlePersistenceImpl
 			String uuid, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -283,7 +267,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<JournalArticle>
+	private UniquePersistenceFinder<JournalArticle, NoSuchArticleException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -298,21 +282,8 @@ public class JournalArticlePersistenceImpl
 	public JournalArticle findByUUID_G(String uuid, long groupId)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByUUID_G(uuid, groupId);
-
-		if (journalArticle == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return journalArticle;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -360,7 +331,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -404,16 +375,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -458,8 +421,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63;.
@@ -499,16 +463,8 @@ public class JournalArticlePersistenceImpl
 			long groupId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -584,7 +540,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -625,16 +581,8 @@ public class JournalArticlePersistenceImpl
 			long companyId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -675,7 +623,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByDDMStructureId;
 
 	/**
@@ -717,16 +665,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByDDMStructureId_First(
-			DDMStructureId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByDDMStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {DDMStructureId}));
+		return _collectionPersistenceFinderByDDMStructureId.findFirst(
+			finderCache, new Object[] {DDMStructureId}, orderByComparator);
 	}
 
 	/**
@@ -768,7 +708,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {DDMStructureId});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByDDMTemplateKey;
 
 	/**
@@ -810,16 +750,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByDDMTemplateKey_First(
-			DDMTemplateKey, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByDDMTemplateKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {DDMTemplateKey}));
+		return _collectionPersistenceFinderByDDMTemplateKey.findFirst(
+			finderCache, new Object[] {DDMTemplateKey}, orderByComparator);
 	}
 
 	/**
@@ -861,7 +793,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {DDMTemplateKey});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByLayoutUuid;
 
 	/**
@@ -903,16 +835,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByLayoutUuid_First(
-			layoutUuid, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByLayoutUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {layoutUuid}));
+		return _collectionPersistenceFinderByLayoutUuid.findFirst(
+			finderCache, new Object[] {layoutUuid}, orderByComparator);
 	}
 
 	/**
@@ -954,7 +878,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {layoutUuid});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderBySmallImageId;
 
 	/**
@@ -996,16 +920,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchBySmallImageId_First(
-			smallImageId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderBySmallImageId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {smallImageId}));
+		return _collectionPersistenceFinderBySmallImageId.findFirst(
+			finderCache, new Object[] {smallImageId}, orderByComparator);
 	}
 
 	/**
@@ -1047,7 +963,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {smallImageId});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_I;
 
 	/**
@@ -1091,17 +1007,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByR_I_First(
-			resourcePrimKey, indexable, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByR_I.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, indexable}));
+		return _collectionPersistenceFinderByR_I.findFirst(
+			finderCache, new Object[] {resourcePrimKey, indexable},
+			orderByComparator);
 	}
 
 	/**
@@ -1147,7 +1055,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, indexable});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_ST;
 
 	/**
@@ -1297,8 +1205,9 @@ public class JournalArticlePersistenceImpl
 			new Object[] {resourcePrimKey, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_U;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_U;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and userId = &#63;.
@@ -1341,16 +1250,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_U_First(
-			groupId, userId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
+		return _collectionPersistenceFinderByG_U.findFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1432,8 +1333,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, userId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_ERC;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_ERC;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1476,17 +1378,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_ERC_First(
-			groupId, externalReferenceCode, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_ERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, externalReferenceCode}));
+		return _collectionPersistenceFinderByG_ERC.findFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode},
+			orderByComparator);
 	}
 
 	/**
@@ -1570,8 +1464,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_F;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_F;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and folderId = &#63;.
@@ -1797,8 +1692,9 @@ public class JournalArticlePersistenceImpl
 			new Object[] {groupId, ArrayUtil.sortedUnique(folderIds)}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_A;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63;.
@@ -1841,16 +1737,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_A_First(
-			groupId, articleId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, articleId}));
+		return _collectionPersistenceFinderByG_A.findFirst(
+			finderCache, new Object[] {groupId, articleId}, orderByComparator);
 	}
 
 	/**
@@ -1932,8 +1820,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_UT;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_UT;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and urlTitle = &#63;.
@@ -1976,16 +1865,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_UT_First(
-			groupId, urlTitle, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_UT.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, urlTitle}));
+		return _collectionPersistenceFinderByG_UT.findFirst(
+			finderCache, new Object[] {groupId, urlTitle}, orderByComparator);
 	}
 
 	/**
@@ -2067,8 +1948,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, urlTitle}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_DDMSI;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_DDMSI;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and DDMStructureId = &#63;.
@@ -2111,17 +1993,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_DDMSI_First(
-			groupId, DDMStructureId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_DDMSI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, DDMStructureId}));
+		return _collectionPersistenceFinderByG_DDMSI.findFirst(
+			finderCache, new Object[] {groupId, DDMStructureId},
+			orderByComparator);
 	}
 
 	/**
@@ -2204,8 +2078,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, DDMStructureId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_DDMTK;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_DDMTK;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
@@ -2248,17 +2123,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_DDMTK_First(
-			groupId, DDMTemplateKey, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_DDMTK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, DDMTemplateKey}));
+		return _collectionPersistenceFinderByG_DDMTK.findFirst(
+			finderCache, new Object[] {groupId, DDMTemplateKey},
+			orderByComparator);
 	}
 
 	/**
@@ -2341,8 +2208,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, DDMTemplateKey}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_L;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_L;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and layoutUuid = &#63;.
@@ -2385,16 +2253,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_L_First(
-			groupId, layoutUuid, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, layoutUuid}));
+		return _collectionPersistenceFinderByG_L.findFirst(
+			finderCache, new Object[] {groupId, layoutUuid}, orderByComparator);
 	}
 
 	/**
@@ -2476,8 +2336,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, layoutUuid}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_ST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_ST;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and status = &#63;.
@@ -2520,16 +2381,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_ST_First(
-			groupId, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_ST.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -2611,7 +2464,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_V;
 
 	/**
@@ -2655,16 +2508,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByC_V_First(
-			companyId, version, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_V.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, version}));
+		return _collectionPersistenceFinderByC_V.findFirst(
+			finderCache, new Object[] {companyId, version}, orderByComparator);
 	}
 
 	/**
@@ -2709,7 +2554,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, version});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_ST;
 
 	/**
@@ -2753,16 +2598,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByC_ST_First(
-			companyId, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_ST.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -2807,7 +2644,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_NotST;
 
 	/**
@@ -2907,16 +2744,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByC_NotST_First(
-			companyId, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_NotST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_NotST.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -2961,7 +2790,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByLtD_S;
 
 	/**
@@ -3061,16 +2890,8 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -3115,7 +2936,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByR_I_S;
 
 	/**
@@ -3289,8 +3110,9 @@ public class JournalArticlePersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_U_C;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_U_C;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
@@ -3335,17 +3157,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_U_C_First(
-			groupId, userId, classNameId, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_U_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, classNameId}));
+		return _collectionPersistenceFinderByG_U_C.findFirst(
+			finderCache, new Object[] {groupId, userId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -3433,7 +3247,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, userId, classNameId}, groupId);
 	}
 
-	private UniquePersistenceFinder<JournalArticle>
+	private UniquePersistenceFinder<JournalArticle, NoSuchArticleException>
 		_uniquePersistenceFinderByG_ERC_V;
 
 	/**
@@ -3450,23 +3264,9 @@ public class JournalArticlePersistenceImpl
 			long groupId, String externalReferenceCode, double version)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_ERC_V(
-			groupId, externalReferenceCode, version);
-
-		if (journalArticle == null) {
-			String message =
-				_uniquePersistenceFinderByG_ERC_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, externalReferenceCode, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return journalArticle;
+		return _uniquePersistenceFinderByG_ERC_V.find(
+			finderCache,
+			new Object[] {groupId, externalReferenceCode, version});
 	}
 
 	/**
@@ -3524,8 +3324,9 @@ public class JournalArticlePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_ERC_ST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_ERC_ST;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
@@ -3790,8 +3591,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_F_ST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_F_ST;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -4034,8 +3836,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_C_C;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_C_C;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -4080,17 +3883,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, classPK}));
+		return _collectionPersistenceFinderByG_C_C.findFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -4180,7 +3975,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, classPK}, groupId);
 	}
 
-	private UniquePersistenceFinder<JournalArticle>
+	private UniquePersistenceFinder<JournalArticle, NoSuchArticleException>
 		_uniquePersistenceFinderByG_C_DDMSI;
 
 	/**
@@ -4197,23 +3992,8 @@ public class JournalArticlePersistenceImpl
 			long groupId, long classNameId, long DDMStructureId)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_C_DDMSI(
-			groupId, classNameId, DDMStructureId);
-
-		if (journalArticle == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_DDMSI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, DDMStructureId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return journalArticle;
+		return _uniquePersistenceFinderByG_C_DDMSI.find(
+			finderCache, new Object[] {groupId, classNameId, DDMStructureId});
 	}
 
 	/**
@@ -4270,8 +4050,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, DDMStructureId});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_C_DDMTK;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_C_DDMTK;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
@@ -4316,17 +4097,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_C_DDMTK_First(
-			groupId, classNameId, DDMTemplateKey, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_C_DDMTK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, DDMTemplateKey}));
+		return _collectionPersistenceFinderByG_C_DDMTK.findFirst(
+			finderCache, new Object[] {groupId, classNameId, DDMTemplateKey},
+			orderByComparator);
 	}
 
 	/**
@@ -4421,8 +4194,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_C_L;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_C_L;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
@@ -4467,17 +4241,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_C_L_First(
-			groupId, classNameId, layoutUuid, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_C_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, layoutUuid}));
+		return _collectionPersistenceFinderByG_C_L.findFirst(
+			finderCache, new Object[] {groupId, classNameId, layoutUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -4570,8 +4336,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_C_NotL;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_C_NotL;
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
@@ -5048,7 +4815,7 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<JournalArticle>
+	private UniquePersistenceFinder<JournalArticle, NoSuchArticleException>
 		_uniquePersistenceFinderByG_A_V;
 
 	/**
@@ -5065,23 +4832,8 @@ public class JournalArticlePersistenceImpl
 			long groupId, String articleId, double version)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_A_V(
-			groupId, articleId, version);
-
-		if (journalArticle == null) {
-			String message =
-				_uniquePersistenceFinderByG_A_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, articleId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleException(message);
-		}
-
-		return journalArticle;
+		return _uniquePersistenceFinderByG_A_V.find(
+			finderCache, new Object[] {groupId, articleId, version});
 	}
 
 	/**
@@ -5136,8 +4888,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId, version});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_A_ST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_A_ST;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and status = &#63;.
@@ -5382,8 +5135,9 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_A_NotST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_A_NotST;
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
@@ -5490,17 +5244,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_A_NotST_First(
-			groupId, articleId, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_A_NotST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, articleId, status}));
+		return _collectionPersistenceFinderByG_A_NotST.findFirst(
+			finderCache, new Object[] {groupId, articleId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5629,8 +5375,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_UT_ST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_UT_ST;
 
 	/**
 	 * Returns an ordered range of all the journal articles where groupId = &#63; and urlTitle = &#63; and status = &#63;.
@@ -5675,17 +5422,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_UT_ST_First(
-			groupId, urlTitle, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_UT_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, urlTitle, status}));
+		return _collectionPersistenceFinderByG_UT_ST.findFirst(
+			finderCache, new Object[] {groupId, urlTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5773,7 +5512,7 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, urlTitle, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<JournalArticle>
+	private CollectionPersistenceFinder<JournalArticle, NoSuchArticleException>
 		_collectionPersistenceFinderByC_V_ST;
 
 	/**
@@ -5819,17 +5558,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByC_V_ST_First(
-			companyId, version, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByC_V_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, version, status}));
+		return _collectionPersistenceFinderByC_V_ST.findFirst(
+			finderCache, new Object[] {companyId, version, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5878,8 +5609,9 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, version, status});
 	}
 
-	private FilterCollectionPersistenceFinder<JournalArticle>
-		_collectionPersistenceFinderByG_F_C_NotST;
+	private FilterCollectionPersistenceFinder
+		<JournalArticle, NoSuchArticleException>
+			_collectionPersistenceFinderByG_F_C_NotST;
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
@@ -5994,17 +5726,9 @@ public class JournalArticlePersistenceImpl
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		JournalArticle journalArticle = fetchByG_F_C_NotST_First(
-			groupId, folderId, classNameId, status, orderByComparator);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		throw new NoSuchArticleException(
-			_collectionPersistenceFinderByG_F_C_NotST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, folderId, classNameId, status}));
+		return _collectionPersistenceFinderByG_F_C_NotST.findFirst(
+			finderCache, new Object[] {groupId, folderId, classNameId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -6631,16 +6355,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId));
@@ -6858,16 +6572,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -6899,16 +6603,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -6939,16 +6633,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -6978,16 +6662,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7017,16 +6691,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7056,16 +6720,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7097,16 +6751,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7137,16 +6781,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7180,16 +6814,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7368,16 +6992,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7444,16 +7058,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7494,16 +7098,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7543,16 +7137,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7620,16 +7204,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7673,16 +7247,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7718,16 +7282,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7792,16 +7346,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7835,16 +7379,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7886,16 +7420,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -7975,16 +7499,6 @@ public class JournalArticlePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalArticleImpl.class, JournalArticle.class,
-					"journalArticle", "JournalArticle",
-					"journalArticle.resourcePrimKey",
-					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
-					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
-					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
-					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
-					JournalArticleModelImpl.ORDER_BY_SQL,
-					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId),
@@ -8070,4 +7584,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-408991661
+// LIFERAY-SERVICE-BUILDER-HASH:45407203

@@ -92,8 +92,9 @@ public class CSDiagramEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CSDiagramEntry>
-		_collectionPersistenceFinderByCPDefinitionId;
+	private CollectionPersistenceFinder
+		<CSDiagramEntry, NoSuchCSDiagramEntryException>
+			_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the cs diagram entries where CPDefinitionId = &#63;.
@@ -134,16 +135,8 @@ public class CSDiagramEntryPersistenceImpl
 			OrderByComparator<CSDiagramEntry> orderByComparator)
 		throws NoSuchCSDiagramEntryException {
 
-		CSDiagramEntry csDiagramEntry = fetchByCPDefinitionId_First(
-			CPDefinitionId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		throw new NoSuchCSDiagramEntryException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -185,8 +178,9 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<CSDiagramEntry>
-		_collectionPersistenceFinderByCPInstanceId;
+	private CollectionPersistenceFinder
+		<CSDiagramEntry, NoSuchCSDiagramEntryException>
+			_collectionPersistenceFinderByCPInstanceId;
 
 	/**
 	 * Returns an ordered range of all the cs diagram entries where CPInstanceId = &#63;.
@@ -227,16 +221,8 @@ public class CSDiagramEntryPersistenceImpl
 			OrderByComparator<CSDiagramEntry> orderByComparator)
 		throws NoSuchCSDiagramEntryException {
 
-		CSDiagramEntry csDiagramEntry = fetchByCPInstanceId_First(
-			CPInstanceId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		throw new NoSuchCSDiagramEntryException(
-			_collectionPersistenceFinderByCPInstanceId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId}));
+		return _collectionPersistenceFinderByCPInstanceId.findFirst(
+			finderCache, new Object[] {CPInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -278,8 +264,9 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPInstanceId});
 	}
 
-	private CollectionPersistenceFinder<CSDiagramEntry>
-		_collectionPersistenceFinderByCProductId;
+	private CollectionPersistenceFinder
+		<CSDiagramEntry, NoSuchCSDiagramEntryException>
+			_collectionPersistenceFinderByCProductId;
 
 	/**
 	 * Returns an ordered range of all the cs diagram entries where CProductId = &#63;.
@@ -320,16 +307,8 @@ public class CSDiagramEntryPersistenceImpl
 			OrderByComparator<CSDiagramEntry> orderByComparator)
 		throws NoSuchCSDiagramEntryException {
 
-		CSDiagramEntry csDiagramEntry = fetchByCProductId_First(
-			CProductId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		throw new NoSuchCSDiagramEntryException(
-			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
+		return _collectionPersistenceFinderByCProductId.findFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -370,8 +349,9 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CProductId});
 	}
 
-	private UniquePersistenceFinder<CSDiagramEntry>
-		_uniquePersistenceFinderByCPDI_S;
+	private UniquePersistenceFinder
+		<CSDiagramEntry, NoSuchCSDiagramEntryException>
+			_uniquePersistenceFinderByCPDI_S;
 
 	/**
 	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or throws a <code>NoSuchCSDiagramEntryException</code> if it could not be found.
@@ -385,22 +365,8 @@ public class CSDiagramEntryPersistenceImpl
 	public CSDiagramEntry findByCPDI_S(long CPDefinitionId, String sequence)
 		throws NoSuchCSDiagramEntryException {
 
-		CSDiagramEntry csDiagramEntry = fetchByCPDI_S(CPDefinitionId, sequence);
-
-		if (csDiagramEntry == null) {
-			String message =
-				_uniquePersistenceFinderByCPDI_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionId, sequence});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCSDiagramEntryException(message);
-		}
-
-		return csDiagramEntry;
+		return _uniquePersistenceFinderByCPDI_S.find(
+			finderCache, new Object[] {CPDefinitionId, sequence});
 	}
 
 	/**
@@ -449,8 +415,9 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, sequence});
 	}
 
-	private UniquePersistenceFinder<CSDiagramEntry>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CSDiagramEntry, NoSuchCSDiagramEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the cs diagram entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCSDiagramEntryException</code> if it could not be found.
@@ -465,23 +432,8 @@ public class CSDiagramEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchCSDiagramEntryException {
 
-		CSDiagramEntry csDiagramEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (csDiagramEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCSDiagramEntryException(message);
-		}
-
-		return csDiagramEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1067,4 +1019,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-979963801
+// LIFERAY-SERVICE-BUILDER-HASH:924997580

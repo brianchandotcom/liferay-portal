@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("LowStockAction")
+@GraphQLName(
+	description = "Read-only descriptor of a registered low-stock activity used by SKU and product configuration endpoints to indicate which action runs when inventory falls below a threshold; entries are contributed by platform extensions and resolved from a registry.",
+	value = "LowStockAction"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LowStockAction")
 public class LowStockAction implements Serializable {
@@ -48,7 +51,10 @@ public class LowStockAction implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(LowStockAction.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable identifier of the registered low-stock activity; read-only because the set of keys is fixed at deployment time.",
+		example = "default"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -80,7 +86,9 @@ public class LowStockAction implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable identifier of the registered low-stock activity; read-only because the set of keys is fixed at deployment time."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
@@ -88,6 +96,7 @@ public class LowStockAction implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text; map keys are locale codes and values are the translated strings; read-only.",
 		example = "{en_US=Low Stock Action, hr_HR=Low Stock Action HR, hu_HU=Low Stock Action HU}"
 	)
 	@Valid
@@ -124,7 +133,9 @@ public class LowStockAction implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text; map keys are locale codes and values are the translated strings; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label;
 
@@ -287,4 +298,4 @@ public class LowStockAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-20035220
+// LIFERAY-REST-BUILDER-HASH:1088057629

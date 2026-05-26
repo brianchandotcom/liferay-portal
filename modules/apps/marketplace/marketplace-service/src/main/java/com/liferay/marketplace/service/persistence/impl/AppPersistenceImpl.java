@@ -80,7 +80,8 @@ public class AppPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<App> _collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder<App, NoSuchAppException>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the apps where uuid = &#63;.
@@ -119,15 +120,8 @@ public class AppPersistenceImpl
 			String uuid, OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException {
 
-		App app = fetchByUuid_First(uuid, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		throw new NoSuchAppException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -168,7 +162,7 @@ public class AppPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<App>
+	private CollectionPersistenceFinder<App, NoSuchAppException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -211,15 +205,8 @@ public class AppPersistenceImpl
 			OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException {
 
-		App app = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		throw new NoSuchAppException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -263,7 +250,7 @@ public class AppPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<App>
+	private CollectionPersistenceFinder<App, NoSuchAppException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -303,15 +290,8 @@ public class AppPersistenceImpl
 			long companyId, OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException {
 
-		App app = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		throw new NoSuchAppException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,7 +332,8 @@ public class AppPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<App> _uniquePersistenceFinderByRemoteAppId;
+	private UniquePersistenceFinder<App, NoSuchAppException>
+		_uniquePersistenceFinderByRemoteAppId;
 
 	/**
 	 * Returns the app where remoteAppId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
@@ -363,21 +344,8 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public App findByRemoteAppId(long remoteAppId) throws NoSuchAppException {
-		App app = fetchByRemoteAppId(remoteAppId);
-
-		if (app == null) {
-			String message =
-				_uniquePersistenceFinderByRemoteAppId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {remoteAppId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAppException(message);
-		}
-
-		return app;
+		return _uniquePersistenceFinderByRemoteAppId.find(
+			finderCache, new Object[] {remoteAppId});
 	}
 
 	/**
@@ -418,7 +386,7 @@ public class AppPersistenceImpl
 			finderCache, new Object[] {remoteAppId});
 	}
 
-	private CollectionPersistenceFinder<App>
+	private CollectionPersistenceFinder<App, NoSuchAppException>
 		_collectionPersistenceFinderByCategory;
 
 	/**
@@ -458,15 +426,8 @@ public class AppPersistenceImpl
 			String category, OrderByComparator<App> orderByComparator)
 		throws NoSuchAppException {
 
-		App app = fetchByCategory_First(category, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		throw new NoSuchAppException(
-			_collectionPersistenceFinderByCategory.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {category}));
+		return _collectionPersistenceFinderByCategory.findFirst(
+			finderCache, new Object[] {category}, orderByComparator);
 	}
 
 	/**
@@ -899,4 +860,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-240968882
+// LIFERAY-SERVICE-BUILDER-HASH:-996276071

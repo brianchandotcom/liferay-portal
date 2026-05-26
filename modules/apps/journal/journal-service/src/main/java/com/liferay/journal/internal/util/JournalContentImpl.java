@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.portlet.RenderRequest;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -245,9 +247,15 @@ public class JournalContentImpl implements JournalContent {
 			articleDisplay = _portalCache.get(journalContentKey);
 		}
 
+		HttpServletRequest httpServletRequest = null;
+
+		if (themeDisplay != null) {
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
 		String nonceAttribute =
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				(themeDisplay != null) ? themeDisplay.getRequest() : null);
+				httpServletRequest);
 
 		if ((articleDisplay == null) || !lifecycleRender) {
 			articleDisplay = getArticleDisplay(

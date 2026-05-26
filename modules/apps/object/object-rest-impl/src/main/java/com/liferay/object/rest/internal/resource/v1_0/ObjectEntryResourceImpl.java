@@ -606,6 +606,19 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
+			public boolean isHidden() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_objectDefinition.getCompanyId(), "LPD-69877") &&
+					!_objectDefinition.isAllowStandaloneObjectEntry() &&
+					_objectDefinition.isRootDescendantNode()) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
 			public boolean isMissingPortletSupported() {
 				return true;
 			}

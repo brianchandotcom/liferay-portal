@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -674,7 +677,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory,pageSpecifications,thumbnail"
+			"nestedFields",
+			"friendlyUrlHistory,pageSpecifications,thumbnailURLReference"
 		).build();
 	}
 
@@ -736,12 +740,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage randomUtilityPage = randomUtilityPage();
 
-		Repository repository = _portletFileRepository.addPortletRepository(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
-
-		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+		FileEntry fileEntry = FileEntryTestUtil.addPreviewFileEntry(
+			testGroup, _portletFileRepository, getClass());
 
 		randomUtilityPage.setThumbnailURLReference(
 			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
@@ -751,6 +751,22 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			randomUtilityPage);
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		IdempotentRetryAssert.retryAssert(
+			30, TimeUnit.SECONDS, 500, TimeUnit.MILLISECONDS,
+			() -> {
+				UtilityPage getUtilityPage =
+					utilityPageResource.getSiteUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						postUtilityPage.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getUtilityPage.getThumbnailURLReference();
+
+				Assert.assertNotNull(thumbnailURLReference);
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<UtilityPage> page = utilityPageResource.getSiteUtilityPagesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);

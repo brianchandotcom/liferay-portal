@@ -34,9 +34,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.After;
@@ -566,38 +563,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 							value, " where id = ", value));
 				},
 				null));
-	}
-
-	@Test
-	public void testProcessConcurrentlyShutdown() throws Exception {
-		List<Integer> values = new ArrayList<>();
-
-		for (int i = 1; i <= _PROCESS_CONCURRENTLY_COUNT; i++) {
-			values.add(i);
-		}
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		ExecutorService executorService = Executors.newWorkStealingPool();
-
-		for (int i = 0; i <= 10; i++) {
-			Future<Void> future = executorService.submit(
-				() -> {
-					processConcurrently(
-						values.toArray(new Integer[0]),
-						value -> Thread.sleep(1000), "An exception was thrown");
-
-					return null;
-				});
-
-			futures.add(future);
-		}
-
-		executorService.shutdown();
-
-		for (Future<Void> future : futures) {
-			future.get();
-		}
 	}
 
 	@Test

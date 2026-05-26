@@ -82,8 +82,9 @@ public class AnnouncementsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where uuid = &#63;.
@@ -124,16 +125,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -210,8 +204,9 @@ public class AnnouncementsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -254,16 +249,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -347,8 +335,9 @@ public class AnnouncementsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where companyId = &#63;.
@@ -389,16 +378,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -477,8 +459,9 @@ public class AnnouncementsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByUserId;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where userId = &#63;.
@@ -519,16 +502,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -605,8 +581,9 @@ public class AnnouncementsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByC_C;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -650,16 +627,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -745,8 +715,9 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByC_C_C;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_C_C;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -792,17 +763,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -896,8 +859,9 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {companyId, classNameId, classPK}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByC_C_A;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_C_A;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -943,17 +907,9 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByC_C_A_First(
-			classNameId, classPK, alert, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, alert}));
+		return _collectionPersistenceFinderByC_C_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, alert}, orderByComparator);
 	}
 
 	/**
@@ -1047,8 +1003,9 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {classNameId, classPK, alert});
 	}
 
-	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
-		_collectionPersistenceFinderByC_C_C_A;
+	private FilterCollectionPersistenceFinder
+		<AnnouncementsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_C_C_A;
 
 	/**
 	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1097,17 +1054,10 @@ public class AnnouncementsEntryPersistenceImpl
 			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AnnouncementsEntry announcementsEntry = fetchByC_C_C_A_First(
-			companyId, classNameId, classPK, alert, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C_C_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK, alert}));
+		return _collectionPersistenceFinderByC_C_C_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, alert},
+			orderByComparator);
 	}
 
 	/**
@@ -1567,16 +1517,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, AnnouncementsEntry::getUuid));
@@ -1604,16 +1544,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, AnnouncementsEntry::getUuid),
@@ -1644,16 +1574,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
@@ -1681,16 +1601,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getUserId));
@@ -1718,16 +1628,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1767,16 +1667,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId),
@@ -1818,16 +1708,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1878,16 +1758,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId),
@@ -1935,4 +1805,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2097722807
+// LIFERAY-SERVICE-BUILDER-HASH:-174723756

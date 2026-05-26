@@ -36,7 +36,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.TaskManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.form.FormDefinitionRetriever;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
+import com.liferay.portal.workflow.kaleo.runtime.notification.KaleoNotificationSender;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -332,7 +332,7 @@ public class DefaultTaskManagerImpl
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		_notificationHelper.sendKaleoNotifications(
+		_kaleoNotificationSender.sendNotifications(
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
@@ -436,9 +436,9 @@ public class DefaultTaskManagerImpl
 	private KaleoActionExecutor _kaleoActionExecutor;
 
 	@Reference
-	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
+	private KaleoNotificationSender _kaleoNotificationSender;
 
 	@Reference
-	private NotificationHelper _notificationHelper;
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 }

@@ -1527,7 +1527,7 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         {{- end -}}
 
-                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch -}}
+                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch }}
                         {{- if $elasticsearchSpec.enabled }}
                         {{- $elasticsearchName := printf "%s-es" $xr.metadata.name -}}
                         {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName }}

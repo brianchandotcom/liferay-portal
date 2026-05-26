@@ -1,5 +1,5 @@
 {
-	"@generated": "5bbe81dd73d591cb2419135d9b74e42169fb90c2",
+	"@generated": "36d92dc6bfa0e2b4eb325912e5b8a726de191087",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,6 +25,9 @@
 			],
 			"@liferay/layout-js-components-web": [
 				"../../../../../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/object-js-components-web": [
+				"../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"document-library-video": [
 				"../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.ts"
@@ -63,6 +66,9 @@
 		},
 		{
 			"path": "../../../../../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/tsconfig.json"

@@ -3,6 +3,10 @@
 .room-statistics-container {
 	min-height: 102px;
 
+	.dsr-analytics-empty-message {
+		min-height: 102px;
+	}
+
 	.icon-blue-light {
 		fill: $blue-l2;
 	}

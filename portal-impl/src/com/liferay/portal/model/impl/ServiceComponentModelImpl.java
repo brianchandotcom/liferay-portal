@@ -744,4 +744,4 @@ public class ServiceComponentModelImpl
 	private ServiceComponent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1280517071
+// LIFERAY-SERVICE-BUILDER-HASH:424635741

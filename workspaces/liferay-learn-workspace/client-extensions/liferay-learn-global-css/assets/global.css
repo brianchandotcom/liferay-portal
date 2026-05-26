@@ -70,7 +70,7 @@ pre[class*='language-'] {
 	line-height: 1rem;
 	padding: 0.125rem 0.5rem;
 	white-space: normal;
-	word-break: auto-phrase;
+	word-break: break-word;
 }
 
 :not(pre) > code[class*='language-'] .token {

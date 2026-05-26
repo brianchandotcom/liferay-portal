@@ -38,8 +38,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Specification")
+@GraphQLName(
+	description = "A reusable, company-scoped specification attribute template; specifications group products by attribute, are optionally bound to one or more list type definitions that constrain their values, and can be displayed on the storefront and used as search facets.",
+	value = "Specification"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "A reusable, company-scoped specification attribute template; specifications group products by attribute, are optionally bound to one or more list type definitions that constrain their values, and can be displayed on the storefront and used as search facets.",
 	requiredProperties = {"key", "title"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,8 @@ public class Specification implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized administrative description shown in the admin UI; map keys are locale codes and values are the translated strings.",
+		example = "{en_US=Material composition, hr_HR=Sastav materijala, hu_HU=Anyagosszetetel}"
 	)
 	@Valid
 	public Map<String, String> getDescription() {
@@ -92,14 +97,19 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized administrative description shown in the admin UI; map keys are locale codes and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per specification within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -133,14 +143,19 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per specification within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the specification is exposed as a search facet in product catalog searches; indexed and filterable through the visible field on the search results.",
+		example = "true"
+	)
 	public Boolean getFacetable() {
 		if (_facetableSupplier != null) {
 			facetable = _facetableSupplier.get();
@@ -174,7 +189,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the specification is exposed as a search facet in product catalog searches; indexed and filterable through the visible field on the search results."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
@@ -182,7 +199,10 @@ public class Specification implements Serializable {
 	private Supplier<Boolean> _facetableSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key; read-only and assigned by the service on create.",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -214,14 +234,19 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "specification-key")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Machine identifier used for lookups and integrations; normalized to a friendly URL form (underscores converted to dashes) and must be unique per company; required.",
+		example = "specification-key"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -253,7 +278,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Machine identifier used for lookups and integrations; normalized to a friendly URL form (underscores converted to dashes) and must be unique per company; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String key;
@@ -263,7 +290,9 @@ public class Specification implements Serializable {
 
 	@DecimalMin("0")
 	@io.swagger.v3.oas.annotations.media.Schema(
-		deprecated = true, example = "31130"
+		deprecated = true,
+		description = "Deprecated; returns the first ID from `listTypeDefinitionIds` in iteration order, which is not stable; preserved only for backward compatibility with older clients; use `listTypeDefinitionIds` instead.",
+		example = "31130"
 	)
 	public Long getListTypeDefinitionId() {
 		if (_listTypeDefinitionIdSupplier != null) {
@@ -299,14 +328,19 @@ public class Specification implements Serializable {
 	}
 
 	@Deprecated
-	@GraphQLField
+	@GraphQLField(
+		description = "Deprecated; returns the first ID from `listTypeDefinitionIds` in iteration order, which is not stable; preserved only for backward compatibility with older clients; use `listTypeDefinitionIds` instead."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long listTypeDefinitionId;
 
 	@JsonIgnore
 	private Supplier<Long> _listTypeDefinitionIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "References to the list type definitions that constrain the allowed values of this specification.",
+		example = "[30130, 30131]"
+	)
 	public Long[] getListTypeDefinitionIds() {
 		if (_listTypeDefinitionIdsSupplier != null) {
 			listTypeDefinitionIds = _listTypeDefinitionIdsSupplier.get();
@@ -340,7 +374,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "References to the list type definitions that constrain the allowed values of this specification."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] listTypeDefinitionIds;
 
@@ -390,7 +426,10 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<OptionCategory> _optionCategorySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display order used when listing specifications in the admin UI; lower values appear first.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -424,7 +463,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display order used when listing specifications in the admin UI; lower values appear first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
@@ -432,7 +473,8 @@ public class Specification implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized display label shown to administrators and (when visible) to shoppers; map keys are locale codes and values are the translated strings; required -- the title map must hold a non-null value for the site default locale.",
+		example = "{en_US=Material, hr_HR=Materijal, hu_HU=Anyag}"
 	)
 	@Valid
 	public Map<String, String> getTitle() {
@@ -468,7 +510,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized display label shown to administrators and (when visible) to shoppers; map keys are locale codes and values are the translated strings; required -- the title map must hold a non-null value for the site default locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> title;
@@ -476,7 +520,10 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the specification is shown to shoppers on the storefront and exposed through search facets.",
+		example = "true"
+	)
 	public Boolean getVisible() {
 		if (_visibleSupplier != null) {
 			visible = _visibleSupplier.get();
@@ -510,7 +557,9 @@ public class Specification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the specification is shown to shoppers on the storefront and exposed through search facets."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean visible;
 
@@ -795,4 +844,4 @@ public class Specification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-153035347
+// LIFERAY-REST-BUILDER-HASH:833901955

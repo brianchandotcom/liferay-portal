@@ -94,7 +94,7 @@ public class EnterpriseDatabaseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		String response = hitHomePage("localhost", 8080);
+		String response = hitHomePage("localhost", getLocalPort());
 
 		for (DBType dbType : _DB_TYPES) {
 			Assert.assertTrue(

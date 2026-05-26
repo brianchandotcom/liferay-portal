@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -55,7 +55,7 @@ describe('VisitFrequencyChart component', () => {
 	let container: HTMLElement;
 
 	beforeEach(() => {
-		const view = render(<FrequencyChart />);
+		const view = render(<FrequencyChart isAnalyticsEnabled={true} />);
 
 		container = view.container;
 	});
@@ -88,5 +88,13 @@ describe('VisitFrequencyChart component', () => {
 		);
 
 		expect(xAxisTick).toHaveTextContent('daily');
+	});
+
+	it('renders the not-configured message when analytics cloud is not configured', () => {
+		render(<FrequencyChart isAnalyticsEnabled={false} />);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

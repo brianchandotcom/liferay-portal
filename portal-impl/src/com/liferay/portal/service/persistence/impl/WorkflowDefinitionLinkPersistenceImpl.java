@@ -88,8 +88,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where uuid = &#63;.
@@ -130,16 +131,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -182,8 +176,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<WorkflowDefinitionLink>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the workflow definition link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.
@@ -197,22 +192,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public WorkflowDefinitionLink findByUUID_G(String uuid, long groupId)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByUUID_G(
-			uuid, groupId);
-
-		if (workflowDefinitionLink == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchWorkflowDefinitionLinkException(message);
-		}
-
-		return workflowDefinitionLink;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -262,8 +243,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where uuid = &#63; and companyId = &#63;.
@@ -306,16 +288,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -361,8 +336,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where companyId = &#63;.
@@ -403,16 +379,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -455,8 +424,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where companyId = &#63; and classNameId = &#63;.
@@ -500,17 +470,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -558,8 +520,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByG_C_C;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByG_C_C;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -605,17 +568,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_First(
-			groupId, companyId, classNameId, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classNameId}));
+		return _collectionPersistenceFinderByG_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -666,8 +621,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByG_C_CPK;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByG_C_CPK;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classPK = &#63;.
@@ -713,17 +669,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_CPK_First(
-			groupId, companyId, classPK, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByG_C_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classPK}));
+		return _collectionPersistenceFinderByG_C_CPK.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -774,8 +722,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classPK});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByC_W_W;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByC_W_W;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -825,20 +774,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByC_W_W_First(
-			companyId, workflowDefinitionName, workflowDefinitionVersion,
+		return _collectionPersistenceFinderByC_W_W.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, workflowDefinitionName, workflowDefinitionVersion
+			},
 			orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByC_W_W.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, workflowDefinitionName, workflowDefinitionVersion
-				}));
 	}
 
 	/**
@@ -903,8 +844,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByG_C_C_C;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByG_C_C_C;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -952,17 +894,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_C_First(
-			groupId, companyId, classNameId, classPK, orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByG_C_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByG_C_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1021,8 +956,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<WorkflowDefinitionLink>
-		_collectionPersistenceFinderByG_C_C_C_T;
+	private CollectionPersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_collectionPersistenceFinderByG_C_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
@@ -1074,20 +1010,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_C_T_First(
-			groupId, companyId, classNameId, classPK, typePK,
+		return _collectionPersistenceFinderByG_C_C_C_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK, typePK},
 			orderByComparator);
-
-		if (workflowDefinitionLink != null) {
-			return workflowDefinitionLink;
-		}
-
-		throw new NoSuchWorkflowDefinitionLinkException(
-			_collectionPersistenceFinderByG_C_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, companyId, classNameId, classPK, typePK
-				}));
 	}
 
 	/**
@@ -1152,8 +1078,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, classPK, typePK});
 	}
 
-	private UniquePersistenceFinder<WorkflowDefinitionLink>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the workflow definition link where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.
@@ -1168,23 +1095,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchWorkflowDefinitionLinkException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (workflowDefinitionLink == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchWorkflowDefinitionLinkException(message);
-		}
-
-		return workflowDefinitionLink;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -2062,4 +1975,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-284504594
+// LIFERAY-SERVICE-BUILDER-HASH:615185120

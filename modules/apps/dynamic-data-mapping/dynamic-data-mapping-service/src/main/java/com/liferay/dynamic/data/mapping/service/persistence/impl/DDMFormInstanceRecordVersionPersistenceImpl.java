@@ -83,8 +83,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecordVersion>
-		_collectionPersistenceFinderByFormInstanceRecordId;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_collectionPersistenceFinderByFormInstanceRecordId;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63;.
@@ -125,19 +126,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			fetchByFormInstanceRecordId_First(
-				formInstanceRecordId, orderByComparator);
-
-		if (ddmFormInstanceRecordVersion != null) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		throw new NoSuchFormInstanceRecordVersionException(
-			_collectionPersistenceFinderByFormInstanceRecordId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {formInstanceRecordId}));
+		return _collectionPersistenceFinderByFormInstanceRecordId.findFirst(
+			finderCache, new Object[] {formInstanceRecordId},
+			orderByComparator);
 	}
 
 	/**
@@ -180,8 +171,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceRecordId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecordVersion>
-		_collectionPersistenceFinderByU_F;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_collectionPersistenceFinderByU_F;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
@@ -224,17 +216,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			fetchByU_F_First(userId, formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceRecordVersion != null) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		throw new NoSuchFormInstanceRecordVersionException(
-			_collectionPersistenceFinderByU_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, formInstanceId}));
+		return _collectionPersistenceFinderByU_F.findFirst(
+			finderCache, new Object[] {userId, formInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -280,8 +264,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			finderCache, new Object[] {userId, formInstanceId});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecordVersion>
-		_collectionPersistenceFinderByF_F;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_collectionPersistenceFinderByF_F;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -324,18 +309,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			fetchByF_F_First(
-				formInstanceId, formInstanceVersion, orderByComparator);
-
-		if (ddmFormInstanceRecordVersion != null) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		throw new NoSuchFormInstanceRecordVersionException(
-			_collectionPersistenceFinderByF_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {formInstanceId, formInstanceVersion}));
+		return _collectionPersistenceFinderByF_F.findFirst(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -381,8 +357,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceId, formInstanceVersion});
 	}
 
-	private UniquePersistenceFinder<DDMFormInstanceRecordVersion>
-		_uniquePersistenceFinderByF_V;
+	private UniquePersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_uniquePersistenceFinderByF_V;
 
 	/**
 	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceRecordVersionException</code> if it could not be found.
@@ -397,23 +374,8 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			long formInstanceRecordId, String version)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion = fetchByF_V(
-			formInstanceRecordId, version);
-
-		if (ddmFormInstanceRecordVersion == null) {
-			String message =
-				_uniquePersistenceFinderByF_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {formInstanceRecordId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFormInstanceRecordVersionException(message);
-		}
-
-		return ddmFormInstanceRecordVersion;
+		return _uniquePersistenceFinderByF_V.find(
+			finderCache, new Object[] {formInstanceRecordId, version});
 	}
 
 	/**
@@ -464,8 +426,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceRecordId, version});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecordVersion>
-		_collectionPersistenceFinderByF_S;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_collectionPersistenceFinderByF_S;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
@@ -508,17 +471,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			fetchByF_S_First(formInstanceRecordId, status, orderByComparator);
-
-		if (ddmFormInstanceRecordVersion != null) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		throw new NoSuchFormInstanceRecordVersionException(
-			_collectionPersistenceFinderByF_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {formInstanceRecordId, status}));
+		return _collectionPersistenceFinderByF_S.findFirst(
+			finderCache, new Object[] {formInstanceRecordId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -564,8 +519,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceRecordId, status});
 	}
 
-	private CollectionPersistenceFinder<DDMFormInstanceRecordVersion>
-		_collectionPersistenceFinderByU_F_F_S;
+	private CollectionPersistenceFinder
+		<DDMFormInstanceRecordVersion, NoSuchFormInstanceRecordVersionException>
+			_collectionPersistenceFinderByU_F_F_S;
 
 	/**
 	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
@@ -615,21 +571,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws NoSuchFormInstanceRecordVersionException {
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			fetchByU_F_F_S_First(
-				userId, formInstanceId, formInstanceVersion, status,
-				orderByComparator);
-
-		if (ddmFormInstanceRecordVersion != null) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		throw new NoSuchFormInstanceRecordVersionException(
-			_collectionPersistenceFinderByU_F_F_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					userId, formInstanceId, formInstanceVersion, status
-				}));
+		return _collectionPersistenceFinderByU_F_F_S.findFirst(
+			finderCache,
+			new Object[] {userId, formInstanceId, formInstanceVersion, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1254,4 +1199,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1992559586
+// LIFERAY-SERVICE-BUILDER-HASH:499362164

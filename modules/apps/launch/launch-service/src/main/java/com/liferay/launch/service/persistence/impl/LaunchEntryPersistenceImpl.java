@@ -89,7 +89,7 @@ public class LaunchEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LaunchEntry>
+	private CollectionPersistenceFinder<LaunchEntry, NoSuchLaunchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -130,15 +130,8 @@ public class LaunchEntryPersistenceImpl
 			String uuid, OrderByComparator<LaunchEntry> orderByComparator)
 		throws NoSuchLaunchEntryException {
 
-		LaunchEntry launchEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (launchEntry != null) {
-			return launchEntry;
-		}
-
-		throw new NoSuchLaunchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,7 +172,7 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<LaunchEntry>
+	private CollectionPersistenceFinder<LaunchEntry, NoSuchLaunchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -223,16 +216,8 @@ public class LaunchEntryPersistenceImpl
 			OrderByComparator<LaunchEntry> orderByComparator)
 		throws NoSuchLaunchEntryException {
 
-		LaunchEntry launchEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (launchEntry != null) {
-			return launchEntry;
-		}
-
-		throw new NoSuchLaunchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -277,7 +262,7 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<LaunchEntry>
+	private CollectionPersistenceFinder<LaunchEntry, NoSuchLaunchEntryException>
 		_collectionPersistenceFinderByLaunchSetId;
 
 	/**
@@ -318,16 +303,8 @@ public class LaunchEntryPersistenceImpl
 			long launchSetId, OrderByComparator<LaunchEntry> orderByComparator)
 		throws NoSuchLaunchEntryException {
 
-		LaunchEntry launchEntry = fetchByLaunchSetId_First(
-			launchSetId, orderByComparator);
-
-		if (launchEntry != null) {
-			return launchEntry;
-		}
-
-		throw new NoSuchLaunchEntryException(
-			_collectionPersistenceFinderByLaunchSetId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {launchSetId}));
+		return _collectionPersistenceFinderByLaunchSetId.findFirst(
+			finderCache, new Object[] {launchSetId}, orderByComparator);
 	}
 
 	/**
@@ -368,7 +345,7 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {launchSetId});
 	}
 
-	private UniquePersistenceFinder<LaunchEntry>
+	private UniquePersistenceFinder<LaunchEntry, NoSuchLaunchEntryException>
 		_uniquePersistenceFinderByC_C_C;
 
 	/**
@@ -385,23 +362,8 @@ public class LaunchEntryPersistenceImpl
 			long classNameId, long classPK, String classVersion)
 		throws NoSuchLaunchEntryException {
 
-		LaunchEntry launchEntry = fetchByC_C_C(
-			classNameId, classPK, classVersion);
-
-		if (launchEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK, classVersion});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLaunchEntryException(message);
-		}
-
-		return launchEntry;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache, new Object[] {classNameId, classPK, classVersion});
 	}
 
 	/**
@@ -458,7 +420,7 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, classVersion});
 	}
 
-	private UniquePersistenceFinder<LaunchEntry>
+	private UniquePersistenceFinder<LaunchEntry, NoSuchLaunchEntryException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -473,23 +435,8 @@ public class LaunchEntryPersistenceImpl
 	public LaunchEntry findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchLaunchEntryException {
 
-		LaunchEntry launchEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (launchEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLaunchEntryException(message);
-		}
-
-		return launchEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1005,4 +952,4 @@ public class LaunchEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-317275135
+// LIFERAY-SERVICE-BUILDER-HASH:-1243807074

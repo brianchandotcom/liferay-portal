@@ -73,7 +73,7 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 16,
+			fdsActionDropdownItems.toString(), 17,
 			fdsActionDropdownItems.size());
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
@@ -105,24 +105,46 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"share", "share", "Share", "get", fdsActionDropdownItems.get(7));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"time", "expire", "Expire", "post", fdsActionDropdownItems.get(8));
+			"info-circle-open", "show-details", "Show Details", null,
+			fdsActionDropdownItems.get(8));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"time", "expire", "Expire", "post", fdsActionDropdownItems.get(9));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"date-time", "version-history", "View History", "get",
-			fdsActionDropdownItems.get(9));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"move-folder", "move", "Move", null,
 			fdsActionDropdownItems.get(10));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"copy", "copy", "Copy To", null, fdsActionDropdownItems.get(11));
+			"move-folder", "move", "Move", null,
+			fdsActionDropdownItems.get(11));
+
+		FDSActionDropdownItem copyFDSActionDropdownItem =
+			fdsActionDropdownItems.get(12);
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy-menu", "Copy", null, "contextual", null,
+			copyFDSActionDropdownItem);
+
+		List<FDSActionDropdownItem> copyFDSActionDropdownItems =
+			(List<FDSActionDropdownItem>)copyFDSActionDropdownItem.get("items");
+
+		Assert.assertEquals(
+			copyFDSActionDropdownItems.toString(), 2,
+			copyFDSActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy", "Copy To", null, copyFDSActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "duplicate", "Duplicate", null,
+			copyFDSActionDropdownItems.get(1));
+
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"upload", "export-for-translation", "Export for Translation", null,
-			fdsActionDropdownItems.get(12));
+			fdsActionDropdownItems.get(13));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"download", "import-translation", "Import Translation", null,
-			fdsActionDropdownItems.get(13));
+			fdsActionDropdownItems.get(14));
 
 		FDSActionDropdownItem permissionsFDSActionDropdownItem =
-			fdsActionDropdownItems.get(14);
+			fdsActionDropdownItems.get(15);
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "permissions-menu", "Permissions", null,
@@ -159,7 +181,7 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 			permissionsFDSActionDropdownItems.get(3));
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(15));
+			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(16));
 	}
 
 	@Override

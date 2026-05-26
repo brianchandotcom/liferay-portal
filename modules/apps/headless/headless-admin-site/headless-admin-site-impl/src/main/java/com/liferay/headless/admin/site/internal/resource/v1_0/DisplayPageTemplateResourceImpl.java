@@ -18,11 +18,11 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
+import com.liferay.headless.admin.site.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SubtypeUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.DisplayPageTemplateEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.DisplayPageTemplateFolderUtil;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -151,7 +151,7 @@ public class DisplayPageTemplateResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of("pageSpecifications", "thumbnail");
+				return List.of("pageSpecifications", "thumbnailURLReference");
 			}
 
 			@Override
@@ -453,7 +453,7 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
-			groupId, getResourceName(),
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES, getResourceName(),
 			_getServiceContext(displayPageTemplate, groupId),
 			displayPageTemplate.getThumbnailURLReference());
 
@@ -630,7 +630,8 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				FileEntryUtil.getPreviewFileEntryId(
-					groupId, getResourceName(),
+					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+					getResourceName(),
 					_getServiceContext(displayPageTemplate, groupId),
 					displayPageTemplate.getThumbnailURLReference()),
 				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),

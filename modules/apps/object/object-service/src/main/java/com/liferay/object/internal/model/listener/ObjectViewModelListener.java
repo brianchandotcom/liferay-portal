@@ -50,8 +50,8 @@ public class ObjectViewModelListener extends BaseModelListener<ObjectView> {
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectView.class.getName(),
-					objectView.getObjectViewId(),
+					ObjectView.class.getName(), objectView.getObjectViewId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(originalObjectView, objectView)));
 		}
 		catch (Exception exception) {
@@ -76,8 +76,8 @@ public class ObjectViewModelListener extends BaseModelListener<ObjectView> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectView.class.getName(),
-				objectView.getObjectViewId(), null);
+				ObjectView.class.getName(), objectView.getObjectViewId(),
+				eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

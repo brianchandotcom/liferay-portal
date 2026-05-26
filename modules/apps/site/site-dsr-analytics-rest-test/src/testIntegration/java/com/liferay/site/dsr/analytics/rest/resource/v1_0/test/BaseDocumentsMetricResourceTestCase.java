@@ -811,4 +811,4 @@ public abstract class BaseDocumentsMetricResourceTestCase {
 			DocumentsMetricResource _documentsMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:438287628
+// LIFERAY-REST-BUILDER-HASH:572869415

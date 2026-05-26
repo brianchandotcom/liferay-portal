@@ -102,6 +102,9 @@ public class CommercePaymentEntryAuditModelImpl
 
 	public static final String ENTITY_ALIAS = "commercePaymentEntryAudit";
 
+	public static final String FILTER_PK_COLUMN_NAME =
+		"commercePaymentEntryAuditId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentEntryAudit.createDate DESC";
 
@@ -996,4 +999,4 @@ public class CommercePaymentEntryAuditModelImpl
 	private CommercePaymentEntryAudit _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-263970515
+// LIFERAY-SERVICE-BUILDER-HASH:-1128319161

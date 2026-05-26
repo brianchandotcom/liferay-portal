@@ -117,6 +117,8 @@ public class DDMFormInstanceModelImpl
 
 	public static final String ENTITY_ALIAS = "ddmFormInstance";
 
+	public static final String FILTER_PK_COLUMN_NAME = "formInstanceId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmFormInstance.formInstanceId ASC";
 
@@ -1615,4 +1617,4 @@ public class DDMFormInstanceModelImpl
 	private DDMFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1038359170
+// LIFERAY-SERVICE-BUILDER-HASH:-1368697225

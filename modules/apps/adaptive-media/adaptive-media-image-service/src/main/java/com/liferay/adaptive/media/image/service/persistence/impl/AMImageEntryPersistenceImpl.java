@@ -86,8 +86,9 @@ public class AMImageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the am image entries where uuid = &#63;.
@@ -127,15 +128,8 @@ public class AMImageEntryPersistenceImpl
 			String uuid, OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +170,7 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AMImageEntry>
+	private UniquePersistenceFinder<AMImageEntry, NoSuchAMImageEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -191,21 +185,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByUUID_G(uuid, groupId);
-
-		if (amImageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAMImageEntryException(message);
-		}
-
-		return amImageEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,8 +234,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the am image entries where uuid = &#63; and companyId = &#63;.
@@ -297,16 +279,8 @@ public class AMImageEntryPersistenceImpl
 			OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,8 +325,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the am image entries where groupId = &#63;.
@@ -392,16 +367,8 @@ public class AMImageEntryPersistenceImpl
 			long groupId, OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -442,8 +409,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the am image entries where companyId = &#63;.
@@ -483,16 +451,8 @@ public class AMImageEntryPersistenceImpl
 			long companyId, OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -533,8 +493,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByConfigurationUuid;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByConfigurationUuid;
 
 	/**
 	 * Returns an ordered range of all the am image entries where configurationUuid = &#63;.
@@ -575,18 +536,8 @@ public class AMImageEntryPersistenceImpl
 			OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByConfigurationUuid_First(
-			configurationUuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByConfigurationUuid.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {configurationUuid}));
+		return _collectionPersistenceFinderByConfigurationUuid.findFirst(
+			finderCache, new Object[] {configurationUuid}, orderByComparator);
 	}
 
 	/**
@@ -628,8 +579,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {configurationUuid});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByFileVersionId;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByFileVersionId;
 
 	/**
 	 * Returns an ordered range of all the am image entries where fileVersionId = &#63;.
@@ -670,16 +622,8 @@ public class AMImageEntryPersistenceImpl
 			OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByFileVersionId_First(
-			fileVersionId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByFileVersionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileVersionId}));
+		return _collectionPersistenceFinderByFileVersionId.findFirst(
+			finderCache, new Object[] {fileVersionId}, orderByComparator);
 	}
 
 	/**
@@ -720,8 +664,9 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {fileVersionId});
 	}
 
-	private CollectionPersistenceFinder<AMImageEntry>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<AMImageEntry, NoSuchAMImageEntryException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the am image entries where companyId = &#63; and configurationUuid = &#63;.
@@ -764,17 +709,9 @@ public class AMImageEntryPersistenceImpl
 			OrderByComparator<AMImageEntry> orderByComparator)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByC_C_First(
-			companyId, configurationUuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		throw new NoSuchAMImageEntryException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, configurationUuid}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {companyId, configurationUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -820,7 +757,8 @@ public class AMImageEntryPersistenceImpl
 			finderCache, new Object[] {companyId, configurationUuid});
 	}
 
-	private UniquePersistenceFinder<AMImageEntry> _uniquePersistenceFinderByC_F;
+	private UniquePersistenceFinder<AMImageEntry, NoSuchAMImageEntryException>
+		_uniquePersistenceFinderByC_F;
 
 	/**
 	 * Returns the am image entry where configurationUuid = &#63; and fileVersionId = &#63; or throws a <code>NoSuchAMImageEntryException</code> if it could not be found.
@@ -834,23 +772,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry findByC_F(String configurationUuid, long fileVersionId)
 		throws NoSuchAMImageEntryException {
 
-		AMImageEntry amImageEntry = fetchByC_F(
-			configurationUuid, fileVersionId);
-
-		if (amImageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {configurationUuid, fileVersionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAMImageEntryException(message);
-		}
-
-		return amImageEntry;
+		return _uniquePersistenceFinderByC_F.find(
+			finderCache, new Object[] {configurationUuid, fileVersionId});
 	}
 
 	/**
@@ -1476,4 +1399,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-581621946
+// LIFERAY-SERVICE-BUILDER-HASH:1604106036

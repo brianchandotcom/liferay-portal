@@ -1,0 +1,223 @@
+[#assign FLAG_ICON_MAP = {
+	"AD": "ca-ad",
+	"AE": "ar-sa",
+	"AR": "es-ar",
+	"AT": "de-at",
+	"AU": "en-au",
+	"BE": "nl-be",
+	"BG": "bg-bg",
+	"BR": "pt-br",
+	"CA": "en-ca",
+	"CH": "de-ch",
+	"CL": "es-es",
+	"CN": "zh-cn",
+	"CO": "es-co",
+	"CZ": "cs-cz",
+	"DE": "de-de",
+	"DK": "da-dk",
+	"EE": "et-ee",
+	"ES": "es-es",
+	"FI": "fi-fi",
+	"FR": "fr-fr",
+	"GB": "en-gb",
+	"GR": "el-gr",
+	"HK": "zh-cn",
+	"HR": "hr-hr",
+	"HU": "hu-hu",
+	"ID": "in-id",
+	"IE": "en-ie",
+	"IL": "iw-il",
+	"IN": "hi-in",
+	"IR": "fa-ir",
+	"IT": "it-it",
+	"JP": "ja-jp",
+	"KH": "km-kh",
+	"KR": "ko-kr",
+	"KZ": "kk-kz",
+	"LA": "lo-la",
+	"LT": "lt-lt",
+	"MX": "es-mx",
+	"MY": "ms-my",
+	"NL": "nl-nl",
+	"NO": "no-no",
+	"NZ": "en-au",
+	"PH": "en-us",
+	"PL": "pl-pl",
+	"PT": "pt-pt",
+	"RO": "ro-ro",
+	"RS": "sr-rs",
+	"RU": "ru-ru",
+	"SA": "ar-sa",
+	"SE": "sv-se",
+	"SG": "en-us",
+	"SI": "sl-si",
+	"SK": "sk-sk",
+	"TH": "th-th",
+	"TR": "tr-tr",
+	"TW": "zh-tw",
+	"UA": "uk-ua",
+	"US": "en-us",
+	"VN": "vi-vn",
+	"ZA": "en-gb"
+} /]
+
+[#assign countries = (input.attributes.countries)![] /]
+[#assign defaultLanguageId = (input.attributes.defaultLanguageId)!"" /]
+[#assign disabled = (input.attributes.disabled)?? && input.attributes.disabled /]
+[#assign prefix = (input.attributes.prefix)!"" /]
+[#assign prefixType = (input.attributes.prefixType)!"definedByUser" /]
+[#assign fixed = prefixType == "fixed" /]
+[#assign showFlag = configuration.showCountryFlag /]
+[#assign showPrefixPicker = configuration.showPrefix /]
+[#assign selectedCountry = {} /]
+
+[#if fixed && prefix?has_content]
+	[#list countries as country]
+		[#if "+" + country.prefix == prefix]
+			[#assign selectedCountry = country /]
+			[#break]
+		[/#if]
+	[/#list]
+[#elseif input.value??]
+	[#list countries as country]
+		[#if input.value?starts_with("+" + country.prefix)]
+			[#assign selectedCountry = country /]
+			[#break]
+		[/#if]
+	[/#list]
+[/#if]
+
+[#if !(selectedCountry.a2??) && !fixed && defaultLanguageId?contains("_")]
+	[#assign defaultCountryA2 = defaultLanguageId?keep_after("_") /]
+
+	[#list countries as country]
+		[#if country.a2 == defaultCountryA2]
+			[#assign selectedCountry = country /]
+			[#break]
+		[/#if]
+	[/#list]
+[/#if]
+
+[#if !(selectedCountry.a2??) && countries?has_content && !fixed]
+	[#assign selectedCountry = countries?first /]
+[/#if]
+
+[#assign displayValue = (input.value)!"" /]
+
+[#if fixed && prefix?has_content && displayValue?starts_with(prefix)]
+	[#assign displayValue = displayValue?remove_beginning(prefix) /]
+[#elseif !fixed && selectedCountry.prefix?? && displayValue?starts_with("+" + selectedCountry.prefix)]
+	[#assign displayValue = displayValue?remove_beginning("+" + selectedCountry.prefix) /]
+[/#if]
+
+<div class="phone-number-input">
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentElementId}-input" id="${fragmentElementId}-label">
+			${htmlUtil.escape(input.label)}
+
+			<span class="[#if !input.readOnly]d-none[/#if]" id="${fragmentElementId}-read-only-label">
+				(${languageUtil.get(locale, "read-only")})
+			</span>
+
+			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		<div class="input-group">
+			[#if showPrefixPicker]
+				[#if fixed]
+					<div class="input-group-item input-group-item-shrink input-group-prepend">
+						<div class="input-group-text p-3">
+							[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]
+
+							[#if showFlag && selectedFlagSymbol?has_content]
+								<span class="inline-item inline-item-before">
+									[@clay["icon"] className="m-0" symbol="${selectedFlagSymbol}" /]
+								</span>
+							[/#if]
+
+							<span>
+								[#if selectedCountry.prefix??]+${selectedCountry.prefix}[#else]${prefix}[/#if]
+							</span>
+						</div>
+					</div>
+				[#else]
+				<div class="dropdown input-group-item input-group-item-shrink input-group-prepend phone-number-input-prefix-picker" id="${fragmentElementId}-prefix-picker">
+					<button aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.get(locale, "country-code")}" class="form-control form-control-select form-control-select-secondary" [#if disabled || input.readOnly]disabled[/#if] id="${fragmentElementId}-prefix-trigger" type="button">
+						[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]
+
+						[#if showFlag]
+							<span class="inline-item inline-item-before phone-number-input-prefix-flag" id="${fragmentElementId}-prefix-flag">
+								[#if selectedFlagSymbol?has_content][@clay["icon"] symbol="${selectedFlagSymbol}" /][/#if]
+							</span>
+						[/#if]
+
+						<span class="mr-2" id="${fragmentElementId}-prefix-code">
+							[#if selectedCountry.prefix??]+${selectedCountry.prefix}[/#if]
+						</span>
+					</button>
+
+					<input id="${fragmentElementId}-prefix-value" type="hidden" value="${(selectedCountry.a2)!""}" />
+
+					[#if !input.readOnly]
+						<div class="dropdown-menu dropdown-menu-indicator-start dropdown-menu-select phone-number-input-prefix-menu" id="${fragmentElementId}-prefix-menu">
+							<ul aria-labelledby="${fragmentElementId}-prefix-trigger" class="inline-scroller list-unstyled" role="listbox">
+								[#list countries as country]
+									[#assign isSelected = selectedCountry.a2?? && country.a2 == selectedCountry.a2 /]
+
+									<li role="presentation">
+										<button aria-selected="${isSelected?string}" class="dropdown-item phone-number-input-prefix-menu-item[#if isSelected] active[/#if]" data-a2="${country.a2}" data-prefix="${country.prefix}" role="option" tabindex="-1" type="button">
+											<span class="dropdown-item-indicator-start">
+												[#if isSelected][@clay["icon"] symbol="check-small" /][/#if]
+											</span>
+
+											<div class="autofit-row">
+												[#assign flagSymbol = (FLAG_ICON_MAP[country.a2])!"" /]
+
+												[#if showFlag]
+													<div class="autofit-col">
+														[#if flagSymbol?has_content][@clay["icon"] symbol="${flagSymbol}" /][/#if]
+													</div>
+												[/#if]
+
+												<div class="autofit-col phone-number-input-prefix-menu-item-code">+${country.prefix}</div>
+
+												<div class="autofit-col autofit-col-expand">${country.name}</div>
+											</div>
+										</button>
+									</li>
+								[/#list]
+							</ul>
+						</div>
+					[/#if]
+				</div>
+				[/#if]
+			[/#if]
+
+			<div class="input-group-append input-group-item">
+				<input aria-describedby="${fragmentElementId}-help-text" aria-labelledby="${fragmentElementId}-label [#if input.errorMessage?has_content]${fragmentElementId}-error-message[/#if]" autocomplete="tel" class="form-control" [#if disabled]disabled[/#if] id="${fragmentElementId}-input" inputmode="tel" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then("required", "")} type="tel" [#if input.value??]value="${displayValue}"[/#if] />
+			</div>
+
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="align-self-center d-none lfr-portal-tooltip ml-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentElementId}-unlocalized-info" tabindex="0">
+					[@clay["icon"] className="mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
+
+		[#if !input.readOnly]
+			<div id="${fragmentElementId}-hidden-input-container" />
+		[/#if]
+
+		[#if input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-error-message">
+				[@clay["icon"] symbol="info-circle" /]
+
+				<span>${input.errorMessage}</span>
+			</p>
+		[/#if]
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentElementId}-help-text">${htmlUtil.escape(input.helpText)}</p>
+		[/#if]
+	</div>
+</div>

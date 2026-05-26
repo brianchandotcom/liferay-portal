@@ -112,6 +112,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public static final String ENTITY_ALIAS = "role_";
 
+	public static final String FILTER_PK_COLUMN_NAME = "roleId";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY role_.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Role_.name ASC";
@@ -1570,4 +1572,4 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private Role _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1030067829
+// LIFERAY-SERVICE-BUILDER-HASH:-1884810261

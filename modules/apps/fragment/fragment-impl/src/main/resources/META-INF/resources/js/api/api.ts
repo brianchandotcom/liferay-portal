@@ -12,5 +12,9 @@ export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {updateDLVideo} from './updateDLVideo';
 export {openCMSFileSelectorModal} from '@liferay/frontend-js-item-selector-web';
+export {
+	getFlagSymbol,
+	parsePhoneValue,
+} from '@liferay/object-js-components-web';
 
 export {localStorage} from 'frontend-js-web';

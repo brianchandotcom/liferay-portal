@@ -1323,4 +1323,4 @@ public class CPOptionValueModelImpl
 	private CPOptionValue _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:178424774
+// LIFERAY-SERVICE-BUILDER-HASH:619440122

@@ -26,12 +26,14 @@ interface IProps {
 		persisted: boolean;
 	};
 	filtersJSONString: string;
+	isAnalyticsEnabled: boolean;
 }
 
 export default function Navigation({
 	activeTab,
 	filterSettings,
 	filtersJSONString,
+	isAnalyticsEnabled,
 }: IProps) {
 	const [filters, setFilter] = useAnalyticsFilters(
 		filtersJSONString,
@@ -48,14 +50,16 @@ export default function Navigation({
 						</h2>
 					</div>
 
-					<RoomAnalyticsFilter
-						filter={
-							filters[
-								AnalyticsFilters.ROOM
-							] as IAnalyticsRoomFilter
-						}
-						setValue={setFilter}
-					/>
+					{isAnalyticsEnabled && (
+						<RoomAnalyticsFilter
+							filter={
+								filters[
+									AnalyticsFilters.ROOM
+								] as IAnalyticsRoomFilter
+							}
+							setValue={setFilter}
+						/>
+					)}
 				</div>
 
 				<ClayNavigationBar
@@ -91,7 +95,7 @@ export default function Navigation({
 				</ClayNavigationBar>
 			</div>
 
-			{filterSettings.disabled ? null : (
+			{filterSettings.disabled || !isAnalyticsEnabled ? null : (
 				<AnalyticsFiltersToolbar
 					{...filterSettings}
 					filters={filters as TAnalyticsFilter}

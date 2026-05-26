@@ -68,7 +68,7 @@ public class CTScorePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<CTScore>
+	private UniquePersistenceFinder<CTScore, NoSuchScoreException>
 		_uniquePersistenceFinderByCtCollectionId;
 
 	/**
@@ -82,21 +82,8 @@ public class CTScorePersistenceImpl
 	public CTScore findByCtCollectionId(long ctCollectionId)
 		throws NoSuchScoreException {
 
-		CTScore ctScore = fetchByCtCollectionId(ctCollectionId);
-
-		if (ctScore == null) {
-			String message =
-				_uniquePersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchScoreException(message);
-		}
-
-		return ctScore;
+		return _uniquePersistenceFinderByCtCollectionId.find(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -385,4 +372,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:459906940
+// LIFERAY-SERVICE-BUILDER-HASH:-307916894

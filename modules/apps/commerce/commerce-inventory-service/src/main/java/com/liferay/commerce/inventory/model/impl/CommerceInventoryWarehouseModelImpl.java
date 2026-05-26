@@ -121,6 +121,8 @@ public class CommerceInventoryWarehouseModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceInventoryWarehouse";
 
+	public static final String FILTER_PK_COLUMN_NAME = "CIWarehouseId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceInventoryWarehouse.name ASC";
 
@@ -1787,4 +1789,4 @@ public class CommerceInventoryWarehouseModelImpl
 	private CommerceInventoryWarehouse _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:965403022
+// LIFERAY-SERVICE-BUILDER-HASH:1584055025

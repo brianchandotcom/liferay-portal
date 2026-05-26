@@ -129,6 +129,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -678,6 +679,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		// Register ObjectEntriesPanelApp after ObjectEntriesPortlet. See
 		// LPS-140379.
 
+		String panelCategoryKey = objectDefinition.getPanelCategoryKey();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-69877") &&
+			!objectDefinition.isAllowStandaloneObjectEntry()) {
+
+			panelCategoryKey = StringPool.BLANK;
+		}
+
 		serviceRegistrations.add(
 			_bundleContext.registerService(
 				PanelApp.class,
@@ -698,7 +708,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"panel.app.order:Integer",
 					objectDefinition.getPanelAppOrder()
 				).put(
-					"panel.category.key", objectDefinition.getPanelCategoryKey()
+					"panel.category.key", panelCategoryKey
 				).build()));
 
 		if (objectDefinition.isCMS() &&

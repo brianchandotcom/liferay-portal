@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
+import com.liferay.sharing.mail.SharingCollaborationMailSender;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -299,8 +300,21 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	}
 
 	private void _sendNotificationEvent(
-		SharingEntry sharingEntry, int notificationType,
-		ServiceContext serviceContext) {
+			SharingEntry sharingEntry, int notificationType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (sharingEntry.getToTicketId() > 0) {
+			try {
+				_sharingCollaborationMailSender.sendEmail(
+					serviceContext, sharingEntry);
+			}
+			catch (Exception exception) {
+				throw new PortalException(exception);
+			}
+
+			return;
+		}
 
 		try {
 			if (sharingEntry.getToUserId() > 0) {
@@ -382,6 +396,9 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationsSharingEntryLocalServiceWrapper.class);
+
+	@Reference
+	private SharingCollaborationMailSender _sharingCollaborationMailSender;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

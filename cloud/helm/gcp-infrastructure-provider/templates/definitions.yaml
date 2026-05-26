@@ -90,6 +90,7 @@ spec:
                                         -   none
                                         -   promoting
                                         -   provisioning
+                                        -   provisioning-database-user
                                     type: string
                                 storage:
                                     properties:

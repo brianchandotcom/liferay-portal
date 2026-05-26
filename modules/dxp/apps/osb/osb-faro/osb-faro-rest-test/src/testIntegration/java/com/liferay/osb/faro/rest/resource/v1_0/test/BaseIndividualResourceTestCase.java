@@ -187,6 +187,356 @@ public abstract class BaseIndividualResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPage() throws Exception {
+		Long groupId = testGetWorkspaceGroupChannelIndividualsPage_getGroupId();
+		Long irrelevantGroupId =
+			testGetWorkspaceGroupChannelIndividualsPage_getIrrelevantGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelIndividualsPage_getChannelId();
+		String irrelevantChannelId =
+			testGetWorkspaceGroupChannelIndividualsPage_getIrrelevantChannelId();
+
+		Page<Individual> page =
+			individualResource.getWorkspaceGroupChannelIndividualsPage(
+				groupId, channelId, RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if ((irrelevantGroupId != null) && (irrelevantChannelId != null)) {
+			Individual irrelevantIndividual =
+				testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+					irrelevantGroupId, irrelevantChannelId,
+					randomIrrelevantIndividual());
+
+			page = individualResource.getWorkspaceGroupChannelIndividualsPage(
+				irrelevantGroupId, irrelevantChannelId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantIndividual, (List<Individual>)page.getItems());
+			assertValid(
+				page,
+				testGetWorkspaceGroupChannelIndividualsPage_getExpectedActions(
+					irrelevantGroupId, irrelevantChannelId));
+		}
+
+		Individual individual1 =
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				groupId, channelId, randomIndividual());
+
+		Individual individual2 =
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				groupId, channelId, randomIndividual());
+
+		page = individualResource.getWorkspaceGroupChannelIndividualsPage(
+			groupId, channelId, null, null, null, null, Pagination.of(1, 10),
+			null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(individual1, (List<Individual>)page.getItems());
+		assertContains(individual2, (List<Individual>)page.getItems());
+		assertValid(
+			page,
+			testGetWorkspaceGroupChannelIndividualsPage_getExpectedActions(
+				groupId, channelId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetWorkspaceGroupChannelIndividualsPage_getExpectedActions(
+				Long groupId, String channelId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPageWithPagination()
+		throws Exception {
+
+		Long groupId = testGetWorkspaceGroupChannelIndividualsPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelIndividualsPage_getChannelId();
+
+		Page<Individual> individualsPage =
+			individualResource.getWorkspaceGroupChannelIndividualsPage(
+				groupId, channelId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(individualsPage.getTotalCount());
+
+		Individual individual1 =
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				groupId, channelId, randomIndividual());
+
+		Individual individual2 =
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				groupId, channelId, randomIndividual());
+
+		Individual individual3 =
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				groupId, channelId, randomIndividual());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Individual> page1 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(individual1, (List<Individual>)page1.getItems());
+
+			Page<Individual> page2 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(individual2, (List<Individual>)page2.getItems());
+
+			Page<Individual> page3 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(individual3, (List<Individual>)page3.getItems());
+		}
+		else {
+			Page<Individual> page1 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<Individual> individuals1 = (List<Individual>)page1.getItems();
+
+			Assert.assertEquals(
+				individuals1.toString(), totalCount + 2, individuals1.size());
+
+			Page<Individual> page2 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Individual> individuals2 = (List<Individual>)page2.getItems();
+
+			Assert.assertEquals(
+				individuals2.toString(), 1, individuals2.size());
+
+			Page<Individual> page3 =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(individual1, (List<Individual>)page3.getItems());
+			assertContains(individual2, (List<Individual>)page3.getItems());
+			assertContains(individual3, (List<Individual>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPageWithSortDateTime()
+		throws Exception {
+
+		testGetWorkspaceGroupChannelIndividualsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, individual1, individual2) -> {
+				BeanTestUtil.setProperty(
+					individual1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPageWithSortDouble()
+		throws Exception {
+
+		testGetWorkspaceGroupChannelIndividualsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, individual1, individual2) -> {
+				BeanTestUtil.setProperty(
+					individual1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					individual2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPageWithSortInteger()
+		throws Exception {
+
+		testGetWorkspaceGroupChannelIndividualsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, individual1, individual2) -> {
+				BeanTestUtil.setProperty(individual1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(individual2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetWorkspaceGroupChannelIndividualsPageWithSortString()
+		throws Exception {
+
+		testGetWorkspaceGroupChannelIndividualsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, individual1, individual2) -> {
+				Class<?> clazz = individual1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						individual1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						individual2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						individual1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						individual2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						individual1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						individual2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetWorkspaceGroupChannelIndividualsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Individual, Individual, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long groupId = testGetWorkspaceGroupChannelIndividualsPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelIndividualsPage_getChannelId();
+
+		Individual individual1 = randomIndividual();
+		Individual individual2 = randomIndividual();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, individual1, individual2);
+		}
+
+		individual1 = testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+			groupId, channelId, individual1);
+
+		individual2 = testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+			groupId, channelId, individual2);
+
+		Page<Individual> page =
+			individualResource.getWorkspaceGroupChannelIndividualsPage(
+				groupId, channelId, null, null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Individual> ascPage =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(individual1, (List<Individual>)ascPage.getItems());
+			assertContains(individual2, (List<Individual>)ascPage.getItems());
+
+			Page<Individual> descPage =
+				individualResource.getWorkspaceGroupChannelIndividualsPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(individual2, (List<Individual>)descPage.getItems());
+			assertContains(individual1, (List<Individual>)descPage.getItems());
+		}
+	}
+
+	protected Individual
+			testGetWorkspaceGroupChannelIndividualsPage_addIndividual(
+				Long groupId, String channelId, Individual individual)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetWorkspaceGroupChannelIndividualsPage_getGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkspaceGroupChannelIndividualsPage_getIrrelevantGroupId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String testGetWorkspaceGroupChannelIndividualsPage_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetWorkspaceGroupChannelIndividualsPage_getIrrelevantChannelId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetWorkspaceGroupIndividual() throws Exception {
 		Individual postIndividual =
 			testGetWorkspaceGroupIndividual_addIndividual();
@@ -329,330 +679,6 @@ public abstract class BaseIndividualResourceTestCase {
 		throws Exception {
 
 		return testGraphQLIndividual_addIndividual();
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPage() throws Exception {
-		Long groupId = testGetWorkspaceGroupIndividualsPage_getGroupId();
-		Long irrelevantGroupId =
-			testGetWorkspaceGroupIndividualsPage_getIrrelevantGroupId();
-
-		Page<Individual> page =
-			individualResource.getWorkspaceGroupIndividualsPage(
-				groupId, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantGroupId != null) {
-			Individual irrelevantIndividual =
-				testGetWorkspaceGroupIndividualsPage_addIndividual(
-					irrelevantGroupId, randomIrrelevantIndividual());
-
-			page = individualResource.getWorkspaceGroupIndividualsPage(
-				irrelevantGroupId, null, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 1), null);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantIndividual, (List<Individual>)page.getItems());
-			assertValid(
-				page,
-				testGetWorkspaceGroupIndividualsPage_getExpectedActions(
-					irrelevantGroupId));
-		}
-
-		Individual individual1 =
-			testGetWorkspaceGroupIndividualsPage_addIndividual(
-				groupId, randomIndividual());
-
-		Individual individual2 =
-			testGetWorkspaceGroupIndividualsPage_addIndividual(
-				groupId, randomIndividual());
-
-		page = individualResource.getWorkspaceGroupIndividualsPage(
-			groupId, null, null, null, null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(individual1, (List<Individual>)page.getItems());
-		assertContains(individual2, (List<Individual>)page.getItems());
-		assertValid(
-			page,
-			testGetWorkspaceGroupIndividualsPage_getExpectedActions(groupId));
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetWorkspaceGroupIndividualsPage_getExpectedActions(
-				Long groupId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPageWithPagination()
-		throws Exception {
-
-		Long groupId = testGetWorkspaceGroupIndividualsPage_getGroupId();
-
-		Page<Individual> individualsPage =
-			individualResource.getWorkspaceGroupIndividualsPage(
-				groupId, null, null, null, null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(individualsPage.getTotalCount());
-
-		Individual individual1 =
-			testGetWorkspaceGroupIndividualsPage_addIndividual(
-				groupId, randomIndividual());
-
-		Individual individual2 =
-			testGetWorkspaceGroupIndividualsPage_addIndividual(
-				groupId, randomIndividual());
-
-		Individual individual3 =
-			testGetWorkspaceGroupIndividualsPage_addIndividual(
-				groupId, randomIndividual());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Individual> page1 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(individual1, (List<Individual>)page1.getItems());
-
-			Page<Individual> page2 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(individual2, (List<Individual>)page2.getItems());
-
-			Page<Individual> page3 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(individual3, (List<Individual>)page3.getItems());
-		}
-		else {
-			Page<Individual> page1 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
-
-			List<Individual> individuals1 = (List<Individual>)page1.getItems();
-
-			Assert.assertEquals(
-				individuals1.toString(), totalCount + 2, individuals1.size());
-
-			Page<Individual> page2 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Individual> individuals2 = (List<Individual>)page2.getItems();
-
-			Assert.assertEquals(
-				individuals2.toString(), 1, individuals2.size());
-
-			Page<Individual> page3 =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(individual1, (List<Individual>)page3.getItems());
-			assertContains(individual2, (List<Individual>)page3.getItems());
-			assertContains(individual3, (List<Individual>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPageWithSortDateTime()
-		throws Exception {
-
-		testGetWorkspaceGroupIndividualsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, individual1, individual2) -> {
-				BeanTestUtil.setProperty(
-					individual1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPageWithSortDouble()
-		throws Exception {
-
-		testGetWorkspaceGroupIndividualsPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, individual1, individual2) -> {
-				BeanTestUtil.setProperty(
-					individual1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					individual2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPageWithSortInteger()
-		throws Exception {
-
-		testGetWorkspaceGroupIndividualsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, individual1, individual2) -> {
-				BeanTestUtil.setProperty(individual1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(individual2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetWorkspaceGroupIndividualsPageWithSortString()
-		throws Exception {
-
-		testGetWorkspaceGroupIndividualsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, individual1, individual2) -> {
-				Class<?> clazz = individual1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						individual1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						individual2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						individual1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						individual2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						individual1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						individual2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetWorkspaceGroupIndividualsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, Individual, Individual, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long groupId = testGetWorkspaceGroupIndividualsPage_getGroupId();
-
-		Individual individual1 = randomIndividual();
-		Individual individual2 = randomIndividual();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, individual1, individual2);
-		}
-
-		individual1 = testGetWorkspaceGroupIndividualsPage_addIndividual(
-			groupId, individual1);
-
-		individual2 = testGetWorkspaceGroupIndividualsPage_addIndividual(
-			groupId, individual2);
-
-		Page<Individual> page =
-			individualResource.getWorkspaceGroupIndividualsPage(
-				groupId, null, null, null, null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<Individual> ascPage =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
-
-			assertContains(individual1, (List<Individual>)ascPage.getItems());
-			assertContains(individual2, (List<Individual>)ascPage.getItems());
-
-			Page<Individual> descPage =
-				individualResource.getWorkspaceGroupIndividualsPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(individual2, (List<Individual>)descPage.getItems());
-			assertContains(individual1, (List<Individual>)descPage.getItems());
-		}
-	}
-
-	protected Individual testGetWorkspaceGroupIndividualsPage_addIndividual(
-			Long groupId, Individual individual)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWorkspaceGroupIndividualsPage_getGroupId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWorkspaceGroupIndividualsPage_getIrrelevantGroupId()
-		throws Exception {
-
-		return null;
 	}
 
 	protected Individual testGraphQLIndividual_addIndividual()
@@ -1695,4 +1721,4 @@ public abstract class BaseIndividualResourceTestCase {
 		_individualResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-466916587
+// LIFERAY-REST-BUILDER-HASH:89174091

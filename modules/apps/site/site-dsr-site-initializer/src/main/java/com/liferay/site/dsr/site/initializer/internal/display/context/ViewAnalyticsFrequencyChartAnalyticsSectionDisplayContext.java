@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.object.model.ObjectDefinition;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,10 +17,13 @@ public class ViewAnalyticsFrequencyChartAnalyticsSectionDisplayContext
 	extends BaseAnalyticsSectionDisplayContext {
 
 	public ViewAnalyticsFrequencyChartAnalyticsSectionDisplayContext(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
-		super(null, null, null, httpServletRequest, objectDefinition);
+		super(
+			analyticsSettingsManager, null, null, null, httpServletRequest,
+			objectDefinition);
 	}
 
 }

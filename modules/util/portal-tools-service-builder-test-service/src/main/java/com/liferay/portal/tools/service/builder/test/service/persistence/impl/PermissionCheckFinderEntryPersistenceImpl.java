@@ -66,8 +66,9 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PermissionCheckFinderEntry>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<PermissionCheckFinderEntry, NoSuchPermissionCheckFinderEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the permission check finder entries where groupId = &#63;.
@@ -505,18 +506,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 				_SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE,
 				PermissionCheckFinderEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PermissionCheckFinderEntryImpl.class,
-					PermissionCheckFinderEntry.class,
-					"permissionCheckFinderEntry", "PermissionCheckFinderEntry",
-					"permissionCheckFinderEntry.permissionCheckFinderEntryId",
-					"SELECT DISTINCT {permissionCheckFinderEntry.*} FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
-					"SELECT {PermissionCheckFinderEntry.*} FROM (SELECT DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
-					") TEMP_TABLE INNER JOIN PermissionCheckFinderEntry ON TEMP_TABLE.permissionCheckFinderEntryId = PermissionCheckFinderEntry.permissionCheckFinderEntryId",
-					"SELECT COUNT(DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId) AS COUNT_VALUE FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
-					PermissionCheckFinderEntryModelImpl.ORDER_BY_SQL,
-					PermissionCheckFinderEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"permissionCheckFinderEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -561,4 +550,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-833753221
+// LIFERAY-SERVICE-BUILDER-HASH:-1927327485

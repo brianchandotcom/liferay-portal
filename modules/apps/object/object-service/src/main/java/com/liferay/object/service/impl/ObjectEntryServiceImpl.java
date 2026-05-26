@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -318,6 +319,37 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 			objectDefinition.getClassName());
+	}
+
+	@Override
+	public List<ObjectEntry> getObjectEntries(
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			objectEntryLocalService.getObjectEntries(
+				groupId, objectDefinitionId, status, start, end);
+
+		if (ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+			return objectEntries;
+		}
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			getModelResourcePermission(objectDefinitionId);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return TransformUtil.transform(
+			objectEntries,
+			objectEntry -> {
+				if (modelResourcePermission.contains(
+						permissionChecker, objectEntry, ActionKeys.VIEW)) {
+
+					return objectEntry;
+				}
+
+				return null;
+			});
 	}
 
 	@Override

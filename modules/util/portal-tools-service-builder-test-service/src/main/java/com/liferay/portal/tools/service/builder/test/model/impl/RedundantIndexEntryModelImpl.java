@@ -631,4 +631,4 @@ public class RedundantIndexEntryModelImpl
 	private RedundantIndexEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-953781444
+// LIFERAY-SERVICE-BUILDER-HASH:702762118

@@ -4528,5 +4528,3 @@ paths:
                         Unexpected error
             summary: Creates a Cart.
             tags: ["Cart"]
-servers:
-    -   url: /

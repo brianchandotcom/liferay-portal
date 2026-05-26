@@ -1,0 +1,47 @@
+[
+	{
+		"externalReferenceCode": "asia-south1",
+		"key": "asiasouth1",
+		"name": "Asia South 1",
+		"name_i18n": {
+			"en-US": "Asia South 1"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "europe-west2",
+		"key": "europewest2",
+		"name": "Europe West 2",
+		"name_i18n": {
+			"en-US": "Europe West 2"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "europe-west3",
+		"key": "europewest3",
+		"name": "Europe West 3",
+		"name_i18n": {
+			"en-US": "Europe West 3"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "southamerica-east1",
+		"key": "southamericaeast1",
+		"name": "South America East 1",
+		"name_i18n": {
+			"en-US": "South America East 1"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "us-west1",
+		"key": "uswest1",
+		"name": "US West 1",
+		"name_i18n": {
+			"en-US": "US West 1"
+		},
+		"type": "string"
+	}
+]

@@ -15,7 +15,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -46,8 +45,7 @@ public interface ChannelResource {
 	public Channel getWorkspaceGroupChannel(Long groupId, String channelId)
 		throws Exception;
 
-	public Page<Channel> getWorkspaceGroupChannelsPage(
-			Long groupId, Pagination pagination)
+	public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -138,4 +136,4 @@ public interface ChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-374305659
+// LIFERAY-REST-BUILDER-HASH:780840551

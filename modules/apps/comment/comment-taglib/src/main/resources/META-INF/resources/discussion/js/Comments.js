@@ -231,6 +231,13 @@ export default function Comments({
 						);
 					}
 					else if (
+						exception.indexOf('MustHaveSessionCSRFToken') > -1
+					) {
+						errorKey = Liferay.Language.get(
+							'your-session-has-expired'
+						);
+					}
+					else if (
 						exception.indexOf('NoSuchMessageException') > -1
 					) {
 						errorKey = Liferay.Language.get(

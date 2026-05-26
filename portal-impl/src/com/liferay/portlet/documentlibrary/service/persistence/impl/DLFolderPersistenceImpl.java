@@ -95,7 +95,7 @@ public class DLFolderPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -135,15 +135,9 @@ public class DLFolderPersistenceImpl
 			String uuid, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByUuid_First(uuid, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -185,7 +179,8 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DLFolder> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<DLFolder, NoSuchFolderException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -199,21 +194,8 @@ public class DLFolderPersistenceImpl
 	public DLFolder findByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByUUID_G(uuid, groupId);
-
-		if (dlFolder == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFolderException(message);
-		}
-
-		return dlFolder;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -262,7 +244,7 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -305,16 +287,9 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -360,7 +335,7 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -400,15 +375,9 @@ public class DLFolderPersistenceImpl
 			long groupId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -485,7 +454,7 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -525,16 +494,9 @@ public class DLFolderPersistenceImpl
 			long companyId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -576,7 +538,7 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByRepositoryId;
 
 	/**
@@ -616,16 +578,9 @@ public class DLFolderPersistenceImpl
 			long repositoryId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByRepositoryId_First(
-			repositoryId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByRepositoryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {repositoryId}));
+		return _collectionPersistenceFinderByRepositoryId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -667,7 +622,7 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId});
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_P;
 
 	/**
@@ -711,17 +666,9 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_P_First(
-			groupId, parentFolderId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, parentFolderId}));
+		return _collectionPersistenceFinderByG_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentFolderId}, orderByComparator);
 	}
 
 	/**
@@ -808,7 +755,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {groupId, parentFolderId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByC_NotS;
 
 	/**
@@ -907,16 +854,9 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByC_NotS_First(
-			companyId, status, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_NotS.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -962,7 +902,8 @@ public class DLFolderPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status});
 	}
 
-	private UniquePersistenceFinder<DLFolder> _uniquePersistenceFinderByR_M;
+	private UniquePersistenceFinder<DLFolder, NoSuchFolderException>
+		_uniquePersistenceFinderByR_M;
 
 	/**
 	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -976,22 +917,9 @@ public class DLFolderPersistenceImpl
 	public DLFolder findByR_M(long repositoryId, boolean mountPoint)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByR_M(repositoryId, mountPoint);
-
-		if (dlFolder == null) {
-			String message =
-				_uniquePersistenceFinderByR_M.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {repositoryId, mountPoint});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFolderException(message);
-		}
-
-		return dlFolder;
+		return _uniquePersistenceFinderByR_M.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {repositoryId, mountPoint});
 	}
 
 	/**
@@ -1041,7 +969,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {repositoryId, mountPoint});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByR_P;
 
 	/**
@@ -1085,17 +1013,9 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByR_P_First(
-			repositoryId, parentFolderId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByR_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {repositoryId, parentFolderId}));
+		return _collectionPersistenceFinderByR_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {repositoryId, parentFolderId}, orderByComparator);
 	}
 
 	/**
@@ -1143,7 +1063,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {repositoryId, parentFolderId});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByP_N;
 
 	/**
@@ -1187,16 +1107,9 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByP_N_First(
-			parentFolderId, name, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByP_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {parentFolderId, name}));
+		return _collectionPersistenceFinderByP_N.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {parentFolderId, name}, orderByComparator);
 	}
 
 	/**
@@ -1244,7 +1157,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {parentFolderId, name});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByGtF_C_P;
 
 	/**
@@ -1355,17 +1268,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByGtF_C_P_First(
-			folderId, companyId, parentFolderId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByGtF_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {folderId, companyId, parentFolderId}));
+		return _collectionPersistenceFinderByGtF_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {folderId, companyId, parentFolderId},
+			orderByComparator);
 	}
 
 	/**
@@ -1421,7 +1327,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {folderId, companyId, parentFolderId});
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_M_P;
 
 	/**
@@ -1468,17 +1374,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_M_P_First(
-			groupId, mountPoint, parentFolderId, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_M_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, mountPoint, parentFolderId}));
+		return _collectionPersistenceFinderByG_M_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, mountPoint, parentFolderId},
+			orderByComparator);
 	}
 
 	/**
@@ -1577,7 +1476,8 @@ public class DLFolderPersistenceImpl
 			new Object[] {groupId, mountPoint, parentFolderId}, groupId);
 	}
 
-	private UniquePersistenceFinder<DLFolder> _uniquePersistenceFinderByG_P_N;
+	private UniquePersistenceFinder<DLFolder, NoSuchFolderException>
+		_uniquePersistenceFinderByG_P_N;
 
 	/**
 	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -1592,22 +1492,9 @@ public class DLFolderPersistenceImpl
 	public DLFolder findByG_P_N(long groupId, long parentFolderId, String name)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_P_N(groupId, parentFolderId, name);
-
-		if (dlFolder == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, parentFolderId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFolderException(message);
-		}
-
-		return dlFolder;
+		return _uniquePersistenceFinderByG_P_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentFolderId, name});
 	}
 
 	/**
@@ -1662,7 +1549,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {groupId, parentFolderId, name});
 	}
 
-	private CollectionPersistenceFinder<DLFolder>
+	private CollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByGtF_C_P_NotS;
 
 	/**
@@ -1779,17 +1666,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByGtF_C_P_NotS_First(
-			folderId, companyId, parentFolderId, status, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByGtF_C_P_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {folderId, companyId, parentFolderId, status}));
+		return _collectionPersistenceFinderByGtF_C_P_NotS.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {folderId, companyId, parentFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1848,7 +1728,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {folderId, companyId, parentFolderId, status});
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_M_P_H;
 
 	/**
@@ -1897,17 +1777,10 @@ public class DLFolderPersistenceImpl
 			boolean hidden, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_M_P_H_First(
-			groupId, mountPoint, parentFolderId, hidden, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_M_P_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, mountPoint, parentFolderId, hidden}));
+		return _collectionPersistenceFinderByG_M_P_H.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, mountPoint, parentFolderId, hidden},
+			orderByComparator);
 	}
 
 	/**
@@ -2012,7 +1885,7 @@ public class DLFolderPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_M_LikeT_H;
 
 	/**
@@ -2129,17 +2002,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_M_LikeT_H_First(
-			groupId, mountPoint, treePath, hidden, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_M_LikeT_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, mountPoint, treePath, hidden}));
+		return _collectionPersistenceFinderByG_M_LikeT_H.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, mountPoint, treePath, hidden},
+			orderByComparator);
 	}
 
 	/**
@@ -2285,7 +2151,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {groupId, mountPoint, treePath, hidden}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_P_H_S;
 
 	/**
@@ -2334,17 +2200,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_P_H_S_First(
-			groupId, parentFolderId, hidden, status, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_P_H_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, parentFolderId, hidden, status}));
+		return _collectionPersistenceFinderByG_P_H_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentFolderId, hidden, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2448,7 +2307,7 @@ public class DLFolderPersistenceImpl
 			new Object[] {groupId, parentFolderId, hidden, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_M_P_H_S;
 
 	/**
@@ -2500,20 +2359,10 @@ public class DLFolderPersistenceImpl
 			OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_M_P_H_S_First(
-			groupId, mountPoint, parentFolderId, hidden, status,
+		return _collectionPersistenceFinderByG_M_P_H_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, mountPoint, parentFolderId, hidden, status},
 			orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_M_P_H_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, mountPoint, parentFolderId, hidden, status
-				}));
 	}
 
 	/**
@@ -2627,7 +2476,7 @@ public class DLFolderPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<DLFolder>
+	private FilterCollectionPersistenceFinder<DLFolder, NoSuchFolderException>
 		_collectionPersistenceFinderByG_M_LikeT_H_NotS;
 
 	/**
@@ -2751,20 +2600,10 @@ public class DLFolderPersistenceImpl
 			int status, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByG_M_LikeT_H_NotS_First(
-			groupId, mountPoint, treePath, hidden, status, orderByComparator);
-
-		if (dlFolder != null) {
-			return dlFolder;
-		}
-
-		throw new NoSuchFolderException(
-			_collectionPersistenceFinderByG_M_LikeT_H_NotS.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, mountPoint, treePath, hidden, status
-					}));
+		return _collectionPersistenceFinderByG_M_LikeT_H_NotS.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, mountPoint, treePath, hidden, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2923,7 +2762,8 @@ public class DLFolderPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<DLFolder> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<DLFolder, NoSuchFolderException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the document library folder where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -2937,22 +2777,9 @@ public class DLFolderPersistenceImpl
 	public DLFolder findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchFolderException {
 
-		DLFolder dlFolder = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (dlFolder == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFolderException(message);
-		}
-
-		return dlFolder;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -3822,15 +3649,6 @@ public class DLFolderPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId));
@@ -3907,15 +3725,6 @@ public class DLFolderPersistenceImpl
 					new String[] {"groupId", "parentFolderId"}, false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4084,15 +3893,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4205,15 +4005,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4256,15 +4047,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4315,15 +4097,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4382,15 +4155,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4439,15 +4203,6 @@ public class DLFolderPersistenceImpl
 					false),
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFolderImpl.class, DLFolder.class, "dlFolder", "DLFolder",
-					"dlFolder.folderId",
-					"SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ",
-					"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ",
-					") TEMP_TABLE INNER JOIN DLFolder ON TEMP_TABLE.folderId = DLFolder.folderId",
-					"SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ",
-					DLFolderModelImpl.ORDER_BY_SQL,
-					DLFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId),
@@ -4525,4 +4280,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1428810887
+// LIFERAY-SERVICE-BUILDER-HASH:-1095980817

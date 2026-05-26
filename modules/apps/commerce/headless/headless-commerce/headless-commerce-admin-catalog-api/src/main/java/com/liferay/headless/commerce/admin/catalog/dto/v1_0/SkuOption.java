@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SkuOption")
+@GraphQLName(
+	description = "Selection of a single product option value for a SKU variant; links the SKU to one product option and one of that option's values.",
+	value = "SkuOption"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuOption")
 public class SkuOption implements Serializable {
@@ -48,7 +51,10 @@ public class SkuOption implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SkuOption.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable string key of the product option; on read the value is the option's key, while on write the value may also be the option's numeric identifier encoded as a string, which the service resolves back to the key.",
+		example = "color"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -80,7 +86,9 @@ public class SkuOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable string key of the product option; on read the value is the option's key, while on write the value may also be the option's numeric identifier encoded as a string, which the service resolves back to the key."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
@@ -88,7 +96,10 @@ public class SkuOption implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the product option this selection answers.",
+		example = "31130"
+	)
 	public Long getOptionId() {
 		if (_optionIdSupplier != null) {
 			optionId = _optionIdSupplier.get();
@@ -122,7 +133,9 @@ public class SkuOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the product option this selection answers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionId;
 
@@ -130,7 +143,10 @@ public class SkuOption implements Serializable {
 	private Supplier<Long> _optionIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the chosen value within the product option referenced by `optionId`.",
+		example = "31130"
+	)
 	public Long getOptionValueId() {
 		if (_optionValueIdSupplier != null) {
 			optionValueId = _optionValueIdSupplier.get();
@@ -164,14 +180,19 @@ public class SkuOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the chosen value within the product option referenced by `optionId`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionValueId;
 
 	@JsonIgnore
 	private Supplier<Long> _optionValueIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable string key of the option value chosen for this option; on read the value is the option value's key.",
+		example = "red"
+	)
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -205,7 +226,9 @@ public class SkuOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable string key of the option value chosen for this option; on read the value is the option value's key."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
@@ -396,4 +419,4 @@ public class SkuOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1039921628
+// LIFERAY-REST-BUILDER-HASH:1665548359

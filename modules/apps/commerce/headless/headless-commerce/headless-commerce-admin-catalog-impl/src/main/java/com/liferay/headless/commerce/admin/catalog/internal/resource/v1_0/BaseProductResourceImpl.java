@@ -77,6 +77,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Cascades CPDefinition delete (skus, options, attachments, categorization)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -149,6 +152,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when ERC not found. Side effects -- Cascades CPDefinition delete."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -179,6 +185,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/by-version/{version}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes a specific historical version of the product identified by external reference code. Calls CProductLocalService.fetchCProductByExternalReferenceCode + CPDefinitionService.getCProductCPDefinition + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when ERC or version not found. Side effects -- Cascades CPDefinition delete for the targeted version only."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -217,6 +226,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/by-version/{version}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes a specific historical version of the product identified by product id. Calls CPDefinitionService.getCProductCPDefinition + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when product id or version not found. Side effects -- Cascades CPDefinition delete for the targeted version only."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -253,6 +265,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the latest published version of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId. Validation -- NoSuchCPDefinitionException -> 404 when product id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -283,6 +298,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the latest published version of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode. Validation -- NoSuchCPDefinitionException -> 404 when ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -315,6 +333,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/by-version/{version}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches a specific historical version of the product identified by external reference code. Calls CProductLocalService.fetchCProductByExternalReferenceCode + CPDefinitionService.getCProductCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when ERC or version not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -355,6 +376,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/by-version/{version}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches a specific historical version of the product identified by product id. Calls CPDefinitionService.getCProductCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when product id or version not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -393,6 +417,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns a page of products scoped to the current company, with filtering by indexed product fields and expando-backed custom fields. Calls SearchUtil.search over CPDefinition (with ProductEntityModel + custom-field expando columns). List query support — filterable fields -- channelId, statusCode, categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, customFields, createDate, modifiedDate, catalogId, productId, externalReferenceCode, name, productType; sortable fields -- channelId, statusCode, categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, customFields, createDate, modifiedDate, catalogId, productId, externalReferenceCode, name, productType."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -443,6 +470,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}' -d $'{"active": ___, "attachments": ___, "catalogExternalReferenceCode": ___, "catalogId": ___, "categories": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "linkedProducts": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productConfiguration": ___, "productOptions": ___, "productSpecifications": ___, "productStatus": ___, "productType": ___, "productVirtualSettings": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + internal _updateProduct (CPDefinitionService.updateCPDefinition and friends). Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags, and may trigger workflow draft transition."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -477,6 +507,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "attachments": ___, "catalogExternalReferenceCode": ___, "catalogId": ___, "categories": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "linkedProducts": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productConfiguration": ___, "productOptions": ___, "productSpecifications": ___, "productStatus": ___, "productType": ___, "productVirtualSettings": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + internal _updateProduct (honors STATUS_DRAFT workflow hint). Validation -- NoSuchCPDefinitionException -> 404 when ERC not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags; may set workflowAction=SAVE_DRAFT when productStatus=DRAFT."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -513,6 +546,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products' -d $'{"active": ___, "attachments": ___, "catalogExternalReferenceCode": ___, "catalogId": ___, "categories": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "linkedProducts": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productConfiguration": ___, "productOptions": ___, "productSpecifications": ___, "productStatus": ___, "productType": ___, "productVirtualSettings": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates or updates a product using the supplied external reference code. Calls Internal _addOrUpdateProduct (CPDefinitionService.addOrUpdate). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCatalogException -> 404 when supplied catalog cannot be resolved; workflow exceptions propagate. Side effects -- Creates the product version chain, asset entry, default SKU when productType has one; triggers workflow on add."
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Product")}
 	)
@@ -574,6 +610,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/clone'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Clones the product identified by external reference code, optionally into a different catalog. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + cloneCPDefinition (optionally retargeting to a different catalog). Validation -- NoSuchCPDefinitionException -> 404 when source product ERC not found; NoSuchCatalogException -> 404 when target catalog ERC not found. Side effects -- Creates a brand new CPDefinition with cloned SKUs, options, attachments, etc.."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -614,6 +653,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/clone'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Clones the product identified by product id, optionally into a different catalog. Calls CPDefinitionService.fetchCPDefinitionByCProductId + cloneCPDefinition (optionally retargeting to a different catalog). Validation -- NoSuchCPDefinitionException -> 404 when source product id not found. Side effects -- Creates a brand new CPDefinition with cloned SKUs, options, attachments, etc.."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -730,6 +772,9 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "attachments": ___, "catalogExternalReferenceCode": ___, "catalogId": ___, "categories": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "linkedProducts": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productConfiguration": ___, "productOptions": ___, "productSpecifications": ___, "productStatus": ___, "productType": ___, "productVirtualSettings": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates or replaces the product identified by external reference code. Calls Internal _addOrUpdateProduct (CPDefinitionService.addOrUpdate). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCatalogException -> 404 when supplied catalog cannot be resolved. Side effects -- Creates or updates the full product version chain."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1549,4 +1594,4 @@ public abstract class BaseProductResourceImpl
 		LogFactoryUtil.getLog(BaseProductResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:203344073
+// LIFERAY-REST-BUILDER-HASH:1585161106

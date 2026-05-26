@@ -48,10 +48,10 @@ const LDPProvisioning = () => {
 		setForm,
 	} = useProductPurchaseOutletContext();
 
-	const {data: acRegionsResponse, isLoading} =
-		useListTypeDefinition('AC-REGIONS');
+	const {data: sfdcRegionsResponse, isLoading} =
+		useListTypeDefinition('SFDC-REGIONS');
 
-	const acRegions = acRegionsResponse?.listTypeEntries ?? [];
+	const sfdcRegions = sfdcRegionsResponse?.listTypeEntries ?? [];
 
 	const accountKey = selectedAccount.externalReferenceCode;
 
@@ -63,7 +63,7 @@ const LDPProvisioning = () => {
 			_refIncidentReportContacts: [],
 			acceptTerms: false,
 			allowedEmailDomains: [],
-			dataCenterLocation: acRegions[0]?.externalReferenceCode,
+			dataCenterLocation: sfdcRegions[0]?.externalReferenceCode,
 			incidentReportContacts: [],
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},
@@ -123,7 +123,7 @@ const LDPProvisioning = () => {
 				boldLabel
 				helpText={`Select a server to store your data. This could have implications to your organization's policy on user data storage.`}
 				label="Data Center Location"
-				options={acRegions.map(({externalReferenceCode, name}) => ({
+				options={sfdcRegions.map(({externalReferenceCode, name}) => ({
 					key: externalReferenceCode,
 					name,
 				}))}

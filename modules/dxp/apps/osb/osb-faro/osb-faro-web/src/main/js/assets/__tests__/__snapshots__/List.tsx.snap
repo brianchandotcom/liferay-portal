@@ -95,6 +95,37 @@ exports[`List rendering should match the snapshot 1`] = `
           id="assetTable"
         >
           <div
+            data-testid="fds-empty-state"
+          >
+            <div
+              data-testid="fds-empty-state-title"
+            >
+              There are no assets found.
+            </div>
+            <div
+              data-testid="fds-empty-state-description"
+            >
+              <span
+                class="mr-1"
+              >
+                Check back later to verify if data has been received from your data sources, or you can try a different date range.
+              </span>
+              <a
+                class=""
+                href="https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                Learn more about assets.
+                <span
+                  class="sr-only"
+                >
+                  (Opens a new window)
+                </span>
+              </a>
+            </div>
+          </div>
+          <div
             data-testid="fds-filters"
           >
             [{"apiURL":"/o/faro/contacts/23/asset-summary-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"assetType","itemKey":"name","itemLabel":"name","label":"Type","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-tags?channelId=123&rangeKey=30","entityFieldType":"string","id":"tags/id","itemKey":"id","itemLabel":"name","label":"Tags","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-categories?channelId=123&rangeKey=30","entityFieldType":"string","id":"categories/id","itemKey":"id","itemLabel":"name","label":"Categories","multiple":true,"searchable":true,"type":"selection"},{"apiURL":"/o/faro/contacts/23/asset-summary-mime-types?channelId=123&rangeKey=30","entityFieldType":"string","id":"mimeType","itemKey":"id","itemLabel":"name","label":"File Type","multiple":true,"searchable":true,"type":"selection"}]

@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupPagesPage` to list these metrics for a site.",
+	description = "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupChannelPagesPage` to list these metrics for a site.",
 	value = "PageMetric"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -1000,4 +1000,4 @@ public class PageMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1790096387
+// LIFERAY-REST-BUILDER-HASH:-1783256004

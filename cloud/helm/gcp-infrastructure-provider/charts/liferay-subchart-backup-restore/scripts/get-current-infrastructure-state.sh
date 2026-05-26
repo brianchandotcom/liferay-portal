@@ -62,7 +62,7 @@ function main {
 
 	restore_phase=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.restorePhase // \"none\"")
 
-	if [ "${restore_phase}" = "promoting" ] || [ "${restore_phase}" = "provisioning" ]
+	if [ "${restore_phase}" = "promoting" ] || [ "${restore_phase}" = "provisioning" ] || [ "${restore_phase}" = "provisioning-database-user" ]
 	then
 		echo "The LiferayInfrastructure spec.restorePhase is set to ${restore_phase}. A restore is in progress." >&2
 
@@ -102,6 +102,19 @@ function main {
 			--selector "component=liferay")
 
 	echo "${liferay_workload_name}" > /tmp/liferay-workload-name.txt
+
+	local root_password_secret_name
+
+	root_password_secret_name=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.database.rootPasswordSecretName // \"\"")
+
+	if [ -z "${root_password_secret_name}" ]
+	then
+		echo "The LiferayInfrastructure has no spec.database.rootPasswordSecretName." >&2
+
+		exit 1
+	fi
+
+	echo "${root_password_secret_name}" > /tmp/root-password-secret-name.txt
 }
 
 main

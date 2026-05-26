@@ -87,7 +87,7 @@ public class PhonePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,9 @@ public class PhonePersistenceImpl
 			String uuid, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByUuid_First(uuid, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -177,7 +171,7 @@ public class PhonePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -220,15 +214,9 @@ public class PhonePersistenceImpl
 			OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -274,7 +262,7 @@ public class PhonePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -314,15 +302,9 @@ public class PhonePersistenceImpl
 			long companyId, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -364,7 +346,7 @@ public class PhonePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -404,15 +386,9 @@ public class PhonePersistenceImpl
 			long userId, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByUserId_First(userId, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -454,7 +430,7 @@ public class PhonePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -498,17 +474,9 @@ public class PhonePersistenceImpl
 			OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -556,7 +524,7 @@ public class PhonePersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByC_C_C;
 
 	/**
@@ -602,17 +570,9 @@ public class PhonePersistenceImpl
 			OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -663,7 +623,7 @@ public class PhonePersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<Phone>
+	private CollectionPersistenceFinder<Phone, NoSuchPhoneException>
 		_collectionPersistenceFinderByC_C_C_P;
 
 	/**
@@ -712,17 +672,10 @@ public class PhonePersistenceImpl
 			OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByC_C_C_P_First(
-			companyId, classNameId, classPK, primary, orderByComparator);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		throw new NoSuchPhoneException(
-			_collectionPersistenceFinderByC_C_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK, primary}));
+		return _collectionPersistenceFinderByC_C_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary},
+			orderByComparator);
 	}
 
 	/**
@@ -781,7 +734,8 @@ public class PhonePersistenceImpl
 			new Object[] {companyId, classNameId, classPK, primary});
 	}
 
-	private UniquePersistenceFinder<Phone> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<Phone, NoSuchPhoneException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the phone where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPhoneException</code> if it could not be found.
@@ -795,22 +749,9 @@ public class PhonePersistenceImpl
 	public Phone findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchPhoneException {
 
-		Phone phone = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (phone == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPhoneException(message);
-		}
-
-		return phone;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1476,4 +1417,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1539493079
+// LIFERAY-SERVICE-BUILDER-HASH:-945442220

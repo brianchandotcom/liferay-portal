@@ -21,6 +21,8 @@ export class ConsentManagerConfigurationPage {
 	readonly saveButton: Locator;
 	readonly storeConsentCheckbox: Locator;
 	readonly systemSettingsPortletForm: Locator;
+	readonly toggleActivateButton: Locator;
+	readonly toggleDeactivateButton: Locator;
 	readonly updateButton: Locator;
 
 	constructor(page: Page) {
@@ -82,6 +84,20 @@ export class ConsentManagerConfigurationPage {
 			{
 				exact: true,
 				name: 'Store Consent',
+			}
+		);
+		this.toggleActivateButton = this.systemSettingsPortletForm.getByRole(
+			'button',
+			{
+				exact: true,
+				name: 'Activate',
+			}
+		);
+		this.toggleDeactivateButton = this.systemSettingsPortletForm.getByRole(
+			'button',
+			{
+				exact: true,
+				name: 'Deactivate',
 			}
 		);
 		this.updateButton = this.systemSettingsPortletForm.getByRole('button', {

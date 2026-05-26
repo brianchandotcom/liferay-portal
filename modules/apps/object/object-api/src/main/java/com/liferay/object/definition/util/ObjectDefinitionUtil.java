@@ -157,6 +157,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
 		).put(
+			"AIHubModelArmorTemplate", "/ai-hub/model-armor-templates"
+		).put(
 			"AIHubQuota", "/ai-hub/quotas"
 		).put(
 			"APIApplication", "/headless-builder/applications"
@@ -226,7 +228,11 @@ public class ObjectDefinitionUtil {
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
 		).put(
+			"MCPServerDataMask", "/mcp/server-data-masks"
+		).put(
 			"MCPServerProfile", "/mcp/server-profiles"
+		).put(
+			"MCPServerProfileDataMask", "/mcp/server-profile-data-masks"
 		).put(
 			"MCPServerPrompt", "/mcp/server-prompts"
 		).put(

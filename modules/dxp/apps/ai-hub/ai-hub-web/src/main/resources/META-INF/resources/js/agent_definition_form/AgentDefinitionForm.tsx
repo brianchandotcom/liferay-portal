@@ -45,13 +45,13 @@ export default function AgentDefinitionForm({
 	accountEntryExternalReferenceCode,
 	backURL,
 	externalReferenceCode,
-	readonly,
+	readOnly,
 	workflowDefinitionURL,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
 	externalReferenceCode: string;
-	readonly: boolean;
+	readOnly: boolean;
 	workflowDefinitionURL: string;
 }) {
 	const [formData, setFormData] = useState<AgentDefinition>(
@@ -218,12 +218,12 @@ export default function AgentDefinitionForm({
 		}
 
 		fetchFormData();
-	}, [accountEntryExternalReferenceCode, externalReferenceCode, readonly]);
+	}, [accountEntryExternalReferenceCode, externalReferenceCode, readOnly]);
 
 	useEffect(() => {
 		async function fetchWorkflowDefinitions() {
 			try {
-				if (readonly) {
+				if (readOnly) {
 					const response = await getWorkflowDefinition(
 						formData.workflowDefinitionName
 					);
@@ -249,7 +249,7 @@ export default function AgentDefinitionForm({
 		}
 
 		fetchWorkflowDefinitions();
-	}, [formData.workflowDefinitionName, readonly]);
+	}, [formData.workflowDefinitionName, readOnly]);
 
 	return (
 		<>
@@ -275,7 +275,7 @@ export default function AgentDefinitionForm({
 						aria-labelledby="saveButton"
 						data-title="Save Button"
 						data-title-set-as-html
-						disabled={readonly}
+						disabled={readOnly}
 						onClick={handleSubmit}
 						size="sm"
 					>
@@ -288,7 +288,7 @@ export default function AgentDefinitionForm({
 				<ClayForm>
 					<div className="agent-definition-header">
 						<ClayToggle
-							disabled={readonly}
+							disabled={readOnly}
 							label={Liferay.Language.get('enable-agent')}
 							name="active-toggle"
 							onBlur={(
@@ -326,7 +326,7 @@ export default function AgentDefinitionForm({
 
 									<ClayForm.Group>
 										<InputLocalized
-											disabled={readonly}
+											disabled={readOnly}
 											id="title"
 											label={Liferay.Language.get(
 												'title'
@@ -364,7 +364,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
-											disabled={readonly}
+											disabled={readOnly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
 											onChange={handleInputChange}
@@ -392,7 +392,7 @@ export default function AgentDefinitionForm({
 
 										<textarea
 											className="form-control"
-											disabled={readonly}
+											disabled={readOnly}
 											id="description"
 											name="description"
 											onChange={handleInputChange}
@@ -416,7 +416,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
-											disabled={readonly}
+											disabled={readOnly}
 											id="input-variables"
 											name="inputVariables"
 											onChange={handleInputChange}
@@ -439,7 +439,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
-											disabled={readonly}
+											disabled={readOnly}
 											id="output-variable"
 											name="outputVariable"
 											onChange={handleInputChange}
@@ -463,7 +463,7 @@ export default function AgentDefinitionForm({
 
 										<Picker
 											className="agent-workflow-definition"
-											disabled={readonly}
+											disabled={readOnly}
 											items={workflowDefinitions.map(
 												(workflowDefinition) => ({
 													label: workflowDefinition.title,
@@ -518,7 +518,7 @@ export default function AgentDefinitionForm({
 									<ClayMultiSelect
 										allowDuplicateValues={false}
 										allowsCustomLabel={false}
-										disabled={readonly}
+										disabled={readOnly}
 										inputName="assignedSources"
 										items={contentRetrievers}
 										locator={{

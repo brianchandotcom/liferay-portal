@@ -109,6 +109,8 @@ public class CommerceChannelModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceChannel";
 
+	public static final String FILTER_PK_COLUMN_NAME = "commerceChannelId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceChannel.createDate DESC";
 
@@ -1297,4 +1299,4 @@ public class CommerceChannelModelImpl
 	private CommerceChannel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1378372253
+// LIFERAY-SERVICE-BUILDER-HASH:-1002297807

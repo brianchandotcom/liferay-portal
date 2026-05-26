@@ -72,6 +72,8 @@ public class NavigationMenuItemDTOConverter
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			unicodeProperties.getProperty("externalReferenceCode"),
 			siteNavigationMenuItem.getGroupId());
+		Object navigationMenuItemSettings = _getNavigationMenuItemSettings(
+			siteNavigationMenuItem.getType(), unicodeProperties);
 
 		String navigationMenuItemType = _toType(
 			siteNavigationMenuItem.getType());
@@ -186,17 +188,8 @@ public class NavigationMenuItemDTOConverter
 							},
 							NavigationMenuItem.class);
 					});
+				setNavigationMenuItemSettings(() -> navigationMenuItemSettings);
 				setType(siteNavigationMenuItem::getType);
-
-				Object navigationMenuItemSettings =
-					_getNavigationMenuItemSettings(
-						siteNavigationMenuItem.getType(), unicodeProperties);
-
-				if (navigationMenuItemSettings != null) {
-					setNavigationMenuItemSettings(
-						() -> navigationMenuItemSettings);
-				}
-
 				setUseCustomName(
 					() -> Boolean.valueOf(
 						unicodeProperties.getProperty("useCustomName")));

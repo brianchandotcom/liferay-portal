@@ -290,7 +290,9 @@ export class PageEditorPage {
 			await this.page.keyboard.press('Enter');
 
 			await expect(
-				this.page.locator('#content').getByText(name, {exact: true})
+				this.page
+					.locator('.page-editor__keyboard-movement-preview')
+					.getByText(name, {exact: true})
 			).toBeVisible();
 
 			await this.page.keyboard.press('Enter');

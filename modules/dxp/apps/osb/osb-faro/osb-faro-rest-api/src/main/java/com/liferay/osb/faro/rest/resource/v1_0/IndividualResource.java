@@ -43,15 +43,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface IndividualResource {
 
-	public Individual getWorkspaceGroupIndividual(
-			Long groupId, String individualId, String channelId)
-		throws Exception;
-
-	public Page<Individual> getWorkspaceGroupIndividualsPage(
-			Long groupId, String accountId, String channelId,
+	public Page<Individual> getWorkspaceGroupChannelIndividualsPage(
+			Long groupId, String channelId, String accountId,
 			Boolean includeAnonymousUsers, String individualSegmentId,
 			String interestName, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Individual getWorkspaceGroupIndividual(
+			Long groupId, String individualId, String channelId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -142,4 +142,4 @@ public interface IndividualResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:575698246
+// LIFERAY-REST-BUILDER-HASH:207163693

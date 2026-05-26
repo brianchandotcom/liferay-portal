@@ -79,7 +79,7 @@ public class CTEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTEntry>
+	private CollectionPersistenceFinder<CTEntry, NoSuchCTEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -119,15 +119,8 @@ public class CTEntryPersistenceImpl
 			long companyId, OrderByComparator<CTEntry> orderByComparator)
 		throws NoSuchCTEntryException {
 
-		CTEntry ctEntry = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		throw new NoSuchCTEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			dummyFinderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -168,7 +161,8 @@ public class CTEntryPersistenceImpl
 			dummyFinderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<CTEntry> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<CTEntry, NoSuchCTEntryException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the ct entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchCTEntryException</code> if it could not be found.
@@ -182,21 +176,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry findByC_N(long companyId, String name)
 		throws NoSuchCTEntryException {
 
-		CTEntry ctEntry = fetchByC_N(companyId, name);
-
-		if (ctEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCTEntryException(message);
-		}
-
-		return ctEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			dummyFinderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -580,4 +561,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:482549931
+// LIFERAY-SERVICE-BUILDER-HASH:-774303921

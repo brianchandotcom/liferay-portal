@@ -188,6 +188,7 @@ export function VerticalBar({
 					<KeyboardArrowsIndicator
 						anchorRef={rootRef}
 						direction="vertical"
+						placement="tooltip-top"
 					/>
 				</ClayPortal>
 			)}

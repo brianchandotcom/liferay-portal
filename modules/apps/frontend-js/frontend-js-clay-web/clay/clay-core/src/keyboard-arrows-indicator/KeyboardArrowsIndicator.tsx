@@ -8,11 +8,11 @@ import {observeRect, useOverlayPosition} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 
-import type {AlignPoints} from '@clayui/shared';
-
 export type Direction = 'all' | 'horizontal' | 'vertical';
 
-export type Placement = 'center' | 'tooltip';
+export type Placement = 'center' | 'tooltip' | 'tooltip-top';
+
+type Offset = [number, number];
 
 export type Props = {
 
@@ -40,10 +40,12 @@ export type Props = {
 	/**
 	 * How the indicator is positioned relative to `anchorRef`. `tooltip`
 	 * (default) places it alongside the anchor with a directional arrow
-	 * that flips to fit the viewport. `center` overlays the indicator on
-	 * the anchor's center with no arrow — useful for narrow interactive
-	 * elements such as a resize handle, where the indicator should mark
-	 * the surface itself rather than point at it.
+	 * at the vertical center, flipping to fit the viewport. `tooltip-top`
+	 * uses the same arrow but anchors near the anchor's top edge — useful
+	 * for tall containers like a vertical navigation, where a centered
+	 * tooltip would sit far from the items the user is reading. `center`
+	 * overlays the indicator on the anchor's center with no arrow —
+	 * useful for narrow interactive elements such as a resize handle.
 	 */
 	placement?: Placement;
 
@@ -54,34 +56,27 @@ export type Props = {
 	spritemap?: string;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'aria-hidden' | 'role'>;
 
-// `alignmentPosition: 2` is `RightCenter` — anchor's center-right aligns
-// to the indicator's center-left. `autoBestAlign` flips to `LeftCenter`
-// when the indicator would overflow on the right; `dom-align` negates
-// the horizontal offset internally during that flip, so a single
-// `getOffset` value drives both sides. The default 4px gap from the
-// shared offset map is too tight for triggers that render a focus ring
-// around their bounding box, so the offset is widened.
+// `RightCenter` (2) anchors the indicator's center-left to the anchor's
+// center-right; `RightTop` (8) anchors the indicator's top-left to the
+// anchor's top-right. `autoBestAlign` flips horizontally when overflow
+// would push the indicator off-screen — `dom-align` negates the
+// horizontal offset internally during that flip, so a single
+// `getOffset` value drives both sides.
 
 const TOOLTIP_ALIGNMENT_POSITION = 2;
 
-const TOOLTIP_OFFSET = 12;
+const TOOLTIP_TOP_ALIGNMENT_POSITION = 8;
 
-// `['cc', 'cc']` aligns the indicator's center to the anchor's center
-// for the overlay-style placement used by narrow interactive elements
-// like the resize handle. `dom-align` accepts arbitrary point strings
-// at runtime, but the shared `AlignPoints` type only enumerates the
-// entries in `ALIGN_MAP`, so the array is cast at the call site.
+function getTooltipOffset(): Offset {
 
-const CENTER_ALIGNMENT_POINTS = ['cc', 'cc'] as const;
+	// The default 4px gap from the shared offset map is too tight for
+	// triggers that render a focus ring around their bounding box.
 
-const NO_OFFSET: [number, number] = [0, 0];
-
-function getTooltipOffset(): [number, number] {
-	return [TOOLTIP_OFFSET, 0];
+	return [12, 0];
 }
 
-function getCenterOffset(): [number, number] {
-	return NO_OFFSET;
+function getCenterOffset(): Offset {
+	return [0, 0];
 }
 
 export function KeyboardArrowsIndicator({
@@ -98,21 +93,24 @@ export function KeyboardArrowsIndicator({
 	const [flipped, setFlipped] = useState(false);
 	const [hasFocusWithin, setHasFocusWithin] = useState(false);
 
-	const isTooltip = placement === 'tooltip';
+	const isTooltip = placement === 'tooltip' || placement === 'tooltip-top';
+	const isCenter = placement === 'center';
 
 	useOverlayPosition(
 		{
 			alignmentByViewport: isTooltip,
 			alignmentPosition: isTooltip
-				? TOOLTIP_ALIGNMENT_POSITION
-				: (CENTER_ALIGNMENT_POINTS as unknown as AlignPoints),
+				? placement === 'tooltip-top'
+					? TOOLTIP_TOP_ALIGNMENT_POSITION
+					: TOOLTIP_ALIGNMENT_POSITION
+				: ['cc', 'cc'],
 			autoBestAlign: isTooltip,
 			getOffset: isTooltip ? getTooltipOffset : getCenterOffset,
 			isOpen: !!anchorRef,
 			ref: indicatorRef,
 			triggerRef: anchorRef ?? fallbackTriggerRef,
 		},
-		[anchorRef, isTooltip]
+		[anchorRef, placement]
 	);
 
 	// `useOverlayPosition` does not expose which side `autoBestAlign`
@@ -189,7 +187,7 @@ export function KeyboardArrowsIndicator({
 				{
 					'clay-keyboard-arrows-indicator-floating': !!anchorRef,
 					'clay-keyboard-arrows-indicator-floating-centered':
-						!!anchorRef && !isTooltip,
+						!!anchorRef && isCenter,
 					'clay-keyboard-arrows-indicator-floating-flipped':
 						!!anchorRef && isTooltip && flipped,
 					'clay-keyboard-arrows-indicator-floating-hidden':

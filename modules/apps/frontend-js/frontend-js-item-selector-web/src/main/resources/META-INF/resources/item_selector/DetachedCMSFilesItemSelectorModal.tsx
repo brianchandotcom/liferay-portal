@@ -249,6 +249,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 												event: React.MouseEvent
 											) => {
 												event.preventDefault();
+												event.stopPropagation();
 
 												navigateToFolder({
 													id: itemData.embedded.id,

@@ -740,9 +740,9 @@ test(
 		);
 
 		await test.step('Move the folder to Recycle Bin', async () => {
-			await contentsPage.goto();
-
-			await contentsPage.deleteFolder(folderName);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				folderData.id
+			);
 		});
 
 		await test.step('Assert navigation within Recycle Bin', async () => {

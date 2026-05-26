@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_INSTRUCTION_DEFINITION",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Instruction Definition"
+		"en_US": "AI Hub Instruction Definition"
 	},
 	"modifiable": true,
 	"name": "AIHubInstructionDefinition",
@@ -130,7 +130,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Instruction Definitions"
+		"en_US": "AI Hub Instruction Definitions"
 	},
 	"portlet": true,
 	"scope": "company",

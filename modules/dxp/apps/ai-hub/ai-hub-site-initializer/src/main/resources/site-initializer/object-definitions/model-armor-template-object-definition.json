@@ -8,7 +8,7 @@
 	"externalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Model Armor Template"
+		"en_US": "AI Hub Model Armor Template"
 	},
 	"modifiable": true,
 	"name": "AIHubModelArmorTemplate",
@@ -242,7 +242,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Model Armor Templates"
+		"en_US": "AI Hub Model Armor Templates"
 	},
 	"portlet": true,
 	"scope": "company",

@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_AGENT_DEFINITION",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Agent Definition"
+		"en_US": "AI Hub Agent Definition"
 	},
 	"modifiable": true,
 	"name": "AIHubAgentDefinition",
@@ -138,7 +138,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Agent Definitions"
+		"en_US": "AI Hub Agent Definitions"
 	},
 	"portlet": true,
 	"scope": "company",

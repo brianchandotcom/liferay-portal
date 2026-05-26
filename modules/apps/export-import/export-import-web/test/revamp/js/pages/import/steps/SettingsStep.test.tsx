@@ -11,8 +11,8 @@ import React from 'react';
 import SettingsStep from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/steps/SettingsStep';
 
 const defaultInitialValues = {
-	authorshipStrategy: 'useOriginalAuthor',
-	updateDataStrategy: 'mirror',
+	dataStrategy: 'MIRROR',
+	userIdStrategy: 'CURRENT_USER_ID',
 };
 
 const renderSettingsStep = (

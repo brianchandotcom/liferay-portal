@@ -103,7 +103,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			contextCompany.getCompanyId(), groupId);
 
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			exportRequest.getRequestPortletDataHandlers());
+			exportRequest);
 
 		long[] layoutIds = GetterUtil.getLongValues(
 			parameterMap.get("layoutIds"));

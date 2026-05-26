@@ -109,6 +109,7 @@ export function NewExport({
 				const result = await postExportProcess({
 					exportRequest: {
 						...normalizeDateFilter(values.dateFilter),
+						deletions: !!values.deletions,
 						fileName: values.fileName,
 						requestPortletDataHandlers:
 							toRequestPortletDataHandlers(

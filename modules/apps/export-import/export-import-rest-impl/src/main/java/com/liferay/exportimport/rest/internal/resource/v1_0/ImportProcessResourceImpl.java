@@ -255,7 +255,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		}
 
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			importRequest.getRequestPortletDataHandlers());
+			importRequest);
 
 		Map<String, Serializable> settingsMap =
 			_exportImportConfigurationSettingsMapFactory.

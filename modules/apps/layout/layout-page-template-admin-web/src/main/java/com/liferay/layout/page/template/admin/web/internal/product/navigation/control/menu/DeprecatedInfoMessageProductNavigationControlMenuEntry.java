@@ -1,0 +1,64 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.page.template.admin.web.internal.product.navigation.control.menu;
+
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.BaseInfoMessageProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.InfoMessageProductNavigationControlMenuEntryTypeConstants;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Georgel Pop
+ */
+@Component(
+	property = {
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.entry.order:Integer=250"
+	},
+	service = ProductNavigationControlMenuEntry.class
+)
+public class DeprecatedInfoMessageProductNavigationControlMenuEntry
+	extends BaseInfoMessageProductNavigationControlMenuEntry {
+
+	@Override
+	public boolean isShow(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return false;
+		}
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((scopeGroup == null) || !scopeGroup.isCompany()) {
+			return false;
+		}
+
+		return super.isShow(httpServletRequest);
+	}
+
+	@Override
+	protected String getPortletName() {
+		return LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
+	}
+
+	@Override
+	protected String getType() {
+		return InfoMessageProductNavigationControlMenuEntryTypeConstants.
+			DEPRECATED;
+	}
+
+}

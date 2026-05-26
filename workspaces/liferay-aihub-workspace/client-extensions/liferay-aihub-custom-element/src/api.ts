@@ -22,7 +22,7 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 		const csrfToken = (window as any).Liferay?.authToken;
 
 		const response = await fetch(
-			'/o/ai-hub-cell/v1.0/authorization-tokens',
+			`${liferayDXPURL}/o/ai-hub-cell/v1.0/authorization-tokens`,
 			{
 				headers: csrfToken
 					? new Headers({'x-csrf-token': csrfToken})
@@ -64,7 +64,7 @@ export async function getChatbotConfiguration(
 	chatbotExternalReferenceCode: string
 ): Promise<ChatbotConfiguration> {
 	const response = await fetch(
-		`${liferayDXPURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
+		`${aiHubURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
 		{
 			headers: new Headers({
 				Accept: 'application/json',

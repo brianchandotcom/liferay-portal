@@ -231,6 +231,15 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AIHubReport$]",
+		"roleName": "Guest",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -101,7 +102,7 @@ public class LoadBalancerUtil {
 		}
 
 		AtomicInteger counter = _roundRobinCounters.computeIfAbsent(
-			masterPrefix, key -> new AtomicInteger());
+			masterPrefix, key -> new AtomicInteger(_random.nextInt()));
 
 		int index = Math.floorMod(
 			counter.getAndIncrement(), eligibleJenkinsMasters.size());
@@ -216,6 +217,7 @@ public class LoadBalancerUtil {
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new ConcurrentHashMap<>();
+	private static final Random _random = new Random();
 	private static final Map<String, AtomicInteger> _roundRobinCounters =
 		new ConcurrentHashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(

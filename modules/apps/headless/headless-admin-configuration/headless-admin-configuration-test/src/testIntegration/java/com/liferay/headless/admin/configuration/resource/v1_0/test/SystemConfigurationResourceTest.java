@@ -7,6 +7,8 @@ package com.liferay.headless.admin.configuration.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.SystemConfiguration;
+import com.liferay.headless.admin.configuration.client.pagination.Page;
+import com.liferay.headless.admin.configuration.client.pagination.Pagination;
 import com.liferay.headless.admin.configuration.client.problem.Problem;
 import com.liferay.headless.admin.configuration.test.configuration.TestConfiguration;
 import com.liferay.headless.admin.configuration.test.configuration.TestFactoryConfiguration;
@@ -66,6 +68,35 @@ public class SystemConfigurationResourceTest
 
 		_testGetSystemConfigurationFromConfigurationScreen();
 		_testGetSystemConfigurationWithPasswordKey();
+	}
+
+	@Override
+	@Test
+	public void testGetSystemConfigurationsPage() throws Exception {
+		Page<SystemConfiguration> page =
+			systemConfigurationResource.getSystemConfigurationsPage(
+				Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		SystemConfiguration systemConfiguration1 =
+			testGetSystemConfigurationsPage_addSystemConfiguration(
+				randomSystemConfiguration());
+
+		SystemConfiguration systemConfiguration2 =
+			testGetSystemConfigurationsPage_addSystemConfiguration(
+				randomSystemConfiguration());
+
+		page = systemConfigurationResource.getSystemConfigurationsPage(
+			Pagination.of(1, (int)totalCount + 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			systemConfiguration1, (List<SystemConfiguration>)page.getItems());
+		assertContains(
+			systemConfiguration2, (List<SystemConfiguration>)page.getItems());
+		assertValid(page, testGetSystemConfigurationsPage_getExpectedActions());
 	}
 
 	@Override

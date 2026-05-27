@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -1016,9 +1015,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					() -> {
 						ThemeDisplay themeDisplay = new ThemeDisplay() {
 							{
-								setCompany(
-									_companyLocalService.getCompany(
-										group.getCompanyId()));
+								setCompany(contextCompany);
 								setPathImage(_portal.getPathImage());
 							}
 						};
@@ -1109,9 +1106,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, "defaultSiteRoleIds",
 		"defaultTeamIds", "googleMapsAPIKey"
 	};
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

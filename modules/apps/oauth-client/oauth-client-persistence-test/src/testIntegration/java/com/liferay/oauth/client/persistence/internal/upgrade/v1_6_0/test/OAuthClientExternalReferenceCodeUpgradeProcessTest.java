@@ -60,6 +60,7 @@ public class OAuthClientExternalReferenceCodeUpgradeProcessTest
 				null, jsonObject.toString(), null,
 				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+				OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
 				jsonObject.toString())
 		};
 	}

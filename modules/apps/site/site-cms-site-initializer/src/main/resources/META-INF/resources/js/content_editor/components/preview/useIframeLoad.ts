@@ -10,10 +10,10 @@ import {PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY} from './sessionKeys';
 
 // Iframes can fail silently (no JS error fires). We detect failures via
 // `onLoad` timing: header-blocked iframes (X-Frame-Options) fire `onLoad`
-// in <600ms with `chrome-error://`; unreachable URLs never fire `onLoad`,
+// in <280ms with `chrome-error://`; unreachable URLs never fire `onLoad`,
 // so we also need a timeout.
 
-const IFRAME_LOAD_BLOCKED_MS = 600;
+const IFRAME_LOAD_BLOCKED_MS = 280;
 const IFRAME_LOAD_TIMEOUT_MS = 8000;
 
 type Status = 'error' | 'idle' | 'loaded' | 'loading';

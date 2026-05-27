@@ -9359,6 +9359,12 @@ paths:
                     schema:
                         type: boolean
                 -   in: query
+                    name: excludedSiteExternalReferenceCodes
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                -   in: query
                     name: page
                     schema:
                         type: integer
@@ -9392,6 +9398,12 @@ paths:
                     name: active
                     schema:
                         type: boolean
+                -   in: query
+                    name: excludedExternalReferenceCodes
+                    schema:
+                        items:
+                            type: string
+                        type: array
                 -   in: query
                     name: page
                     schema:

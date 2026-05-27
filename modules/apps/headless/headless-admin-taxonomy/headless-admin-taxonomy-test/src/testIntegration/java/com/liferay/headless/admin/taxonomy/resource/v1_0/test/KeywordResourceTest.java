@@ -499,6 +499,19 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertEquals(randomKeyword, postKeyword);
 		assertValid(postKeyword);
 
+		List<AssetTagGroupRel> assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				postKeyword.getId());
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), 1, assetTagGroupRels.size());
+
+		AssetTagGroupRel assetTagGroupRel = assetTagGroupRels.get(0);
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), GroupConstants.ANY_PARENT_GROUP_ID,
+			assetTagGroupRel.getGroupId());
+
 		testGroup = originalTestGroup;
 	}
 

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {
@@ -25,7 +26,8 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 		'LPD-58677': {enabled: true},
 	}),
-	loginTest()
+	loginTest(),
+	rolesPagesTest
 );
 
 test(
@@ -85,5 +87,73 @@ test(
 
 			await deleteSpace(page, spaceName);
 		}
+	}
+);
+
+test(
+	'Define Permissions tree filters object definitions by depot role subtype',
+	{tag: '@LPD-88820'},
+	async ({apiHelpers, page, rolePage, rolesPage}) => {
+		const objectMenuItem = (id: number) =>
+			page.locator(`[data-qa-id="object_${id}"]`);
+
+		const projectObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectDefinitionSettings: [
+					{name: 'domain', value: 'project' as unknown as object},
+				],
+				scope: 'depot',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: projectObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const spaceObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectDefinitionSettings: [
+					{name: 'domain', value: 'space' as unknown as object},
+				],
+				scope: 'depot',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: spaceObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const projectRole = await apiHelpers.headlessAdminUser.postRole({
+			name: 'ProjectRole' + getRandomInt(),
+			roleType: 'depot',
+			subtype: 'project',
+		});
+		const spaceRole = await apiHelpers.headlessAdminUser.postRole({
+			name: 'SpaceRole' + getRandomInt(),
+			roleType: 'depot',
+			subtype: 'space',
+		});
+
+		await rolesPage.goto();
+		await rolesPage.rolesLink('Space').click();
+		await rolesPage.selectRole(spaceRole.name);
+
+		await rolePage.definePermissionsLink.click();
+
+		await expect(objectMenuItem(projectObjectDefinition.id!)).toHaveCount(
+			0
+		);
+		await expect(objectMenuItem(spaceObjectDefinition.id!)).toBeVisible();
+
+		await rolesPage.goto();
+		await rolesPage.rolesLink('Space').click();
+		await rolesPage.selectRole(projectRole.name);
+
+		await rolePage.definePermissionsLink.click();
+
+		await expect(objectMenuItem(projectObjectDefinition.id!)).toBeVisible();
+		await expect(objectMenuItem(spaceObjectDefinition.id!)).toHaveCount(0);
 	}
 );

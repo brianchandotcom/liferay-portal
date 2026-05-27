@@ -146,13 +146,12 @@ public class ExportTranslationServletTest {
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		String expectedTitle1 = RandomTestUtil.randomString();
+		String expectedTitle2 = RandomTestUtil.randomString();
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
-
-		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
 
 		FragmentEntryLink fragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
@@ -160,9 +159,9 @@ public class ExportTranslationServletTest {
 					"com.liferay.fragment.entry.processor.editable." +
 						"EditableFragmentEntryProcessor",
 					JSONUtil.put(
-						"title-1", JSONUtil.put("defaultValue", "Title One")
+						"title-1", JSONUtil.put("defaultValue", expectedTitle1)
 					).put(
-						"title-2", JSONUtil.put("defaultValue", "Title Two")
+						"title-2", JSONUtil.put("defaultValue", expectedTitle2)
 					)
 				).put(
 					"com.liferay.fragment.entry.processor.freemarker." +
@@ -173,7 +172,8 @@ public class ExportTranslationServletTest {
 				fragmentEntry.getExternalReferenceCode(), null,
 				fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
 				null, FragmentConstants.TYPE_COMPONENT, null, 0,
-				segmentsExperienceId);
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
 
 		String xliff = _exportTranslation(
 			Layout.class, layout.getPlid(), _MIMETYPE_XLIFF_2_0);
@@ -185,8 +185,8 @@ public class ExportTranslationServletTest {
 		Assert.assertTrue(xliff.contains(fragmentEntryLinkPrefix + "title-1"));
 		Assert.assertTrue(xliff.contains(fragmentEntryLinkPrefix + "title-2"));
 
-		Assert.assertTrue(xliff.contains("Title One"));
-		Assert.assertTrue(xliff.contains("Title Two"));
+		Assert.assertTrue(xliff.contains(expectedTitle1));
+		Assert.assertTrue(xliff.contains(expectedTitle2));
 	}
 
 	private String _exportTranslation(

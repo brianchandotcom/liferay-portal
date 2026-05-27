@@ -76,7 +76,7 @@ The elapsed time of the run, formatted as `<minutes>m <seconds>s`.
 
 The Task created in **Claim the Failure** is the persistent ticket of record for every verdict. Update it at the end of the run based on the verdict:
 
-- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. The title summarizes the regression. The description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to the Task with the **Fix** issue link type so the Task surfaces it as **is fixed by**. Return the Bug URL alongside the Task URL.
+- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. The title summarizes the regression. The description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Do **not** add the `claude-test-fix` label to the Bug — that label belongs to the Task alone, so the duplicate-ticket check in **Claim the Failure** matches one ticket per failure. Link the Bug to the Task with the **Fix** issue link type so the Task surfaces it as **is fixed by**. Return the Bug URL alongside the Task URL.
 
 - **Outdated test** — return the Task URL.
 

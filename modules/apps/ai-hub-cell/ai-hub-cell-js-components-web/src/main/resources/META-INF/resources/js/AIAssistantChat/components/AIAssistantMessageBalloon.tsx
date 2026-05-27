@@ -6,37 +6,61 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import FeedbackActionsRow from '../../ReportFeedback/FeedbackActionsRow';
+
 import '../chat.scss';
 import renderAIAssistantMessageMarkdown from '../utils/renderAIAssistantMessageMarkdown';
 
-const AssistantMessageBalloon: React.FC<{error: boolean; message: string}> = ({
+interface AssistantMessageBalloonProps {
+	error: boolean;
+	message: string;
+	onReport?: () => void;
+	onThumbsUp?: () => void;
+}
+
+const AssistantMessageBalloon: React.FC<AssistantMessageBalloonProps> = ({
 	error,
 	message,
+	onReport,
+	onThumbsUp,
 }) => {
 	return (
 		<div
-			className={`d-flex flex-row font-weight-semi-bold mb-2 rounded ${error ? 'ai-assistant-chat__ai-assistant-error-message-balloon' : 'ai-assistant-chat__ai-assistant-message-balloon'}`}
+			className={`d-flex flex-column mb-2 rounded ${error ? 'ai-assistant-chat__ai-assistant-error-message-balloon' : 'ai-assistant-chat__ai-assistant-message-balloon'}`}
 		>
-			<div className="align-items-start d-inline-block ml-2 mt-2">
-				<ClayIcon
-					color={error ? '#FF0000' : '#0B5FFF'}
-					height={12}
-					spritemap={Liferay.Icons.spritemap}
-					symbol={error ? 'exclamation-full' : 'stars'}
-					width={12}
-				/>
+			<div className="d-flex flex-row font-weight-semi-bold">
+				<div className="align-items-start d-inline-block ml-2 mt-2">
+					<ClayIcon
+						color={error ? '#FF0000' : '#0B5FFF'}
+						height={12}
+						spritemap={Liferay.Icons.spritemap}
+						symbol={error ? 'exclamation-full' : 'stars'}
+						width={12}
+					/>
+				</div>
+
+				{error ? (
+					<span className="m-2">
+						{Liferay.Language.get('generating-content-failed')}
+					</span>
+				) : (
+					<div
+						className="m-2"
+						dangerouslySetInnerHTML={{
+							__html: renderAIAssistantMessageMarkdown(message),
+						}}
+					/>
+				)}
 			</div>
 
-			{error ? (
-				<span className="m-2">
-					{Liferay.Language.get('generating-content-failed')}
-				</span>
-			) : (
-				<div
-					className="m-2"
-					dangerouslySetInnerHTML={{
-						__html: renderAIAssistantMessageMarkdown(message),
-					}}
+			{onReport && !error && (
+				<FeedbackActionsRow
+					className="mb-1 ml-2"
+					onRegenerate={() => {}}
+					onReport={onReport}
+					onThumbsUp={onThumbsUp}
+					regenerateDisabled
+					showRegenerate
 				/>
 			)}
 		</div>

@@ -12,6 +12,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {EventSource} from 'eventsource';
 import React, {useEffect, useRef, useState} from 'react';
 
+import ReportFeedbackModal from '../ReportFeedback/ReportFeedbackModal';
 import {
 	ChatContext,
 	createEventSource,
@@ -26,6 +27,7 @@ import './chat.scss';
 interface message {
 	sender: string;
 	text: string;
+	traceId?: string;
 }
 
 interface AIAssistantChatProps {
@@ -41,6 +43,7 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
+	const [reportTraceId, setReportTraceId] = useState<string | null>(null);
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -155,6 +158,10 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 							{
 								sender: 'assistant',
 								text: dataJSON['data'],
+								traceId:
+									dataJSON['traceId'] ??
+									eventSourceReference.current ??
+									undefined,
 							},
 						];
 					});
@@ -263,6 +270,23 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 								error={false}
 								key={index}
 								message={item.text}
+								onReport={
+									item.traceId
+										? () => setReportTraceId(item.traceId!)
+										: undefined
+								}
+								onThumbsUp={
+									item.traceId
+										? () =>
+												Liferay.Util.openToast({
+													message:
+														Liferay.Language.get(
+															'thanks-for-your-feedback'
+														),
+													type: 'success',
+												})
+										: undefined
+								}
 							/>
 						)
 					)}
@@ -325,6 +349,15 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 
 				<AIAssistantFooterDisclaimer />
 			</div>
+
+			{reportTraceId !== null && (
+				<ReportFeedbackModal
+					agentId={instructionDefinitionScope}
+					onClose={() => setReportTraceId(null)}
+					surface="AI_ASSISTANT"
+					traceId={reportTraceId}
+				/>
+			)}
 		</ClayDropDown>
 	);
 };

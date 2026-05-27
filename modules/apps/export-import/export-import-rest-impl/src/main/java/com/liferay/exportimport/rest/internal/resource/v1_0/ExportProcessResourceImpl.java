@@ -58,10 +58,10 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isDepot()) {
+		if ((group == null) || !group.isDepot()) {
 			throw new NotFoundException();
 		}
 
@@ -76,6 +76,10 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
+		if (group == null) {
+			throw new NotFoundException();
+		}
+
 		return _postExportProcess(group, exportProcessRequest);
 	}
 
@@ -85,10 +89,10 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 			ExportProcessRequest exportProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isSite()) {
+		if ((group == null) || !group.isSite()) {
 			throw new NotFoundException();
 		}
 

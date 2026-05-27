@@ -48,10 +48,10 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			Integer last, String range, Date startDate)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isDepot()) {
+		if ((group == null) || !group.isDepot()) {
 			throw new NotFoundException();
 		}
 
@@ -67,6 +67,10 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
+		if (group == null) {
+			throw new NotFoundException();
+		}
+
 		return _getExportPreview(
 			endDate, group.getGroupId(), last, range, startDate);
 	}
@@ -77,10 +81,10 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			String range, Date startDate)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isSite()) {
+		if ((group == null) || !group.isSite()) {
 			throw new NotFoundException();
 		}
 

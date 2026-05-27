@@ -21,12 +21,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -34,12 +38,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -86,6 +92,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
 					layoutSetPrototypeId);
+
+			_mergeLayoutPrototypeLayouts(layoutSetPrototype);
 
 			boolean importData = MapUtil.getBoolean(parameterMap, "importData");
 
@@ -200,6 +208,48 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_COMPANY);
 	}
 
+	private void _mergeLayoutPrototypeLayouts(
+			LayoutSetPrototype layoutSetPrototype)
+		throws PortalException {
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			layoutSetPrototypeGroup.getGroupId(), true);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(layoutSetPrototype.getCompanyId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			for (Layout layout : layouts) {
+				if (Validator.isNull(
+						layout.getPortletLayoutPageTemplateEntryERC())) {
+
+					continue;
+				}
+
+				try {
+					_sites.mergeLayoutPrototypeLayout(
+						layout.getGroup(), layout);
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to merge layout prototype into layout ",
+							layout.getPlid(), " of layout set prototype ",
+							layoutSetPrototype.getLayoutSetPrototypeId()),
+						exception);
+				}
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private static final String _TEMP_DIR =
 		SystemProperties.get(SystemProperties.TMP_DIR) +
 			"/liferay/layout_set_prototype/";
@@ -213,6 +263,9 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

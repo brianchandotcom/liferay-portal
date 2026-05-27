@@ -21,7 +21,10 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.defaultpermissions.util.PortalDefaultPermissionsUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -123,6 +126,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutComparator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -1577,6 +1581,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layout;
 	}
 
+	@Override
+	public Layout getLayout(long plid) throws PortalException {
+		Layout layout = layoutPersistence.findByPrimaryKey(plid);
+
+		if (_mergeLayout(layout, plid)) {
+			return layoutPersistence.findByPrimaryKey(plid);
+		}
+
+		return layout;
+	}
+
 	/**
 	 * Returns the layout matching the layout ID, group, and privacy; throws a
 	 * {@link NoSuchLayoutException} otherwise.
@@ -1591,7 +1606,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout getLayout(long groupId, boolean privateLayout, long layoutId)
 		throws PortalException {
 
-		return layoutPersistence.findByG_P_L(groupId, privateLayout, layoutId);
+		Layout layout = layoutPersistence.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (_mergeLayout(layout, groupId, privateLayout, layoutId)) {
+			return layoutPersistence.findByG_P_L(
+				groupId, privateLayout, layoutId);
+		}
+
+		return layout;
 	}
 
 	@Override
@@ -4527,6 +4550,57 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
+	}
+
+	private boolean _mergeLayout(Layout layout, Object... arguments)
+		throws PortalException {
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress() ||
+			StartupHelperUtil.isUpgrading()) {
+
+			return false;
+		}
+
+		arguments = ArrayUtil.append(
+			arguments, CTCollectionThreadLocal.getCTCollectionId());
+
+		Group group = layout.getGroup();
+
+		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
+				"getLayout", arguments) &&
+			!group.isUser()) {
+
+			return false;
+		}
+
+		if (Validator.isNull(layout.getPortletLayoutPageTemplateEntryERC()) ||
+			Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
+
+			return false;
+		}
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(false);
+
+			Sites sites = _sitesSnapshot.get();
+
+			sites.mergeLayoutPrototypeLayout(group, layout);
+		}
+		catch (CTTransactionException | PortalException exception) {
+			throw exception;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setMergeComplete(
+				"getLayout", arguments);
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+
+		return true;
 	}
 
 	private void _resetPortalPreferences(Layout layout) {

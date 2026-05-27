@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import jakarta.portlet.PortletPreferences;
@@ -404,6 +405,22 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypePortletLayout(
+			Group group, boolean privateLayout,
+			long layoutPageTemplateEntryGroupId,
+			LayoutPrototype layoutPrototype, boolean linkEnabled)
+		throws Exception {
+
+		return addTypePortletLayout(
+			group.getGroupId(),
+			RandomTestUtil.randomString(
+				LayoutFriendlyURLRandomizerBumper.INSTANCE,
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			privateLayout, layoutPageTemplateEntryGroupId, layoutPrototype,
+			linkEnabled, false);
+	}
+
+	public static Layout addTypePortletLayout(
 			Group group, long parentLayoutPlid)
 		throws Exception {
 
@@ -521,6 +538,18 @@ public class LayoutTestUtil {
 			boolean hidden)
 		throws Exception {
 
+		return addTypePortletLayout(
+			groupId, name, privateLayout, groupId, layoutPrototype, linkEnabled,
+			hidden);
+	}
+
+	public static Layout addTypePortletLayout(
+			long groupId, String name, boolean privateLayout,
+			long layoutPageTemplateEntryGroupId,
+			LayoutPrototype layoutPrototype, boolean linkEnabled,
+			boolean hidden)
+		throws Exception {
+
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
@@ -549,7 +578,7 @@ public class LayoutTestUtil {
 					getFirstLayoutPageTemplateEntry(
 						layoutPrototype.getLayoutPrototypeId());
 
-			layoutPageTemplateEntry.setGroupId(group.getGroupId());
+			layoutPageTemplateEntry.setGroupId(layoutPageTemplateEntryGroupId);
 
 			layoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
@@ -558,6 +587,11 @@ public class LayoutTestUtil {
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryERC",
 				layoutPageTemplateEntry.getExternalReferenceCode());
+
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryScopeERC",
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					layoutPageTemplateEntryGroupId, groupId));
 
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);

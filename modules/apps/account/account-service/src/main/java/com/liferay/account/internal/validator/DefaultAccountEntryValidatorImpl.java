@@ -35,6 +35,16 @@ public class DefaultAccountEntryValidatorImpl
 	extends BaseAccountEntryValidator {
 
 	@Override
+	public DefaultAccountEntryValidatorConfiguration getConfiguration(
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			DefaultAccountEntryValidatorConfiguration.class,
+			accountEntry.getCompanyId());
+	}
+
+	@Override
 	public String getKey(
 		AccountEntry accountEntry, Map<String, Object> additionalProps) {
 
@@ -53,16 +63,6 @@ public class DefaultAccountEntryValidatorImpl
 		).resultMessage(
 			"an-error-occurred"
 		).build();
-	}
-
-	@Override
-	protected DefaultAccountEntryValidatorConfiguration getConfiguration(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
-		throws ConfigurationException {
-
-		return _configurationProvider.getCompanyConfiguration(
-			DefaultAccountEntryValidatorConfiguration.class,
-			accountEntry.getCompanyId());
 	}
 
 	@Reference

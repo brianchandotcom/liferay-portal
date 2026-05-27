@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.validation.ValidationException;
 
@@ -83,7 +84,8 @@ public class SystemConfigurationResourceImpl
 	}
 
 	@Override
-	public Page<SystemConfiguration> getSystemConfigurationsPage()
+	public Page<SystemConfiguration> getSystemConfigurationsPage(
+			Pagination pagination)
 		throws Exception {
 
 		_checkFeatureFlag();
@@ -98,7 +100,11 @@ public class SystemConfigurationResourceImpl
 
 		_addConfigurationScreenSystemConfigurations(systemConfigurations);
 
-		return Page.of(systemConfigurations);
+		return Page.of(
+			ListUtil.subList(
+				systemConfigurations, pagination.getStartPosition(),
+				pagination.getEndPosition()),
+			pagination, systemConfigurations.size());
 	}
 
 	@Override

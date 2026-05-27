@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.validation.ValidationException;
 
@@ -90,7 +91,7 @@ public class SiteConfigurationResourceImpl
 
 	@Override
 	public Page<SiteConfiguration> getSiteSiteConfigurationsPage(
-			String siteExternalReferenceCode)
+			String siteExternalReferenceCode, Pagination pagination)
 		throws Exception {
 
 		_checkFeatureFlag();
@@ -115,7 +116,10 @@ public class SiteConfigurationResourceImpl
 					ActionKeys.UPDATE, "postSiteSiteConfigurationBatch",
 					Group.class.getName(), group.getGroupId())
 			).build(),
-			siteConfigurations);
+			ListUtil.subList(
+				siteConfigurations, pagination.getStartPosition(),
+				pagination.getEndPosition()),
+			pagination, siteConfigurations.size());
 	}
 
 	@Override

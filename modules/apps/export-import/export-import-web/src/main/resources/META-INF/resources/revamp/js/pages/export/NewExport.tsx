@@ -131,7 +131,7 @@ export function NewExport({
 					return;
 				}
 
-				window.location.href = backURL;
+				Liferay.Util.navigate(backURL);
 			}}
 			validate={(values: FormikValues) => {
 				const errors: {[key: string]: string} = {};

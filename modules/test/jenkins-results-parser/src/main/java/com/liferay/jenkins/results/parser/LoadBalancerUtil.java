@@ -109,17 +109,12 @@ public class LoadBalancerUtil {
 		JenkinsMaster selectedJenkinsMaster = eligibleJenkinsMasters.get(index);
 
 		if (verbose) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Selected master ");
-			sb.append(selectedJenkinsMaster.getName());
-			sb.append(" via round-robin (");
-			sb.append(eligibleJenkinsMasters.size());
-			sb.append(" eligible masters under prefix ");
-			sb.append(masterPrefix);
-			sb.append(")");
-
-			System.out.println(sb.toString());
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Selected master ", selectedJenkinsMaster.getName(),
+					" via round-robin (",
+					String.valueOf(eligibleJenkinsMasters.size()),
+					" eligible masters under prefix ", masterPrefix, ")"));
 		}
 
 		return "http://" + selectedJenkinsMaster.getName();
@@ -186,20 +181,20 @@ public class LoadBalancerUtil {
 
 		List<String> blacklist = new ArrayList<>();
 
-		String propertyBlacklistString = properties.getProperty(
-			"jenkins.load.balancer.blacklist", "");
+		String propertyBlacklistString = JenkinsResultsParserUtil.getProperty(
+			properties, "jenkins.load.balancer.blacklist");
 
-		for (String blacklistItem : propertyBlacklistString.split(",")) {
-			blacklistItem = blacklistItem.trim();
+		if (propertyBlacklistString != null) {
+			for (String blacklistItem : propertyBlacklistString.split(",")) {
+				blacklistItem = blacklistItem.trim();
 
-			if (!blacklistItem.isEmpty()) {
-				blacklist.add(blacklistItem);
+				if (!blacklistItem.isEmpty()) {
+					blacklist.add(blacklistItem);
+				}
 			}
 		}
 
-		if ((requestBlacklistString != null) &&
-			!requestBlacklistString.isEmpty()) {
-
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(requestBlacklistString)) {
 			String[] requestBlacklistItems = requestBlacklistString.toLowerCase(
 			).split(
 				"\\s*,\\s*"

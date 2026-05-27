@@ -59,6 +59,9 @@ components:
                     type: object
                 oidcUserInfoMapperJSON:
                     type: string
+                tokenConnectionTimeout:
+                    format: int32
+                    type: integer
                 tokenRequestParametersJSON:
                     type: string
             type: object

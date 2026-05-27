@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Feliphe Marinho
@@ -50,12 +49,12 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 		_userToken = userToken;
 
 		_searchCallable = new CompanyInheritableThreadLocalCallable<>(
-			() -> _search(_webSearchRequestAtomicReference.get()));
+			() -> _search(_webSearchRequest));
 	}
 
 	@Override
 	public WebSearchResults search(WebSearchRequest webSearchRequest) {
-		_webSearchRequestAtomicReference.set(webSearchRequest);
+		_webSearchRequest = webSearchRequest;
 
 		try {
 			return _searchCallable.call();
@@ -154,7 +153,6 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 	private final long _oAuth2ApplicationId;
 	private final Callable<WebSearchResults> _searchCallable;
 	private final String _userToken;
-	private final AtomicReference<WebSearchRequest>
-		_webSearchRequestAtomicReference = new AtomicReference<>();
+	private WebSearchRequest _webSearchRequest;
 
 }

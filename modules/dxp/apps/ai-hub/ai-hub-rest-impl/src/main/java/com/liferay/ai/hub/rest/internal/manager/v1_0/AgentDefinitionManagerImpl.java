@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -119,7 +120,7 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			companyId, _getObjectDefinition(companyId), null, null,
-			dtoConverterContext, filter, pagination, search, sorts);
+			dtoConverterContext, _getFilter(filter), pagination, search, sorts);
 
 		return Page.of(
 			actions,
@@ -280,6 +281,14 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			workflowDefinition.getWorkflowDefinitionId(), methodName,
 			_kaleoDefinitionModelResourcePermission, (Long)null,
 			dtoConverterContext.getUriInfo());
+	}
+
+	private String _getFilter(String filter) {
+		if (Validator.isNull(filter)) {
+			return "externalReferenceCode ne 'L_PAGE_BUILDER'";
+		}
+
+		return "(" + filter + ") and externalReferenceCode ne 'L_PAGE_BUILDER'";
 	}
 
 	private ObjectDefinition _getObjectDefinition(long companyId)

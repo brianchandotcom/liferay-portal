@@ -13,24 +13,20 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.admin.web.internal.info.item.LayoutInfoItemFields;
 import com.liferay.layout.util.InfoFieldUtil;
+import com.liferay.layout.util.LayoutServiceContextHelperUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.ServicePreAction;
-import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,9 +48,9 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 	public InfoItemFieldValues getInfoItemFieldValues(
 		Layout layout, long segmentsExperienceId) {
 
-		HttpServletRequest httpServletRequest = _setUpThemeDisplay(layout);
+		try (AutoCloseable autoCloseable = _getServiceContextAutoCloseable(
+				layout)) {
 
-		try {
 			long defaultSegmentsExperienceId =
 				SegmentsExperienceLocalServiceUtil.
 					fetchDefaultSegmentsExperienceId(layout.getPlid());
@@ -87,10 +83,8 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 					defaultSegmentsExperienceId, layout, segmentsExperienceId)
 			).build();
 		}
-		finally {
-			if (httpServletRequest != null) {
-				httpServletRequest.removeAttribute(WebKeys.THEME_DISPLAY);
-			}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -182,7 +176,9 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		}
 	}
 
-	private HttpServletRequest _setUpThemeDisplay(Layout layout) {
+	private AutoCloseable _getServiceContextAutoCloseable(Layout layout)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -198,33 +194,8 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 			return null;
 		}
 
-		try {
-			HttpServletResponse httpServletResponse =
-				new DummyHttpServletResponse();
-
-			ServicePreAction servicePreAction = new ServicePreAction();
-
-			servicePreAction.servicePre(
-				httpServletRequest, httpServletResponse, false);
-
-			ThemeServicePreAction themeServicePreAction =
-				new ThemeServicePreAction();
-
-			themeServicePreAction.run(httpServletRequest, httpServletResponse);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			themeDisplay.setLayout(layout);
-			themeDisplay.setScopeGroupId(layout.getGroupId());
-			themeDisplay.setSiteGroupId(layout.getGroupId());
-
-			return httpServletRequest;
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		return LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+			layout);
 	}
 
 	private final FragmentRendererController _fragmentRendererController;

@@ -20,6 +20,8 @@ import ChatbotIntro from './ChatbotIntro';
 import ErrorMessage from './ErrorMessage';
 import {ChatIcon, CloseIcon} from './Icons';
 import LoadingIndicator from './LoadingIndicator';
+import SendFeedbackModal from './SendFeedbackModal';
+import Toast from './Toast';
 import UserMessage from './UserMessage';
 
 import type {
@@ -41,7 +43,9 @@ export default function ChatbotWidget({
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [notificationDismissed, setNotificationDismissed] = useState(false);
 	const [open, setOpen] = useState(false);
+	const [reportTraceId, setReportTraceId] = useState<string | null>(null);
 	const [subscribed, setSubscribed] = useState(false);
+	const [toastMessage, setToastMessage] = useState<string | null>(null);
 
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
@@ -99,7 +103,14 @@ export default function ChatbotWidget({
 
 						setMessages((prev) => [
 							...prev,
-							{sender: 'assistant', text: data.data},
+							{
+								sender: 'assistant',
+								text: data.data,
+								traceId:
+									data.traceId ??
+									eventSourceReference.current ??
+									undefined,
+							},
 						]);
 					}
 					catch (error) {
@@ -272,6 +283,22 @@ export default function ChatbotWidget({
 								<AssistantMessage
 									avatar={avatarURL}
 									key={index}
+									onReport={
+										msg.traceId
+											? () =>
+													setReportTraceId(
+														msg.traceId!
+													)
+											: undefined
+									}
+									onThumbsUp={
+										msg.traceId
+											? () =>
+													setToastMessage(
+														'Thanks for your feedback!'
+													)
+											: undefined
+									}
 									text={msg.text}
 									title={localized.title}
 								/>
@@ -326,6 +353,25 @@ export default function ChatbotWidget({
 			>
 				{open ? <CloseIcon /> : <ChatIcon />}
 			</button>
+
+			{reportTraceId !== null && (
+				<SendFeedbackModal
+					agentId={widgetConfiguration.chatbotExternalReferenceCode}
+					onClose={() => setReportTraceId(null)}
+					onSubmitted={() => {
+						setReportTraceId(null);
+						setToastMessage('Thanks for your feedback!');
+					}}
+					traceId={reportTraceId}
+				/>
+			)}
+
+			{toastMessage && (
+				<Toast
+					message={toastMessage}
+					onDismiss={() => setToastMessage(null)}
+				/>
+			)}
 		</>
 	);
 }

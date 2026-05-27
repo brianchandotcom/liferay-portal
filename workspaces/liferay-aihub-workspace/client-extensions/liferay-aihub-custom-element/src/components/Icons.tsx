@@ -54,3 +54,36 @@ export function StarsIcon() {
 		</svg>
 	);
 }
+
+export function ThumbsUpIcon() {
+	return (
+		<svg aria-hidden="true" viewBox="0 0 24 24">
+			<path d="M2 20h2.5a1 1 0 001-1v-8a1 1 0 00-1-1H2v10zm5-9.5V19a1 1 0 001 1h8.5a1.5 1.5 0 001.45-1.11l1.83-6.6A1.5 1.5 0 0018.33 10H13V5.5A1.5 1.5 0 0011.5 4a.75.75 0 00-.7.48L7.5 12.3v-1.8z" />
+		</svg>
+	);
+}
+
+export function ThumbsDownIcon() {
+	return (
+		<svg aria-hidden="true" viewBox="0 0 24 24">
+			<path d="M22 4h-2.5a1 1 0 00-1 1v8a1 1 0 001 1H22V4zm-5 9.5V5a1 1 0 00-1-1H7.5a1.5 1.5 0 00-1.45 1.11l-1.83 6.6A1.5 1.5 0 005.67 14H11v4.5A1.5 1.5 0 0012.5 20a.75.75 0 00.7-.48L16.5 11.7v1.8z" />
+		</svg>
+	);
+}
+
+export function CheckCircleIcon() {
+	return (
+		<svg aria-hidden="true" viewBox="0 0 16 16">
+			<circle cx="8" cy="8" fill="#287d3c" r="8" />
+
+			<path
+				d="M4.5 8.2l2.3 2.3 4.7-4.7"
+				fill="none"
+				stroke="#fff"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="1.6"
+			/>
+		</svg>
+	);
+}

@@ -7,8 +7,15 @@
 	--aihub-accent: #0b5fff;
 	--aihub-bg-light: #f7f8f9;
 	--aihub-border: #e7e7ed;
+	--aihub-danger: #da1414;
+	--aihub-danger-bg: #feefef;
+	--aihub-danger-border: #f9c7c7;
+	--aihub-success: #287d3c;
+	--aihub-success-bg: #edf9f0;
+	--aihub-success-border: #5aca75;
 	--aihub-text-main: #272833;
 	--aihub-text-muted: #6b6c7e;
+	--aihub-warning: #b95000;
 
 	all: initial;
 	font-family:
@@ -270,11 +277,11 @@
 }
 
 .aihub-msg-error {
-	background: #feefef;
+	background: var(--aihub-danger-bg);
 }
 
 .aihub-msg-error .aihub-msg-assistant-icon svg {
-	fill: #da1414;
+	fill: var(--aihub-danger);
 }
 
 .aihub-msg-user {
@@ -430,6 +437,246 @@
 	fill: currentColor;
 	height: 0.875rem;
 	width: 0.875rem;
+}
+
+.aihub-feedback-actions {
+	display: flex;
+	gap: 0.375rem;
+	margin-top: 0.375rem;
+}
+
+.aihub-feedback-btn {
+	align-items: center;
+	background: none;
+	border: none;
+	border-radius: 0.25rem;
+	color: var(--aihub-text-muted);
+	cursor: pointer;
+	display: inline-flex;
+	height: 1.75rem;
+	justify-content: center;
+	padding: 0;
+	width: 1.75rem;
+}
+
+.aihub-feedback-btn svg {
+	fill: currentColor;
+	height: 1rem;
+	pointer-events: none;
+	width: 1rem;
+}
+
+.aihub-feedback-btn:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.aihub-feedback-btn:hover:not(:disabled) {
+	background: var(--aihub-bg-light);
+	color: var(--aihub-text-main);
+}
+
+.aihub-modal-overlay {
+	align-items: center;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	inset: 0;
+	justify-content: center;
+	padding: 1rem;
+	position: fixed;
+	z-index: 1;
+}
+
+.aihub-modal {
+	background: #fff;
+	border-radius: 0.5rem;
+	box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	max-height: calc(100vh - 2rem);
+	max-width: 33rem;
+	overflow: hidden;
+	width: 100%;
+}
+
+.aihub-modal form {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.aihub-modal-header {
+	align-items: center;
+	border-bottom: 1px solid var(--aihub-border);
+	display: flex;
+	flex-shrink: 0;
+	justify-content: space-between;
+	padding: 1rem 1.5rem;
+}
+
+.aihub-modal-title {
+	color: var(--aihub-text-main);
+	font-size: 1.25rem;
+	font-weight: 700;
+	margin: 0;
+}
+
+.aihub-modal-close {
+	align-items: center;
+	background: none;
+	border: none;
+	border-radius: 0.375rem;
+	color: var(--aihub-text-muted);
+	cursor: pointer;
+	display: flex;
+	height: 1.75rem;
+	justify-content: center;
+	padding: 0.25rem;
+	width: 1.75rem;
+}
+
+.aihub-modal-close:hover {
+	background: var(--aihub-bg-light);
+	color: var(--aihub-text-main);
+}
+
+.aihub-modal-close svg {
+	fill: currentColor;
+	height: 0.875rem;
+	width: 0.875rem;
+}
+
+.aihub-modal-body {
+	overflow-y: auto;
+	padding: 1.5rem;
+}
+
+.aihub-modal-error {
+	background: var(--aihub-danger-bg);
+	border: 1px solid var(--aihub-danger-border);
+	border-radius: 0.25rem;
+	color: var(--aihub-danger);
+	font-size: 0.875rem;
+	margin-bottom: 1rem;
+	padding: 0.75rem 1rem;
+}
+
+.aihub-modal-field {
+	margin-bottom: 1rem;
+}
+
+.aihub-modal-field:last-child {
+	margin-bottom: 0;
+}
+
+.aihub-modal-field label {
+	color: var(--aihub-text-main);
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.aihub-modal-required {
+	color: var(--aihub-warning);
+	margin-left: 0.25rem;
+}
+
+.aihub-modal-field select,
+.aihub-modal-field textarea {
+	background: var(--aihub-bg-light);
+	border: 1px solid var(--aihub-border);
+	border-radius: 0.25rem;
+	color: var(--aihub-text-main);
+	font-family: inherit;
+	font-size: 0.875rem;
+	padding: 0.5rem 0.75rem;
+	width: 100%;
+}
+
+.aihub-modal-field textarea {
+	min-height: 5rem;
+	resize: vertical;
+}
+
+.aihub-modal-field select:focus,
+.aihub-modal-field textarea:focus {
+	border-color: var(--aihub-accent);
+	outline: none;
+}
+
+.aihub-modal-field select:disabled,
+.aihub-modal-field textarea:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.aihub-modal-footer {
+	border-top: 1px solid var(--aihub-border);
+	display: flex;
+	flex-shrink: 0;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	padding: 1rem 1.5rem;
+}
+
+.aihub-modal-btn {
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	padding: 0.5rem 1rem;
+}
+
+.aihub-modal-btn-secondary {
+	background: #fff;
+	border-color: var(--aihub-border);
+	color: var(--aihub-text-main);
+}
+
+.aihub-modal-btn-secondary:hover:not(:disabled) {
+	background: var(--aihub-bg-light);
+}
+
+.aihub-modal-btn-primary {
+	background: var(--aihub-accent);
+	color: #fff;
+}
+
+.aihub-modal-btn-primary:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.aihub-toast {
+	align-items: center;
+	background: var(--aihub-success-bg);
+	border: 1px solid var(--aihub-success-border);
+	border-radius: 0.25rem;
+	bottom: 1.25rem;
+	box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+	color: var(--aihub-success);
+	display: flex;
+	font-size: 0.875rem;
+	gap: 0.75rem;
+	left: 1.25rem;
+	max-width: calc(100vw - 2.5rem);
+	padding: 1rem;
+	position: fixed;
+	width: 22.5rem;
+}
+
+.aihub-toast-icon {
+	align-items: center;
+	display: flex;
+	flex-shrink: 0;
+}
+
+.aihub-toast-icon svg {
+	height: 1.25rem;
+	width: 1.25rem;
 }
 
 @media (max-width: 480px) {

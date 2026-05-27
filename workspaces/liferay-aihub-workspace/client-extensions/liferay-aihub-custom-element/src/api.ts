@@ -159,3 +159,32 @@ export async function postChatMessage(
 		}
 	);
 }
+
+export type ReportFeedbackReason =
+	| 'AGENT_ERROR_OR_MALFUNCTION'
+	| 'INAPPROPRIATE_OR_HARMFUL_CONTENT'
+	| 'INCORRECT_OR_INACCURATE_RESPONSE'
+	| 'OTHER'
+	| 'PII_EXPOSURE';
+
+export interface ReportFeedbackPayload {
+	agentId: string;
+	comment?: string;
+	reason: ReportFeedbackReason;
+	surface: 'CLICK_TO_CHAT';
+	traceId: string;
+}
+
+// TODO LPD-92295 replace with a real POST to
+// `${aiHubURL}/o/ai-hub-cell/v1.0/ai-issue-reports` once the backend endpoint
+// lands (tracked under LPD-92286's follow-ups).
+
+export async function postAIIssueReport(
+	payload: ReportFeedbackPayload
+): Promise<{id: string}> {
+	void payload;
+
+	await new Promise((resolve) => setTimeout(resolve, 400));
+
+	return {id: `mock-${Date.now()}`};
+}

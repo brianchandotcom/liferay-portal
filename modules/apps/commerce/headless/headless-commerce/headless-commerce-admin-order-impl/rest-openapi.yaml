@@ -1423,23 +1423,6 @@ components:
                     example: v1.0.0
                     type: string
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        CommerceOpenApiAdmin.admin: Grants access to admin operations
-                        CommerceOpenApiAdmin.read: Grants read access
-                        CommerceOpenApiAdmin.write: Grants write access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     description:
         "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay',
@@ -1805,11 +1788,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Order Rule Account Group by ID.
             tags: ["OrderRuleAccountGroup"]
     /order-rule-account-groups/{orderRuleAccountGroupId}/account-group:
@@ -1870,11 +1848,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets account group associated to the pricing object.
             tags: ["OrderAccountGroup"]
     /order-rule-accounts/{orderRuleAccountId}:
@@ -1908,11 +1881,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Order Rule Account by ID.
             tags: ["OrderRuleAccount"]
     /order-rule-accounts/{orderRuleAccountId}/account:
@@ -1973,11 +1941,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets account associated to the pricing object.
             tags: ["Account"]
     /order-rule-channels/{orderRuleChannelId}:
@@ -2011,11 +1974,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Order Rule Channel by ID.
             tags: ["OrderRuleChannel"]
     /order-rule-channels/{orderRuleChannelId}/channel:
@@ -2076,11 +2034,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets channel associated to the pricing object.
             tags: ["Channel"]
     /order-rule-order-types/{orderRuleOrderTypeId}:
@@ -2114,11 +2067,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Order Rule Order Type by ID.
             tags: ["OrderRuleOrderType"]
     /order-rule-order-types/{orderRuleOrderTypeId}/order-type:
@@ -2179,11 +2127,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets order type associated to the pricing object.
             tags: ["OrderType"]
     /order-rules:
@@ -2260,11 +2203,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Rules.
             tags: ["OrderRule"]
         post:
@@ -2328,11 +2266,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order Rule.
             tags: ["OrderRule"]
     /order-rules/by-externalReferenceCode/{externalReferenceCode}:
@@ -2365,11 +2298,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Order Rule by external reference code.
             tags: ["OrderRule"]
         get:
@@ -2430,11 +2358,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a Order Rule by external reference code.
             tags: ["OrderRule"]
         patch:
@@ -2504,11 +2427,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Updates a Order Rule by external reference code.
             tags: ["OrderRule"]
         put:
@@ -2578,11 +2496,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Replaces a order rule with information sent in the request body. Any missing fields are deleted
                 unless they are required.
             tags: ["OrderRule"]
@@ -2660,11 +2573,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Rule Account Groups.
             tags: ["OrderRuleAccountGroup"]
         post:
@@ -2740,11 +2648,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order Rule Account Group.
             tags: ["OrderRuleAccountGroup"]
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-accounts:
@@ -2821,11 +2724,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Rule Account.
             tags: ["OrderRuleAccount"]
         post:
@@ -2901,11 +2799,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order Rule Account.
             tags: ["OrderRuleAccount"]
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-channels:
@@ -2982,11 +2875,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Rule Channel.
             tags: ["OrderRuleChannel"]
         post:
@@ -3062,11 +2950,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order Rule Channel.
             tags: ["OrderRuleChannel"]
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-order-types:
@@ -3143,11 +3026,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Rule Order Types.
             tags: ["OrderRuleOrderType"]
         post:
@@ -3223,11 +3101,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order Rule Order Type.
             tags: ["OrderRuleOrderType"]
     /order-rules/{id}:
@@ -3258,11 +3131,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an OrderRule by ID.
             tags:
                 -   OrderRule
@@ -3322,11 +3190,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an OrderRule by ID.
             tags:
                 -   OrderRule
@@ -3398,11 +3261,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an OrderRule by ID.
             tags:
                 -   OrderRule
@@ -3492,11 +3350,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order rule Account Groups.
             tags: ["OrderRuleAccountGroup"]
         post:
@@ -3573,11 +3426,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order rule Account Group.
     /order-rules/{id}/order-rule-accounts:
         get:
@@ -3665,11 +3513,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order rule Accounts.
             tags: ["OrderRuleAccount"]
         post:
@@ -3746,11 +3589,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order rule Account.
     /order-rules/{id}/order-rule-channels:
         get:
@@ -3838,11 +3676,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order rule Channels.
             tags: ["OrderRuleChannel"]
         post:
@@ -3919,11 +3752,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order rule Channel.
             tags: ["OrderRuleChannel"]
     /order-rules/{id}/order-rule-order-types:
@@ -4002,11 +3830,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order rule Order Types.
             tags: ["OrderRuleOrderType"]
         post:
@@ -4083,11 +3906,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Order rule Order Type.
             tags: ["OrderRuleOrderType"]
     /order-type-channels/{orderTypeChannelId}:
@@ -4121,11 +3939,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Order Type Channel by ID.
             tags: ["OrderTypeChannel"]
     /order-type-channels/{orderTypeChannelId}/channel:
@@ -4186,11 +3999,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets channel associated to the order type object.
             tags: ["Channel"]
     /order-types:
@@ -4270,11 +4078,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a List of OrderTypes.
             tags:
                 -   OrderType
@@ -4339,11 +4142,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a OrderType.
             tags:
                 -   OrderType
@@ -4375,11 +4173,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an OrderType by external reference code.
             tags:
                 -   OrderType
@@ -4439,11 +4232,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an OrderType by external reference code.
             tags:
                 -   OrderType
@@ -4515,11 +4303,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an OrderType by external reference code.
             tags:
                 -   OrderType
@@ -4591,11 +4374,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Replaces a order type with information sent in the request body. Any missing fields are deleted
                 unless they are required.
             tags:
@@ -4674,11 +4452,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Type Channels.
             tags: ["OrderTypeChannel"]
         post:
@@ -4754,11 +4527,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Order Type Channel.
             tags: ["OrderTypeChannel"]
     /order-types/{id}:
@@ -4790,11 +4558,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an OrderType by ID.
             tags:
                 -   OrderType
@@ -4855,11 +4618,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an OrderType by ID.
             tags:
                 -   OrderType
@@ -4932,11 +4690,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an OrderType by ID.
             tags:
                 -   OrderType
@@ -5021,11 +4774,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Type Channels.
             tags: ["OrderTypeChannel"]
         post:
@@ -5102,11 +4850,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Order Type Channel.
             tags: ["OrderTypeChannel"]
     /orderItems:
@@ -5182,11 +4925,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Order Items.
             tags: ["OrderItem"]
     /orderItems/by-externalReferenceCode/{externalReferenceCode}:
@@ -5216,11 +4954,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order Item by external reference code.
             tags:
                 -   OrderItem
@@ -5280,11 +5013,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order Item by external reference code.
             tags:
                 -   OrderItem
@@ -5353,11 +5081,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order Item by external reference code.
             tags:
                 -   OrderItem
@@ -5425,11 +5148,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order Item by external reference code.
             tags:
                 -   OrderItem
@@ -5461,11 +5179,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order Item by ID.
             tags:
                 -   OrderItem
@@ -5526,11 +5239,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order Item by ID.
             tags:
                 -   OrderItem
@@ -5600,11 +5308,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order Item by ID.
             tags:
                 -   OrderItem
@@ -5673,11 +5376,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Update an Order Item by ID.
             tags:
                 -   OrderItem
@@ -5739,11 +5437,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order Item by ID.
             tags:
                 -   ShippingAddress
@@ -5774,11 +5467,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order Note by external reference code.
             tags:
                 -   OrderNote
@@ -5838,11 +5526,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order Note by external reference code.
             tags:
                 -   OrderNote
@@ -5907,11 +5590,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order Note by external reference code.
             tags:
                 -   OrderNote
@@ -5943,11 +5621,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order Note by ID.
             tags:
                 -   OrderNote
@@ -6008,11 +5681,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order Note by ID.
             tags:
                 -   OrderNote
@@ -6078,11 +5746,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order Note by ID.
             tags:
                 -   OrderNote
@@ -6163,11 +5826,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a List of Orders.
             tags:
                 -   Order
@@ -6232,11 +5890,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Order.
             tags:
                 -   Order
@@ -6267,11 +5920,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order by external reference code.
             tags:
                 -   Order
@@ -6331,11 +5979,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order by external reference code.
             tags:
                 -   Order
@@ -6404,11 +6047,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order by external reference code.
             tags:
                 -   Order
@@ -6477,11 +6115,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Replaces a order with information sent in the request body. Any missing fields are deleted
                 unless they are required.
             tags:
@@ -6543,11 +6176,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a billing Address related to an Order.
             tags:
                 -   Account
@@ -6608,11 +6236,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a billing Address related to an Order.
             tags:
                 -   BillingAddress
@@ -6677,11 +6300,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a billing Address related to an Order.
             tags:
                 -   BillingAddress
@@ -6742,11 +6360,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a channel related to an Order.
             tags:
                 -   Channel
@@ -6821,11 +6434,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Items related to an Order.
             tags:
                 -   OrderItem
@@ -6900,11 +6508,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Order Item.
             tags:
                 -   OrderItem
@@ -6979,11 +6582,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Notes related to an Order.
             tags:
                 -   OrderNote
@@ -7058,11 +6656,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Order Note.
             tags:
                 -   OrderNote
@@ -7123,11 +6716,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -7192,11 +6780,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -7228,11 +6811,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Order by ID.
             tags:
                 -   Order
@@ -7293,11 +6871,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets an Order by ID.
             tags:
                 -   Order
@@ -7367,11 +6940,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Order by ID.
             tags:
                 -   Order
@@ -7433,11 +7001,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a billing Address related to an Order.
             tags:
                 -   Account
@@ -7499,11 +7062,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a billing Address related to an Order.
             tags:
                 -   BillingAddress
@@ -7569,11 +7127,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a billing Address related to an Order.
             tags:
                 -   BillingAddress
@@ -7635,11 +7188,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a channel related to an Order.
             tags:
                 -   Channel
@@ -7715,11 +7263,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Items related to an Order.
             tags:
                 -   OrderItem
@@ -7795,11 +7338,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Order Item.
             tags:
                 -   OrderItem
@@ -7875,11 +7413,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Order Notes related to an Order.
             tags:
                 -   OrderNote
@@ -7955,11 +7488,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Order Note.
             tags:
                 -   OrderNote
@@ -8021,11 +7549,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -8091,11 +7614,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -8130,11 +7648,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Term Order Type by ID.
             tags: ["TermOrderType"]
     /term-order-types/{termOrderTypeId}/order-type:
@@ -8195,11 +7708,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets order type associated to the term.
             tags: ["OrderType"]
     /terms:
@@ -8276,11 +7784,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Terms.
             tags: ["Term"]
         post:
@@ -8344,11 +7847,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Term.
             tags: ["Term"]
     /terms/by-externalReferenceCode/{externalReferenceCode}:
@@ -8381,11 +7879,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Deletes a Term by external reference code.
             tags: ["Term"]
         get:
@@ -8446,11 +7939,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a Term by external reference code.
             tags: ["Term"]
         patch:
@@ -8520,11 +8008,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Updates a Term by external reference code.
             tags: ["Term"]
         put:
@@ -8594,11 +8077,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Replaces a term with information sent in the request body. Any missing fields are deleted
                 unless they are required.
             tags: ["Term"]
@@ -8676,11 +8154,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Term Order Types.
             tags: ["TermOrderType"]
         post:
@@ -8756,11 +8229,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Term Order Type.
             tags: ["TermOrderType"]
     /terms/{id}:
@@ -8791,11 +8259,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Term by ID.
             tags:
                 -   Term
@@ -8855,11 +8318,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Term by ID.
             tags:
                 -   Term
@@ -8931,11 +8389,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates an Term by ID.
             tags:
                 -   Term
@@ -9015,11 +8468,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.read
             summary: Gets a list of Term Order Types.
             tags: ["TermOrderType"]
         post:
@@ -9096,10 +8544,5 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminOrder.write
             summary: Creates or updates a Term Order Type.
             tags: ["TermOrderType"]

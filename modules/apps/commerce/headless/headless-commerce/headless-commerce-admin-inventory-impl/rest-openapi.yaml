@@ -385,23 +385,6 @@ components:
                 -   orderTypeId
                 -   warehouseId
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        CommerceOpenApiAdmin.admin: Grants access to admin operations
-                        CommerceOpenApiAdmin.read: Grants read access
-                        CommerceOpenApiAdmin.write: Grants write access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     description:
         "Liferay Commerce Admin Inventory API. A Java client JAR is available for use with the group ID 'com.liferay',
@@ -443,11 +426,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
@@ -509,11 +487,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
@@ -584,11 +557,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
@@ -659,11 +627,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: "Replaces a replenishment item with information sent in the request body.
                 Any missing fields are deleted unless they are required."
             tags:
@@ -697,11 +660,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
@@ -762,11 +720,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
@@ -836,11 +789,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
@@ -912,11 +860,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Replenishment Items related to a SKU.
             tags:
                 -   ReplenishmentItem
@@ -950,11 +893,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Account Group by ID.
             tags: ["WarehouseAccountGroup"]
     "/warehouse-account-groups/{warehouseAccountGroupId}/account-group":
@@ -1014,11 +952,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets account group associated to the warehouse object.
             tags: ["AccountGroup"]
     "/warehouse-accounts/{warehouseAccountId}":
@@ -1051,11 +984,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Account by ID.
             tags: ["WarehouseAccount"]
     "/warehouse-accounts/{warehouseAccountId}/account":
@@ -1115,11 +1043,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets account associated to the warehouse object.
             tags: ["Account"]
     "/warehouse-channels/{warehouseChannelId}":
@@ -1153,11 +1076,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Channel by ID.
             tags: ["WarehouseChannel"]
     "/warehouse-channels/{warehouseChannelId}/channel":
@@ -1218,11 +1136,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets channel associated to the pricing object.
             tags: ["Channel"]
     "/warehouse-order-types/{warehouseOrderTypeId}":
@@ -1255,11 +1168,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Order Type by ID.
             tags: ["WarehouseOrderType"]
     "/warehouse-order-types/{warehouseOrderTypeId}/order-type":
@@ -1319,11 +1227,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets order type associated to the pricing object.
             tags: ["OrderType"]
     "/warehouseItems/by-externalReferenceCode/{externalReferenceCode}":
@@ -1356,11 +1259,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -1422,11 +1320,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -1493,11 +1386,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -1574,11 +1462,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Warehouse Item by external reference code.
             tags:
                 -   WarehouseItem
@@ -1655,11 +1538,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse Item by external reference code.
             tags:
                 -   WarehouseItem
@@ -1750,11 +1628,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: "Retrieves the list of WarehouseItem that have been updated (added or\nchanged) within the given timespan. If only one parameter is used for searching\nitems a default timespan of 30 days is used."
             tags:
                 -   WarehouseItem
@@ -1787,11 +1660,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -1852,11 +1720,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -1922,11 +1785,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
@@ -2007,11 +1865,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a List of Warehouses.
             tags:
                 -   Warehouse
@@ -2076,11 +1929,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse.
             tags:
                 -   Warehouse
@@ -2112,11 +1960,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse by external reference code.
             tags:
                 -   Warehouse
@@ -2176,11 +2019,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Warehouse by external reference code.
             tags:
                 -   Warehouse
@@ -2245,11 +2083,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Warehouse by external reference code.
             tags:
                 -   Warehouse
@@ -2324,11 +2157,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse.
             tags:
                 -   Warehouse
@@ -2406,11 +2234,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Account Groups.
             tags: ["WarehouseAccountGroup"]
         post:
@@ -2486,11 +2309,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse Account Group.
             tags: ["WarehouseAccountGroup"]
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-accounts":
@@ -2567,11 +2385,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Account.
             tags: ["WarehouseAccount"]
         post:
@@ -2647,11 +2460,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse Account.
             tags: ["WarehouseAccount"]
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-channels":
@@ -2728,11 +2536,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Warehouse Channels.
             tags: ["WarehouseChannel"]
         post:
@@ -2808,11 +2611,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Warehouse Channel.
             tags: ["WarehouseChannel"]
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-order-types":
@@ -2889,11 +2687,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Warehouse Order Types.
             tags: ["WarehouseOrderType"]
         post:
@@ -2969,11 +2762,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Warehouse Order Type.
             tags: ["WarehouseOrderType"]
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems":
@@ -3047,11 +2835,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Items related to an Warehouse.
             tags:
                 -   WarehouseItem
@@ -3126,11 +2909,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Warehouse Item.
             tags:
                 -   WarehouseItem
@@ -3163,11 +2941,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Warehouse by ID.
             tags:
                 -   Warehouse
@@ -3228,11 +3001,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Warehouse by ID.
             tags:
                 -   Warehouse
@@ -3298,11 +3066,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Warehouse by ID.
             tags:
                 -   Warehouse
@@ -3392,11 +3155,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Account Groups.
             tags: ["WarehouseAccountGroup"]
         post:
@@ -3473,11 +3231,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse Account Group.
             tags: ["WarehouseAccountGroup"]
     "/warehouses/{id}/warehouse-accounts":
@@ -3566,11 +3319,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Accounts.
             tags: ["WarehouseAccount"]
         post:
@@ -3647,11 +3395,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Warehouse Account.
             tags: ["WarehouseAccount"]
     "/warehouses/{id}/warehouse-channels":
@@ -3740,11 +3483,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Warehouse Channels.
             tags: ["WarehouseChannel"]
         post:
@@ -3821,11 +3559,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Warehouse Channel.
             tags: ["WarehouseChannel"]
     "/warehouses/{id}/warehouse-order-types":
@@ -3914,11 +3647,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Warehouse Order Types.
             tags: ["WarehouseOrderType"]
         post:
@@ -3995,11 +3723,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Warehouse Order Type.
             tags: ["WarehouseOrderType"]
     "/warehouses/{id}/warehouseItems":
@@ -4074,11 +3797,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Warehouse Items related to a Warehouse.
             tags:
                 -   WarehouseItem
@@ -4154,11 +3872,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Warehouse Item.
             tags:
                 -   WarehouseItem
@@ -4234,11 +3947,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Replenishment Items related to a Warehouse.
             tags:
                 -   ReplenishmentItem
@@ -4320,11 +4028,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Unexpected error"
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Replenishment Item by warehouse ID and SKU.
             tags:
                 -   ReplenishmentItem

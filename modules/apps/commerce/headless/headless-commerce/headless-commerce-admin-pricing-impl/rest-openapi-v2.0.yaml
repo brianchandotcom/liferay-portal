@@ -1475,23 +1475,6 @@ components:
                 -   price
                 -   priceEntryId
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        HeadlessCommerceAdminPricing.admin: Grants access to admin operations
-                        HeadlessCommerceAdminPricing.read: Grants read access
-                        HeadlessCommerceAdminPricing.write: Grants write access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     contact:
         email: team-commerce@liferay.com
@@ -1537,11 +1520,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Account Group by ID.
             tags: ["DiscountAccountGroup"]
     /discount-account-groups/{discountAccountGroupId}/account-group:
@@ -1602,11 +1580,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets account group associated to the pricing object.
             tags: ["PricingAccountGroup"]
     /discount-accounts/{discountAccountId}:
@@ -1640,11 +1613,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Account by ID.
             tags: ["DiscountAccount"]
     /discount-accounts/{discountAccountId}/account:
@@ -1705,11 +1673,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets account associated to the pricing object.
             tags: ["Account"]
     /discount-categories/{discountCategoryId}:
@@ -1743,11 +1706,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Category by ID.
             tags: ["DiscountCategory"]
     /discount-categories/{discountCategoryId}/category:
@@ -1808,11 +1766,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets category associated to the pricing object.
             tags: ["Category"]
     /discount-channels/{discountChannelId}:
@@ -1846,11 +1799,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Channel by ID.
             tags: ["DiscountChannel"]
     /discount-channels/{discountChannelId}/channel:
@@ -1911,11 +1859,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets channel associated to the pricing object.
             tags: ["Channel"]
     /discount-order-types/{discountOrderTypeId}:
@@ -1948,11 +1891,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Order Type by ID.
             tags: ["DiscountOrderType"]
     /discount-order-types/{discountOrderTypeId}/order-type:
@@ -2012,11 +1950,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets order type associated to the pricing object.
             tags: ["OrderType"]
     /discount-product-groups/{discountProductGroupId}:
@@ -2050,11 +1983,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Product Group by ID.
             tags: ["DiscountProductGroup"]
     /discount-product-groups/{discountProductGroupId}/product-group:
@@ -2115,11 +2043,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets product group associated to the pricing object.
             tags: ["ProductGroup"]
     /discount-products/{discountProductId}:
@@ -2153,11 +2076,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Product by ID.
             tags: ["DiscountProduct"]
     /discount-products/{discountProductId}/product:
@@ -2218,11 +2136,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets product associated to the pricing object.
             tags: ["Product"]
     /discount-rules/{id}:
@@ -2256,11 +2169,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Rule by ID.
             tags: ["DiscountRule"]
         get:
@@ -2322,11 +2230,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Discount Rule by ID.
             tags: ["DiscountRule"]
         patch:
@@ -2397,11 +2300,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Discount Rule by ID.
             tags: ["DiscountRule"]
     /discount-skus/{discountSkuId}:
@@ -2435,11 +2333,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Sku by ID.
             tags: ["DiscountSku"]
     /discount-skus/{discountSkuId}/sku:
@@ -2500,11 +2393,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets Sku associated to the pricing object.
             tags: ["Sku"]
     /discounts:
@@ -2581,11 +2469,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount.
             tags: ["Discount"]
         post:
@@ -2649,11 +2532,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Discount.
             tags: ["Discount"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}:
@@ -2686,11 +2564,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount by external reference code.
             tags: ["Discount"]
         get:
@@ -2751,11 +2624,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Discount by external reference code.
             tags: ["Discount"]
         patch:
@@ -2825,11 +2693,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Discount by external reference code.
             tags: ["Discount"]
         put:
@@ -2905,11 +2768,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Discount.
             tags: ["Discount"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-account-groups:
@@ -2986,11 +2844,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Account Groups.
             tags: ["DiscountAccountGroup"]
         post:
@@ -3066,11 +2919,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Account Group.
             tags: ["DiscountAccountGroup"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-accounts:
@@ -3147,11 +2995,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Accounts.
             tags: ["DiscountAccount"]
         post:
@@ -3227,11 +3070,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Account.
             tags: ["DiscountAccount"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-categories:
@@ -3308,11 +3146,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Categories.
             tags: ["DiscountCategory"]
         post:
@@ -3388,11 +3221,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Category.
             tags: ["DiscountCategory"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-channels:
@@ -3469,11 +3297,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Channels.
             tags: ["DiscountChannel"]
         post:
@@ -3549,11 +3372,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Channel.
             tags: ["DiscountChannel"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types:
@@ -3629,11 +3447,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Order Types.
             tags: ["DiscountOrderType"]
         post:
@@ -3708,11 +3521,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Order Type.
             tags: ["DiscountOrderType"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-product-groups:
@@ -3789,11 +3597,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Product Groups.
             tags: ["DiscountProductGroup"]
         post:
@@ -3869,11 +3672,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Product Group.
             tags: ["DiscountProductGroup"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-products:
@@ -3950,11 +3748,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Products.
             tags: ["DiscountProduct"]
         post:
@@ -4030,11 +3823,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Product.
             tags: ["DiscountProduct"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-rules:
@@ -4114,11 +3902,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Rule related to a Discount.
             tags: ["DiscountRule"]
         post:
@@ -4194,11 +3977,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Discount Rule.
             tags: ["DiscountRule"]
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discount-skus:
@@ -4275,11 +4053,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Skus.
             tags: ["DiscountSku"]
         post:
@@ -4355,11 +4128,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Sku.
             tags: ["DiscountSku"]
     /discounts/{id}:
@@ -4393,11 +4161,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount by ID.
             tags: ["Discount"]
         get:
@@ -4459,11 +4222,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Discount by ID.
             tags: ["Discount"]
         patch:
@@ -4534,11 +4292,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Discount by ID.
             tags: ["Discount"]
     /discounts/{id}/discount-account-groups:
@@ -4627,11 +4380,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Account Groups.
             tags: ["DiscountAccountGroup"]
         post:
@@ -4708,11 +4456,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Account Group.
             tags: ["DiscountAccountGroup"]
     /discounts/{id}/discount-accounts:
@@ -4801,11 +4544,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Accounts.
             tags: ["DiscountAccount"]
         post:
@@ -4882,11 +4620,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Account.
             tags: ["DiscountAccount"]
     /discounts/{id}/discount-categories:
@@ -4975,11 +4708,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Categories.
             tags: ["DiscountCategory"]
         post:
@@ -5056,11 +4784,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Category.
             tags: ["DiscountCategory"]
     /discounts/{id}/discount-channels:
@@ -5149,11 +4872,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Channels.
             tags: ["DiscountChannel"]
         post:
@@ -5230,11 +4948,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Channel.
             tags: ["DiscountChannel"]
     /discounts/{id}/discount-order-types:
@@ -5322,11 +5035,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Order Types.
             tags: ["DiscountOrderType"]
         post:
@@ -5402,11 +5110,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Order Type.
             tags: ["DiscountOrderType"]
     /discounts/{id}/discount-product-groups:
@@ -5495,11 +5198,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Product Groups.
             tags: ["DiscountProductGroup"]
         post:
@@ -5576,11 +5274,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Product Group.
             tags: ["DiscountProductGroup"]
     /discounts/{id}/discount-products:
@@ -5669,11 +5362,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Products.
             tags: ["DiscountProduct"]
         post:
@@ -5750,11 +5438,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Product.
             tags: ["DiscountProduct"]
     /discounts/{id}/discount-rules:
@@ -5846,11 +5529,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Rule related to a Discount.
             tags: ["DiscountRule"]
         post:
@@ -5927,11 +5605,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Discount Rule.
             tags: ["DiscountRule"]
     /discounts/{id}/discount-skus:
@@ -6020,11 +5693,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Discount Skus.
             tags: ["DiscountSku"]
         post:
@@ -6101,11 +5769,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Discount Sku.
             tags: ["DiscountSku"]
     /price-entries/by-externalReferenceCode/{externalReferenceCode}:
@@ -6138,11 +5801,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Entry by external reference code.
             tags: ["PriceEntry"]
         get:
@@ -6203,11 +5861,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price Entry by external reference code.
             tags: ["PriceEntry"]
         patch:
@@ -6277,11 +5930,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price Entry by external reference code.
             tags: ["PriceEntry"]
     /price-entries/by-externalReferenceCode/{externalReferenceCode}/tier-prices:
@@ -6361,11 +6009,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Tier Price related to a Price Entry.
             tags: ["TierPrice"]
         post:
@@ -6441,11 +6084,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Tier Price.
             tags: ["TierPrice"]
     /price-entries/{priceEntryId}:
@@ -6479,11 +6117,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Entry by ID.
             tags: ["PriceEntry"]
         get:
@@ -6545,11 +6178,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price Entry by ID.
             tags: ["PriceEntry"]
         patch:
@@ -6620,11 +6248,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price Entry by ID.
             tags: ["PriceEntry"]
     /price-entries/{priceEntryId}/product:
@@ -6685,11 +6308,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets product associated to the pricing object.
             tags: ["Product"]
     /price-entries/{priceEntryId}/sku:
@@ -6750,11 +6368,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets sku associated to the pricing object.
             tags: ["Sku"]
     /price-entries/{priceEntryId}/tier-prices:
@@ -6835,11 +6448,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Tier Price related to a Price Entry.
             tags: ["TierPrice"]
         post:
@@ -6916,11 +6524,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Tier Price.
             tags: ["TierPrice"]
     /price-list-account-groups/{priceListAccountGroupId}:
@@ -6954,11 +6557,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List Account Group by ID.
             tags: ["PriceListAccountGroup"]
     /price-list-account-groups/{priceListAccountGroupId}/account-group:
@@ -7019,11 +6617,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets account group associated to the pricing object.
             tags: ["PricingAccountGroup"]
     /price-list-accounts/{priceListAccountId}:
@@ -7057,11 +6650,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List Account by ID.
             tags: ["PriceListAccount"]
     /price-list-accounts/{priceListAccountId}/account:
@@ -7122,11 +6710,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets account associated to the pricing object.
             tags: ["Account"]
     /price-list-channels/{priceListChannelId}:
@@ -7160,11 +6743,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List Channel by ID.
             tags: ["PriceListChannel"]
     /price-list-channels/{priceListChannelId}/channel:
@@ -7225,11 +6803,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets channel associated to the pricing object.
             tags: ["Channel"]
     /price-list-discounts/{priceListDiscountId}:
@@ -7263,11 +6836,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List Discount by ID.
             tags: ["PriceListDiscount"]
     /price-list-order-types/{priceListOrderTypeId}:
@@ -7301,11 +6869,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List Order Type by ID.
             tags: ["PriceListOrderType"]
     /price-list-order-types/{priceListOrderTypeId}/order-type:
@@ -7366,11 +6929,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets order type associated to the pricing object.
             tags: ["OrderType"]
     /price-lists:
@@ -7447,11 +7005,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Lists.
             tags: ["PriceList"]
         post:
@@ -7515,11 +7068,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List.
             tags: ["PriceList"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}:
@@ -7552,11 +7100,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List by external reference code.
             tags: ["PriceList"]
         get:
@@ -7617,11 +7160,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price List by external reference code.
             tags: ["PriceList"]
         patch:
@@ -7691,11 +7229,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price List by external reference code.
             tags: ["PriceList"]
         put:
@@ -7771,11 +7304,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List.
             tags: ["PriceList"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-entries:
@@ -7867,11 +7395,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Entries.
             tags: ["PriceEntry"]
         post:
@@ -7947,11 +7470,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Entry.
             tags: ["PriceEntry"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-account-groups:
@@ -8028,11 +7546,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Account Groups.
             tags: ["PriceListAccountGroup"]
         post:
@@ -8108,11 +7621,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Account Group.
             tags: ["PriceListAccountGroup"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-accounts:
@@ -8189,11 +7697,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Account.
             tags: ["PriceListAccount"]
         post:
@@ -8269,11 +7772,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Account.
             tags: ["PriceListAccount"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-channels:
@@ -8350,11 +7848,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Channel.
             tags: ["PriceListChannel"]
         post:
@@ -8430,11 +7923,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Channel.
             tags: ["PriceListChannel"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-discounts:
@@ -8511,11 +7999,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Channel.
             tags: ["PriceListDiscount"]
         post:
@@ -8591,11 +8074,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Discount.
             tags: ["PriceListDiscount"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-order-types:
@@ -8672,11 +8150,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Order Types.
             tags: ["PriceListOrderType"]
         post:
@@ -8752,11 +8225,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Order Type.
             tags: ["PriceListOrderType"]
     /price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers:
@@ -8833,11 +8301,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Price Modifiers.
             tags: ["PriceModifier"]
         post:
@@ -8913,11 +8376,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Price Modifier.
             tags: ["PriceModifier"]
     /price-lists/{id}:
@@ -8951,11 +8409,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price List by ID.
             tags: ["PriceList"]
         get:
@@ -9017,11 +8470,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price List by ID.
             tags: ["PriceList"]
         patch:
@@ -9092,11 +8540,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price List by ID.
             tags: ["PriceList"]
     /price-lists/{id}/price-entries:
@@ -9189,11 +8632,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Entries.
             tags: ["PriceEntry"]
         post:
@@ -9270,11 +8708,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Entry.
             tags: ["PriceEntry"]
     /price-lists/{id}/price-list-account-groups:
@@ -9363,11 +8796,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Account Groups.
             tags: ["PriceListAccountGroup"]
         post:
@@ -9444,11 +8872,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Account Group.
     /price-lists/{id}/price-list-accounts:
         get:
@@ -9536,11 +8959,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Accounts.
             tags: ["PriceListAccount"]
         post:
@@ -9617,11 +9035,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Account.
     /price-lists/{id}/price-list-channels:
         get:
@@ -9709,11 +9122,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Channels.
             tags: ["PriceListChannel"]
         post:
@@ -9790,11 +9198,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Channel.
             tags: ["PriceListChannel"]
     /price-lists/{id}/price-list-discounts:
@@ -9872,11 +9275,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Discounts.
             tags: ["PriceListDiscount"]
         post:
@@ -9953,11 +9351,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Discount.
             tags: ["PriceListDiscount"]
     /price-lists/{id}/price-list-order-types:
@@ -10036,11 +9429,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price List Order Types.
             tags: ["PriceListOrderType"]
         post:
@@ -10117,11 +9505,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price List Order Type.
     /price-lists/{id}/price-modifiers:
         get:
@@ -10209,11 +9592,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Modifiers.
             tags: ["PriceModifier"]
         post:
@@ -10290,11 +9668,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Modifier.
             tags: ["PriceModifier"]
     /price-modifier-categories/{priceModifierCategoryId}:
@@ -10328,11 +9701,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Modifier Category by ID.
             tags: ["PriceModifierCategory"]
     /price-modifier-categories/{priceModifierCategoryId}/category:
@@ -10393,11 +9761,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets category associated to the pricing object.
             tags: ["Category"]
     /price-modifier-product-groups/{priceModifierProductGroupId}:
@@ -10431,11 +9794,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Modifier Product Group by ID.
             tags: ["PriceModifierProductGroup"]
     /price-modifier-product-groups/{priceModifierProductGroupId}/product-group:
@@ -10496,11 +9854,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets product group associated to the pricing object.
             tags: ["ProductGroup"]
     /price-modifier-products/{priceModifierProductId}:
@@ -10534,11 +9887,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Modifier Product by ID.
             tags: ["PriceModifierProduct"]
     /price-modifier-products/{priceModifierProductId}/product:
@@ -10599,11 +9947,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets product associated to the pricing object.
             tags: ["Product"]
     /price-modifiers/by-externalReferenceCode/{externalReferenceCode}:
@@ -10636,11 +9979,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Modifier by external reference code.
             tags: ["PriceModifier"]
         get:
@@ -10701,11 +10039,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price Modifier by external reference code.
             tags: ["PriceModifier"]
         patch:
@@ -10771,11 +10104,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price Modifier by external reference code.
             tags: ["PriceModifier"]
     /price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories:
@@ -10855,11 +10183,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Category related to a Price Modifier.
             tags: ["PriceModifierCategory"]
         post:
@@ -10935,11 +10258,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Price Modifier Category.
             tags: ["PriceModifierCategory"]
     /price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-product-groups:
@@ -11019,11 +10337,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Product Group related to a Price Modifier.
             tags: ["PriceModifierProductGroup"]
         post:
@@ -11099,11 +10412,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Price Modifier Product Group.
             tags: ["PriceModifierProductGroup"]
     /price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-products:
@@ -11183,11 +10491,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Product related to a Price Modifier.
             tags: ["PriceModifierProduct"]
         post:
@@ -11263,11 +10566,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or Updates a Price Modifier Product.
             tags: ["PriceModifierProduct"]
     /price-modifiers/{id}:
@@ -11301,11 +10599,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Price Modifier by ID.
             tags: ["PriceModifier"]
         get:
@@ -11367,11 +10660,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Price Modifier by ID.
             tags: ["PriceModifier"]
         patch:
@@ -11438,11 +10726,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Price Modifier by ID.
             tags: ["PriceModifier"]
     /price-modifiers/{id}/price-modifier-categories:
@@ -11531,11 +10814,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Modifier Categories.
             tags: ["PriceModifierCategory"]
         post:
@@ -11612,11 +10890,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Modifier Category.
             tags: ["PriceModifierCategory"]
     /price-modifiers/{id}/price-modifier-product-groups:
@@ -11705,11 +10978,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Modifier Product Groups.
             tags: ["PriceModifierProductGroup"]
         post:
@@ -11786,11 +11054,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Modifier Product Group.
             tags: ["PriceModifierProductGroup"]
     /price-modifiers/{id}/price-modifier-products:
@@ -11879,11 +11142,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a list of Price Modifier Products.
             tags: ["PriceModifierProduct"]
         post:
@@ -11960,11 +11218,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Creates or updates a Price Modifier Product.
             tags: ["PriceModifierProduct"]
     /tier-prices/by-externalReferenceCode/{externalReferenceCode}:
@@ -11997,11 +11250,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Tier Price by external reference code.
             tags: ["TierPrice"]
         get:
@@ -12062,11 +11310,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Tier Price by external reference code.
             tags: ["TierPrice"]
         patch:
@@ -12132,11 +11375,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Tier Price by external reference code.
             tags: ["TierPrice"]
     /tier-prices/{id}:
@@ -12170,11 +11408,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Tier Price by ID.
             tags: ["TierPrice"]
         get:
@@ -12236,11 +11469,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.read
             summary: Gets a Tier Price by ID.
             tags: ["TierPrice"]
         patch:
@@ -12307,11 +11535,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminPricing.write
             summary: Updates a Tier Price by ID.
             tags: ["TierPrice"]
 servers:

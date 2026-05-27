@@ -1223,11 +1223,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Conflict — entity cannot be deleted due to dependent state
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Address Channel by ID.
             tags:
                 -   AccountAddressChannel
@@ -1294,11 +1289,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the channel associated to the account address object.
             tags:
                 -   Channel
@@ -1370,11 +1360,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Account Address Channels.
             tags:
                 -   AccountAddressChannel
@@ -1479,11 +1464,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account Address Channel.
             tags:
                 -   AccountAddressChannel
@@ -1558,11 +1538,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Account Address Channels.
             tags:
                 -   AccountAddressChannel
@@ -1665,11 +1640,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account Address Channel.
             tags:
                 -   AccountAddressChannel
@@ -1718,11 +1688,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Conflict — entity cannot be deleted due to dependent state
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Channel Account by ID.
             tags:
                 -   ChannelAccount
@@ -1789,11 +1754,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the account associated to the channel account object.
             tags:
                 -   Account
@@ -1866,11 +1826,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Accounts.
             tags:
                 -   ChannelAccount
@@ -1977,11 +1932,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Account.
             tags:
                 -   ChannelAccount
@@ -2057,11 +2007,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Accounts.
             tags:
                 -   ChannelAccount
@@ -2168,11 +2113,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Account.
             tags:
                 -   ChannelAccount
@@ -2284,11 +2224,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Category Display Page by ID.
             tags:
                 -   CategoryDisplayPage
@@ -2918,11 +2853,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Category Display Pages.
             tags:
                 -   CategoryDisplayPage
@@ -3028,11 +2958,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Category Display Page.
             tags:
                 -   CategoryDisplayPage
@@ -3145,11 +3070,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the default Category Display Page of a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -3253,11 +3173,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates the default Category Display Page for a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -3370,11 +3285,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -3477,11 +3387,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -3555,11 +3460,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Product Display Pages.
             tags:
                 -   ProductDisplayPage
@@ -3663,11 +3563,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Product Display Page.
             tags:
                 -   ProductDisplayPage
@@ -4116,11 +4011,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Category Display Pages.
             tags:
                 -   CategoryDisplayPage
@@ -4226,11 +4116,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Category Display Page.
             tags:
                 -   CategoryDisplayPage
@@ -4341,11 +4226,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the default Category Display Page of a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -4448,11 +4328,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates the default Category Display Page for a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -4563,11 +4438,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -4670,11 +4540,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -4747,11 +4612,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Channel Product Display Pages.
             tags:
                 -   ProductDisplayPage
@@ -4855,11 +4715,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates a Channel Product Display Page.
             tags:
                 -   ProductDisplayPage
@@ -5552,11 +5407,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Product Display Page by ID.
             tags:
                 -   ProductDisplayPage
@@ -6288,11 +6138,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Tax Categories.
             tags:
                 -   TaxCategory
@@ -6357,11 +6202,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Tax Category by ID.
             tags:
                 -   TaxCategory

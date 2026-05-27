@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -61,6 +62,10 @@ public class JournalConverterImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_originalLanguage = LanguageUtil.getLanguage();
+		_originalSAXReader = SAXReaderUtil.getSAXReader();
+		_originalUnsecureSAXReader = UnsecureSAXReaderUtil.getSAXReader();
+
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
@@ -98,6 +103,19 @@ public class JournalConverterImplTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_mockedStatic.close();
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_originalLanguage);
+
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
+
+		saxReaderUtil.setSAXReader(_originalSAXReader);
+
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		unsecureSAXReaderUtil.setSAXReader(_originalUnsecureSAXReader);
 	}
 
 	@Test
@@ -113,7 +131,7 @@ public class JournalConverterImplTest {
 		);
 
 		Mockito.when(
-			DDMStructureLocalServiceUtil.fetchDDMStructure(Mockito.anyLong())
+			DDMStructureLocalServiceUtil.fetchStructure(Mockito.anyLong())
 		).thenReturn(
 			ddmStructure
 		);
@@ -180,8 +198,9 @@ public class JournalConverterImplTest {
 	public void testUpdateContentDynamicElement() {
 		_testUpdateContentDynamicElement(StringPool.BLANK, null);
 
-		_testUpdateContentDynamicElement(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		String value = RandomTestUtil.randomString();
+
+		_testUpdateContentDynamicElement(value, value);
 
 		_testUpdateContentDynamicElementWithCheckBox();
 		_testUpdateContentDynamicElementWithOptions();
@@ -435,5 +454,8 @@ public class JournalConverterImplTest {
 	}
 
 	private static MockedStatic<DDMStructureLocalServiceUtil> _mockedStatic;
+	private static Language _originalLanguage;
+	private static SAXReader _originalSAXReader;
+	private static SAXReader _originalUnsecureSAXReader;
 
 }

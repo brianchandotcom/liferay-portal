@@ -1854,7 +1854,7 @@ test(
 test(
 	'Repetable text input is validated correctly',
 	{
-		tag: '@LPD-69446',
+		tag: ['@LPD-69446', '@LPD-92353'],
 	},
 	async ({contentsPage, page, structureBuilderPage}) => {
 
@@ -1908,7 +1908,9 @@ test(
 
 		const firstText = page.getByRole('textbox', {name: 'Text'}).first();
 
-		await firstText.fill('MoreThan5Characters');
+		await firstText.pressSequentially('MoreThan5Characters');
+
+		await expect(firstText).toHaveValue('MoreThan5Characters');
 
 		// Save content
 
@@ -1919,8 +1921,6 @@ test(
 		await expect(
 			page.getByText('Value exceeds maximum length of 5 for field Text.')
 		).toBeVisible();
-
-		await expect(firstText).toHaveValue('MoreThan5Characters');
 
 		// Delete content
 

@@ -336,7 +336,7 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 test(
 	'Validate that a UI error appears when attempting to create or edit a tag with an existing name',
-	{tag: '@LPD-57497'},
+	{tag: ['@LPD-57497', '@LPD-92349']},
 	async ({page, tagsPage}) => {
 		const name1 = await tagsPage.createTag();
 
@@ -349,9 +349,11 @@ test(
 		await page.getByLabel('NameRequired').fill(name1);
 
 		await clickAndExpectToBeVisible({
-			target: page.getByText(
-				'Please enter a unique name. This one is already in use.'
-			),
+			target: page
+				.locator('.modal-body')
+				.getByText(
+					'Please enter a unique name. This one is already in use.'
+				),
 			trigger: tagsPage.saveButton,
 		});
 
@@ -383,9 +385,11 @@ test(
 		await page.getByLabel('NameRequired').fill(name1);
 
 		await clickAndExpectToBeVisible({
-			target: page.getByText(
-				'Please enter a unique name. This one is already in use.'
-			),
+			target: page
+				.locator('.modal-body')
+				.getByText(
+					'Please enter a unique name. This one is already in use.'
+				),
 			trigger: tagsPage.saveButton,
 		});
 

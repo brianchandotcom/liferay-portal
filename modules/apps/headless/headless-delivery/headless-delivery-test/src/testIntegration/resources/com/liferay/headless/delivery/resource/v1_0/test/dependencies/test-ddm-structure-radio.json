@@ -3,6 +3,7 @@
 		"en_US"
 	],
 	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
 			"dataType": "string",
@@ -21,21 +22,21 @@
 					"label": {
 						"en_US": "Option1"
 					},
-					"reference": "",
+					"reference": "OptionReference1",
 					"value": "Option1"
 				},
 				{
 					"label": {
 						"en_US": "Option2"
 					},
-					"reference": "",
+					"reference": "OptionReference2",
 					"value": "Option2"
 				},
 				{
 					"label": {
 						"en_US": "Option3"
 					},
-					"reference": "",
+					"reference": "OptionReference3",
 					"value": "Option3"
 				}
 			],

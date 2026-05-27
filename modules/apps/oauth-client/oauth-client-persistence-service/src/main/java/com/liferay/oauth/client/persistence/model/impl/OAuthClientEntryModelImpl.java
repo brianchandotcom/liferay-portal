@@ -74,6 +74,7 @@ public class OAuthClientEntryModelImpl
 		{"customClaimsJSON", Types.CLOB}, {"infoJSON", Types.CLOB},
 		{"matcherField", Types.VARCHAR}, {"metadataCacheTime", Types.BIGINT},
 		{"oidcUserInfoMapperJSON", Types.VARCHAR},
+		{"tokenConnectionTimeout", Types.INTEGER},
 		{"tokenRequestParametersJSON", Types.VARCHAR}
 	};
 
@@ -98,11 +99,12 @@ public class OAuthClientEntryModelImpl
 		TABLE_COLUMNS_MAP.put("matcherField", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataCacheTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oidcUserInfoMapperJSON", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("tokenConnectionTimeout", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("tokenRequestParametersJSON", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,customClaimsJSON TEXT null,infoJSON TEXT null,matcherField VARCHAR(75) null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenRequestParametersJSON VARCHAR(3999) null)";
+		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,customClaimsJSON TEXT null,infoJSON TEXT null,matcherField VARCHAR(75) null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenConnectionTimeout INTEGER,tokenRequestParametersJSON VARCHAR(3999) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuthClientEntry";
 
@@ -315,6 +317,9 @@ public class OAuthClientEntryModelImpl
 				"oidcUserInfoMapperJSON",
 				OAuthClientEntry::getOIDCUserInfoMapperJSON);
 			attributeGetterFunctions.put(
+				"tokenConnectionTimeout",
+				OAuthClientEntry::getTokenConnectionTimeout);
+			attributeGetterFunctions.put(
 				"tokenRequestParametersJSON",
 				OAuthClientEntry::getTokenRequestParametersJSON);
 
@@ -403,6 +408,10 @@ public class OAuthClientEntryModelImpl
 				"oidcUserInfoMapperJSON",
 				(BiConsumer<OAuthClientEntry, String>)
 					OAuthClientEntry::setOIDCUserInfoMapperJSON);
+			attributeSetterBiConsumers.put(
+				"tokenConnectionTimeout",
+				(BiConsumer<OAuthClientEntry, Integer>)
+					OAuthClientEntry::setTokenConnectionTimeout);
 			attributeSetterBiConsumers.put(
 				"tokenRequestParametersJSON",
 				(BiConsumer<OAuthClientEntry, String>)
@@ -798,6 +807,21 @@ public class OAuthClientEntryModelImpl
 
 	@JSON
 	@Override
+	public int getTokenConnectionTimeout() {
+		return _tokenConnectionTimeout;
+	}
+
+	@Override
+	public void setTokenConnectionTimeout(int tokenConnectionTimeout) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_tokenConnectionTimeout = tokenConnectionTimeout;
+	}
+
+	@JSON
+	@Override
 	public String getTokenRequestParametersJSON() {
 		if (_tokenRequestParametersJSON == null) {
 			return "";
@@ -901,6 +925,8 @@ public class OAuthClientEntryModelImpl
 		oAuthClientEntryImpl.setMetadataCacheTime(getMetadataCacheTime());
 		oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
 			getOIDCUserInfoMapperJSON());
+		oAuthClientEntryImpl.setTokenConnectionTimeout(
+			getTokenConnectionTimeout());
 		oAuthClientEntryImpl.setTokenRequestParametersJSON(
 			getTokenRequestParametersJSON());
 
@@ -947,6 +973,8 @@ public class OAuthClientEntryModelImpl
 			this.<Long>getColumnOriginalValue("metadataCacheTime"));
 		oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
 			this.<String>getColumnOriginalValue("oidcUserInfoMapperJSON"));
+		oAuthClientEntryImpl.setTokenConnectionTimeout(
+			this.<Integer>getColumnOriginalValue("tokenConnectionTimeout"));
 		oAuthClientEntryImpl.setTokenRequestParametersJSON(
 			this.<String>getColumnOriginalValue("tokenRequestParametersJSON"));
 
@@ -1151,6 +1179,9 @@ public class OAuthClientEntryModelImpl
 			oAuthClientEntryCacheModel.oidcUserInfoMapperJSON = null;
 		}
 
+		oAuthClientEntryCacheModel.tokenConnectionTimeout =
+			getTokenConnectionTimeout();
+
 		oAuthClientEntryCacheModel.tokenRequestParametersJSON =
 			getTokenRequestParametersJSON();
 
@@ -1243,6 +1274,7 @@ public class OAuthClientEntryModelImpl
 	private String _matcherField;
 	private long _metadataCacheTime;
 	private String _oidcUserInfoMapperJSON;
+	private int _tokenConnectionTimeout;
 	private String _tokenRequestParametersJSON;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1296,6 +1328,8 @@ public class OAuthClientEntryModelImpl
 		_columnOriginalValues.put("metadataCacheTime", _metadataCacheTime);
 		_columnOriginalValues.put(
 			"oidcUserInfoMapperJSON", _oidcUserInfoMapperJSON);
+		_columnOriginalValues.put(
+			"tokenConnectionTimeout", _tokenConnectionTimeout);
 		_columnOriginalValues.put(
 			"tokenRequestParametersJSON", _tokenRequestParametersJSON);
 	}
@@ -1355,7 +1389,9 @@ public class OAuthClientEntryModelImpl
 
 		columnBitmasks.put("oidcUserInfoMapperJSON", 65536L);
 
-		columnBitmasks.put("tokenRequestParametersJSON", 131072L);
+		columnBitmasks.put("tokenConnectionTimeout", 131072L);
+
+		columnBitmasks.put("tokenRequestParametersJSON", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1364,4 +1400,4 @@ public class OAuthClientEntryModelImpl
 	private OAuthClientEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1372120665
+// LIFERAY-SERVICE-BUILDER-HASH:-1092471136

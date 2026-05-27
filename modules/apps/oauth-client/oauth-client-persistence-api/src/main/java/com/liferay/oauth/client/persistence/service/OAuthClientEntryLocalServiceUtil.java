@@ -58,13 +58,13 @@ public class OAuthClientEntryLocalServiceUtil {
 			String authRequestParametersJSON, String authServerWellKnownURI,
 			String customClaimsJSON, String infoJSON, String matcherField,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
-			String tokenRequestParametersJSON)
+			int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws PortalException {
 
 		return getService().addOAuthClientEntry(
 			externalReferenceCode, userId, authRequestParametersJSON,
 			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
-			metadataCacheTime, oidcUserInfoMapperJSON,
+			metadataCacheTime, oidcUserInfoMapperJSON, tokenConnectionTimeout,
 			tokenRequestParametersJSON);
 	}
 
@@ -397,13 +397,14 @@ public class OAuthClientEntryLocalServiceUtil {
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
 			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		return getService().updateOAuthClientEntry(
 			oAuthClientEntryId, authRequestParametersJSON,
 			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
-			metadataCacheTime, oidcUserInfoMapperJSON,
+			metadataCacheTime, oidcUserInfoMapperJSON, tokenConnectionTimeout,
 			tokenRequestParametersJSON);
 	}
 
@@ -433,4 +434,4 @@ public class OAuthClientEntryLocalServiceUtil {
 			OAuthClientEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206070149
+// LIFERAY-SERVICE-BUILDER-HASH:1618291231

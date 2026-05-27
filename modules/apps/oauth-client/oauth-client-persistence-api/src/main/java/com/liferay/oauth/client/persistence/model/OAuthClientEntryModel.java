@@ -333,6 +333,20 @@ public interface OAuthClientEntryModel
 	public void setOIDCUserInfoMapperJSON(String oidcUserInfoMapperJSON);
 
 	/**
+	 * Returns the token connection timeout of this o auth client entry.
+	 *
+	 * @return the token connection timeout of this o auth client entry
+	 */
+	public int getTokenConnectionTimeout();
+
+	/**
+	 * Sets the token connection timeout of this o auth client entry.
+	 *
+	 * @param tokenConnectionTimeout the token connection timeout of this o auth client entry
+	 */
+	public void setTokenConnectionTimeout(int tokenConnectionTimeout);
+
+	/**
 	 * Returns the token request parameters json of this o auth client entry.
 	 *
 	 * @return the token request parameters json of this o auth client entry
@@ -356,4 +370,4 @@ public interface OAuthClientEntryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-601502993
+// LIFERAY-SERVICE-BUILDER-HASH:-1560907844

@@ -9,9 +9,12 @@ import com.liferay.headless.admin.site.dto.v1_0.SiteTemplate;
 import com.liferay.headless.admin.site.resource.v1_0.SiteTemplateResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -71,6 +74,21 @@ public class SiteTemplateResourceImpl extends BaseSiteTemplateResourceImpl {
 					() -> LocalizedMapUtil.getI18nMap(
 						layoutSetPrototype.getDescriptionMap()));
 				setId(layoutSetPrototype::getLayoutSetPrototypeId);
+				setLogo(
+					() -> {
+						Group group = layoutSetPrototype.getGroup();
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setCompany(
+									_companyLocalService.getCompany(
+										group.getCompanyId()));
+								setPathImage(_portal.getPathImage());
+							}
+						};
+
+						return group.getLogoURL(themeDisplay, true);
+					});
 				setName(
 					() -> layoutSetPrototype.getName(
 						contextAcceptLanguage.getPreferredLocale()));
@@ -97,9 +115,15 @@ public class SiteTemplateResourceImpl extends BaseSiteTemplateResourceImpl {
 	}
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private LayoutSetPrototypeService _layoutSetPrototypeService;
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
 
 }

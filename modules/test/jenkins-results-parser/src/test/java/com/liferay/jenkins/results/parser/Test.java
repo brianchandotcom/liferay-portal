@@ -24,9 +24,12 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
+
+import org.mockito.Mockito;
 
 /**
  * @author Peter Yoo
@@ -36,6 +39,11 @@ public class Test {
 	@Before
 	public void setUp() throws Exception {
 		JenkinsResultsParserUtil.clearCache();
+	}
+
+	@After
+	public void tearDown() {
+		JenkinsResultsParserUtil.setEnvironment(new DefaultEnvironment());
 	}
 
 	@Rule
@@ -286,6 +294,14 @@ public class Test {
 		}
 
 		return _simpleClassNames;
+	}
+
+	protected Environment mockEnvironment() {
+		Environment environment = Mockito.mock(Environment.class);
+
+		JenkinsResultsParserUtil.setEnvironment(environment);
+
+		return environment;
 	}
 
 	protected String read(File file) throws IOException {

@@ -30,6 +30,7 @@ page import="com.liferay.ai.hub.web.internal.display.context.ViewChatbotsDisplay
 page import="com.liferay.ai.hub.web.internal.display.context.ViewContentRetrieversDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewInstructionDefinitionsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewModelArmorTemplatesDisplayContext" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %>
 
 <liferay-frontend:defineObjects />

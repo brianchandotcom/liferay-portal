@@ -45,3 +45,13 @@ HomeDashboardDisplayContext homeDashboardDisplayContext = (HomeDashboardDisplayC
 		/>
 	</div>
 </c:if>
+
+<c:if test='<%= SessionMessages.contains(request, "userAdded") %>'>
+	<aui:script>
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message key="use-your-password-to-login" />',
+			type: 'success'
+		});
+	</aui:script>
+</c:if>

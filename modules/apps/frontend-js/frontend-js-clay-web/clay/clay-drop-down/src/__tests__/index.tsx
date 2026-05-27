@@ -481,8 +481,13 @@ describe('ClayDropDown', () => {
 	});
 
 	it('keeps the outer dropdown accessible when a nested dropdown inside one of its items opens', async () => {
+		const HIDDEN_SELECTOR =
+			'[aria-hidden="true"], [data-aria-hidden="true"]';
+
 		const {getByText} = render(
 			<div>
+				<p>Baseline</p>
+
 				<ClayDropDown trigger={<button>Outer Trigger</button>}>
 					<ClayDropDown.ItemList>
 						<ClayDropDown.Item>Outer Item</ClayDropDown.Item>
@@ -507,15 +512,13 @@ describe('ClayDropDown', () => {
 
 		await userEvent.click(getByText('Inner Trigger'));
 
-		const outerItem = getByText('Outer Item');
-		const innerItem = getByText('Inner Item');
+		expect(getByText('Outer Item').closest(HIDDEN_SELECTOR)).toBeNull();
+		expect(getByText('Inner Item').closest(HIDDEN_SELECTOR)).toBeNull();
 
-		expect(
-			outerItem.closest('[aria-hidden="true"], [data-aria-hidden="true"]')
-		).toBeNull();
-		expect(
-			innerItem.closest('[aria-hidden="true"], [data-aria-hidden="true"]')
-		).toBeNull();
+		// Baseline: content outside the overlay chain must end up suppressed,
+		// proving the aria-hidden library actually ran.
+
+		expect(getByText('Baseline').closest(HIDDEN_SELECTOR)).not.toBeNull();
 	});
 
 	it('render dynamic content with group and search', () => {

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
@@ -24,6 +25,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.hamcrest.CoreMatchers;
 
@@ -266,13 +268,70 @@ public class BatchEngineExportTaskServiceTest
 				QueryUtil.ALL_POS));
 	}
 
+	@Test
+	public void testUpdateBatchEngineExportTask() throws Exception {
+		BatchEngineExportTask batchEngineExportTask1 =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
+				null, BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.COMPLETED.name(),
+				Collections.emptyList(), null, null);
+		BatchEngineExportTask batchEngineExportTask2 =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
+				null, BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.COMPLETED.name(),
+				Collections.emptyList(), null, null);
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(1);
+		CountDownLatch countDownLatch2 = new CountDownLatch(1);
+
+		assertConcurrentRunnables(
+			() -> TransactionInvokerUtil.invoke(
+				REQUIRED_TRANSACTION_CONFIG,
+				() -> {
+					batchEngineExportTask1.setExecuteStatus(
+						BatchEngineTaskExecuteStatus.COMPLETED.name());
+
+					_batchEngineExportTaskLocalService.
+						updateBatchEngineExportTask(batchEngineExportTask1);
+
+					countDownLatch1.countDown();
+
+					countDownLatch2.await();
+
+					return null;
+				}),
+			() -> {
+				countDownLatch1.await();
+
+				try {
+					TransactionInvokerUtil.invoke(
+						REQUIRED_TRANSACTION_CONFIG,
+						() -> {
+							batchEngineExportTask2.setExecuteStatus(
+								BatchEngineTaskExecuteStatus.COMPLETED.name());
+
+							_batchEngineExportTaskLocalService.
+								updateBatchEngineExportTask(
+									batchEngineExportTask2);
+
+							return null;
+						});
+				}
+				finally {
+					countDownLatch2.countDown();
+				}
+			});
+	}
+
 	private BatchEngineExportTask _addBatchEngineExportTask(User user)
 		throws Exception {
 
 		return _batchEngineExportTaskLocalService.addBatchEngineExportTask(
 			null, user.getCompanyId(), user.getUserId(), null,
 			BlogPosting.class.getName(), "JSON",
-			BatchEngineTaskExecuteStatus.INITIAL.name(),
+			BatchEngineTaskExecuteStatus.COMPLETED.name(),
 			Collections.emptyList(),
 			HashMapBuilder.<String, Serializable>put(
 				"siteId", TestPropsValues.getGroupId()

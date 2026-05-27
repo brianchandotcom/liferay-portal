@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.InstanceConfiguration;
 import com.liferay.headless.admin.configuration.client.http.HttpInvoker;
 import com.liferay.headless.admin.configuration.client.pagination.Page;
+import com.liferay.headless.admin.configuration.client.pagination.Pagination;
 import com.liferay.headless.admin.configuration.client.resource.v1_0.InstanceConfigurationResource;
 import com.liferay.headless.admin.configuration.client.serdes.v1_0.InstanceConfigurationSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -209,7 +211,8 @@ public abstract class BaseInstanceConfigurationResourceTestCase {
 	@Test
 	public void testGetInstanceConfigurationsPage() throws Exception {
 		Page<InstanceConfiguration> page =
-			instanceConfigurationResource.getInstanceConfigurationsPage();
+			instanceConfigurationResource.getInstanceConfigurationsPage(
+				Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -221,7 +224,8 @@ public abstract class BaseInstanceConfigurationResourceTestCase {
 			testGetInstanceConfigurationsPage_addInstanceConfiguration(
 				randomInstanceConfiguration());
 
-		page = instanceConfigurationResource.getInstanceConfigurationsPage();
+		page = instanceConfigurationResource.getInstanceConfigurationsPage(
+			Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -242,6 +246,106 @@ public abstract class BaseInstanceConfigurationResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
+	}
+
+	@Test
+	public void testGetInstanceConfigurationsPageWithPagination()
+		throws Exception {
+
+		Page<InstanceConfiguration> instanceConfigurationsPage =
+			instanceConfigurationResource.getInstanceConfigurationsPage(null);
+
+		int totalCount = GetterUtil.getInteger(
+			instanceConfigurationsPage.getTotalCount());
+
+		InstanceConfiguration instanceConfiguration1 =
+			testGetInstanceConfigurationsPage_addInstanceConfiguration(
+				randomInstanceConfiguration());
+
+		InstanceConfiguration instanceConfiguration2 =
+			testGetInstanceConfigurationsPage_addInstanceConfiguration(
+				randomInstanceConfiguration());
+
+		InstanceConfiguration instanceConfiguration3 =
+			testGetInstanceConfigurationsPage_addInstanceConfiguration(
+				randomInstanceConfiguration());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<InstanceConfiguration> page1 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				instanceConfiguration1,
+				(List<InstanceConfiguration>)page1.getItems());
+
+			Page<InstanceConfiguration> page2 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				instanceConfiguration2,
+				(List<InstanceConfiguration>)page2.getItems());
+
+			Page<InstanceConfiguration> page3 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				instanceConfiguration3,
+				(List<InstanceConfiguration>)page3.getItems());
+		}
+		else {
+			Page<InstanceConfiguration> page1 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(1, totalCount + 2));
+
+			List<InstanceConfiguration> instanceConfigurations1 =
+				(List<InstanceConfiguration>)page1.getItems();
+
+			Assert.assertEquals(
+				instanceConfigurations1.toString(), totalCount + 2,
+				instanceConfigurations1.size());
+
+			Page<InstanceConfiguration> page2 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<InstanceConfiguration> instanceConfigurations2 =
+				(List<InstanceConfiguration>)page2.getItems();
+
+			Assert.assertEquals(
+				instanceConfigurations2.toString(), 1,
+				instanceConfigurations2.size());
+
+			Page<InstanceConfiguration> page3 =
+				instanceConfigurationResource.getInstanceConfigurationsPage(
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				instanceConfiguration1,
+				(List<InstanceConfiguration>)page3.getItems());
+			assertContains(
+				instanceConfiguration2,
+				(List<InstanceConfiguration>)page3.getItems());
+			assertContains(
+				instanceConfiguration3,
+				(List<InstanceConfiguration>)page3.getItems());
+		}
 	}
 
 	protected InstanceConfiguration
@@ -1008,4 +1112,4 @@ public abstract class BaseInstanceConfigurationResourceTestCase {
 		InstanceConfigurationResource _instanceConfigurationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:38308911
+// LIFERAY-REST-BUILDER-HASH:-1055139650

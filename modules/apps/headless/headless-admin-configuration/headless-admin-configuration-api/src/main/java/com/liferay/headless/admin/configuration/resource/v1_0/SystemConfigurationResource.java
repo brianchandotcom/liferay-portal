@@ -17,6 +17,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -49,7 +50,8 @@ public interface SystemConfigurationResource {
 			String systemConfigurationExternalReferenceCode)
 		throws Exception;
 
-	public Page<SystemConfiguration> getSystemConfigurationsPage()
+	public Page<SystemConfiguration> getSystemConfigurationsPage(
+			Pagination pagination)
 		throws Exception;
 
 	public SystemConfiguration postSystemConfiguration(
@@ -169,4 +171,4 @@ public interface SystemConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-79502249
+// LIFERAY-REST-BUILDER-HASH:-787878027

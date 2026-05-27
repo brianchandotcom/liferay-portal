@@ -8,18 +8,7 @@ Pull a single Testray case result through the REST API at `https://testray.lifer
 
 ## Authentication
 
-Fetch a bearer token once per run via the OAuth2 client credentials grant and reuse it for every call:
-
-```bash
-export ACCESS_TOKEN=$(curl \
-	--data "grant_type=client_credentials" \
-	--header "Authorization: Basic $(printf "%s:%s" "${TESTRAY_CLIENT_ID}" "${TESTRAY_CLIENT_SECRET}" | base64 --wrap 0)" \
-	--header "Content-Type: application/x-www-form-urlencoded" \
-	--request POST \
-	--silent \
-	--url "https://testray.liferay.com/o/oauth2/token" \
-	| jq --raw-output .access_token)
-```
+Obtain a bearer token once per run through the OAuth2 client credentials grant at `https://testray.liferay.com/o/oauth2/token`, authenticating with `${TESTRAY_CLIENT_ID}` and `${TESTRAY_CLIENT_SECRET}` as HTTP Basic credentials. Read the `access_token` from the JSON response, store it in `${ACCESS_TOKEN}`, and present it as a `Bearer` token on every subsequent request.
 
 ## Resolve a Test Name to a Case Result ID
 

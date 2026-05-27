@@ -472,7 +472,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"edgeRelationship", false,
+				"oneToManyRelationshipName", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
@@ -481,7 +481,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				"parentTitle", "Parent Title Value"
+				"parentTitle", RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -495,24 +495,13 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			HashMapBuilder.<String, Serializable>put(
 				"childTitle", childTitleValue
 			).put(
-				"r_edgeRelationship_" +
+				"r_oneToManyRelationshipName_" +
 					parentObjectDefinition.getPKObjectFieldName(),
 				parentObjectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(StringPool.BLANK, "UTC"));
-
-		serviceContext.setRequest(mockHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		_pushServiceContext(_getThemeDisplay(StringPool.BLANK, "UTC"));
 
 		try {
 			InfoItemFieldValuesProvider<ObjectEntry>
@@ -529,10 +518,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 			InfoFieldValue<Object> childTitleInfoFieldValue =
 				infoItemFieldValues.getInfoFieldValue("childTitle");
-
-			Assert.assertNotNull(
-				"Edge child entry field values should not be empty",
-				childTitleInfoFieldValue);
 
 			Assert.assertEquals(
 				childTitleValue, childTitleInfoFieldValue.getValue());

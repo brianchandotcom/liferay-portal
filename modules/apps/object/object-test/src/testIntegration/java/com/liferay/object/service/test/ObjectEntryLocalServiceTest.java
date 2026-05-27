@@ -5997,6 +5997,77 @@ public class ObjectEntryLocalServiceTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	public void testMoveObjectEntryToTrashWithObjectDefinitionTree()
+		throws Exception {
+
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[0]
+			).build());
+
+		try {
+			ObjectDefinition rootObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					TestPropsValues.getCompanyId(), "C_A");
+
+			TreeTestUtil.createObjectEntryTree(
+				"1", _objectDefinitionLocalService, _objectEntryLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				rootObjectDefinition.getObjectDefinitionId());
+
+			ObjectEntry rootObjectEntry =
+				_objectEntryLocalService.getObjectEntry(
+					"A1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+					rootObjectDefinition.getObjectDefinitionId());
+
+			ObjectDefinition childObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					TestPropsValues.getCompanyId(), "C_AA");
+
+			ObjectEntry childObjectEntry =
+				_objectEntryLocalService.getObjectEntry(
+					"AA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+					childObjectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				childObjectEntry.getStatus());
+
+			rootObjectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(), rootObjectEntry,
+				ServiceContextTestUtil.getServiceContext());
+
+			childObjectEntry = _objectEntryLocalService.getObjectEntry(
+				childObjectEntry.getObjectEntryId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_IN_TRASH,
+				childObjectEntry.getStatus());
+
+			_objectEntryLocalService.restoreObjectEntryFromTrash(
+				TestPropsValues.getUserId(), rootObjectEntry,
+				ServiceContextTestUtil.getServiceContext());
+
+			childObjectEntry = _objectEntryLocalService.getObjectEntry(
+				childObjectEntry.getObjectEntryId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				childObjectEntry.getStatus());
+		}
+		finally {
+			TreeTestUtil.deleteObjectDefinitionHierarchy(
+				_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+				_objectEntryLocalService, _objectRelationshipLocalService);
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
 	public void testMoveObjectEntryToTrashWithObjectEntryFolder()
 		throws Exception {
 

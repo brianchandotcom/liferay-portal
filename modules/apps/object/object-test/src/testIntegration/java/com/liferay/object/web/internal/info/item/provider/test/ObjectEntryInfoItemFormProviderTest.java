@@ -27,7 +27,6 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -393,74 +392,26 @@ public class ObjectEntryInfoItemFormProviderTest {
 	}
 
 	private void _testGetInfoFormWithEdgeObjectRelationship() throws Exception {
-		ObjectDefinition parentObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"parentTitle"
-					).build()));
+		Node node = _tree.getNode(_objectDefinitionAA.getObjectDefinitionId());
 
-		ObjectDefinition childObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"childTitle"
-					).build()));
+		Edge edge = node.getEdge();
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				parentObjectDefinition.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"a" + RandomTestUtil.randomString(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+			_objectRelationshipLocalService.getObjectRelationship(
+				edge.getObjectRelationshipId());
 
-		try {
-			InfoForm parentInfoForm = _getInfoForm(parentObjectDefinition);
+		InfoForm parentInfoForm = _getInfoForm(_objectDefinitionA);
 
-			InfoFieldSet infoFieldSet =
-				(InfoFieldSet)parentInfoForm.getInfoFieldSetEntry(
-					parentObjectDefinition.getName());
+		InfoFieldSet infoFieldSet =
+			(InfoFieldSet)parentInfoForm.getInfoFieldSetEntry(
+				_objectDefinitionA.getName());
 
-			InfoFieldSet relationshipInfoFieldSet =
-				(InfoFieldSet)infoFieldSet.getInfoFieldSetEntry(
-					objectRelationship.getName());
+		InfoFieldSet relationshipInfoFieldSet =
+			(InfoFieldSet)infoFieldSet.getInfoFieldSetEntry(
+				objectRelationship.getName());
 
-			Assert.assertNotNull(
-				"Child fields should appear in parent InfoForm for edge " +
-					"relationships",
-				relationshipInfoFieldSet);
-
-			Assert.assertNotNull(
-				relationshipInfoFieldSet.getInfoFieldSetEntry("childTitle"));
-		}
-		finally {
-			objectRelationship =
-				_objectRelationshipLocalService.updateObjectRelationship(
-					objectRelationship.getExternalReferenceCode(),
-					objectRelationship.getObjectRelationshipId(),
-					objectRelationship.getParameterObjectFieldId(),
-					objectRelationship.getDeletionType(), false,
-					objectRelationship.getLabelMap(), null);
-
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				childObjectDefinition);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				parentObjectDefinition);
-		}
+		Assert.assertNotNull(
+			relationshipInfoFieldSet.getInfoFieldSetEntry("able"));
 	}
 
 	private void _testGetInfoFormWithEnableObjectEntrySchedule()

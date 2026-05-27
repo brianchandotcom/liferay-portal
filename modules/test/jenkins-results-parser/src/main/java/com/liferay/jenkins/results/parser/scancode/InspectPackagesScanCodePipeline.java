@@ -25,6 +25,12 @@ public class InspectPackagesScanCodePipeline extends BaseScanCodePipeline {
 
 		waitForScan(_pipelineName);
 
+		if (hasFailedScan()) {
+			sendSlackNotification(getCloudBucketURL());
+
+			return;
+		}
+
 		addAdditionalPipeline("populate_purldb");
 
 		waitForScan("populate_purldb");

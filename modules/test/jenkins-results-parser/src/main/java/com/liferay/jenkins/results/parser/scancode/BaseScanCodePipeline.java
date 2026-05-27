@@ -319,6 +319,16 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 		return _simpleDateFormat;
 	}
 
+	public boolean hasFailedScan() {
+		for (String projectStatus : _projectStatuses) {
+			if (!projectStatus.equals("success")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void invokeScan(JSONObject jsonObject)
 		throws IOException, TimeoutException {
 
@@ -366,7 +376,10 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 
 		String subject = "ScanCode pipeline is complete";
 
-		if (_hasErrors()) {
+		if (hasFailedScan()) {
+			subject = "ScanCode pipeline has failed :red-circle:";
+		}
+		else if (_hasErrors()) {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 

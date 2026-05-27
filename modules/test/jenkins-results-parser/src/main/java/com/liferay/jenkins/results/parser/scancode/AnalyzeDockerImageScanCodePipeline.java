@@ -31,6 +31,12 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 
 		waitForScan(_pipelineName);
 
+		if (hasFailedScan()) {
+			sendSlackNotification(getCloudBucketURL());
+
+			return;
+		}
+
 		addAdditionalPipeline("match_to_matchcode");
 
 		waitForScan("match_to_matchcode");

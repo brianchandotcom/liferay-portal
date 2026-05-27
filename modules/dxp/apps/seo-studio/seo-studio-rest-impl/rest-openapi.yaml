@@ -33,7 +33,7 @@ paths:
         get:
             description:
                 "Returns the crawl hits for an SEO Studio domain."
-            operationId: getCrawlHitsPage
+            operationId: getSeoStudioDomainCrawlHitsPage
             parameters:
                 -   in: path
                     name: seoStudioDomainId

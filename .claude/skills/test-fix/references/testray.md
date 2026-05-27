@@ -103,7 +103,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
 ```
 
-When `dueStatus.key` is `PASSED` or `BLOCKED`, return only **Name** and that `dueStatus`; the rest are skipped. Otherwise, return all five fields.
+When `dueStatus.key` is `PASSED` or `BLOCKED`, return only **Name** and that `dueStatus`; the rest are skipped. Otherwise, return all fields.
 
 ### Name
 
@@ -177,3 +177,7 @@ Filter to entries where `testrayRoutineId` equals `<routineId>` and walk newest-
 - `lastPassSha` is the `gitHash` of the first entry whose `status` is `PASSED`, or `null` if none.
 
 - `firstFailSha` is the `gitHash` of the oldest entry whose `status` is `FAILED` before that `PASSED`, or `null` if none.
+
+### Build SHA
+
+The `gitHash` of the build the case result belongs to — the commit the failing build was actually tested against, distinct from `firstFailSha` because later failing builds run against newer commits. Read it from the same `/o/c/builds/<buildId>` fetch used to resolve `<routineId>` above.

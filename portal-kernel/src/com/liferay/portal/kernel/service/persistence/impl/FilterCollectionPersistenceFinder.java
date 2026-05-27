@@ -63,6 +63,7 @@ public class FilterCollectionPersistenceFinder
 		_filterSqlCountWhere = StringBundler.concat(
 			"SELECT COUNT(DISTINCT ", entityAlias, ".", pkColumnName,
 			") AS COUNT_VALUE FROM ", tableName, " ", entityAlias, " WHERE ");
+
 		_orderByEntityTable = tableName.concat(".");
 	}
 

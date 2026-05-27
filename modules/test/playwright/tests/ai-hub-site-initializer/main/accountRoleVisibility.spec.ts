@@ -60,7 +60,9 @@ test(
 
 		await userSelectorPage.assignUsers([user.name!]);
 
-		await expect(accountUsersPage.usersTable.cell(user.name!)).toBeVisible();
+		await expect(
+			accountUsersPage.usersTable.cell(user.name!)
+		).toBeVisible();
 
 		const userContext = await page.context().browser()!.newContext();
 		const userPage = await userContext.newPage();
@@ -120,12 +122,7 @@ test(
 		await test.step('Without any account role the user sees only Home', async () => {
 			await assertVisibleMenuPages(
 				['Home'],
-				[
-					'Account Management',
-					'Activity',
-					'Agent Builder',
-					'Chatbots',
-				]
+				['Account Management', 'Activity', 'Agent Builder', 'Chatbots']
 			);
 		});
 

@@ -234,6 +234,14 @@ test(
 			});
 		});
 
+		await test.step('Verify the success alert is visible on the home page after registration', async () => {
+			await waitForAlert(
+				inviteePage,
+				'Thank you for creating an account',
+				{autoClose: false}
+			);
+		});
+
 		await test.step('Sign in as the newly registered user via the portal login form', async () => {
 			await expect(async () => {
 				await inviteePage.goto('/');

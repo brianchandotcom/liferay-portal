@@ -226,35 +226,17 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 			</Card.Title>
 			<Card.Body className='p-0'>
 				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
-					<ClayTabs.Item
-						innerProps={{
-							'aria-controls':
-								'tabpanel-top-categories-and-tags-category'
-						}}
-					>
+					<ClayTabs.Item>
 						{Liferay.Language.get('category')}
 					</ClayTabs.Item>
-					<ClayTabs.Item
-						innerProps={{
-							'aria-controls':
-								'tabpanel-top-categories-and-tags-tag'
-						}}
-					>
-						{Liferay.Language.get('tag')}
-					</ClayTabs.Item>
+					<ClayTabs.Item>{Liferay.Language.get('tag')}</ClayTabs.Item>
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane
-						aria-labelledby='tab-top-categories-and-tags-category'
-						className='pb-0'
-					>
+					<ClayTabs.TabPane className='pb-0'>
 						{tabContent}
 					</ClayTabs.TabPane>
-					<ClayTabs.TabPane
-						aria-labelledby='tab-top-categories-and-tags-tag'
-						className='pb-0'
-					>
+					<ClayTabs.TabPane className='pb-0'>
 						{tabContent}
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>

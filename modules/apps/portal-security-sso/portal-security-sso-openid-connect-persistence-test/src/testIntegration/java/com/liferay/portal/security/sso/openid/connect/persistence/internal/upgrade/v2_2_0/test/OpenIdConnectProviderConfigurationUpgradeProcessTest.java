@@ -111,6 +111,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 				"subject_type", "public"
 			).toString(),
 			"email", 0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+			OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
 			StringPool.BLANK);
 		_oAuthClientEntry2 = _oAuthClientEntryLocalService.addOAuthClientEntry(
 			null, TestPropsValues.getUserId(), StringPool.BLANK,
@@ -131,6 +132,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 			).toString(),
 			"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+			OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
 			StringPool.BLANK);
 	}
 

@@ -261,8 +261,8 @@ export const mergeRef =
 			}
 		});
 
-export function getInitials(name = '') {
-	const nameArray = name.split(' ', 3);
+export function getInitials(name: string | null | undefined = '') {
+	const nameArray = (name ?? '').split(' ', 3);
 
 	return nameArray
 		.reduce((acc, val) => acc + val.substring(0, 1), '')

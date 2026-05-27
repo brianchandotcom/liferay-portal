@@ -587,8 +587,8 @@ public interface ContactsEngineClient {
 		List<Map<String, String>> groups);
 
 	public DataSource patchDataSource(
-		Credentials credentials, Event event, FaroProject faroProject,
-		String id, String name, Provider provider, String status, String url,
+		FaroProject faroProject, String id, Credentials credentials,
+		Event event, String name, Provider provider, String status, String url,
 		long userId);
 
 	public FieldMapping patchFieldMapping(
@@ -606,8 +606,8 @@ public interface ContactsEngineClient {
 		throws Exception;
 
 	public DataSource reconnectDataSource(
-		Credentials credentials, Event event, FaroProject faroProject,
-		String id, String name, Provider provider, String status, String url,
+		FaroProject faroProject, String id, Credentials credentials,
+		Event event, String name, Provider provider, String status, String url,
 		long userId);
 
 	public List<Map<String, Object>> refreshLiferay(FaroProject faroProject);
@@ -627,8 +627,8 @@ public interface ContactsEngineClient {
 
 	public DataSource updateDataSource(
 		FaroProject faroProject, String id, Credentials credentials,
-		long userId, String name, String url, Provider provider, Event event,
-		String status);
+		Event event, String name, Provider provider, String status, String url,
+		long userId);
 
 	public FieldMapping updateFieldMapping(
 		FaroProject faroProject, String context,

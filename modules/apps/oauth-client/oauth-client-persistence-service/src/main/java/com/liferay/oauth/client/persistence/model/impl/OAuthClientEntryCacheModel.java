@@ -69,7 +69,7 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(metadataCacheTime);
 		sb.append(", oidcUserInfoMapperJSON=");
 		sb.append(oidcUserInfoMapperJSON);
+		sb.append(", tokenConnectionTimeout=");
+		sb.append(tokenConnectionTimeout);
 		sb.append(", tokenRequestParametersJSON=");
 		sb.append(tokenRequestParametersJSON);
 		sb.append("}");
@@ -212,6 +214,8 @@ public class OAuthClientEntryCacheModel
 				oidcUserInfoMapperJSON);
 		}
 
+		oAuthClientEntryImpl.setTokenConnectionTimeout(tokenConnectionTimeout);
+
 		if (tokenRequestParametersJSON == null) {
 			oAuthClientEntryImpl.setTokenRequestParametersJSON("");
 		}
@@ -250,6 +254,8 @@ public class OAuthClientEntryCacheModel
 
 		metadataCacheTime = objectInput.readLong();
 		oidcUserInfoMapperJSON = objectInput.readUTF();
+
+		tokenConnectionTimeout = objectInput.readInt();
 		tokenRequestParametersJSON = objectInput.readUTF();
 	}
 
@@ -338,6 +344,8 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeUTF(oidcUserInfoMapperJSON);
 		}
 
+		objectOutput.writeInt(tokenConnectionTimeout);
+
 		if (tokenRequestParametersJSON == null) {
 			objectOutput.writeUTF("");
 		}
@@ -363,7 +371,8 @@ public class OAuthClientEntryCacheModel
 	public String matcherField;
 	public long metadataCacheTime;
 	public String oidcUserInfoMapperJSON;
+	public int tokenConnectionTimeout;
 	public String tokenRequestParametersJSON;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:269235767
+// LIFERAY-SERVICE-BUILDER-HASH:42918712

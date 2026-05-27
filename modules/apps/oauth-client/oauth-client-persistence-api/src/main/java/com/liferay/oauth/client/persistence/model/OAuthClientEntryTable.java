@@ -73,6 +73,10 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 		createColumn(
 			"oidcUserInfoMapperJSON", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, Integer> tokenConnectionTimeout =
+		createColumn(
+			"tokenConnectionTimeout", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, String>
 		tokenRequestParametersJSON = createColumn(
 			"tokenRequestParametersJSON", String.class, Types.VARCHAR,
@@ -83,4 +87,4 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1834512804
+// LIFERAY-SERVICE-BUILDER-HASH:-972702295

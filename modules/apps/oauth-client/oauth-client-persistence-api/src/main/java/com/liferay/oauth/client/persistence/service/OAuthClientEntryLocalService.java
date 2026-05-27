@@ -74,7 +74,7 @@ public interface OAuthClientEntryLocalService
 			String authRequestParametersJSON, String authServerWellKnownURI,
 			String customClaimsJSON, String infoJSON, String matcherField,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
-			String tokenRequestParametersJSON)
+			int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws PortalException;
 
 	/**
@@ -324,7 +324,8 @@ public interface OAuthClientEntryLocalService
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
 			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
+			String tokenRequestParametersJSON)
 		throws PortalException;
 
 	/**
@@ -342,4 +343,4 @@ public interface OAuthClientEntryLocalService
 		OAuthClientEntry oAuthClientEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:991072256
+// LIFERAY-SERVICE-BUILDER-HASH:-71031088

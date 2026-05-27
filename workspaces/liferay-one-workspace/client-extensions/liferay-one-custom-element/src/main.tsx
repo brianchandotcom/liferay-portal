@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React, {Suspense} from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
 import ErrorBoundary from './components/ErrorBoundary';
 import {PropertiesProvider} from './context/PropertiesContext';
+import {getIconSpriteMap} from './liferay/constants';
 import {baseAttributes, getAttributes} from './utils/attributes';
 
 type RouterComponent = React.ComponentType;
@@ -31,11 +33,13 @@ class WebComponent extends HTMLElement {
 
 		this.root.render(
 			<ErrorBoundary>
-				<PropertiesProvider value={getAttributes(this)}>
-					<Suspense fallback={null}>
-						<Router />
-					</Suspense>
-				</PropertiesProvider>
+				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+					<PropertiesProvider value={getAttributes(this)}>
+						<Suspense fallback={null}>
+							<Router />
+						</Suspense>
+					</PropertiesProvider>
+				</ClayIconSpriteContext.Provider>
 			</ErrorBoundary>
 		);
 	}

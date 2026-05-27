@@ -7,6 +7,7 @@ package com.liferay.ai.hub.internal.model.listener;
 
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,11 +52,16 @@ public class AccountEntryUserRelModelListener
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		if ((groupId <= 0) ||
-			(_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE", groupId) == null)) {
+		if (groupId <= 0) {
+			return;
+		}
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+					"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE", groupId);
+
+		if (layoutUtilityPageEntry == null) {
 			return;
 		}
 

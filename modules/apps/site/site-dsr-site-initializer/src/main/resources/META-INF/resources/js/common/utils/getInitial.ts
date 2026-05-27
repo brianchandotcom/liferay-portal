@@ -4,5 +4,5 @@
  */
 
 export function getInitial(name?: string) {
-	return (name ?? '').split(' ')[0].charAt(0).toUpperCase();
+	return (name ?? '').charAt(0).toUpperCase();
 }

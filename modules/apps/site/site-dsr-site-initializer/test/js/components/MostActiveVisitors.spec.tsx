@@ -9,6 +9,7 @@ import React from 'react';
 
 import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import MostActiveVisitors from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/MostActiveVisitors';
+import {mostActiveVisitorsDevEnvData} from '../fixtures/analyticsDevEnvData';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
@@ -57,6 +58,12 @@ describe('MostActiveVisitors', () => {
 		cleanup();
 
 		jest.clearAllMocks();
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: mostActiveVisitorsDevEnvData,
+			sendRequest: jest.fn(),
+		}));
 	});
 
 	it('renders the component with provided data', () => {
@@ -76,30 +83,36 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
 	});
 
-	it('does not render the literal "Undefined" when visitor fields are missing', () => {
-		(useAnalyticsQuery as jest.Mock).mockReturnValueOnce({
-			isLoading: false,
-			response: {
-				mostActiveVisitors: {
-					mostActiveVisitors: [
-						{
-							activitiesCount: 12,
-							emailAddress: undefined,
-							firstName: undefined,
-							id: '2',
-							lastName: undefined,
-						},
-					],
-					total: 1,
-				},
+	it('renders "anonymous" when visitor fields are missing', () => {
+		const anonymousResponse = {
+			mostActiveVisitors: {
+				mostActiveVisitors: [
+					{
+						activitiesCount: 12,
+						emailAddress: undefined,
+						firstName: undefined,
+						id: '2',
+						lastName: undefined,
+					},
+				],
+				total: 1,
 			},
+		};
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: anonymousResponse,
 			sendRequest: jest.fn(),
-		});
+		}));
 
-		render(<MostActiveVisitors namespace="test-namespace" />);
+		render(
+			<MostActiveVisitors
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
 
-		expect(screen.queryByText(/^Undefined$/)).not.toBeInTheDocument();
-		expect(screen.queryByText(/^undefined$/)).not.toBeInTheDocument();
+		expect(screen.getByText('anonymous')).toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

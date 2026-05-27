@@ -7,6 +7,7 @@ import {openToast} from '@liferay/object-js-components-web';
 import {useFormik} from 'formik';
 import {useCallback, useEffect} from 'react';
 
+import {required, requiredLocalized, validate} from '../../utils/validations';
 import {DEFAULT_AGENT_DEFINITION} from '../constants';
 import {
 	deleteAgentDefinitionToContentRetrievers,
@@ -21,7 +22,6 @@ import {getModelArmorTemplates} from '../services/ModelArmorTemplateService';
 import {AgentDefinition} from '../types/AgentDefinition';
 import {ContentRetriever} from '../types/ContentRetriever';
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
-import {required, requiredLocalized, validate} from '../../utils/validations';
 import {useRelationshipPicker} from './useRelationshipPicker';
 
 interface UseAgentDefinitionFormProps {

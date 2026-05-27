@@ -130,36 +130,6 @@ describe('useAgentDefinitionForm', () => {
 	});
 
 	describe('fetch lifecycle', () => {
-		it('loads the agent definition and hydrates values on mount in edit mode', async () => {
-			mockGetAgentDefinition.mockResolvedValueOnce({
-				active: true,
-				agentDefinitionsToContentRetrievers: [],
-				agentDefinitionsToModelArmorTemplates: [],
-				description: 'Loaded from API',
-				externalReferenceCode: 'AGENT_X',
-				inputVariables: 'in1,in2',
-				outputVariable: 'out',
-				r_accountToAIHubAgentDefinitions_accountEntryERC: 'ACCOUNT',
-				title_i18n: {en_US: 'Loaded Title'},
-				workflowDefinitionName: 'wf-1',
-			});
-
-			const {result} = renderAgentHook({
-				externalReferenceCode: 'AGENT_X',
-			});
-
-			await waitFor(() => {
-				expect(result.current.values.title_i18n).toEqual({
-					en_US: 'Loaded Title',
-				});
-			});
-
-			expect(result.current.values.active).toBe(true);
-			expect(result.current.values.description).toBe('Loaded from API');
-			expect(result.current.values.inputVariables).toBe('in1,in2');
-			expect(result.current.values.workflowDefinitionName).toBe('wf-1');
-		});
-
 		it('hydrates the relationship pickers from the nested fields', async () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				agentDefinitionsToContentRetrievers: [
@@ -198,29 +168,34 @@ describe('useAgentDefinitionForm', () => {
 			).not.toHaveBeenCalled();
 		});
 
-		it('shows an error toast when the agent fetch rejects', async () => {
-			mockGetAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
-
-			renderAgentHook({externalReferenceCode: 'AGENT_X'});
-
-			await waitFor(() => {
-				expect(mockOpenToast).toHaveBeenCalledWith(
-					expect.objectContaining({
-						message: 'failed-to-load-agent-data',
-						type: 'danger',
-					})
-				);
-			});
-		});
-
-		it('skips the agent fetch when externalReferenceCode is empty', async () => {
-			renderAgentHook({externalReferenceCode: ''});
-
-			await waitFor(() => {
-				expect(mockGetContentRetrievers).toHaveBeenCalled();
+		it('loads the agent definition and hydrates values on mount in edit mode', async () => {
+			mockGetAgentDefinition.mockResolvedValueOnce({
+				active: true,
+				agentDefinitionsToContentRetrievers: [],
+				agentDefinitionsToModelArmorTemplates: [],
+				description: 'Loaded from API',
+				externalReferenceCode: 'AGENT_X',
+				inputVariables: 'in1,in2',
+				outputVariable: 'out',
+				r_accountToAIHubAgentDefinitions_accountEntryERC: 'ACCOUNT',
+				title_i18n: {en_US: 'Loaded Title'},
+				workflowDefinitionName: 'wf-1',
 			});
 
-			expect(mockGetAgentDefinition).not.toHaveBeenCalled();
+			const {result} = renderAgentHook({
+				externalReferenceCode: 'AGENT_X',
+			});
+
+			await waitFor(() => {
+				expect(result.current.values.title_i18n).toEqual({
+					en_US: 'Loaded Title',
+				});
+			});
+
+			expect(result.current.values.active).toBe(true);
+			expect(result.current.values.description).toBe('Loaded from API');
+			expect(result.current.values.inputVariables).toBe('in1,in2');
+			expect(result.current.values.workflowDefinitionName).toBe('wf-1');
 		});
 
 		it('populates the source lists for both relationship pickers on mount', async () => {
@@ -245,6 +220,31 @@ describe('useAgentDefinitionForm', () => {
 			expect(result.current.modelArmorTemplates.sourceList).toHaveLength(
 				1
 			);
+		});
+
+		it('shows an error toast when the agent fetch rejects', async () => {
+			mockGetAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
+
+			renderAgentHook({externalReferenceCode: 'AGENT_X'});
+
+			await waitFor(() => {
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'failed-to-load-agent-data',
+						type: 'danger',
+					})
+				);
+			});
+		});
+
+		it('skips the agent fetch when externalReferenceCode is empty', async () => {
+			renderAgentHook({externalReferenceCode: ''});
+
+			await waitFor(() => {
+				expect(mockGetContentRetrievers).toHaveBeenCalled();
+			});
+
+			expect(mockGetAgentDefinition).not.toHaveBeenCalled();
 		});
 	});
 
@@ -275,73 +275,61 @@ describe('useAgentDefinitionForm', () => {
 	});
 
 	describe('submit', () => {
-		it('shows the success toast when the API echoes back an approved status', async () => {
+		it('issues DELETE requests for removed relationships', async () => {
+			mockGetAgentDefinition.mockResolvedValueOnce({
+				agentDefinitionsToContentRetrievers: [
+					{externalReferenceCode: 'CR_1'},
+					{externalReferenceCode: 'CR_2'},
+				],
+				agentDefinitionsToModelArmorTemplates: [
+					{externalReferenceCode: 'MAT_1'},
+				],
+				description: 'desc',
+				externalReferenceCode: 'AGENT_X',
+				inputVariables: 'a',
+				outputVariable: 'b',
+				title_i18n: {en_US: 'My Agent'},
+				workflowDefinitionName: 'wf-1',
+			});
 			mockPutAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'approved'},
 			});
+			mockDeleteAgentDefinitionToContentRetrievers.mockResolvedValue({});
+			mockDeleteAgentDefinitionToModelArmorTemplates.mockResolvedValue(
+				{}
+			);
 
-			const {result} = renderAgentHook();
-
-			await fillRequiredFields(result);
-
-			await act(async () => {
-				result.current.handleSubmit();
-			});
-
-			await waitFor(() => {
-				expect(mockOpenToast).toHaveBeenCalledWith(
-					expect.objectContaining({
-						message: 'agent-saved-successfully',
-						type: 'success',
-					})
-				);
-			});
-		});
-
-		it('shows a danger toast when the response status is not approved', async () => {
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			const {result} = renderAgentHook({
 				externalReferenceCode: 'AGENT_X',
-				status: {label: 'rejected'},
 			});
 
-			const {result} = renderAgentHook();
+			await waitFor(() => {
+				expect(result.current.contentRetrievers.selected).toHaveLength(
+					2
+				);
+			});
 
-			await fillRequiredFields(result);
+			await act(async () => {
+				result.current.contentRetrievers.setSelected([
+					{externalReferenceCode: 'CR_1'},
+				]);
+				result.current.modelArmorTemplates.setSelected([]);
+			});
 
 			await act(async () => {
 				result.current.handleSubmit();
 			});
 
 			await waitFor(() => {
-				expect(mockOpenToast).toHaveBeenCalledWith(
-					expect.objectContaining({
-						message: 'failed-to-save-agent',
-						type: 'danger',
-					})
-				);
-			});
-		});
-
-		it('shows the unexpected-error toast when the API call rejects', async () => {
-			mockPutAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
-
-			const {result} = renderAgentHook();
-
-			await fillRequiredFields(result);
-
-			await act(async () => {
-				result.current.handleSubmit();
+				expect(
+					mockDeleteAgentDefinitionToContentRetrievers
+				).toHaveBeenCalledWith('AGENT_X', 'CR_2');
 			});
 
-			await waitFor(() => {
-				expect(mockOpenToast).toHaveBeenCalledWith(
-					expect.objectContaining({
-						message: 'an-unexpected-error-occurred',
-						type: 'danger',
-					})
-				);
-			});
+			expect(
+				mockDeleteAgentDefinitionToModelArmorTemplates
+			).toHaveBeenCalledWith('AGENT_X', 'MAT_1');
 		});
 
 		it('issues PUT requests for added relationships only', async () => {
@@ -405,61 +393,73 @@ describe('useAgentDefinitionForm', () => {
 			).not.toHaveBeenCalled();
 		});
 
-		it('issues DELETE requests for removed relationships', async () => {
-			mockGetAgentDefinition.mockResolvedValueOnce({
-				agentDefinitionsToContentRetrievers: [
-					{externalReferenceCode: 'CR_1'},
-					{externalReferenceCode: 'CR_2'},
-				],
-				agentDefinitionsToModelArmorTemplates: [
-					{externalReferenceCode: 'MAT_1'},
-				],
-				description: 'desc',
-				externalReferenceCode: 'AGENT_X',
-				inputVariables: 'a',
-				outputVariable: 'b',
-				title_i18n: {en_US: 'My Agent'},
-				workflowDefinitionName: 'wf-1',
-			});
+		it('shows a danger toast when the response status is not approved', async () => {
 			mockPutAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
-				status: {label: 'approved'},
-			});
-			mockDeleteAgentDefinitionToContentRetrievers.mockResolvedValue({});
-			mockDeleteAgentDefinitionToModelArmorTemplates.mockResolvedValue(
-				{}
-			);
-
-			const {result} = renderAgentHook({
-				externalReferenceCode: 'AGENT_X',
+				status: {label: 'rejected'},
 			});
 
-			await waitFor(() => {
-				expect(result.current.contentRetrievers.selected).toHaveLength(
-					2
-				);
-			});
+			const {result} = renderAgentHook();
 
-			await act(async () => {
-				result.current.contentRetrievers.setSelected([
-					{externalReferenceCode: 'CR_1'},
-				]);
-				result.current.modelArmorTemplates.setSelected([]);
-			});
+			await fillRequiredFields(result);
 
 			await act(async () => {
 				result.current.handleSubmit();
 			});
 
 			await waitFor(() => {
-				expect(
-					mockDeleteAgentDefinitionToContentRetrievers
-				).toHaveBeenCalledWith('AGENT_X', 'CR_2');
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'failed-to-save-agent',
+						type: 'danger',
+					})
+				);
+			});
+		});
+
+		it('shows the success toast when the API echoes back an approved status', async () => {
+			mockPutAgentDefinition.mockResolvedValueOnce({
+				externalReferenceCode: 'AGENT_X',
+				status: {label: 'approved'},
 			});
 
-			expect(
-				mockDeleteAgentDefinitionToModelArmorTemplates
-			).toHaveBeenCalledWith('AGENT_X', 'MAT_1');
+			const {result} = renderAgentHook();
+
+			await fillRequiredFields(result);
+
+			await act(async () => {
+				result.current.handleSubmit();
+			});
+
+			await waitFor(() => {
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'agent-saved-successfully',
+						type: 'success',
+					})
+				);
+			});
+		});
+
+		it('shows the unexpected-error toast when the API call rejects', async () => {
+			mockPutAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
+
+			const {result} = renderAgentHook();
+
+			await fillRequiredFields(result);
+
+			await act(async () => {
+				result.current.handleSubmit();
+			});
+
+			await waitFor(() => {
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'an-unexpected-error-occurred',
+						type: 'danger',
+					})
+				);
+			});
 		});
 
 		it('skips relationship PUTs and DELETEs when neither picker has changed', async () => {
@@ -496,29 +496,6 @@ describe('useAgentDefinitionForm', () => {
 	});
 
 	describe('validate', () => {
-		it('flags every required field on a blank submit', async () => {
-			const {result} = renderAgentHook();
-
-			await act(async () => {
-				result.current.handleSubmit();
-			});
-
-			await waitFor(() => {
-				expect(result.current.errors.title_i18n).toBe('required');
-			});
-
-			expect(result.current.errors.externalReferenceCode).toBe(
-				'required'
-			);
-			expect(result.current.errors.description).toBe('required');
-			expect(result.current.errors.inputVariables).toBe('required');
-			expect(result.current.errors.outputVariable).toBe('required');
-			expect(result.current.errors.workflowDefinitionName).toBe(
-				'required'
-			);
-			expect(mockPutAgentDefinition).not.toHaveBeenCalled();
-		});
-
 		it('clears errors once required fields are filled', async () => {
 			mockPutAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
@@ -552,6 +529,29 @@ describe('useAgentDefinitionForm', () => {
 			expect(
 				result.current.errors.workflowDefinitionName
 			).toBeUndefined();
+		});
+
+		it('flags every required field on a blank submit', async () => {
+			const {result} = renderAgentHook();
+
+			await act(async () => {
+				result.current.handleSubmit();
+			});
+
+			await waitFor(() => {
+				expect(result.current.errors.title_i18n).toBe('required');
+			});
+
+			expect(result.current.errors.externalReferenceCode).toBe(
+				'required'
+			);
+			expect(result.current.errors.description).toBe('required');
+			expect(result.current.errors.inputVariables).toBe('required');
+			expect(result.current.errors.outputVariable).toBe('required');
+			expect(result.current.errors.workflowDefinitionName).toBe(
+				'required'
+			);
+			expect(mockPutAgentDefinition).not.toHaveBeenCalled();
 		});
 	});
 });

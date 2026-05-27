@@ -185,16 +185,6 @@ describe('AgentDefinitionForm', () => {
 	});
 
 	describe('panels', () => {
-		it('renders every panel for a fresh form', () => {
-			render(<AgentDefinitionForm {...defaultProps} />);
-
-			expect(screen.getByText('details')).toBeInTheDocument();
-			expect(screen.getByText('workflow')).toBeInTheDocument();
-			expect(screen.getByText('variables')).toBeInTheDocument();
-			expect(screen.getByText('data-sources')).toBeInTheDocument();
-			expect(screen.getByText('guardrails')).toBeInTheDocument();
-		});
-
 		it('hydrates panel inputs after the fetch resolves', async () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				active: true,
@@ -220,6 +210,16 @@ describe('AgentDefinitionForm', () => {
 					screen.getByDisplayValue('Loaded From API')
 				).toBeInTheDocument();
 			});
+		});
+
+		it('renders every panel for a fresh form', () => {
+			render(<AgentDefinitionForm {...defaultProps} />);
+
+			expect(screen.getByText('details')).toBeInTheDocument();
+			expect(screen.getByText('workflow')).toBeInTheDocument();
+			expect(screen.getByText('variables')).toBeInTheDocument();
+			expect(screen.getByText('data-sources')).toBeInTheDocument();
+			expect(screen.getByText('guardrails')).toBeInTheDocument();
 		});
 	});
 
@@ -303,6 +303,12 @@ describe('AgentDefinitionForm', () => {
 	});
 
 	describe('toolbar', () => {
+		it('disables the save button when readOnly is true', () => {
+			render(<AgentDefinitionForm {...defaultProps} readOnly={true} />);
+
+			expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
+		});
+
 		it('exposes a Cancel link that points at backURL', () => {
 			render(
 				<AgentDefinitionForm {...defaultProps} backURL="/back-here" />
@@ -311,12 +317,6 @@ describe('AgentDefinitionForm', () => {
 			const cancel = screen.getByRole('link', {name: 'cancel'});
 
 			expect(cancel).toHaveAttribute('href', '/back-here');
-		});
-
-		it('disables the save button when readOnly is true', () => {
-			render(<AgentDefinitionForm {...defaultProps} readOnly={true} />);
-
-			expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
 		});
 	});
 

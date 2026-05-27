@@ -9,7 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.consent.management.platform.integration.configuration.ConsentManagementPlatformConfiguration;
 import com.liferay.cookies.consent.CookiesConsentChecker;
 import com.liferay.cookies.consent.CookiesConsentCheckerResolver;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -17,6 +24,13 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.http.Cookie;
+
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,6 +51,13 @@ public class CookiesConsentCheckerResolverImplTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@After
+	public void tearDown() throws Exception {
+		if (_group != null) {
+			GroupTestUtil.deleteGroup(_group);
+		}
+	}
+
 	@Test
 	public void testGetCookiesConsentChecker() throws Exception {
 		CookiesConsentChecker cookiesConsentChecker =
@@ -51,10 +72,29 @@ public class CookiesConsentCheckerResolverImplTest {
 							"enabled", false
 						).build())) {
 
+			MockHttpServletRequest mockHttpServletRequest =
+				_createMockHttpServletRequest();
+
 			Assert.assertSame(
 				cookiesConsentChecker,
 				_cookiesConsentCheckerResolver.getCookiesConsentChecker(
-					_createMockHttpServletRequest()));
+					mockHttpServletRequest));
+
+			mockHttpServletRequest.setCookies(
+				new Cookie(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"),
+				new Cookie(
+					CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+					URLEncoder.encode(
+						JSONUtil.put(
+							CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
+						).toString(),
+						StandardCharsets.UTF_8)));
+
+			Assert.assertTrue(
+				cookiesConsentChecker.hasConsent(
+					CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+					mockHttpServletRequest));
 		}
 
 		try (CompanyConfigurationTemporarySwapper
@@ -67,9 +107,33 @@ public class CookiesConsentCheckerResolverImplTest {
 						).build())) {
 
 			Assert.assertSame(
-				cookiesConsentChecker,
+				_consentManagementPlatformCookiesConsentChecker,
 				_cookiesConsentCheckerResolver.getCookiesConsentChecker(
 					_createMockHttpServletRequest()));
+		}
+
+		_group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						ConsentManagementPlatformConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Assert.assertSame(
+				_consentManagementPlatformCookiesConsentChecker,
+				_cookiesConsentCheckerResolver.getCookiesConsentChecker(
+					mockHttpServletRequest));
 		}
 	}
 
@@ -85,7 +149,15 @@ public class CookiesConsentCheckerResolverImplTest {
 		return mockHttpServletRequest;
 	}
 
+	@Inject(
+		filter = "component.name=com.liferay.consent.management.platform.integration.internal.consent.ConsentManagementPlatformCookiesConsentChecker"
+	)
+	private CookiesConsentChecker
+		_consentManagementPlatformCookiesConsentChecker;
+
 	@Inject
 	private CookiesConsentCheckerResolver _cookiesConsentCheckerResolver;
+
+	private Group _group;
 
 }

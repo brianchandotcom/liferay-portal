@@ -72,8 +72,6 @@ test(
 				page,
 				projectID: project.groupId,
 			});
-
-			await page.getByRole('link', {name: 'Web Content'}).click();
 		});
 
 		await test.step('Change the time filter to Last 24 hours', async () => {

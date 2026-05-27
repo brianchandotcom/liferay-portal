@@ -1809,58 +1809,90 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		await expect(page.getByText('Required')).toBeVisible();
 	});
 
-	test('verify it is possible to add an Object Entry Title Field when changing the localization on Instance Settings', async ({
-		apiHelpers,
-		editObjectDetailsPage,
-		localizationInstanceSettingsPage,
-		page,
-		restoreInstanceDefaultLanguage: _restoreInstanceDefaultLanguage,
-		viewObjectEntriesPage,
-	}) => {
-		let objectDefinition: ObjectDefinition;
-		let relationshipLabel: string;
-		let relationshipName: string;
+	const titleFieldTest = test.extend<{
+		restoreAccountEntryTitleFieldAndDefaultLanguage: void;
+	}>({
+		restoreAccountEntryTitleFieldAndDefaultLanguage: async (
+			{editObjectDetailsPage, localizationInstanceSettingsPage, page},
+			use
+		) => {
+			try {
+				await use();
+			}
+			finally {
+				await localizationInstanceSettingsPage.goto('Language', false);
 
-		await test.step('Create an Account and a Custom Object with a Relationship 1toM of Account to Custom Object', async () => {
-			await apiHelpers.headlessAdminUser.postAccount();
+				await localizationInstanceSettingsPage.setDefaultLanguage(
+					'en_US'
+				);
 
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
+				await editObjectDetailsPage.goto('Account');
 
-			objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
+				await editObjectDetailsPage.selectEntryTitleField('Name');
+
+				await editObjectDetailsPage.saveObjectDefinition();
+
+				await waitForAlert(page, 'The object was saved successfully.');
+			}
+		},
+	});
+
+	titleFieldTest(
+		'verify object entries display the new title field correctly when changing the localization on Instance Settings',
+		async ({
+			apiHelpers,
+			editObjectDetailsPage,
+			localizationInstanceSettingsPage,
+			page,
+			restoreAccountEntryTitleFieldAndDefaultLanguage:
+				_restoreAccountEntryTitleFieldAndDefaultLanguage,
+			viewObjectEntriesPage,
+		}) => {
+			let objectDefinition: ObjectDefinition;
+			let relationshipLabel: string;
+			let relationshipName: string;
+
+			await test.step('Create an Account and a Custom Object with a Relationship 1toM of Account to Custom Object', async () => {
+				await apiHelpers.headlessAdminUser.postAccount({
+					type: 'business',
 				});
 
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: ['Text'],
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				const objectRelationshipAPIClient =
+					await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+				relationshipLabel = 'Relationship';
+				relationshipName = 'relationship' + getRandomInt();
+
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_ACCOUNT',
+					{
+						label: {en_US: relationshipLabel},
+						name: relationshipName,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
 			});
 
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-			relationshipLabel = 'Relationship';
-			relationshipName = 'relationship' + getRandomInt();
-
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT',
-				{
-					label: {en_US: relationshipLabel},
-					name: relationshipName,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition.externalReferenceCode,
-					objectDefinitionId2: objectDefinition.id,
-					objectDefinitionName2: objectDefinition.name,
-					type: 'oneToMany',
-				}
-			);
-		});
-
-		try {
-			await test.step('Change the default language in the virtual instance to Portuguese', async () => {
+			await test.step('Change the default language to Portuguese', async () => {
 				await localizationInstanceSettingsPage.goto('Language');
 
 				await localizationInstanceSettingsPage.setDefaultLanguage(
@@ -1868,17 +1900,14 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 				);
 			});
 
-			await test.step('Change the title field in the System Object', async () => {
+			await test.step('Change the title field in the "Account" system object', async () => {
 				await editObjectDetailsPage.goto('Account');
 
 				await editObjectDetailsPage.selectEntryTitleField('Type');
 
 				await editObjectDetailsPage.saveObjectDefinition();
 
-				await waitForAlert(
-					page,
-					'The object was saved successfully.'
-				);
+				await waitForAlert(page, 'The object was saved successfully.');
 			});
 
 			await test.step('Create an entry using the title field selected', async () => {
@@ -1888,19 +1917,19 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 					objectDefinition.label!['en_US']
 				);
 
-				await page.getByLabel(relationshipLabel).click();
+				await page
+					.locator('.form-group', {hasText: relationshipLabel})
+					.getByPlaceholder('Search')
+					.click();
 
 				await page
-					.getByRole('option', {name: /business/i})
+					.getByRole('menuitem', {name: /business/i})
 					.first()
 					.click();
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-				await waitForAlert(
-					page,
-					'The object was saved successfully.'
-				);
+				await waitForAlert(page);
 			});
 
 			await test.step('Verify the title field of System Object is present', async () => {
@@ -1915,26 +1944,10 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 					.first()
 					.click();
 
-				await expect(
-					page.getByText(/business/i).first()
-				).toBeVisible();
+				await expect(page.getByText(/business/i).first()).toBeVisible();
 			});
 		}
-		finally {
-			await test.step('Restore Account Entry Title Field', async () => {
-				await editObjectDetailsPage.goto('Account');
-
-				await editObjectDetailsPage.selectEntryTitleField('Name');
-
-				await editObjectDetailsPage.saveObjectDefinition();
-
-				await waitForAlert(
-					page,
-					'The object was saved successfully.'
-				);
-			});
-		}
-	});
+	);
 
 	test('verify it is possible to update Custom Object when changing the localization on Instance Settings', async ({
 		apiHelpers,

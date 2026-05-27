@@ -13,7 +13,13 @@
 					"fragmentStyle": {
 						"backgroundFragmentImage": {
 							"url": {
-								"value": "/documents/d/one/hero_banner_background-svg"
+								"mapping": {
+									"fieldKey": "FileEntry_previewImage",
+									"itemReference": {
+										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero_banner_background.svg#]"
+									}
+								}
 							}
 						},
 						"paddingBottom": "6",
@@ -301,8 +307,12 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
-																			"en_US": "/documents/d/one/hero_banner_illustration_image-svg"
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero_banner_illustration_image.svg#]"
+																			}
 																		}
 																	}
 																},
@@ -430,8 +440,12 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
-																			"en_US": "/documents/d/one/service_card_account-svg"
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/service_card_account.svg#]"
+																			}
 																		}
 																	}
 																},
@@ -585,8 +599,12 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
-																			"en_US": "/documents/d/one/service_card_support-svg"
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/service_card_support.svg#]"
+																			}
 																		}
 																	}
 																},
@@ -740,8 +758,12 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
-																			"en_US": "/documents/d/one/service_card_learn-svg"
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/service_card_learn.svg#]"
+																			}
 																		}
 																	}
 																},
@@ -895,8 +917,12 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
-																			"en_US": "/documents/d/one/service_card_marketplace-svg"
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/service_card_marketplace.svg#]"
+																			}
 																		}
 																	}
 																},

@@ -66,4 +66,6 @@ public class OAuthClientEntryConstants {
 		"users_roles", JSONUtil.put("roles", "")
 	).toString();
 
+	public static final int TOKEN_CONNECTION_TIMEOUT_DEFAULT = 1000;
+
 }

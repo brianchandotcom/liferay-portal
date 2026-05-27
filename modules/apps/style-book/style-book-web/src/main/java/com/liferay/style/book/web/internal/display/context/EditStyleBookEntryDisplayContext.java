@@ -372,7 +372,7 @@ public class EditStyleBookEntryDisplayContext {
 			});
 	}
 
-	private String _getLayoutLabel(Group entryGroup, Layout layout) {
+	private String _getName(Group entryGroup, Layout layout) {
 		String layoutName = layout.getName(_themeDisplay.getLocale());
 
 		if ((entryGroup == null) || !entryGroup.isDepot()) {
@@ -519,7 +519,7 @@ public class EditStyleBookEntryDisplayContext {
 										role.getRoleId(), ActionKeys.VIEW);
 							}
 						).put(
-							"name", _getLayoutLabel(entryGroup, layout)
+							"name", _getName(entryGroup, layout)
 						).put(
 							"private", layout.isPrivateLayout()
 						).put(

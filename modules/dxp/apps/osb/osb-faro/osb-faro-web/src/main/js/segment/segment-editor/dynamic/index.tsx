@@ -239,6 +239,13 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 						}}
 						innerRef={this._formRef as any}
 						onSubmit={this.handleSubmit}
+						validate={(values: FormValues) => {
+							const error = validateSegmentEditor(
+								values.criteria
+							);
+
+							return error ? {criteria: error} : {};
+						}}
 					>
 						{({
 							handleSubmit,
@@ -394,9 +401,6 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 															segmentType={type}
 															sequential={
 																sequential
-															}
-															validate={
-																validateSegmentEditor
 															}
 														/>
 													</div>

@@ -42,6 +42,8 @@ import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.WindowState;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,6 +143,19 @@ public class InviteAccountUsersMVCActionCommand
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/account_admin/create_account_user"
+		).setRedirect(
+			() -> {
+				Group group = _groupLocalService.getGroup(groupId);
+
+				HttpServletRequest httpServletRequest =
+					serviceContext.getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return group.getDisplayURL(themeDisplay, false);
+			}
 		).setParameter(
 			"ticketKey", ticketKey
 		).setPortletMode(

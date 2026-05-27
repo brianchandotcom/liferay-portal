@@ -318,17 +318,17 @@ public class UpgradeLogProgressTracker {
 			return futureTask.get(
 				_COUNT_QUERY_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 		}
+		catch (ExecutionException executionException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to run count query", executionException.getCause());
+			}
+		}
 		catch (TimeoutException timeoutException) {
 			futureTask.cancel(true);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Count query timed out", timeoutException);
-			}
-		}
-		catch (ExecutionException executionException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to run count query", executionException.getCause());
 			}
 		}
 		catch (Exception exception) {

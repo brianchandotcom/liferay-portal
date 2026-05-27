@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -174,7 +175,21 @@ public class ContentStructureUtil {
 											() -> LocalizedMapUtil.getI18nMap(
 												acceptAllLanguage,
 												localizedValue.getValues()));
-										setValue(entry::getKey);
+										setValue(
+											() -> {
+												String optionReference =
+													ddmFormFieldOptions.
+														getOptionReference(
+															entry.getKey());
+
+												if (Validator.isNotNull(
+														optionReference)) {
+
+													return optionReference;
+												}
+
+												return entry.getKey();
+											});
 									}
 								};
 							},

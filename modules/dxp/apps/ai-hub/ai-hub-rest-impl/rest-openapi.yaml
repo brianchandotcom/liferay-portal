@@ -126,7 +126,7 @@ components:
                     type: string
                 maliciousUriFilterEnabled:
                     type: boolean
-                multiLanguageDetectionEnabled:
+                multilanguageDetectionEnabled:
                     type: boolean
                 piAndJailbreakConfidenceLevel:
                     default: mediumAndAbove

@@ -1,6 +1,7 @@
 import Card from './Card';
 import classNames from 'classnames';
 import Icon from '@clayui/icon';
+import Loading from './Loading';
 import React from 'react';
 import Sticker from '@clayui/sticker';
 import {Text} from '@clayui/core';
@@ -53,12 +54,14 @@ interface IGeneralInfoSectionProps {
 	config: DataDrivenConfig;
 	getValue: (key: string) => string | undefined;
 	languageMap: Record<string, string>;
+	loading?: boolean;
 }
 
 export const GeneralInfoSection: React.FC<IGeneralInfoSectionProps> = ({
 	config,
 	getValue,
-	languageMap
+	languageMap,
+	loading
 }) => (
 	<div className='general-info mb-4'>
 		<div className='row g-3'>
@@ -69,23 +72,27 @@ export const GeneralInfoSection: React.FC<IGeneralInfoSectionProps> = ({
 							<Text size={4}>{section.title}</Text>
 						</Card.Title>
 						<Card.Body className='pb-0 px-2'>
-							<div className='g-2 row'>
-								{section.items.map(item => {
-									const rawValue = getValue(item.key);
+							{loading ? (
+								<Loading />
+							) : (
+								<div className='g-2 row'>
+									{section.items.map(item => {
+										const rawValue = getValue(item.key);
 
-									const displayValue = rawValue || '-';
+										const displayValue = rawValue || '-';
 
-									return (
-										<InfoItem
-											className={item.className}
-											icon={item.icon}
-											key={item.key}
-											label={languageMap[item.key]}
-											value={displayValue}
-										/>
-									);
-								})}
-							</div>
+										return (
+											<InfoItem
+												className={item.className}
+												icon={item.icon}
+												key={item.key}
+												label={languageMap[item.key]}
+												value={displayValue}
+											/>
+										);
+									})}
+								</div>
+							)}
 						</Card.Body>
 					</Card>
 				</div>

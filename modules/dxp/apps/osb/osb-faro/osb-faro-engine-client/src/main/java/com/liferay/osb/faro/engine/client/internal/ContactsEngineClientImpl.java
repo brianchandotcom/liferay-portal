@@ -3229,12 +3229,12 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public DataSource patchDataSource(
-		Credentials credentials, Event event, FaroProject faroProject,
-		String id, String name, Provider provider, String status, String url,
+		FaroProject faroProject, String id, Credentials credentials,
+		Event event, String name, Provider provider, String status, String url,
 		long userId) {
 
 		return _patchDataSource(
-			credentials, event, faroProject, id, name, provider, status,
+			faroProject, id, credentials, event, name, provider, status,
 			Rels.DATA_SOURCE, url, userId);
 	}
 
@@ -3295,12 +3295,12 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public DataSource reconnectDataSource(
-		Credentials credentials, Event event, FaroProject faroProject,
-		String id, String name, Provider provider, String status, String url,
+		FaroProject faroProject, String id, Credentials credentials,
+		Event event, String name, Provider provider, String status, String url,
 		long userId) {
 
 		return _patchDataSource(
-			credentials, event, faroProject, id, name, provider, status,
+			faroProject, id, credentials, event, name, provider, status,
 			Rels.DATA_SOURCE_RECONNECT, url, userId);
 	}
 
@@ -3393,8 +3393,8 @@ public class ContactsEngineClientImpl
 	@Override
 	public DataSource updateDataSource(
 		FaroProject faroProject, String id, Credentials credentials,
-		long userId, String name, String url, Provider provider, Event event,
-		String status) {
+		Event event, String name, Provider provider, String status, String url,
+		long userId) {
 
 		DataSource dataSource = new DataSource();
 
@@ -3602,8 +3602,8 @@ public class ContactsEngineClientImpl
 	}
 
 	private DataSource _patchDataSource(
-		Credentials credentials, Event event, FaroProject faroProject,
-		String id, String name, Provider provider, String status, String rel,
+		FaroProject faroProject, String id, Credentials credentials,
+		Event event, String name, Provider provider, String status, String rel,
 		String url, long userId) {
 
 		Map<String, Object> dataSourcePatch = new HashMap<>();

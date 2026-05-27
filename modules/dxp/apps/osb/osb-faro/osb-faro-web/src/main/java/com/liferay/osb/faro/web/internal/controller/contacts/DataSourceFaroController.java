@@ -181,8 +181,8 @@ public class DataSourceFaroController extends BaseFaroController {
 					"CLIENT_CREDENTIALS", portalURL, "",
 					"https://analytics.liferay.com/oauth/receive",
 					oAuthClientId, oAuthClientSecret, "LIFERAY"),
-				getUserId(), null, portalURL, new LiferayProvider(), null,
-				DataSource.Status.ACTIVE.toString());
+				null, null, new LiferayProvider(),
+				DataSource.Status.ACTIVE.toString(), portalURL, getUserId());
 
 			_tokenManager.clearToken(token);
 		}
@@ -1105,9 +1105,9 @@ public class DataSourceFaroController extends BaseFaroController {
 		throws Exception {
 
 		return update(
-			groupId, id, null, name, null, new CSVProvider(), CSVProvider.TYPE,
-			fileVersionId, event, status, fieldMappingMapsFaroParam.getValue(),
-			true);
+			groupId, id, null, event, fieldMappingMapsFaroParam.getValue(),
+			fileVersionId, name, true, new CSVProvider(), CSVProvider.TYPE,
+			status, null);
 	}
 
 	@PATCH
@@ -1131,8 +1131,8 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		return update(
-			groupId, id, credentials, name, null, demandbaseProvider,
-			DemandbaseProvider.TYPE, 0, null, status, null, true);
+			groupId, id, credentials, null, null, 0, name, true,
+			demandbaseProvider, DemandbaseProvider.TYPE, status, null);
 	}
 
 	@PATCH
@@ -1156,8 +1156,8 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		return update(
-			groupId, id, credentials, name, null, hubSpotProvider,
-			HubSpotProvider.TYPE, 0, null, status, null, true);
+			groupId, id, credentials, null, null, 0, name, true,
+			hubSpotProvider, HubSpotProvider.TYPE, status, null);
 	}
 
 	@PATCH
@@ -1223,9 +1223,9 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		return update(
-			groupId, id, credentials, name, url, liferayProvider,
-			LiferayProvider.TYPE, 0, null, status,
-			fieldMappingMapsFaroParam.getValue(), true);
+			groupId, id, credentials, null,
+			fieldMappingMapsFaroParam.getValue(), 0, name, true,
+			liferayProvider, LiferayProvider.TYPE, status, url);
 	}
 
 	@PATCH
@@ -1249,8 +1249,8 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		return update(
-			groupId, id, credentials, name, null, marketoProvider,
-			MarketoProvider.TYPE, 0, null, status, null, true);
+			groupId, id, credentials, null, null, 0, name, true,
+			marketoProvider, MarketoProvider.TYPE, status, null);
 	}
 
 	@PATCH
@@ -1316,8 +1316,8 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		return update(
-			groupId, id, credentials, name, url, salesforceProvider,
-			SalesforceProvider.TYPE, 0, null, status, null, true);
+			groupId, id, credentials, null, null, 0, name, true,
+			salesforceProvider, SalesforceProvider.TYPE, status, url);
 	}
 
 	@Path("/{id}")
@@ -1348,7 +1348,7 @@ public class DataSourceFaroController extends BaseFaroController {
 			OAuthUtil.getOAuth20Credentials(
 				"CLIENT_CREDENTIALS", "", "", "", oAuthClientId,
 				oAuthClientSecret, "LIFERAY"),
-			0, null, null, null, null, DataSource.Status.ACTIVE.toString());
+			null, null, null, DataSource.Status.ACTIVE.toString(), null, 0);
 	}
 
 	@Override
@@ -1438,9 +1438,9 @@ public class DataSourceFaroController extends BaseFaroController {
 		throws Exception {
 
 		return update(
-			groupId, id, null, name, null, new CSVProvider(), CSVProvider.TYPE,
-			fileVersionId, event, status, fieldMappingMapsFaroParam.getValue(),
-			false);
+			groupId, id, null, event, fieldMappingMapsFaroParam.getValue(),
+			fileVersionId, name, false, new CSVProvider(), CSVProvider.TYPE,
+			status, null);
 	}
 
 	@Path("/{id}/demandbase")
@@ -1460,8 +1460,8 @@ public class DataSourceFaroController extends BaseFaroController {
 			channelsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, null, demandbaseProvider,
-			DemandbaseProvider.TYPE, 0, null, status, null, false);
+			groupId, id, credentials, null, null, 0, name, false,
+			demandbaseProvider, DemandbaseProvider.TYPE, status, null);
 	}
 
 	@Path("/{id}/hubspot")
@@ -1481,8 +1481,8 @@ public class DataSourceFaroController extends BaseFaroController {
 			channelsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, null, hubSpotProvider,
-			HubSpotProvider.TYPE, 0, null, status, null, false);
+			groupId, id, credentials, null, null, 0, name, false,
+			hubSpotProvider, HubSpotProvider.TYPE, status, null);
 	}
 
 	@Path("/{id}/liferay")
@@ -1511,9 +1511,9 @@ public class DataSourceFaroController extends BaseFaroController {
 			contactsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, url, liferayProvider,
-			LiferayProvider.TYPE, 0, null, status,
-			fieldMappingMapsFaroParam.getValue(), false);
+			groupId, id, credentials, null,
+			fieldMappingMapsFaroParam.getValue(), 0, name, false,
+			liferayProvider, LiferayProvider.TYPE, status, url);
 	}
 
 	@Path("/{id}/marketo")
@@ -1533,8 +1533,8 @@ public class DataSourceFaroController extends BaseFaroController {
 			channelsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, null, marketoProvider,
-			MarketoProvider.TYPE, 0, null, status, null, false);
+			groupId, id, credentials, null, null, 0, name, false,
+			marketoProvider, MarketoProvider.TYPE, status, null);
 	}
 
 	@Path("/{id}/salesforce")
@@ -1565,8 +1565,8 @@ public class DataSourceFaroController extends BaseFaroController {
 			contactsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, url, salesforceProvider,
-			SalesforceProvider.TYPE, 0, null, status, null, false);
+			groupId, id, credentials, null, null, 0, name, false,
+			salesforceProvider, SalesforceProvider.TYPE, status, url);
 	}
 
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -1735,10 +1735,10 @@ public class DataSourceFaroController extends BaseFaroController {
 	}
 
 	protected DataSourceDisplay update(
-			long groupId, String id, Credentials credentials, String name,
-			String url, Provider provider, String providerType,
-			long fileVersionId, Event event, String status,
-			List<FieldMappingMap> fieldMappingMaps, boolean patch)
+			long groupId, String id, Credentials credentials, Event event,
+			List<FieldMappingMap> fieldMappingMaps, long fileVersionId,
+			String name, boolean patch, Provider provider, String providerType,
+			String status, String url)
 		throws Exception {
 
 		validateFieldMappingMaps(fieldMappingMaps);
@@ -1757,13 +1757,13 @@ public class DataSourceFaroController extends BaseFaroController {
 
 		if (patch) {
 			dataSource = contactsEngineClient.patchDataSource(
-				faroProject, id, credentials, getUserId(), name, url, provider,
-				event, status);
+				faroProject, id, credentials, event, name, provider, status,
+				url, getUserId());
 		}
 		else {
 			dataSource = contactsEngineClient.updateDataSource(
-				faroProject, id, credentials, getUserId(), name, url, provider,
-				event, status);
+				faroProject, id, credentials, event, name, provider, status,
+				url, getUserId());
 		}
 
 		return new DataSourceDisplay(groupId, dataSource);

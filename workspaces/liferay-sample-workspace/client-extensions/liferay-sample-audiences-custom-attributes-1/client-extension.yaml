@@ -1,0 +1,11 @@
+assemble:
+    -   from: assets
+        hashify: custom-attributes.js
+        into: static
+liferay-sample-audiences-custom-attributes-1:
+    name: Liferay Sample Audiences Custom Attributes 1
+    symbols:
+        -   timeOfDay
+        -   touchDevice
+    type: audiencesCustomAttributes
+    url: custom-attributes.*.js

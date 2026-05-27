@@ -75,7 +75,6 @@ public class OpenIdConnectHttpUtil {
 		}
 
 		httpOptions.setCookieSpec(Http.CookieSpec.STANDARD);
-
 		httpOptions.setLocation(String.valueOf(httpRequest.getURL()));
 
 		if (HTTPRequest.Method.POST.equals(httpRequest.getMethod())) {

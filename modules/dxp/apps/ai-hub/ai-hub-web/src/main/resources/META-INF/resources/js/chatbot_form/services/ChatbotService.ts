@@ -11,8 +11,15 @@ const CHATBOT_BASE_URI = '/o/ai-hub/chatbots';
 
 const CHATBOT_BY_ERC_URI = `${CHATBOT_BASE_URI}/by-external-reference-code/`;
 
+const HEADERS = new Headers({
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+});
+
 async function getChatbots() {
 	const response = await fetch(CHATBOT_BASE_URI, {
+		headers: HEADERS,
 		method: 'GET',
 	});
 
@@ -27,6 +34,7 @@ async function getChatbot(externalReferenceCode: string) {
 	const response = await fetch(
 		`${CHATBOT_BY_ERC_URI}${externalReferenceCode}?nestedFields=agentDefinitionsToChatbots`,
 		{
+			headers: HEADERS,
 			method: 'GET',
 		}
 	);
@@ -41,14 +49,14 @@ async function getChatbot(externalReferenceCode: string) {
 async function postChatbot(chatbot: Chatbot) {
 	const response = await fetch(CHATBOT_BASE_URI, {
 		body: JSON.stringify(chatbot),
-		headers: {
-			'Content-Type': 'application/json',
-		},
+		headers: HEADERS,
 		method: 'POST',
 	});
 
 	if (!response.ok) {
-		throw new Error();
+		const {message, title} = await response.json().catch(() => ({}));
+
+		throw new Error(title || message || '');
 	}
 
 	return response.json();
@@ -62,15 +70,15 @@ async function putChatbot(
 		`${CHATBOT_BY_ERC_URI}${existingExternalReferenceCode}`,
 		{
 			body: JSON.stringify(chatbot),
-			headers: {
-				'Content-Type': 'application/json',
-			},
+			headers: HEADERS,
 			method: 'PUT',
 		}
 	);
 
 	if (!response.ok) {
-		throw new Error();
+		const {message, title} = await response.json().catch(() => ({}));
+
+		throw new Error(title || message || '');
 	}
 
 	return response.json();
@@ -82,7 +90,10 @@ async function deleteChatbotAgentDefinitionRelationship(
 ) {
 	return fetch(
 		`${CHATBOT_BY_ERC_URI}${chatbotERC}/agentDefinitionsToChatbots/${agentERC}`,
-		{method: 'DELETE'}
+		{
+			headers: HEADERS,
+			method: 'DELETE',
+		}
 	);
 }
 
@@ -92,7 +103,10 @@ async function putChatbotAgentDefinitionRelationship(
 ) {
 	return fetch(
 		`${CHATBOT_BY_ERC_URI}${chatbotERC}/agentDefinitionsToChatbots/${agentERC}`,
-		{method: 'PUT'}
+		{
+			headers: HEADERS,
+			method: 'PUT',
+		}
 	);
 }
 

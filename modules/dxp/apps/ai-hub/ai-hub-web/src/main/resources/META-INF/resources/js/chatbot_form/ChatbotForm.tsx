@@ -338,7 +338,9 @@ export default function ChatbotForm({
 			console.error(error);
 
 			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				message:
+					(error instanceof Error && error.message) ||
+					Liferay.Language.get('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
 		}

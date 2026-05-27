@@ -85,11 +85,10 @@ public class OpenAPIUtil {
 	}
 
 	public static Tool getTool(JSONObject openAPIJSONObject, String toolName) {
+		Operation operation = _getOperation(openAPIJSONObject, toolName);
+
 		return new Tool() {
 			{
-				Operation operation = _getOperation(
-					openAPIJSONObject, toolName);
-
 				setDescription(
 					() -> _getDescription(
 						operation._method, operation._operationJSONObject,

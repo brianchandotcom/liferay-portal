@@ -49,9 +49,7 @@ const ReportFeedbackModal: React.FC<ReportFeedbackModalProps> = ({
 
 		if (await submit()) {
 			Liferay.Util.openToast({
-				message: Liferay.Language.get(
-					'feedback-sent-thank-you-for-helping-us-improve'
-				),
+				message: Liferay.Language.get('thanks-for-your-feedback'),
 				type: 'success',
 			});
 

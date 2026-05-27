@@ -103,9 +103,10 @@ describe('ReportFeedbackModal', () => {
 				traceId: 'trace-1',
 			})
 		);
-		expect(openToast).toHaveBeenCalledWith(
-			expect.objectContaining({type: 'success'})
-		);
+		expect(openToast).toHaveBeenCalledWith({
+			message: 'thanks-for-your-feedback',
+			type: 'success',
+		});
 	});
 
 	it('shows an inline error and stays open on failure', async () => {

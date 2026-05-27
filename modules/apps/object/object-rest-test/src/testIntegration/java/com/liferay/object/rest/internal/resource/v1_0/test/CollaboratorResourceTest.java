@@ -631,6 +631,15 @@ public class CollaboratorResourceTest {
 				"/collaborators/by-email-address/", emailAddress),
 			Http.Method.PUT);
 
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				objectEntry.getObjectEntryId(), "/collaborators"),
+			Http.Method.GET);
+
+		Assert.assertEquals(4, jsonObject.getInt("totalCount"));
+
 		Ticket ticket = _fetchTicketByEmailAddress(
 			objectEntry.getModelClassName(), objectEntry.getObjectEntryId(),
 			emailAddress);
@@ -644,7 +653,7 @@ public class CollaboratorResourceTest {
 				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.GET);
 
-		Assert.assertEquals(4, jsonObject.getInt("totalCount"));
+		Assert.assertEquals(3, jsonObject.getInt("totalCount"));
 	}
 
 	@Test

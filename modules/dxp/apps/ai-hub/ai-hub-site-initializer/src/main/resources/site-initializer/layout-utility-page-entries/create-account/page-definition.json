@@ -11,6 +11,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".portlet-boundary_com_liferay_account_admin_web_internal_portlet_AccountUsersRegistrationPortlet_ {\n  margin-top: 3rem;\n}\n\n.portlet-boundary_com_liferay_account_admin_web_internal_portlet_AccountUsersRegistrationPortlet_ .btn-cancel,\n.portlet-boundary_com_liferay_account_admin_web_internal_portlet_AccountUsersRegistrationPortlet_ .portlet-icon-back {\n  display: none !important;\n}",
 							"widgetInstance": {
 								"widgetName": "com_liferay_account_admin_web_internal_portlet_AccountUsersRegistrationPortlet"
 							}

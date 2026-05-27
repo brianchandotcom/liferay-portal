@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+{{- if .Values.structuredLogging.enabled }}
+    100-inject-structured-logging.sh: |-
+{{ .Files.Get "files/structured-logging/100-inject-structured-logging.sh" | indent 8 }}
+    cloud-native-layout.json: |-
+{{ .Files.Get "files/structured-logging/cloud-native-layout.json" | indent 8 }}
+    portal-log4j-ext.xml: |-
+{{ .Files.Get "files/structured-logging/portal-log4j-ext.xml" | indent 8 }}
+{{- else }}
+    100-inject-structured-logging.sh: |-
+        #!/bin/bash
+    cloud-native-layout.json: |-
+        {}
+    portal-log4j-ext.xml: |-
+        <?xml version="1.0"?>
+        <Configuration />
+{{- end }}
+kind: ConfigMap
+metadata:
+    name: liferay-structured-logging

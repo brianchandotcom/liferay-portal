@@ -378,6 +378,8 @@ startupProbe:
     initialDelaySeconds: 60
     periodSeconds: 10
     timeoutSeconds: 5
+structuredLogging:
+    enabled: false
 tolerations: []
 updateStrategy:
     type: RollingUpdate
@@ -391,6 +393,10 @@ volumeClaimTemplates:
                 requests:
                     storage: 1Gi
 volumeMounts:
+    -   mountPath: /etc/liferay/mount/scripts/100-inject-structured-logging.sh
+        name: liferay-structured-logging-scripts
+        readOnly: true
+        subPath: 100-inject-structured-logging.sh
     -   mountPath: /opt/liferay/data
         name: liferay-persistent-volume
         subPath: liferay/data
@@ -466,8 +472,26 @@ volumeMounts:
     -   mountPath: /usr/local/liferay/scripts/pre-configure/010_install_prometheus_jmx_agent.sh
         name: liferay-configmap
         subPath: 010_install_prometheus_jmx_agent.sh
+    -   mountPath: /var/lib/structured-logging/configs
+        name: liferay-structured-logging-configs
+        readOnly: true
 volumes:
     -   configMap:
             name: liferay-default
             optional: true
         name: liferay-configmap
+    -   configMap:
+            items:
+                -   key: cloud-native-layout.json
+                    path: META-INF/cloud-native-layout.json
+                -   key: portal-log4j-ext.xml
+                    path: META-INF/portal-log4j-ext.xml
+            name: liferay-structured-logging
+        name: liferay-structured-logging-configs
+    -   configMap:
+            defaultMode: 0755
+            items:
+                -   key: 100-inject-structured-logging.sh
+                    path: 100-inject-structured-logging.sh
+            name: liferay-structured-logging
+        name: liferay-structured-logging-scripts

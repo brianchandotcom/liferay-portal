@@ -1,0 +1,62 @@
+{
+	"class": {
+		"$resolver": "logger",
+		"field": "name"
+	},
+	"level": {
+		"$resolver": "level",
+		"field": "name"
+	},
+	"logging.googleapis.com/insertId": {
+		"$resolver": "counter",
+		"stringified": true
+	},
+	"logging.googleapis.com/sourceLocation": {
+		"file": {
+			"$resolver": "source",
+			"field": "fileName"
+		},
+		"function": {
+			"$resolver": "pattern",
+			"pattern": "%replace{%C.%M}{^\\?\\.$}{}",
+			"stackTraceEnabled": false
+		},
+		"line": {
+			"$resolver": "source",
+			"field": "lineNumber"
+		}
+	},
+	"message": {
+		"$resolver": "pattern",
+		"pattern": "%m",
+		"stackTraceEnabled": false
+	},
+	"method": {
+		"$resolver": "pattern",
+		"pattern": "%M",
+		"stackTraceEnabled": false
+	},
+	"severity": {
+		"$resolver": "pattern",
+		"pattern": "%level{WARN=WARNING, TRACE=DEBUG, FATAL=EMERGENCY}",
+		"stackTraceEnabled": false
+	},
+	"source": "liferay",
+	"thread": {
+		"$resolver": "thread",
+		"field": "name"
+	},
+	"throwable": {
+		"$resolver": "pattern",
+		"pattern": "%ex{full}",
+		"stackTraceEnabled": true
+	},
+	"time": {
+		"$resolver": "timestamp",
+		"pattern": {
+			"format": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+			"locale": "en_US",
+			"timeZone": "UTC"
+		}
+	}
+}

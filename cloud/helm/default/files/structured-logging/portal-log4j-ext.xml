@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<Configuration strict="true">
+	<Appenders>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<JsonTemplateLayout eventTemplateUri="classpath:META-INF/cloud-native-layout.json" maxStringLength="131072" stackTraceEnabled="true" />
+		</Console>
+
+		<Null name="COMPANY_LOG_ROUTING_TEXT_FILE" />
+		<Null name="TEXT_FILE" />
+		<Null name="XML_FILE" />
+	</Appenders>
+
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="CONSOLE" />
+		</Root>
+	</Loggers>
+</Configuration>

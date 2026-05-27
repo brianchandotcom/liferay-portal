@@ -30,6 +30,9 @@ spec:
             annotations:
                 checksum/config: {{ include (print .root.Template.BasePath "/configmap.yaml") .root | sha256sum }}
                 checksum/init-scripts: {{ include (print .root.Template.BasePath "/liferay-init-scripts-cm.yaml") .root | sha256sum }}
+                {{- if .root.Values.structuredLogging.enabled }}
+                checksum/structured-logging: {{ include (print .root.Template.BasePath "/structured-logging-cm.yaml") .root | sha256sum }}
+                {{- end }}
                 {{- with .statefulset.annotations }}
                 {{- toYaml . | nindent 16 }}
                 {{- end }}

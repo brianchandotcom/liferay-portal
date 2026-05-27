@@ -3,7 +3,6 @@ import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ContextualInformation from '../components/ContextualInformation';
-import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import ProfileCardCDP from '../hoc/ProfileCardCDP';
 import React from 'react';
@@ -17,19 +16,10 @@ import {useRequest} from 'shared/hooks/useRequest';
 const OverviewCDPEmptyState = ({
 	authorized,
 	dataSourceData,
-	dataSourceLoading,
 	groupId,
 	hasConnectedDataSources,
 	pageDisplay = true
 }) => {
-	if (dataSourceLoading) {
-		return (
-			<NoResultsDisplay>
-				<Loading key='LOADING' />
-			</NoResultsDisplay>
-		);
-	}
-
 	const noSitesSelected = !dataSourceData?.items?.some(
 		dataSource => dataSource.sitesSelected
 	);
@@ -115,20 +105,22 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 		dataSource => dataSource.sitesSelected
 	);
 
+	const showEmptyState = !dataSourceLoading && !sitesSelected;
+
 	return (
 		<div className='overview-column-main'>
 			<ContextualInformation
 				contactId={individual.get('id')}
 				contextData={individual.get('context')}
 				email={individual.getIn(['properties', 'email'])}
-				showEmptyState={!sitesSelected}
+				loading={dataSourceLoading}
+				showEmptyState={showEmptyState}
 				userId={individual.getIn(['properties', 'userId'])}
 				uuid={individual.getIn(['properties', 'uuid'])}
 			>
 				<OverviewCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}
-					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
 					hasConnectedDataSources={!dataSourceStates.empty}
 					pageDisplay={false}
@@ -139,14 +131,13 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 				channelId={channelId}
 				entity={individual}
 				groupId={groupId}
-				showEmptyState={!sitesSelected}
+				showEmptyState={showEmptyState}
 				tabId={tabId}
 				timeZoneId={timeZoneId}
 			>
 				<OverviewCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}
-					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
 					hasConnectedDataSources={!dataSourceStates.empty}
 				/>

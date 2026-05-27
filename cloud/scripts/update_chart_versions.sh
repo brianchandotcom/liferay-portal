@@ -9,6 +9,8 @@ _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
 function main {
+	local chart_dir
+
 	if [ "${#}" -eq 0 ]
 	then
 		for chart_dir in "${_ROOT_CLOUD_DIR}"/helm/*/

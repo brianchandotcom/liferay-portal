@@ -1,6 +1,12 @@
 import React from 'react';
 import TopAssets from '../TopAssets';
-import {cleanup, fireEvent, render, screen, within} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	within
+} from '@testing-library/react';
 import {ITopAsset} from 'shared/api/assets';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -132,7 +138,9 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
-			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(
+				0
+			);
 		});
 	});
 
@@ -216,7 +224,9 @@ describe('TopAssets', () => {
 				name: 'Custom Entry'
 			})[0] as HTMLAnchorElement;
 
-			expect(link.getAttribute('href')).toContain('/assets/object-entry/');
+			expect(link.getAttribute('href')).toContain(
+				'/assets/object-entry/'
+			);
 		});
 	});
 
@@ -228,7 +238,9 @@ describe('TopAssets', () => {
 				screen.getAllByRole('button', {name: /Group By/})[0]
 			);
 
-			fireEvent.click(screen.getAllByRole('menuitem', {name: 'Views'})[0]);
+			fireEvent.click(
+				screen.getAllByRole('menuitem', {name: 'Views'})[0]
+			);
 
 			const lastCall =
 				mockedUseRequest.mock.calls[

@@ -40,7 +40,6 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 	@Test
 	public void testInvokeTool() throws Exception {
 		byte[] bytes = RandomTestUtil.randomBytes();
-
 		String fileName =
 			"mcp-upload-" + RandomTestUtil.randomString() + ".txt";
 

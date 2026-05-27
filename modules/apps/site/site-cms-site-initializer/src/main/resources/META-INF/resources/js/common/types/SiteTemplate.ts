@@ -6,6 +6,7 @@
 export type SiteTemplate = {
 	description?: string;
 	id: string;
+	logo?: string;
 	name: string;
 	siteExternalReferenceCode?: string;
 };

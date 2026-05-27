@@ -7,6 +7,8 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.SiteTemplate;
+import com.liferay.headless.admin.site.client.pagination.Page;
+import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -19,7 +21,10 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -27,6 +32,14 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetSiteTemplatesPage() throws Exception {
+		super.testGetSiteTemplatesPage();
+
+		_testGetSiteTemplatesPageWithExcludedSiteExternalReferenceCodes();
+	}
 
 	@Override
 	protected SiteTemplate randomSiteTemplate() throws Exception {
@@ -79,6 +92,74 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 			siteTemplate.getPagesUpdateable(), new ServiceContext());
 
 		return siteTemplate;
+	}
+
+	private void _testGetSiteTemplatesPageWithExcludedSiteExternalReferenceCodes()
+		throws Exception {
+
+		SiteTemplate siteTemplate1 = randomSiteTemplate();
+
+		siteTemplate1.setActive(true);
+
+		testGetSiteTemplatesPage_addSiteTemplate(siteTemplate1);
+
+		SiteTemplate siteTemplate2 = randomSiteTemplate();
+
+		siteTemplate2.setActive(true);
+
+		testGetSiteTemplatesPage_addSiteTemplate(siteTemplate2);
+
+		Page<SiteTemplate> siteTemplatesPage =
+			siteTemplateResource.getSiteTemplatesPage(
+				true, null, Pagination.of(1, 100));
+
+		String excludedSiteExternalReferenceCode = null;
+		String includedSiteExternalReferenceCode = null;
+
+		for (SiteTemplate siteTemplate : siteTemplatesPage.getItems()) {
+			if (Objects.equals(
+					siteTemplate1.getName(), siteTemplate.getName())) {
+
+				excludedSiteExternalReferenceCode =
+					siteTemplate.getSiteExternalReferenceCode();
+			}
+			else if (Objects.equals(
+						siteTemplate2.getName(), siteTemplate.getName())) {
+
+				includedSiteExternalReferenceCode =
+					siteTemplate.getSiteExternalReferenceCode();
+			}
+		}
+
+		Assert.assertNotNull(excludedSiteExternalReferenceCode);
+		Assert.assertNotNull(includedSiteExternalReferenceCode);
+
+		Page<SiteTemplate> filteredSiteTemplatesPage =
+			siteTemplateResource.getSiteTemplatesPage(
+				true, new String[] {excludedSiteExternalReferenceCode},
+				Pagination.of(1, 100));
+
+		boolean excludedSiteTemplateFound = false;
+		boolean includedSiteTemplateFound = false;
+
+		for (SiteTemplate siteTemplate : filteredSiteTemplatesPage.getItems()) {
+			String siteExternalReferenceCode =
+				siteTemplate.getSiteExternalReferenceCode();
+
+			if (excludedSiteExternalReferenceCode.equals(
+					siteExternalReferenceCode)) {
+
+				excludedSiteTemplateFound = true;
+			}
+			else if (includedSiteExternalReferenceCode.equals(
+						siteExternalReferenceCode)) {
+
+				includedSiteTemplateFound = true;
+			}
+		}
+
+		Assert.assertFalse(excludedSiteTemplateFound);
+		Assert.assertTrue(includedSiteTemplateFound);
 	}
 
 	@Inject

@@ -7,7 +7,7 @@ import {MappingFieldSet} from '../../types/MappingField';
 import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
 import {FormRelationshipLayoutDataItem} from '../../types/layout_data/FormRelationshipLayoutDataItem';
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
-import {useObjectFields} from '../contexts/ObjectDataContext';
+import {useFormMappingFields} from '../contexts/FormDataContext';
 import {useSelector} from '../contexts/StoreContext';
 
 function getParent(
@@ -30,7 +30,7 @@ export default function useFormRelationshipFieldSets(
 
 	const parent = getParent(item, layoutData);
 
-	const fields = useObjectFields(
+	const fields = useFormMappingFields(
 		parent.type === 'form'
 			? {
 					classNameId: parent.config.classNameId,

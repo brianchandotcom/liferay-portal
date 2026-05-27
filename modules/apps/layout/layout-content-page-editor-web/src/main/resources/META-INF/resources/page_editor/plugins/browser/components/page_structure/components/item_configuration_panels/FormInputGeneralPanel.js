@@ -17,9 +17,9 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../../../../app/config/index';
 import {
-	useObjectFields,
-	useObjectLabel,
-} from '../../../../../../app/contexts/ObjectDataContext';
+	useFormMappingFields,
+	useFormMappingFieldsLabel,
+} from '../../../../../../app/contexts/FormDataContext';
 import {
 	useDispatch,
 	useSelector,
@@ -181,7 +181,7 @@ export function FormInputGeneralPanel({item}) {
 			[item.itemId, item.parentId]
 		);
 
-	const formFields = useObjectFields(
+	const formFields = useFormMappingFields(
 		fieldSetName ? {name: fieldSetName} : {classNameId, classTypeId}
 	);
 
@@ -592,7 +592,7 @@ function FormInputMappingOptions({
 		[classNameId, classTypeId]
 	);
 
-	const label = useObjectLabel(
+	const label = useFormMappingFieldsLabel(
 		fieldSetName ? {name: fieldSetName} : {classNameId, classTypeId}
 	);
 

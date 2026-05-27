@@ -18,23 +18,23 @@ import FormService from '../services/FormService';
 import {CACHE_KEYS} from '../utils/cache';
 import useCache from '../utils/useCache';
 
-type ObjectDataMap = Record<string, {fields: MappingFields; label?: string}>;
+type FormDataMap = Record<string, {fields: MappingFields; label?: string}>;
 
-const ObjectDataContext = React.createContext<{
-	map: ObjectDataMap;
-	setMap: Dispatch<SetStateAction<ObjectDataMap>>;
+const FormDataContext = React.createContext<{
+	map: FormDataMap;
+	setMap: Dispatch<SetStateAction<FormDataMap>>;
 }>({
 	map: {},
 	setMap: () => {},
 });
 
-function ObjectDataContextProvider({children}: {children: ReactNode}) {
+function FormDataContextProvider({children}: {children: ReactNode}) {
 	const [map, setMap] = useState({});
 
 	return (
-		<ObjectDataContext.Provider value={{map, setMap}}>
+		<FormDataContext.Provider value={{map, setMap}}>
 			{children}
-		</ObjectDataContext.Provider>
+		</FormDataContext.Provider>
 	);
 }
 
@@ -42,8 +42,8 @@ type Props =
 	| {classNameId: string; classTypeId: string; name?: never}
 	| {classNameId?: never; classTypeId?: never; name: string};
 
-function useObjectFields(props: Props) {
-	const map = useContext(ObjectDataContext).map;
+function useFormMappingFields(props: Props) {
+	const map = useContext(FormDataContext).map;
 
 	const entry = map[buildKey(props)];
 
@@ -54,8 +54,8 @@ function useObjectFields(props: Props) {
 	return [];
 }
 
-function useObjectLabel(props: Props) {
-	const map = useContext(ObjectDataContext).map;
+function useFormMappingFieldsLabel(props: Props) {
+	const map = useContext(FormDataContext).map;
 
 	const entry = map[buildKey(props)];
 
@@ -66,14 +66,14 @@ function useObjectLabel(props: Props) {
 	return null;
 }
 
-function useSaveObjectFields({
+function useSaveFormMappingFields({
 	classNameId,
 	classTypeId,
 }: {
 	classNameId: string;
 	classTypeId: string;
 }) {
-	const {setMap} = useContext(ObjectDataContext);
+	const {setMap} = useContext(FormDataContext);
 
 	const fields = useCache({
 		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
@@ -109,10 +109,10 @@ function buildMap({
 	label,
 	...props
 }: Props & {
-	currentMap: ObjectDataMap;
+	currentMap: FormDataMap;
 	fields: MappingFields;
 	label?: string;
-}): ObjectDataMap {
+}): FormDataMap {
 	let map = {...currentMap};
 
 	const key = buildKey(props);
@@ -139,8 +139,8 @@ function buildMap({
 }
 
 export {
-	ObjectDataContextProvider,
-	useObjectFields,
-	useObjectLabel,
-	useSaveObjectFields,
+	FormDataContextProvider,
+	useFormMappingFields,
+	useFormMappingFieldsLabel,
+	useSaveFormMappingFields,
 };

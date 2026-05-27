@@ -57,7 +57,7 @@ describe('fetch lifecycle', () => {
 			guardrailType: 'output',
 			location: 'us-central1',
 			maliciousUriFilterEnabled: true,
-			multiLanguageDetectionEnabled: false,
+			multilanguageDetectionEnabled: false,
 			piAndJailbreakConfidenceLevel: 'high',
 			piAndJailbreakFilterEnabled: true,
 			raiDangerousLevel: 'lowAndAbove',
@@ -134,10 +134,10 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
-				result.current.setField('multiLanguageDetectionEnabled', true);
+				result.current.setField('multilanguageDetectionEnabled', true);
 			});
 
-			expect(result.current.values.multiLanguageDetectionEnabled).toBe(
+			expect(result.current.values.multilanguageDetectionEnabled).toBe(
 				true
 			);
 		});

@@ -12,7 +12,7 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: ModelArmorTemplate = {
 	guardrailType: '',
 	location: '',
 	maliciousUriFilterEnabled: false,
-	multiLanguageDetectionEnabled: false,
+	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 	piAndJailbreakFilterEnabled: false,
 	raiDangerousLevel: 'none',

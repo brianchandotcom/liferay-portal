@@ -109,8 +109,8 @@ export function useModelArmorTemplateForm({
 					location: modelArmorTemplate.location,
 					maliciousUriFilterEnabled:
 						modelArmorTemplate.maliciousUriFilterEnabled,
-					multiLanguageDetectionEnabled:
-						modelArmorTemplate.multiLanguageDetectionEnabled,
+					multilanguageDetectionEnabled:
+						modelArmorTemplate.multilanguageDetectionEnabled,
 					piAndJailbreakConfidenceLevel:
 						modelArmorTemplate.piAndJailbreakConfidenceLevel,
 					piAndJailbreakFilterEnabled:

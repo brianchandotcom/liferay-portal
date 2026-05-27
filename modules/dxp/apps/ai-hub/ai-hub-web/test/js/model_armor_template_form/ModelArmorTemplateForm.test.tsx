@@ -140,7 +140,7 @@ describe('ModelArmorTemplateForm', () => {
 				guardrailType: 'input',
 				location: '',
 				maliciousUriFilterEnabled: false,
-				multiLanguageDetectionEnabled: false,
+				multilanguageDetectionEnabled: false,
 				piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 				piAndJailbreakFilterEnabled: false,
 				r_accountToAIHubModelArmorTemplates_accountEntryERC: 'ACCOUNT',

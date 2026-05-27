@@ -480,6 +480,44 @@ describe('ClayDropDown', () => {
 		expect(vegetable3).toBeDefined();
 	});
 
+	it('keeps the outer dropdown accessible when a nested dropdown inside one of its items opens', async () => {
+		const {getByText} = render(
+			<div>
+				<ClayDropDown trigger={<button>Outer Trigger</button>}>
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Item>Outer Item</ClayDropDown.Item>
+
+						<ClayDropDown.Item>
+							<ClayDropDown
+								trigger={<button>Inner Trigger</button>}
+							>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item>
+										Inner Item
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</div>
+		);
+
+		await userEvent.click(getByText('Outer Trigger'));
+
+		await userEvent.click(getByText('Inner Trigger'));
+
+		const outerItem = getByText('Outer Item');
+		const innerItem = getByText('Inner Item');
+
+		expect(
+			outerItem.closest('[aria-hidden="true"], [data-aria-hidden="true"]')
+		).toBeNull();
+		expect(
+			innerItem.closest('[aria-hidden="true"], [data-aria-hidden="true"]')
+		).toBeNull();
+	});
+
 	it('render dynamic content with group and search', () => {
 		const {getAllByRole: cGetAllByRole, getByRole} = render(
 			<ClayDropDown trigger={<button>Click Me</button>}>

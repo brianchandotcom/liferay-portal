@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.servlet.ServletContext;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -51,19 +52,27 @@ public class InputsFragmentCollectionContributor
 	}
 
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+		long companyId = CompanyThreadLocal.getCompanyId();
 
-			Set<String> excludedKeys = Set.of(
-				"INPUTS-drag-and-drop-upload", "INPUTS-video-previewer-input");
+		Set<String> excludedKeys = new HashSet<>();
 
-			fragmentEntries = ListUtil.filter(
-				fragmentEntries,
-				fragmentEntry -> !excludedKeys.contains(
-					fragmentEntry.getFragmentEntryKey()));
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			excludedKeys.add("INPUTS-drag-and-drop-upload");
+			excludedKeys.add("INPUTS-video-previewer-input");
 		}
 
-		return fragmentEntries;
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-70672")) {
+			excludedKeys.add("INPUTS-email-input");
+		}
+
+		if (excludedKeys.isEmpty()) {
+			return fragmentEntries;
+		}
+
+		return ListUtil.filter(
+			fragmentEntries,
+			fragmentEntry -> !excludedKeys.contains(
+				fragmentEntry.getFragmentEntryKey()));
 	}
 
 	@Reference(

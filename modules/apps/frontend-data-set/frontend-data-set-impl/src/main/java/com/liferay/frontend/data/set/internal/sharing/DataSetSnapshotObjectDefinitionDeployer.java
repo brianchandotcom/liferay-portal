@@ -36,7 +36,7 @@ public class DataSetSnapshotObjectDefinitionDeployer
 
 		if (!Objects.equals(
 				objectDefinition.getExternalReferenceCode(),
-				_DATA_SET_SNAPSHOT_EXTERNAL_REFERENCE_CODE)) {
+				"L_DATA_SET_SNAPSHOT")) {
 
 			return Collections.emptyList();
 		}
@@ -55,9 +55,6 @@ public class DataSetSnapshotObjectDefinitionDeployer
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
-
-	private static final String _DATA_SET_SNAPSHOT_EXTERNAL_REFERENCE_CODE =
-		"L_DATA_SET_SNAPSHOT";
 
 	private BundleContext _bundleContext;
 

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
@@ -54,9 +55,7 @@ public class DataSetSnapshotSharingEntryInterpreter
 	@Override
 	public SharingEntryViewRenderer getSharingEntryViewRenderer() {
 
-		// A data set user view has no standalone preview surface, so it has
-		// no view renderer. See ViewSharedAssetsDisplayContext, which drops
-		// the row link when the view renderer is null.
+		// This sharing entry has no standalone preview.
 
 		return null;
 	}
@@ -69,7 +68,7 @@ public class DataSetSnapshotSharingEntryInterpreter
 			return label;
 		}
 
-		return "'" + label + "'";
+		return StringUtil.quote(label);
 	}
 
 	@Override

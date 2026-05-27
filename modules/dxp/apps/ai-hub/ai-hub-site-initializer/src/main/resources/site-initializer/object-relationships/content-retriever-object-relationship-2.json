@@ -2,7 +2,7 @@
 	"deletionType": "cascade",
 	"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
 	"label": {
-		"en_US": "Content Retriever to Crawler Jobs"
+		"en_US": "AI Hub Content Retriever to AI Hub Crawler Jobs"
 	},
 	"name": "contentRetrieverToCrawlerJobs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AIHubContentRetriever$]",

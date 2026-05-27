@@ -4,7 +4,7 @@
 	"label": {
 		"en_US": "AI Hub Agent Definitions to AI Hub Model Armor Templates"
 	},
-	"name": "agentDefinitionsToModelArmorTemplates",
+	"name": "aiHubAgentDefinitionsToAIHubMATemplates",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AIHubAgentDefinition$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubModelArmorTemplate$]",
 	"objectDefinitionName2": "AIHubModelArmorTemplate",

@@ -2,7 +2,7 @@
 	"deletionType": "cascade",
 	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWLER_JOBS",
 	"label": {
-		"en_US": "Account to Crawler Jobs"
+		"en_US": "Account to AI Hub Crawler Jobs"
 	},
 	"name": "accountToAIHubCrawlerJobs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

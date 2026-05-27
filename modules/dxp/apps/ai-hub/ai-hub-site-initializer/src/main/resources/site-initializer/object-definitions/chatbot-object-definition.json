@@ -155,7 +155,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Chatbots"
+				"en_US": "Account to AI Hub Chatbots"
 			},
 			"name": "r_accountToAIHubChatbots_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

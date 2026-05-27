@@ -113,7 +113,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Agent Definitions"
+				"en_US": "Account to AI Hub Agent Definitions"
 			},
 			"name": "r_accountToAIHubAgentDefinitions_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

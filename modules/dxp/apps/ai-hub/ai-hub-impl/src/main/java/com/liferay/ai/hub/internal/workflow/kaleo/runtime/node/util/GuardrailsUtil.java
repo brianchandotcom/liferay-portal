@@ -48,7 +48,7 @@ public class GuardrailsUtil {
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
 				new NestedFieldsContext(
-					1, List.of("agentDefinitionsToModelArmorTemplates")));
+					1, List.of("aiHubAgentDefinitionsToAIHubMATemplates")));
 
 		try {
 			ObjectEntry agentDefinitionObjectEntry =
@@ -70,7 +70,7 @@ public class GuardrailsUtil {
 
 			ObjectEntry[] modelArmorTemplateObjectEntries =
 				(ObjectEntry[])agentDefinitionObjectEntry.getPropertyValue(
-					"agentDefinitionsToModelArmorTemplates");
+					"aiHubAgentDefinitionsToAIHubMATemplates");
 
 			if (ArrayUtil.isEmpty(modelArmorTemplateObjectEntries)) {
 				return;

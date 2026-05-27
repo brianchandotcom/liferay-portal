@@ -2,7 +2,7 @@
 	"deletionType": "cascade",
 	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CHATBOTS",
 	"label": {
-		"en_US": "Account to Chatbots"
+		"en_US": "Account to AI Hub Chatbots"
 	},
 	"name": "accountToAIHubChatbots",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

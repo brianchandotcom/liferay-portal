@@ -43,7 +43,7 @@
 			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_QUOTAS",
 			"indexed": true,
 			"label": {
-				"en_US": "Account to Quotas"
+				"en_US": "Account to AI Hub Quotas"
 			},
 			"name": "r_accountToAIHubQuotas_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

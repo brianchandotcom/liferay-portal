@@ -552,7 +552,7 @@ test(
 			await expect(helpIcon).toBeVisible();
 			await expect(helpIcon).toHaveAttribute(
 				'data-title',
-				/This view can be used by users/
+				/Sharing recipients can use the view/
 			);
 
 			await expect(

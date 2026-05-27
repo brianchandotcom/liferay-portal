@@ -66,7 +66,7 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			});
 	}
 
-	private Void _removeFragmentEntryVersions(List<CTEntry> ctEntries) {
+	private void _removeFragmentEntryVersions(List<CTEntry> ctEntries) {
 		List<Long> fragmentEntryIds = _fragmentEntryVersionPersistence.dslQuery(
 			DSLQueryFactoryUtil.selectDistinct(
 				FragmentEntryVersionTable.INSTANCE.fragmentEntryId
@@ -87,8 +87,6 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 		for (long fragmentEntryId : fragmentEntryIds) {
 			_removeFragmentEntryVersions(fragmentEntryId);
 		}
-
-		return null;
 	}
 
 	private void _removeFragmentEntryVersions(long fragmentEntryId) {

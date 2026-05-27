@@ -272,7 +272,7 @@ components:
                 fieldType:
                     description:
                         "Logical data type of the value. Use this to interpret the `value` field."
-                    enum: [boolean, date, number, string]
+                    enum: [BOOLEAN, DATE, NUMBER, STRING]
                     readOnly: true
                     type: string
                 label:

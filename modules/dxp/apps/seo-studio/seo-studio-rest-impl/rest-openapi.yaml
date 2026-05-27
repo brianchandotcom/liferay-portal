@@ -6,7 +6,7 @@ components:
             properties:
                 canonicalURL:
                     description:
-                        "The locale-stripped, normalized form of the URL, used as a stable key for grouping localized variants of the same page."
+                        "The locale-stripped, normalized form of the URL."
                     type: string
                 links:
                     items:
@@ -32,7 +32,7 @@ paths:
     "/seo-studio-domains/{seoStudioDomainId}/crawl-hits":
         get:
             description:
-                "Returns crawl hits from the Elasticsearch index for the SEO Studio Domain identified by seoStudioDomainId. The index is resolved server-side from the Domain itself, so each Domain has its own index; callers cannot address indexes belonging to Domains they do not own."
+                "Returns crawl hits for the SEO Studio Domain identified by seoStudioDomainId. The index is resolved server-side, so callers cannot address indexes belonging to Domains they do not own."
             operationId: getCrawlHitsPage
             parameters:
                 -   in: path

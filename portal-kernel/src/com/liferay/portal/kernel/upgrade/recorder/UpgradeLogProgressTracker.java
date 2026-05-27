@@ -520,6 +520,10 @@ public class UpgradeLogProgressTracker {
 					_lastLogTime = now;
 				}
 			}
+			else if (Objects.equals(methodName, "next")) {
+				_lastKnownProgresses.remove(_progressId);
+				_lastKnownTotalCounts.remove(_progressId);
+			}
 			else if (Objects.equals(methodName, "close")) {
 				_finishProgress();
 

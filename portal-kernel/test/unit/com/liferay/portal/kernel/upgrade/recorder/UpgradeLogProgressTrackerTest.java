@@ -1052,6 +1052,46 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testNextRemovesProgressOnEndOfResultSet() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			UpgradeLogProgressTracker.start();
+
+			ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+			Mockito.when(
+				resultSet.next()
+			).thenReturn(
+				true, false
+			);
+
+			ResultSet wrappedResultSet = _wrapResultSet(
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_assertLastKnownProgress(1, wrappedResultSet);
+
+			Assert.assertFalse(wrappedResultSet.next());
+
+			Map<String, Long> lastKnownProgresses =
+				UpgradeLogProgressTracker.getLastKnownProgresses();
+
+			Assert.assertTrue(lastKnownProgresses.isEmpty());
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
 	public void testSetObjectWithScalarIsAppliedToCountStatement()
 		throws Exception {
 

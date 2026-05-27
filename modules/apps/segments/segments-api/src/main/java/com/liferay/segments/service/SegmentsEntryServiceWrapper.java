@@ -118,12 +118,12 @@ public class SegmentsEntryServiceWrapper
 
 	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, int start, int end,
+		long groupId, String[] sources, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator) {
 
 		return _segmentsEntryService.getSegmentsEntries(
-			groupId, source, start, end, orderByComparator);
+			groupId, sources, start, end, orderByComparator);
 	}
 
 	@Override
@@ -132,8 +132,8 @@ public class SegmentsEntryServiceWrapper
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(long groupId, String source) {
-		return _segmentsEntryService.getSegmentsEntriesCount(groupId, source);
+	public int getSegmentsEntriesCount(long groupId, String[] sources) {
+		return _segmentsEntryService.getSegmentsEntriesCount(groupId, sources);
 	}
 
 	@Override
@@ -155,12 +155,13 @@ public class SegmentsEntryServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<SegmentsEntry>
 			searchSegmentsEntries(
-				long companyId, long groupId, String keywords, int start,
+				long companyId, long groupId, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
 				int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsEntryService.searchSegmentsEntries(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, params, start, end, sort);
 	}
 
 	@Override
@@ -190,4 +191,4 @@ public class SegmentsEntryServiceWrapper
 	private SegmentsEntryService _segmentsEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-16920795
+// LIFERAY-SERVICE-BUILDER-HASH:-208650748

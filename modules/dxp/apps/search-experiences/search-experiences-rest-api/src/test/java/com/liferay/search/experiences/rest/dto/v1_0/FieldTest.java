@@ -28,7 +28,7 @@ public class FieldTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testDecodeWhenDefaultValueIsCollection() throws Exception {
+	public void testDecodeDefaultValueCollection() throws Exception {
 		_testDecodeDefaultValue(
 			Arrays.asList(
 				_createEntry(_CLASS_NAME_BLOGS_ENTRY),
@@ -36,7 +36,7 @@ public class FieldTest {
 	}
 
 	@Test
-	public void testDecodeWhenDefaultValueIsObjectArray() throws Exception {
+	public void testDecodeDefaultValueObjectArray() throws Exception {
 		_testDecodeDefaultValue(
 			new Object[] {
 				_createEntry(_CLASS_NAME_BLOGS_ENTRY),

@@ -102,6 +102,28 @@
 				cursor: not-allowed;
 				opacity: 0.5;
 			}
+
+			.ai-feedback-actions-row {
+				border-top: 1px solid $gray-200;
+				gap: 0.375rem;
+				margin-top: 0.5rem;
+				padding: 0.5rem 1rem 0;
+
+				.btn-monospaced {
+					cursor: pointer;
+					height: 1.5rem;
+					min-width: 0;
+					padding: 0;
+					width: 1.5rem;
+				}
+
+				.lexicon-icon {
+					fill: #6b6c7e;
+					height: 1rem;
+					pointer-events: none;
+					width: 1rem;
+				}
+			}
 		}
 	}
 }

@@ -10,6 +10,7 @@ import dev.langchain4j.guardrail.OutputGuardrail;
 import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
+import dev.langchain4j.observability.api.listener.AiServiceListener;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.service.tool.ToolProvider;
 
@@ -27,6 +28,7 @@ public class AssistantHandlerContext {
 	}
 
 	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
+		_aiServiceListeners = builder._aiServiceListeners;
 		_inputGuardrails = builder._inputGuardrails;
 		_invocationParameters = builder._invocationParameters;
 		_memoryId = builder._memoryId;
@@ -40,6 +42,10 @@ public class AssistantHandlerContext {
 		_userMessage = builder._userMessage;
 		_vertexAiGeminiStreamingChatModel =
 			builder._vertexAiGeminiStreamingChatModel;
+	}
+
+	public List<AiServiceListener<?>> getAiServiceListeners() {
+		return _aiServiceListeners;
 	}
 
 	public List<InputGuardrail> getInputGuardrails() {
@@ -93,6 +99,14 @@ public class AssistantHandlerContext {
 	}
 
 	public static class Builder {
+
+		public Builder aiServiceListeners(
+			List<AiServiceListener<?>> aiServiceListeners) {
+
+			_aiServiceListeners = aiServiceListeners;
+
+			return this;
+		}
 
 		public AssistantHandlerContext build() {
 			return new AssistantHandlerContext(this);
@@ -185,6 +199,7 @@ public class AssistantHandlerContext {
 			return this;
 		}
 
+		private List<AiServiceListener<?>> _aiServiceListeners;
 		private List<InputGuardrail> _inputGuardrails;
 		private InvocationParameters _invocationParameters;
 		private String _memoryId;
@@ -201,6 +216,7 @@ public class AssistantHandlerContext {
 
 	}
 
+	private final List<AiServiceListener<?>> _aiServiceListeners;
 	private final List<InputGuardrail> _inputGuardrails;
 	private final InvocationParameters _invocationParameters;
 	private final String _memoryId;

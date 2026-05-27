@@ -32,6 +32,9 @@ public class AssistantHandlerUtil {
 			aiServices.chatMemoryProvider(ChatMemoryProviderUtil::provide);
 		}
 
+		aiServices.registerListeners(
+			assistantHandlerContext.getAiServiceListeners());
+
 		if (assistantHandlerContext.getRetrievalAugmentor() != null) {
 			aiServices.retrievalAugmentor(
 				assistantHandlerContext.getRetrievalAugmentor());

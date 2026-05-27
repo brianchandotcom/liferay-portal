@@ -38,15 +38,12 @@ public class TokenTestUtil {
 				List.of(GrantType.CLIENT_CREDENTIALS), "client_secret_post",
 				user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
-				ClientProfile.WEB_APPLICATION.id(),
+				ClientProfile.HEADLESS_SERVER.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), "",
 				List.of(),
 				"http://localhost:" + PortalUtil.getPortalServerPort(false), 0,
-				null, "AI Hub", "",
-				List.of(
-					"http://localhost:" +
-						PortalUtil.getPortalServerPort(false)),
-				false, Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
+				null, "AI Hub", "", null, false,
+				Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
 				new ServiceContext());
 
 		ConfigurationTestUtil.saveConfiguration(

@@ -25,7 +25,12 @@ function setup({items = [] as TestItem[]} = {}) {
 		})
 	);
 
-	return {deleteRelationship, fetchSourceList, putRelationship, ...renderResult};
+	return {
+		deleteRelationship,
+		fetchSourceList,
+		putRelationship,
+		...renderResult,
+	};
 }
 
 describe('useRelationshipPicker', () => {
@@ -73,7 +78,7 @@ describe('useRelationshipPicker', () => {
 
 	describe('sync', () => {
 		it('deletes only the removals relative to the baseline', async () => {
-			const {putRelationship, deleteRelationship, result} = setup();
+			const {deleteRelationship, putRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([
@@ -96,7 +101,7 @@ describe('useRelationshipPicker', () => {
 		});
 
 		it('issues both additions and removals when selection diverges', async () => {
-			const {putRelationship, deleteRelationship, result} = setup();
+			const {deleteRelationship, putRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([
@@ -121,7 +126,7 @@ describe('useRelationshipPicker', () => {
 		});
 
 		it('issues no requests when the selection matches the baseline', async () => {
-			const {putRelationship, deleteRelationship, result} = setup();
+			const {deleteRelationship, putRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([{externalReferenceCode: 'A'}]);
@@ -161,7 +166,7 @@ describe('useRelationshipPicker', () => {
 		});
 
 		it('puts only the additions relative to the baseline', async () => {
-			const {putRelationship, deleteRelationship, result} = setup();
+			const {deleteRelationship, putRelationship, result} = setup();
 
 			act(() => {
 				result.current.reset([{externalReferenceCode: 'A'}]);

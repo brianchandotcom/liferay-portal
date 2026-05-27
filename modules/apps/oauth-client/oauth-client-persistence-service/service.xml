@@ -75,6 +75,7 @@
 		<column name="matcherField" type="String" />
 		<column name="metadataCacheTime" type="long" />
 		<column method-name="OIDCUserInfoMapperJSON" name="oidcUserInfoMapperJSON" type="String" />
+		<column name="tokenConnectionTimeout" type="int" />
 		<column name="tokenRequestParametersJSON" type="String" />
 
 		<!-- Finder methods -->

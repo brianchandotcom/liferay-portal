@@ -120,7 +120,13 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 
 ### Claim the Failure
 
-1. Check Jira for an LPD ticket whose summary contains `<test-name>`, is labeled `claude-test-fix`, and was **created on or after `<failureDate>`**. A ticket matching those criteria already covers this failure (in progress when still open, already shipped when resolved), so skip it; when there are other candidates, retry with the next one.
+1. Check Jira for an LPD ticket whose summary contains `<test-name>` and is labeled `claude-test-fix`. Decide whether it already covers this failure by its state:
+
+	- **Unresolved** (Open, In Progress, or any non-resolved state) → claimed, skip. Someone is already working it.
+	- **Resolved on or after `<failureDate>`** → fix already shipped for this occurrence, skip.
+	- **Resolved before `<failureDate>`** → stale fix, a new occurrence is not covered, proceed.
+
+	When skipping and other candidates remain, retry with the next one.
 
 1. Invoke the `jira-task` skill with summary `<test-name>` and a description that names the case result ID, the source build, and the failure trace excerpt. Add the `claude-test-fix` label.
 

@@ -1,0 +1,37 @@
+{
+	"externalReferenceCode": "L_AI_HUB_REPORT_REASONS",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "AGENT_ERROR",
+			"key": "agentError",
+			"name": "Agent Error or Malfunction",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "HARMFUL_CONTENT",
+			"key": "harmfulContent",
+			"name": "Inappropriate or Harmful Content",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "INCORRECT",
+			"key": "incorrect",
+			"name": "Incorrect or Inaccurate Response",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "OTHER",
+			"key": "other",
+			"name": "Other",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "PII_EXPOSURE",
+			"key": "piiExposure",
+			"name": "Exposure of Personal / Sensitive Data (PII)",
+			"system": true
+		}
+	],
+	"name": "AI Hub Report Reasons",
+	"system": true
+}

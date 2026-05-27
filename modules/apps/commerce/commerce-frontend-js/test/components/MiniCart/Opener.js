@@ -136,7 +136,7 @@ describe('MiniCart Opener', () => {
 				expect(asFragment()).toMatchSnapshot();
 			});
 
-			it('if "displayTotalItemsQuantity" is set to true and no summary is provided, renders no badge (Opener reads counts from summary, not cartItems.length)', () => {
+			it('if "displayTotalItemsQuantity" is set to true but no summary is provided, renders no badge', () => {
 				const {container} = render(
 					<MiniCartContext.Provider
 						value={{

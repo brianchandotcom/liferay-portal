@@ -22,6 +22,25 @@ jest.mock(
 );
 
 describe('MiniCart tests_utilities', () => {
+	describe('filterOptions', () => {
+		it('parses the options JSON string and keeps only options with a truthy value', () => {
+			const OPTIONS_JSON = JSON.stringify([
+				{key: 'size', value: ['L']},
+				{key: 'empty', value: []},
+				{key: 'blank', value: ['']},
+			]);
+
+			expect(filterOptions(OPTIONS_JSON)).toEqual([
+				{key: 'size', value: ['L']},
+			]);
+		});
+
+		it('returns an empty array when the input is not valid options JSON', () => {
+			expect(filterOptions('/fail]')).toEqual([]);
+			expect(filterOptions(null)).toEqual([]);
+		});
+	});
+
 	describe('hasErrors', () => {
 		it('returns true if at least one cart item contains error messages', () => {
 			const CART_ITEMS = [

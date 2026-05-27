@@ -1516,8 +1516,8 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		_assertAnalyticsObjectType(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-			"content");
+			"content",
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 	}
 
 	@Test
@@ -1526,7 +1526,7 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		_assertAnalyticsObjectType(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES, "file");
+			"file", ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
 	}
 
 	@Test
@@ -2354,7 +2354,7 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	private void _assertAnalyticsObjectType(
-			String objectFolderExternalReferenceCode, String expectedObjectType)
+			String expectedObjectType, String objectFolderExternalReferenceCode)
 		throws Exception {
 
 		ObjectFolder objectFolder =

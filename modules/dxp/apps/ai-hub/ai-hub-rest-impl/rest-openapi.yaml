@@ -206,6 +206,41 @@ components:
                 -   accountEntryName
                 -   userAccounts
             type: object
+        Report:
+            properties:
+                agentDefinitionExternalReferenceCodes:
+                    items:
+                        type: string
+                    type: array
+                chatbotExternalReferenceCode:
+                    type: string
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                feedback:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                level:
+                    readOnly: true
+                    type: string
+                reason:
+                    type: string
+                surface:
+                    type: string
+                userMessage:
+                    type: string
+            required:
+                -   agentDefinitionExternalReferenceCodes
+                -   feedback
+                -   surface
+            type: object
         Site:
             properties:
                 externalReferenceCode:
@@ -559,6 +594,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProvisioningRequest"
             tags: ["ProvisioningRequest"]
+    "/reports":
+        post:
+            operationId: postReport
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Report"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Report"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Report"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Report"
+            tags: ["Report"]
     "/sites/by-external-reference-code/{externalReferenceCode}/site-initializer":
         put:
             operationId: putSiteByExternalReferenceCodeSiteInitializer

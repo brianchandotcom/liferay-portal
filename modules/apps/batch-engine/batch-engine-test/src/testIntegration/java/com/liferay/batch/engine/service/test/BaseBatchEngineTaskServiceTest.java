@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,6 +43,11 @@ public class BaseBatchEngineTaskServiceTest {
 		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
 		user = UserTestUtil.addUser(company);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyLocalServiceUtil.deleteCompany(company);
 	}
 
 	protected static Company company;

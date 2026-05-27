@@ -4,12 +4,17 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {ClayModalProvider} from '@clayui/modal';
 import React, {Suspense} from 'react';
 import {Root, createRoot} from 'react-dom/client';
+import {SWRConfig} from 'swr';
 
 import ErrorBoundary from './components/ErrorBoundary';
+import OneContextProvider from './context/OneContext';
 import {PropertiesProvider} from './context/PropertiesContext';
 import {getIconSpriteMap} from './liferay/constants';
+import SWRCacheProvider from './services/SWRCacheProvider';
+import fetcher from './services/fetcher';
 import {baseAttributes, getAttributes} from './utils/attributes';
 
 type RouterComponent = React.ComponentType;
@@ -31,14 +36,29 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 
+		const properties = getAttributes(this);
+
 		this.root.render(
 			<ErrorBoundary>
 				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-					<PropertiesProvider value={getAttributes(this)}>
-						<Suspense fallback={null}>
-							<Router />
-						</Suspense>
-					</PropertiesProvider>
+					<SWRConfig
+						value={{
+							fetcher,
+							provider: SWRCacheProvider,
+							revalidateIfStale: true,
+							revalidateOnFocus: false,
+						}}
+					>
+						<PropertiesProvider value={properties}>
+							<OneContextProvider properties={properties}>
+								<ClayModalProvider>
+									<Suspense fallback={null}>
+										<Router />
+									</Suspense>
+								</ClayModalProvider>
+							</OneContextProvider>
+						</PropertiesProvider>
+					</SWRConfig>
 				</ClayIconSpriteContext.Provider>
 			</ErrorBoundary>
 		);

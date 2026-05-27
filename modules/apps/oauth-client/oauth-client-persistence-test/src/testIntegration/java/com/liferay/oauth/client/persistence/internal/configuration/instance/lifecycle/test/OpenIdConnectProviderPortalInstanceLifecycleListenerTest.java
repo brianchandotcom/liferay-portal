@@ -1,0 +1,106 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.oauth.client.persistence.internal.configuration.instance.lifecycle.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
+import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Christian Moura
+ */
+@RunWith(Arquillian.class)
+public class OpenIdConnectProviderPortalInstanceLifecycleListenerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		if (Validator.isNotNull(_pid1)) {
+			ConfigurationTestUtil.deleteConfiguration(_pid1);
+		}
+
+		if (Validator.isNotNull(_pid2)) {
+			ConfigurationTestUtil.deleteConfiguration(_pid2);
+		}
+	}
+
+	@Test
+	public void testTokenConnectionTimeout() throws Exception {
+		int customTimeout = RandomTestUtil.randomInt();
+
+		String discoveryEndpoint =
+			"https://accounts.google.com/.well-known/openid-configuration";
+
+		String clientId1 = RandomTestUtil.randomString();
+
+		_pid1 = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.portal.security.sso.openid.connect.internal." +
+				"configuration.OpenIdConnectProviderConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"discoveryEndpoint", discoveryEndpoint
+			).put(
+				"openIdConnectClientId", clientId1
+			).put(
+				"tokenConnectionTimeout", customTimeout
+			).build());
+
+		OAuthClientEntry oAuthClientEntry1 =
+			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+				TestPropsValues.getCompanyId(), discoveryEndpoint, clientId1);
+
+		Assert.assertEquals(
+			customTimeout, oAuthClientEntry1.getTokenConnectionTimeout());
+
+		String clientId2 = RandomTestUtil.randomString();
+
+		_pid2 = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.portal.security.sso.openid.connect.internal." +
+				"configuration.OpenIdConnectProviderConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"discoveryEndpoint", discoveryEndpoint
+			).put(
+				"openIdConnectClientId", clientId2
+			).build());
+
+		OAuthClientEntry oAuthClientEntry2 =
+			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+				TestPropsValues.getCompanyId(), discoveryEndpoint, clientId2);
+
+		Assert.assertEquals(
+			OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+			oAuthClientEntry2.getTokenConnectionTimeout());
+	}
+
+	@Inject
+	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
+
+	private String _pid1;
+	private String _pid2;
+
+}

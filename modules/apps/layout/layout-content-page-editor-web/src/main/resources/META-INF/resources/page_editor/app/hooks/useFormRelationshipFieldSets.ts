@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MappingFieldSet} from '../../types/MappingField';
 import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
 import {FormRelationshipLayoutDataItem} from '../../types/layout_data/FormRelationshipLayoutDataItem';
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
-import {ObjectFieldSet, useObjectFields} from '../contexts/ObjectDataContext';
+import {useObjectFields} from '../contexts/ObjectDataContext';
 import {useSelector} from '../contexts/StoreContext';
 
 function getParent(
@@ -46,7 +47,7 @@ export default function useFormRelationshipFieldSets(
 				'fields' in item &&
 				item.name &&
 				item.name !== 'basic-information'
-		) as ObjectFieldSet;
+		) as MappingFieldSet;
 
 		if (!mainFieldSet) {
 			return [];
@@ -54,12 +55,12 @@ export default function useFormRelationshipFieldSets(
 
 		return mainFieldSet.fields.filter(
 			(fieldSet) => 'relationship' in fieldSet && fieldSet.relationship
-		) as ObjectFieldSet[];
+		) as MappingFieldSet[];
 	}
 
 	// Take relationship fieldSets directly if parent is a form relationship
 
 	return fields.filter(
 		(fieldSet) => 'relationship' in fieldSet && fieldSet.relationship
-	) as ObjectFieldSet[];
+	) as MappingFieldSet[];
 }

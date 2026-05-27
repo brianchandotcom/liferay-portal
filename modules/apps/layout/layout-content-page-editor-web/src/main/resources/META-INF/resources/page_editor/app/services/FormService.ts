@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MappingFields} from '../../types/MappingField';
 import {config} from '../config/index';
-import {ObjectFields} from '../contexts/ObjectDataContext';
 import draftServiceFetch, {OnNetworkStatus} from './draftServiceFetch';
 import serviceFetch from './serviceFetch';
 
@@ -14,16 +14,6 @@ import type {
 	FragmentEntryLink,
 	FragmentEntryLinkMap,
 } from '../actions/addFragmentEntryLinks';
-
-export interface FormField {
-	key: string;
-	label: string;
-	localizable: boolean;
-	name: string;
-	required: boolean;
-	type: string;
-	typeLabel: string;
-}
 
 export default {
 	getFormConfig({classNameId}: {classNameId: string}) {
@@ -39,7 +29,7 @@ export default {
 		classNameId: string;
 		classTypeId: string;
 	}) {
-		return serviceFetch<ObjectFields>(config.getFormFieldsURL, {
+		return serviceFetch<MappingFields>(config.getFormFieldsURL, {
 			body: {
 				classNameId,
 				classTypeId,

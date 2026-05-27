@@ -12,49 +12,13 @@ import React, {
 	useState,
 } from 'react';
 
+import {MappingFields} from '../../types/MappingField';
 import {config} from '../config/index';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from '../utils/cache';
 import useCache from '../utils/useCache';
 
-type FieldType =
-	| 'boolean'
-	| 'date'
-	| 'datetime'
-	| 'decimal'
-	| 'friendly-url'
-	| 'integer'
-	| 'long-text'
-	| 'multiselect'
-	| 'rich-text'
-	| 'single-select'
-	| 'text'
-	| 'upload';
-
-export type ObjectField = {
-	attributes?: ObjectFieldAttributes;
-	key: string;
-	label: string;
-	localizable: boolean;
-	name: string;
-	required: boolean;
-	type: FieldType;
-};
-
-export type ObjectFieldAttributes = {
-	options?: {label: string; value: string}[];
-};
-
-export type ObjectFieldSet = {
-	fields: ObjectFields;
-	label: string;
-	name: string;
-	relationship: boolean;
-};
-
-export type ObjectFields = Array<ObjectField | ObjectFieldSet>;
-
-type ObjectDataMap = Record<string, {fields: ObjectFields; label?: string}>;
+type ObjectDataMap = Record<string, {fields: MappingFields; label?: string}>;
 
 const ObjectDataContext = React.createContext<{
 	map: ObjectDataMap;
@@ -146,7 +110,7 @@ function buildMap({
 	...props
 }: Props & {
 	currentMap: ObjectDataMap;
-	fields: ObjectFields;
+	fields: MappingFields;
 	label?: string;
 }): ObjectDataMap {
 	let map = {...currentMap};
@@ -158,18 +122,16 @@ function buildMap({
 	}
 
 	for (const field of fields) {
-		if ('fields' in field) {
-			if (!(field.name in map)) {
-				map = {
-					...map,
-					...buildMap({
-						currentMap: map,
-						fields: field.fields,
-						label: field.label,
-						name: field.name,
-					}),
-				};
-			}
+		if ('fields' in field && field.name && !(field.name in map)) {
+			map = {
+				...map,
+				...buildMap({
+					currentMap: map,
+					fields: field.fields,
+					label: field.label,
+					name: field.name,
+				}),
+			};
 		}
 	}
 

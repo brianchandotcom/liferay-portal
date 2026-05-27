@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MappingFieldSet} from '../../types/MappingField';
 import {CollectionLayoutDataItem} from '../../types/layout_data/CollectionLayoutDataItem';
-import {MappingFieldFieldSet} from '../actions/addMappingFields';
 import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
@@ -116,7 +116,7 @@ export default {
 		itemSubtype: string;
 		itemType: string;
 	}) {
-		return serviceFetch<{mappingFields: MappingFieldFieldSet[]}>(
+		return serviceFetch<{mappingFields: MappingFieldSet[]}>(
 			config.getCollectionMappingFieldsURL,
 			{body}
 		);

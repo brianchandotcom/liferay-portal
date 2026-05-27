@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MappingFields} from '../../types/MappingField';
 import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
-import {ObjectFields} from '../contexts/ObjectDataContext';
 import {State} from '../reducers';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
@@ -32,7 +32,7 @@ export async function hasLocalizableFields(
 		classTypeId,
 	]);
 
-	const {data: fields} = getCacheItem<ObjectFields>(cacheKey);
+	const {data: fields} = getCacheItem<MappingFields>(cacheKey);
 
 	const promise = fields
 		? Promise.resolve(fields)

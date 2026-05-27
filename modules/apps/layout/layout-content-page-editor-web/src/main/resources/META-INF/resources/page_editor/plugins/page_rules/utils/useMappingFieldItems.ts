@@ -6,16 +6,13 @@
 import {useMemo} from 'react';
 
 import {config} from '../../../app/config/index';
-import {
-	ObjectFieldAttributes,
-	ObjectFields,
-} from '../../../app/contexts/ObjectDataContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import getMappingFieldsKey from '../../../app/utils/getMappingFieldsKey';
+import {MappingFieldAttributes} from '../../../types/MappingField';
 import {filterAndConvertMappingFields} from '../components/Condition';
 
 export type MappingFieldItem = {
-	attributes?: ObjectFieldAttributes;
+	attributes?: MappingFieldAttributes;
 	label: string;
 	type: string;
 	value: string;
@@ -31,10 +28,7 @@ export default function useMappingFieldItems() {
 	);
 
 	return useMemo(
-		() =>
-			filterAndConvertMappingFields(
-				mappingFields as unknown as ObjectFields | null
-			),
+		() => filterAndConvertMappingFields(mappingFields ?? null),
 		[mappingFields]
 	);
 }

@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import addMappingFields, {
-	MappingFieldFieldSet,
-} from '../actions/addMappingFields';
+import {MappingFieldSet} from '../../types/MappingField';
+import addMappingFields from '../actions/addMappingFields';
 import {ADD_MAPPING_FIELDS} from '../actions/types';
 
-export const INITIAL_STATE: Record<string, MappingFieldFieldSet[]> = {};
+export const INITIAL_STATE: Record<string, MappingFieldSet[]> = {};
 
 export default function mappedInfoItemsReducer(
 	mappingFields = INITIAL_STATE,

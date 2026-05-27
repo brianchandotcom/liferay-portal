@@ -10,10 +10,10 @@ import React, {useContext} from 'react';
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
 import {
-	ObjectField,
-	ObjectFieldAttributes,
-	ObjectFields,
-} from '../../../app/contexts/ObjectDataContext';
+	MappingField,
+	MappingFieldAttributes,
+	MappingFields,
+} from '../../../types/MappingField';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
 import FieldFragmentTypeSelector from './FieldFragmentTypeSelector';
 import FormFragmentTypeSelector from './FormFragmentTypeSelector';
@@ -24,7 +24,7 @@ interface ConditionProps {
 	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
 	mappingFieldItems: {
-		attributes?: ObjectFieldAttributes;
+		attributes?: MappingFieldAttributes;
 		label: string;
 		type: string;
 		value: string;
@@ -138,9 +138,9 @@ export default function Condition({
 }
 
 export function filterAndConvertMappingFields(
-	mappingFields: ObjectFields | null
+	mappingFields: MappingFields | null
 ): {
-	attributes?: ObjectFieldAttributes;
+	attributes?: MappingFieldAttributes;
 	label: string;
 	type: string;
 	value: string;
@@ -152,18 +152,18 @@ export function filterAndConvertMappingFields(
 	return mappingFields
 		.flatMap((field) => ('fields' in field ? field.fields : [field]))
 		.filter((field) => {
-			const objectField = field as ObjectField;
+			const mappingField = field as MappingField;
 
-			return SUPPORTED_FIELD_TYPES.has(objectField.type);
+			return SUPPORTED_FIELD_TYPES.has(mappingField.type);
 		})
 		.map((field) => {
-			const objectField = field as ObjectField;
+			const mappingField = field as MappingField;
 
 			return {
-				attributes: objectField.attributes,
-				label: objectField.label,
-				type: objectField.type,
-				value: objectField.key,
+				attributes: mappingField.attributes,
+				label: mappingField.label,
+				type: mappingField.type,
+				value: mappingField.key,
 			};
 		});
 }

@@ -79,6 +79,17 @@
 		},
 		{
 			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_TICKET_ATTACHMENT",
+			"label": {
+				"en_US": "Account Entry to Ticket Attachment"
+			},
+			"name": "accountEntryToTicketAttachment",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_TICKET_ATTACHMENT",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
 			"externalReferenceCode": "R_ACCOUNT_TO_OAUTH2_DXP_AUTHORIZATION",
 			"label": {
 				"en_US": "Account to OAuth2 DXP Authorization"

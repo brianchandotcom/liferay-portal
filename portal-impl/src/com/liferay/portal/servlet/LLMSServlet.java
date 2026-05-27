@@ -31,12 +31,11 @@ public class LLMSServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			String redirect = Portal.PATH_MAIN + "/portal/llms";
-
 			ServletContext servletContext = getServletContext();
 
 			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(redirect);
+				servletContext.getRequestDispatcher(
+					Portal.PATH_MAIN + "/portal/llms");
 
 			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}

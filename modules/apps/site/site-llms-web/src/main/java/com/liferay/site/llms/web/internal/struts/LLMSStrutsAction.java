@@ -40,14 +40,14 @@ public class LLMSStrutsAction implements StrutsAction {
 		throws Exception {
 
 		try {
+			boolean enabled = false;
+			String content = null;
+
 			String host = GetterUtil.getString(
 				_portal.getForwardedHost(httpServletRequest));
 
 			host = StringUtil.toLowerCase(host);
 			host = host.trim();
-
-			boolean enabled = false;
-			String content = null;
 
 			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
 				host);

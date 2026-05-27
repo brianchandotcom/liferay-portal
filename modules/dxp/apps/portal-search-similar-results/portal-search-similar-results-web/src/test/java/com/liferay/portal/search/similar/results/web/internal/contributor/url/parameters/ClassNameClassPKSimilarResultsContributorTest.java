@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -43,9 +41,9 @@ public class ClassNameClassPKSimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
-		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
-			"?classUuid=uid&className=AssetClassName&classPK=112233");
+		RouteHelper routeHelper = () ->
+			"http://localhost:8080?classUuid=uid&" +
+				"className=AssetClassName&classPK=112233";
 
 		_classNameClassPKSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -81,9 +79,8 @@ public class ClassNameClassPKSimilarResultsContributorTest
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
-				StringBundler.concat(
-					"http://localhost:", PortalUtil.getPortalServerPort(false),
-					"?classUuid=uid&className=AssetClassName&classPK=112233"));
+				"http://localhost:8080?classUuid=uid&" +
+					"className=AssetClassName&classPK=112233");
 
 		setUpDestinationHelper(setUpAssetEntry("newAssetClassName", 54321L));
 
@@ -93,9 +90,8 @@ public class ClassNameClassPKSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
-				"?classUuid=uid&className=newAssetClassName&classPK=54321"),
+			"http://localhost:8080?classUuid=uid&" +
+				"className=newAssetClassName&classPK=54321",
 			destinationBuilderImpl.build());
 	}
 

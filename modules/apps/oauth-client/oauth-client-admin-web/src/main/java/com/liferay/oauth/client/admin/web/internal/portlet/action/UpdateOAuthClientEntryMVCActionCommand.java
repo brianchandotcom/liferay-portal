@@ -60,6 +60,8 @@ public class UpdateOAuthClientEntryMVCActionCommand
 				actionRequest, "metadataCacheTime");
 			String oidcUserInfoMapperJSON = ParamUtil.getString(
 				actionRequest, "OIDCUserInfoMapperJSON");
+			int tokenConnectionTimeout = ParamUtil.getInteger(
+				actionRequest, "tokenConnectionTimeout");
 			String tokenRequestParametersJSON = ParamUtil.getString(
 				actionRequest, "tokenRequestParametersJSON");
 
@@ -68,7 +70,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 					oAuthClientEntryId, authRequestParametersJSON,
 					authServerWellKnownURI, customClaimsJSON, infoJSON,
 					matcherField, metadataCacheTime, oidcUserInfoMapperJSON,
-					tokenRequestParametersJSON);
+					tokenConnectionTimeout, tokenRequestParametersJSON);
 			}
 			else {
 				ThemeDisplay themeDisplay =
@@ -79,7 +81,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 					null, themeDisplay.getUserId(), authRequestParametersJSON,
 					authServerWellKnownURI, customClaimsJSON, infoJSON,
 					matcherField, metadataCacheTime, oidcUserInfoMapperJSON,
-					tokenRequestParametersJSON);
+					tokenConnectionTimeout, tokenRequestParametersJSON);
 			}
 
 			return true;

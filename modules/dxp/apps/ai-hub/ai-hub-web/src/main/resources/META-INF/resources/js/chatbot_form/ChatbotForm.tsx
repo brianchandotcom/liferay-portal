@@ -151,9 +151,7 @@ export default function ChatbotForm({
 					)
 				);
 			})
-			.catch((error) => {
-				console.error(error);
-			})
+			.catch(() => {})
 			.finally(() => {
 				setAgentDefinitionsLoaded(true);
 			});
@@ -335,8 +333,6 @@ export default function ChatbotForm({
 			});
 		}
 		catch (error) {
-			console.error(error);
-
 			openToast({
 				message:
 					(error instanceof Error && error.message) ||

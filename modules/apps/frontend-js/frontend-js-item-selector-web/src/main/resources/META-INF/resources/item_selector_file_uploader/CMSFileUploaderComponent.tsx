@@ -16,11 +16,6 @@ import React, {useId, useState} from 'react';
 import ItemSelector from '../item_selector/ItemSelector';
 import {FilesUploaderComponent} from '../item_selector/ItemSelectorModal';
 
-type CMSFileUploaderComponentProps =
-	React.ComponentProps<FilesUploaderComponent> & {
-		parentObjectEntryFolderId?: number | null;
-	};
-
 type AssetLibrary = {
 	externalReferenceCode: string;
 	id: number;
@@ -69,14 +64,16 @@ const SpaceInput = React.forwardRef<HTMLInputElement, ISpaceInputProps>(
 
 const ASSET_LIBRARIES_API_URL = `${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`;
 
-const CMSFileUploaderComponent = function ({
+const CMSFileUploaderComponent: FilesUploaderComponent<{
+	parentObjectEntryFolderId?: number | null;
+}> = function ({
 	allowedExtensions,
 	files,
 	groupId: externalGroupId,
 	maxFileSize,
 	onCloseUploadView,
 	parentObjectEntryFolderId,
-}: CMSFileUploaderComponentProps) {
+}) {
 	const [assetLibrary, setAssetLibrary] = useState<
 		AssetLibrary | undefined
 	>();

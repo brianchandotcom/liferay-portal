@@ -26,7 +26,7 @@ import React, {
 	useState,
 } from 'react';
 
-import ItemSelectorModal from './ItemSelectorModal';
+import ItemSelectorModal, {FilesUploaderComponent} from './ItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
 
 import '../css/DetachedCMSFilesItemSelectorModal.scss';
@@ -34,7 +34,7 @@ import '../css/DetachedCMSFilesItemSelectorModal.scss';
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
-function isFolder(item: any): boolean {
+function isFolder(item?: {entryClassName: string}): boolean {
 	return item?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 }
 
@@ -156,12 +156,14 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	const {observer, onOpenChange, open} = useModal();
 	const [newItemsCount, setNewItemsCount] = useState(0);
 	const [showInlineNotification, setShowInlineNotification] = useState(false);
-	const [currentFolder, setCurrentFolder] = useState<FolderCrumb[]>(() => [
-		{
-			id: null,
-			label: Liferay.Language.get('files'),
-		},
-	]);
+	const [breadcrumbFolders, setBreadcrumbFolders] = useState<FolderCrumb[]>(
+		() => [
+			{
+				id: null,
+				label: Liferay.Language.get('files'),
+			},
+		]
+	);
 
 	const isBrowserTabVisible = useBrowserTabVisibility();
 	const lastRequestTimeRef = useRef(new Date().toISOString());
@@ -170,9 +172,8 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		onOpenChange(true);
 	}, [onOpenChange]);
 
-	const activeFolderId = currentFolder[currentFolder.length - 1].id;
-	const activeScopeId =
-		currentFolder[currentFolder.length - 1].scopeId ?? null;
+	const activeFolderId = breadcrumbFolders.at(-1)!.id;
+	const activeScopeId = breadcrumbFolders.at(-1)!.scopeId ?? null;
 
 	const apiURL = useMemo(
 		() => buildApiURL(activeFolderId),
@@ -196,8 +197,8 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 
 	const breadcrumbs = useMemo(
 		() =>
-			currentFolder.map((crumb, index) => {
-				const isLast = index === currentFolder.length - 1;
+			breadcrumbFolders.map((crumb, index) => {
+				const isLast = index === breadcrumbFolders.length - 1;
 
 				return {
 					active: isLast,
@@ -207,18 +208,18 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 						: (event: React.SyntheticEvent) => {
 								event.preventDefault();
 
-								setCurrentFolder((path) =>
+								setBreadcrumbFolders((path) =>
 									path.slice(0, index + 1)
 								);
 							},
 				};
 			}),
-		[currentFolder]
+		[breadcrumbFolders]
 	);
 
 	const navigateToFolder = useCallback(
 		(folder: {id: number; label: string; scopeId?: number | null}) => {
-			setCurrentFolder((path) => [...path, folder]);
+			setBreadcrumbFolders((path) => [...path, folder]);
 		},
 		[]
 	);
@@ -389,7 +390,12 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 	);
 
 	const filesUploaderComponent = useMemo(() => {
-		const InitialFileUploaderComponent = restProps.filesUploaderComponent;
+		const InitialFileUploaderComponent =
+			restProps.filesUploaderComponent as
+				| FilesUploaderComponent<{
+						parentObjectEntryFolderId?: number | null;
+				  }>
+				| undefined;
 
 		if (!InitialFileUploaderComponent) {
 			return undefined;
@@ -403,7 +409,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 			<InitialFileUploaderComponent
 				{...uploaderProps}
 				groupId={activeScopeId ?? uploaderProps.groupId}
-				{...({parentObjectEntryFolderId: activeFolderId} as any)}
+				parentObjectEntryFolderId={activeFolderId}
 			/>
 		);
 	}, [activeFolderId, activeScopeId, restProps.filesUploaderComponent]);

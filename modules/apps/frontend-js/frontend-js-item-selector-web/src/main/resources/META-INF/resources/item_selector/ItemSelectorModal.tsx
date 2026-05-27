@@ -29,26 +29,28 @@ type IItemSelectorModalFDSProps = Omit<
 	| 'style'
 >;
 
-export type FilesUploaderComponent = React.ComponentType<{
-	allowedExtensions?: string;
+export type FilesUploaderComponent<T extends object = {}> = React.ComponentType<
+	{
+		allowedExtensions?: string;
 
-	/**
-	 * List of files that will represent the initial state of files to upload.
-	 */
-	files: FileData[];
+		/**
+		 * List of files that will represent the initial state of files to upload.
+		 */
+		files: FileData[];
 
-	/**
-	 * Site/Space where to upload items
-	 */
-	groupId?: number;
+		/**
+		 * Site/Space where to upload items
+		 */
+		groupId?: number;
 
-	maxFileSize?: number;
+		maxFileSize?: number;
 
-	/**
-	 * Callback for when upload is done in both cases: by success, or user cancelation.
-	 */
-	onCloseUploadView: () => void;
-}>;
+		/**
+		 * Callback for when upload is done in both cases: by success, or user cancelation.
+		 */
+		onCloseUploadView: () => void;
+	} & T
+>;
 
 export interface IItemSelectorModalProps<T> {
 

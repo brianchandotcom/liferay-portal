@@ -23,6 +23,11 @@ public class GradlePluginsDefaultsUtilTest {
 		_testGetBuildProfileFileNames(null, true);
 
 		_testGetBuildProfileFileNames(
+			"cms", false, ".lfrbuild-cms", ".lfrbuild-cms-private");
+		_testGetBuildProfileFileNames(
+			"cms", true, ".lfrbuild-cms", ".lfrbuild-cms-public");
+
+		_testGetBuildProfileFileNames(
 			"foo", false, ".lfrbuild-foo", ".lfrbuild-foo-private");
 		_testGetBuildProfileFileNames(
 			"foo", true, ".lfrbuild-foo", ".lfrbuild-foo-public");

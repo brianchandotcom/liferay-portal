@@ -144,11 +144,6 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		return jobProperty.getValue();
 	}
 
-	@Override
-	protected int getSlaveRAMMinimum() {
-		return 24;
-	}
-
 	protected TopLevelBuild getTopLevelBuild() {
 		return _topLevelBuild;
 	}

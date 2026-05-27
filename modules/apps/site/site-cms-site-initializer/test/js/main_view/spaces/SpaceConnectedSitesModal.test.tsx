@@ -290,6 +290,31 @@ describe('SpaceConnectedSitesModal', () => {
 			).toBeInTheDocument();
 		});
 
+		it('renders the site logo in the autocomplete options', async () => {
+			mockFetch.mockImplementation(async () => {
+				return {
+					headers: new Headers([
+						['Content-Type', 'application/json'],
+					]),
+					json: async () => ({items: [mockUnconnectedSite]}),
+				} as Response;
+			});
+
+			renderComponent();
+			await waitForComponentRendering();
+
+			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
+
+			const option = await screen.findByRole('option', {
+				name: mockUnconnectedSite.descriptiveName,
+			});
+
+			expect(option.querySelector('img')).toHaveAttribute(
+				'src',
+				mockUnconnectedSite.logo
+			);
+		});
+
 		it('shows an error toast if connecting a site fails', async () => {
 			mockFetch.mockImplementation(async () => {
 				return {
@@ -505,7 +530,7 @@ describe('SpaceConnectedSitesModal', () => {
 
 			await waitFor(() => {
 				const sitesURLs = mockFetch.mock.calls
-					.map((call) => String(call[0]))
+					.map((call: unknown[]) => String(call[0]))
 					.filter((url) => url.includes('/sites'));
 
 				expect(
@@ -550,7 +575,7 @@ describe('SpaceConnectedSitesModal', () => {
 
 			await waitFor(() => {
 				const siteTemplatesURLs = mockFetch.mock.calls
-					.map((call) => String(call[0]))
+					.map((call: unknown[]) => String(call[0]))
 					.filter((url) => url.includes('/site-templates'));
 
 				expect(

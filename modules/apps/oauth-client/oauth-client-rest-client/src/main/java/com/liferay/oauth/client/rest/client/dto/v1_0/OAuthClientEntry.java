@@ -307,6 +307,28 @@ public class OAuthClientEntry implements Cloneable, Serializable {
 
 	protected String oidcUserInfoMapperJSON;
 
+	public Integer getTokenConnectionTimeout() {
+		return tokenConnectionTimeout;
+	}
+
+	public void setTokenConnectionTimeout(Integer tokenConnectionTimeout) {
+		this.tokenConnectionTimeout = tokenConnectionTimeout;
+	}
+
+	public void setTokenConnectionTimeout(
+		UnsafeSupplier<Integer, Exception>
+			tokenConnectionTimeoutUnsafeSupplier) {
+
+		try {
+			tokenConnectionTimeout = tokenConnectionTimeoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer tokenConnectionTimeout;
+
 	public String getTokenRequestParametersJSON() {
 		return tokenRequestParametersJSON;
 	}
@@ -364,4 +386,4 @@ public class OAuthClientEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1044931912
+// LIFERAY-REST-BUILDER-HASH:-1727517471

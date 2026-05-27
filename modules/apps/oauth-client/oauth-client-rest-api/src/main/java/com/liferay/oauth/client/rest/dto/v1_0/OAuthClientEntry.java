@@ -598,6 +598,48 @@ public class OAuthClientEntry implements Serializable {
 	private Supplier<String> _oidcUserInfoMapperJSONSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Integer getTokenConnectionTimeout() {
+		if (_tokenConnectionTimeoutSupplier != null) {
+			tokenConnectionTimeout = _tokenConnectionTimeoutSupplier.get();
+
+			_tokenConnectionTimeoutSupplier = null;
+		}
+
+		return tokenConnectionTimeout;
+	}
+
+	public void setTokenConnectionTimeout(Integer tokenConnectionTimeout) {
+		this.tokenConnectionTimeout = tokenConnectionTimeout;
+
+		_tokenConnectionTimeoutSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTokenConnectionTimeout(
+		UnsafeSupplier<Integer, Exception>
+			tokenConnectionTimeoutUnsafeSupplier) {
+
+		_tokenConnectionTimeoutSupplier = () -> {
+			try {
+				return tokenConnectionTimeoutUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer tokenConnectionTimeout;
+
+	@JsonIgnore
+	private Supplier<Integer> _tokenConnectionTimeoutSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTokenRequestParametersJSON() {
 		if (_tokenRequestParametersJSONSupplier != null) {
 			tokenRequestParametersJSON =
@@ -869,6 +911,18 @@ public class OAuthClientEntry implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer tokenConnectionTimeout = getTokenConnectionTimeout();
+
+		if (tokenConnectionTimeout != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tokenConnectionTimeout\": ");
+
+			sb.append(tokenConnectionTimeout);
+		}
+
 		String tokenRequestParametersJSON = getTokenRequestParametersJSON();
 
 		if (tokenRequestParametersJSON != null) {
@@ -986,4 +1040,4 @@ public class OAuthClientEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:95965037
+// LIFERAY-REST-BUILDER-HASH:956565789

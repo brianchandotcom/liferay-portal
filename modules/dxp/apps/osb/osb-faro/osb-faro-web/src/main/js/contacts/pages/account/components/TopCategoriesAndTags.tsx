@@ -182,7 +182,10 @@ const TabContent: React.FC<ITabContentProps> = ({
 								{isCategory && (
 									<ClayTable.Cell>
 										<Text size={3}>
-											{(item as ITopCategory).vocabularyName}
+											{
+												(item as ITopCategory)
+													.vocabularyName
+											}
 										</Text>
 									</ClayTable.Cell>
 								)}
@@ -262,9 +265,7 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 					<ClayTabs.Item>
 						{Liferay.Language.get('category')}
 					</ClayTabs.Item>
-					<ClayTabs.Item>
-						{Liferay.Language.get('tag')}
-					</ClayTabs.Item>
+					<ClayTabs.Item>{Liferay.Language.get('tag')}</ClayTabs.Item>
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>

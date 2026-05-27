@@ -51,7 +51,7 @@ HomeDashboardDisplayContext homeDashboardDisplayContext = (HomeDashboardDisplayC
 		Liferay.Util.openToast({
 			message:
 				'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message key="use-your-password-to-login" />',
-			type: 'success'
+			type: 'success',
 		});
 	</aui:script>
 </c:if>

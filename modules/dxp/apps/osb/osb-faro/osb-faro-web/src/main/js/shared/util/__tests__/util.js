@@ -1,6 +1,7 @@
 import {
 	formatStringToLowercase,
 	getAlignPosition,
+	getInitials,
 	getPercentage,
 	getRangeSelectorsFromQuery,
 	getSafeDecodedURIComponent,
@@ -62,6 +63,28 @@ describe('util', () => {
 			expect(getAlignPosition(source, target, 'bottom')).toEqual(
 				'bottom'
 			);
+		});
+	});
+
+	describe('getInitials', () => {
+		it('should return uppercased initials for a full name', () => {
+			expect(getInitials('Adriano Interaminense')).toEqual('AI');
+		});
+
+		it('should cap the result at three initials', () => {
+			expect(getInitials('Foo Bar Baz Qux')).toEqual('FBB');
+		});
+
+		it('should return an empty string when name is undefined', () => {
+			expect(getInitials(undefined)).toEqual('');
+		});
+
+		it('should return an empty string when name is null', () => {
+			expect(getInitials(null)).toEqual('');
+		});
+
+		it('should return an empty string when no argument is provided', () => {
+			expect(getInitials()).toEqual('');
 		});
 	});
 

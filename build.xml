@@ -263,23 +263,59 @@ message.
 	</target>
 
 	<target name="clean">
-		<gradle-stop-daemon />
+		<exec executable="git" outputproperty="master.private.ref">
+			<arg value="for-each-ref" />
+			<arg value="--format=%(refname)" />
+			<arg value="refs/heads/master-private" />
+		</exec>
 
 		<if>
-			<available file="${project.dir}/.git" />
+			<equals arg1="${master.private.ref}" arg2="refs/heads/master-private" />
 			<then>
-				<execute>
-					${build.git.clean.command}
-				</execute>
+				<exec executable="git" outputproperty="master.private.merge.base">
+					<arg value="merge-base" />
+					<arg value="HEAD" />
+					<arg value="master-private" />
+				</exec>
+
+				<exec executable="git" outputproperty="master.private.unique.commits">
+					<arg value="rev-list" />
+					<arg value="--count" />
+					<arg value="master..${master.private.merge.base}" />
+				</exec>
 			</then>
-			<else>
-				<echo>Do not clean project because it is not in a Git repository.</echo>
-			</else>
 		</if>
 
-		<clean-liferay-home />
+		<if>
+			<and>
+				<isset property="master.private.unique.commits" />
+				<not>
+					<equals arg1="${master.private.unique.commits}" arg2="0" />
+				</not>
+			</and>
+			<then>
+				<echo>Skip clean because the current branch is based on master-private.</echo>
+			</then>
+			<else>
+				<gradle-stop-daemon />
 
-		<print-current-time />
+				<if>
+					<available file="${project.dir}/.git" />
+					<then>
+						<execute>
+							${build.git.clean.command}
+						</execute>
+					</then>
+					<else>
+						<echo>Do not clean project because it is not in a Git repository.</echo>
+					</else>
+				</if>
+
+				<clean-liferay-home />
+
+				<print-current-time />
+			</else>
+		</if>
 	</target>
 
 	<target name="compile">

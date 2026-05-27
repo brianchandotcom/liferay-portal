@@ -116,36 +116,6 @@
 													"indexed": true
 												},
 												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "For prototypes and PoCs only (not production use)."
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontSize": "24px",
-														"textAlign": "center",
-														"textColor": "rgb(107, 108, 126)"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
 											}
 										],
 										"type": "Section"

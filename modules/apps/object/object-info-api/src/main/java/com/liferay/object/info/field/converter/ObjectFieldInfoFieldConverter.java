@@ -247,13 +247,14 @@ public class ObjectFieldInfoFieldConverter {
 					ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
 
 			finalStep.attribute(
-				PhoneNumberInfoFieldType.PREFIX,
+				PhoneNumberInfoFieldType.COUNTRY,
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_PREFIX, objectField)
+					ObjectFieldSettingConstants.NAME_COUNTRY, objectField)
 			).attribute(
-				PhoneNumberInfoFieldType.PREFIX_TYPE,
+				PhoneNumberInfoFieldType.COUNTRY_SOURCE,
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_PREFIX_TYPE, objectField)
+					ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE,
+					objectField)
 			);
 		}
 		else if (Objects.equals(

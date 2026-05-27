@@ -64,23 +64,23 @@
 [#assign countries = (input.attributes.countries)![] /]
 [#assign defaultLanguageId = (input.attributes.defaultLanguageId)!"" /]
 [#assign disabled = (input.attributes.disabled)?? && input.attributes.disabled /]
-[#assign prefix = (input.attributes.prefix)!"" /]
-[#assign prefixType = (input.attributes.prefixType)!"definedByUser" /]
-[#assign fixed = prefixType == "fixed" /]
+[#assign countryA2 = (input.attributes.country)!"" /]
+[#assign countrySource = (input.attributes.countrySource)!"definedByUser" /]
+[#assign fixed = countrySource == "fixed" /]
 [#assign showFlag = configuration.showCountryFlag /]
-[#assign showPrefixPicker = configuration.showPrefix /]
+[#assign showCountryCodePicker = configuration.showPrefix /]
 [#assign selectedCountry = {} /]
 
-[#if fixed && prefix?has_content]
+[#if fixed && countryA2?has_content]
 	[#list countries as country]
-		[#if "+" + country.prefix == prefix]
+		[#if country.a2 == countryA2]
 			[#assign selectedCountry = country /]
 			[#break]
 		[/#if]
 	[/#list]
 [#elseif input.value??]
 	[#list countries as country]
-		[#if input.value?starts_with("+" + country.prefix)]
+		[#if input.value?starts_with("+" + country.idd)]
 			[#assign selectedCountry = country /]
 			[#break]
 		[/#if]
@@ -104,10 +104,8 @@
 
 [#assign displayValue = (input.value)!"" /]
 
-[#if fixed && prefix?has_content && displayValue?starts_with(prefix)]
-	[#assign displayValue = displayValue?remove_beginning(prefix) /]
-[#elseif !fixed && selectedCountry.prefix?? && displayValue?starts_with("+" + selectedCountry.prefix)]
-	[#assign displayValue = displayValue?remove_beginning("+" + selectedCountry.prefix) /]
+[#if selectedCountry.idd?? && displayValue?starts_with("+" + selectedCountry.idd)]
+	[#assign displayValue = displayValue?remove_beginning("+" + selectedCountry.idd) /]
 [/#if]
 
 <div class="phone-number-input">
@@ -123,7 +121,7 @@
 		</label>
 
 		<div class="input-group">
-			[#if showPrefixPicker]
+			[#if showCountryCodePicker]
 				[#if fixed]
 					<div class="input-group-item input-group-item-shrink input-group-prepend">
 						<div class="input-group-text p-3">
@@ -136,36 +134,36 @@
 							[/#if]
 
 							<span>
-								[#if selectedCountry.prefix??]+${selectedCountry.prefix}[#else]${prefix}[/#if]
+								[#if selectedCountry.idd??]+${selectedCountry.idd}[/#if]
 							</span>
 						</div>
 					</div>
 				[#else]
-				<div class="dropdown input-group-item input-group-item-shrink input-group-prepend phone-number-input-prefix-picker" id="${fragmentElementId}-prefix-picker">
-					<button aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.get(locale, "country-code")}" class="form-control form-control-select form-control-select-secondary" [#if disabled || input.readOnly]disabled[/#if] id="${fragmentElementId}-prefix-trigger" type="button">
+				<div class="dropdown input-group-item input-group-item-shrink input-group-prepend phone-number-input-country-code-picker" id="${fragmentElementId}-country-code-picker">
+					<button aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.get(locale, "country-code")}" class="form-control form-control-select form-control-select-secondary" [#if disabled || input.readOnly]disabled[/#if] id="${fragmentElementId}-country-code-trigger" type="button">
 						[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]
 
 						[#if showFlag]
-							<span class="inline-item inline-item-before phone-number-input-prefix-flag" id="${fragmentElementId}-prefix-flag">
+							<span class="inline-item inline-item-before phone-number-input-country-code-flag" id="${fragmentElementId}-country-code-flag">
 								[#if selectedFlagSymbol?has_content][@clay["icon"] symbol="${selectedFlagSymbol}" /][/#if]
 							</span>
 						[/#if]
 
-						<span class="mr-2" id="${fragmentElementId}-prefix-code">
-							[#if selectedCountry.prefix??]+${selectedCountry.prefix}[/#if]
+						<span class="mr-2" id="${fragmentElementId}-country-code">
+							[#if selectedCountry.idd??]+${selectedCountry.idd}[/#if]
 						</span>
 					</button>
 
-					<input id="${fragmentElementId}-prefix-value" type="hidden" value="${(selectedCountry.a2)!""}" />
+					<input id="${fragmentElementId}-country-code-value" type="hidden" value="${(selectedCountry.a2)!""}" />
 
 					[#if !input.readOnly]
-						<div class="dropdown-menu dropdown-menu-indicator-start dropdown-menu-select phone-number-input-prefix-menu" id="${fragmentElementId}-prefix-menu">
-							<ul aria-labelledby="${fragmentElementId}-prefix-trigger" class="inline-scroller list-unstyled" role="listbox">
+						<div class="dropdown-menu dropdown-menu-indicator-start dropdown-menu-select phone-number-input-country-code-menu" id="${fragmentElementId}-country-code-menu">
+							<ul aria-labelledby="${fragmentElementId}-country-code-trigger" class="inline-scroller list-unstyled" role="listbox">
 								[#list countries as country]
 									[#assign isSelected = selectedCountry.a2?? && country.a2 == selectedCountry.a2 /]
 
 									<li role="presentation">
-										<button aria-selected="${isSelected?string}" class="dropdown-item phone-number-input-prefix-menu-item[#if isSelected] active[/#if]" data-a2="${country.a2}" data-prefix="${country.prefix}" role="option" tabindex="-1" type="button">
+										<button aria-selected="${isSelected?string}" class="dropdown-item phone-number-input-country-code-menu-item[#if isSelected] active[/#if]" data-a2="${country.a2}" data-idd="${country.idd}" role="option" tabindex="-1" type="button">
 											<span class="dropdown-item-indicator-start">
 												[#if isSelected][@clay["icon"] symbol="check-small" /][/#if]
 											</span>
@@ -179,7 +177,7 @@
 													</div>
 												[/#if]
 
-												<div class="autofit-col phone-number-input-prefix-menu-item-code">+${country.prefix}</div>
+												<div class="autofit-col phone-number-input-country-code-menu-item-code">+${country.idd}</div>
 
 												<div class="autofit-col autofit-col-expand">${country.name}</div>
 											</div>

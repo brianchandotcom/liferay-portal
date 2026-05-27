@@ -740,10 +740,11 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		inputTemplateNode.addAttribute(
 			"countries", _getCountriesJSONObjects(locale));
 		inputTemplateNode.addAttribute(
-			"prefix", infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
+			"country",
+			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY));
 		inputTemplateNode.addAttribute(
-			"prefixType",
-			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
+			"countrySource",
+			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY_SOURCE));
 	}
 
 	private void _addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
@@ -899,9 +900,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				JSONUtil.put(
 					"a2", a2
 				).put(
-					"name", country.getTitle(languageId)
+					"idd", idd
 				).put(
-					"prefix", idd
+					"name", country.getTitle(languageId)
 				));
 		}
 

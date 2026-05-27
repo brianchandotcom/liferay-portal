@@ -10,14 +10,14 @@ package com.liferay.info.field.type;
  */
 public class PhoneNumberInfoFieldType implements InfoFieldType {
 
-	public static final PhoneNumberInfoFieldType INSTANCE =
-		new PhoneNumberInfoFieldType();
-
-	public static final Attribute<PhoneNumberInfoFieldType, String> PREFIX =
+	public static final Attribute<PhoneNumberInfoFieldType, String> COUNTRY =
 		new Attribute<>();
 
 	public static final Attribute<PhoneNumberInfoFieldType, String>
-		PREFIX_TYPE = new Attribute<>();
+		COUNTRY_SOURCE = new Attribute<>();
+
+	public static final PhoneNumberInfoFieldType INSTANCE =
+		new PhoneNumberInfoFieldType();
 
 	@Override
 	public String getName() {

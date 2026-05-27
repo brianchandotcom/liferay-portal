@@ -11,13 +11,18 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.ServiceLocator;
 import com.liferay.portal.template.engine.TemplateContextHelper;
@@ -27,15 +32,22 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -202,5 +214,49 @@ public class TemplateContextHelperTest {
 		Assert.assertEquals(
 			" nonce=\"TEST_NONCE\"", contextObjects.get("nonceAttribute"));
 	}
+
+	@Test
+	public void testSensitiveVariablesNotAccessibleInRestrictedTemplateContext()
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			TemplateContextHelperTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Collection<ServiceReference<TemplateManager>> serviceReferences =
+			bundleContext.getServiceReferences(TemplateManager.class, null);
+
+		Assert.assertFalse(serviceReferences.isEmpty());
+
+		for (ServiceReference<TemplateManager> serviceReference :
+				serviceReferences) {
+
+			TemplateManager templateManager = bundleContext.getService(
+				serviceReference);
+
+			try {
+				Template template = templateManager.getTemplate(
+					new StringTemplateResource("test", "x"), true);
+
+				for (String sensitiveVariable : _sensitiveVariables) {
+					template.put(sensitiveVariable, new Object());
+
+					Assert.assertFalse(
+						StringBundler.concat(
+							sensitiveVariable, " accessible in ",
+							templateManager.getName()),
+						template.containsKey(sensitiveVariable));
+				}
+			}
+			finally {
+				bundleContext.ungetService(serviceReference);
+			}
+		}
+	}
+
+	private static final Set<String> _sensitiveVariables = SetUtil.fromArray(
+		"httpUtil", "httpUtilUnsafe", "portletConfig", "propsUtil",
+		"serviceLocator", "staticFieldGetter");
 
 }

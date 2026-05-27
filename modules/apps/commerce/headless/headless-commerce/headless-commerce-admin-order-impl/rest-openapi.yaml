@@ -1567,6 +1567,20 @@ components:
                     description:
                         Display name of the user who authored the note. Read-only.
                     example: Test Test
+                    readOnly: true
+                    type: string
+                authorId:
+                    description:
+                        Reference to the user who authored the note (FK identifier). Read-only.
+                    example: 20078
+                    format: int64
+                    readOnly: true
+                    type: integer
+                authorPortraitURL:
+                    description:
+                        Avatar URL of the note author. Read-only.
+                    example: https://example.com/portrait.png
+                    readOnly: true
                     type: string
                 content:
                     description:
@@ -1584,7 +1598,15 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
+                modifiedDate:
+                    description:
+                        Last modification timestamp in ISO 8601. Read-only.
+                    example: 2017-07-21
+                    format: date
+                    readOnly: true
+                    type: string
                 orderExternalReferenceCode:
                     description:
                         External reference code of the parent order.

@@ -5,22 +5,17 @@
 
 package com.liferay.osb.spring.boot.client.pubsub.configuration;
 
-import com.liferay.osb.spring.boot.client.pubsub.router.BaseMessageRouter;
-
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * @author Kyle Bischof
  */
+@ComponentScan(
+	basePackages = "com.liferay.osb.spring.boot.client.pubsub",
+	excludeFilters = @ComponentScan.Filter(classes = PubsubAutoConfiguration.class, type = FilterType.ASSIGNABLE_TYPE)
+)
 @Configuration
-@EnableConfigurationProperties(PubsubProperties.class)
 public class PubsubAutoConfiguration {
-
-	@Bean
-	public BaseMessageRouter baseMessageRouter() {
-		return new BaseMessageRouter();
-	}
-
 }

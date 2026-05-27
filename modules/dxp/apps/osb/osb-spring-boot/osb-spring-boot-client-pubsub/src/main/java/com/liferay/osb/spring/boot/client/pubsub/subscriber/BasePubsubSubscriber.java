@@ -5,20 +5,21 @@
 
 package com.liferay.osb.spring.boot.client.pubsub.subscriber;
 
-import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
+import com.google.cloud.pubsub.v1.AckReplyConsumer;
+import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
+import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.DeadLetterPolicy;
 import com.google.pubsub.v1.ProjectSubscriptionName;
+import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
-import com.liferay.osb.spring.boot.client.pubsub.configuration.PubsubProperties;
+import com.liferay.osb.spring.boot.client.pubsub.Message;
 import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
-import com.liferay.osb.spring.boot.client.pubsub.router.MessageRouter;
-import com.liferay.osb.spring.boot.client.pubsub.subscriber.internal.DefaultMessageReceiver;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -35,39 +36,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class BasePubsubSubscriber {
 
 	@PostConstruct
-	public void start() throws Exception {
-		if ((topic == null) || topic.isEmpty()) {
-			throw new IllegalStateException("Topic must not be null or empty");
+	public void initialize() throws Exception {
+		Class<?> clazz = getClass();
+
+		String subscriptionName = getSubscriptionName();
+
+		if ((subscriptionName == null) || subscriptionName.isEmpty()) {
+			subscriptionName = clazz.getName();
 		}
 
-		String userClassName = getClass().getName();
-
-		String resolvedSubscriptionName = subscription;
-
-		if ((resolvedSubscriptionName == null) ||
-			resolvedSubscriptionName.isEmpty()) {
-
-			resolvedSubscriptionName = userClassName;
-		}
-
-		String namespace = _pubsubProperties.getNamespace();
-
-		String namespacedSubscription = namespace + resolvedSubscriptionName;
-		String namespacedTopic = namespace + topic;
+		subscriptionName = getNamespace() + subscriptionName;
 
 		ProjectSubscriptionName projectSubscriptionName =
-			ProjectSubscriptionName.of(
-				_pubsubProperties.getProjectId(), namespacedSubscription);
+			ProjectSubscriptionName.of(getProjectId(), subscriptionName);
 
-		if (isAutoCreate() && namespacedSubscription.contains(userClassName)) {
-			_ensureSubscription(projectSubscriptionName, namespacedTopic);
+		if (subscriptionName.contains(clazz.getName())) {
+			_ensureSubscriptionExists(
+				projectSubscriptionName, getNamespace() + getTopic());
 		}
 
 		_subscriber = Subscriber.newBuilder(
 			projectSubscriptionName,
-			new DefaultMessageReceiver(topic, _messageRouter)
+			new MessageReceiver() {
+
+				@Override
+				public void receiveMessage(
+					PubsubMessage pubsubMessage,
+					AckReplyConsumer ackReplyConsumer) {
+
+					try {
+						ByteString byteString = pubsubMessage.getData();
+
+						receive(
+							new Message(
+								pubsubMessage.getAttributesMap(),
+								byteString.toStringUtf8(), getTopic()));
+
+						ackReplyConsumer.ack();
+					}
+					catch (Exception exception) {
+						_log.error("Error processing message", exception);
+
+						ackReplyConsumer.nack();
+					}
+				}
+
+			}
 		).setCredentialsProvider(
-			getCredentialsProvider()
+			_serviceAccountCredentialsProvider.getCredentialsProvider()
 		).build();
 
 		_subscriber.startAsync(
@@ -99,37 +115,42 @@ public abstract class BasePubsubSubscriber {
 		}
 	}
 
-	protected CredentialsProvider getCredentialsProvider() throws Exception {
-		ServiceAccountCredentialsProvider serviceAccountCredentialsProvider =
-			getServiceAccountCredentialsProvider();
-
-		return serviceAccountCredentialsProvider.getCredentialsProvider();
+	protected int getMaxDeliveryAttempts() {
+		return 5;
 	}
 
-	protected abstract ServiceAccountCredentialsProvider
-			getServiceAccountCredentialsProvider()
-		throws Exception;
-
-	protected boolean isAutoCreate() {
-		PubsubProperties.Subscriber subscriber =
-			_pubsubProperties.getSubscriber();
-
-		return subscriber.isAutoCreate();
+	protected String getMessageFilter() {
+		return "";
 	}
 
-	protected String messageFilter = "";
-	protected String subscription = "";
-	protected String topic;
+	protected String getNamespace() {
+		return "";
+	}
 
-	private void _ensureSubscription(
-			ProjectSubscriptionName projectSubscriptionName,
-			String namespacedTopic)
+	protected abstract String getProjectId();
+
+	protected String getSubscriptionName() {
+		return "";
+	}
+
+	protected String getTopic() {
+		return "";
+	}
+
+	protected boolean isDeadLetterEnabled() {
+		return true;
+	}
+
+	protected abstract void receive(Message message);
+
+	private void _ensureSubscriptionExists(
+			ProjectSubscriptionName projectSubscriptionName, String topic)
 		throws Exception {
 
 		SubscriptionAdminSettings subscriptionAdminSettings =
 			SubscriptionAdminSettings.newBuilder(
 			).setCredentialsProvider(
-				getCredentialsProvider()
+				_serviceAccountCredentialsProvider.getCredentialsProvider()
 			).build();
 
 		try (SubscriptionAdminClient subscriptionAdminClient =
@@ -148,47 +169,40 @@ public abstract class BasePubsubSubscriber {
 			catch (NotFoundException notFoundException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Subscription not found, creating", notFoundException);
+						"Unable to find subscription. Creating subscription " +
+							projectSubscriptionName,
+						notFoundException);
 				}
 			}
 
 			TopicName topicName = TopicName.ofProjectTopicName(
-				_pubsubProperties.getProjectId(), namespacedTopic);
+				getProjectId(), topic);
 
 			Subscription.Builder builder = Subscription.newBuilder(
 			).setAckDeadlineSeconds(
 				30
 			).setFilter(
-				messageFilter
+				getMessageFilter()
 			).setName(
 				projectSubscriptionName.toString()
 			).setTopic(
 				topicName.toString()
 			);
 
-			PubsubProperties.Subscriber subscriber =
-				_pubsubProperties.getSubscriber();
-
-			if (subscriber.isDeadLetterEnabled()) {
+			if (isDeadLetterEnabled()) {
 				TopicName dlqTopicName = TopicName.ofProjectTopicName(
-					_pubsubProperties.getProjectId(), namespacedTopic + "-dlq");
+					getProjectId(), topic + "-dlq");
 
 				builder.setDeadLetterPolicy(
 					DeadLetterPolicy.newBuilder(
 					).setDeadLetterTopic(
 						dlqTopicName.toString()
 					).setMaxDeliveryAttempts(
-						subscriber.getMaxDeliveryAttempts()
+						getMaxDeliveryAttempts()
 					).build());
 			}
 
-			Subscription subscription = builder.build();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Creating subscription " + subscription);
-			}
-
-			subscriptionAdminClient.createSubscription(subscription);
+			subscriptionAdminClient.createSubscription(builder.build());
 		}
 	}
 
@@ -196,10 +210,8 @@ public abstract class BasePubsubSubscriber {
 		BasePubsubSubscriber.class);
 
 	@Autowired
-	private MessageRouter _messageRouter;
-
-	@Autowired
-	private PubsubProperties _pubsubProperties;
+	private ServiceAccountCredentialsProvider
+		_serviceAccountCredentialsProvider;
 
 	private Subscriber _subscriber;
 

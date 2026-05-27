@@ -36,23 +36,19 @@ public class FaroPaginationUtil {
 		return pagination.getPageSize();
 	}
 
-	public static Map<String, Object> toGraphQLSort(Sort[] sorts) {
-		String column = "visitorsMetric";
-		String type = "DESC";
+	public static Map<String, Object> toGraphQLSort(
+		Sort defaultSort, Sort[] sorts) {
+
+		Sort sort = defaultSort;
 
 		if (ArrayUtil.isNotEmpty(sorts)) {
-			Sort sort = sorts[0];
-
-			if (sort.getFieldName() != null) {
-				column = sort.getFieldName();
-				type = sort.isReverse() ? "DESC" : "ASC";
-			}
+			sort = sorts[0];
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"column", column
+			"column", sort.getFieldName()
 		).put(
-			"type", type
+			"type", sort.isReverse() ? "DESC" : "ASC"
 		).build();
 	}
 

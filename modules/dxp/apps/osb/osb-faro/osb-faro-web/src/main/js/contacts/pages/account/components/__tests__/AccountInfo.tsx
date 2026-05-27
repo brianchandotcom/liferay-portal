@@ -106,7 +106,7 @@ describe('AccountInfo', () => {
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(
-					'Account attributes will appear here once they are available.'
+					'Account attributes will appear here when available.'
 				)
 			).toBeInTheDocument();
 		});

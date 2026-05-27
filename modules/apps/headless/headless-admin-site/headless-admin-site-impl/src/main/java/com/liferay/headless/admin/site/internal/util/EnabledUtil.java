@@ -41,13 +41,12 @@ public class EnabledUtil {
 			return;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				company.getCompanyId(), "LPD-35443") ||
-			(privateLayout &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 company.getCompanyId(), "LPD-38869"))) {
+		FeatureFlagManagerUtil.checkEnabled(
+			company.getCompanyId(), "LPD-35443");
 
-			throw new UnsupportedOperationException();
+		if (privateLayout) {
+			FeatureFlagManagerUtil.checkEnabled(
+				company.getCompanyId(), "LPD-38869");
 		}
 	}
 

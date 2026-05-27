@@ -270,6 +270,47 @@ public class SiteTemplate implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The site template's logo URL."
+	)
+	public String getLogo() {
+		if (_logoSupplier != null) {
+			logo = _logoSupplier.get();
+
+			_logoSupplier = null;
+		}
+
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+
+		_logoSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLogo(UnsafeSupplier<String, Exception> logoUnsafeSupplier) {
+		_logoSupplier = () -> {
+			try {
+				return logoUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The site template's logo URL.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String logo;
+
+	@JsonIgnore
+	private Supplier<String> _logoSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The site template's name."
 	)
 	public String getName() {
@@ -590,6 +631,22 @@ public class SiteTemplate implements Serializable {
 			sb.append(id);
 		}
 
+		String logo = getLogo();
+
+		if (logo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logo\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(logo));
+
+			sb.append("\"");
+		}
+
 		String name = getName();
 
 		if (name != null) {
@@ -770,4 +827,4 @@ public class SiteTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:942551449
+// LIFERAY-REST-BUILDER-HASH:1730452494

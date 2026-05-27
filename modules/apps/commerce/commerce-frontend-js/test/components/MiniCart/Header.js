@@ -60,7 +60,7 @@ describe('MiniCart Header', () => {
 
 	describe('by data flow', () => {
 		it(`if there are no cart items, the header title shows the label "${ORDER_IS_EMPTY}"`, async () => {
-			const {getByText} = render(
+			const {getByText, queryByText} = render(
 				<MiniCartContext.Provider
 					value={{
 						...BASE_CONTEXT_MOCK,
@@ -80,14 +80,13 @@ describe('MiniCart Header', () => {
 				getByText(DEFAULT_LABELS[ORDER_IS_EMPTY])
 			).toBeInTheDocument();
 
-			try {
-				expect(getByText(DEFAULT_LABELS[YOUR_ORDER])).toThrow();
-			}
-			catch (_ignore) {}
+			expect(
+				queryByText(DEFAULT_LABELS[YOUR_ORDER])
+			).not.toBeInTheDocument();
 		});
 
 		it(`if there are cart items, the header title shows the label "${YOUR_ORDER}"`, async () => {
-			const {getByText} = render(
+			const {getByText, queryByText} = render(
 				<MiniCartContext.Provider
 					value={{
 						...BASE_CONTEXT_MOCK,
@@ -105,10 +104,9 @@ describe('MiniCart Header', () => {
 
 			expect(getByText(DEFAULT_LABELS[YOUR_ORDER])).toBeInTheDocument();
 
-			try {
-				expect(getByText(DEFAULT_LABELS[ORDER_IS_EMPTY])).toThrow();
-			}
-			catch (_ignore) {}
+			expect(
+				queryByText(DEFAULT_LABELS[ORDER_IS_EMPTY])
+			).not.toBeInTheDocument();
 		});
 
 		it('if MiniCart is not toggleable, will not render the close button', () => {

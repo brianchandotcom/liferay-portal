@@ -99,7 +99,10 @@ describe('MiniCart Item', () => {
 	const renderCartItem = (props = BASE_PROPS, context = BASE_CONTEXT_MOCK) =>
 		render(
 			<MiniCartContext.Provider value={context}>
-				<CartItem {...props.item} updateCartItem={props.updateCartItem} />
+				<CartItem
+					{...props.item}
+					updateCartItem={props.updateCartItem}
+				/>
 			</MiniCartContext.Provider>
 		);
 
@@ -170,7 +173,7 @@ describe('MiniCart Item', () => {
 			expect(CartItemElement.innerHTML).toMatchSnapshot();
 		});
 
-		it('On click redirect to product page', () => {
+		it('redirects to the product page when the cart item is clicked', () => {
 			const {getByRole} = renderCartItem();
 
 			expect(getByRole('link').href).toBe(
@@ -182,7 +185,7 @@ describe('MiniCart Item', () => {
 			);
 		});
 
-		it('On quantitySelector click, no redirect to product page', () => {
+		it('does not redirect to the product page when the quantity selector is clicked', () => {
 			const {getByRole} = renderCartItem();
 
 			const mockClick = jest.fn();
@@ -190,12 +193,12 @@ describe('MiniCart Item', () => {
 			getByRole('link').addEventListener('click', mockClick);
 
 			fireEvent.click(getByRole('spinbutton'));
-			fireEvent.change(getByRole('spinbutton'), {value: '12'});
+			fireEvent.change(getByRole('spinbutton'), {target: {value: '12'}});
 
 			expect(mockClick).not.toBeCalled();
 		});
 
-		it('On remove button click, no redirect to product page', () => {
+		it('does not redirect to the product page when the remove button is clicked', () => {
 			const {getAllByRole, getByRole} = renderCartItem();
 
 			const mockClick = jest.fn();
@@ -258,7 +261,7 @@ describe('MiniCart Item', () => {
 				expect(CartItemElement.innerHTML).toMatchSnapshot();
 			});
 
-			it('if no action is performed, calls to API to remove the item from the order', async () => {
+			it('if no action is performed, calls the API to remove the item from the order', async () => {
 				const {container} = renderCartItem();
 
 				const CartItemElement =
@@ -293,7 +296,8 @@ describe('MiniCart Item', () => {
 					refreshItems: true,
 				});
 
-				expect(setIsUpdating).toHaveBeenCalled();
+				expect(setIsUpdating).toHaveBeenCalledTimes(2);
+				expect(setIsUpdating.mock.calls).toEqual([[true], [false]]);
 				expect(window.Liferay.fire).toHaveBeenCalledWith(
 					CART_PRODUCT_QUANTITY_CHANGED,
 					{
@@ -338,6 +342,92 @@ describe('MiniCart Item', () => {
 				await act(async () => {
 					jest.advanceTimersByTime(REMOVAL_CANCELING_TIMEOUT);
 				});
+			});
+		});
+
+		describe('if the cart item quantity is edited', () => {
+			it('debounces a call to the API to update the item quantity, then refreshes the cart', async () => {
+				const UPDATED_QUANTITY = 2;
+
+				CartResource.updateItemById.mockImplementation(() =>
+					Promise.resolve({quantity: UPDATED_QUANTITY})
+				);
+
+				const {getByRole} = renderCartItem();
+
+				await act(async () => {
+					fireEvent.change(getByRole('spinbutton'), {
+						target: {value: `${UPDATED_QUANTITY}`},
+					});
+				});
+
+				await act(async () => {
+					jest.advanceTimersByTime(1000);
+				});
+
+				const {setIsUpdating, updateCartModel} = BASE_CONTEXT_MOCK;
+				const {id: orderId} = BASE_CONTEXT_MOCK.cartState;
+
+				await waitFor(() => {
+					expect(updateCartModel).toHaveBeenCalledWith({
+						order: {id: orderId},
+					});
+				});
+
+				expect(CartResource.updateItemById).toHaveBeenCalledWith(
+					BASE_PROPS.item.id,
+					{quantity: UPDATED_QUANTITY}
+				);
+				expect(setIsUpdating.mock.calls).toEqual([[true], [false]]);
+
+				const [itemUpdater] = BASE_PROPS.updateCartItem.mock.calls[0];
+
+				expect(itemUpdater({id: BASE_PROPS.item.id})).toEqual({
+					id: BASE_PROPS.item.id,
+					quantity: UPDATED_QUANTITY,
+				});
+			});
+
+			it('if the request fails, surfaces the error on the item and does not refresh the cart', async () => {
+				const ERROR_MESSAGE = 'The quantity is not available';
+
+				CartResource.updateItemById.mockImplementation(() =>
+					Promise.reject({message: ERROR_MESSAGE})
+				);
+
+				const updateCartItem = jest.fn();
+
+				const {getByRole} = renderCartItem({
+					...BASE_PROPS,
+					updateCartItem,
+				});
+
+				await act(async () => {
+					fireEvent.change(getByRole('spinbutton'), {
+						target: {value: '2'},
+					});
+				});
+
+				await act(async () => {
+					jest.advanceTimersByTime(1000);
+				});
+
+				await waitFor(() => {
+					expect(updateCartItem).toHaveBeenCalled();
+				});
+
+				const [itemUpdater] = updateCartItem.mock.calls[0];
+
+				expect(itemUpdater({})).toEqual({
+					errorMessages: [ERROR_MESSAGE],
+				});
+				expect(
+					BASE_CONTEXT_MOCK.updateCartModel
+				).not.toHaveBeenCalled();
+				expect(BASE_CONTEXT_MOCK.setIsUpdating.mock.calls).toEqual([
+					[true],
+					[false],
+				]);
 			});
 		});
 	});

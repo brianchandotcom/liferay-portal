@@ -22,30 +22,33 @@ import {
 import * as Notificationtests_utilities from '../../../src/main/resources/META-INF/resources/utilities/notifications';
 import {getMockedCart} from '../../tests_utilities/fake_data/carts';
 
-jest.mock('../../../src/main/resources/META-INF/resources/ServiceProvider', () => {
-	const cartApi = {
-		getCartById: jest.fn(),
-		getCartItemsByCartId: jest.fn(),
-	};
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/ServiceProvider',
+	() => {
+		const cartApi = {
+			getCartById: jest.fn(),
+			getCartItemsByCartId: jest.fn(),
+		};
 
-	const cache = {DeliveryCartAPI: jest.fn(() => cartApi)};
+		const cache = {DeliveryCartAPI: jest.fn(() => cartApi)};
 
-	return {
-		__esModule: true,
-		default: new Proxy(
-			{},
-			{
-				get: (_, prop) => {
-					if (!cache[prop]) {
-						cache[prop] = jest.fn(() => ({}));
-					}
+		return {
+			__esModule: true,
+			default: new Proxy(
+				{},
+				{
+					get: (_, prop) => {
+						if (!cache[prop]) {
+							cache[prop] = jest.fn(() => ({}));
+						}
 
-					return cache[prop];
-				},
-			}
-		),
-	};
-});
+						return cache[prop];
+					},
+				}
+			),
+		};
+	}
+);
 
 describe('MiniCart', () => {
 	const BASE_PROPS = {
@@ -135,7 +138,7 @@ describe('MiniCart', () => {
 			}
 		);
 
-		it('wraps the MiniCart with a Context provider for all of the children component', async () => {
+		it('wraps the MiniCart with a Context provider for all of its child components', async () => {
 			let Context = {};
 
 			const ConsumerComponent = () => {
@@ -171,7 +174,7 @@ describe('MiniCart', () => {
 
 	describe('by interaction', () => {
 		describe('if cart is toggleable', () => {
-			it('click on the Opener button opens and the MiniCart', async () => {
+			it('click on the Opener button opens the MiniCart', async () => {
 				const {container} = render(<MiniCart {...BASE_PROPS} />);
 
 				await waitFor(() =>
@@ -261,7 +264,7 @@ describe('MiniCart', () => {
 
 	describe('by data flow', () => {
 		describe('if the order ID is defined and > 0', () => {
-			it('calls the API to fetch the cart by orderId and', async () => {
+			it('calls the API to fetch the cart by orderId', async () => {
 				const PROPS = {
 					...BASE_PROPS,
 					orderId: 123,
@@ -276,9 +279,9 @@ describe('MiniCart', () => {
 					).toBeInTheDocument()
 				);
 
-				expect(
-					CartResource.getCartById
-				).toHaveBeenCalledWith(PROPS.orderId);
+				expect(CartResource.getCartById).toHaveBeenCalledWith(
+					PROPS.orderId
+				);
 			});
 
 			it('if the request fails, displays an error via Liferay Notification', async () => {
@@ -302,17 +305,19 @@ describe('MiniCart', () => {
 					).toBeInTheDocument()
 				);
 
-				expect(
-					CartResource.getCartById
-				).toHaveBeenCalledWith(PROPS.orderId);
+				await waitFor(() => {
+					expect(CartResource.getCartById).toHaveBeenCalledWith(
+						PROPS.orderId
+					);
 
-				expect(
-					Notificationtests_utilities.showErrorNotification
-				).toHaveBeenCalledWith(ERROR);
+					expect(
+						Notificationtests_utilities.showErrorNotification
+					).toHaveBeenCalledWith(ERROR);
+				});
 			});
 
 			describe('if the request succeeds', () => {
-				it("updates the cart action URL's", async () => {
+				it('updates the cart action URLs', async () => {
 					let Context = {};
 
 					const ConsumerComponent = () => {
@@ -422,9 +427,7 @@ describe('MiniCart', () => {
 			});
 
 			await waitFor(() => {
-				expect(
-					CartResource.getCartById
-				).toHaveBeenCalledWith(
+				expect(CartResource.getCartById).toHaveBeenCalledWith(
 					INCOMING_ORDER_UPDATED_PAYLOAD.order.id
 				);
 			});
@@ -457,12 +460,14 @@ describe('MiniCart', () => {
 				).toBeInTheDocument()
 			);
 
-			await act(async () => {
+			await waitFor(() => {
 				expect(Context.cartState).toEqual({
 					...CART_WITH_ITEMS_MOCK,
 					channel: {channel: BASE_PROPS.channel},
 				});
+			});
 
+			await act(async () => {
 				onCurrentAccountUpdated({});
 			});
 

@@ -17,7 +17,7 @@ describe('useLDPEnabled', () => {
 				[groupId]: {
 					data: {
 						faroSubscription: {
-							name: SubscriptionNames.LiferayDataPlatform
+							name: SubscriptionNames.LiferayDataPlatformPrivateBeta
 						}
 					}
 				}

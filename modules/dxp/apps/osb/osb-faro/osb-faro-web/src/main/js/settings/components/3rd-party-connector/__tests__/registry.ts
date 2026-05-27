@@ -63,7 +63,7 @@ describe('connector registry', () => {
 
 			const slugs = listAvailableConnectors(
 				existing,
-				SubscriptionNames.LiferayDataPlatform
+				SubscriptionNames.LiferayDataPlatformPrivateBeta
 			).map(c => c.slug);
 
 			expect(slugs).not.toContain('demandbase');
@@ -73,7 +73,7 @@ describe('connector registry', () => {
 		it('returns all connectors when none are present yet', () => {
 			const slugs = listAvailableConnectors(
 				new Set(),
-				SubscriptionNames.LiferayDataPlatform
+				SubscriptionNames.LiferayDataPlatformPrivateBeta
 			)
 				.map(c => c.slug)
 				.sort();
@@ -99,7 +99,7 @@ describe('connector registry', () => {
 		it('shows LDP-only connectors on an LDP plan', () => {
 			const slugs = listAvailableConnectors(
 				new Set(),
-				SubscriptionNames.LiferayDataPlatform
+				SubscriptionNames.LiferayDataPlatformPrivateBeta
 			)
 				.map(c => c.slug)
 				.sort();

@@ -1,0 +1,22 @@
+services:
+    qdrant:
+        container_name: search-qdrant
+        image: qdrant/qdrant:v1.12.4
+        ports:
+            -   "127.0.0.1:6333:6333"
+            -   "127.0.0.1:6334:6334"
+        restart: unless-stopped
+        volumes:
+            -   ${SEARCH_DATA_HOME:?must be set; see modules/util/semantic-search-cli/README.md}/qdrant-data:/qdrant/storage
+    tei:
+        container_name: search-tei
+        environment:
+            AUTO_TRUNCATE: "true"
+            MAX_CLIENT_BATCH_SIZE: "64"
+            MODEL_ID: BAAI/bge-small-en-v1.5
+        image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.6
+        ports:
+            -   "127.0.0.1:8080:80"
+        restart: unless-stopped
+        volumes:
+            -   ${SEARCH_DATA_HOME:?must be set; see modules/util/semantic-search-cli/README.md}/model-cache:/data

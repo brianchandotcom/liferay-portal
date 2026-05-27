@@ -108,22 +108,10 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	@TestInfo("LPD-89104")
 	public void testCheckEntriesWithExpiredObjectEntry() throws Exception {
-		ObjectEntry expiredObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_depotEntry.getGroupId(), _objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).build()
-			).build());
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_depotEntry.getGroupId(), _objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).build()
-			).build());
+		ObjectEntry expiredObjectEntry = _addObjectEntry(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+		ObjectEntry objectEntry = _addObjectEntry(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
 		_moveToTrash(expiredObjectEntry);
 

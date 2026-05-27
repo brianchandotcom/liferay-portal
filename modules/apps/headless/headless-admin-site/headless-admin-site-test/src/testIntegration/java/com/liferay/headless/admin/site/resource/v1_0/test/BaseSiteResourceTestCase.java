@@ -336,7 +336,7 @@ public abstract class BaseSiteResourceTestCase {
 	@Test
 	public void testGetSitesPage() throws Exception {
 		Page<Site> page = siteResource.getSitesPage(
-			null, null, Pagination.of(1, 10));
+			null, null, null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -344,7 +344,8 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site2 = testGetSitesPage_addSite(randomSite());
 
-		page = siteResource.getSitesPage(null, null, Pagination.of(1, 10));
+		page = siteResource.getSitesPage(
+			null, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -357,7 +358,7 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		page = permissionsSiteResource.getSitesPage(
-			null, null, Pagination.of(1, 10));
+			null, null, null, Pagination.of(1, 10));
 
 		for (Site site : page.getItems()) {
 			Assert.assertNotNull(site.getPermissions());
@@ -379,7 +380,8 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPageWithPagination() throws Exception {
-		Page<Site> sitesPage = siteResource.getSitesPage(null, null, null);
+		Page<Site> sitesPage = siteResource.getSitesPage(
+			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sitesPage.getTotalCount());
 
@@ -395,7 +397,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Site> page1 = siteResource.getSitesPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -405,7 +407,7 @@ public abstract class BaseSiteResourceTestCase {
 			assertContains(site1, (List<Site>)page1.getItems());
 
 			Page<Site> page2 = siteResource.getSitesPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -413,7 +415,7 @@ public abstract class BaseSiteResourceTestCase {
 			assertContains(site2, (List<Site>)page2.getItems());
 
 			Page<Site> page3 = siteResource.getSitesPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -422,7 +424,7 @@ public abstract class BaseSiteResourceTestCase {
 		}
 		else {
 			Page<Site> page1 = siteResource.getSitesPage(
-				null, null, Pagination.of(1, totalCount + 2));
+				null, null, null, Pagination.of(1, totalCount + 2));
 
 			List<Site> sites1 = (List<Site>)page1.getItems();
 
@@ -430,7 +432,7 @@ public abstract class BaseSiteResourceTestCase {
 				sites1.toString(), totalCount + 2, sites1.size());
 
 			Page<Site> page2 = siteResource.getSitesPage(
-				null, null, Pagination.of(2, totalCount + 2));
+				null, null, null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -439,7 +441,7 @@ public abstract class BaseSiteResourceTestCase {
 			Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
 			Page<Site> page3 = siteResource.getSitesPage(
-				null, null, Pagination.of(1, (int)totalCount + 3));
+				null, null, null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(site1, (List<Site>)page3.getItems());
 			assertContains(site2, (List<Site>)page3.getItems());
@@ -2551,4 +2553,4 @@ public abstract class BaseSiteResourceTestCase {
 		_siteResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1579821345
+// LIFERAY-REST-BUILDER-HASH:2076733421

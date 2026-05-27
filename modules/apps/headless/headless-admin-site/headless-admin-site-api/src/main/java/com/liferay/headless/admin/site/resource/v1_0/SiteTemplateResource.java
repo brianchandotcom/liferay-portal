@@ -47,12 +47,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SiteTemplateResource {
 
 	public Page<SiteTemplate> getSiteTemplatesPage(
-			Boolean active, Pagination pagination)
+			Boolean active, String[] excludedSiteExternalReferenceCodes,
+			Pagination pagination)
 		throws Exception;
 
 	public Response postSiteTemplatesPageExportBatch(
-			Boolean active, String callbackURL, String contentType,
-			String fieldNames)
+			Boolean active, String[] excludedSiteExternalReferenceCodes,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -151,4 +152,4 @@ public interface SiteTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1873868301
+// LIFERAY-REST-BUILDER-HASH:1961746381

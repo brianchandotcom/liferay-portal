@@ -35,22 +35,24 @@ public interface SiteTemplateResource {
 	}
 
 	public Page<SiteTemplate> getSiteTemplatesPage(
-			Boolean active, Pagination pagination)
+			Boolean active, String[] excludedSiteExternalReferenceCodes,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteTemplatesPageHttpResponse(
-			Boolean active, Pagination pagination)
+			Boolean active, String[] excludedSiteExternalReferenceCodes,
+			Pagination pagination)
 		throws Exception;
 
 	public void postSiteTemplatesPageExportBatch(
-			Boolean active, String callbackURL, String contentType,
-			String fieldNames)
+			Boolean active, String[] excludedSiteExternalReferenceCodes,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteTemplatesPageExportBatchHttpResponse(
-				Boolean active, String callbackURL, String contentType,
-				String fieldNames)
+				Boolean active, String[] excludedSiteExternalReferenceCodes,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public static class Builder {
@@ -163,11 +165,13 @@ public interface SiteTemplateResource {
 		implements SiteTemplateResource {
 
 		public Page<SiteTemplate> getSiteTemplatesPage(
-				Boolean active, Pagination pagination)
+				Boolean active, String[] excludedSiteExternalReferenceCodes,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteTemplatesPageHttpResponse(active, pagination);
+				getSiteTemplatesPageHttpResponse(
+					active, excludedSiteExternalReferenceCodes, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -229,7 +233,8 @@ public interface SiteTemplateResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteTemplatesPageHttpResponse(
-				Boolean active, Pagination pagination)
+				Boolean active, String[] excludedSiteExternalReferenceCodes,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -257,6 +262,16 @@ public interface SiteTemplateResource {
 				httpInvoker.parameter("active", String.valueOf(active));
 			}
 
+			if (excludedSiteExternalReferenceCodes != null) {
+				for (int i = 0; i < excludedSiteExternalReferenceCodes.length;
+					 i++) {
+
+					httpInvoker.parameter(
+						"excludedSiteExternalReferenceCodes",
+						String.valueOf(excludedSiteExternalReferenceCodes[i]));
+				}
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
@@ -278,13 +293,14 @@ public interface SiteTemplateResource {
 		}
 
 		public void postSiteTemplatesPageExportBatch(
-				Boolean active, String callbackURL, String contentType,
-				String fieldNames)
+				Boolean active, String[] excludedSiteExternalReferenceCodes,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteTemplatesPageExportBatchHttpResponse(
-					active, callbackURL, contentType, fieldNames);
+					active, excludedSiteExternalReferenceCodes, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -336,8 +352,8 @@ public interface SiteTemplateResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteTemplatesPageExportBatchHttpResponse(
-					Boolean active, String callbackURL, String contentType,
-					String fieldNames)
+					Boolean active, String[] excludedSiteExternalReferenceCodes,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -365,6 +381,16 @@ public interface SiteTemplateResource {
 
 			if (active != null) {
 				httpInvoker.parameter("active", String.valueOf(active));
+			}
+
+			if (excludedSiteExternalReferenceCodes != null) {
+				for (int i = 0; i < excludedSiteExternalReferenceCodes.length;
+					 i++) {
+
+					httpInvoker.parameter(
+						"excludedSiteExternalReferenceCodes",
+						String.valueOf(excludedSiteExternalReferenceCodes[i]));
+				}
 			}
 
 			if (callbackURL != null) {
@@ -406,4 +432,4 @@ public interface SiteTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:337816008
+// LIFERAY-REST-BUILDER-HASH:709383156

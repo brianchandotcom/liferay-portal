@@ -308,7 +308,8 @@ public abstract class BaseSiteResourceImpl
 	}
 
 	protected abstract Page<Site> doGetSitesPage(
-			Boolean active, String search, Pagination pagination)
+			Boolean active, String[] excludedExternalReferenceCodes,
+			String search, Pagination pagination)
 		throws Exception;
 
 	/**
@@ -324,6 +325,10 @@ public abstract class BaseSiteResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "active"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "excludedExternalReferenceCodes"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -351,12 +356,16 @@ public abstract class BaseSiteResourceImpl
 			@jakarta.ws.rs.QueryParam("active")
 			Boolean active,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("excludedExternalReferenceCodes")
+			String[] excludedExternalReferenceCodes,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
 			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
-		Page<Site> sitesPage = doGetSitesPage(active, search, pagination);
+		Page<Site> sitesPage = doGetSitesPage(
+			active, excludedExternalReferenceCodes, search, pagination);
 
 		for (Site site : sitesPage.getItems()) {
 			site.setPermissions(
@@ -498,6 +507,10 @@ public abstract class BaseSiteResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "excludedExternalReferenceCodes"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -526,6 +539,9 @@ public abstract class BaseSiteResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("active")
 			Boolean active,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("excludedExternalReferenceCodes")
+			String[] excludedExternalReferenceCodes,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -960,7 +976,8 @@ public abstract class BaseSiteResourceImpl
 		throws Exception {
 
 		return getSitesPage(
-			_parseBoolean((String)parameters.get("active")), search,
+			_parseBoolean((String)parameters.get("active")),
+			(String[])parameters.get("excludedExternalReferenceCodes"), search,
 			pagination);
 	}
 
@@ -1757,4 +1774,4 @@ public abstract class BaseSiteResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1439273677
+// LIFERAY-REST-BUILDER-HASH:-998732090

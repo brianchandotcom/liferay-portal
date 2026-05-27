@@ -63,7 +63,8 @@ public interface SiteResource {
 		throws Exception;
 
 	public Page<Site> getSitesPage(
-			Boolean active, String search, Pagination pagination)
+			Boolean active, String[] excludedExternalReferenceCodes,
+			String search, Pagination pagination)
 		throws Exception;
 
 	public Site postSite(Site site) throws Exception;
@@ -75,8 +76,9 @@ public interface SiteResource {
 		throws Exception;
 
 	public Response postSitesPageExportBatch(
-			Boolean active, String search, String callbackURL,
-			String contentType, String fieldNames)
+			Boolean active, String[] excludedExternalReferenceCodes,
+			String search, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public Site putSite(String siteExternalReferenceCode, Site site)
@@ -197,4 +199,4 @@ public interface SiteResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1430547821
+// LIFERAY-REST-BUILDER-HASH:-521558797

@@ -5,4 +5,10 @@
 
 export {default as AIAssistantChat} from './AIAssistantChat/AIAssistantChat';
 export type {ChatContext} from './AIAssistantChat/api';
+export {default as ReportFeedbackModal} from './ReportFeedback/ReportFeedbackModal';
+export type {
+	ReportFeedbackPayload,
+	ReportFeedbackReason,
+	ReportFeedbackSurface,
+} from './ReportFeedback/api';
 export {default as WritingAssistant} from './WritingAssistant/WritingAssistant';

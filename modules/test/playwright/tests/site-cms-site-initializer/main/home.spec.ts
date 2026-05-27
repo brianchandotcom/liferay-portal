@@ -893,7 +893,7 @@ test(
 
 test(
 	'Can use Search Bar to search for content',
-	{tag: '@LPD-61220'},
+	{tag: ['@LPD-61220', '@LPD-89781']},
 	async ({apiHelpers, assetsPage, homePage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
@@ -929,9 +929,15 @@ test(
 
 			await searchInput.press('Enter');
 
+			await test.step('Verify URL uses the FDS pretty format', async () => {
+				await expect(page).toHaveURL(/_fdsConfig=\(q:title\)(?:&|$)/);
+			});
+
 			const row = assetsPage.table.bodyRows.filter({hasText: file1Title});
 
-			await expect(row.getByText(file1Title)).toBeVisible();
+			await expect(
+				row.getByRole('link', {name: file1Title})
+			).toBeVisible();
 
 			await test.step('Verify search input contains the search value', async () => {
 				const searchInput = page.getByPlaceholder('Search');

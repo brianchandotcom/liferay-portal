@@ -20,7 +20,7 @@ type PathRoute = {
 	children?: AppRoute[];
 	element?: ReactNode;
 	index?: never;
-	nav?: {label: string; section?: string};
+	nav?: {icon?: string; label: string};
 	path: string;
 };
 
@@ -57,9 +57,9 @@ export function buildNavItems(routes: AppRoute[], prefix = ''): NavItem[] {
 
 		items.push({
 			children: children?.length ? children : undefined,
+			icon: route.nav.icon,
 			label: route.nav.label,
 			path: fullPath,
-			section: route.nav.section,
 		});
 	}
 

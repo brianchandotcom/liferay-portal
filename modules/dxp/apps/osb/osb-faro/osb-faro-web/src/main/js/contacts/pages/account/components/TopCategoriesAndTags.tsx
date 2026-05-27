@@ -156,9 +156,16 @@ const TabContent: React.FC<ITabContentProps> = ({
 				<ClayTable className='mt-3'>
 					<ClayTable.Head>
 						<ClayTable.Row>
-							<ClayTable.Cell headingCell>
-								{Liferay.Language.get('name')}
+							<ClayTable.Cell expanded headingCell>
+								{isCategory
+									? Liferay.Language.get('category-name')
+									: Liferay.Language.get('tag-name')}
 							</ClayTable.Cell>
+							{isCategory && (
+								<ClayTable.Cell headingCell>
+									{Liferay.Language.get('vocabulary')}
+								</ClayTable.Cell>
+							)}
 							<ClayTable.Cell headingCell>
 								{groupByLabel}
 							</ClayTable.Cell>
@@ -169,9 +176,16 @@ const TabContent: React.FC<ITabContentProps> = ({
 							<ClayTable.Row key={item.id}>
 								<ClayTable.Cell expanded>
 									<Text size={3} weight='semi-bold'>
-									{item.name}
-								</Text>
+										{item.name}
+									</Text>
 								</ClayTable.Cell>
+								{isCategory && (
+									<ClayTable.Cell>
+										<Text size={3}>
+											{(item as ITopCategory).vocabularyName}
+										</Text>
+									</ClayTable.Cell>
+								)}
 								<ClayTable.Cell>
 									{toThousands(item[selectedMetric].value)}
 								</ClayTable.Cell>

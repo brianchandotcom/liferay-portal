@@ -112,12 +112,47 @@ components:
                     type: array
             type: object
         SearchResult:
+            description:
+                A single search hit returned by GET /search and POST /search. The properties below appear on every
+                result; the embedded property carries asset-specific payload and so its shape varies by entryClassName.
+            example:
+                actions:
+                    update:
+                        href: /o/headless-delivery/v1.0/blog-posting/12345
+                        method: PUT
+                        permissionName: UPDATE
+                    view:
+                        href: /o/headless-delivery/v1.0/blog-posting/12345
+                        method: GET
+                        permissionName: VIEW
+                dateCreated: 2025-08-15T14:32:00Z
+                dateModified: 2025-09-20T09:18:45Z
+                dateReview: 2026-08-15T14:32:00Z
+                description:
+                    A short summary of the blog entry describing the topic.
+                embedded:
+                    assetTagNames:
+                        -   release
+                        -   announcement
+                    authorName: Jane Doe
+                    categoryNames:
+                        -   Product News
+                    groupId: "20121"
+                entryClassName: com.liferay.blogs.model.BlogsEntry
+                itemURL: /web/sites/marketing/-/blogs/release-notes-7.4
+                score: 1.42
+                title: Release Notes for Liferay 7.4
             properties:
                 actions:
                     additionalProperties:
                         additionalProperties:
                             type: string
                         type: object
+                    description:
+                        Map of HATEOAS-style action descriptors keyed by action name (such as view, update, delete).
+                        Each action contains metadata like the HTTP method, URL, and required permission. Only actions
+                        the requesting user is permitted to perform are returned. Read-only - populated by the API,
+                        ignored on requests.
                     readOnly: true
                     type: object
                 dateCreated:
@@ -137,27 +172,36 @@ components:
                     type: string
                 description:
                     description:
-                        The item's description.
+                        Free-text description of the item. Locale-dependent on the 'Accept-Language' request header where applicable.
                     type: string
                 embedded:
+                    description:
+                        Asset-specific nested data. The shape depends on entryClassName - blog entries include
+                        authorName and assetTagNames, documents include extension and size, custom Objects include their
+                        declared fields, and so on. Populated only when nestedFields=embedded is requested.
                     type: object
                 entryClassName:
                     description:
-                        The object entry class name.
+                        Fully-qualified class name of the indexed entity (for example,
+                        com.liferay.blogs.model.BlogsEntry for a blog entry, com.liferay.journal.model.JournalArticle
+                        for a Web Content Article).
                     type: string
                 itemURL:
                     description:
-                        The link to the embedded item.
+                        Friendly URL where the item can be viewed in the portal. May be relative or absolute depending
+                        on configuration.
                     format: uri
                     type: string
                 score:
                     description:
-                        The item's score.
+                        Relevance score assigned by the search engine. Higher values indicate stronger relevance to the
+                        query. Typical values fall in the range 0.0 to ~10.0 depending on query complexity and blueprint
+                        configuration.
                     format: float
                     type: number
                 title:
                     description:
-                        The item's title.
+                        Title of the item. Locale-dependent on the 'Accept-Language' request header where applicable.
                     type: string
         Suggestion:
             properties:

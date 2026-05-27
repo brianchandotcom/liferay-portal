@@ -2050,21 +2050,6 @@ public class LayoutLocalServiceUtil {
 		return getService().updateStatus(userId, plid, status, serviceContext);
 	}
 
-	/**
-	 * Updates the layout replacing its style book entry ERC and the optional
-	 * scope ERC identifying the group that owns the entry.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutId the layout ID of the layout
-	 * @param styleBookEntryERC the external reference code of the style book
-	 entry
-	 * @param styleBookEntryScopeERC the external reference code of the group
-	 that owns the style book entry, or {@code null} when the entry
-	 lives in the layout's own group
-	 * @return the updated layout
-	 * @throws PortalException if a portal exception occurred
-	 */
 	public static Layout updateStyleBookEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			String styleBookEntryERC, String styleBookEntryScopeERC)
@@ -2127,4 +2112,4 @@ public class LayoutLocalServiceUtil {
 	private static volatile LayoutLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1471757
+// LIFERAY-SERVICE-BUILDER-HASH:-1200364554

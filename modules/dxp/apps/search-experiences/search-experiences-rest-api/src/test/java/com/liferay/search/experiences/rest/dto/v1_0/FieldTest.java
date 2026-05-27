@@ -6,7 +6,11 @@
 package com.liferay.search.experiences.rest.dto.v1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Arrays;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -24,6 +28,23 @@ public class FieldTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testDecodeWhenDefaultValueIsCollection() throws Exception {
+		_testDecodeDefaultValue(
+			Arrays.asList(
+				_createEntry(_CLASS_NAME_BLOGS_ENTRY),
+				_createEntry(_CLASS_NAME_JOURNAL_ARTICLE)));
+	}
+
+	@Test
+	public void testDecodeWhenDefaultValueIsObjectArray() throws Exception {
+		_testDecodeDefaultValue(
+			new Object[] {
+				_createEntry(_CLASS_NAME_BLOGS_ENTRY),
+				_createEntry(_CLASS_NAME_JOURNAL_ARTICLE)
+			});
+	}
+
+	@Test
 	public void testEscape() throws Exception {
 		_testEscape(
 			"es\\\\ca\\\"pe\\bES\\fCA\\nPE\\rRO\\tOM",
@@ -32,6 +53,39 @@ public class FieldTest {
 			"es\\\\\\\\ca\\\\\\\"pe\\\\\\bES\\\\\\fCA\\\\\\nPE" +
 				"\\\\\\rRO\\\\\\tOM",
 			"es\\\\ca\\\"pe\\\bES\\\fCA\\\nPE\\\rRO\\\tOM");
+	}
+
+	private Map<String, String> _createEntry(String className) {
+		return HashMapBuilder.put(
+			_LABEL, className
+		).put(
+			_VALUE, className
+		).build();
+	}
+
+	private void _testDecodeDefaultValue(Object defaultValue) {
+		Field field = new Field();
+
+		field.setDefaultValue(defaultValue);
+
+		Field decodedField = Field.unsafeToDTO(field.toString());
+
+		Object[] decodedEntries = (Object[])decodedField.getDefaultValue();
+
+		Assert.assertEquals(
+			Arrays.toString(decodedEntries), 2, decodedEntries.length);
+
+		Map<?, ?> firstEntry = (Map<?, ?>)decodedEntries[0];
+
+		Assert.assertEquals(_CLASS_NAME_BLOGS_ENTRY, firstEntry.get(_LABEL));
+		Assert.assertEquals(_CLASS_NAME_BLOGS_ENTRY, firstEntry.get(_VALUE));
+
+		Map<?, ?> secondEntry = (Map<?, ?>)decodedEntries[1];
+
+		Assert.assertEquals(
+			_CLASS_NAME_JOURNAL_ARTICLE, secondEntry.get(_LABEL));
+		Assert.assertEquals(
+			_CLASS_NAME_JOURNAL_ARTICLE, secondEntry.get(_VALUE));
 	}
 
 	private void _testEscape(String escaped, String unescaped) {
@@ -53,5 +107,15 @@ public class FieldTest {
 
 		Assert.assertEquals(field1.toString(), field2.toString());
 	}
+
+	private static final String _CLASS_NAME_BLOGS_ENTRY =
+		"com.liferay.blogs.model.BlogsEntry";
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
+
+	private static final String _LABEL = "label";
+
+	private static final String _VALUE = "value";
 
 }

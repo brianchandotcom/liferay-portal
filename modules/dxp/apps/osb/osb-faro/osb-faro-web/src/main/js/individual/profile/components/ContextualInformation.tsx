@@ -53,6 +53,7 @@ interface IContextualInfoProps {
 	contactId?: string;
 	contextData: Map<string, any>;
 	email?: string;
+	loading?: boolean;
 	showEmptyState?: boolean;
 	userId?: string;
 	uuid?: string;
@@ -80,6 +81,7 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	contactId,
 	contextData,
 	email,
+	loading = false,
 	showEmptyState = false,
 	userId,
 	uuid
@@ -110,13 +112,14 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 				title={Liferay.Language.get('contextual-information')}
 			/>
 
-			{showEmptyState ? (
+			{showEmptyState && !loading ? (
 				emptyState
 			) : (
 				<GeneralInfoSection
 					config={contextualInfoConfig}
 					getValue={getValue}
 					languageMap={CONTEXTUAL_INFO_LABEL_MAP}
+					loading={loading}
 				/>
 			)}
 		</>

@@ -1,0 +1,23 @@
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
+dependencies {
+	api group: "com.google.protobuf", name: "protobuf-java", version: "3.25.5"
+	api group: "io.grpc", name: "grpc-netty-shaded", version: "1.75.0"
+	api group: "io.grpc", name: "grpc-protobuf", version: "1.75.0"
+	api group: "io.grpc", name: "grpc-stub", version: "1.75.0"
+	api group: "io.qdrant", name: "client", version: "1.13.0"
+	api group: "org.json", name: "json", version: "20231013"
+	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "6.0.0"
+	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.7"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
+}
+
+liferay {
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.semantic.search.cli/lib"
+}
+
+test {
+	jvmArgs "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED"
+}

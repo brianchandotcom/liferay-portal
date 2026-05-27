@@ -160,19 +160,26 @@ function ExternalURLInput({
 }: ExternalURLInputProps) {
 	const [value, setValue] = useState<string>(initialValue);
 
+	const confirmURL = (rawURL: string) => {
+		const absoluteURL = toAbsoluteURL(rawURL);
+
+		setValue(absoluteURL);
+		onBlur(absoluteURL);
+	};
+
 	return (
 		<ClayInput.Group>
 			<ClayInput.GroupItem>
 				<ClayInput
 					aria-label={Liferay.Language.get('external-url')}
 					insetAfter={!vertical}
-					onBlur={(event) => {
-						const absoluteURL = toAbsoluteURL(event.target.value);
-
-						setValue(absoluteURL);
-						onBlur(absoluteURL);
-					}}
+					onBlur={(event) => confirmURL(event.target.value)}
 					onChange={(event) => setValue(event.target.value)}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							confirmURL(event.currentTarget.value);
+						}
+					}}
 					sizing={!vertical ? 'sm' : undefined}
 					type="text"
 					value={value}

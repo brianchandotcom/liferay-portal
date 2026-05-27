@@ -343,8 +343,9 @@ public interface BatchEngineExportTaskLocalService
 	 * @return the batch engine export task that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineExportTask updateBatchEngineExportTask(
 		BatchEngineExportTask batchEngineExportTask);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:753350967
+// LIFERAY-SERVICE-BUILDER-HASH:-587742894

@@ -1,13 +1,33 @@
 {
 	"dependencies": {
+		"@clayui/button": "^3.159.0",
+		"@clayui/core": "^3.159.0",
+		"@clayui/date-picker": "^3.159.0",
+		"@clayui/drop-down": "^3.159.0",
+		"@clayui/empty-state": "^3.159.0",
+		"@clayui/form": "^3.159.0",
+		"@clayui/icon": "^3.159.0",
+		"@clayui/label": "^3.159.0",
+		"@clayui/loading-indicator": "^3.159.0",
+		"@clayui/management-toolbar": "^3.159.0",
+		"@clayui/modal": "^3.159.0",
+		"@clayui/pagination-bar": "^3.159.0",
+		"@clayui/table": "^3.159.0",
+		"@clayui/tooltip": "^3.159.0",
+		"classnames": "^2.3.2",
+		"date-fns": "^2.30.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "6.8.0"
+		"react-router-dom": "6.8.0",
+		"react-select": "^5.3.2",
+		"recharts": "^2.15.3",
+		"swr": "^2.2.4"
 	},
 	"devDependencies": {
 		"@types/react": "^18.2.6",
 		"@types/react-dom": "^18.0.9",
 		"@vitejs/plugin-react": "^3.0.0",
+		"sass": "1.57.1",
 		"typescript": "5.7.2",
 		"vite": "4.0.0"
 	},

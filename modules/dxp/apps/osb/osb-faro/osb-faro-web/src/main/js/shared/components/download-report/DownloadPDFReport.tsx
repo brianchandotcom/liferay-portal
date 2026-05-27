@@ -226,7 +226,11 @@ export const formattedContainers = (
 
 let _spriteSVG: Element | null = null;
 
-const fetchSprite = async (): Promise<Element | null> => {
+export const resetSpriteCache = () => {
+	_spriteSVG = null;
+};
+
+export const fetchSprite = async (): Promise<Element | null> => {
 	if (_spriteSVG) {
 		return _spriteSVG;
 	}
@@ -255,7 +259,7 @@ const fetchSprite = async (): Promise<Element | null> => {
 	return _spriteSVG;
 };
 
-const inlineSVGIcons = (clonedDoc: Document, sprite: Element) => {
+export const inlineSVGIcons = (clonedDoc: Document, sprite: Element) => {
 	clonedDoc.querySelectorAll('svg use').forEach(useEl => {
 		const href =
 			useEl.getAttribute('href') ||

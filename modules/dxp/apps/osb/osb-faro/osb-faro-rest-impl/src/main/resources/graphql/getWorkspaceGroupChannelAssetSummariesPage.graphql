@@ -1,4 +1,4 @@
-query getWorkspaceGroupAssetSummariesPage(
+query getWorkspaceGroupChannelAssetSummariesPage(
     $channelId: String
     $keywords: String
     $rangeEnd: String

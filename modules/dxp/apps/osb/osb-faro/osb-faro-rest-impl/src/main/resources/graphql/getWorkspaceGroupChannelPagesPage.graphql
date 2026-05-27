@@ -1,4 +1,4 @@
-query getWorkspaceGroupPagesPage(
+query getWorkspaceGroupChannelPagesPage(
     $channelId: String
     $dataSourceId: String
     $keywords: String

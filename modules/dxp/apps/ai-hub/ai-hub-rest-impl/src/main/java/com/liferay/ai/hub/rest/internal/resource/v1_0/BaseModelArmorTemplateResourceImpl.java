@@ -77,7 +77,7 @@ public abstract class BaseModelArmorTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multiLanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multilanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -555,4 +555,4 @@ public abstract class BaseModelArmorTemplateResourceImpl
 		LogFactoryUtil.getLog(BaseModelArmorTemplateResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1851590443
+// LIFERAY-REST-BUILDER-HASH:-1708761931

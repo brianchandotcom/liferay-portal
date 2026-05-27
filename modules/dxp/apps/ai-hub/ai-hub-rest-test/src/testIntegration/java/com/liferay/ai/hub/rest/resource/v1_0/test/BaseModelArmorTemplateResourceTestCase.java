@@ -422,10 +422,10 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"multiLanguageDetectionEnabled",
+					"multilanguageDetectionEnabled",
 					additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getMultiLanguageDetectionEnabled() ==
+				if (modelArmorTemplate.getMultilanguageDetectionEnabled() ==
 						null) {
 
 					valid = false;
@@ -717,13 +717,13 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"multiLanguageDetectionEnabled",
+					"multilanguageDetectionEnabled",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getMultiLanguageDetectionEnabled(),
+						modelArmorTemplate1.getMultilanguageDetectionEnabled(),
 						modelArmorTemplate2.
-							getMultiLanguageDetectionEnabled())) {
+							getMultilanguageDetectionEnabled())) {
 
 					return false;
 				}
@@ -1105,7 +1105,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("multiLanguageDetectionEnabled")) {
+		if (entityFieldName.equals("multilanguageDetectionEnabled")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1251,7 +1251,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 				location = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				maliciousUriFilterEnabled = RandomTestUtil.randomBoolean();
-				multiLanguageDetectionEnabled = RandomTestUtil.randomBoolean();
+				multilanguageDetectionEnabled = RandomTestUtil.randomBoolean();
 				piAndJailbreakFilterEnabled = RandomTestUtil.randomBoolean();
 				sdpFilterEnabled = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -1484,4 +1484,4 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		_modelArmorTemplateResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:266374056
+// LIFERAY-REST-BUILDER-HASH:1191882568

@@ -315,33 +315,33 @@ public class ModelArmorTemplate implements Serializable {
 	private Supplier<Boolean> _maliciousUriFilterEnabledSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getMultiLanguageDetectionEnabled() {
-		if (_multiLanguageDetectionEnabledSupplier != null) {
-			multiLanguageDetectionEnabled =
-				_multiLanguageDetectionEnabledSupplier.get();
+	public Boolean getMultilanguageDetectionEnabled() {
+		if (_multilanguageDetectionEnabledSupplier != null) {
+			multilanguageDetectionEnabled =
+				_multilanguageDetectionEnabledSupplier.get();
 
-			_multiLanguageDetectionEnabledSupplier = null;
+			_multilanguageDetectionEnabledSupplier = null;
 		}
 
-		return multiLanguageDetectionEnabled;
+		return multilanguageDetectionEnabled;
 	}
 
-	public void setMultiLanguageDetectionEnabled(
-		Boolean multiLanguageDetectionEnabled) {
+	public void setMultilanguageDetectionEnabled(
+		Boolean multilanguageDetectionEnabled) {
 
-		this.multiLanguageDetectionEnabled = multiLanguageDetectionEnabled;
+		this.multilanguageDetectionEnabled = multilanguageDetectionEnabled;
 
-		_multiLanguageDetectionEnabledSupplier = null;
+		_multilanguageDetectionEnabledSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMultiLanguageDetectionEnabled(
+	public void setMultilanguageDetectionEnabled(
 		UnsafeSupplier<Boolean, Exception>
-			multiLanguageDetectionEnabledUnsafeSupplier) {
+			multilanguageDetectionEnabledUnsafeSupplier) {
 
-		_multiLanguageDetectionEnabledSupplier = () -> {
+		_multilanguageDetectionEnabledSupplier = () -> {
 			try {
-				return multiLanguageDetectionEnabledUnsafeSupplier.get();
+				return multilanguageDetectionEnabledUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -354,10 +354,10 @@ public class ModelArmorTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean multiLanguageDetectionEnabled;
+	protected Boolean multilanguageDetectionEnabled;
 
 	@JsonIgnore
-	private Supplier<Boolean> _multiLanguageDetectionEnabledSupplier;
+	private Supplier<Boolean> _multilanguageDetectionEnabledSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("piAndJailbreakConfidenceLevel")
@@ -926,17 +926,17 @@ public class ModelArmorTemplate implements Serializable {
 			sb.append(maliciousUriFilterEnabled);
 		}
 
-		Boolean multiLanguageDetectionEnabled =
-			getMultiLanguageDetectionEnabled();
+		Boolean multilanguageDetectionEnabled =
+			getMultilanguageDetectionEnabled();
 
-		if (multiLanguageDetectionEnabled != null) {
+		if (multilanguageDetectionEnabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"multiLanguageDetectionEnabled\": ");
+			sb.append("\"multilanguageDetectionEnabled\": ");
 
-			sb.append(multiLanguageDetectionEnabled);
+			sb.append(multilanguageDetectionEnabled);
 		}
 
 		PiAndJailbreakConfidenceLevel piAndJailbreakConfidenceLevel =
@@ -1403,4 +1403,4 @@ public class ModelArmorTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:87448398
+// LIFERAY-REST-BUILDER-HASH:-1193542898

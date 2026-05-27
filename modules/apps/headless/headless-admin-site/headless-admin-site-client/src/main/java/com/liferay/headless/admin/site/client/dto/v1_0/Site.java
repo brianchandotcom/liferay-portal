@@ -374,6 +374,25 @@ public class Site implements Cloneable, Serializable {
 
 	protected String[] locales;
 
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public void setLogo(UnsafeSupplier<String, Exception> logoUnsafeSupplier) {
+		try {
+			logo = logoUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String logo;
+
 	public Boolean getManualMembership() {
 		return manualMembership;
 	}
@@ -858,4 +877,4 @@ public class Site implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1854504143
+// LIFERAY-REST-BUILDER-HASH:1045296917

@@ -104,6 +104,20 @@ public class SiteTemplateSerDes {
 			sb.append(siteTemplate.getId());
 		}
 
+		if (siteTemplate.getLogo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logo\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(siteTemplate.getLogo()));
+
+			sb.append("\"");
+		}
+
 		if (siteTemplate.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -231,6 +245,13 @@ public class SiteTemplateSerDes {
 			map.put("id", String.valueOf(siteTemplate.getId()));
 		}
 
+		if (siteTemplate.getLogo() == null) {
+			map.put("logo", null);
+		}
+		else {
+			map.put("logo", String.valueOf(siteTemplate.getLogo()));
+		}
+
 		if (siteTemplate.getName() == null) {
 			map.put("name", null);
 		}
@@ -304,6 +325,9 @@ public class SiteTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "logo")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -356,6 +380,11 @@ public class SiteTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					siteTemplate.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "logo")) {
+				if (jsonParserFieldValue != null) {
+					siteTemplate.setLogo((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -484,4 +513,4 @@ public class SiteTemplateSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1701914520
+// LIFERAY-REST-BUILDER-HASH:-449461425

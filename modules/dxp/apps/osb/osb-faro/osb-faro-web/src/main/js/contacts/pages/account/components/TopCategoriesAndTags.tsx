@@ -89,14 +89,14 @@ const TabContent: React.FC<ITabContentProps> = ({
 			<StatesRenderer.Loading />
 			<StatesRenderer.Empty>
 				<ClayEmptyState
-					className='py-3'
+					className='py-3 text-center'
 					description={
 						isCategory
 							? Liferay.Language.get(
-									'categories-will-appear-here-once-they-are-available'
+									'categories-will-appear-here-when-available'
 							  )
 							: Liferay.Language.get(
-									'tags-will-appear-here-once-they-are-available'
+									'tags-will-appear-here-when-available'
 							  )
 					}
 					small

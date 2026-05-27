@@ -103,9 +103,9 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 					<StatesRenderer.Loading />
 					<StatesRenderer.Empty>
 						<ClayEmptyState
-							className='mt-n5'
+							className='mt-n5 text-center'
 							description={Liferay.Language.get(
-								'lifecycle-data-will-appear-here-once-it-is-synced'
+								'lifecycle-data-will-appear-here-when-synced'
 							)}
 							small
 							title={Liferay.Language.get(

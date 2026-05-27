@@ -391,7 +391,7 @@ describe('TopAssets', () => {
 			const {container} = render(<TopAssets />);
 
 			const tabPanel = container.querySelector(
-				'[aria-labelledby="tab-top-assets-content"]'
+				'.tab-pane'
 			) as HTMLElement;
 
 			expect(within(tabPanel).getAllByText('999').length).toBe(1);

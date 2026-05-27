@@ -365,7 +365,7 @@ describe('TopCategoriesAndTags', () => {
 			).toBeGreaterThan(0);
 			expect(
 				screen.getAllByText(
-					'Categories will appear here once they are available.'
+					'Categories will appear here when available.'
 				).length
 			).toBeGreaterThan(0);
 		});
@@ -381,9 +381,8 @@ describe('TopCategoriesAndTags', () => {
 				screen.getAllByText('No Tags Available').length
 			).toBeGreaterThan(0);
 			expect(
-				screen.getAllByText(
-					'Tags will appear here once they are available.'
-				).length
+				screen.getAllByText('Tags will appear here when available.')
+					.length
 			).toBeGreaterThan(0);
 		});
 

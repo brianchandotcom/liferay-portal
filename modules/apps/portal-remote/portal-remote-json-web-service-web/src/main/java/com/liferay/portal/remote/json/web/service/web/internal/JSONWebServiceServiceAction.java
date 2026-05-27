@@ -84,31 +84,15 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			if (throwable instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
-			else if (throwable instanceof NoSuchModelException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(getThrowableMessage(throwable), throwable);
-				}
-
-				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-				if (PropsValues.JSON_SERVICE_SERIALIZE_THROWABLE) {
-					return JSONFactoryUtil.serializeThrowable(throwable);
-				}
-
-				return JSONFactoryUtil.getNullJSON();
-			}
-			else if (throwable instanceof PrincipalException ||
+			else if (throwable instanceof NoSuchModelException ||
+					 throwable instanceof PrincipalException ||
 					 throwable instanceof SecurityException) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(getThrowableMessage(throwable), throwable);
 				}
 
-				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-				if (PropsValues.JSON_SERVICE_SERIALIZE_THROWABLE) {
-					return JSONFactoryUtil.serializeThrowable(throwable);
-				}
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 				return JSONFactoryUtil.getNullJSON();
 			}

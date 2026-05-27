@@ -98,7 +98,7 @@ test('Date-time filter is displayed in fragment, and applied to data @LPD-10754'
 
 	await assertDataIsFetched();
 
-	await test.step('Set an impossible date range', async () => {
+	await test.step('Assert that a filter cannot be applied when setting an impossible date range', async () => {
 		await activeFilterButton.click();
 
 		const toInput = dataSetFragmentPage.page.getByLabel('To', {
@@ -115,13 +115,7 @@ test('Date-time filter is displayed in fragment, and applied to data @LPD-10754'
 			name: 'Show Results',
 		});
 
-		await expect(editButton).toBeVisible();
-
-		await editButton.click();
-	});
-
-	await test.step('Assert that the data entry is not fetched', async () => {
-		await expect(dataSetFragmentPage.emptyStateTitle).toBeVisible();
+		await expect(editButton).toBeDisabled();
 	});
 
 	await test.step('Remove the filter @LPS-191295', async () => {

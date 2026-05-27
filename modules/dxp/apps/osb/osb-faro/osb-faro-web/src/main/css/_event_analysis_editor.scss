@@ -55,6 +55,10 @@
 
 		.dropdown-item-primary-button {
 			line-height: 32px;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		.options-button {
@@ -261,9 +265,11 @@
 	.description {
 		color: $secondary;
 		padding-bottom: 8px;
+		word-break: break-word;
 	}
 
 	.filter-name {
 		font-weight: $fontWeightSemiBold;
+		word-break: break-word;
 	}
 }

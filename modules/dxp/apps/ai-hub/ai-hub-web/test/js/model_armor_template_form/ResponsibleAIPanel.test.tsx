@@ -51,7 +51,7 @@ const baseValues: ModelArmorTemplate = {
 	guardrailType: 'input',
 	location: '',
 	maliciousUriFilterEnabled: false,
-	multiLanguageDetectionEnabled: false,
+	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 	piAndJailbreakFilterEnabled: false,
 	raiDangerousLevel: 'none',

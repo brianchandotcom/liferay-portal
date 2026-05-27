@@ -178,10 +178,10 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 										<div className='align-items-center d-flex'>
 											<div className='mr-3'>
 												<ClaySticker
-													className={
-														mimeType.className
-													}
-													displayType='dark'
+													className={classNames(
+														mimeType.className,
+														'bg-transparent'
+													)}
 												>
 													<ClayIcon
 														symbol={mimeType.icon}

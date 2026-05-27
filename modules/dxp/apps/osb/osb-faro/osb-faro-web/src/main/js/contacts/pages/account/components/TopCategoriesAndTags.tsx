@@ -168,7 +168,9 @@ const TabContent: React.FC<ITabContentProps> = ({
 						{items.map(item => (
 							<ClayTable.Row key={item.id}>
 								<ClayTable.Cell expanded>
-									<Text weight='semi-bold'>{item.name}</Text>
+									<Text size={3} weight='semi-bold'>
+									{item.name}
+								</Text>
 								</ClayTable.Cell>
 								<ClayTable.Cell>
 									{toThousands(item[selectedMetric].value)}

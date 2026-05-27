@@ -5,7 +5,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import IndividualAttributesCDP from '../components/IndividualAttributesCDP';
 import IndividualDetailsCDP from '../components/IndividualAllAttributesCDP';
-import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -28,7 +27,6 @@ interface IIndividualProfileCDPProps {
 interface IProfileCDPEmptyStateProps {
 	authorized: boolean;
 	dataSourceData?: any;
-	dataSourceLoading: boolean;
 	groupId: string;
 	pageDisplay?: boolean;
 	type?: IndividualProfileCDPCards;
@@ -37,19 +35,10 @@ interface IProfileCDPEmptyStateProps {
 const ProfileCDPEmptyState: React.FC<IProfileCDPEmptyStateProps> = ({
 	authorized,
 	dataSourceData,
-	dataSourceLoading,
 	groupId,
 	pageDisplay = true,
 	type = IndividualProfileCDPCards.IndividualsAttributes
 }) => {
-	if (dataSourceLoading) {
-		return (
-			<NoResultsDisplay>
-				<Loading key='LOADING' />
-			</NoResultsDisplay>
-		);
-	}
-
 	if (isNil(dataSourceData?.total) || dataSourceData?.total === 0) {
 		const isAccount = type === IndividualProfileCDPCards.AccountMembership;
 
@@ -148,19 +137,20 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const showEmptyState =
-		isNil(dataSourceData?.total) || dataSourceData?.total === 0;
+		!dataSourceLoading &&
+		(isNil(dataSourceData?.total) || dataSourceData?.total === 0);
 
 	return (
 		<>
 			<IndividualAttributesCDP
 				contactId={individual.get('id')}
+				loading={dataSourceLoading}
 				propertiesData={individual.get('properties')}
 				showEmptyState={showEmptyState}
 			>
 				<ProfileCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}
-					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
 					pageDisplay={false}
 				/>
@@ -168,12 +158,12 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 
 			<AccountMembership
 				accountData={individual.getIn(['accounts', 0])}
+				loading={dataSourceLoading}
 				showEmptyState={showEmptyState}
 			>
 				<ProfileCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}
-					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
 					pageDisplay={false}
 				/>
@@ -187,7 +177,6 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 				<ProfileCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}
-					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
 					pageDisplay={false}
 				/>

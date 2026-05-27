@@ -67,6 +67,7 @@ const dateKeys = ['createdDate', 'lastActivityDate'];
 interface IAccountMembershipProps {
 	accountData?: Map<string, any>;
 	children?: React.ReactNode;
+	loading?: boolean;
 	showEmptyState?: boolean;
 }
 
@@ -88,6 +89,7 @@ const ACCOUNT_MEMBERSHIP_LABEL_MAP: Record<string, string> = {
 const AccountMembership: React.FC<IAccountMembershipProps> = ({
 	accountData,
 	children: emptyState,
+	loading = false,
 	showEmptyState = false
 }) => {
 	const getValue = (key: string): string | undefined => {
@@ -113,6 +115,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 			config={accountMembershipConfig}
 			getValue={getValue}
 			languageMap={ACCOUNT_MEMBERSHIP_LABEL_MAP}
+			loading={loading}
 		/>
 	) : (
 		<Card className='p-5'>
@@ -154,7 +157,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 				title={Liferay.Language.get('account-membership')}
 			/>
 
-			{showEmptyState ? emptyState : sectionContent}
+			{showEmptyState && !loading ? emptyState : sectionContent}
 		</>
 	);
 };

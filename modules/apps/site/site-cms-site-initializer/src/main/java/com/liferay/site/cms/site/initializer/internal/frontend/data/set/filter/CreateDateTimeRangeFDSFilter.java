@@ -23,14 +23,15 @@ import org.osgi.service.component.annotations.Component;
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SHARED_WITH_ME,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.STRUCTURE_USAGES,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FILES_FOLDER,
-		"service.ranking:Integer=89"
+		"service.ranking:Integer=94"
 	},
 	service = FDSFilter.class
 )
-public class ReviewDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
+public class CreateDateTimeRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -39,17 +40,17 @@ public class ReviewDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getId() {
-		return "dateReview";
+		return "dateCreated";
 	}
 
 	@Override
 	public String getLabel() {
-		return "review-date";
+		return "create-date";
 	}
 
 	@Override
 	public DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem() {
-		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
+		return DateTimeFDSFilterItem.NOW;
 	}
 
 	@Override

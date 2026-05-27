@@ -96,7 +96,7 @@ accountSettingsTest(
 			await fdsSamplePage.selectTab('Advanced');
 
 			await expect(
-				page.getByText('Jan 1, 2020, 12:00:00 AM')
+				page.getByText('Jan 1, 2020, 1:01:01 AM')
 			).toBeVisible();
 		});
 
@@ -110,7 +110,7 @@ accountSettingsTest(
 			await fdsSamplePage.selectTab('Advanced');
 
 			await expect(
-				page.getByText('Jan 1, 2020, 1:00:00 AM')
+				page.getByText('Jan 1, 2020, 2:01:01 AM')
 			).toBeVisible();
 		});
 

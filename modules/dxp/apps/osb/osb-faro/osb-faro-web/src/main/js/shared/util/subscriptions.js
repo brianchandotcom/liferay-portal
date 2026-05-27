@@ -21,6 +21,7 @@ export const SubscriptionNames = {
 		'Liferay Analytics Cloud Enterprise Tracked Pages',
 	LiferayDataPlatform: 'Liferay Data Platform',
 	LiferayDataPlatformEnterprise: 'Liferay Data Platform Enterprise',
+	LiferayDataPlatformPrivateBeta: 'Liferay Data Platform (Private Beta)',
 	LiferaySaasBusinessPlan: 'Liferay SaaS - Business Plan',
 	LiferaySaasCspCustomUserTier: 'Liferay SaaS - CSP - Custom User Tier',
 	LiferaySaasCspCustomUserTierExtraUser:
@@ -83,6 +84,7 @@ export const PLAN_TYPES = {
 	[SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages]: PAGEVIEWS,
 	[SubscriptionNames.LiferayDataPlatform]: 'dataPlatform',
 	[SubscriptionNames.LiferayDataPlatformEnterprise]: 'dataPlatformEnterprise',
+	[SubscriptionNames.LiferayDataPlatformPrivateBeta]: 'dataPlatform',
 	[SubscriptionNames.LiferaySaasBusinessPlan]: 'lxcBusiness',
 	[SubscriptionNames.LiferaySaasCspCustomUserTier]: 'lxcCspCustomUserTier',
 	[SubscriptionNames.LiferaySaasCspCustomUserTierExtraUser]:
@@ -247,8 +249,11 @@ export function getPlanLabel(name) {
 		case PLANS.enterprise.name:
 			return Liferay.Language.get('enterprise-plan');
 
-		case PLANS.dataPlatform.name:
+		case SubscriptionNames.LiferayDataPlatform:
 			return Liferay.Language.get('liferay-data-platform');
+
+		case SubscriptionNames.LiferayDataPlatformPrivateBeta:
+			return Liferay.Language.get('liferay-data-platform-private-beta');
 
 		case SubscriptionNames.LiferayDataPlatformEnterprise:
 			return Liferay.Language.get('liferay-data-platform-enterprise');
@@ -327,11 +332,14 @@ export function getPropLabel(name) {
 		case PLANS.enterprise.name:
 			return Liferay.Language.get('enterprise');
 
-		case PLANS.dataPlatform.name:
+		case SubscriptionNames.LiferayDataPlatform:
 			return Liferay.Language.get('liferay-data-platform');
 
 		case SubscriptionNames.LiferayDataPlatformEnterprise:
 			return Liferay.Language.get('liferay-data-platform-enterprise');
+
+		case SubscriptionNames.LiferayDataPlatformPrivateBeta:
+			return Liferay.Language.get('liferay-data-platform-private-beta');
 
 		case PLANS.lxcCspCustomUserTier.name:
 			return Liferay.Language.get('lxc-csp-custom-user-tier');

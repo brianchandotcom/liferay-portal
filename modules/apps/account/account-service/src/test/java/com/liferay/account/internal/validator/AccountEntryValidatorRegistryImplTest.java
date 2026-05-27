@@ -168,6 +168,7 @@ public class AccountEntryValidatorRegistryImplTest {
 				accountEntry, additionalProps);
 
 		Assert.assertEquals(2, accountEntryValidatorResults.size());
+
 		Assert.assertSame(
 			accountEntryValidatorResult1, accountEntryValidatorResults.get(0));
 		Assert.assertSame(
@@ -217,7 +218,8 @@ public class AccountEntryValidatorRegistryImplTest {
 	private final AccountEntryValidatorRegistryImpl
 		_accountEntryValidatorRegistryImpl =
 			new AccountEntryValidatorRegistryImpl();
-	private ServiceTrackerMap<String, ServiceWrapper<AccountEntryValidator>>
-		_serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);;
+	private final ServiceTrackerMap
+		<String, ServiceWrapper<AccountEntryValidator>> _serviceTrackerMap =
+			Mockito.mock(ServiceTrackerMap.class);
 
 }

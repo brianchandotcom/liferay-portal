@@ -991,7 +991,7 @@ public class MarketplaceCommandLineRunner
 				)),
 			" and createDate le ",
 			dateTimeFormatter.format(windowStartZonedDateTime.minusDays(7)),
-			" and orderTypeExternalReferenceCode eq 'CMP_BETA'");
+			" and orderTypeExternalReferenceCode in ('ADDONS', 'CMP_BETA')");
 
 		Page<Order> page = _getOrdersPage(filterString, -1, -1);
 

@@ -142,10 +142,10 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isDepot()) {
+		if ((group == null) || !group.isDepot()) {
 			throw new NotFoundException();
 		}
 
@@ -160,6 +160,10 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
+		if (group == null) {
+			throw new NotFoundException();
+		}
+
 		return _postImportProcess(group, importProcessRequest);
 	}
 
@@ -169,10 +173,10 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		if (!group.isSite()) {
+		if ((group == null) || !group.isSite()) {
 			throw new NotFoundException();
 		}
 

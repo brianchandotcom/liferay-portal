@@ -176,7 +176,7 @@ public class AssetStatisticsResourceTest
 
 		_assertAssetStatistics(0, 1, 0, 0, 3);
 
-		// Add object entry with already-passed expiration date
+		// Add object entry with already passed expiration date
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			depotEntry, objectDefinition);

@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Status")
+@GraphQLName(
+	description = "Payment status envelope. Exposes the integer status code together with the English label key and the label rendered in the request locale. Read-only.",
+	value = "Status"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -46,7 +49,10 @@ public class Status implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Status.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer payment status. 0=Completed, 1=Pending, 2=Authorized, 4=Failed, 8=Cancelled, 17=Refunded, 18=Created, 23=Not Required. Read-only.",
+		example = "0"
+	)
 	public Integer getCode() {
 		if (_codeSupplier != null) {
 			code = _codeSupplier.get();
@@ -78,14 +84,19 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Integer payment status. 0=Completed, 1=Pending, 2=Authorized, 4=Failed, 8=Cancelled, 17=Refunded, 18=Created, 23=Not Required. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer code;
 
 	@JsonIgnore
 	private Supplier<Integer> _codeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "English label key for the status. Stable identifier used to look up translations.",
+		example = "completed"
+	)
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -119,14 +130,19 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "English label key for the status. Stable identifier used to look up translations."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized rendering of `label` in the request locale.",
+		example = "Completed"
+	)
 	public String getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
 			label_i18n = _label_i18nSupplier.get();
@@ -160,7 +176,9 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized rendering of `label` in the request locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label_i18n;
 
@@ -339,4 +357,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1899856714
+// LIFERAY-REST-BUILDER-HASH:1101655821

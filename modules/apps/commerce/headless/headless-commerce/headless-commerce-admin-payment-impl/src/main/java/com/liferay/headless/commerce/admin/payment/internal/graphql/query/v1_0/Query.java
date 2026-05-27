@@ -51,7 +51,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payment(id: ___){actions, amount, amountFormatted, author, callbackURL, cancelURL, channelId, comment, createDate, currencyCode, currencyExternalReferenceCode, currencyId, errorMessages, externalReferenceCode, id, languageId, payload, paymentIntegrationKey, paymentIntegrationType, paymentStatus, paymentStatusStatus, reasonKey, reasonName, redirectURL, relatedItemId, relatedItemName, relatedItemNameLabel, transactionCode, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Returns the payment identified by internal ID. Delegates to CommercePaymentEntryService.getCommercePaymentEntry and converts the result through PaymentDTOConverter, populating the formatted amount, the localized paymentStatusStatus envelope, the type label, and the HATEOAS actions map."
+	)
 	public Payment payment(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_paymentResourceComponentServiceObjects,
@@ -64,7 +66,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {paymentByExternalReferenceCode(externalReferenceCode: ___){actions, amount, amountFormatted, author, callbackURL, cancelURL, channelId, comment, createDate, currencyCode, currencyExternalReferenceCode, currencyId, errorMessages, externalReferenceCode, id, languageId, payload, paymentIntegrationKey, paymentIntegrationType, paymentStatus, paymentStatusStatus, reasonKey, reasonName, redirectURL, relatedItemId, relatedItemName, relatedItemNameLabel, transactionCode, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Returns the payment identified by external reference code. Looks up the entry via CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode for the current company and converts it through PaymentDTOConverter, populating the formatted amount, the localized paymentStatusStatus envelope, the type label, and the HATEOAS actions map. Raises NoSuchPaymentEntryException (404) when no record matches the supplied code."
+	)
 	public Payment paymentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -82,7 +86,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payments(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists payments visible to the authenticated user as a permission-filtered page. Searches the CommercePaymentEntry index for the current company and applies the OData filter, full-text search, and sort expression. Filterable fields -- paymentStatus, type, reasonKey, relatedItemId. Sortable fields -- createDate, id, paymentStatus, reasonKey, relatedItemId, type. Search is matched against the indexed fields of the entry."
+	)
 	public PaymentPage payments(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -191,4 +197,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1643862826
+// LIFERAY-REST-BUILDER-HASH:445434927

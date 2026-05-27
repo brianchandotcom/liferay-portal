@@ -3,6 +3,8 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="ListUtilCheck" files="osb-spring-boot/osb-spring-boot-client-pubsub/src/main/java/.*\.java" />
+		<suppress checks="MapBuilderCheck" files="osb-spring-boot/osb-spring-boot-client-pubsub/src/test/java/.*\.java" />
+		<suppress checks="TestClassMissingLiferayUnitTestRuleCheck" files="osb-spring-boot/osb-spring-boot-client-pubsub/src/test/java/.*\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="CSPTagIllegalAttributesCheck" files="osb-site-initializer/osb-site-initializer-liferay-online/src/main/resources/site-initializer/ddm-templates/category-facet-widget-template/ddm-template\.ftl" />

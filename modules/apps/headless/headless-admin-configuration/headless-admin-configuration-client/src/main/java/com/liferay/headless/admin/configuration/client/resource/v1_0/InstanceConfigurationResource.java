@@ -8,6 +8,7 @@ package com.liferay.headless.admin.configuration.client.resource.v1_0;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.InstanceConfiguration;
 import com.liferay.headless.admin.configuration.client.http.HttpInvoker;
 import com.liferay.headless.admin.configuration.client.pagination.Page;
+import com.liferay.headless.admin.configuration.client.pagination.Pagination;
 import com.liferay.headless.admin.configuration.client.problem.Problem;
 import com.liferay.headless.admin.configuration.client.serdes.v1_0.InstanceConfigurationSerDes;
 
@@ -41,10 +42,12 @@ public interface InstanceConfigurationResource {
 			String instanceConfigurationExternalReferenceCode)
 		throws Exception;
 
-	public Page<InstanceConfiguration> getInstanceConfigurationsPage()
+	public Page<InstanceConfiguration> getInstanceConfigurationsPage(
+			Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getInstanceConfigurationsPageHttpResponse()
+	public HttpInvoker.HttpResponse getInstanceConfigurationsPageHttpResponse(
+			Pagination pagination)
 		throws Exception;
 
 	public InstanceConfiguration postInstanceConfiguration(
@@ -307,11 +310,12 @@ public interface InstanceConfigurationResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<InstanceConfiguration> getInstanceConfigurationsPage()
+		public Page<InstanceConfiguration> getInstanceConfigurationsPage(
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getInstanceConfigurationsPageHttpResponse();
+				getInstanceConfigurationsPageHttpResponse(pagination);
 
 			String content = httpResponse.getContent();
 
@@ -373,7 +377,7 @@ public interface InstanceConfigurationResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getInstanceConfigurationsPageHttpResponse()
+				getInstanceConfigurationsPageHttpResponse(Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -396,6 +400,13 @@ public interface InstanceConfigurationResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -957,4 +968,4 @@ public interface InstanceConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:180577652
+// LIFERAY-REST-BUILDER-HASH:1249140031

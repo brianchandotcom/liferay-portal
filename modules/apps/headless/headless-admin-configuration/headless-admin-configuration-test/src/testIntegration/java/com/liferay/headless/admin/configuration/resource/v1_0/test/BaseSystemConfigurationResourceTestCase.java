@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.SystemConfiguration;
 import com.liferay.headless.admin.configuration.client.http.HttpInvoker;
 import com.liferay.headless.admin.configuration.client.pagination.Page;
+import com.liferay.headless.admin.configuration.client.pagination.Pagination;
 import com.liferay.headless.admin.configuration.client.resource.v1_0.SystemConfigurationResource;
 import com.liferay.headless.admin.configuration.client.serdes.v1_0.SystemConfigurationSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -204,7 +206,8 @@ public abstract class BaseSystemConfigurationResourceTestCase {
 	@Test
 	public void testGetSystemConfigurationsPage() throws Exception {
 		Page<SystemConfiguration> page =
-			systemConfigurationResource.getSystemConfigurationsPage();
+			systemConfigurationResource.getSystemConfigurationsPage(
+				Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -216,7 +219,8 @@ public abstract class BaseSystemConfigurationResourceTestCase {
 			testGetSystemConfigurationsPage_addSystemConfiguration(
 				randomSystemConfiguration());
 
-		page = systemConfigurationResource.getSystemConfigurationsPage();
+		page = systemConfigurationResource.getSystemConfigurationsPage(
+			Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -234,6 +238,106 @@ public abstract class BaseSystemConfigurationResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
+	}
+
+	@Test
+	public void testGetSystemConfigurationsPageWithPagination()
+		throws Exception {
+
+		Page<SystemConfiguration> systemConfigurationsPage =
+			systemConfigurationResource.getSystemConfigurationsPage(null);
+
+		int totalCount = GetterUtil.getInteger(
+			systemConfigurationsPage.getTotalCount());
+
+		SystemConfiguration systemConfiguration1 =
+			testGetSystemConfigurationsPage_addSystemConfiguration(
+				randomSystemConfiguration());
+
+		SystemConfiguration systemConfiguration2 =
+			testGetSystemConfigurationsPage_addSystemConfiguration(
+				randomSystemConfiguration());
+
+		SystemConfiguration systemConfiguration3 =
+			testGetSystemConfigurationsPage_addSystemConfiguration(
+				randomSystemConfiguration());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<SystemConfiguration> page1 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				systemConfiguration1,
+				(List<SystemConfiguration>)page1.getItems());
+
+			Page<SystemConfiguration> page2 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				systemConfiguration2,
+				(List<SystemConfiguration>)page2.getItems());
+
+			Page<SystemConfiguration> page3 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				systemConfiguration3,
+				(List<SystemConfiguration>)page3.getItems());
+		}
+		else {
+			Page<SystemConfiguration> page1 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(1, totalCount + 2));
+
+			List<SystemConfiguration> systemConfigurations1 =
+				(List<SystemConfiguration>)page1.getItems();
+
+			Assert.assertEquals(
+				systemConfigurations1.toString(), totalCount + 2,
+				systemConfigurations1.size());
+
+			Page<SystemConfiguration> page2 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SystemConfiguration> systemConfigurations2 =
+				(List<SystemConfiguration>)page2.getItems();
+
+			Assert.assertEquals(
+				systemConfigurations2.toString(), 1,
+				systemConfigurations2.size());
+
+			Page<SystemConfiguration> page3 =
+				systemConfigurationResource.getSystemConfigurationsPage(
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				systemConfiguration1,
+				(List<SystemConfiguration>)page3.getItems());
+			assertContains(
+				systemConfiguration2,
+				(List<SystemConfiguration>)page3.getItems());
+			assertContains(
+				systemConfiguration3,
+				(List<SystemConfiguration>)page3.getItems());
+		}
 	}
 
 	protected SystemConfiguration
@@ -994,4 +1098,4 @@ public abstract class BaseSystemConfigurationResourceTestCase {
 		SystemConfigurationResource _systemConfigurationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1114677225
+// LIFERAY-REST-BUILDER-HASH:1979538580

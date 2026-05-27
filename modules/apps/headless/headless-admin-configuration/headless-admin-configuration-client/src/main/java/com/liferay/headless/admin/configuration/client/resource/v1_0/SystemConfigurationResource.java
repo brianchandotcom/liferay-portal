@@ -8,6 +8,7 @@ package com.liferay.headless.admin.configuration.client.resource.v1_0;
 import com.liferay.headless.admin.configuration.client.dto.v1_0.SystemConfiguration;
 import com.liferay.headless.admin.configuration.client.http.HttpInvoker;
 import com.liferay.headless.admin.configuration.client.pagination.Page;
+import com.liferay.headless.admin.configuration.client.pagination.Pagination;
 import com.liferay.headless.admin.configuration.client.problem.Problem;
 import com.liferay.headless.admin.configuration.client.serdes.v1_0.SystemConfigurationSerDes;
 
@@ -41,10 +42,12 @@ public interface SystemConfigurationResource {
 			String systemConfigurationExternalReferenceCode)
 		throws Exception;
 
-	public Page<SystemConfiguration> getSystemConfigurationsPage()
+	public Page<SystemConfiguration> getSystemConfigurationsPage(
+			Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSystemConfigurationsPageHttpResponse()
+	public HttpInvoker.HttpResponse getSystemConfigurationsPageHttpResponse(
+			Pagination pagination)
 		throws Exception;
 
 	public SystemConfiguration postSystemConfiguration(
@@ -306,11 +309,12 @@ public interface SystemConfigurationResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<SystemConfiguration> getSystemConfigurationsPage()
+		public Page<SystemConfiguration> getSystemConfigurationsPage(
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSystemConfigurationsPageHttpResponse();
+				getSystemConfigurationsPageHttpResponse(pagination);
 
 			String content = httpResponse.getContent();
 
@@ -371,8 +375,8 @@ public interface SystemConfigurationResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getSystemConfigurationsPageHttpResponse()
+		public HttpInvoker.HttpResponse getSystemConfigurationsPageHttpResponse(
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -395,6 +399,13 @@ public interface SystemConfigurationResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -955,4 +966,4 @@ public interface SystemConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1122831048
+// LIFERAY-REST-BUILDER-HASH:817223635

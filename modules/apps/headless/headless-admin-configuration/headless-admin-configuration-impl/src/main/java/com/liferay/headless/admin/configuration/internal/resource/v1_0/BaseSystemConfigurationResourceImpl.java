@@ -110,6 +110,18 @@ public abstract class BaseSystemConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-configuration/v1.0/system-configurations'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
@@ -121,7 +133,8 @@ public abstract class BaseSystemConfigurationResourceImpl
 	@jakarta.ws.rs.Path("/system-configurations")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<SystemConfiguration> getSystemConfigurationsPage()
+	public Page<SystemConfiguration> getSystemConfigurationsPage(
+			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -451,7 +464,7 @@ public abstract class BaseSystemConfigurationResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSystemConfigurationsPage();
+		return getSystemConfigurationsPage(pagination);
 	}
 
 	@Override
@@ -1059,4 +1072,4 @@ public abstract class BaseSystemConfigurationResourceImpl
 		LogFactoryUtil.getLog(BaseSystemConfigurationResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-800449693
+// LIFERAY-REST-BUILDER-HASH:1851373891

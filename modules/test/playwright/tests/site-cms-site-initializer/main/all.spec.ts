@@ -10,6 +10,10 @@ import path from 'path';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {
+	applyFDSDateTimeRangeFilter,
+	formatDateTimeForUI,
+} from '../../../utils/applyFDSDateTimeRangeFilter';
 import {applyFDSSelectionFilter} from '../../../utils/applyFDSSelectionFilter';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitchViaApi, userData} from '../../../utils/performLogin';
@@ -378,7 +382,7 @@ test(
 
 test(
 	'Expiration date filter allows future dates',
-	{tag: '@LPD-69189'},
+	{tag: ['@LPD-69189', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const file1Title = `Content ${getRandomString()}`;
@@ -403,34 +407,18 @@ test(
 			page.getByRole('cell', {exact: true, name: file1Title})
 		).toBeVisible();
 
-		// Choose to filter by Expiration Date
-
-		await page.getByRole('button', {name: 'Filter'}).click();
-
-		await page.getByRole('menuitem', {name: 'Expiration Date'}).click();
-
-		const fromDateInput = page.getByLabel('From');
-		const toDateInput = page.getByLabel('To', {exact: true});
-
-		// Set future From and To dates covering futureDate
+		// Filter by an Expiration Date range covering futureDate
 
 		const fromDate = new Date();
 		const toDate = new Date();
 
 		toDate.setDate(toDate.getDate() + 2);
 
-		// Fill in future dates and see that filter label is applied
-
-		await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
-		await toDateInput.fill(toDate.toISOString().split('T')[0]);
-
-		await page.getByRole('button', {name: 'Add Filter'}).click();
-
-		await expect(
-			page
-				.getByRole('button', {name: /Expiration Date:/})
-				.locator('.label-section')
-		).toBeVisible();
+		await applyFDSDateTimeRangeFilter(page, {
+			filter: 'Expiration Date',
+			from: fromDate,
+			to: toDate,
+		});
 
 		// Verify that the content is still visible (it was filtered out before the fix)
 
@@ -442,7 +430,7 @@ test(
 
 test(
 	'Content can be filtered by Review Date',
-	{tag: '@LPD-85206'},
+	{tag: ['@LPD-85206', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const file1Title = `Content ${getRandomString()}`;
@@ -467,34 +455,18 @@ test(
 			page.getByRole('cell', {exact: true, name: file1Title})
 		).toBeVisible();
 
-		// Choose to filter by Review Date
-
-		await page.getByRole('button', {name: 'Filter'}).click();
-
-		await page.getByRole('menuitem', {name: 'Review Date'}).click();
-
-		const fromDateInput = page.getByLabel('From');
-		const toDateInput = page.getByLabel('To', {exact: true});
-
-		// Set past From and To dates covering pastDate
+		// Filter by a Review Date range covering pastDate
 
 		const fromDate = new Date();
 		const toDate = new Date();
 
 		fromDate.setDate(fromDate.getDate() - 2);
 
-		// Fill in dates and see that filter label is applied
-
-		await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
-		await toDateInput.fill(toDate.toISOString().split('T')[0]);
-
-		await page.getByRole('button', {name: 'Add Filter'}).click();
-
-		await expect(
-			page
-				.getByRole('button', {name: /Review Date:/})
-				.locator('.label-section')
-		).toBeVisible();
+		await applyFDSDateTimeRangeFilter(page, {
+			filter: 'Review Date',
+			from: fromDate,
+			to: toDate,
+		});
 
 		// Verify that the content is visible
 
@@ -506,7 +478,7 @@ test(
 
 test(
 	'Expiration date filter does not allow "to" date to be before "from" date',
-	{tag: '@LPD-78935'},
+	{tag: ['@LPD-78935', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const fileTitle = `Content ${getRandomString()}`;
@@ -544,17 +516,17 @@ test(
 			fromDate.setDate(fromDate.getDate() + 1);
 
 			await test.step('Set "from" date to a future date', async () => {
-				await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
+				await fromDateInput.fill(formatDateTimeForUI(fromDate));
 			});
 
 			await test.step('Check that the "Add filter" button is disabled if "to" date is before "from date"', async () => {
-				await toDateInput.fill(toDate.toISOString().split('T')[0]);
+				await toDateInput.fill(formatDateTimeForUI(toDate));
 				await expect(addFilterButton).toBeDisabled();
 			});
 
 			await test.step('Check that the "Add filter" button is enabled if "to" date is after "from date"', async () => {
 				toDate.setDate(toDate.getDate() + 5);
-				await toDateInput.fill(toDate.toISOString().split('T')[0]);
+				await toDateInput.fill(formatDateTimeForUI(toDate));
 				await expect(addFilterButton).toBeEnabled();
 			});
 		}
@@ -743,7 +715,7 @@ test(
 
 test(
 	'Content can be filtered by Create Date',
-	{tag: ['@LPD-85551', '@LPD-87955']},
+	{tag: ['@LPD-85551', '@LPD-87955', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const fileTitle = `Content ${getRandomString()}`;
@@ -768,23 +740,14 @@ test(
 			});
 
 			await test.step('Apply Create Date filter', async () => {
-				await page.getByRole('button', {name: 'Filter'}).click();
-
-				await page.getByRole('menuitem', {name: 'Create Date'}).click();
-
 				const fromDate = new Date();
-				const toDate = new Date();
 
 				fromDate.setDate(fromDate.getDate() - 1);
 
-				await page
-					.getByLabel('From')
-					.fill(fromDate.toISOString().split('T')[0]);
-				await page
-					.getByLabel('To', {exact: true})
-					.fill(toDate.toISOString().split('T')[0]);
-
-				await page.getByRole('button', {name: 'Add Filter'}).click();
+				await applyFDSDateTimeRangeFilter(page, {
+					filter: 'Create Date',
+					from: fromDate,
+				});
 			});
 
 			await test.step('Check filter chip and entry are visible', async () => {
@@ -812,7 +775,7 @@ test(
 
 test(
 	'Content can be filtered by Display Date',
-	{tag: ['@LPD-85551', '@LPD-87955']},
+	{tag: ['@LPD-85551', '@LPD-87955', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const matchingTitle = `Matching ${getRandomString()}`;
@@ -862,26 +825,17 @@ test(
 			});
 
 			await test.step('Apply Display Date filter', async () => {
-				await page.getByRole('button', {name: 'Filter'}).click();
-
-				await page
-					.getByRole('menuitem', {name: 'Display Date'})
-					.click();
-
 				const fromDate = new Date();
 				const toDate = new Date();
 
 				fromDate.setDate(fromDate.getDate() + 4);
 				toDate.setDate(toDate.getDate() + 6);
 
-				await page
-					.getByLabel('From')
-					.fill(fromDate.toISOString().split('T')[0]);
-				await page
-					.getByLabel('To', {exact: true})
-					.fill(toDate.toISOString().split('T')[0]);
-
-				await page.getByRole('button', {name: 'Add Filter'}).click();
+				await applyFDSDateTimeRangeFilter(page, {
+					filter: 'Display Date',
+					from: fromDate,
+					to: toDate,
+				});
 			});
 
 			await test.step('Check only the matching content remains visible', async () => {
@@ -924,7 +878,7 @@ test(
 
 test(
 	'Content can be filtered by Modified Date',
-	{tag: ['@LPD-85551', '@LPD-87955']},
+	{tag: ['@LPD-85551', '@LPD-87955', '@LPD-90051']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const fileTitle = `Content ${getRandomString()}`;
@@ -949,25 +903,14 @@ test(
 			});
 
 			await test.step('Apply Modified Date filter', async () => {
-				await page.getByRole('button', {name: 'Filter'}).click();
-
-				await page
-					.getByRole('menuitem', {name: 'Modified Date'})
-					.click();
-
 				const fromDate = new Date();
-				const toDate = new Date();
 
 				fromDate.setDate(fromDate.getDate() - 1);
 
-				await page
-					.getByLabel('From')
-					.fill(fromDate.toISOString().split('T')[0]);
-				await page
-					.getByLabel('To', {exact: true})
-					.fill(toDate.toISOString().split('T')[0]);
-
-				await page.getByRole('button', {name: 'Add Filter'}).click();
+				await applyFDSDateTimeRangeFilter(page, {
+					filter: 'Modified Date',
+					from: fromDate,
+				});
 			});
 
 			await test.step('Check filter chip and entry are visible', async () => {

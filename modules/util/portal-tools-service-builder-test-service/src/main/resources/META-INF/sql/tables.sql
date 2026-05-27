@@ -334,6 +334,12 @@ create table UndefinedDefaultOrderEntry (
 	name VARCHAR(75) null
 );
 
+create table UniqueFinderEntry (
+	uniqueFinderEntryId LONG not null primary key,
+	modifiedDate DATE null,
+	name VARCHAR(75) null
+);
+
 create table VersionedEntry (
 	mvccVersion LONG default 0 not null,
 	headId LONG,

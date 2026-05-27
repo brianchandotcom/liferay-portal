@@ -46,7 +46,9 @@ const LatestActivity = ({
 				eventEntries.map((eventEntry: any) => ({
 					action: eventEntry.name,
 					createDate: eventEntry.createDate,
-					name: eventEntry.individualName,
+					name:
+						eventEntry.individualName ??
+						Liferay.Language.get('anonymous'),
 				}))
 			);
 		}

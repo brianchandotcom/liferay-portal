@@ -9,6 +9,7 @@ import React from 'react';
 
 import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
+import {latestActivityDevEnvData} from '../fixtures/analyticsDevEnvData';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
@@ -79,6 +80,12 @@ describe('LatestActivity', () => {
 	afterEach(() => {
 		cleanup();
 		jest.clearAllMocks();
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: latestActivityDevEnvData,
+			sendRequest: jest.fn(),
+		}));
 	});
 
 	it('renders the component with provided data', () => {
@@ -106,27 +113,33 @@ describe('LatestActivity', () => {
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
 	});
 
-	it('does not render the literal "Undefined" when the event has no individualName', () => {
-		(useAnalyticsQuery as jest.Mock).mockReturnValueOnce({
-			isLoading: false,
-			response: {
-				events: {
-					eventEntries: [
-						{
-							createDate: '2026-03-26T14:30:00Z',
-							individualName: undefined,
-							name: 'pageViewed',
-						},
-					],
-				},
+	it('renders "anonymous" when the event has no individualName', () => {
+		const anonymousResponse = {
+			events: {
+				eventEntries: [
+					{
+						createDate: '2026-03-26T14:30:00Z',
+						individualName: undefined,
+						name: 'pageViewed',
+					},
+				],
 			},
+		};
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: anonymousResponse,
 			sendRequest: jest.fn(),
-		});
+		}));
 
-		render(<LatestActivity namespace="test-namespace" />);
+		render(
+			<LatestActivity
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
 
-		expect(screen.queryByText(/^Undefined$/)).not.toBeInTheDocument();
-		expect(screen.queryByText(/^undefined$/)).not.toBeInTheDocument();
+		expect(screen.getByText('anonymous')).toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

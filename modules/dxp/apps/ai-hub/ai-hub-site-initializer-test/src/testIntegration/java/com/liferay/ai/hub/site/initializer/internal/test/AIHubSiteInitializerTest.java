@@ -92,7 +92,6 @@ public class AIHubSiteInitializerTest {
 			"L_AI_HUB_AGENT_ADMINISTRATOR", "AI Hub Agent Administrator");
 		_assertAccountRoleExists(
 			"L_AI_HUB_AGENT_VIEWER", "AI Hub Agent Viewer");
-
 		_assertAccountRoleObjectEntryResourcePermission(
 			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_ADMINISTRATOR", "DELETE",
 			"PERMISSIONS", "UPDATE", "VIEW");
@@ -116,7 +115,6 @@ public class AIHubSiteInitializerTest {
 			"DELETE", "PERMISSIONS", "UPDATE", "VIEW");
 		_assertAccountRoleObjectEntryResourcePermission(
 			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_VIEWER", "VIEW");
-
 		_assertAccountRolePortletResourcePermission(
 			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_ADMINISTRATOR",
 			"ADD_OBJECT_ENTRY");
@@ -137,7 +135,6 @@ public class AIHubSiteInitializerTest {
 		_assertAccountRolePortletResourcePermission(
 			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_ADMINISTRATOR",
 			"ADD_OBJECT_ENTRY");
-
 		_assertLayoutExists("/account-management");
 		_assertLayoutUtilityPageEntryExists(
 			"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE",

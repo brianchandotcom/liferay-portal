@@ -43,6 +43,7 @@ describe('Individuals List', () => {
 					{
 						accountName: 'Liferay Inc.',
 						activitiesCount: 8,
+						activityStatus: 'ACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1',
@@ -57,6 +58,7 @@ describe('Individuals List', () => {
 					{
 						accountName: 'Liferay',
 						activitiesCount: 8,
+						activityStatus: 'ACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3',
@@ -70,6 +72,7 @@ describe('Individuals List', () => {
 					},
 					{
 						activitiesCount: 3,
+						activityStatus: 'INACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2',
@@ -172,6 +175,74 @@ describe('Individuals List', () => {
 				activityStatus: 'ACTIVE'
 			})
 		);
+	});
+
+	it('renders the activity status column header', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		const {getByText} = render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(getByText('Activity Status')).toBeInTheDocument();
+	});
+
+	it('renders active and inactive activity status labels', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({
+				items: [
+					{
+						activitiesCount: 1,
+						activityStatus: 'ACTIVE',
+						dateCreated: 1769697362927,
+						firstActivityDate: 1769697128235,
+						id: 'id-active',
+						lastActivityDate: 1769697160365,
+						name: 'Active User',
+						profileType: 'KNOWN',
+						properties: {}
+					},
+					{
+						activitiesCount: 0,
+						activityStatus: 'INACTIVE',
+						dateCreated: 1769697362927,
+						firstActivityDate: 1769697128235,
+						id: 'id-inactive',
+						lastActivityDate: 1769697160365,
+						name: 'Inactive User',
+						profileType: 'KNOWN',
+						properties: {}
+					}
+				],
+				total: 2
+			})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(
+			document.querySelector('.label-success .label-item')
+		).toHaveTextContent('Active');
+
+		expect(
+			document.querySelector('.label-secondary .label-item')
+		).toHaveTextContent('Inactive');
 	});
 
 	it('passes undefined activityStatus when both active and inactive are selected', async () => {

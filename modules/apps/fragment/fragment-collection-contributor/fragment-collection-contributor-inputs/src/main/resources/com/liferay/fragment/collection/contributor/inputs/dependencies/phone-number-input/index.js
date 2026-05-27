@@ -1,7 +1,7 @@
 // Constants
 
-const FIXED_PREFIX = input.attributes.prefix || '';
-const IS_FIXED = input.attributes.prefixType === 'fixed';
+const FIXED_COUNTRY_A2 = input.attributes.country || '';
+const IS_FIXED = input.attributes.countrySource === 'fixed';
 const SHOW_FLAG = configuration.showCountryFlag;
 
 const SPRITEMAP =
@@ -12,20 +12,29 @@ const SPRITEMAP =
 // DOM elements
 
 const inputElement = document.getElementById(`${fragmentElementId}-input`);
-const prefixCode = document.getElementById(`${fragmentElementId}-prefix-code`);
-const prefixFlag = document.getElementById(`${fragmentElementId}-prefix-flag`);
-const prefixMenu = document.getElementById(`${fragmentElementId}-prefix-menu`);
 
-const prefixPicker = document.getElementById(
-	`${fragmentElementId}-prefix-picker`
+const countryCode = document.getElementById(
+	`${fragmentElementId}-country-code`
 );
 
-const prefixTrigger = document.getElementById(
-	`${fragmentElementId}-prefix-trigger`
+const countryCodeFlag = document.getElementById(
+	`${fragmentElementId}-country-code-flag`
 );
 
-const prefixValueInput = document.getElementById(
-	`${fragmentElementId}-prefix-value`
+const countryCodeMenu = document.getElementById(
+	`${fragmentElementId}-country-code-menu`
+);
+
+const countryCodePicker = document.getElementById(
+	`${fragmentElementId}-country-code-picker`
+);
+
+const countryCodeTrigger = document.getElementById(
+	`${fragmentElementId}-country-code-trigger`
+);
+
+const countryCodeValueInput = document.getElementById(
+	`${fragmentElementId}-country-code-value`
 );
 
 const hiddenInputContainer = document.getElementById(
@@ -46,19 +55,25 @@ async function main() {
 	const COUNTRIES = (input.attributes.countries || []).map((country) => ({
 		a2: country.a2,
 		flagSymbol: getFlagSymbol(country.a2),
-		idd: country.prefix,
+		idd: country.idd,
 		name: country.name,
 	}));
+
+	const fixedCountry = COUNTRIES.find(
+		(country) => country.a2 === FIXED_COUNTRY_A2
+	);
+
+	const fixedPrefix = fixedCountry ? `+${fixedCountry.idd}` : '';
 
 	// Utils
 
 	function getSelectedCountry() {
-		if (!prefixValueInput?.value) {
+		if (!countryCodeValueInput?.value) {
 			return null;
 		}
 
 		return COUNTRIES.find(
-			(country) => country.a2 === prefixValueInput.value
+			(country) => country.a2 === countryCodeValueInput.value
 		);
 	}
 
@@ -70,7 +85,7 @@ async function main() {
 		}
 
 		if (IS_FIXED) {
-			return `${FIXED_PREFIX}${digits}`;
+			return `${fixedPrefix}${digits}`;
 		}
 
 		const country = getSelectedCountry();
@@ -93,15 +108,15 @@ async function main() {
 			return;
 		}
 
-		prefixValueInput.value = country.a2;
-		prefixCode.textContent = `+${country.idd}`;
+		countryCodeValueInput.value = country.a2;
+		countryCode.textContent = `+${country.idd}`;
 
-		if (SHOW_FLAG && prefixFlag) {
-			prefixFlag.innerHTML = renderClayIcon(country.flagSymbol);
+		if (SHOW_FLAG && countryCodeFlag) {
+			countryCodeFlag.innerHTML = renderClayIcon(country.flagSymbol);
 		}
 
-		for (const item of prefixMenu.querySelectorAll(
-			'.phone-number-input-prefix-menu-item'
+		for (const item of countryCodeMenu.querySelectorAll(
+			'.phone-number-input-country-code-menu-item'
 		)) {
 			const selected = item.dataset.a2 === country.a2;
 
@@ -120,20 +135,20 @@ async function main() {
 		}
 	}
 
-	function togglePrefixMenu(open) {
+	function toggleCountryCodeMenu(open) {
 		const next =
 			typeof open === 'boolean'
 				? open
-				: !prefixMenu.classList.contains('show');
+				: !countryCodeMenu.classList.contains('show');
 
-		prefixMenu.classList.toggle('show', next);
-		prefixTrigger.setAttribute('aria-expanded', next);
+		countryCodeMenu.classList.toggle('show', next);
+		countryCodeTrigger.setAttribute('aria-expanded', next);
 	}
 
 	function syncFromValue(value) {
 		if (IS_FIXED) {
-			if (value && value.startsWith(FIXED_PREFIX)) {
-				inputElement.value = value.slice(FIXED_PREFIX.length);
+			if (value && value.startsWith(fixedPrefix)) {
+				inputElement.value = value.slice(fixedPrefix.length);
 			}
 
 			return;
@@ -154,32 +169,32 @@ async function main() {
 	// Event handlers
 
 	function handleTriggerClick() {
-		togglePrefixMenu();
+		toggleCountryCodeMenu();
 	}
 
 	function handleTriggerKeydown(event) {
 		if (event.key === 'ArrowDown' || event.key === 'Enter') {
 			event.preventDefault();
-			togglePrefixMenu(true);
+			toggleCountryCodeMenu(true);
 
 			const activeItem =
-				prefixMenu.querySelector(
-					'.phone-number-input-prefix-menu-item.active'
+				countryCodeMenu.querySelector(
+					'.phone-number-input-country-code-menu-item.active'
 				) ||
-				prefixMenu.querySelector(
-					'.phone-number-input-prefix-menu-item'
+				countryCodeMenu.querySelector(
+					'.phone-number-input-country-code-menu-item'
 				);
 
 			activeItem?.focus();
 		}
 		else if (event.key === 'Escape') {
-			togglePrefixMenu(false);
+			toggleCountryCodeMenu(false);
 		}
 	}
 
 	function handleMenuClick(event) {
 		const item = event.target.closest(
-			'.phone-number-input-prefix-menu-item'
+			'.phone-number-input-country-code-menu-item'
 		);
 
 		if (!item) {
@@ -187,14 +202,14 @@ async function main() {
 		}
 
 		selectCountry(item.dataset.a2);
-		togglePrefixMenu(false);
+		toggleCountryCodeMenu(false);
 
-		prefixTrigger.dispatchEvent(new Event('change', {bubbles: true}));
+		countryCodeTrigger.dispatchEvent(new Event('change', {bubbles: true}));
 	}
 
 	function handleDocumentClick(event) {
-		if (!prefixPicker.contains(event.target)) {
-			togglePrefixMenu(false);
+		if (!countryCodePicker.contains(event.target)) {
+			toggleCountryCodeMenu(false);
 		}
 	}
 
@@ -208,13 +223,13 @@ async function main() {
 		focusInput(inputElement);
 	}
 
-	// Add prefix picker listeners
+	// Add country code picker listeners
 
-	if (!IS_FIXED && prefixTrigger && prefixMenu) {
-		prefixTrigger.addEventListener('click', handleTriggerClick);
-		prefixTrigger.addEventListener('keydown', handleTriggerKeydown);
+	if (!IS_FIXED && countryCodeTrigger && countryCodeMenu) {
+		countryCodeTrigger.addEventListener('click', handleTriggerClick);
+		countryCodeTrigger.addEventListener('keydown', handleTriggerKeydown);
 
-		prefixMenu.addEventListener('click', handleMenuClick);
+		countryCodeMenu.addEventListener('click', handleMenuClick);
 
 		document.addEventListener('click', handleDocumentClick);
 	}
@@ -237,7 +252,7 @@ async function main() {
 		const handleChange = () => onChange(getCombinedValue());
 
 		inputElement.addEventListener('input', handleChange);
-		prefixTrigger?.addEventListener('change', handleChange);
+		countryCodeTrigger?.addEventListener('change', handleChange);
 
 		Liferay.on('localizationSelect:localeChanged', () => {
 			requestAnimationFrame(() => {
@@ -273,7 +288,7 @@ async function main() {
 if (layoutMode === 'edit') {
 	inputElement.setAttribute('disabled', true);
 
-	prefixTrigger?.setAttribute('disabled', true);
+	countryCodeTrigger?.setAttribute('disabled', true);
 }
 
 // Otherwise, execute main logic

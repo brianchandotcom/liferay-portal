@@ -265,7 +265,7 @@ public class ObjectFieldInfoFieldConverterTest {
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
 					).build())
@@ -287,10 +287,10 @@ public class ObjectFieldInfoFieldConverterTest {
 		Assert.assertSame(
 			PhoneNumberInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertNull(
-			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
+			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY));
 		Assert.assertEquals(
 			ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER,
-			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
+			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY_SOURCE));
 
 		objectField = ObjectFieldUtil.addCustomObjectField(
 			new PhoneNumberObjectFieldBuilder(
@@ -304,13 +304,13 @@ public class ObjectFieldInfoFieldConverterTest {
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX
+						ObjectFieldSettingConstants.NAME_COUNTRY
 					).value(
-						"+1"
+						"US"
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
-						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+						ObjectFieldSettingConstants.NAME_COUNTRY_SOURCE
 					).value(
 						ObjectFieldSettingConstants.VALUE_FIXED
 					).build())
@@ -326,10 +326,10 @@ public class ObjectFieldInfoFieldConverterTest {
 		Assert.assertSame(
 			PhoneNumberInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals(
-			"+1", infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
+			"US", infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY));
 		Assert.assertEquals(
 			ObjectFieldSettingConstants.VALUE_FIXED,
-			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
+			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY_SOURCE));
 	}
 
 	private String _getRelationshipURL(

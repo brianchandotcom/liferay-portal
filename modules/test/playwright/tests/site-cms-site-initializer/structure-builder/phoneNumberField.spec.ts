@@ -93,7 +93,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {name: 'Fixed'}),
-			trigger: page.getByLabel('Prefix Type'),
+			trigger: page.getByLabel('Country Source'),
 		});
 
 		await clickAndExpectToBeVisible({

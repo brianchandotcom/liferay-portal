@@ -167,11 +167,6 @@ const ConnectableSelector = ({
 					(kind === ConnectableKind.SITE_TEMPLATES)
 		);
 
-	// The /sites and /site-templates endpoints exclude already-connected items
-	// via repeated query params. Rebuilding the URL when a connection changes
-	// also remounts the ItemSelector (keyed by apiURL), which clears the input
-	// and refetches the autocomplete results.
-
 	const sitesAPIURL = useMemo(() => {
 		const url = new URL(SITES_API_URL);
 

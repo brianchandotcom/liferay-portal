@@ -267,3 +267,95 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Excludes already-connected sites and site templates from the autocomplete and clears the input',
+	{tag: '@LPD-91266'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		const connectedTemplateName = `Site Template ${getRandomString()}`;
+		const otherTemplateName = `Site Template ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {logoColor: 'outline-3'},
+			type: 'Space',
+		});
+
+		for (const name of [connectedTemplateName, otherTemplateName]) {
+			const layoutSetPrototype =
+				await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+					{name}
+				);
+
+			apiHelpers.data.push({
+				id: layoutSetPrototype.layoutSetPrototypeId,
+				type: 'layoutSetPrototype',
+			});
+		}
+
+		await apiHelpers.headlessAssetLibrary.connectSite(
+			space.externalReferenceCode,
+			'L_GLOBAL'
+		);
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.openConnectedSitesModal();
+
+		await page
+			.getByLabel('Sites', {exact: true})
+			.selectOption('site-templates');
+
+		const siteTemplateAutocomplete = page.getByPlaceholder(
+			'Select a Site Template',
+			{exact: true}
+		);
+
+		await siteTemplateAutocomplete.click();
+		await page
+			.getByRole('option', {exact: true, name: connectedTemplateName})
+			.click();
+		await page.getByRole('button', {exact: true, name: 'Connect'}).click();
+
+		await waitForAlert(
+			page,
+			`Success:Site template ${connectedTemplateName} was successfully connected to the space.`,
+			{autoClose: false}
+		);
+
+		await page
+			.getByLabel('Connected Sites')
+			.getByText(templateLabel(connectedTemplateName), {exact: true})
+			.waitFor();
+
+		// The input clears after connecting.
+
+		await expect(siteTemplateAutocomplete).toHaveValue('');
+
+		// The connected template is no longer offered, but the other one still
+		// is.
+
+		await siteTemplateAutocomplete.click();
+
+		await expect(
+			page.getByRole('option', {exact: true, name: otherTemplateName})
+		).toBeVisible();
+		await expect(
+			page.getByRole('option', {exact: true, name: connectedTemplateName})
+		).toHaveCount(0);
+
+		// The connected site is excluded from the sites autocomplete, which
+		// uses a separate query param.
+
+		await page.getByLabel('Sites', {exact: true}).selectOption('sites');
+
+		await page.getByPlaceholder('Select a Site', {exact: true}).click();
+
+		await page.getByRole('option').first().waitFor();
+
+		await expect(
+			page.getByRole('option', {exact: true, name: 'Global'})
+		).toHaveCount(0);
+	}
+);

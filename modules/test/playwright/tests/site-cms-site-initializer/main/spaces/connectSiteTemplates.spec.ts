@@ -329,12 +329,7 @@ test(
 			.getByText(templateLabel(connectedTemplateName), {exact: true})
 			.waitFor();
 
-		// The input clears after connecting.
-
 		await expect(siteTemplateAutocomplete).toHaveValue('');
-
-		// The connected template is no longer offered, but the other one still
-		// is.
 
 		await siteTemplateAutocomplete.click();
 
@@ -344,9 +339,6 @@ test(
 		await expect(
 			page.getByRole('option', {exact: true, name: connectedTemplateName})
 		).toHaveCount(0);
-
-		// The connected site is excluded from the sites autocomplete, which
-		// uses a separate query param.
 
 		await page.getByLabel('Sites', {exact: true}).selectOption('sites');
 

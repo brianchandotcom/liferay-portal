@@ -1,35 +1,22 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.distributed.messaging;
+package com.liferay.osb.spring.boot.client.pubsub;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.io.InputStream;
-
-import java.nio.ByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Amos Fong
+ * @author Kyle Bischof
  */
-public class Message extends com.liferay.portal.kernel.messaging.Message {
+public class Message {
 
-	public static Message fromInputStream(InputStream inputStream)
-		throws Exception {
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
-
-		return deserializer.readObject();
+	public Message() {
 	}
 
 	public Message(Map<String, Object> attributes, Object payload) {
@@ -49,17 +36,31 @@ public class Message extends com.liferay.portal.kernel.messaging.Message {
 		setPayload(payload);
 	}
 
+	public Object get(String key) {
+		if (_attributes == null) {
+			return null;
+		}
+
+		return _attributes.get(key);
+	}
+
 	public Map<String, Object> getAttributes() {
-		return getValues();
+		return _attributes;
+	}
+
+	public String getDestinationName() {
+		return _topic;
+	}
+
+	public Object getPayload() {
+		return _payload;
 	}
 
 	public Map<String, String> getStringAttributes() {
 		Map<String, String> stringAttributes = new HashMap<>();
 
-		Map<String, Object> attributes = getValues();
-
-		if (attributes != null) {
-			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+		if (_attributes != null) {
+			for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
 				stringAttributes.put(
 					entry.getKey(), String.valueOf(entry.getValue()));
 			}
@@ -69,19 +70,35 @@ public class Message extends com.liferay.portal.kernel.messaging.Message {
 	}
 
 	public String getTopic() {
-		return getDestinationName();
+		return _topic;
+	}
+
+	public void put(String key, Object value) {
+		if (_attributes == null) {
+			_attributes = new HashMap<>();
+		}
+
+		_attributes.put(key, value);
 	}
 
 	public void setAttributes(Map<String, Object> attributes) {
-		setValues(attributes);
+		_attributes = attributes;
+	}
+
+	public void setDestinationName(String destinationName) {
+		_topic = destinationName;
+	}
+
+	public void setPayload(Object payload) {
+		_payload = payload;
 	}
 
 	public void setStringAttributes(Map<String, String> attributes) {
-		setValues(new HashMap<String, Object>(attributes));
+		_attributes = new HashMap<>(attributes);
 	}
 
 	public void setTopic(String topic) {
-		setDestinationName(topic);
+		_topic = topic;
 	}
 
 	@Override
@@ -89,14 +106,18 @@ public class Message extends com.liferay.portal.kernel.messaging.Message {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("{topic=");
-		sb.append(getTopic());
+		sb.append(_topic);
 		sb.append(", attributes=");
-		sb.append(MapUtil.toString(getAttributes()));
+		sb.append(_attributes);
 		sb.append(", payload=");
-		sb.append(getPayload());
+		sb.append(_payload);
 		sb.append("}");
 
 		return sb.toString();
 	}
+
+	private Map<String, Object> _attributes;
+	private Object _payload;
+	private String _topic;
 
 }

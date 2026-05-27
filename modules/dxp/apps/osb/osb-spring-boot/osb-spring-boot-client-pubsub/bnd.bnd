@@ -1,0 +1,11 @@
+Bundle-Name: Liferay OSB Spring Boot Client Pubsub
+Bundle-SymbolicName: com.liferay.osb.spring.boot.client.pubsub
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.spring.boot.client.pubsub,\
+	com.liferay.osb.spring.boot.client.pubsub.broker,\
+	com.liferay.osb.spring.boot.client.pubsub.configuration,\
+	com.liferay.osb.spring.boot.client.pubsub.credentials,\
+	com.liferay.osb.spring.boot.client.pubsub.publisher,\
+	com.liferay.osb.spring.boot.client.pubsub.router,\
+	com.liferay.osb.spring.boot.client.pubsub.subscriber

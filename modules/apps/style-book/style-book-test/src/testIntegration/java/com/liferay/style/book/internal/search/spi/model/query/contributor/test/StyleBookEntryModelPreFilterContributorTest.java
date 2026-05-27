@@ -41,10 +41,10 @@ public class StyleBookEntryModelPreFilterContributorTest {
 
 	@Test
 	public void testContribute() throws Exception {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
-
-		BooleanFilter booleanFilter = new BooleanFilter();
 
 		_styleBookEntryModelPreFilterContributor.contribute(
 			booleanFilter, null, searchContext);
@@ -54,9 +54,9 @@ public class StyleBookEntryModelPreFilterContributorTest {
 		Assert.assertTrue(
 			booleanFilterString, booleanFilterString.contains("head"));
 
-		searchContext.setAttribute("head", Boolean.FALSE);
-
 		booleanFilter = new BooleanFilter();
+
+		searchContext.setAttribute("head", Boolean.FALSE);
 
 		_styleBookEntryModelPreFilterContributor.contribute(
 			booleanFilter, null, searchContext);

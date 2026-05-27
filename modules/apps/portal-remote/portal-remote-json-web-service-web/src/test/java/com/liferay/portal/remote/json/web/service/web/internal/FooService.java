@@ -6,6 +6,8 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -172,6 +174,10 @@ public class FooService {
 		return "m-1";
 	}
 
+	public static String noSuchModel() throws NoSuchModelException {
+		throw new NoSuchModelException();
+	}
+
 	public static String nullLover(String name, int number) {
 		if (name == null) {
 			return "null!";
@@ -184,9 +190,17 @@ public class FooService {
 		return null;
 	}
 
+	public static String principalDenied() throws PrincipalException {
+		throw new PrincipalException();
+	}
+
 	public static String search(String name, String... params) {
 		return StringBundler.concat(
 			"search ", name, ">", StringUtil.merge(params));
+	}
+
+	public static String securityDenied() {
+		throw new SecurityException();
 	}
 
 	public static String srvcctx(ServiceContext serviceContext) {

@@ -7,6 +7,7 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
@@ -19,6 +20,7 @@ import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
 
@@ -148,6 +150,21 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	@Test
+	public void testNoSuchModelExceptionReturnsNotFound() throws Exception {
+		_assertNotFoundResponse("/foo/no-such-model");
+	}
+
+	@Test
+	public void testPrincipalExceptionReturnsNotFound() throws Exception {
+		_assertNotFoundResponse("/foo/principal-denied");
+	}
+
+	@Test
+	public void testSecurityExceptionReturnsNotFound() throws Exception {
+		_assertNotFoundResponse("/foo/security-denied");
+	}
+
+	@Test
 	public void testServletContextInvoker1() throws Exception {
 		testServletContextInvoker("somectx", true, "/foo/hello-world");
 	}
@@ -267,6 +284,30 @@ public class JSONWebServiceServiceActionTest
 			"\"Welcome 173 to Jupiter\"",
 			_jsonWebServiceServiceAction.getJSON(
 				mockHttpServletRequest, new MockHttpServletResponse()));
+	}
+
+	private void _assertNotFoundResponse(String path) throws Exception {
+		registerActionClass(FooService.class);
+
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				path, new LinkedHashMap<>()
+			).build());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			createInvokerHttpServletRequest(json);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String result = _jsonWebServiceServiceAction.getJSON(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+
+		Assert.assertEquals(JSONFactoryUtil.getNullJSON(), result);
 	}
 
 	private FileItem _createFileItem(String content) throws Exception {

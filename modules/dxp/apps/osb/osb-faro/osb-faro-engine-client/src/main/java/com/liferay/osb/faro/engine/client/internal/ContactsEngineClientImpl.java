@@ -1177,11 +1177,16 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummary> getAssetSummaries(
-		FaroProject faroProject, long channelId, String filterString,
-		String keywords, int rangeKey, int cur, int delta, String sortString) {
+		FaroProject faroProject, String accountId, long channelId,
+		String filterString, String keywords, String objectType, int rangeKey,
+		String selectedMetric, int cur, int delta, String sortString) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
+
+		if (Validator.isNotNull(accountId)) {
+			uriVariables.put("accountId", accountId);
+		}
 
 		uriVariables.put("channelId", channelId);
 
@@ -1190,7 +1195,17 @@ public class ContactsEngineClientImpl
 		}
 
 		uriVariables.put("keywords", keywords);
+
+		if (Validator.isNotNull(objectType)) {
+			uriVariables.put("objectType", objectType);
+		}
+
 		uriVariables.put("rangeKey", rangeKey);
+
+		if (Validator.isNotNull(selectedMetric)) {
+			uriVariables.put("selectedMetric", selectedMetric);
+		}
+
 		uriVariables.put(
 			"sort",
 			Arrays.asList(

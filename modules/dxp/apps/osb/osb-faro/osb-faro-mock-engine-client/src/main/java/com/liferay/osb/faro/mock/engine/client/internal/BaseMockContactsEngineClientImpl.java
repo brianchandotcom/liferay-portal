@@ -506,12 +506,13 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	public Results<AssetSummary> getAssetSummaries(
-		FaroProject faroProject, long channelId, String filterString,
-		String keywords, int rangeKey, int cur, int delta, String sortString) {
+		FaroProject faroProject, String accountId, long channelId,
+		String filterString, String keywords, String objectType, int rangeKey,
+		String selectedMetric, int cur, int delta, String sortString) {
 
 		return contactsEngineClient.getAssetSummaries(
-			faroProject, channelId, filterString, keywords, rangeKey, cur,
-			delta, sortString);
+			faroProject, accountId, channelId, filterString, keywords,
+			objectType, rangeKey, selectedMetric, cur, delta, sortString);
 	}
 
 	@Override

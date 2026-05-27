@@ -10,6 +10,7 @@ import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
 import com.liferay.headless.object.util.v1_0.CollaboratorUtil;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -20,11 +21,14 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.sharing.configuration.SharingEntryCollaborationEmailConfiguration;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 
+import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -237,10 +241,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
-			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
-			contextHttpServletRequest, _sharingEntryService,
-			_ticketLocalService, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+			_dtoConverterRegistry, _getExpirationDate(),
+			objectEntryFolder.getGroupId(), contextHttpServletRequest,
+			_sharingEntryService, _ticketLocalService, contextUriInfo,
+			contextUser, _userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -277,10 +281,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
-			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
-			contextHttpServletRequest, _sharingEntryService,
-			_ticketLocalService, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+			_dtoConverterRegistry, _getExpirationDate(),
+			objectEntryFolder.getGroupId(), contextHttpServletRequest,
+			_sharingEntryService, _ticketLocalService, contextUriInfo,
+			contextUser, _userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -307,9 +311,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborator,
 			collaboratorId, contextCompany.getCompanyId(),
 			_collaboratorDTOConverter, _dtoConverterRegistry,
-			objectEntryFolder.getGroupId(), contextHttpServletRequest,
-			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			_getExpirationDate(), objectEntryFolder.getGroupId(),
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, type, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -342,9 +347,24 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborator,
 			collaboratorId, contextCompany.getCompanyId(),
 			_collaboratorDTOConverter, _dtoConverterRegistry,
-			objectEntryFolder.getGroupId(), contextHttpServletRequest,
-			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			_getExpirationDate(), objectEntryFolder.getGroupId(),
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, type, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
+	}
+
+	private Date _getExpirationDate() throws Exception {
+		SharingEntryCollaborationEmailConfiguration
+			sharingEntryCollaborationEmailConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					SharingEntryCollaborationEmailConfiguration.class,
+					contextCompany.getCompanyId());
+
+		return new Date(
+			System.currentTimeMillis() +
+				TimeUnit.HOURS.toMillis(
+					sharingEntryCollaborationEmailConfiguration.
+						invitationToCollaborateTokenExpirationTime()));
 	}
 
 	@Reference
@@ -354,6 +374,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		target = "(component.name=com.liferay.headless.object.internal.dto.v1_0.converter.CollaboratorDTOConverter)"
 	)
 	private DTOConverter<SharingEntry, Collaborator> _collaboratorDTOConverter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

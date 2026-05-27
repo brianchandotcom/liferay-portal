@@ -48,6 +48,9 @@ public class FieldsToDDMFormValuesConverterImpl
 	public DDMFormValues convert(DDMStructure ddmStructure, Fields fields)
 		throws PortalException {
 
+		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
+		String[] ddmFieldsDisplayValues = null;
+
 		DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
@@ -56,32 +59,27 @@ public class FieldsToDDMFormValuesConverterImpl
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmForm, fields.getAvailableLocales(), fields.getDefaultLocale());
 
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
-
 		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-		String[] ddmFieldsDisplayValues = null;
 		Map<String, List<String>> instanceIdsByFieldNamesMap = null;
 
 		if (fieldsDisplayField != null) {
-			String[] rawFieldsDisplayValues = splitFieldsDisplayValue(
-				fieldsDisplayField);
+			String[] parts = splitFieldsDisplayValue(fieldsDisplayField);
 
 			List<String> ddmFieldsDisplayValuesList = new ArrayList<>(
-				rawFieldsDisplayValues.length);
+				parts.length);
 
 			instanceIdsByFieldNamesMap = new HashMap<>();
 
-			for (String rawFieldsDisplayValue : rawFieldsDisplayValues) {
+			for (String part : parts) {
 				String fieldName = StringUtil.extractFirst(
-					rawFieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+					part, DDMImpl.INSTANCE_SEPARATOR);
 
 				if (ddmFormFieldsMap.containsKey(fieldName)) {
 					ddmFieldsDisplayValuesList.add(fieldName);
 				}
 
 				String instanceId = StringUtil.extractLast(
-					rawFieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+					part, DDMImpl.INSTANCE_SEPARATOR);
 
 				List<String> instanceIds =
 					instanceIdsByFieldNamesMap.computeIfAbsent(

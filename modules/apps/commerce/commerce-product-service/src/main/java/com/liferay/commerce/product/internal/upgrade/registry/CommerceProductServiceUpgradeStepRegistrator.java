@@ -462,8 +462,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register("5.13.0", "5.13.1", new DummyUpgradeProcess());
+
+		registry.register("5.13.1", "5.13.2", new DummyUpgradeProcess());
+
 		registry.register(
-			"5.13.0", "5.14.0",
+			"5.13.2", "5.14.0",
 			new CPDefinitionSpecificationOptionValueUpgradeProcess());
 
 		registry.register(

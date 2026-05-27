@@ -198,6 +198,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
 		).put(
+			"AIHubReport", "/ai-hub/reports"
+		).put(
 			"APIApplication", "/headless-builder/applications"
 		).put(
 			"APIEndpoint", "/headless-builder/endpoints"

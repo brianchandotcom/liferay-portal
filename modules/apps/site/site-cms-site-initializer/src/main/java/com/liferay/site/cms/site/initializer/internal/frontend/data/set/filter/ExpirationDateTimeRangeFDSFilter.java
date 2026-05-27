@@ -26,11 +26,12 @@ import org.osgi.service.component.annotations.Component;
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.STRUCTURE_USAGES,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FILES_FOLDER,
-		"service.ranking:Integer=90"
+		"service.ranking:Integer=92"
 	},
 	service = FDSFilter.class
 )
-public class PublishDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
+public class ExpirationDateTimeRangeFDSFilter
+	extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -39,12 +40,12 @@ public class PublishDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getId() {
-		return "datePublish";
+		return "dateExpiration";
 	}
 
 	@Override
 	public String getLabel() {
-		return "publish-date";
+		return "expiration-date";
 	}
 
 	@Override

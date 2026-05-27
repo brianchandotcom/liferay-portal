@@ -23,15 +23,14 @@ import org.osgi.service.component.annotations.Component;
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SHARED_WITH_ME,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.STRUCTURE_USAGES,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER,
 		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FILES_FOLDER,
-		"service.ranking:Integer=94"
+		"service.ranking:Integer=90"
 	},
 	service = FDSFilter.class
 )
-public class CreateDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
+public class PublishDateTimeRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -40,17 +39,17 @@ public class CreateDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getId() {
-		return "dateCreated";
+		return "datePublish";
 	}
 
 	@Override
 	public String getLabel() {
-		return "create-date";
+		return "publish-date";
 	}
 
 	@Override
 	public DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem() {
-		return DateTimeFDSFilterItem.NOW;
+		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
 	}
 
 	@Override

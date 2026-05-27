@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FDSFilter.class
 )
-public class DisplayDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
+public class DisplayDateTimeRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {

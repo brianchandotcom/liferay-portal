@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FDSFilter.class
 )
-public class ModifiedDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
+public class ModifiedDateTimeRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {

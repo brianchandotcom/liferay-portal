@@ -25,4 +25,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DefaultAccountEntryValidatorConfiguration
 	extends BaseAccountEntryValidatorConfiguration {
+
+	@Meta.AD(
+		deflt = "30",
+		description = "account-entry-validator-check-interval-description",
+		min = "0", name = "check-interval", required = false,
+		type = Meta.Type.Integer
+	)
+	@Override
+	public int checkInterval();
+
+	@Meta.AD(
+		deflt = "true",
+		description = "account-entry-validator-enabled-description",
+		name = "enabled", required = false
+	)
+	@Override
+	public boolean enabled();
+
 }

@@ -19,6 +19,11 @@ public abstract class BaseAccountEntryValidator
 	implements AccountEntryValidator {
 
 	@Override
+	public abstract BaseAccountEntryValidatorConfiguration getConfiguration(
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
+		throws ConfigurationException;
+
+	@Override
 	public final AccountEntryValidatorResult validate(
 			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException {
@@ -29,9 +34,5 @@ public abstract class BaseAccountEntryValidator
 	protected abstract AccountEntryValidatorResult doValidate(
 			AccountEntry accountEntry, Map<String, Object> additionalProps)
 		throws PortalException;
-
-	protected abstract BaseAccountEntryValidatorConfiguration getConfiguration(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
-		throws ConfigurationException;
 
 }

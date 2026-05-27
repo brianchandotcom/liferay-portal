@@ -29,30 +29,6 @@ public class AccountEntryValidatorResultTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testBuilderWithKey() {
-		AccountEntryValidatorResult accountEntryValidatorResult =
-			AccountEntryValidatorResult.builder(
-				"key"
-			).build();
-
-		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
-		Assert.assertEquals(
-			StringPool.BLANK, accountEntryValidatorResult.getActionLabel());
-		Assert.assertEquals(
-			StringPool.BLANK, accountEntryValidatorResult.getActionURL());
-		Assert.assertEquals(
-			StringPool.BLANK, accountEntryValidatorResult.getResultMessage());
-		Assert.assertEquals(
-			Collections.emptyMap(),
-			accountEntryValidatorResult.getAdditionalProps());
-		Assert.assertEquals(
-			AccountEntryValidatorResultConstants.SUCCESS,
-			accountEntryValidatorResult.getResultStatus());
-
-		Assert.assertTrue(accountEntryValidatorResult.isValid());
-	}
-
-	@Test
 	public void testBuilderWithAllValues() {
 		Map<String, String> additionalProps = HashMapBuilder.put(
 			"field", "value"
@@ -88,6 +64,30 @@ public class AccountEntryValidatorResultTest {
 	}
 
 	@Test
+	public void testBuilderWithKey() {
+		AccountEntryValidatorResult accountEntryValidatorResult =
+			AccountEntryValidatorResult.builder(
+				"key"
+			).build();
+
+		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
+		Assert.assertEquals(
+			StringPool.BLANK, accountEntryValidatorResult.getActionLabel());
+		Assert.assertEquals(
+			StringPool.BLANK, accountEntryValidatorResult.getActionURL());
+		Assert.assertEquals(
+			StringPool.BLANK, accountEntryValidatorResult.getResultMessage());
+		Assert.assertEquals(
+			Collections.emptyMap(),
+			accountEntryValidatorResult.getAdditionalProps());
+		Assert.assertEquals(
+			AccountEntryValidatorResultConstants.SUCCESS,
+			accountEntryValidatorResult.getResultStatus());
+
+		Assert.assertTrue(accountEntryValidatorResult.isValid());
+	}
+
+	@Test
 	public void testIsValid() {
 		for (String resultStatus :
 				new String[] {
@@ -115,7 +115,6 @@ public class AccountEntryValidatorResultTest {
 			).build();
 
 		Assert.assertFalse(accountEntryValidatorResult.isValid());
-
 	}
 
 }

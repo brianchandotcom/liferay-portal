@@ -5,8 +5,10 @@
 
 package com.liferay.account.validator;
 
+import com.liferay.account.configuration.BaseAccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 import java.util.Map;
 
@@ -14,6 +16,10 @@ import java.util.Map;
  * @author Tancredi Covioli
  */
 public interface AccountEntryValidator {
+
+	public BaseAccountEntryValidatorConfiguration getConfiguration(
+			AccountEntry accountEntry, Map<String, Object> additionalProps)
+		throws ConfigurationException;
 
 	public String getKey(
 		AccountEntry accountEntry, Map<String, Object> additionalProps);

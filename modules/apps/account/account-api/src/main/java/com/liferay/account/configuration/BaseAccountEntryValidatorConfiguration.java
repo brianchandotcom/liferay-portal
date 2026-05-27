@@ -5,26 +5,13 @@
 
 package com.liferay.account.configuration;
 
-import aQute.bnd.annotation.metatype.Meta;
-
 /**
  * @author Tancredi Covioli
  */
 public interface BaseAccountEntryValidatorConfiguration {
 
-	@Meta.AD(
-		deflt = "30",
-		description = "account-entry-validator-check-interval-description",
-		min = "0", name = "check-interval", required = false,
-		type = Meta.Type.Integer
-	)
 	public int checkInterval();
 
-	@Meta.AD(
-		deflt = "true",
-		description = "account-entry-validator-enabled-description",
-		name = "enabled", required = false
-	)
 	public boolean enabled();
 
 }

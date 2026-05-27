@@ -33,6 +33,7 @@ When `${ARGUMENTS}` is anything else, resolve it to a case result ID by followin
 
 Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. When it is `BLOCKED` — a tester deliberately flagged it, so it must not be auto-fixed — skip the workflow and exit reporting that the case is blocked. Otherwise, the procedure returns these fields:
 
+- **buildSha** — commit the failing build was tested against.
 - **errorTrace** — error trace produced by the test framework.
 - **failureDate** — timestamp when the case result was recorded, used to scope the duplicate-ticket check in **Claim the Failure**.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).
@@ -123,8 +124,10 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 1. Check Jira for an LPD ticket whose summary contains `<test-name>` and is labeled `claude-test-fix`. Decide whether it already covers this failure by its state:
 
 	- **Unresolved** (Open, In Progress, or any non-resolved state) → claimed, skip. Someone is already working it.
-	- **Resolved on or after `<failureDate>`** → fix already shipped for this occurrence, skip.
-	- **Resolved before `<failureDate>`** → stale fix, a new occurrence is not covered, proceed.
+	- **Resolved** → find the ticket's PR by following the `pr` skill's rules for where it is recorded, derive its fix commit, and test whether it already reached the build that failed, judging by `git merge-base --is-ancestor <fixSha> <buildSha>`:
+		- **Fix commit is an ancestor of `<buildSha>`** → the fix was already present when this build ran, yet the test still failed, so it does not cover this occurrence → proceed.
+		- **Fix commit is not yet in `<buildSha>`** → Testray has not retested since the fix merged, so the failure is already addressed → skip.
+		- **No fix commit found** (test-only ticket, unmerged commit, or a non-fixing resolution) → fall back to the resolution date: resolved before `<failureDate>` proceeds, resolved on or after skips.
 
 	When skipping and other candidates remain, retry with the next one.
 

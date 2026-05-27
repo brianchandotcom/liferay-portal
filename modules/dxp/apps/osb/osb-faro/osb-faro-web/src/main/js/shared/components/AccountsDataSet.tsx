@@ -79,6 +79,16 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				apiURL={rangeApiURL}
 				configInURLBehavior={EConfigInURLBehavior.OFF}
 				customDataRenderers={{
+					accountActivityStatusRenderer: ({value}: {value: string}) =>
+						value &&
+						columns.cmsLabelRenderer({
+							displayType:
+								value === 'ACTIVE' ? 'success' : 'secondary',
+							label:
+								value === 'ACTIVE'
+									? Liferay.Language.get('active')
+									: Liferay.Language.get('inactive')
+						}),
 					accountLifecycleStageRenderer: ({
 						value
 					}: {
@@ -243,6 +253,15 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									fieldName: 'lastEnriched',
 									label: Liferay.Language.get(
 										'last-enriched'
+									),
+									sortable: true
+								},
+								{
+									contentRenderer:
+										'accountActivityStatusRenderer',
+									fieldName: 'activityStatus',
+									label: Liferay.Language.get(
+										'activity-status'
 									),
 									sortable: true
 								}

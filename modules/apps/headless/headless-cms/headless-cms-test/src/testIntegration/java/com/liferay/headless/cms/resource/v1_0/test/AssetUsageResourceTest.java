@@ -121,7 +121,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+			null, DepotConstants.TYPE_SPACE, _serviceContext);
 
 		_objectEntryFolder =
 			_objectEntryFolderLocalService.

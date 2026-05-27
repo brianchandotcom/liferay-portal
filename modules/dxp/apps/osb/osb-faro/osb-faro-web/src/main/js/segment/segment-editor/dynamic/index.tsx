@@ -259,6 +259,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 
 							return error ? {criteria: error} : {};
 						}}
+						validateOnMount
 					>
 						{({
 							handleSubmit,

@@ -170,9 +170,18 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 		onOpenChange(true);
 	}, [onOpenChange]);
 
+	const activeFolderId = currentFolder[currentFolder.length - 1].id;
+	const activeScopeId =
+		currentFolder[currentFolder.length - 1].scopeId ?? null;
+
+	const apiURL = useMemo(
+		() => buildApiURL(activeFolderId),
+		[activeFolderId, buildApiURL]
+	);
+
 	useEffect(() => {
 		if (isBrowserTabVisible && open) {
-			checkNewCMSFiles(props.apiURL, lastRequestTimeRef.current).then(
+			checkNewCMSFiles(apiURL, lastRequestTimeRef.current).then(
 				(response) => {
 					if (response.totalCount > 0) {
 						setNewItemsCount(response.totalCount);
@@ -183,16 +192,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 				}
 			);
 		}
-	}, [isBrowserTabVisible, open, props.apiURL]);
-
-	const activeFolderId = currentFolder[currentFolder.length - 1].id;
-	const activeScopeId =
-		currentFolder[currentFolder.length - 1].scopeId ?? null;
-
-	const apiURL = useMemo(
-		() => buildApiURL(activeFolderId),
-		[activeFolderId, buildApiURL]
-	);
+	}, [isBrowserTabVisible, open, apiURL]);
 
 	const breadcrumbs = useMemo(
 		() =>

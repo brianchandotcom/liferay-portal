@@ -179,10 +179,11 @@ public class TrashEntryLocalServiceTest {
 		Assert.assertNull(
 			_trashEntryLocalService.fetchEntry(
 				className, objectEntry2.getObjectEntryId()));
-		Assert.assertTrue(
-			_trashEntryLocalService.getEntries(
-				_depotEntry.getGroupId()
-			).isEmpty());
+
+		List<TrashEntry> trashEntries = _trashEntryLocalService.getEntries(
+			_depotEntry.getGroupId());
+
+		Assert.assertTrue(trashEntries.toString(), trashEntries.isEmpty());
 	}
 
 	@Test

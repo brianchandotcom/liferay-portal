@@ -228,6 +228,16 @@ public class OAuthClientEntrySerDes {
 			sb.append("\"");
 		}
 
+		if (oAuthClientEntry.getTokenConnectionTimeout() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tokenConnectionTimeout\": ");
+
+			sb.append(oAuthClientEntry.getTokenConnectionTimeout());
+		}
+
 		if (oAuthClientEntry.getTokenRequestParametersJSON() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -380,6 +390,15 @@ public class OAuthClientEntrySerDes {
 				String.valueOf(oAuthClientEntry.getOidcUserInfoMapperJSON()));
 		}
 
+		if (oAuthClientEntry.getTokenConnectionTimeout() == null) {
+			map.put("tokenConnectionTimeout", null);
+		}
+		else {
+			map.put(
+				"tokenConnectionTimeout",
+				String.valueOf(oAuthClientEntry.getTokenConnectionTimeout()));
+		}
+
 		if (oAuthClientEntry.getTokenRequestParametersJSON() == null) {
 			map.put("tokenRequestParametersJSON", null);
 		}
@@ -454,6 +473,11 @@ public class OAuthClientEntrySerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "oidcUserInfoMapperJSON")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "tokenConnectionTimeout")) {
 
 				return false;
 			}
@@ -559,6 +583,14 @@ public class OAuthClientEntrySerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "tokenConnectionTimeout")) {
+
+				if (jsonParserFieldValue != null) {
+					oAuthClientEntry.setTokenConnectionTimeout(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "tokenRequestParametersJSON")) {
 
 				if (jsonParserFieldValue != null) {
@@ -647,4 +679,4 @@ public class OAuthClientEntrySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1591259252
+// LIFERAY-REST-BUILDER-HASH:1983385951

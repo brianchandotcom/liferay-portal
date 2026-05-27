@@ -83,6 +83,10 @@ public abstract class BaseSiteTemplateResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "excludedSiteExternalReferenceCodes"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -102,6 +106,9 @@ public abstract class BaseSiteTemplateResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("active")
 			Boolean active,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("excludedSiteExternalReferenceCodes")
+			String[] excludedSiteExternalReferenceCodes,
 			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -118,6 +125,10 @@ public abstract class BaseSiteTemplateResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "active"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "excludedSiteExternalReferenceCodes"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -145,6 +156,9 @@ public abstract class BaseSiteTemplateResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("active")
 			Boolean active,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("excludedSiteExternalReferenceCodes")
+			String[] excludedSiteExternalReferenceCodes,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -230,7 +244,9 @@ public abstract class BaseSiteTemplateResourceImpl
 		throws Exception {
 
 		return getSiteTemplatesPage(
-			_parseBoolean((String)parameters.get("active")), pagination);
+			_parseBoolean((String)parameters.get("active")),
+			(String[])parameters.get("excludedSiteExternalReferenceCodes"),
+			pagination);
 	}
 
 	@Override
@@ -843,4 +859,4 @@ public abstract class BaseSiteTemplateResourceImpl
 		LogFactoryUtil.getLog(BaseSiteTemplateResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:98562846
+// LIFERAY-REST-BUILDER-HASH:-1704394203

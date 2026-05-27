@@ -103,7 +103,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
 ```
 
-When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise, return all five fields.
+When `dueStatus.key` is `PASSED` or `BLOCKED`, return only **Name** and that `dueStatus`; the rest are skipped. Otherwise, return all five fields.
 
 ### Name
 

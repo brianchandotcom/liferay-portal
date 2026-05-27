@@ -273,10 +273,6 @@ public class ViewSharedAssetsDisplayContext {
 			}
 		}
 
-		// Fall back to the sharing entry view only when the interpreter has
-		// a view renderer. A null view renderer signals that the entry has
-		// no standalone preview surface, so the row should not link anywhere.
-
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 

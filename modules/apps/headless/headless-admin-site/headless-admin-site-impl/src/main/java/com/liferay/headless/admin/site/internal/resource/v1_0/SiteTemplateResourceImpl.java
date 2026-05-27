@@ -10,7 +10,6 @@ import com.liferay.headless.admin.site.resource.v1_0.SiteTemplateResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -107,9 +106,7 @@ public class SiteTemplateResourceImpl extends BaseSiteTemplateResourceImpl {
 
 						ThemeDisplay themeDisplay = new ThemeDisplay() {
 							{
-								setCompany(
-									_companyLocalService.getCompany(
-										group.getCompanyId()));
+								setCompany(contextCompany);
 								setPathImage(_portal.getPathImage());
 							}
 						};
@@ -140,9 +137,6 @@ public class SiteTemplateResourceImpl extends BaseSiteTemplateResourceImpl {
 			}
 		};
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private LayoutSetPrototypeService _layoutSetPrototypeService;

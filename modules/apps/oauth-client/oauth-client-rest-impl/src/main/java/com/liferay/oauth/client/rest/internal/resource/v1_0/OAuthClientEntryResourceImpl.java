@@ -196,6 +196,7 @@ public class OAuthClientEntryResourceImpl
 				oAuthClientEntry.getMatcherField(),
 				oAuthClientEntry.getMetadataCacheTime(),
 				oAuthClientEntry.getOidcUserInfoMapperJSON(),
+				oAuthClientEntry.getTokenConnectionTimeout(),
 				oAuthClientEntry.getTokenRequestParametersJSON()));
 	}
 
@@ -232,6 +233,7 @@ public class OAuthClientEntryResourceImpl
 					oAuthClientEntry.getMatcherField(),
 					oAuthClientEntry.getMetadataCacheTime(),
 					oAuthClientEntry.getOidcUserInfoMapperJSON(),
+					oAuthClientEntry.getTokenConnectionTimeout(),
 					oAuthClientEntry.getTokenRequestParametersJSON()));
 		}
 
@@ -302,6 +304,8 @@ public class OAuthClientEntryResourceImpl
 							getAuthServerWellKnownURI()));
 				setOidcUserInfoMapperJSON(
 					serviceBuilderOAuthClientEntry::getOIDCUserInfoMapperJSON);
+				setTokenConnectionTimeout(
+					serviceBuilderOAuthClientEntry::getTokenConnectionTimeout);
 				setTokenRequestParametersJSON(
 					serviceBuilderOAuthClientEntry::
 						getTokenRequestParametersJSON);

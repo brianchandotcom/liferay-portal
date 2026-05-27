@@ -29,42 +29,7 @@ public class AccountEntryValidatorResultTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testBuilderWithAllValues() {
-		Map<String, String> additionalProps = HashMapBuilder.put(
-			"field", "value"
-		).build();
-
-		AccountEntryValidatorResult accountEntryValidatorResult =
-			AccountEntryValidatorResult.builder(
-				"key"
-			).action(
-				"actionLabel", "actionURL"
-			).additionalProps(
-				additionalProps
-			).resultMessage(
-				"resultMessage"
-			).resultStatus(
-				AccountEntryValidatorResultConstants.WARNING
-			).build();
-
-		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
-		Assert.assertEquals(
-			"actionLabel", accountEntryValidatorResult.getActionLabel());
-		Assert.assertEquals(
-			"actionURL", accountEntryValidatorResult.getActionURL());
-		Assert.assertEquals(
-			additionalProps, accountEntryValidatorResult.getAdditionalProps());
-		Assert.assertEquals(
-			"resultMessage", accountEntryValidatorResult.getResultMessage());
-		Assert.assertEquals(
-			AccountEntryValidatorResultConstants.WARNING,
-			accountEntryValidatorResult.getResultStatus());
-
-		Assert.assertTrue(accountEntryValidatorResult.isValid());
-	}
-
-	@Test
-	public void testBuilderWithKey() {
+	public void testBuilder() {
 		AccountEntryValidatorResult accountEntryValidatorResult =
 			AccountEntryValidatorResult.builder(
 				"key"
@@ -83,30 +48,43 @@ public class AccountEntryValidatorResultTest {
 		Assert.assertEquals(
 			AccountEntryValidatorResultConstants.SUCCESS,
 			accountEntryValidatorResult.getResultStatus());
+		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
+		Map<String, String> additionalProps = HashMapBuilder.put(
+			"field", "value"
+		).build();
+
+		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
+			"key"
+		).actionLabel(
+			"actionLabel"
+		).actionURL(
+			"actionURL"
+		).additionalProps(
+			additionalProps
+		).resultMessage(
+			"resultMessage"
+		).resultStatus(
+			AccountEntryValidatorResultConstants.WARNING
+		).build();
+
+		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
+		Assert.assertEquals(
+			"actionLabel", accountEntryValidatorResult.getActionLabel());
+		Assert.assertEquals(
+			"actionURL", accountEntryValidatorResult.getActionURL());
+		Assert.assertEquals(
+			additionalProps, accountEntryValidatorResult.getAdditionalProps());
+		Assert.assertEquals(
+			"resultMessage", accountEntryValidatorResult.getResultMessage());
+		Assert.assertEquals(
+			AccountEntryValidatorResultConstants.WARNING,
+			accountEntryValidatorResult.getResultStatus());
 		Assert.assertTrue(accountEntryValidatorResult.isValid());
 	}
 
 	@Test
 	public void testIsValid() {
-		for (String resultStatus :
-				new String[] {
-					AccountEntryValidatorResultConstants.MANUAL,
-					AccountEntryValidatorResultConstants.SUCCESS,
-					AccountEntryValidatorResultConstants.WARNING
-				}) {
-
-			AccountEntryValidatorResult accountEntryValidatorResult =
-				AccountEntryValidatorResult.builder(
-					"key"
-				).resultStatus(
-					resultStatus
-				).build();
-
-			Assert.assertTrue(
-				resultStatus, accountEntryValidatorResult.isValid());
-		}
-
 		AccountEntryValidatorResult accountEntryValidatorResult =
 			AccountEntryValidatorResult.builder(
 				"key"
@@ -115,6 +93,36 @@ public class AccountEntryValidatorResultTest {
 			).build();
 
 		Assert.assertFalse(accountEntryValidatorResult.isValid());
+
+		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
+			"key"
+		).resultStatus(
+			AccountEntryValidatorResultConstants.MANUAL
+		).build();
+
+		Assert.assertTrue(
+			AccountEntryValidatorResultConstants.MANUAL,
+			accountEntryValidatorResult.isValid());
+
+		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
+			"key"
+		).resultStatus(
+			AccountEntryValidatorResultConstants.SUCCESS
+		).build();
+
+		Assert.assertTrue(
+			AccountEntryValidatorResultConstants.SUCCESS,
+			accountEntryValidatorResult.isValid());
+
+		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
+			"key"
+		).resultStatus(
+			AccountEntryValidatorResultConstants.WARNING
+		).build();
+
+		Assert.assertTrue(
+			AccountEntryValidatorResultConstants.WARNING,
+			accountEntryValidatorResult.isValid());
 	}
 
 }

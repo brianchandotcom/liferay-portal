@@ -52,7 +52,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			AccountEntryValidator.class);
 
 		ServiceWrapper<AccountEntryValidator> serviceWrapper =
-			_toServiceWrapper(accountEntryValidator);
+			_getMockServiceWrapper(accountEntryValidator);
 
 		Mockito.when(
 			_serviceTrackerMap.getService("key")
@@ -63,19 +63,15 @@ public class AccountEntryValidatorRegistryImplTest {
 		Assert.assertSame(
 			accountEntryValidator,
 			_accountEntryValidatorRegistryImpl.getAccountEntryValidator("key"));
-	}
 
-	@Test
-	public void testGetAccountEntryValidatorReturnsNullForBlankKey() {
+		Mockito.clearInvocations(_serviceTrackerMap);
+
 		Assert.assertNull(
 			_accountEntryValidatorRegistryImpl.getAccountEntryValidator(
 				StringPool.BLANK));
 
 		Mockito.verifyNoInteractions(_serviceTrackerMap);
-	}
 
-	@Test
-	public void testGetAccountEntryValidatorReturnsNullWhenNotRegistered() {
 		Mockito.when(
 			_serviceTrackerMap.getService("key")
 		).thenReturn(
@@ -95,8 +91,8 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		List<ServiceWrapper<AccountEntryValidator>> serviceWrappers =
 			Arrays.asList(
-				_toServiceWrapper(accountEntryValidator1),
-				_toServiceWrapper(accountEntryValidator2));
+				_getMockServiceWrapper(accountEntryValidator1),
+				_getMockServiceWrapper(accountEntryValidator2));
 
 		Mockito.when(
 			_serviceTrackerMap.values()
@@ -107,7 +103,9 @@ public class AccountEntryValidatorRegistryImplTest {
 		List<AccountEntryValidator> accountEntryValidators =
 			_accountEntryValidatorRegistryImpl.getAccountEntryValidators();
 
-		Assert.assertEquals(2, accountEntryValidators.size());
+		Assert.assertEquals(
+			accountEntryValidators.toString(), 2,
+			accountEntryValidators.size());
 
 		Assert.assertSame(
 			accountEntryValidator1, accountEntryValidators.get(0));
@@ -117,6 +115,14 @@ public class AccountEntryValidatorRegistryImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
+		List<AccountEntryValidatorResult> accountEntryValidatorResults =
+			_accountEntryValidatorRegistryImpl.validate(
+				null, Collections.emptyMap());
+
+		Assert.assertTrue(accountEntryValidatorResults.isEmpty());
+
+		Mockito.verifyNoInteractions(_serviceTrackerMap);
+
 		Map<String, Object> additionalProps =
 			HashMapBuilder.<String, Object>put(
 				"field", "value"
@@ -126,18 +132,10 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		AccountEntryValidator accountEntryValidator1 = Mockito.mock(
 			AccountEntryValidator.class);
-		AccountEntryValidator accountEntryValidator2 = Mockito.mock(
-			AccountEntryValidator.class);
 
 		AccountEntryValidatorResult accountEntryValidatorResult1 =
 			AccountEntryValidatorResult.builder(
 				"key1"
-			).build();
-		AccountEntryValidatorResult accountEntryValidatorResult2 =
-			AccountEntryValidatorResult.builder(
-				"key2"
-			).resultStatus(
-				AccountEntryValidatorResultConstants.FAILURE
 			).build();
 
 		Mockito.when(
@@ -145,6 +143,16 @@ public class AccountEntryValidatorRegistryImplTest {
 		).thenReturn(
 			accountEntryValidatorResult1
 		);
+
+		AccountEntryValidator accountEntryValidator2 = Mockito.mock(
+			AccountEntryValidator.class);
+
+		AccountEntryValidatorResult accountEntryValidatorResult2 =
+			AccountEntryValidatorResult.builder(
+				"key2"
+			).resultStatus(
+				AccountEntryValidatorResultConstants.FAILURE
+			).build();
 
 		Mockito.when(
 			accountEntryValidator2.validate(accountEntry, additionalProps)
@@ -154,8 +162,8 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		List<ServiceWrapper<AccountEntryValidator>> serviceWrappers =
 			Arrays.asList(
-				_toServiceWrapper(accountEntryValidator1),
-				_toServiceWrapper(accountEntryValidator2));
+				_getMockServiceWrapper(accountEntryValidator1),
+				_getMockServiceWrapper(accountEntryValidator2));
 
 		Mockito.when(
 			_serviceTrackerMap.values()
@@ -163,11 +171,13 @@ public class AccountEntryValidatorRegistryImplTest {
 			serviceWrappers
 		);
 
-		List<AccountEntryValidatorResult> accountEntryValidatorResults =
+		accountEntryValidatorResults =
 			_accountEntryValidatorRegistryImpl.validate(
 				accountEntry, additionalProps);
 
-		Assert.assertEquals(2, accountEntryValidatorResults.size());
+		Assert.assertEquals(
+			accountEntryValidatorResults.toString(), 2,
+			accountEntryValidatorResults.size());
 
 		Assert.assertSame(
 			accountEntryValidatorResult1, accountEntryValidatorResults.get(0));
@@ -187,20 +197,7 @@ public class AccountEntryValidatorRegistryImplTest {
 		);
 	}
 
-	@Test
-	public void testValidateReturnsEmptyListForNullAccountEntry()
-		throws Exception {
-
-		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			_accountEntryValidatorRegistryImpl.validate(
-				null, Collections.emptyMap());
-
-		Assert.assertTrue(accountEntryValidatorResults.isEmpty());
-
-		Mockito.verifyNoInteractions(_serviceTrackerMap);
-	}
-
-	private ServiceWrapper<AccountEntryValidator> _toServiceWrapper(
+	private ServiceWrapper<AccountEntryValidator> _getMockServiceWrapper(
 		AccountEntryValidator accountEntryValidator) {
 
 		ServiceWrapper<AccountEntryValidator> serviceWrapper = Mockito.mock(

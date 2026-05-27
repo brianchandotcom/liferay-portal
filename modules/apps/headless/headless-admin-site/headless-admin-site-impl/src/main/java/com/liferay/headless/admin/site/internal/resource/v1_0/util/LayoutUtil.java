@@ -765,11 +765,8 @@ public class LayoutUtil {
 			ItemScopeUtil.getItemScopeExternalReferenceCode(
 				itemExternalReference.getScope(), scopeGroupId);
 
-		if (Validator.isNotNull(styleBookEntryScopeERC) &&
-			!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-57283")) {
-
-			throw new UnsupportedOperationException(
-				"Style book scoping is not enabled");
+		if (Validator.isNotNull(styleBookEntryScopeERC)) {
+			FeatureFlagManagerUtil.checkEnabled(companyId, "LPD-57283");
 		}
 
 		StyleBookEntry styleBookEntry = null;

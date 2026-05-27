@@ -94,7 +94,6 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 		throws Exception {
 
 		return _hasViolation(
-			companyId, externalReferenceCode, location,
 			(modelArmorClient, templateName) -> {
 				SanitizeModelResponseResponse sanitizeModelResponseResponse =
 					modelArmorClient.sanitizeModelResponse(
@@ -109,7 +108,8 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 						).build());
 
 				return sanitizeModelResponseResponse.getSanitizationResult();
-			});
+			},
+			companyId, externalReferenceCode, location);
 	}
 
 	@Override
@@ -119,7 +119,6 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 		throws Exception {
 
 		return _hasViolation(
-			companyId, externalReferenceCode, location,
 			(modelArmorClient, templateName) -> {
 				SanitizeUserPromptResponse sanitizeUserPromptResponse =
 					modelArmorClient.sanitizeUserPrompt(
@@ -134,7 +133,8 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 						).build());
 
 				return sanitizeUserPromptResponse.getSanitizationResult();
-			});
+			},
+			companyId, externalReferenceCode, location);
 	}
 
 	@Override
@@ -238,8 +238,8 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 	}
 
 	private boolean _hasViolation(
-			long companyId, String externalReferenceCode, String location,
-			BiFunction<ModelArmorClient, String, SanitizationResult> biFunction)
+			BiFunction<ModelArmorClient, String, SanitizationResult> biFunction,
+			long companyId, String externalReferenceCode, String location)
 		throws Exception {
 
 		VertexAIConfiguration vertexAIConfiguration =

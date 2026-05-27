@@ -218,7 +218,7 @@ public abstract class BaseOAuthClientEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/oauth-client/v1.0/oauth-client-entries' -d $'{"authRequestParametersJSON": ___, "authServerWellKnownURI": ___, "clientId": ___, "customClaims": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "infoJSON": ___, "matcherField": ___, "metadataCacheTime": ___, "oAuthClientASLocalMetadata": ___, "oidcUserInfoMapperJSON": ___, "tokenRequestParametersJSON": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/oauth-client/v1.0/oauth-client-entries' -d $'{"authRequestParametersJSON": ___, "authServerWellKnownURI": ___, "clientId": ___, "customClaims": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "infoJSON": ___, "matcherField": ___, "metadataCacheTime": ___, "oAuthClientASLocalMetadata": ___, "oidcUserInfoMapperJSON": ___, "tokenConnectionTimeout": ___, "tokenRequestParametersJSON": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -286,7 +286,7 @@ public abstract class BaseOAuthClientEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/oauth-client/v1.0/oauth-client-entries/by-external-reference-code/{externalReferenceCode}' -d $'{"authRequestParametersJSON": ___, "authServerWellKnownURI": ___, "clientId": ___, "customClaims": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "infoJSON": ___, "matcherField": ___, "metadataCacheTime": ___, "oAuthClientASLocalMetadata": ___, "oidcUserInfoMapperJSON": ___, "tokenRequestParametersJSON": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/oauth-client/v1.0/oauth-client-entries/by-external-reference-code/{externalReferenceCode}' -d $'{"authRequestParametersJSON": ___, "authServerWellKnownURI": ___, "clientId": ___, "customClaims": ___, "dateCreated": ___, "dateModified": ___, "externalReferenceCode": ___, "infoJSON": ___, "matcherField": ___, "metadataCacheTime": ___, "oAuthClientASLocalMetadata": ___, "oidcUserInfoMapperJSON": ___, "tokenConnectionTimeout": ___, "tokenRequestParametersJSON": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1040,4 +1040,4 @@ public abstract class BaseOAuthClientEntryResourceImpl
 		LogFactoryUtil.getLog(BaseOAuthClientEntryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:964433989
+// LIFERAY-REST-BUILDER-HASH:-450878247

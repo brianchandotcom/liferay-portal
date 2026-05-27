@@ -636,6 +636,16 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"tokenConnectionTimeout", additionalAssertFieldName)) {
+
+				if (oAuthClientEntry.getTokenConnectionTimeout() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"tokenRequestParametersJSON", additionalAssertFieldName)) {
 
 				if (oAuthClientEntry.getTokenRequestParametersJSON() == null) {
@@ -916,6 +926,19 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						oAuthClientEntry1.getOidcUserInfoMapperJSON(),
 						oAuthClientEntry2.getOidcUserInfoMapperJSON())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"tokenConnectionTimeout", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						oAuthClientEntry1.getTokenConnectionTimeout(),
+						oAuthClientEntry2.getTokenConnectionTimeout())) {
 
 					return false;
 				}
@@ -1485,6 +1508,13 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("tokenConnectionTimeout")) {
+			sb.append(
+				String.valueOf(oAuthClientEntry.getTokenConnectionTimeout()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("tokenRequestParametersJSON")) {
 			Object object = oAuthClientEntry.getTokenRequestParametersJSON();
 
@@ -1597,6 +1627,7 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 				metadataCacheTime = RandomTestUtil.randomLong();
 				oidcUserInfoMapperJSON = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				tokenConnectionTimeout = RandomTestUtil.randomInt();
 				tokenRequestParametersJSON = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
@@ -1849,4 +1880,4 @@ public abstract class BaseOAuthClientEntryResourceTestCase {
 		_oAuthClientEntryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1361052297
+// LIFERAY-REST-BUILDER-HASH:-2051143216

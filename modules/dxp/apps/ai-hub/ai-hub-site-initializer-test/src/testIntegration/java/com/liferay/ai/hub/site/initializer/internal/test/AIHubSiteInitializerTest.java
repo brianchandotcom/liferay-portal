@@ -82,11 +82,9 @@ public class AIHubSiteInitializerTest {
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
 		_assertLayoutExists("/account-management");
-
 		_assertLayoutUtilityPageEntryExists(
 			"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE",
 			LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT);
-
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_CRAWLER_JOB_STATUSES", "abandoned", "dispatched",
 			"failed", "queued", "running", "succeeded");
@@ -101,10 +99,8 @@ public class AIHubSiteInitializerTest {
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS", "high",
 			"lowAndAbove", "mediumAndAbove", "none");
-
 		_assertNotificationTemplateExists(
 			"L_AI_HUB_ACCOUNT_INVITE_USER_EMAIL_NOTIFICATION_TEMPLATE");
-
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
@@ -112,7 +108,6 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
-
 		_assertObjectFieldsExist(
 			"L_AI_HUB_AGENT_DEFINITION", "active", "description",
 			"inputVariables", "outputVariable",
@@ -149,7 +144,6 @@ public class AIHubSiteInitializerTest {
 			"r_accountToAIHubModelArmorTemplates_accountEntryId",
 			"raiDangerousLevel", "raiHarassmentLevel", "raiHateSpeechLevel",
 			"raiSexuallyExplicitLevel", "sdpFilterEnabled", "title");
-
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
@@ -185,7 +179,6 @@ public class AIHubSiteInitializerTest {
 			"L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
 			"L_AI_HUB_CONTENT_RETRIEVER",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
 			WorkflowDefinitionConstants.NAME_CHANGE_TONE);

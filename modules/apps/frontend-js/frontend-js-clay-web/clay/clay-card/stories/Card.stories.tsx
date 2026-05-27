@@ -23,6 +23,22 @@ export default {
 	title: 'Design System/Components/Card',
 };
 
+const cardActions: React.ComponentProps<
+	typeof ClayCardWithHorizontal
+>['actions'] = [
+	{
+		label: 'clickable',
+		onClick: () => {
+			alert('you clicked!');
+		},
+	},
+	{type: 'divider'},
+	{
+		href: '#',
+		label: 'linkable',
+	},
+];
+
 function ClayCheckboxWithState(props: any) {
 	const [value, setValue] = React.useState<boolean>(false);
 	const checked = props.value || value;
@@ -65,19 +81,7 @@ export function CardWithInfo(args: {disabled?: boolean}) {
 
 				<div className="col-md-4">
 					<ClayCardWithInfo
-						actions={[
-							{
-								label: 'clickable',
-								onClick: () => {
-									alert('you clicked!');
-								},
-							},
-							{type: 'divider'},
-							{
-								href: '#',
-								label: 'linkable',
-							},
-						]}
+						actions={cardActions}
 						description="A cool description"
 						disabled={args.disabled}
 						href="#"
@@ -229,19 +233,7 @@ export function CardWithHorizontal(args: any) {
 
 				<div className="col-md-4">
 					<ClayCardWithHorizontal
-						actions={[
-							{
-								label: 'clickable',
-								onClick: () => {
-									alert('you clicked!');
-								},
-							},
-							{type: 'divider'},
-							{
-								href: '#',
-								label: 'linkable',
-							},
-						]}
+						actions={cardActions}
 						disabled={args.disabled}
 						href="#"
 						onSelectChange={setValue}
@@ -265,19 +257,7 @@ export function CardWithHorizontal(args: any) {
 				<div className="col-md-12">
 					<ClayCard.Group label="Radio Card Group">
 						<ClayCardWithHorizontal
-							actions={[
-								{
-									label: 'clickable',
-									onClick: () => {
-										alert('you clicked!');
-									},
-								},
-								{type: 'divider'},
-								{
-									href: '#',
-									label: 'linkable',
-								},
-							]}
+							actions={cardActions}
 							disabled={args.disabled}
 							href="#"
 							onSelectChange={setRadioValue}
@@ -288,19 +268,7 @@ export function CardWithHorizontal(args: any) {
 						/>
 
 						<ClayCardWithHorizontal
-							actions={[
-								{
-									label: 'clickable',
-									onClick: () => {
-										alert('you clicked!');
-									},
-								},
-								{type: 'divider'},
-								{
-									href: '#',
-									label: 'linkable',
-								},
-							]}
+							actions={cardActions}
 							disabled={args.disabled}
 							href="#"
 							onSelectChange={setRadioValue}
@@ -311,19 +279,7 @@ export function CardWithHorizontal(args: any) {
 						/>
 
 						<ClayCardWithHorizontal
-							actions={[
-								{
-									label: 'clickable',
-									onClick: () => {
-										alert('you clicked!');
-									},
-								},
-								{type: 'divider'},
-								{
-									href: '#',
-									label: 'linkable',
-								},
-							]}
+							actions={cardActions}
 							disabled={args.disabled}
 							href="#"
 							onSelectChange={setRadioValue}
@@ -384,19 +340,7 @@ export function CardWithUser(args: any) {
 			<div className="row">
 				<div className="col-md-4">
 					<ClayCardWithUser
-						actions={[
-							{
-								label: 'clickable',
-								onClick: () => {
-									alert('you clicked!');
-								},
-							},
-							{type: 'divider'},
-							{
-								href: '#',
-								label: 'linkable',
-							},
-						]}
+						actions={cardActions}
 						description="Assistant to the regional manager"
 						disabled={args.disabled}
 						href="#"

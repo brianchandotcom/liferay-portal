@@ -4089,6 +4089,223 @@
 			},
 			"system": false,
 			"titleObjectFieldName": "classPK"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToTicketAttachment_accountEntryId",
+			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_TICKET_ATTACHMENT",
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableObjectEntryDraft": true,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C_TICKET_ATTACHMENT",
+			"friendlyURLSeparator": "cpta",
+			"label": {
+				"en_US": "Ticket Attachment"
+			},
+			"name": "TicketAttachment",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_ACCOUNT_KEY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Account Key"
+					},
+					"name": "accountKey",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_DRAFT_COMMENT_BODY",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Draft Comment Body"
+					},
+					"name": "draftCommentBody",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_FILE_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "File Name"
+					},
+					"name": "fileName",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_FILE_SIZE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "File Size"
+					},
+					"name": "fileSize",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_GCS_BUCKET_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Google Cloud Storage Bucket Name"
+					},
+					"name": "gcsBucketName",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_JIRA_ISSUE_KEY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Jira Issue"
+					},
+					"name": "jiraIssueKey",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_MD5_CHECKSUM",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "MD5 Checksum"
+					},
+					"name": "md5Checksum",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_STATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "State"
+					},
+					"name": "state",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_STORAGE_PROVIDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Storage Provider"
+					},
+					"name": "storageProvider",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TICKET_ATTACHMENT_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Ticket Attachments"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/ticketattachments",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "fileName"
 		}
 	]
 }

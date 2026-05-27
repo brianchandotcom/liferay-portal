@@ -251,6 +251,57 @@ test('Checks sidebar accessibility', async ({
 	});
 });
 
+test(
+	'Check that the sidebars are fully closed when toggling the Toggle Sidebars button',
+	{
+		tag: ['@LPD-60893'],
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		await page.goto('/');
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Click on the Browser panel
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		// Check panels are visible
+
+		const configurationPanel = page.getByLabel('Configuration Panel', {
+			exact: true,
+		});
+
+		const sidebarButtons = page.locator('.page-editor__sidebar__buttons');
+
+		const sidebarContent = page.locator('.page-editor__sidebar__content');
+
+		await expect(configurationPanel).toBeInViewport();
+
+		await expect(sidebarButtons).toBeInViewport();
+
+		await expect(sidebarContent).toBeInViewport();
+
+		// Toggle the Toggle Sidebars button
+
+		await pageEditorPage.toggleSidebars();
+
+		// Check that sidebars are fully out of view
+
+		await expect(configurationPanel).not.toBeInViewport();
+
+		await expect(sidebarButtons).not.toBeInViewport();
+
+		await expect(sidebarContent).not.toBeInViewport();
+	}
+);
+
 test.describe('Browser Panel', () => {
 	test('Deleting a fragment while its editable is selected', async ({
 		apiHelpers,

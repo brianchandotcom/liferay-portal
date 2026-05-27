@@ -102,10 +102,10 @@ public class ModelArmorTemplateManagerImpl
 					() -> GetterUtil.getBoolean(
 						objectEntry.getPropertyValue(
 							"maliciousUriFilterEnabled")));
-				setMultiLanguageDetectionEnabled(
+				setMultilanguageDetectionEnabled(
 					() -> GetterUtil.getBoolean(
 						objectEntry.getPropertyValue(
-							"multiLanguageDetectionEnabled")));
+							"multilanguageDetectionEnabled")));
 				setPiAndJailbreakConfidenceLevel(
 					() ->
 						ModelArmorTemplate.PiAndJailbreakConfidenceLevel.create(
@@ -194,10 +194,10 @@ public class ModelArmorTemplateManagerImpl
 								modelArmorTemplate.
 									getMaliciousUriFilterEnabled())
 						).put(
-							"multiLanguageDetectionEnabled",
+							"multilanguageDetectionEnabled",
 							GetterUtil.getBoolean(
 								modelArmorTemplate.
-									getMultiLanguageDetectionEnabled())
+									getMultilanguageDetectionEnabled())
 						).put(
 							"piAndJailbreakConfidenceLevel",
 							Objects.toString(

@@ -80,10 +80,10 @@ public class ModelArmorTemplate {
 			return this;
 		}
 
-		public Builder multiLanguageDetectionEnabled(
-			boolean multiLanguageDetectionEnabled) {
+		public Builder multilanguageDetectionEnabled(
+			boolean multilanguageDetectionEnabled) {
 
-			_multiLanguageDetectionEnabled = multiLanguageDetectionEnabled;
+			_multilanguageDetectionEnabled = multilanguageDetectionEnabled;
 
 			return this;
 		}
@@ -211,7 +211,7 @@ public class ModelArmorTemplate {
 			FilterConfig.newBuilder();
 		private String _guardrailType;
 		private String _location;
-		private boolean _multiLanguageDetectionEnabled;
+		private boolean _multilanguageDetectionEnabled;
 		private String _name;
 		private DetectionConfidenceLevel _piAndJailbreakConfidenceLevel;
 		private final RaiFilterSettings.Builder _raiFilterSettingsBuilder =
@@ -233,7 +233,7 @@ public class ModelArmorTemplate {
 			).setMultiLanguageDetection(
 				Template.TemplateMetadata.MultiLanguageDetection.newBuilder(
 				).setEnableMultiLanguageDetection(
-					builder._multiLanguageDetectionEnabled
+					builder._multilanguageDetectionEnabled
 				)
 			).build()
 		).build();

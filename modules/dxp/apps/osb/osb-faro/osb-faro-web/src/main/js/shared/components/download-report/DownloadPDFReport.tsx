@@ -224,11 +224,78 @@ export const formattedContainers = (
 		return acc;
 	}, {} as ContainerList);
 
+let _spriteSVG: Element | null = null;
+
+const fetchSprite = async (): Promise<Element | null> => {
+	if (_spriteSVG) {
+		return _spriteSVG;
+	}
+
+	const useEl = document.querySelector('svg use');
+
+	if (!useEl) {
+		return null;
+	}
+
+	const href =
+		useEl.getAttribute('href') || useEl.getAttribute('xlink:href') || '';
+
+	const spriteUrl = href.split('#')[0];
+
+	if (!spriteUrl) {
+		return null;
+	}
+
+	const res = await fetch(spriteUrl);
+	const text = await res.text();
+	const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+
+	_spriteSVG = doc.documentElement;
+
+	return _spriteSVG;
+};
+
+const inlineSVGIcons = (clonedDoc: Document, sprite: Element) => {
+	clonedDoc.querySelectorAll('svg use').forEach(useEl => {
+		const href =
+			useEl.getAttribute('href') ||
+			useEl.getAttribute('xlink:href') ||
+			'';
+
+		const symbolId = href.split('#')[1];
+
+		if (!symbolId) {
+			return;
+		}
+
+		const symbol = sprite.querySelector(`#${symbolId}`);
+
+		if (!symbol) {
+			return;
+		}
+
+		const svgEl = useEl.closest('svg');
+
+		if (!svgEl) {
+			return;
+		}
+
+		svgEl.innerHTML = symbol.innerHTML;
+
+		const viewBox = symbol.getAttribute('viewBox');
+
+		if (viewBox) {
+			svgEl.setAttribute('viewBox', viewBox);
+		}
+	});
+};
+
 const getContainers = async (
 	containers: TransformedContainer[]
 ): Promise<JSPDFExtensionContainer[]> => {
 	const containerArr: JSPDFExtensionContainer[] = [];
 	const promises: Promise<void>[] = [];
+	const sprite = await fetchSprite();
 
 	containers.map(({id, layout}) => {
 		const containerElement = document.getElementById(id);
@@ -239,7 +306,10 @@ const getContainers = async (
 
 		const promise = html2canvas(containerElement, {
 			backgroundColor: '#F1F2F5',
-			logging: false
+			logging: false,
+			onclone: sprite
+				? clonedDoc => inlineSVGIcons(clonedDoc, sprite)
+				: undefined
 		}).then(canvas => {
 			const imageData = canvas.toDataURL('image/jpeg', 1.0);
 

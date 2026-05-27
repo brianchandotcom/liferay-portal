@@ -16,11 +16,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -41,12 +36,11 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.internal.service.test.util.CMSObjectEntryTestUtil;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
-
-import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
@@ -105,16 +99,20 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	@TestInfo("LPD-89104")
 	public void testCheckEntriesWithExpiredObjectEntry() throws Exception {
-		ObjectEntry expiredObjectEntry = _addObjectEntry(
+		ObjectEntry expiredObjectEntry = CMSObjectEntryTestUtil.addObjectEntry(
+			_depotEntry.getGroupId(), _objectDefinition,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry = CMSObjectEntryTestUtil.addObjectEntry(
+			_depotEntry.getGroupId(), _objectDefinition,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		_moveToTrash(expiredObjectEntry);
+		CMSObjectEntryTestUtil.moveObjectEntryToTrash(
+			_depotEntry.getGroupId(), expiredObjectEntry);
 
 		_expireTrashEntry(expiredObjectEntry);
 
-		_moveToTrash(objectEntry);
+		CMSObjectEntryTestUtil.moveObjectEntryToTrash(
+			_depotEntry.getGroupId(), objectEntry);
 
 		_trashEntryLocalService.checkEntries();
 
@@ -130,14 +128,18 @@ public class TrashEntryLocalServiceTest {
 
 	@Test
 	@TestInfo("LPD-89104")
-	public void testDeleteEntriesEmptiesRecycleBinForGroup() throws Exception {
-		ObjectEntry objectEntry1 = _addObjectEntry(
+	public void testDeleteEntriesForGroup() throws Exception {
+		ObjectEntry objectEntry1 = CMSObjectEntryTestUtil.addObjectEntry(
+			_depotEntry.getGroupId(), _objectDefinition,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-		ObjectEntry objectEntry2 = _addObjectEntry(
+		ObjectEntry objectEntry2 = CMSObjectEntryTestUtil.addObjectEntry(
+			_depotEntry.getGroupId(), _objectDefinition,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		_moveToTrash(objectEntry1);
-		_moveToTrash(objectEntry2);
+		CMSObjectEntryTestUtil.moveObjectEntryToTrash(
+			_depotEntry.getGroupId(), objectEntry1);
+		CMSObjectEntryTestUtil.moveObjectEntryToTrash(
+			_depotEntry.getGroupId(), objectEntry2);
 
 		String className = _objectDefinition.getClassName();
 
@@ -163,93 +165,6 @@ public class TrashEntryLocalServiceTest {
 		Assert.assertTrue(trashEntries.toString(), trashEntries.isEmpty());
 	}
 
-	@Test
-	@TestInfo("LPD-89104")
-	public void testRestoreObjectEntryToOriginalFolderWhenFolderExists()
-		throws Exception {
-
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder();
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			objectEntryFolder.getObjectEntryFolderId());
-
-		_moveToTrash(objectEntry);
-
-		ObjectEntry trashedObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				objectEntry.getObjectEntryId());
-
-		ObjectEntry restoredObjectEntry =
-			_objectEntryLocalService.restoreObjectEntryFromTrash(
-				TestPropsValues.getUserId(), trashedObjectEntry,
-				ServiceContextTestUtil.getServiceContext(
-					_depotEntry.getGroupId()));
-
-		Assert.assertEquals(
-			objectEntryFolder.getObjectEntryFolderId(),
-			restoredObjectEntry.getObjectEntryFolderId());
-		Assert.assertNull(
-			_trashEntryLocalService.fetchEntry(
-				_objectDefinition.getClassName(),
-				restoredObjectEntry.getObjectEntryId()));
-	}
-
-	@Test
-	@TestInfo("LPD-89104")
-	public void testRestoreObjectEntryToSpaceRootWhenParentFolderPermanentlyDeleted()
-		throws Exception {
-
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder();
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			objectEntryFolder.getObjectEntryFolderId());
-
-		_moveToTrash(objectEntry);
-
-		_objectEntryFolderLocalService.deleteObjectEntryFolder(
-			objectEntryFolder.getObjectEntryFolderId());
-
-		ObjectEntry trashedObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				objectEntry.getObjectEntryId());
-
-		ObjectEntry restoredObjectEntry =
-			_objectEntryLocalService.restoreObjectEntryFromTrash(
-				TestPropsValues.getUserId(), trashedObjectEntry,
-				ServiceContextTestUtil.getServiceContext(
-					_depotEntry.getGroupId()));
-
-		Assert.assertEquals(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			restoredObjectEntry.getObjectEntryFolderId());
-	}
-
-	private ObjectEntry _addObjectEntry(long objectEntryFolderId)
-		throws Exception {
-
-		return ObjectEntryTestUtil.addObjectEntry(
-			_depotEntry.getGroupId(), _objectDefinition, objectEntryFolderId,
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).build()
-			).build());
-	}
-
-	private ObjectEntryFolder _addObjectEntryFolder() throws Exception {
-		return _objectEntryFolderLocalService.addObjectEntryFolder(
-			RandomTestUtil.randomString(), _depotEntry.getGroupId(),
-			TestPropsValues.getUserId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			RandomTestUtil.randomString(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));
-	}
-
 	private void _expireTrashEntry(ObjectEntry objectEntry) throws Exception {
 		int maxAgeMinutes = _trashHelper.getMaxAge(_depotEntry.getGroup());
 
@@ -264,12 +179,6 @@ public class TrashEntryLocalServiceTest {
 					Time.DAY));
 
 		_trashEntryLocalService.updateTrashEntry(trashEntry);
-	}
-
-	private void _moveToTrash(ObjectEntry objectEntry) throws Exception {
-		_objectEntryLocalService.moveObjectEntryToTrash(
-			TestPropsValues.getUserId(), objectEntry,
-			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));
 	}
 
 	private void _updateTrashEntriesMaxAge(Group group, int days) {
@@ -300,12 +209,6 @@ public class TrashEntryLocalServiceTest {
 	@Inject
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
-
-	@Inject
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private TrashEntryLocalService _trashEntryLocalService;

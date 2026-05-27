@@ -256,13 +256,13 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 
 												navigateToFolder({
 													id:
-														itemData.embedded.id ??
-														'',
+														itemData?.embedded.id ??
+														0,
 													label:
-														itemData.embedded
+														itemData?.embedded
 															.title ?? '',
 													scopeId:
-														itemData.embedded
+														itemData?.embedded
 															.scopeId ?? 0,
 												});
 											}}
@@ -358,7 +358,7 @@ const DetachedCMSFilesItemSelectorModal = <T extends Record<string, any>>(
 									navigateToFolder({
 										id: item?.embedded?.id ?? 0,
 										label: item?.embedded?.title ?? '',
-										scopeId: item.embedded.scopeId ?? 0,
+										scopeId: item?.embedded?.scopeId ?? 0,
 									}),
 								...(view.contentRenderer === 'cards'
 									? {onSelectChange: null, symbol: 'folder'}

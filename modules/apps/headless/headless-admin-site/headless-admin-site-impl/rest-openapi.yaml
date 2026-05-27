@@ -3434,6 +3434,11 @@ components:
                     items:
                         type: string
                     type: array
+                logo:
+                    description:
+                        The site's logo URL.
+                    readOnly: true
+                    type: string
                 manualMembership:
                     type: boolean
                 mapProviderKey:
@@ -3701,6 +3706,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                logo:
+                    description:
+                        The site template's logo URL.
+                    readOnly: true
+                    type: string
                 name:
                     description:
                         The site template's name.

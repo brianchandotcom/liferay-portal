@@ -32,11 +32,8 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -275,35 +272,16 @@ public class TrashEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));
 	}
 
-	private Group _updateTrashEntriesMaxAge(Group group, int days) {
+	private void _updateTrashEntriesMaxAge(Group group, int days) {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		int companyTrashEntriesMaxAge = PrefsPropsUtil.getInteger(
-			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
-
-		int minutes;
-
-		if (days > 0) {
-			minutes = days * 1440;
-		}
-		else {
-			minutes = GetterUtil.getInteger(
-				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
-				companyTrashEntriesMaxAge);
-		}
-
-		if (minutes != companyTrashEntriesMaxAge) {
-			typeSettingsUnicodeProperties.setProperty(
-				"trashEntriesMaxAge", String.valueOf(minutes));
-		}
-		else {
-			typeSettingsUnicodeProperties.remove("trashEntriesMaxAge");
-		}
+		typeSettingsUnicodeProperties.setProperty(
+			"trashEntriesMaxAge", String.valueOf(days * 24 * 60));
 
 		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
-		return _groupLocalService.updateGroup(group);
+		_groupLocalService.updateGroup(group);
 	}
 
 	private Group _cmsGroup;

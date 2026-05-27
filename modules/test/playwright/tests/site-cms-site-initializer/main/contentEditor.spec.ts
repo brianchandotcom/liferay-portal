@@ -360,7 +360,11 @@ test(
 
 		// Check that the content is visible that means we redirected to the folder
 
-		await expect(page.getByText(title)).toBeVisible();
+		await expect(
+			page
+				.locator('tr', {hasText: title})
+				.or(page.locator('.card-row', {hasText: title}))
+		).toBeVisible();
 
 		// Delete content and folder
 
@@ -370,7 +374,11 @@ test(
 
 		await folderPage.deleteFolder(folderName);
 
-		await expect(page.getByText(folderName)).not.toBeVisible();
+		await expect(
+			page
+				.locator('tr', {hasText: folderName})
+				.or(page.locator('.card-row', {hasText: folderName}))
+		).not.toBeVisible();
 	}
 );
 

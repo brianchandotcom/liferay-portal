@@ -25,7 +25,7 @@ export class FolderPage {
 		this.newButton = page.getByTestId('fdsCreationActionButton').first();
 	}
 
-	async createFolder(name: string) {
+	async createFolder(name: string, spaceName: string = 'Default') {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Folder'}),
@@ -37,6 +37,13 @@ export class FolderPage {
 		await dialog.waitFor();
 
 		await dialog.getByLabel('Name').fill(name);
+
+		const spaceSelector = dialog.getByLabel('SpaceMandatory');
+
+		if (await spaceSelector.isVisible()) {
+			await spaceSelector.click();
+			await this.page.getByRole('option', {name: spaceName}).click();
+		}
 
 		await dialog.getByRole('button', {name: 'Save'}).click();
 

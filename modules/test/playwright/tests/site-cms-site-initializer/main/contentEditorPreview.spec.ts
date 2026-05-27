@@ -836,7 +836,7 @@ test(
 
 			await test.step('Enter a valid URL and check that its content renders in the iframe', async () => {
 				await externalURLInput.fill('https://valid.test');
-				await externalURLInput.blur();
+				await externalURLInput.press('Enter');
 
 				const iframe = page.frameLocator('iframe[title="Preview"]');
 

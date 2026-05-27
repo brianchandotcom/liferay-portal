@@ -47,7 +47,7 @@ public interface OAuthClientEntryService extends BaseService {
 			String authRequestParametersJSON, String authServerWellKnownURI,
 			String customClaimsJSON, String infoJSON, String matcherField,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
-			String tokenRequestParametersJSON)
+			int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws PortalException;
 
 	public OAuthClientEntry deleteOAuthClientEntry(long oAuthClientEntryId)
@@ -103,8 +103,9 @@ public interface OAuthClientEntryService extends BaseService {
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
 			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
+			String tokenRequestParametersJSON)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1326215869
+// LIFERAY-SERVICE-BUILDER-HASH:1279433219

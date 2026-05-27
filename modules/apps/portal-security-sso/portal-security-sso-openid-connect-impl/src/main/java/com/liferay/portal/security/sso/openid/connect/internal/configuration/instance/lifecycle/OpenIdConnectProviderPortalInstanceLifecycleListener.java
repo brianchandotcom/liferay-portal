@@ -115,6 +115,9 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			GetterUtil.getLong(
 				properties.get("discoveryEndpointCacheInMillis")),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+			GetterUtil.getInteger(
+				properties.get("tokenConnectionTimeout"),
+				OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT),
 			_generateTokenRequestParametersJSON(properties));
 	}
 
@@ -459,6 +462,10 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 						GetterUtil.getLong(
 							properties.get("discoveryEndpointCacheInMillis")),
 						oldOAuthClientEntry.getOIDCUserInfoMapperJSON(),
+						GetterUtil.getInteger(
+							properties.get("tokenConnectionTimeout"),
+							OAuthClientEntryConstants.
+								TOKEN_CONNECTION_TIMEOUT_DEFAULT),
 						_generateTokenRequestParametersJSON(properties));
 				}
 				else {
@@ -504,7 +511,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		new ConcurrentHashMap<>();
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.oauth.client.persistence.service)(&(release.schema.version>=1.4.1)))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.oauth.client.persistence.service)(&(release.schema.version>=1.5.3)))"
 	)
 	private Release _release;
 

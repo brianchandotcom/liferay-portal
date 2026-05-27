@@ -63,7 +63,7 @@ public interface VelocityEngineConfiguration {
 	public String[] restrictedPackages();
 
 	@Meta.AD(
-		deflt = "httpUtil|httpUtilUnsafe|propsUtil|serviceLocator|staticFieldGetter",
+		deflt = "httpUtil|httpUtilUnsafe|portletConfig|propsUtil|serviceLocator|staticFieldGetter",
 		name = "restricted-variables", required = false
 	)
 	public String[] restrictedVariables();

@@ -52,6 +52,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("matcherField", getMatcherField());
 		attributes.put("metadataCacheTime", getMetadataCacheTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
+		attributes.put("tokenConnectionTimeout", getTokenConnectionTimeout());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
 
@@ -164,6 +165,13 @@ public class OAuthClientEntryWrapper
 
 		if (oidcUserInfoMapperJSON != null) {
 			setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
+		}
+
+		Integer tokenConnectionTimeout = (Integer)attributes.get(
+			"tokenConnectionTimeout");
+
+		if (tokenConnectionTimeout != null) {
+			setTokenConnectionTimeout(tokenConnectionTimeout);
 		}
 
 		String tokenRequestParametersJSON = (String)attributes.get(
@@ -332,6 +340,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the token connection timeout of this o auth client entry.
+	 *
+	 * @return the token connection timeout of this o auth client entry
+	 */
+	@Override
+	public int getTokenConnectionTimeout() {
+		return model.getTokenConnectionTimeout();
 	}
 
 	/**
@@ -540,6 +558,16 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
+	 * Sets the token connection timeout of this o auth client entry.
+	 *
+	 * @param tokenConnectionTimeout the token connection timeout of this o auth client entry
+	 */
+	@Override
+	public void setTokenConnectionTimeout(int tokenConnectionTimeout) {
+		model.setTokenConnectionTimeout(tokenConnectionTimeout);
+	}
+
+	/**
 	 * Sets the token request parameters json of this o auth client entry.
 	 *
 	 * @param tokenRequestParametersJSON the token request parameters json of this o auth client entry
@@ -607,4 +635,4 @@ public class OAuthClientEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1284682508
+// LIFERAY-SERVICE-BUILDER-HASH:326876092

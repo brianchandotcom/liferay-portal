@@ -62,7 +62,7 @@ public class OAuthClientEntryLocalServiceImpl
 			String authRequestParametersJSON, String authServerWellKnownURI,
 			String customClaimsJSON, String infoJSON, String matcherField,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
-			String tokenRequestParametersJSON)
+			int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -130,6 +130,7 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setMatcherField(matcherField);
 		oAuthClientEntry.setMetadataCacheTime(metadataCacheTime);
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
+		oAuthClientEntry.setTokenConnectionTimeout(tokenConnectionTimeout);
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);
 
@@ -233,7 +234,8 @@ public class OAuthClientEntryLocalServiceImpl
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
 			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
@@ -295,6 +297,7 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
 		oAuthClientEntry.setMetadataCacheTime(metadataCacheTime);
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
+		oAuthClientEntry.setTokenConnectionTimeout(tokenConnectionTimeout);
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);
 

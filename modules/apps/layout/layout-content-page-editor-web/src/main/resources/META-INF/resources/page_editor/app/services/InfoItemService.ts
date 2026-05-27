@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MappingFields} from '../../types/MappingField';
 import {EditableValue} from '../../types/editables/EditableValue';
 import {config} from '../config/index';
-import {ObjectFields} from '../contexts/ObjectDataContext';
 import {State} from '../reducers';
 import {PageContent} from '../utils/usePageContents';
 import serviceFetch from './serviceFetch';
@@ -50,7 +50,7 @@ function getAvailableStructureMappingFields({
 	classNameId: string;
 	classTypeId: string;
 }) {
-	return serviceFetch<ObjectFields>(config.mappingFieldsURL, {
+	return serviceFetch<MappingFields>(config.mappingFieldsURL, {
 		body: {
 			classNameId,
 			classTypeId,

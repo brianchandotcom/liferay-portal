@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {ObjectFieldAttributes} from '../../../app/contexts/ObjectDataContext';
+import {MappingFieldAttributes} from '../../../types/MappingField';
 import {RuleError} from '../../../types/Rule';
 import RuleDatePickerField from './RuleDatePickerField';
 import RuleMultiSelectField from './RuleMultiSelectField';
@@ -25,7 +25,7 @@ export default function ConditionValueInput({
 	onErrorChange,
 	value,
 }: {
-	attributes?: ObjectFieldAttributes;
+	attributes?: MappingFieldAttributes;
 	fieldType: string | undefined;
 	onBlur: () => void;
 	onChange: (value: string | string[]) => void;

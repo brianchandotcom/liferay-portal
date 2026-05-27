@@ -7,7 +7,7 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {ObjectFieldAttributes} from '../../../app/contexts/ObjectDataContext';
+import {MappingFieldAttributes} from '../../../types/MappingField';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
 import ConditionValueInput from './ConditionValueInput';
 import RuleSelect from './RuleSelect';
@@ -21,7 +21,7 @@ export default function FieldFragmentTypeSelector({
 }: {
 	condition: ConditionType;
 	items: {
-		attributes?: ObjectFieldAttributes;
+		attributes?: MappingFieldAttributes;
 		label: string;
 		type: string;
 		value: string;

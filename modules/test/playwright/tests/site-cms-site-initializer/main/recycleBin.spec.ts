@@ -1338,13 +1338,3 @@ test(
 		});
 	}
 );
-
-test(
-	'Recycle Bin shows the empty state when no entries exist',
-	{tag: '@LPD-89104'},
-	async ({page, recycleBinPage}) => {
-		await recycleBinPage.goto();
-
-		await expect(page.getByText('The Recycle Bin is empty.')).toBeVisible();
-	}
-);

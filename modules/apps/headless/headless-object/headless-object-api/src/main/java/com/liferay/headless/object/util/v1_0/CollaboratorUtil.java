@@ -53,7 +53,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mikel Lorza
@@ -65,8 +64,8 @@ public class CollaboratorUtil {
 			long classPK, Collaborator collaborator, long collaboratorId,
 			long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
-			DTOConverterRegistry dtoConverterRegistry, long groupId,
-			HttpServletRequest httpServletRequest,
+			DTOConverterRegistry dtoConverterRegistry, Date expirationDate,
+			long groupId, HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, String type, UriInfo uriInfo,
 			User user, UserGroupLocalService userGroupLocalService,
@@ -79,9 +78,9 @@ public class CollaboratorUtil {
 			return addOrUpdateCollaboratorByEmailAddress(
 				acceptLanguage, className, classNameId, classPK, collaborator,
 				companyId, dtoConverter, dtoConverterRegistry,
-				collaborator.getEmailAddress(), groupId, httpServletRequest,
-				sharingEntryService, ticketLocalService, uriInfo, user,
-				userGroupLocalService, userLocalService);
+				collaborator.getEmailAddress(), expirationDate, groupId,
+				httpServletRequest, sharingEntryService, ticketLocalService,
+				uriInfo, user, userGroupLocalService, userLocalService);
 		}
 
 		return toCollaborator(
@@ -98,7 +97,8 @@ public class CollaboratorUtil {
 			long classPK, Collaborator collaborator, long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry, String emailAddress,
-			long groupId, HttpServletRequest httpServletRequest,
+			Date expirationDate, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, UriInfo uriInfo, User user,
 			UserGroupLocalService userGroupLocalService,
@@ -147,7 +147,7 @@ public class CollaboratorUtil {
 		}
 
 		Ticket ticket = _addOrUpdateTicket(
-			className, classPK, collaborator, companyId, emailAddress,
+			className, classPK, companyId, emailAddress, expirationDate,
 			_fetchTicketByEmailAddress(
 				className, classPK, companyId, emailAddress,
 				ticketLocalService),
@@ -166,8 +166,8 @@ public class CollaboratorUtil {
 			AcceptLanguage acceptLanguage, String className, long classNameId,
 			long classPK, Collaborator[] collaborators, long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
-			DTOConverterRegistry dtoConverterRegistry, long groupId,
-			HttpServletRequest httpServletRequest,
+			DTOConverterRegistry dtoConverterRegistry, Date expirationDate,
+			long groupId, HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, UriInfo uriInfo, User user,
 			UserGroupLocalService userGroupLocalService,
@@ -211,8 +211,8 @@ public class CollaboratorUtil {
 				}
 				else {
 					Ticket ticket = _addOrUpdateTicket(
-						className, classPK, collaborator, companyId,
-						emailAddress,
+						className, classPK, companyId, emailAddress,
+						expirationDate,
 						_fetchTicketByEmailAddress(
 							className, classPK, companyId, emailAddress,
 							ticketLocalService),
@@ -527,28 +527,19 @@ public class CollaboratorUtil {
 	}
 
 	private static Ticket _addOrUpdateTicket(
-		String className, long classPK, Collaborator collaborator,
-		long companyId, String emailAddress, Ticket ticket,
+		String className, long classPK, long companyId, String emailAddress,
+		Date expirationDate, Ticket ticket,
 		TicketLocalService ticketLocalService) {
 
 		if (ticket == null) {
 			return ticketLocalService.addTicket(
 				companyId, className, classPK,
 				TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress, null,
-				GetterUtil.getObject(
-					collaborator.getDateExpired(),
-					() -> new Date(
-						System.currentTimeMillis() +
-							TimeUnit.HOURS.toMillis(
-								_DEFAULT_INVITATION_EXPIRATION_HOURS))),
-				null);
-		}
-
-		if (collaborator.getDateExpired() != null) {
-			ticket.setExpirationDate(collaborator.getDateExpired());
+				expirationDate, null);
 		}
 
 		ticket.setEmailAddress(emailAddress);
+		ticket.setExpirationDate(expirationDate);
 
 		return ticketLocalService.updateTicket(ticket);
 	}
@@ -651,7 +642,5 @@ public class CollaboratorUtil {
 				"Collaborator type must be \"User\" or \"UserGroup\"");
 		}
 	}
-
-	private static final int _DEFAULT_INVITATION_EXPIRATION_HOURS = 48;
 
 }

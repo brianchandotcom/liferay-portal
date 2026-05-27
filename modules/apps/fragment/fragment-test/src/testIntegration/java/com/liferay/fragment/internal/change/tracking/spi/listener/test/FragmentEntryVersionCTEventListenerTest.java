@@ -55,31 +55,17 @@ public class FragmentEntryVersionCTEventListenerTest {
 
 	@Test
 	public void testOnAfterPublish() throws Throwable {
-		FragmentEntry fragmentEntry =
-			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
+		FragmentEntry fragmentEntry1 = _addFragmentEntry();
 
 		List<Integer> versions =
 			FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-				fragmentEntry);
+				fragmentEntry1);
 
 		int oldestVersion = versions.get(0);
 
 		Assert.assertTrue(oldestVersion > 0);
 
-		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
-
-		Assert.assertEquals(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT + 1,
-			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
-
-		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry);
-
-		Assert.assertTrue(
-			versions.toString(), versions.contains(oldestVersion));
+		FragmentEntry fragmentEntry2 = _addFragmentEntry();
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -89,7 +75,8 @@ public class FragmentEntryVersionCTEventListenerTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection.getCtCollectionId())) {
 
-			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
+			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry1);
+			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry2);
 		}
 
 		_ctCollectionService.publishCTCollection(
@@ -100,13 +87,34 @@ public class FragmentEntryVersionCTEventListenerTest {
 		Assert.assertEquals(
 			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry1));
 
 		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry);
+			fragmentEntry1);
 
 		Assert.assertFalse(
 			versions.toString(), versions.contains(oldestVersion));
+
+		Assert.assertEquals(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2));
+	}
+
+	private FragmentEntry _addFragmentEntry() throws Exception {
+		FragmentEntry fragmentEntry =
+			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
+
+		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
+
+		Assert.assertEquals(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT + 1,
+			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
+
+		return fragmentEntry;
 	}
 
 	@Inject

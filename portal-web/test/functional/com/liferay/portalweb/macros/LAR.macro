@@ -121,12 +121,14 @@ definition {
 
 	@summary = "Default summary"
 	macro _exportSite(larFileName = null) {
-		if (isSet(larFileName)) {
-			Type(
-				inputFieldId = "ExportPortlet_name",
-				locator1 = "TextInput#INPUT_ID",
-				value1 = ${larFileName});
+		if (!(isSet(larFileName))) {
+			var larFileName = "Export Process";
 		}
+
+		Type(
+			inputFieldId = "ExportPortlet_name",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = ${larFileName});
 
 		LAR.exportWithAssertionOnSuccess();
 	}

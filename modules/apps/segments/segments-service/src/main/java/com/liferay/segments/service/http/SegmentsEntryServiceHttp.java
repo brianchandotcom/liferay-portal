@@ -357,8 +357,8 @@ public class SegmentsEntryServiceHttp {
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry>
 		getSegmentsEntries(
-			HttpPrincipal httpPrincipal, long groupId, String source, int start,
-			int end,
+			HttpPrincipal httpPrincipal, long groupId, String[] sources,
+			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
 
@@ -368,7 +368,7 @@ public class SegmentsEntryServiceHttp {
 				_getSegmentsEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, source, start, end, orderByComparator);
+				methodKey, groupId, sources, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -424,7 +424,7 @@ public class SegmentsEntryServiceHttp {
 	}
 
 	public static int getSegmentsEntriesCount(
-		HttpPrincipal httpPrincipal, long groupId, String source) {
+		HttpPrincipal httpPrincipal, long groupId, String[] sources) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -432,7 +432,7 @@ public class SegmentsEntryServiceHttp {
 				_getSegmentsEntriesCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, source);
+				methodKey, groupId, sources);
 
 			Object returnObj = null;
 
@@ -541,8 +541,8 @@ public class SegmentsEntryServiceHttp {
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.segments.model.SegmentsEntry> searchSegmentsEntries(
 				HttpPrincipal httpPrincipal, long companyId, long groupId,
-				String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
+				String keywords, java.util.LinkedHashMap<String, Object> params,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -551,7 +551,8 @@ public class SegmentsEntryServiceHttp {
 				_searchSegmentsEntriesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, keywords, start, end, sort);
+				methodKey, companyId, groupId, keywords, params, start, end,
+				sort);
 
 			Object returnObj = null;
 
@@ -666,13 +667,13 @@ public class SegmentsEntryServiceHttp {
 		};
 	private static final Class<?>[] _getSegmentsEntriesParameterTypes8 =
 		new Class[] {
-			long.class, String.class, int.class, int.class,
+			long.class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getSegmentsEntriesCountParameterTypes9 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getSegmentsEntriesCountParameterTypes10 =
-		new Class[] {long.class, String.class};
+		new Class[] {long.class, String[].class};
 	private static final Class<?>[] _getSegmentsEntryParameterTypes11 =
 		new Class[] {long.class};
 	private static final Class<?>[]
@@ -681,8 +682,8 @@ public class SegmentsEntryServiceHttp {
 		};
 	private static final Class<?>[] _searchSegmentsEntriesParameterTypes13 =
 		new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, String.class, java.util.LinkedHashMap.class,
+			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateSegmentsEntryParameterTypes14 =
 		new Class[] {
@@ -692,4 +693,4 @@ public class SegmentsEntryServiceHttp {
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:919124702
+// LIFERAY-SERVICE-BUILDER-HASH:597784507

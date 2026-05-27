@@ -108,19 +108,19 @@ public class SegmentsEntryServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, int start, int end,
+		long groupId, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getService().getSegmentsEntries(
-			groupId, source, start, end, orderByComparator);
+			groupId, sources, start, end, orderByComparator);
 	}
 
 	public static int getSegmentsEntriesCount(long groupId) {
 		return getService().getSegmentsEntriesCount(groupId);
 	}
 
-	public static int getSegmentsEntriesCount(long groupId, String source) {
-		return getService().getSegmentsEntriesCount(groupId, source);
+	public static int getSegmentsEntriesCount(long groupId, String[] sources) {
+		return getService().getSegmentsEntriesCount(groupId, sources);
 	}
 
 	public static SegmentsEntry getSegmentsEntry(long segmentsEntryId)
@@ -139,12 +139,13 @@ public class SegmentsEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<SegmentsEntry> searchSegmentsEntries(
-				long companyId, long groupId, String keywords, int start,
+				long companyId, long groupId, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
 				int end, com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchSegmentsEntries(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, params, start, end, sort);
 	}
 
 	public static SegmentsEntry updateSegmentsEntry(
@@ -169,4 +170,4 @@ public class SegmentsEntryServiceUtil {
 			SegmentsEntryServiceUtil.class, SegmentsEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2133663031
+// LIFERAY-SERVICE-BUILDER-HASH:600949036

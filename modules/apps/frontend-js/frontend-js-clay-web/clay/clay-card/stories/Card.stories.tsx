@@ -214,6 +214,7 @@ CardWithInfoImage.args = {
 };
 export function CardWithHorizontal(args: any) {
 	const [value, setValue] = useState<boolean>(false);
+	const [longTextValue, setLongTextValue] = useState<boolean>(false);
 	const [radioValue, setRadioValue] = useState<string>('');
 
 	return (
@@ -246,6 +247,17 @@ export function CardWithHorizontal(args: any) {
 						onSelectChange={setValue}
 						selected={value}
 						title="Selectable Folder"
+					/>
+				</div>
+
+				<div className="col-md-4">
+					<ClayCardWithHorizontal
+						disabled={args.disabled}
+						href="#"
+						onSelectChange={setLongTextValue}
+						selected={longTextValue}
+						title="This Folder Has an Extremely Long Name That Wraps Onto Multiple Lines Instead of Being Truncated With an Ellipsis"
+						truncate={false}
 					/>
 				</div>
 			</div>
@@ -296,6 +308,30 @@ export function CardWithHorizontal(args: any) {
 							selectableType="radio"
 							selected={radioValue === 'radio2'}
 							title="Radio Selectable Folder 2"
+						/>
+
+						<ClayCardWithHorizontal
+							actions={[
+								{
+									label: 'clickable',
+									onClick: () => {
+										alert('you clicked!');
+									},
+								},
+								{type: 'divider'},
+								{
+									href: '#',
+									label: 'linkable',
+								},
+							]}
+							disabled={args.disabled}
+							href="#"
+							onSelectChange={setRadioValue}
+							radioProps={{name: 'cards', value: 'radio3'}}
+							selectableType="radio"
+							selected={radioValue === 'radio3'}
+							title="This Radio Folder Has an Extremely Long Name That Wraps Onto Multiple Lines Instead of Being Truncated With an Ellipsis"
+							truncate={false}
 						/>
 					</ClayCard.Group>
 				</div>

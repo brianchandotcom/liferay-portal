@@ -63,26 +63,23 @@ test(
 
 test(
 	'Folders should not show status',
-	{tag: '@LPD-78615'},
+	{tag: ['@LPD-78615', '@LPD-92355']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const folderTitle = getRandomString();
 
 		await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 			scopeKey: 'Default',
 			title: folderTitle,
 		});
 
-		await assetsPage.gotoFiles();
-
-		await assetsPage.changeVisualizationMode('Table');
+		await assetsPage.gotoContents();
 
 		const row = page
 			.getByRole('row')
 			.filter({has: page.getByRole('link', {name: folderTitle})});
 
-		await expect(
-			row.getByRole('cell', {exact: true, name: '--'})
-		).toBeVisible();
+		await expect(row.locator('.cell-embedded-status')).toHaveText('--');
 	}
 );
 

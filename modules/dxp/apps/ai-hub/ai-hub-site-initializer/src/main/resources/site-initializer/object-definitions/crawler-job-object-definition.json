@@ -19,7 +19,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Crawler Jobs"
+				"en_US": "Account to AI Hub Crawler Jobs"
 			},
 			"name": "r_accountToAIHubCrawlerJobs_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
@@ -47,7 +47,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Content Retriever to Crawler Jobs"
+				"en_US": "AI Hub Content Retriever to AI Hub Crawler Jobs"
 			},
 			"name": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
 			"objectDefinitionExternalReferenceCode1": "L_AI_HUB_CONTENT_RETRIEVER",

@@ -117,7 +117,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Content Retrievers"
+				"en_US": "Account to AI Hub Content Retrievers"
 			},
 			"name": "r_accountToAIHubContentRetrievers_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

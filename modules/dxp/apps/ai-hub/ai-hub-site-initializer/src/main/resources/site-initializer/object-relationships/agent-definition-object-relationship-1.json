@@ -2,7 +2,7 @@
 	"deletionType": "cascade",
 	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS",
 	"label": {
-		"en_US": "Account to Agent Definitions"
+		"en_US": "Account to AI Hub Agent Definitions"
 	},
 	"name": "accountToAgentDefinitions",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

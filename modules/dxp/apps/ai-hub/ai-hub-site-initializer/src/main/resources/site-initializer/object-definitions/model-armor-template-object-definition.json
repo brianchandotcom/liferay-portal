@@ -20,7 +20,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Model Armor Templates"
+				"en_US": "Account to AI Hub Model Armor Templates"
 			},
 			"name": "r_accountToAIHubModelArmorTemplates_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

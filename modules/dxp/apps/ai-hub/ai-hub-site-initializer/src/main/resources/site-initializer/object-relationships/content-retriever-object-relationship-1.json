@@ -2,7 +2,7 @@
 	"deletionType": "cascade",
 	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 	"label": {
-		"en_US": "Account to Content Retrievers"
+		"en_US": "Account to AI Hub Content Retrievers"
 	},
 	"name": "accountToContentRetrievers",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",

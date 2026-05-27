@@ -53,7 +53,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,11 +74,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			_completeWorkflowNodeCallable =
 				new CompanyInheritableThreadLocalCallable<>(
 					() -> {
-						InvocationParameters invocationParameters =
-							_invocationParametersAtomicReference.get();
-
 						ExecutionContext executionContext =
-							invocationParameters.get("executionContext");
+							_invocationParameters.get("executionContext");
 
 						KaleoInstanceToken kaleoInstanceToken =
 							executionContext.getKaleoInstanceToken();
@@ -87,15 +83,13 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						Map<String, Serializable> workflowContext =
 							executionContext.getWorkflowContext();
 
-						workflowContext.put(
-							"reason", _reasonAtomicReference.get());
+						workflowContext.put("reason", _reason);
 
 						_workflowNodeManager.completeWorkflowNode(
 							kaleoInstanceToken.getCompanyId(),
 							kaleoInstanceToken.getUserId(),
 							kaleoInstanceToken.getKaleoInstanceTokenId(),
-							_transitionNameAtomicReference.get(),
-							workflowContext, false);
+							_transitionName, workflowContext, false);
 
 						return null;
 					});
@@ -113,9 +107,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				@P("Transition name") String transitionName)
 			throws PortalException {
 
-			_invocationParametersAtomicReference.set(invocationParameters);
-			_reasonAtomicReference.set(reason);
-			_transitionNameAtomicReference.set(transitionName);
+			_invocationParameters = invocationParameters;
+			_reason = reason;
+			_transitionName = transitionName;
 
 			try {
 				_completeWorkflowNodeCallable.call();
@@ -126,12 +120,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		}
 
 		private final Callable<Void> _completeWorkflowNodeCallable;
-		private final AtomicReference<InvocationParameters>
-			_invocationParametersAtomicReference = new AtomicReference<>();
-		private final AtomicReference<String> _reasonAtomicReference =
-			new AtomicReference<>();
-		private final AtomicReference<String> _transitionNameAtomicReference =
-			new AtomicReference<>();
+		private InvocationParameters _invocationParameters;
+		private String _reason;
+		private String _transitionName;
 
 	}
 

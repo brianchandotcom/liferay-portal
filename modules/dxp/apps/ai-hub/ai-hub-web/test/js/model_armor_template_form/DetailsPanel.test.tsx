@@ -102,7 +102,7 @@ const baseValues: ModelArmorTemplate = {
 	guardrailType: 'input',
 	location: '',
 	maliciousUriFilterEnabled: false,
-	multiLanguageDetectionEnabled: false,
+	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 	piAndJailbreakFilterEnabled: false,
 	raiDangerousLevel: 'none',
@@ -245,7 +245,7 @@ describe('DetailsPanel', () => {
 	describe('multi-language detection checkbox', () => {
 		it('toggles the value via setField', () => {
 			const {setField} = renderPanel({
-				values: {...baseValues, multiLanguageDetectionEnabled: false},
+				values: {...baseValues, multilanguageDetectionEnabled: false},
 			});
 
 			fireEvent.click(
@@ -253,7 +253,7 @@ describe('DetailsPanel', () => {
 			);
 
 			expect(setField).toHaveBeenCalledWith(
-				'multiLanguageDetectionEnabled',
+				'multilanguageDetectionEnabled',
 				true
 			);
 		});

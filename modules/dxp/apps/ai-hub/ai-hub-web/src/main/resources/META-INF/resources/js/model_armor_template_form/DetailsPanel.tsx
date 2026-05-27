@@ -176,11 +176,11 @@ const DetailsPanel: React.FC<IProps> = ({
 
 				<ClayForm.Group>
 					<ClayCheckbox
-						checked={values.multiLanguageDetectionEnabled}
+						checked={values.multilanguageDetectionEnabled}
 						label={Liferay.Language.get('multilanguage-detection')}
 						onChange={(event) =>
 							setField(
-								'multiLanguageDetectionEnabled',
+								'multilanguageDetectionEnabled',
 								event.target.checked
 							)
 						}

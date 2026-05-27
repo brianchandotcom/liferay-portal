@@ -198,12 +198,10 @@ describe('TopCategoriesAndTags', () => {
 		it('should render the vocabulary name of every category returned', () => {
 			render(<TopCategoriesAndTags />);
 
-			expect(
-				screen.getAllByText('Department').length
-			).toBeGreaterThan(0);
-			expect(
-				screen.getAllByText('Document Type').length
-			).toBeGreaterThan(0);
+			expect(screen.getAllByText('Department').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Document Type').length).toBeGreaterThan(
+				0
+			);
 			expect(
 				screen.getAllByText('Employment Type').length
 			).toBeGreaterThan(0);
@@ -397,9 +395,7 @@ describe('TopCategoriesAndTags', () => {
 			expect(
 				screen.getByRole('tab', {name: 'Category'})
 			).toBeInTheDocument();
-			expect(
-				screen.getByRole('tab', {name: 'Tag'})
-			).toBeInTheDocument();
+			expect(screen.getByRole('tab', {name: 'Tag'})).toBeInTheDocument();
 		});
 
 		it('should not render rows when no items are returned', () => {

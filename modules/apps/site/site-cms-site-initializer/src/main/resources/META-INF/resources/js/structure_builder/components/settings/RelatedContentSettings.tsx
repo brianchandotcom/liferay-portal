@@ -19,8 +19,7 @@ import {useCache} from '../../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectErrors from '../../selectors/selectErrors';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
-import selectStructureERC from '../../selectors/selectStructureERC';
-import {RelatedContent, Structure} from '../../types/Structure';
+import {RelatedContent} from '../../types/Structure';
 import Breadcrumb from '../Breadcrumb';
 import ERCInput from '../ERCInput';
 import {LocalizedInput} from '../LocalizedInput';
@@ -64,7 +63,6 @@ function GeneralTab({
 	relatedContent: RelatedContent;
 }) {
 	const errors = useSelector(selectErrors(relatedContent.uuid));
-	const mainStructureERC = useSelector(selectStructureERC);
 	const publishedChildren = useSelector(selectPublishedChildren);
 
 	const isPublished = publishedChildren.has(relatedContent.uuid);
@@ -92,7 +90,7 @@ function GeneralTab({
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="warning">
+				<ClayLabel displayType="warning" inverse>
 					{Liferay.Language.get('select-related-content')}
 				</ClayLabel>
 			</div>
@@ -130,7 +128,7 @@ function GeneralTab({
 					aria-describedby={feedbackId}
 					disabled={isPublished || disabled}
 					id={pickerId}
-					items={getItems(objectDefinitions, mainStructureERC)}
+					items={getItems(objectDefinitions)}
 					messages={{
 						itemDescribedby: Liferay.Language.get(
 							'you-are-currently-on-a-text-element,-inside-of-a-list-box'
@@ -192,10 +190,7 @@ function GeneralTab({
 	);
 }
 
-function getItems(
-	objectDefinitions: ObjectDefinitions,
-	mainStructureERC: Structure['erc']
-) {
+function getItems(objectDefinitions: ObjectDefinitions) {
 	if (!objectDefinitions) {
 		return [];
 	}
@@ -204,9 +199,8 @@ function getItems(
 
 	for (const objectDefinition of Object.values(objectDefinitions)) {
 		if (
-			objectDefinition.externalReferenceCode === mainStructureERC ||
 			objectDefinition.objectFolderExternalReferenceCode ===
-				'L_CMS_STRUCTURE_REPEATABLE_GROUPS'
+			'L_CMS_STRUCTURE_REPEATABLE_GROUPS'
 		) {
 			continue;
 		}

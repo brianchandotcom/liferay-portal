@@ -38,7 +38,8 @@ export default class MarketplaceDeliveryOrder {
 				OrderTypes.DXP_APP,
 			].includes(
 				this.order.orderTypeExternalReferenceCode as OrderTypes
-			) && !this.isFreeApp
+			) &&
+			(!this.isFreeApp || this.paymentMethod === 'paypal-integration')
 		);
 	}
 	get customFields() {
@@ -73,6 +74,10 @@ export default class MarketplaceDeliveryOrder {
 
 	get placedOrderItems() {
 		return this.order?.placedOrderItems ?? [];
+	}
+
+	get paymentMethod() {
+		return this.order?.paymentMethod;
 	}
 
 	get productThumbnail() {

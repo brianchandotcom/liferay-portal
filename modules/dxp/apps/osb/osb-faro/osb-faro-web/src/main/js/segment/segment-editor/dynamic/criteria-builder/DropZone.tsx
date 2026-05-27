@@ -28,13 +28,19 @@ const acceptedDragTypes = [
 const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
+		disabled,
 		dropIndex: destIndex
 	}: {
 		criteriaGroupId: string;
+		disabled?: boolean;
 		dropIndex: number;
 	},
 	monitor: DropTargetMonitor
 ): boolean => {
+	if (disabled) {
+		return false;
+	}
+
 	const {
 		childGroupIds = [],
 		criteriaGroupId: startGroupId,
@@ -109,6 +115,7 @@ interface IDropZoneProps {
 	canDrop: boolean;
 	connectDropTarget: ConnectDropTarget;
 	criteriaGroupId: string;
+	disabled?: boolean;
 	dropIndex: number;
 	hover?: boolean;
 	onCriterionAdd: OnCriterionAdd;

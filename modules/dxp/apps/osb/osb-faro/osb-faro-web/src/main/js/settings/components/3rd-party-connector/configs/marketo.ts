@@ -14,10 +14,11 @@ const marketoConfig: ConnectorConfig = {
 		{
 			entity: Entity.Events,
 			fetchCount: params =>
-				fetchConnectorEntityCount(SLUG, Entity.Events, params)
+				fetchConnectorEntityCount(Entity.Events, params)
 		}
 	],
 	languages: buildLanguages(displayName),
+	requiresLDP: true,
 	singleton: true,
 	slug: SLUG,
 	type: DataSourceTypes.Marketo

@@ -173,10 +173,10 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest {
 		}
 	}
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private Language _language;

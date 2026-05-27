@@ -76,8 +76,9 @@ public class PatcherProductVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PatcherProductVersion>
-		_collectionPersistenceFinderByFixDeliveryMethod;
+	private FilterCollectionPersistenceFinder
+		<PatcherProductVersion, NoSuchPatcherProductVersionException>
+			_collectionPersistenceFinderByFixDeliveryMethod;
 
 	/**
 	 * Returns an ordered range of all the patcher product versions where fixDeliveryMethod = &#63;.
@@ -118,19 +119,8 @@ public class PatcherProductVersionPersistenceImpl
 			OrderByComparator<PatcherProductVersion> orderByComparator)
 		throws NoSuchPatcherProductVersionException {
 
-		PatcherProductVersion patcherProductVersion =
-			fetchByFixDeliveryMethod_First(
-				fixDeliveryMethod, orderByComparator);
-
-		if (patcherProductVersion != null) {
-			return patcherProductVersion;
-		}
-
-		throw new NoSuchPatcherProductVersionException(
-			_collectionPersistenceFinderByFixDeliveryMethod.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fixDeliveryMethod}));
+		return _collectionPersistenceFinderByFixDeliveryMethod.findFirst(
+			finderCache, new Object[] {fixDeliveryMethod}, orderByComparator);
 	}
 
 	/**
@@ -207,8 +197,9 @@ public class PatcherProductVersionPersistenceImpl
 			finderCache, new Object[] {fixDeliveryMethod});
 	}
 
-	private UniquePersistenceFinder<PatcherProductVersion>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<PatcherProductVersion, NoSuchPatcherProductVersionException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the patcher product version where name = &#63; or throws a <code>NoSuchPatcherProductVersionException</code> if it could not be found.
@@ -221,21 +212,8 @@ public class PatcherProductVersionPersistenceImpl
 	public PatcherProductVersion findByName(String name)
 		throws NoSuchPatcherProductVersionException {
 
-		PatcherProductVersion patcherProductVersion = fetchByName(name);
-
-		if (patcherProductVersion == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherProductVersionException(message);
-		}
-
-		return patcherProductVersion;
+		return _uniquePersistenceFinderByName.find(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -517,18 +495,6 @@ public class PatcherProductVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
 				PatcherProductVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherProductVersionImpl.class,
-					PatcherProductVersion.class, "patcherProductVersion",
-					"OSBPatcher_PProductVersion",
-					"patcherProductVersion.patcherProductVersionId",
-					"SELECT DISTINCT {patcherProductVersion.*} FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
-					"SELECT {OSBPatcher_PProductVersion.*} FROM (SELECT DISTINCT patcherProductVersion.patcherProductVersionId FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PProductVersion ON TEMP_TABLE.patcherProductVersionId = OSBPatcher_PProductVersion.patcherProductVersionId",
-					"SELECT COUNT(DISTINCT patcherProductVersion.patcherProductVersionId) AS COUNT_VALUE FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
-					PatcherProductVersionModelImpl.ORDER_BY_SQL,
-					PatcherProductVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProductVersion.", "fixDeliveryMethod",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -611,4 +577,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1796365727
+// LIFERAY-SERVICE-BUILDER-HASH:-1759848940

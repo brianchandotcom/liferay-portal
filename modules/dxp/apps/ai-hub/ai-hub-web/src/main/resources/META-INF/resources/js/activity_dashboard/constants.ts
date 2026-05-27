@@ -1,0 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+export const POLL_INTERVAL_MS = 30_000;
+
+export const REST_BASE_URL = '/o/ai-hub/v1.0';

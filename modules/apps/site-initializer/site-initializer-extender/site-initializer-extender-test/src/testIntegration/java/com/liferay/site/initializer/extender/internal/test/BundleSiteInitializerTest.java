@@ -4672,12 +4672,6 @@ public class BundleSiteInitializerTest {
 		BundleSiteInitializerTest.class);
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static PLOEntryLocalService _ploEntryLocalService;
-
-	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
@@ -4734,6 +4728,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -4856,6 +4853,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private OrganizationResource.Factory _organizationResourceFactory;
+
+	@Inject
+	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -27,8 +27,8 @@ import {
 
 const IncidentContactEditModal = ({
 	close,
-	hasCloudNativeContact,
 	hasCriticalIncidentContact,
+	hasPaaSUserContact,
 	hasPrivacyBreachContact,
 	hasSecurityBreachContact,
 	leftButton,
@@ -55,17 +55,17 @@ const IncidentContactEditModal = ({
 	const handleSubmit = async () => {
 		const handleToastOpening = (contacts, actionType) => {
 			contacts?.map((item) => {
-				openToast(
-					`${item.label}`,
-					`${i18n.translate(`high-priority-contact-${actionType}`)}
+				openToast({
+					message: `${i18n.translate(`high-priority-contact-${actionType}`)}
 					<b>${i18n.translate(
 						`${getKebabCase(
 							actionType === 'added'
 								? item.category.name
 								: item.labelRole
 						)}-contact`
-					)}</b>`
-				);
+					)}</b>`,
+					title: `${item.label}`,
+				});
 			});
 		};
 
@@ -128,8 +128,10 @@ const IncidentContactEditModal = ({
 		catch (error) {
 			setIsLoadingSaveButton(false);
 
-			openToast('error', 'an-unexpected-error-occurred', {
-				type: 'danger'
+			openToast({
+				message: 'an-unexpected-error-occurred',
+				title: 'error',
+				type: 'danger',
 			});
 		}
 	};
@@ -139,8 +141,8 @@ const IncidentContactEditModal = ({
 	).find((category) => category === modalFilter);
 
 	const hasHighPriorityContactByCategory = {
-		[HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative]: hasCloudNativeContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident]: hasCriticalIncidentContact,
+		[HIGH_PRIORITY_CONTACT_CATEGORIES.paasUser]: hasPaaSUserContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach]: hasPrivacyBreachContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach]: hasSecurityBreachContact,
 	};
@@ -209,8 +211,8 @@ const IncidentContactEditModal = ({
 
 const IncidentContactEditForm = ({
 	close,
-	hasCloudNativeContact,
 	hasCriticalIncidentContact,
+	hasPaaSUserContact,
 	hasPrivacyBreachContact,
 	hasSecurityBreachContact,
 	leftButton,
@@ -222,8 +224,8 @@ const IncidentContactEditForm = ({
 			{(formikProps) => (
 				<IncidentContactEditModal
 					close={close}
-					hasCloudNativeContact={hasCloudNativeContact}
 					hasCriticalIncidentContact={hasCriticalIncidentContact}
+					hasPaaSUserContact={hasPaaSUserContact}
 					hasPrivacyBreachContact={hasPrivacyBreachContact}
 					hasSecurityBreachContact={hasSecurityBreachContact}
 					leftButton={leftButton}

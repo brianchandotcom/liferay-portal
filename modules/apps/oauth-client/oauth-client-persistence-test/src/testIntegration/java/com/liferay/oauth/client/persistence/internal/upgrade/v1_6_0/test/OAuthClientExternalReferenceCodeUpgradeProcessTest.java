@@ -102,16 +102,16 @@ public class OAuthClientExternalReferenceCodeUpgradeProcessTest
 		return new Version(1, 5, 1);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private OAuthClientASLocalMetadataLocalService
 		_oAuthClientASLocalMetadataLocalService;
 
 	@Inject
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

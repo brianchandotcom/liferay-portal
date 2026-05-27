@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayLabel from '..';
+import ClayLabel, {ContentLabel} from '..';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
@@ -19,7 +19,7 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('with a different displayType ', () => {
+	it('with a different displayType', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel displayType="success">Success Label</ClayLabel>
 		);
@@ -27,7 +27,27 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('as a link ', () => {
+	it('renders as inverse displayType', () => {
+		const testRenderer = TestRenderer.create(
+			<ClayLabel displayType="success" inverse>
+				Success Label
+			</ClayLabel>
+		);
+
+		expect(testRenderer.toJSON()).toMatchSnapshot();
+	});
+
+	it('does not renders as inverse for unstyled displayType', () => {
+		const testRenderer = TestRenderer.create(
+			<ClayLabel displayType="unstyled" inverse>
+				Success Label
+			</ClayLabel>
+		);
+
+		expect(testRenderer.toJSON()).toMatchSnapshot();
+	});
+
+	it('as a link', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel href="#/foo/bar">Label w/ link</ClayLabel>
 		);
@@ -85,6 +105,32 @@ describe('Rendering', () => {
 
 				<ClayLabel.ItemAfter>Content after</ClayLabel.ItemAfter>
 			</ClayLabel>
+		);
+
+		expect(testRenderer.toJSON()).toMatchSnapshot();
+	});
+});
+
+describe('ContentLabel rendering', () => {
+	it('renders with a content displayType', () => {
+		const testRenderer = TestRenderer.create(
+			<ContentLabel displayType="content-2">Content 2 Label</ContentLabel>
+		);
+
+		expect(testRenderer.toJSON()).toMatchSnapshot();
+	});
+
+	it('renders as closable', () => {
+		const testRenderer = TestRenderer.create(
+			<ContentLabel
+				closeButtonProps={{
+					onClick: () => {},
+				}}
+				displayType="content-1"
+				spritemap={spritemap}
+			>
+				Content Closable
+			</ContentLabel>
 		);
 
 		expect(testRenderer.toJSON()).toMatchSnapshot();

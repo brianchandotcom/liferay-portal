@@ -38,6 +38,9 @@ ServerDisplayContext serverDisplayContext = new ServerDisplayContext(renderReque
 		<c:when test='<%= tabs1.equals("external-services") %>'>
 			<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
 		</c:when>
+		<c:when test='<%= tabs1.equals("friendly-urls") %>'>
+			<liferay-util:include page="/friendly_urls.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test='<%= tabs1.equals("log-levels") %>'>
 			<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
 		</c:when>

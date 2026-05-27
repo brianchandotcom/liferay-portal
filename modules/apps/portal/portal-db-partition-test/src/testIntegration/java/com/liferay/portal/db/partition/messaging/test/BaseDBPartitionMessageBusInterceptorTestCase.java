@@ -303,21 +303,21 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 
 	private static volatile CountDownLatch _countDownLatch;
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.db.partition.internal.messaging.DBPartitionMessageBusInterceptor"
-	)
-	private static MessageBusInterceptor _dbPartitionMessageBusInterceptor;
-
 	@Inject
 	private static DestinationFactory _destinationFactory;
-
-	@Inject
-	private static MessageBus _messageBus;
 
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 	private static TestDBPartitionMessageListener
 		_testDBPartitionMessageListener;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.db.partition.internal.messaging.DBPartitionMessageBusInterceptor"
+	)
+	private MessageBusInterceptor _dbPartitionMessageBusInterceptor;
+
+	@Inject
+	private MessageBus _messageBus;
 
 	private Set<String> _originalExcludedMessageBusDestinationNames;
 	private Set<String> _originalExcludedSchedulerJobNames;

@@ -98,7 +98,11 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
-			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"));
+			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"),
+			ParamUtil.getString(
+				actionRequest, "xmlSitemapIndexMode",
+				_sitemapConfigurationManager.xmlSitemapIndexMode(
+					themeDisplay.getCompanyId())));
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",

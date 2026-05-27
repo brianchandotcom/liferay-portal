@@ -80,8 +80,9 @@ public class ResourcePermissionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByName;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByName;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where name = &#63;.
@@ -122,16 +123,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByName_First(
-			name, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByName.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
+		return _collectionPersistenceFinderByName.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name},
+			orderByComparator);
 	}
 
 	/**
@@ -173,8 +167,9 @@ public class ResourcePermissionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByScope;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByScope;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where scope = &#63;.
@@ -311,8 +306,9 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(scopes)});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByRoleId;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByRoleId;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where roleId = &#63;.
@@ -353,16 +349,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByRoleId_First(
-			roleId, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByRoleId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId}));
+		return _collectionPersistenceFinderByRoleId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId},
+			orderByComparator);
 	}
 
 	/**
@@ -404,8 +393,9 @@ public class ResourcePermissionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByC_LikeP;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByC_LikeP;
 
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and primKey LIKE &#63;.
@@ -506,16 +496,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_LikeP_First(
-			companyId, primKey, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByC_LikeP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, primKey}));
+		return _collectionPersistenceFinderByC_LikeP.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, primKey},
+			orderByComparator);
 	}
 
 	/**
@@ -563,8 +546,9 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, primKey});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByC_N_S;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByC_N_S;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
@@ -610,17 +594,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_N_S_First(
-			companyId, name, scope, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByC_N_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, name, scope}));
+		return _collectionPersistenceFinderByC_N_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope}, orderByComparator);
 	}
 
 	/**
@@ -671,8 +647,9 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, name, scope});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByC_S_P;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByC_S_P;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
@@ -718,17 +695,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_S_P_First(
-			companyId, scope, primKey, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByC_S_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, scope, primKey}));
+		return _collectionPersistenceFinderByC_S_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, scope, primKey}, orderByComparator);
 	}
 
 	/**
@@ -779,8 +748,9 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, scope, primKey});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByC_N_S_P;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByC_N_S_P;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -963,8 +933,9 @@ public class ResourcePermissionPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<ResourcePermission>
-		_collectionPersistenceFinderByC_N_S_R;
+	private CollectionPersistenceFinder
+		<ResourcePermission, NoSuchResourcePermissionException>
+			_collectionPersistenceFinderByC_N_S_R;
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
@@ -1012,17 +983,9 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_N_S_R_First(
-			companyId, name, scope, roleId, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		throw new NoSuchResourcePermissionException(
-			_collectionPersistenceFinderByC_N_S_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, name, scope, roleId}));
+		return _collectionPersistenceFinderByC_N_S_R.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, roleId}, orderByComparator);
 	}
 
 	/**
@@ -3388,4 +3351,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258478800
+// LIFERAY-SERVICE-BUILDER-HASH:1697224168

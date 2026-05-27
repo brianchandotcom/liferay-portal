@@ -37,15 +37,16 @@ export {PanelHeader} from './components/Panel/PanelHeader';
 export {CountryCodePicker} from './components/PhoneNumber/CountryCodePicker';
 export {PhoneNumberInput} from './components/PhoneNumber/PhoneNumberInput';
 export {
+	COUNTRY_SOURCE,
 	DEFAULT_COUNTRIES,
 	getCombinedValue,
+	getDefaultCountry,
 	getFlagSymbol,
 	parsePhoneValue,
-	PREFIX_TYPE,
 } from './components/PhoneNumber/phoneNumberUtil';
 export type {
 	CountryInfo,
-	PrefixType,
+	CountrySource,
 } from './components/PhoneNumber/phoneNumberUtil';
 export {RadioField} from './components/RadioField/RadioField';
 export {RichTextLocalized} from './components/RichTextLocalized';

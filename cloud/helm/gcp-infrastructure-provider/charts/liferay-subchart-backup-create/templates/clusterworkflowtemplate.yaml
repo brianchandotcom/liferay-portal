@@ -26,7 +26,7 @@ spec:
                     apiVersion: backup.liferay.cloud/v1alpha1
                     kind: LiferayBackup
                     metadata:
-                        generateName: "liferay-backup-"
+                        generateName: "liferay-{{ "{{" }}inputs.parameters.project-id}}-{{ "{{" }}inputs.parameters.environment-id}}-"
                         namespace: {{ "{{" }}workflow.namespace}}
                     spec:
                         databaseSnapshot:

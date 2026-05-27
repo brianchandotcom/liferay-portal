@@ -100,7 +100,7 @@ public class AssetListEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetListEntry>
+	private CollectionPersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -141,16 +141,8 @@ public class AssetListEntryPersistenceImpl
 			String uuid, OrderByComparator<AssetListEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -191,7 +183,7 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetListEntry>
+	private UniquePersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -206,21 +198,8 @@ public class AssetListEntryPersistenceImpl
 	public AssetListEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByUUID_G(uuid, groupId);
-
-		if (assetListEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return assetListEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -268,7 +247,7 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetListEntry>
+	private CollectionPersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -312,16 +291,8 @@ public class AssetListEntryPersistenceImpl
 			OrderByComparator<AssetListEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -366,8 +337,9 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the asset list entries where groupId = &#63;.
@@ -576,7 +548,7 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {groupIds}, groupIds);
 	}
 
-	private UniquePersistenceFinder<AssetListEntry>
+	private UniquePersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_ALEK;
 
 	/**
@@ -591,23 +563,8 @@ public class AssetListEntryPersistenceImpl
 	public AssetListEntry findByG_ALEK(long groupId, String assetListEntryKey)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByG_ALEK(
-			groupId, assetListEntryKey);
-
-		if (assetListEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_ALEK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, assetListEntryKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return assetListEntry;
+		return _uniquePersistenceFinderByG_ALEK.find(
+			finderCache, new Object[] {groupId, assetListEntryKey});
 	}
 
 	/**
@@ -657,7 +614,7 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {groupId, assetListEntryKey});
 	}
 
-	private UniquePersistenceFinder<AssetListEntry>
+	private UniquePersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_T;
 
 	/**
@@ -672,21 +629,8 @@ public class AssetListEntryPersistenceImpl
 	public AssetListEntry findByG_T(long groupId, String title)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByG_T(groupId, title);
-
-		if (assetListEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, title});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return assetListEntry;
+		return _uniquePersistenceFinderByG_T.find(
+			finderCache, new Object[] {groupId, title});
 	}
 
 	/**
@@ -734,8 +678,9 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {groupId, title});
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_LikeT;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_LikeT;
 
 	/**
 	 * Returns all the asset list entries where groupId = &#63; and title LIKE &#63;.
@@ -1147,8 +1092,9 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {groupIds, title}, groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_TY;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_TY;
 
 	/**
 	 * Returns an ordered range of all the asset list entries where groupId = &#63; and type = &#63;.
@@ -1191,16 +1137,8 @@ public class AssetListEntryPersistenceImpl
 			OrderByComparator<AssetListEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByG_TY_First(
-			groupId, type, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_TY.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
+		return _collectionPersistenceFinderByG_TY.findFirst(
+			finderCache, new Object[] {groupId, type}, orderByComparator);
 	}
 
 	/**
@@ -1282,8 +1220,9 @@ public class AssetListEntryPersistenceImpl
 			finderCache, new Object[] {groupId, type}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_AET;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_AET;
 
 	/**
 	 * Returns an ordered range of all the asset list entries where groupId = &#63; and assetEntryType = &#63;.
@@ -1526,8 +1465,9 @@ public class AssetListEntryPersistenceImpl
 			groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_LikeT_AET;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_LikeT_AET;
 
 	/**
 	 * Returns all the asset list entries where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
@@ -2022,8 +1962,9 @@ public class AssetListEntryPersistenceImpl
 			groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_AES_AET;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_AES_AET;
 
 	/**
 	 * Returns an ordered range of all the asset list entries where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
@@ -2304,8 +2245,9 @@ public class AssetListEntryPersistenceImpl
 			groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetListEntry>
-		_collectionPersistenceFinderByG_LikeT_AES_AET;
+	private FilterCollectionPersistenceFinder
+		<AssetListEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_LikeT_AES_AET;
 
 	/**
 	 * Returns all the asset list entries where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
@@ -2844,7 +2786,7 @@ public class AssetListEntryPersistenceImpl
 			groupIds);
 	}
 
-	private UniquePersistenceFinder<AssetListEntry>
+	private UniquePersistenceFinder<AssetListEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -2860,23 +2802,8 @@ public class AssetListEntryPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchEntryException {
 
-		AssetListEntry assetListEntry = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (assetListEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return assetListEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -3392,16 +3319,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId));
@@ -3458,16 +3375,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3501,16 +3408,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetListEntry::getGroupId),
@@ -3542,16 +3439,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3584,16 +3471,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3644,16 +3521,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3699,16 +3566,6 @@ public class AssetListEntryPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRY_WHERE,
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AssetListEntryImpl.class, AssetListEntry.class,
-					"assetListEntry", "AssetListEntry",
-					"assetListEntry.assetListEntryId",
-					"SELECT DISTINCT {assetListEntry.*} FROM AssetListEntry assetListEntry WHERE ",
-					"SELECT {AssetListEntry.*} FROM (SELECT DISTINCT assetListEntry.assetListEntryId FROM AssetListEntry assetListEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AssetListEntry ON TEMP_TABLE.assetListEntryId = AssetListEntry.assetListEntryId",
-					"SELECT COUNT(DISTINCT assetListEntry.assetListEntryId) AS COUNT_VALUE FROM AssetListEntry assetListEntry WHERE ",
-					AssetListEntryModelImpl.ORDER_BY_SQL,
-					AssetListEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetListEntry::getGroupId),
@@ -3813,4 +3670,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1873463488
+// LIFERAY-SERVICE-BUILDER-HASH:506278457

@@ -952,4 +952,4 @@ public abstract class BaseAssetPermissionActionResourceTestCase {
 		_assetPermissionActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-397013588
+// LIFERAY-REST-BUILDER-HASH:-795246401

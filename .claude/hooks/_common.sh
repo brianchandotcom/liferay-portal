@@ -53,10 +53,10 @@ function _drop_database {
 	local user=root
 	local password=""
 
-	if [[ -n ${bundles_dir} && -f ${bundles_dir}/portal-ext.properties ]]
+	if [[ -n ${bundles_dir} ]]
 	then
-		user="$(_get_property "${bundles_dir}/portal-ext.properties" "jdbc\.default\.username" root)"
-		password="$(_get_property "${bundles_dir}/portal-ext.properties" "jdbc\.default\.password")"
+		user="$(_get_property_from_files "jdbc\.default\.username" root "${bundles_dir}/portal-ext.properties" "${bundles_dir}/portal-setup-wizard.properties")"
+		password="$(_get_property_from_files "jdbc\.default\.password" "" "${bundles_dir}/portal-ext.properties" "${bundles_dir}/portal-setup-wizard.properties")"
 	fi
 
 	local mysql_args=(--user "${user}")
@@ -127,4 +127,25 @@ function _get_property {
 	fi
 
 	echo "${value}"
+}
+
+function _get_property_from_files {
+	local key="${1}"
+	local default="${2}"
+
+	shift 2
+
+	local file
+
+	for file in "${@}"
+	do
+		if [[ -f ${file} ]] && grep --extended-regexp --quiet "^[[:space:]]*${key}=" "${file}"
+		then
+			grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//"
+
+			return
+		fi
+	done
+
+	echo "${default}"
 }

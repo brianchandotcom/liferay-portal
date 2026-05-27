@@ -816,10 +816,10 @@ public class AsyncAntivirusDLStoreTest {
 
 	private static BundleContext _bundleContext;
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject(filter = "store.type=" + _CLASS_NAME_DB_STORE)
 	private Store _dbStore;

@@ -8,15 +8,23 @@ package com.liferay.ai.hub.site.initializer.internal.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -73,20 +81,69 @@ public class AIHubSiteInitializerTest {
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
+		_assertLayoutExists("/account-management");
+		_assertLayoutUtilityPageEntryExists(
+			"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE",
+			LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT);
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_CRAWLER_JOB_STATUSES", "abandoned", "dispatched",
 			"failed", "queued", "running", "succeeded");
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat", "cms",
 			"everywhere");
-
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_CONFIDENCE_LEVELS", "high",
+			"lowAndAbove", "mediumAndAbove");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_GUARDRAIL_TYPES", "input", "output");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS", "high",
+			"lowAndAbove", "mediumAndAbove", "none");
+		_assertNotificationTemplateExists(
+			"L_AI_HUB_ACCOUNT_INVITE_USER_EMAIL_NOTIFICATION_TEMPLATE");
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
 		_assertObjectDefinitionExists("L_AI_HUB_CRAWLER_JOB");
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
-
+		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_AGENT_DEFINITION", "active", "description",
+			"inputVariables", "outputVariable",
+			"r_accountToAIHubAgentDefinitions_accountEntryId", "title",
+			"workflowDefinitionName");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CHATBOT", "active", "companyLogo", "description",
+			"introMessage", "notificationMessage", "placeholderMessage",
+			"r_accountToAIHubChatbots_accountEntryId", "showCompanyLogo",
+			"title");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CONTENT_RETRIEVER", "crawlDate", "description",
+			"indexName", "r_accountToAIHubContentRetrievers_accountEntryId",
+			"title", "type", "url");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CRAWLER_JOB", "crawlerJobStatus", "endDate",
+			"errorMessage", "executionId", "indexedDocumentCount",
+			"r_accountToAIHubCrawlerJobs_accountEntryId",
+			"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+			"startDate");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "active", "description",
+			"instruction", "occasion",
+			"r_accountToAIHubInstructionDefinitions_accountEntryId", "scope",
+			"title");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_MCP_SERVER", "r_accountToAIHubMCPServers_accountEntryId",
+			"title", "url");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "active", "description",
+			"guardrailType", "location", "maliciousUriFilterEnabled",
+			"multilanguageDetectionEnabled", "piAndJailbreakConfidenceLevel",
+			"piAndJailbreakFilterEnabled",
+			"r_accountToAIHubModelArmorTemplates_accountEntryId",
+			"raiDangerousLevel", "raiHarassmentLevel", "raiHateSpeechLevel",
+			"raiSexuallyExplicitLevel", "sdpFilterEnabled", "title");
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
@@ -104,8 +161,17 @@ public class AIHubSiteInitializerTest {
 			"L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
+			"L_AI_HUB_AGENT_DEFINITION",
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES",
 			"L_AI_HUB_AGENT_DEFINITION",
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		_assertObjectRelationshipExists(
@@ -113,7 +179,6 @@ public class AIHubSiteInitializerTest {
 			"L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
 			"L_AI_HUB_CONTENT_RETRIEVER",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
 			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
@@ -135,6 +200,27 @@ public class AIHubSiteInitializerTest {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
+	private void _assertLayoutExists(String friendlyURL) throws Exception {
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			TestPropsValues.getGroupId(), false, friendlyURL);
+
+		Assert.assertNotNull(layout);
+	}
+
+	private void _assertLayoutUtilityPageEntryExists(
+			String externalReferenceCode, String type)
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					TestPropsValues.getGroupId(), type);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			layoutUtilityPageEntry.getExternalReferenceCode());
+	}
+
 	private void _assertListTypeDefinitionExists(
 			String externalReferenceCode, String... listTypeEntryKeys)
 		throws Exception {
@@ -154,6 +240,17 @@ public class AIHubSiteInitializerTest {
 		}
 	}
 
+	private void _assertNotificationTemplateExists(String externalReferenceCode)
+		throws Exception {
+
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.
+				fetchNotificationTemplateByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(notificationTemplate);
+	}
+
 	private void _assertObjectDefinitionExists(String externalReferenceCode)
 		throws Exception {
 
@@ -164,6 +261,24 @@ public class AIHubSiteInitializerTest {
 
 		Assert.assertTrue(objectDefinition.isApproved());
 		Assert.assertTrue(objectDefinition.isSystem());
+	}
+
+	private void _assertObjectFieldsExist(
+			String objectDefinitionExternalReferenceCode,
+			String... objectFieldNames)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		for (String objectFieldName : objectFieldNames) {
+			Assert.assertNotNull(
+				_objectFieldLocalService.fetchObjectField(
+					objectDefinition.getObjectDefinitionId(), objectFieldName));
+		}
 	}
 
 	private void _assertObjectRelationshipExists(
@@ -210,13 +325,26 @@ public class AIHubSiteInitializerTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
+
+	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

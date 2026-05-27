@@ -103,7 +103,7 @@ public class InviteMemberMVCRenderCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER, null,
 			JSONUtil.put(
 				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
 			).toString(),
@@ -134,7 +134,7 @@ public class InviteMemberMVCRenderCommandTest {
 
 		ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER, null,
 			JSONUtil.put(
 				"emailAddress", user.getEmailAddress()
 			).toString(),

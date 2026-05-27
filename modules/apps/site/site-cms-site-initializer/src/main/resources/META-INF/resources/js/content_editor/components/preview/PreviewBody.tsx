@@ -3,11 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
+import ClayAlert, {DisplayType} from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import React from 'react';
 
 import PreviewSelectors from './PreviewSelectors';
+import useIframeLoad from './useIframeLoad';
 import usePreviewState from './usePreviewState';
 
 export default function PreviewBody({
@@ -21,10 +26,25 @@ export default function PreviewBody({
 }) {
 	const {
 		displayPageTemplates,
+		isDisplayPageTemplatesListEmpty,
+		isExternalURL,
 		previewURL,
-		showDisplayPageTemplateAlert,
+		setExternalURL,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
+
+	const {
+		handleIframeLoad,
+		iframeError,
+		iframeKey,
+		isIframeLoading,
+		reloadIframe,
+	} = useIframeLoad(previewURL, isExternalURL);
+
+	const previewAlert = getPreviewAlert({
+		iframeError,
+		isDisplayPageTemplatesListEmpty,
+	});
 
 	return (
 		<>
@@ -32,6 +52,9 @@ export default function PreviewBody({
 				<PreviewSelectors
 					{...selectorProps}
 					displayPageTemplates={displayPageTemplates}
+					isExternalURL={isExternalURL}
+					onBlurExternalURLInput={setExternalURL}
+					onReloadExternalURLInput={reloadIframe}
 					previewURL={previewURL}
 					showPreviewInNewTabLink
 				/>
@@ -49,28 +72,43 @@ export default function PreviewBody({
 				</ClayAlert>
 			) : null}
 
-			{showDisplayPageTemplateAlert ? (
+			{previewAlert ? (
 				<ClayAlert
 					className="m-3"
-					displayType="info"
-					title={Liferay.Language.get('info')}
+					displayType={previewAlert.displayType}
+					title={previewAlert.title}
 				>
-					{Liferay.Language.get(
-						'no-display-page-templates-are-available-for-preview-in-this-channel'
-					)}
+					{previewAlert.message}
+
+					{previewAlert.Footer ? (
+						<previewAlert.Footer onClick={reloadIframe} />
+					) : null}
 				</ClayAlert>
 			) : (
-				<div
-					className="align-items-center content-editor__preview__content d-flex position-relative"
-					{...(previewURL && {inert: ''})}
-				>
+				<div className="align-items-center content-editor__preview__content d-flex position-relative">
 					{previewURL ? (
-						<iframe
-							className="border-0 d-block h-100 w-100"
-							src={previewURL}
-							tabIndex={-1}
-							title={Liferay.Language.get('preview')}
-						/>
+						<>
+							<iframe
+								className="border-0 d-block h-100 w-100"
+								key={iframeKey}
+								onLoad={(event) => {
+									handleIframeLoad();
+									preventIframeNavigation(event);
+								}}
+								src={previewURL}
+								title={Liferay.Language.get('preview')}
+							/>
+
+							{isIframeLoading ? (
+								<div className="align-items-center bg-white d-flex h-100 position-absolute w-100">
+									<ClayLoadingIndicator
+										displayType="primary"
+										shape="squares"
+										size="lg"
+									/>
+								</div>
+							) : null}
+						</>
 					) : (
 						<ClayEmptyState
 							className="mt-0"
@@ -86,4 +124,46 @@ export default function PreviewBody({
 			)}
 		</>
 	);
+}
+
+function getPreviewAlert({
+	iframeError,
+	isDisplayPageTemplatesListEmpty,
+}: {
+	iframeError: boolean;
+	isDisplayPageTemplatesListEmpty: boolean;
+}): {
+	Footer?: React.ComponentType<{onClick: () => void}>;
+	displayType: DisplayType;
+	message: string;
+	title: string;
+} | null {
+	if (iframeError) {
+		return {
+			Footer: ({onClick}: {onClick: () => void}) => (
+				<ClayAlert.Footer>
+					<ClayButton displayType="warning" onClick={onClick} small>
+						<ClayIcon className="c-mr-2" symbol="reload" />
+
+						{Liferay.Language.get('refresh')}
+					</ClayButton>
+				</ClayAlert.Footer>
+			),
+			displayType: 'warning',
+			message: Liferay.Language.get('we-could-not-load-the-preview'),
+			title: Liferay.Language.get('warning'),
+		};
+	}
+
+	if (isDisplayPageTemplatesListEmpty) {
+		return {
+			displayType: 'info',
+			message: Liferay.Language.get(
+				'no-display-page-templates-are-available-for-preview-in-this-channel'
+			),
+			title: Liferay.Language.get('info'),
+		};
+	}
+
+	return null;
 }

@@ -37,7 +37,7 @@ exports[`IndividualProfileRoutes should render 1`] = `
                 class="breadcrumb-text-truncate breadcrumb-link"
                 href="/workspace/23/123/contacts/individuals/known-individuals"
               >
-                Known Individuals
+                Individuals
               </a>
             </li>
             <li

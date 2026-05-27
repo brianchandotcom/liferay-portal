@@ -1263,4 +1263,4 @@ public class KaleoInstanceTokenModelImpl
 	private KaleoInstanceToken _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-503814983
+// LIFERAY-SERVICE-BUILDER-HASH:-1614170967

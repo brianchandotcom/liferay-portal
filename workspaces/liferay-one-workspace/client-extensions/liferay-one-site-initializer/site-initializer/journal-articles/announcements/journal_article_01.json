@@ -1,0 +1,10 @@
+{
+	"articleId": "WEB-CONTENT-ANNOUNCEMENT-01",
+	"assetCategoryERCs": [
+		"T_AC_ONLINE",
+		"T_AC_COMMUNITY"
+	],
+	"ddmStructureKey": "ANNOUNCEMENT",
+	"folder": "Announcements",
+	"name": "Liferay DXP 2026.Q2 release now available"
+}

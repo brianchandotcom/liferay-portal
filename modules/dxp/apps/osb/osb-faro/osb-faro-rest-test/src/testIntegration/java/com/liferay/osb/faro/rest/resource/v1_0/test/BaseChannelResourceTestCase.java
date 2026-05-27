@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.osb.faro.rest.client.dto.v1_0.Channel;
 import com.liferay.osb.faro.rest.client.http.HttpInvoker;
 import com.liferay.osb.faro.rest.client.pagination.Page;
-import com.liferay.osb.faro.rest.client.pagination.Pagination;
 import com.liferay.osb.faro.rest.client.resource.v1_0.ChannelResource;
 import com.liferay.osb.faro.rest.client.serdes.v1_0.ChannelSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -324,7 +322,7 @@ public abstract class BaseChannelResourceTestCase {
 			testGetWorkspaceGroupChannelsPage_getIrrelevantGroupId();
 
 		Page<Channel> page = channelResource.getWorkspaceGroupChannelsPage(
-			groupId, Pagination.of(1, 10));
+			groupId);
 
 		long totalCount = page.getTotalCount();
 
@@ -334,7 +332,7 @@ public abstract class BaseChannelResourceTestCase {
 					irrelevantGroupId, randomIrrelevantChannel());
 
 			page = channelResource.getWorkspaceGroupChannelsPage(
-				irrelevantGroupId, Pagination.of(1, (int)totalCount + 1));
+				irrelevantGroupId);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -351,8 +349,7 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel2 = testGetWorkspaceGroupChannelsPage_addChannel(
 			groupId, randomChannel());
 
-		page = channelResource.getWorkspaceGroupChannelsPage(
-			groupId, Pagination.of(1, 10));
+		page = channelResource.getWorkspaceGroupChannelsPage(groupId);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -370,84 +367,6 @@ public abstract class BaseChannelResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
-	}
-
-	@Test
-	public void testGetWorkspaceGroupChannelsPageWithPagination()
-		throws Exception {
-
-		Long groupId = testGetWorkspaceGroupChannelsPage_getGroupId();
-
-		Page<Channel> channelsPage =
-			channelResource.getWorkspaceGroupChannelsPage(groupId, null);
-
-		int totalCount = GetterUtil.getInteger(channelsPage.getTotalCount());
-
-		Channel channel1 = testGetWorkspaceGroupChannelsPage_addChannel(
-			groupId, randomChannel());
-
-		Channel channel2 = testGetWorkspaceGroupChannelsPage_addChannel(
-			groupId, randomChannel());
-
-		Channel channel3 = testGetWorkspaceGroupChannelsPage_addChannel(
-			groupId, randomChannel());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Channel> page1 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(channel1, (List<Channel>)page1.getItems());
-
-			Page<Channel> page2 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(channel2, (List<Channel>)page2.getItems());
-
-			Page<Channel> page3 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(channel3, (List<Channel>)page3.getItems());
-		}
-		else {
-			Page<Channel> page1 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId, Pagination.of(1, totalCount + 2));
-
-			List<Channel> channels1 = (List<Channel>)page1.getItems();
-
-			Assert.assertEquals(
-				channels1.toString(), totalCount + 2, channels1.size());
-
-			Page<Channel> page2 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Channel> channels2 = (List<Channel>)page2.getItems();
-
-			Assert.assertEquals(channels2.toString(), 1, channels2.size());
-
-			Page<Channel> page3 = channelResource.getWorkspaceGroupChannelsPage(
-				groupId, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(channel1, (List<Channel>)page3.getItems());
-			assertContains(channel2, (List<Channel>)page3.getItems());
-			assertContains(channel3, (List<Channel>)page3.getItems());
-		}
 	}
 
 	protected Channel testGetWorkspaceGroupChannelsPage_addChannel(
@@ -1163,4 +1082,4 @@ public abstract class BaseChannelResourceTestCase {
 		_channelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1139785364
+// LIFERAY-REST-BUILDER-HASH:2037503774

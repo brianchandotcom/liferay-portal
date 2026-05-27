@@ -95,7 +95,7 @@ function GeneralTab({
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="warning">
+				<ClayLabel displayType="warning" inverse>
 					{Liferay.Language.get('referenced-content-structure')}
 				</ClayLabel>
 			</div>

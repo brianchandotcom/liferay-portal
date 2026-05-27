@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="first-instance-id" name="Text-Box" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[first value]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="second-instance-id" name="Text-Box" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[second value]]></dynamic-content>
+	</dynamic-element>
+</root>

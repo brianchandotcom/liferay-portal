@@ -1,0 +1,18 @@
+{
+	"description": "Online",
+	"description_i18n": {
+		"en_US": "Online",
+		"es_ES": "En línea",
+		"ja_JP": "オンライン",
+		"pt_BR": "Online"
+	},
+	"externalReferenceCode": "T_AC_ONLINE",
+	"name": "Online",
+	"name_i18n": {
+		"en_US": "Online",
+		"es_ES": "En línea",
+		"ja_JP": "オンライン",
+		"pt_BR": "Online"
+	},
+	"viewableBy": "Anyone"
+}

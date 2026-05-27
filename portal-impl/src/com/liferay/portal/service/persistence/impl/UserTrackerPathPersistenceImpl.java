@@ -63,8 +63,9 @@ public class UserTrackerPathPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserTrackerPath>
-		_collectionPersistenceFinderByUserTrackerId;
+	private CollectionPersistenceFinder
+		<UserTrackerPath, NoSuchUserTrackerPathException>
+			_collectionPersistenceFinderByUserTrackerId;
 
 	/**
 	 * Returns an ordered range of all the user tracker paths where userTrackerId = &#63;.
@@ -105,16 +106,9 @@ public class UserTrackerPathPersistenceImpl
 			OrderByComparator<UserTrackerPath> orderByComparator)
 		throws NoSuchUserTrackerPathException {
 
-		UserTrackerPath userTrackerPath = fetchByUserTrackerId_First(
-			userTrackerId, orderByComparator);
-
-		if (userTrackerPath != null) {
-			return userTrackerPath;
-		}
-
-		throw new NoSuchUserTrackerPathException(
-			_collectionPersistenceFinderByUserTrackerId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userTrackerId}));
+		return _collectionPersistenceFinderByUserTrackerId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userTrackerId},
+			orderByComparator);
 	}
 
 	/**
@@ -405,4 +399,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:257040081
+// LIFERAY-SERVICE-BUILDER-HASH:-1050603196

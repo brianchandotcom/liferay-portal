@@ -72,8 +72,9 @@ public class SocialActivityLimitPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SocialActivityLimit>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<SocialActivityLimit, NoSuchActivityLimitException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the social activity limits where groupId = &#63;.
@@ -114,16 +115,9 @@ public class SocialActivityLimitPersistenceImpl
 			OrderByComparator<SocialActivityLimit> orderByComparator)
 		throws NoSuchActivityLimitException {
 
-		SocialActivityLimit socialActivityLimit = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		throw new NoSuchActivityLimitException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -166,8 +160,9 @@ public class SocialActivityLimitPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivityLimit>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<SocialActivityLimit, NoSuchActivityLimitException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the social activity limits where userId = &#63;.
@@ -208,16 +203,9 @@ public class SocialActivityLimitPersistenceImpl
 			OrderByComparator<SocialActivityLimit> orderByComparator)
 		throws NoSuchActivityLimitException {
 
-		SocialActivityLimit socialActivityLimit = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		throw new NoSuchActivityLimitException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -259,8 +247,9 @@ public class SocialActivityLimitPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivityLimit>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<SocialActivityLimit, NoSuchActivityLimitException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the social activity limits where classNameId = &#63; and classPK = &#63;.
@@ -304,16 +293,9 @@ public class SocialActivityLimitPersistenceImpl
 			OrderByComparator<SocialActivityLimit> orderByComparator)
 		throws NoSuchActivityLimitException {
 
-		SocialActivityLimit socialActivityLimit = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		throw new NoSuchActivityLimitException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -361,8 +343,9 @@ public class SocialActivityLimitPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private UniquePersistenceFinder<SocialActivityLimit>
-		_uniquePersistenceFinderByG_U_C_C_A_A;
+	private UniquePersistenceFinder
+		<SocialActivityLimit, NoSuchActivityLimitException>
+			_uniquePersistenceFinderByG_U_C_C_A_A;
 
 	/**
 	 * Returns the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; or throws a <code>NoSuchActivityLimitException</code> if it could not be found.
@@ -382,27 +365,12 @@ public class SocialActivityLimitPersistenceImpl
 			int activityType, String activityCounterName)
 		throws NoSuchActivityLimitException {
 
-		SocialActivityLimit socialActivityLimit = fetchByG_U_C_C_A_A(
-			groupId, userId, classNameId, classPK, activityType,
-			activityCounterName);
-
-		if (socialActivityLimit == null) {
-			String message =
-				_uniquePersistenceFinderByG_U_C_C_A_A.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, userId, classNameId, classPK, activityType,
-						activityCounterName
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchActivityLimitException(message);
-		}
-
-		return socialActivityLimit;
+		return _uniquePersistenceFinderByG_U_C_C_A_A.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, userId, classNameId, classPK, activityType,
+				activityCounterName
+			});
 	}
 
 	/**
@@ -893,4 +861,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94907028
+// LIFERAY-SERVICE-BUILDER-HASH:-1717515091

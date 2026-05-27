@@ -35,6 +35,7 @@ const DateRangeFields = ({
 					errorMessage={
 						touchedFields.startDate ? errors.startDate : undefined
 					}
+					formGroupProps={{className: 'mb-0'}}
 					id="startDate"
 					label={Liferay.Language.get('from')}
 					name="startDate"
@@ -58,6 +59,7 @@ const DateRangeFields = ({
 					errorMessage={
 						touchedFields.endDate ? errors.endDate : undefined
 					}
+					formGroupProps={{className: 'mb-0'}}
 					id="endDate"
 					label={Liferay.Language.get('to')}
 					name="endDate"

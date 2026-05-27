@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Lourdes Fernández Besada
  */
 @ExtendedObjectClassDefinition(
-	category = "seo", generateUI = false,
+	category = "aeo-seo", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
@@ -54,5 +54,10 @@ public interface SitemapCompanyConfiguration {
 		deflt = "true", name = "xml-sitemap-index-enabled", required = false
 	)
 	public boolean xmlSitemapIndexEnabled();
+
+	@Meta.AD(
+		deflt = "page-layout", name = "xml-sitemap-index-mode", required = false
+	)
+	public String xmlSitemapIndexMode();
 
 }

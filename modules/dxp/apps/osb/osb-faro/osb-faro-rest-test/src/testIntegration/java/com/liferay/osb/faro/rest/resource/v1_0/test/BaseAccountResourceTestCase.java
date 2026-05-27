@@ -326,24 +326,29 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPage() throws Exception {
-		Long groupId = testGetWorkspaceGroupAccountsPage_getGroupId();
+	public void testGetWorkspaceGroupChannelAccountsPage() throws Exception {
+		Long groupId = testGetWorkspaceGroupChannelAccountsPage_getGroupId();
 		Long irrelevantGroupId =
-			testGetWorkspaceGroupAccountsPage_getIrrelevantGroupId();
+			testGetWorkspaceGroupChannelAccountsPage_getIrrelevantGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAccountsPage_getChannelId();
+		String irrelevantChannelId =
+			testGetWorkspaceGroupChannelAccountsPage_getIrrelevantChannelId();
 
-		Page<Account> page = accountResource.getWorkspaceGroupAccountsPage(
-			groupId, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
-			null);
+		Page<Account> page =
+			accountResource.getWorkspaceGroupChannelAccountsPage(
+				groupId, channelId, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantGroupId != null) {
+		if ((irrelevantGroupId != null) && (irrelevantChannelId != null)) {
 			Account irrelevantAccount =
-				testGetWorkspaceGroupAccountsPage_addAccount(
-					irrelevantGroupId, randomIrrelevantAccount());
+				testGetWorkspaceGroupChannelAccountsPage_addAccount(
+					irrelevantGroupId, irrelevantChannelId,
+					randomIrrelevantAccount());
 
-			page = accountResource.getWorkspaceGroupAccountsPage(
-				irrelevantGroupId, null, null,
+			page = accountResource.getWorkspaceGroupChannelAccountsPage(
+				irrelevantGroupId, irrelevantChannelId, null,
 				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -351,18 +356,18 @@ public abstract class BaseAccountResourceTestCase {
 			assertContains(irrelevantAccount, (List<Account>)page.getItems());
 			assertValid(
 				page,
-				testGetWorkspaceGroupAccountsPage_getExpectedActions(
-					irrelevantGroupId));
+				testGetWorkspaceGroupChannelAccountsPage_getExpectedActions(
+					irrelevantGroupId, irrelevantChannelId));
 		}
 
-		Account account1 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, randomAccount());
+		Account account1 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, randomAccount());
 
-		Account account2 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, randomAccount());
+		Account account2 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, randomAccount());
 
-		page = accountResource.getWorkspaceGroupAccountsPage(
-			groupId, null, null, Pagination.of(1, 10), null);
+		page = accountResource.getWorkspaceGroupChannelAccountsPage(
+			groupId, channelId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -370,11 +375,13 @@ public abstract class BaseAccountResourceTestCase {
 		assertContains(account2, (List<Account>)page.getItems());
 		assertValid(
 			page,
-			testGetWorkspaceGroupAccountsPage_getExpectedActions(groupId));
+			testGetWorkspaceGroupChannelAccountsPage_getExpectedActions(
+				groupId, channelId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetWorkspaceGroupAccountsPage_getExpectedActions(Long groupId)
+			testGetWorkspaceGroupChannelAccountsPage_getExpectedActions(
+				Long groupId, String channelId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -383,71 +390,80 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPageWithPagination()
+	public void testGetWorkspaceGroupChannelAccountsPageWithPagination()
 		throws Exception {
 
-		Long groupId = testGetWorkspaceGroupAccountsPage_getGroupId();
+		Long groupId = testGetWorkspaceGroupChannelAccountsPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAccountsPage_getChannelId();
 
 		Page<Account> accountsPage =
-			accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null, null, null);
+			accountResource.getWorkspaceGroupChannelAccountsPage(
+				groupId, channelId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(accountsPage.getTotalCount());
 
-		Account account1 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, randomAccount());
+		Account account1 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, randomAccount());
 
-		Account account2 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, randomAccount());
+		Account account2 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, randomAccount());
 
-		Account account3 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, randomAccount());
+		Account account3 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, randomAccount());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
 		int pageSizeLimit = 500;
 
 		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Account> page1 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
+			Page<Account> page1 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(account1, (List<Account>)page1.getItems());
 
-			Page<Account> page2 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
+			Page<Account> page2 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(account2, (List<Account>)page2.getItems());
 
-			Page<Account> page3 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
+			Page<Account> page3 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(account3, (List<Account>)page3.getItems());
 		}
 		else {
-			Page<Account> page1 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null, Pagination.of(1, totalCount + 2), null);
+			Page<Account> page1 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null, Pagination.of(1, totalCount + 2),
+					null);
 
 			List<Account> accounts1 = (List<Account>)page1.getItems();
 
 			Assert.assertEquals(
 				accounts1.toString(), totalCount + 2, accounts1.size());
 
-			Page<Account> page2 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null, Pagination.of(2, totalCount + 2), null);
+			Page<Account> page2 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null, Pagination.of(2, totalCount + 2),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -455,9 +471,10 @@ public abstract class BaseAccountResourceTestCase {
 
 			Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
 
-			Page<Account> page3 = accountResource.getWorkspaceGroupAccountsPage(
-				groupId, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<Account> page3 =
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(account1, (List<Account>)page3.getItems());
 			assertContains(account2, (List<Account>)page3.getItems());
@@ -466,10 +483,10 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPageWithSortDateTime()
+	public void testGetWorkspaceGroupChannelAccountsPageWithSortDateTime()
 		throws Exception {
 
-		testGetWorkspaceGroupAccountsPageWithSort(
+		testGetWorkspaceGroupChannelAccountsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, account1, account2) -> {
 				BeanTestUtil.setProperty(
@@ -479,10 +496,10 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPageWithSortDouble()
+	public void testGetWorkspaceGroupChannelAccountsPageWithSortDouble()
 		throws Exception {
 
-		testGetWorkspaceGroupAccountsPageWithSort(
+		testGetWorkspaceGroupChannelAccountsPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, account1, account2) -> {
 				BeanTestUtil.setProperty(account1, entityField.getName(), 0.1);
@@ -491,10 +508,10 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPageWithSortInteger()
+	public void testGetWorkspaceGroupChannelAccountsPageWithSortInteger()
 		throws Exception {
 
-		testGetWorkspaceGroupAccountsPageWithSort(
+		testGetWorkspaceGroupChannelAccountsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, account1, account2) -> {
 				BeanTestUtil.setProperty(account1, entityField.getName(), 0);
@@ -503,10 +520,10 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAccountsPageWithSortString()
+	public void testGetWorkspaceGroupChannelAccountsPageWithSortString()
 		throws Exception {
 
-		testGetWorkspaceGroupAccountsPageWithSort(
+		testGetWorkspaceGroupChannelAccountsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, account1, account2) -> {
 				Class<?> clazz = account1.getClass();
@@ -555,7 +572,7 @@ public abstract class BaseAccountResourceTestCase {
 			});
 	}
 
-	protected void testGetWorkspaceGroupAccountsPageWithSort(
+	protected void testGetWorkspaceGroupChannelAccountsPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, Account, Account, Exception>
 				unsafeTriConsumer)
@@ -567,7 +584,9 @@ public abstract class BaseAccountResourceTestCase {
 			return;
 		}
 
-		Long groupId = testGetWorkspaceGroupAccountsPage_getGroupId();
+		Long groupId = testGetWorkspaceGroupChannelAccountsPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAccountsPage_getChannelId();
 
 		Account account1 = randomAccount();
 		Account account2 = randomAccount();
@@ -576,19 +595,20 @@ public abstract class BaseAccountResourceTestCase {
 			unsafeTriConsumer.accept(entityField, account1, account2);
 		}
 
-		account1 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, account1);
+		account1 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, account1);
 
-		account2 = testGetWorkspaceGroupAccountsPage_addAccount(
-			groupId, account2);
+		account2 = testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			groupId, channelId, account2);
 
-		Page<Account> page = accountResource.getWorkspaceGroupAccountsPage(
-			groupId, null, null, null, null);
+		Page<Account> page =
+			accountResource.getWorkspaceGroupChannelAccountsPage(
+				groupId, channelId, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<Account> ascPage =
-				accountResource.getWorkspaceGroupAccountsPage(
-					groupId, null, null,
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
@@ -596,8 +616,8 @@ public abstract class BaseAccountResourceTestCase {
 			assertContains(account2, (List<Account>)ascPage.getItems());
 
 			Page<Account> descPage =
-				accountResource.getWorkspaceGroupAccountsPage(
-					groupId, null, null,
+				accountResource.getWorkspaceGroupChannelAccountsPage(
+					groupId, channelId, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
@@ -606,22 +626,37 @@ public abstract class BaseAccountResourceTestCase {
 		}
 	}
 
-	protected Account testGetWorkspaceGroupAccountsPage_addAccount(
-			Long groupId, Account account)
+	protected Account testGetWorkspaceGroupChannelAccountsPage_addAccount(
+			Long groupId, String channelId, Account account)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupAccountsPage_getGroupId()
+	protected Long testGetWorkspaceGroupChannelAccountsPage_getGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupAccountsPage_getIrrelevantGroupId()
+	protected Long
+			testGetWorkspaceGroupChannelAccountsPage_getIrrelevantGroupId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String testGetWorkspaceGroupChannelAccountsPage_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetWorkspaceGroupChannelAccountsPage_getIrrelevantChannelId()
 		throws Exception {
 
 		return null;
@@ -1638,4 +1673,4 @@ public abstract class BaseAccountResourceTestCase {
 		_accountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:134797294
+// LIFERAY-REST-BUILDER-HASH:798509312

@@ -8,15 +8,24 @@ package com.liferay.ai.hub.web.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletQName;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.portlet.ActionRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,10 +38,14 @@ public class ViewContentRetrieversDisplayContext {
 
 	public ViewContentRetrieversDisplayContext(
 		GroupLocalService groupLocalService,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		Portal portal) {
 
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -65,16 +78,20 @@ public class ViewContentRetrieversDisplayContext {
 			new FDSActionDropdownItem(
 				getAPIURL() +
 					"/by-external-reference-code/{externalReferenceCode}" +
-						"/object-actions/crawl",
+						"/object-actions/crawler",
 				"reload", "put",
 				LanguageUtil.get(_httpServletRequest, "sync-now"), "put", null,
 				"async"),
 			new FDSActionDropdownItem(
-				getAPIURL() +
-					"/by-external-reference-code/{externalReferenceCode}",
+				"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
+					"/{externalReferenceCode}",
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
-				"delete", "async"));
+				"delete", "async"),
+			new FDSActionDropdownItem(
+				_getPermissionsURL(), "password-policies", "permissions",
+				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"));
 	}
 
 	private String _getContentRetrieverURL() throws Exception {
@@ -87,8 +104,41 @@ public class ViewContentRetrieversDisplayContext {
 			"/web", group.getFriendlyURL(), "/content-retriever");
 	}
 
+	private String _getPermissionsURL() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_CONTENT_RETRIEVER", _themeDisplay.getCompanyId());
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+			ParamUtil.getString(
+				_httpServletRequest, "currentUrl",
+				_portal.getCurrentURL(_httpServletRequest))
+		).setParameter(
+			"modelResource", objectDefinition.getClassName()
+		).setParameter(
+			"modelResourceDescription",
+			objectDefinition.getLabel(_themeDisplay.getLocale())
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;
 
 }

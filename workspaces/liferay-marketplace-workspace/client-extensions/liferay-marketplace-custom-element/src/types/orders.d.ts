@@ -147,13 +147,13 @@ type PaymentStatusInfo = {
 };
 
 type PlacedOrder = {
-	orderStatus: any;
 	account: string;
 	accountId: number;
 	author: string;
 	createDate: string;
 	customFields: {[key: string]: string};
 	id: number;
+	orderStatus: any;
 	orderStatusInfo: {
 		code: number;
 		label: string;
@@ -161,6 +161,7 @@ type PlacedOrder = {
 	};
 	orderType: String;
 	orderTypeExternalReferenceCode: string;
+	paymentMethod: string;
 	paymentStatus: number;
 	placedOrderBillingAddress: any;
 	placedOrderBillingAddressId: number;

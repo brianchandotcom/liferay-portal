@@ -1055,6 +1055,30 @@ public class ServiceBuilder {
 		return TextFormatter.formatPlural(s);
 	}
 
+	public String getCacheFieldGetterPrefix(JavaField javaField) {
+		String typeName = getTypeGenericsName(javaField.getType());
+
+		if (typeName.equals("Boolean") || typeName.equals("boolean") ||
+			typeName.equals("java.lang.Boolean")) {
+
+			return "is";
+		}
+
+		return "get";
+	}
+
+	public String getCacheFieldGetterReturnType(JavaField javaField) {
+		String typeName = getTypeGenericsName(javaField.getType());
+
+		if (typeName.equals("Boolean") ||
+			typeName.equals("java.lang.Boolean")) {
+
+			return "boolean";
+		}
+
+		return typeName;
+	}
+
 	public String getCacheFieldMethodName(JavaField javaField) {
 		List<JavaAnnotation> javaAnnotations = javaField.getAnnotations();
 
@@ -6066,7 +6090,12 @@ public class ServiceBuilder {
 							getVariableName(javaField), TextFormatter.G);
 					}
 
-					cacheFieldMethods.add("get".concat(methodName));
+					cacheFieldMethods.add(
+						getCacheFieldGetterPrefix(
+							javaField
+						).concat(
+							methodName
+						));
 					cacheFieldMethods.add("set".concat(methodName));
 				}
 

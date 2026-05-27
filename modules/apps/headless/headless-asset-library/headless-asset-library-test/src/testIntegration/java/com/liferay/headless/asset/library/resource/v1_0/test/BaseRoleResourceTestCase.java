@@ -19,6 +19,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.asset.library.client.dto.v1_0.Role;
 import com.liferay.headless.asset.library.client.http.HttpInvoker;
 import com.liferay.headless.asset.library.client.pagination.Page;
+import com.liferay.headless.asset.library.client.pagination.Pagination;
 import com.liferay.headless.asset.library.client.resource.v1_0.RoleResource;
 import com.liferay.headless.asset.library.client.serdes.v1_0.RoleSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -209,6 +211,167 @@ public abstract class BaseRoleResourceTestCase {
 
 		Assert.assertEquals(regex, role.getExternalReferenceCode());
 		Assert.assertEquals(regex, role.getName());
+	}
+
+	@Test
+	public void testGetAssetLibraryRolesPage() throws Exception {
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryRolesPage_getAssetLibraryExternalReferenceCode();
+		String irrelevantAssetLibraryExternalReferenceCode =
+			testGetAssetLibraryRolesPage_getIrrelevantAssetLibraryExternalReferenceCode();
+
+		Page<Role> page = roleResource.getAssetLibraryRolesPage(
+			assetLibraryExternalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAssetLibraryExternalReferenceCode != null) {
+			Role irrelevantRole = testGetAssetLibraryRolesPage_addRole(
+				irrelevantAssetLibraryExternalReferenceCode,
+				randomIrrelevantRole());
+
+			page = roleResource.getAssetLibraryRolesPage(
+				irrelevantAssetLibraryExternalReferenceCode,
+				Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantRole, (List<Role>)page.getItems());
+			assertValid(
+				page,
+				testGetAssetLibraryRolesPage_getExpectedActions(
+					irrelevantAssetLibraryExternalReferenceCode));
+		}
+
+		Role role1 = testGetAssetLibraryRolesPage_addRole(
+			assetLibraryExternalReferenceCode, randomRole());
+
+		Role role2 = testGetAssetLibraryRolesPage_addRole(
+			assetLibraryExternalReferenceCode, randomRole());
+
+		page = roleResource.getAssetLibraryRolesPage(
+			assetLibraryExternalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(role1, (List<Role>)page.getItems());
+		assertContains(role2, (List<Role>)page.getItems());
+		assertValid(
+			page,
+			testGetAssetLibraryRolesPage_getExpectedActions(
+				assetLibraryExternalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryRolesPage_getExpectedActions(
+				String assetLibraryExternalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibraryRolesPageWithPagination() throws Exception {
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryRolesPage_getAssetLibraryExternalReferenceCode();
+
+		Page<Role> rolesPage = roleResource.getAssetLibraryRolesPage(
+			assetLibraryExternalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(rolesPage.getTotalCount());
+
+		Role role1 = testGetAssetLibraryRolesPage_addRole(
+			assetLibraryExternalReferenceCode, randomRole());
+
+		Role role2 = testGetAssetLibraryRolesPage_addRole(
+			assetLibraryExternalReferenceCode, randomRole());
+
+		Role role3 = testGetAssetLibraryRolesPage_addRole(
+			assetLibraryExternalReferenceCode, randomRole());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Role> page1 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(role1, (List<Role>)page1.getItems());
+
+			Page<Role> page2 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(role2, (List<Role>)page2.getItems());
+
+			Page<Role> page3 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(role3, (List<Role>)page3.getItems());
+		}
+		else {
+			Page<Role> page1 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(1, totalCount + 2));
+
+			List<Role> roles1 = (List<Role>)page1.getItems();
+
+			Assert.assertEquals(
+				roles1.toString(), totalCount + 2, roles1.size());
+
+			Page<Role> page2 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Role> roles2 = (List<Role>)page2.getItems();
+
+			Assert.assertEquals(roles2.toString(), 1, roles2.size());
+
+			Page<Role> page3 = roleResource.getAssetLibraryRolesPage(
+				assetLibraryExternalReferenceCode,
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(role1, (List<Role>)page3.getItems());
+			assertContains(role2, (List<Role>)page3.getItems());
+			assertContains(role3, (List<Role>)page3.getItems());
+		}
+	}
+
+	protected Role testGetAssetLibraryRolesPage_addRole(
+			String assetLibraryExternalReferenceCode, Role role)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAssetLibraryRolesPage_getAssetLibraryExternalReferenceCode()
+		throws Exception {
+
+		return testDepotEntryGroup.getExternalReferenceCode();
+	}
+
+	protected String
+			testGetAssetLibraryRolesPage_getIrrelevantAssetLibraryExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -1212,4 +1375,4 @@ public abstract class BaseRoleResourceTestCase {
 		_roleResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1976747930
+// LIFERAY-REST-BUILDER-HASH:1519026666

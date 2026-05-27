@@ -1400,4 +1400,4 @@ public class KaleoInstanceModelImpl
 	private KaleoInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-109697438
+// LIFERAY-SERVICE-BUILDER-HASH:-459835106

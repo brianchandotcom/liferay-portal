@@ -361,6 +361,7 @@ function addPortletAction(items, action, portletId) {
 	items.push({
 		action: () => {
 			openModal({
+				iframeBodyCssClass: '',
 				onClose: () => Liferay.Portlet.refresh(`#p_p_id_${portletId}_`),
 				title: action.title,
 				url: action.url,

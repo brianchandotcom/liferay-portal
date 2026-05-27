@@ -89,8 +89,9 @@ public class CommercePaymentEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entries where companyId = &#63;.
@@ -131,16 +132,8 @@ public class CommercePaymentEntryPersistenceImpl
 			OrderByComparator<CommercePaymentEntry> orderByComparator)
 		throws NoSuchPaymentEntryException {
 
-		CommercePaymentEntry commercePaymentEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		throw new NoSuchPaymentEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -217,8 +210,9 @@ public class CommercePaymentEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntry>
-		_collectionPersistenceFinderByC_C_C;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
+			_collectionPersistenceFinderByC_C_C;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -263,17 +257,9 @@ public class CommercePaymentEntryPersistenceImpl
 			OrderByComparator<CommercePaymentEntry> orderByComparator)
 		throws NoSuchPaymentEntryException {
 
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		throw new NoSuchPaymentEntryException(
-			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C_C.findFirst(
+			finderCache, new Object[] {companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -364,8 +350,9 @@ public class CommercePaymentEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntry>
-		_collectionPersistenceFinderByC_C_C_T;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
+			_collectionPersistenceFinderByC_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -412,17 +399,9 @@ public class CommercePaymentEntryPersistenceImpl
 			OrderByComparator<CommercePaymentEntry> orderByComparator)
 		throws NoSuchPaymentEntryException {
 
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_T_First(
-			companyId, classNameId, classPK, type, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		throw new NoSuchPaymentEntryException(
-			_collectionPersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, classPK, type}));
+		return _collectionPersistenceFinderByC_C_C_T.findFirst(
+			finderCache, new Object[] {companyId, classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -522,8 +501,9 @@ public class CommercePaymentEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntry>
-		_collectionPersistenceFinderByC_C_C_P_T;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
+			_collectionPersistenceFinderByC_C_C_P_T;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
@@ -574,20 +554,10 @@ public class CommercePaymentEntryPersistenceImpl
 			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
 		throws NoSuchPaymentEntryException {
 
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_P_T_First(
-			companyId, classNameId, classPK, paymentStatus, type,
+		return _collectionPersistenceFinderByC_C_C_P_T.findFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, classPK, paymentStatus, type},
 			orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		throw new NoSuchPaymentEntryException(
-			_collectionPersistenceFinderByC_C_C_P_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, classNameId, classPK, paymentStatus, type
-				}));
 	}
 
 	/**
@@ -705,8 +675,9 @@ public class CommercePaymentEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommercePaymentEntry>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce payment entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPaymentEntryException</code> if it could not be found.
@@ -721,23 +692,8 @@ public class CommercePaymentEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchPaymentEntryException {
 
-		CommercePaymentEntry commercePaymentEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commercePaymentEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPaymentEntryException(message);
-		}
-
-		return commercePaymentEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1095,16 +1051,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1141,16 +1087,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1202,16 +1138,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1274,16 +1200,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1391,4 +1307,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-33118869
+// LIFERAY-SERVICE-BUILDER-HASH:-2143216899

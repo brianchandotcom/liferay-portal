@@ -8,15 +8,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewFolderSectionDisplayContext;
+import com.liferay.trash.TrashHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,10 +54,8 @@ public class ViewFolderJSPSectionFragmentRenderer
 		return new ViewFolderSectionDisplayContext(
 			_depotEntryLocalService, _dlConfiguration, _groupLocalService,
 			httpServletRequest, language, _objectDefinitionService,
-			_objectDefinitionSettingLocalService,
-			_objectEntryFolderLocalService,
-			_objectEntryFolderModelResourcePermission, _portal,
-			translationInfoItemFieldValuesExporterRegistry);
+			_objectEntryFolderLocalService, _portal,
+			translationInfoItemFieldValuesExporterRegistry, _trashHelper);
 	}
 
 	@Override
@@ -79,19 +75,12 @@ public class ViewFolderJSPSectionFragmentRenderer
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-
-	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

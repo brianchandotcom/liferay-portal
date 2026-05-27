@@ -33,6 +33,8 @@
 		}
 
 		&.ck-button {
+			color: $secondary;
+
 			&:active,
 			&.ck-on:focus,
 			&.ck-disabled:active {
@@ -52,10 +54,14 @@
 				box-shadow: $btn-focus-box-shadow;
 			}
 
-			&.ck-on,
-			&.ck-on:not(.ck-disabled):hover,
 			&:not(.ck-disabled):hover {
 				background: $gray-100;
+				color: $gray-900;
+			}
+
+			&.ck-on,
+			&.ck-on:not(.ck-disabled):hover {
+				background: $gray-200;
 				color: $gray-900;
 			}
 		}

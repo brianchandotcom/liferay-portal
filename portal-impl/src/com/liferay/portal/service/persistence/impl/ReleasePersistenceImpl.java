@@ -64,7 +64,7 @@ public class ReleasePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<Release>
+	private UniquePersistenceFinder<Release, NoSuchReleaseException>
 		_uniquePersistenceFinderByServletContextName;
 
 	/**
@@ -78,23 +78,9 @@ public class ReleasePersistenceImpl
 	public Release findByServletContextName(String servletContextName)
 		throws NoSuchReleaseException {
 
-		Release release = fetchByServletContextName(servletContextName);
-
-		if (release == null) {
-			String message =
-				_uniquePersistenceFinderByServletContextName.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {servletContextName});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchReleaseException(message);
-		}
-
-		return release;
+		return _uniquePersistenceFinderByServletContextName.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {servletContextName});
 	}
 
 	/**
@@ -386,4 +372,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:916608323
+// LIFERAY-SERVICE-BUILDER-HASH:954924940

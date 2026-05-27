@@ -778,6 +778,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							return null;
 						}
 
+						BigDecimal convertedPrice = _getConvertedPrice(
+							commerceCurrency,
+							commercePriceEntry.getCommercePriceList(),
+							commercePriceEntry.getPrice());
 						CommerceMoney pricingQuantityUnitPriceCommerceMoney =
 							_getPricingQuantityUnitPriceCommerceMoney(
 								commerceCurrency, commercePriceEntry);
@@ -786,18 +790,11 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							{
 								setCurrency(
 									() -> commerceCurrency.getName(locale));
-
-								BigDecimal convertedPrice = _getConvertedPrice(
-									commerceCurrency,
-									commercePriceEntry.getCommercePriceList(),
-									commercePriceEntry.getPrice());
-
 								setPrice(convertedPrice::doubleValue);
 								setPriceFormatted(
 									() -> _commercePriceFormatter.format(
 										commerceCurrency, true, locale,
 										convertedPrice));
-
 								setPriceOnApplication(
 									commercePriceEntry::isPriceOnApplication);
 								setPricingQuantityPrice(
@@ -894,8 +891,11 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 		CommercePriceEntry commercePriceEntry =
 			commerceTierPriceEntry.getCommercePriceEntry();
-		BigDecimal commerceTierPriceEntryPrice =
-			commerceTierPriceEntry.getPrice();
+
+		BigDecimal convertedPrice = _getConvertedPrice(
+			commerceCurrency, commercePriceEntry.getCommercePriceList(),
+			commerceTierPriceEntry.getPrice());
+
 		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
 			_getPricingQuantityUnitPriceCommerceMoney(
 				commerceCurrency, commerceTierPriceEntry);
@@ -903,16 +903,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return new TierPrice() {
 			{
 				setCurrency(() -> commerceCurrency.getName(locale));
-
-				BigDecimal convertedPrice = _getConvertedPrice(
-					commerceCurrency, commercePriceEntry.getCommercePriceList(),
-					commerceTierPriceEntryPrice);
-
 				setPrice(convertedPrice::doubleValue);
 				setPriceFormatted(
 					() -> _commercePriceFormatter.format(
 						commerceCurrency, true, locale, convertedPrice));
-
 				setPricingQuantityPrice(
 					() -> {
 						if ((cpInstanceUnitOfMeasure == null) ||

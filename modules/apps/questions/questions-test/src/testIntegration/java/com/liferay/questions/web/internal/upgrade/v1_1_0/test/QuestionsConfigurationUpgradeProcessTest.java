@@ -281,11 +281,6 @@ public class QuestionsConfigurationUpgradeProcessTest {
 		"com.liferay.questions.web.internal.upgrade.v1_1_0." +
 			"QuestionsConfigurationUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.questions.web.internal.upgrade.registry.QuestionsWebUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -295,5 +290,10 @@ public class QuestionsConfigurationUpgradeProcessTest {
 	private List<Dictionary<String, Object>>
 		_originalScopedConfigurationsProperties;
 	private Dictionary<String, Object> _originalSystemConfigurationProperties;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.questions.web.internal.upgrade.registry.QuestionsWebUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

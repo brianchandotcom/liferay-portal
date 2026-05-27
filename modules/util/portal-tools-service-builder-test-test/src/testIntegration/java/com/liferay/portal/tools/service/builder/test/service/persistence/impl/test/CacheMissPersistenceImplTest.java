@@ -145,25 +145,25 @@ public class CacheMissPersistenceImplTest {
 		return _persistence.fetchByPrimaryKeys(primaryKeys);
 	}
 
-	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTCollectionService _ctCollectionService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
 	private static CacheMissEntryPersistence _persistence;
 	private static ServiceRegistration<CTService> _serviceRegistration;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
 	@DeleteAfterTestRun
 	private CTEntry _ctEntry;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
 
 }

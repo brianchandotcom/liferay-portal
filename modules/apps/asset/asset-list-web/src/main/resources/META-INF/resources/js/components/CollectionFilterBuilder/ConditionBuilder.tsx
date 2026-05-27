@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import {RowBuilder} from '@liferay/layout-js-components-web';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import './ConditionBuilder.scss';
@@ -16,6 +16,7 @@ import {
 	getCollectionOperators,
 	getCollectionQuantifierOptions,
 } from './operators';
+import {getPropertyKey} from './types';
 
 import type {
 	FilterCondition,
@@ -42,6 +43,7 @@ interface ConditionBuilderProps {
 	conditions: FilterCondition[];
 	onChange: (conditions: FilterCondition[]) => void;
 	properties: Array<FilterProperty | FilterPropertyGroup>;
+	propertiesMap: Map<string, FilterProperty>;
 }
 
 type ConditionRowProps = Omit<
@@ -64,21 +66,15 @@ function ConditionRow({
 	index,
 	onChange,
 	properties,
+	propertiesMap,
 }: ConditionRowProps) {
-	const flatProperties = useMemo(
-		() =>
-			properties.flatMap((item) =>
-				isPropertyGroup(item) ? item.items : [item]
-			),
-		[properties]
+	const conditionKey = getPropertyKey(
+		condition.classNameId,
+		condition.classTypeId,
+		condition.propertyName
 	);
 
-	const selectedProperty = flatProperties.find(
-		({classNameId, classTypeId, name}) =>
-			name === condition.propertyName &&
-			classNameId === condition.classNameId &&
-			classTypeId === condition.classTypeId
-	);
+	const selectedProperty = propertiesMap.get(conditionKey);
 
 	const operators = selectedProperty
 		? getCollectionOperators(selectedProperty)
@@ -86,11 +82,6 @@ function ConditionRow({
 	const quantifierOptions = selectedProperty
 		? getCollectionQuantifierOptions(selectedProperty)
 		: null;
-
-	const getPropertyKey = (
-		property: Pick<FilterProperty, 'classNameId' | 'classTypeId' | 'name'>
-	) =>
-		`${property.classNameId ?? ''}|${property.classTypeId ?? ''}|${property.name}`;
 
 	const handleValueChange = useCallback(
 		(value: string | Array<string | object>) => {
@@ -107,9 +98,7 @@ function ConditionRow({
 					as={TriggerLabel}
 					items={properties}
 					onSelectionChange={(key) => {
-						const newProperty = flatProperties.find(
-							(property) => getPropertyKey(property) === key
-						);
+						const newProperty = propertiesMap.get(key as string);
 
 						const operators = newProperty
 							? getCollectionOperators(newProperty)
@@ -127,9 +116,7 @@ function ConditionRow({
 						});
 					}}
 					placeholder={Liferay.Language.get('select')}
-					selectedKey={
-						selectedProperty ? getPropertyKey(selectedProperty) : ''
-					}
+					selectedKey={selectedProperty ? conditionKey : ''}
 				>
 					{(item) =>
 						isPropertyGroup(item) ? (
@@ -138,13 +125,25 @@ function ConditionRow({
 								items={item.items}
 							>
 								{(prop) => (
-									<Option key={getPropertyKey(prop)}>
+									<Option
+										key={getPropertyKey(
+											prop.classNameId,
+											prop.classTypeId,
+											prop.name
+										)}
+									>
 										{prop.label}
 									</Option>
 								)}
 							</DropDown.Group>
 						) : (
-							<Option key={getPropertyKey(item)}>
+							<Option
+								key={getPropertyKey(
+									item.classNameId,
+									item.classTypeId,
+									item.name
+								)}
+							>
 								{item.label}
 							</Option>
 						)
@@ -205,19 +204,17 @@ function ConditionRow({
 				</div>
 			)}
 
-			<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
-				{selectedProperty &&
-				condition.operatorName &&
-				(!quantifierOptions?.length || condition.quantifier) ? (
-					<ValueInput
-						index={index}
-						onChange={handleValueChange}
-						operator={condition.operatorName}
-						property={selectedProperty}
-						value={condition.value}
-					/>
-				) : null}
-			</div>
+			{selectedProperty &&
+			condition.operatorName &&
+			(!quantifierOptions?.length || condition.quantifier) ? (
+				<ValueInput
+					index={index}
+					onChange={handleValueChange}
+					operator={condition.operatorName}
+					property={selectedProperty}
+					value={condition.value}
+				/>
+			) : null}
 		</>
 	);
 }
@@ -226,6 +223,7 @@ export function ConditionBuilder({
 	conditions,
 	onChange,
 	properties,
+	propertiesMap,
 }: ConditionBuilderProps) {
 	return (
 		<div className="condition-builder">
@@ -260,6 +258,7 @@ export function ConditionBuilder({
 						index={index}
 						onChange={onItemChange}
 						properties={properties}
+						propertiesMap={propertiesMap}
 					/>
 				)}
 				setItems={onChange}

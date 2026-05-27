@@ -37,10 +37,14 @@ public class AssistantHandlerUtil {
 				assistantHandlerContext.getRetrievalAugmentor());
 		}
 
-		Assistant assistant = aiServices.streamingChatModel(
-			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
+		Assistant assistant = aiServices.inputGuardrails(
+			assistantHandlerContext.getInputGuardrails()
 		).maxSequentialToolsInvocations(
 			7
+		).outputGuardrails(
+			assistantHandlerContext.getOutputGuardrails()
+		).streamingChatModel(
+			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProviderFunction()
 		).toolProvider(

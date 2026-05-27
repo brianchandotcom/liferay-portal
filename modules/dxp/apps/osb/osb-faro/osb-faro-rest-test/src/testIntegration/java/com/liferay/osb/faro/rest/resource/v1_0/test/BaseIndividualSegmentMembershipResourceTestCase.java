@@ -182,7 +182,6 @@ public abstract class BaseIndividualSegmentMembershipResourceTestCase {
 
 		individualSegmentMembership.setIndividualId(regex);
 		individualSegmentMembership.setIndividualSegmentId(regex);
-		individualSegmentMembership.setStatus(regex);
 
 		String json = IndividualSegmentMembershipSerDes.toJSON(
 			individualSegmentMembership);
@@ -196,7 +195,6 @@ public abstract class BaseIndividualSegmentMembershipResourceTestCase {
 			regex, individualSegmentMembership.getIndividualId());
 		Assert.assertEquals(
 			regex, individualSegmentMembership.getIndividualSegmentId());
-		Assert.assertEquals(regex, individualSegmentMembership.getStatus());
 	}
 
 	@Test
@@ -1208,49 +1206,8 @@ public abstract class BaseIndividualSegmentMembershipResourceTestCase {
 		}
 
 		if (entityFieldName.equals("status")) {
-			Object object = individualSegmentMembership.getStatus();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -1308,7 +1265,6 @@ public abstract class BaseIndividualSegmentMembershipResourceTestCase {
 					RandomTestUtil.randomString());
 				individualSegmentId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				status = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1545,4 +1501,4 @@ public abstract class BaseIndividualSegmentMembershipResourceTestCase {
 				_individualSegmentMembershipResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:770708246
+// LIFERAY-REST-BUILDER-HASH:188514073

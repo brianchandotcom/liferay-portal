@@ -457,11 +457,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		"com_liferay_search_experiences_web_internal_blueprint_options_" +
 			"portlet_SXPBlueprintOptionsPortlet";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -501,6 +496,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Inject
 	private SXPElementLocalService _sxpElementLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private User _user;
 

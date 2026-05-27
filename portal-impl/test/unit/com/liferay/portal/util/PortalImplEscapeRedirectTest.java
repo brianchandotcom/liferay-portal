@@ -368,14 +368,13 @@ public class PortalImplEscapeRedirectTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<RedirectURLSettings>
-		_serviceRegistration;
 
 	private final PortalImpl _portalImpl = new PortalImpl();
 	private final MockedStatic<PrefsPropsUtil> _prefsPropsUtilMockedStatic =
 		Mockito.mockStatic(PrefsPropsUtil.class);
 	private final RedirectURLSettingsImpl _redirectURLSettingsImpl =
 		new RedirectURLSettingsImpl();
+	private ServiceRegistration<RedirectURLSettings> _serviceRegistration;
 
 	private static class RedirectURLSettingsImpl
 		implements RedirectURLSettings {

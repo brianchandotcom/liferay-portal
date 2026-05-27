@@ -50,6 +50,10 @@ public interface InvitedMemberResource {
 	public Page<InvitedMember> getRoomInvitedMembersPage(Long roomId)
 		throws Exception;
 
+	public InvitedMember patchRoomInvitedMember(
+			Long roomId, Long invitedMemberId, InvitedMember invitedMember)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
@@ -138,4 +142,4 @@ public interface InvitedMemberResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:159423760
+// LIFERAY-REST-BUILDER-HASH:-721801738

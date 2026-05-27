@@ -58,7 +58,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 
 	if (isLoading) {
 		return (
-			<Card className={classNames(className, 'p-3')}>
+			<Card className={classNames(className, 'p-3')} minHeight={284}>
 				<Card.Body>
 					<Loading />
 				</Card.Body>
@@ -87,7 +87,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 	const isAtRisk = Boolean(atRiskStage?.startDate && !atRiskStage.endDate);
 
 	return (
-		<Card className={classNames(className, 'p-3')}>
+		<Card className={classNames(className, 'p-3')} minHeight={284}>
 			<Card.Title>
 				<Text weight='semi-bold'>
 					{Liferay.Language.get('lifecycle-status').toUpperCase()}
@@ -136,11 +136,17 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 								</MultiStepNav.Title>
 								<MultiStepNav.Divider />
 								<ClaySticker
-									className='rounded-circle'
+									className={classNames('rounded-circle', {
+										'bg-red': isAtRisk
+									})}
 									displayType='secondary'
 								>
 									<ClayIcon
-										className='text-secondary'
+										className={
+											isAtRisk
+												? 'text-white'
+												: 'text-secondary'
+										}
 										symbol='exclamation-circle'
 									/>
 								</ClaySticker>

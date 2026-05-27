@@ -246,6 +246,15 @@ public class KaleoNotificationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByKCN_KDVI() throws Exception {
+		_persistence.countByKCN_KDVI("", RandomTestUtil.nextLong());
+
+		_persistence.countByKCN_KDVI("null", 0L);
+
+		_persistence.countByKCN_KDVI((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoNotification newKaleoNotification = addKaleoNotification();
 
@@ -555,4 +564,4 @@ public class KaleoNotificationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:69215043
+// LIFERAY-SERVICE-BUILDER-HASH:-409862158

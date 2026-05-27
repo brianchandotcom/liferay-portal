@@ -142,6 +142,11 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
+		<servlet-name>LLMS Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.servlet.LLMSServlet</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet>
 		<servlet-name>Module Framework Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
 		<async-supported>true</async-supported>
@@ -977,6 +982,10 @@
 		<url-pattern>/language/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>LLMS Servlet</servlet-name>
+		<url-pattern>/llms.txt</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>Netvibes Servlet</servlet-name>
 		<url-pattern>/netvibes/*</url-pattern>
 	</servlet-mapping>
@@ -991,6 +1000,22 @@
 	<servlet-mapping>
 		<servlet-name>Sitemap Servlet</servlet-name>
 		<url-pattern>/sitemap.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-categories.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-object-entries.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-pages.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-web-content.xml</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Sharepoint Document Workspace Servlet</servlet-name>

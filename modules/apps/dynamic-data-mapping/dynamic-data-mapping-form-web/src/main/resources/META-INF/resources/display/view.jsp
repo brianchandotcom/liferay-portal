@@ -371,6 +371,14 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 							Liferay.Util.fetch('<%= autoSaveFormInstanceRecordURL.toString() %>', {
 								body: data,
 								method: 'POST',
+							}).catch(function () {
+								clearInterval(window.<portlet:namespace />intervalId);
+
+								Liferay.Util.openToast({
+									message:
+										'<%= UnicodeLanguageUtil.get(request, "autosave-error") %>',
+									type: 'warning',
+								});
 							});
 						}
 

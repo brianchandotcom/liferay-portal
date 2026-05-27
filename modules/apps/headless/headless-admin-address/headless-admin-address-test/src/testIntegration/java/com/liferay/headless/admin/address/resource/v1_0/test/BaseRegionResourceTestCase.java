@@ -214,6 +214,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		Region region = randomRegion();
 
+		region.setExternalReferenceCode(regex);
 		region.setName(regex);
 		region.setRegionCode(regex);
 
@@ -223,6 +224,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		region = RegionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, region.getExternalReferenceCode());
 		Assert.assertEquals(regex, region.getName());
 		Assert.assertEquals(regex, region.getRegionCode());
 	}
@@ -325,10 +327,35 @@ public abstract class BaseRegionResourceTestCase {
 	public void testDeleteRegionBatch() throws Exception {
 		Region region1 = testDeleteRegionBatch_addRegion();
 
+		testDeleteRegionBatch_deleteRegion(
+			202, region1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region1.getId()));
+
+		region1 = testDeleteRegionBatch_addRegion();
+
 		testDeleteRegionBatch_deleteRegion(202, null, region1.getId());
 
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(region1.getId()));
+
+		region1 = testDeleteRegionBatch_addRegion();
+		Region region2 = testDeleteRegionBatch_addRegion();
+
+		testDeleteRegionBatch_deleteRegion(
+			202, region2.getExternalReferenceCode(), region1.getId());
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region1.getId()));
+		assertHttpResponseStatusCode(
+			200, regionResource.getRegionHttpResponse(region2.getId()));
+
+		testDeleteRegionBatch_deleteRegion(
+			202, region2.getExternalReferenceCode(), region1.getId());
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region2.getId()));
 	}
 
 	protected Region testDeleteRegionBatch_addRegion() throws Exception {
@@ -354,6 +381,126 @@ public abstract class BaseRegionResourceTestCase {
 		waitForFinish(
 			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteRegionByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region region = testDeleteRegionByExternalReferenceCode_addRegion();
+
+		assertHttpResponseStatusCode(
+			204,
+			regionResource.deleteRegionByExternalReferenceCodeHttpResponse(
+				region.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			regionResource.getRegionByExternalReferenceCodeHttpResponse(
+				region.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			regionResource.getRegionByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Region testDeleteRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteRegionByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region region1 =
+			testGraphQLDeleteRegionByExternalReferenceCode_addRegion();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteRegionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + region1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteRegionByExternalReferenceCode"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"regionByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + region1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region region2 =
+			testGraphQLDeleteRegionByExternalReferenceCode_addRegion();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"deleteRegionByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											region2.getExternalReferenceCode() +
+												"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
+				"Object/deleteRegionByExternalReferenceCode"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminAddress_v1_0",
+					new GraphQLField(
+						"regionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + region2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Region testGraphQLDeleteRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		return testGraphQLRegion_addRegion();
 	}
 
 	@Test
@@ -1169,6 +1316,134 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testGetRegionByExternalReferenceCode() throws Exception {
+		Region postRegion = testGetRegionByExternalReferenceCode_addRegion();
+
+		Region getRegion = regionResource.getRegionByExternalReferenceCode(
+			postRegion.getExternalReferenceCode());
+
+		assertEquals(postRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testGetRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetRegionByExternalReferenceCode() throws Exception {
+		Region region = testGraphQLGetRegionByExternalReferenceCode_addRegion();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"regionByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												region.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/regionByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminAddress_v1_0",
+								new GraphQLField(
+									"regionByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													region.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminAddress_v1_0",
+						"Object/regionByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetRegionByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"regionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"regionByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Region testGraphQLGetRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		return testGraphQLRegion_addRegion();
+	}
+
+	@Test
 	public void testGetRegionsPage() throws Exception {
 		Page<Region> page = regionResource.getRegionsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -1434,6 +1709,34 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchRegionByExternalReferenceCode() throws Exception {
+		Region postRegion = testPatchRegionByExternalReferenceCode_addRegion();
+
+		Region randomPatchRegion = randomPatchRegion();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region patchRegion = regionResource.patchRegionByExternalReferenceCode(
+			postRegion.getExternalReferenceCode(), randomPatchRegion);
+
+		Region expectedPatchRegion = postRegion.clone();
+
+		BeanTestUtil.copyProperties(randomPatchRegion, expectedPatchRegion);
+
+		Region getRegion = regionResource.getRegionByExternalReferenceCode(
+			patchRegion.getExternalReferenceCode());
+
+		assertEquals(expectedPatchRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testPatchRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostCountryRegion() throws Exception {
 		Region randomRegion = randomRegion();
 
@@ -1492,14 +1795,88 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testPutRegionByExternalReferenceCode() throws Exception {
+		Region postRegion = testPutRegionByExternalReferenceCode_addRegion();
+
+		Region randomRegion = randomRegion();
+
+		Region putRegion = regionResource.putRegionByExternalReferenceCode(
+			postRegion.getExternalReferenceCode(), randomRegion);
+
+		assertEquals(randomRegion, putRegion);
+		assertValid(putRegion);
+
+		Region getRegion = regionResource.getRegionByExternalReferenceCode(
+			putRegion.getExternalReferenceCode());
+
+		assertEquals(randomRegion, getRegion);
+		assertValid(getRegion);
+
+		Region newRegion = testPutRegionByExternalReferenceCode_createRegion();
+
+		putRegion = regionResource.putRegionByExternalReferenceCode(
+			newRegion.getExternalReferenceCode(), newRegion);
+
+		assertEquals(newRegion, putRegion);
+		assertValid(putRegion);
+
+		getRegion = regionResource.getRegionByExternalReferenceCode(
+			putRegion.getExternalReferenceCode());
+
+		assertEquals(newRegion, getRegion);
+
+		Assert.assertEquals(
+			newRegion.getExternalReferenceCode(),
+			putRegion.getExternalReferenceCode());
+	}
+
+	protected Region testPutRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Region testPutRegionByExternalReferenceCode_createRegion()
+		throws Exception {
+
+		return randomRegion();
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Region region1 = testBatchEngineDeleteImportTask_addRegion();
+
+		testBatchEngineDeleteImportTask_deleteRegion(
+			200, region1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region1.getId()));
+
+		region1 = testBatchEngineDeleteImportTask_addRegion();
 
 		testBatchEngineDeleteImportTask_deleteRegion(
 			200, null, region1.getId());
 
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(region1.getId()));
+
+		region1 = testBatchEngineDeleteImportTask_addRegion();
+		Region region2 = testBatchEngineDeleteImportTask_addRegion();
+
+		testBatchEngineDeleteImportTask_deleteRegion(
+			200, region2.getExternalReferenceCode(), region1.getId());
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region1.getId()));
+		assertHttpResponseStatusCode(
+			200, regionResource.getRegionHttpResponse(region2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteRegion(
+			200, region2.getExternalReferenceCode(), region1.getId());
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region2.getId()));
 	}
 
 	protected Region testBatchEngineDeleteImportTask_addRegion()
@@ -1760,6 +2137,24 @@ public abstract class BaseRegionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (region.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (region.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (region.getName() == null) {
 					valid = false;
@@ -1849,6 +2244,8 @@ public abstract class BaseRegionResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		for (java.lang.reflect.Field field :
@@ -1922,6 +2319,29 @@ public abstract class BaseRegionResourceTestCase {
 			if (Objects.equals("countryId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						region1.getCountryId(), region2.getCountryId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						region1.getCreator(), region2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						region1.getExternalReferenceCode(),
+						region2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2093,6 +2513,57 @@ public abstract class BaseRegionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = region.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2250,6 +2721,8 @@ public abstract class BaseRegionResourceTestCase {
 			{
 				active = RandomTestUtil.randomBoolean();
 				countryId = RandomTestUtil.randomLong();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				position = RandomTestUtil.randomDouble();
@@ -2524,4 +2997,4 @@ public abstract class BaseRegionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:677489906
+// LIFERAY-REST-BUILDER-HASH:-467967665

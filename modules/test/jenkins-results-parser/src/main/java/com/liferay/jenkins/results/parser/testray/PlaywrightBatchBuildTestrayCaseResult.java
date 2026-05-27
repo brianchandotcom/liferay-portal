@@ -266,24 +266,12 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return null;
 		}
 
-		String traceZipFilePath = matcher.group("traceZipFilePath");
-
-		URL traceZipURL = null;
-
 		BuildReport buildReport = getBuildReport();
 
-		for (URL testrayAttachmentURL :
-				buildReport.getTestrayAttachmentURLs()) {
+		String traceZipFilePath = matcher.group("traceZipFilePath");
 
-			String testrayAttachmentURLString = String.valueOf(
-				testrayAttachmentURL);
-
-			if (testrayAttachmentURLString.endsWith(traceZipFilePath)) {
-				traceZipURL = testrayAttachmentURL;
-
-				break;
-			}
-		}
+		URL traceZipURL = buildReport.getTestrayAttachmentURLBySuffix(
+			traceZipFilePath);
 
 		if (traceZipURL == null) {
 			return null;

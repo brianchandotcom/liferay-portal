@@ -131,35 +131,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			"liferay-portal-ee", getUpstreamBranchName() + "-private");
 	}
 
-	public void setUpPortalProfile() {
-		String upstreamBranchName = getUpstreamBranchName();
-
-		if (upstreamBranchName.startsWith("ee-")) {
-			return;
-		}
-
-		Retryable<Object> setupProfileDXPRetryable = new Retryable<Object>(
-			true, _SETUP_PROFILE_DXP_RETRY_COUNT,
-			_SETUP_PROFILE_DXP_RETRY_DELAY, true) {
-
-			@Override
-			public Object execute() {
-				try {
-					AntUtil.callTarget(
-						getDirectory(), "build.xml", "setup-profile-dxp");
-				}
-				catch (AntException antException) {
-					throw new RuntimeException(antException);
-				}
-
-				return null;
-			}
-
-		};
-
-		setupProfileDXPRetryable.executeWithRetries();
-	}
-
 	public void setUpTCKHome() {
 		Map<String, String> parameters = new HashMap<>();
 
@@ -420,10 +391,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 					"test.", System.getenv("HOSTNAME"), ".properties")),
 			_getPortalTestProperties(), true);
 	}
-
-	private static final int _SETUP_PROFILE_DXP_RETRY_COUNT = 2;
-
-	private static final int _SETUP_PROFILE_DXP_RETRY_DELAY = 5;
 
 	private Properties _appServerProperties;
 	private boolean _setUpBinariesCache;

@@ -6,7 +6,7 @@
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.rest.dto.v1_0.PageMetric;
-import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupPagesPageResponse;
+import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelPagesPageResponse;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -19,12 +19,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Leslie Wong
  */
 @Component(
-	property = "dto.class.name=com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupPagesPageResponse$PageMetric",
+	property = "dto.class.name=com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelPagesPageResponse$PageMetric",
 	service = DTOConverter.class
 )
 public class PageMetricDTOConverter
 	implements DTOConverter
-		<GetWorkspaceGroupPagesPageResponse.PageMetric, PageMetric> {
+		<GetWorkspaceGroupChannelPagesPageResponse.PageMetric, PageMetric> {
 
 	@Override
 	public String getContentType() {
@@ -34,7 +34,7 @@ public class PageMetricDTOConverter
 	@Override
 	public PageMetric toDTO(
 		DTOConverterContext dtoConverterContext,
-		GetWorkspaceGroupPagesPageResponse.PageMetric pageMetric) {
+		GetWorkspaceGroupChannelPagesPageResponse.PageMetric pageMetric) {
 
 		if (pageMetric == null) {
 			return null;
@@ -74,7 +74,7 @@ public class PageMetricDTOConverter
 	}
 
 	private Double _trendPercentage(
-		GetWorkspaceGroupPagesPageResponse.Metric metric) {
+		GetWorkspaceGroupChannelPagesPageResponse.Metric metric) {
 
 		if ((metric == null) || (metric.getTrend() == null)) {
 			return null;
@@ -84,7 +84,9 @@ public class PageMetricDTOConverter
 		).getPercentage();
 	}
 
-	private Double _value(GetWorkspaceGroupPagesPageResponse.Metric metric) {
+	private Double _value(
+		GetWorkspaceGroupChannelPagesPageResponse.Metric metric) {
+
 		if (metric == null) {
 			return null;
 		}

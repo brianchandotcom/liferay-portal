@@ -398,3 +398,52 @@ test(
 		}
 	}
 );
+
+test(
+	'Add SKU with duplicate values and confirm warning message shows',
+	{tag: '@LPD-90070'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+		page,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		await commerceAdminProductPage.gotoProduct(product2.name['en_US']);
+
+		await commerceAdminProductDetailsPage.goToProductSkus();
+
+		await commerceAdminProductDetailsSkusPage.skuAddButton.click();
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuInput.fill(
+			product1.skus[0].sku.toUpperCase()
+		);
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPurchasableToggle.check();
+
+		page.once('dialog', async (dialog) => {
+			expect(dialog.message()).toContain('The SKU is already in use');
+
+			await dialog.accept();
+		});
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPublishButton.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.skuAddModalSuccessMessage
+		).toBeVisible();
+	}
+);

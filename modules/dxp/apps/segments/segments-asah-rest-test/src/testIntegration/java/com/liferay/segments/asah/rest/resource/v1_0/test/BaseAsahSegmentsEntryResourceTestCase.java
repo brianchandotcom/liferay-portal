@@ -960,4 +960,4 @@ public abstract class BaseAsahSegmentsEntryResourceTestCase {
 			_asahSegmentsEntryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-652972462
+// LIFERAY-REST-BUILDER-HASH:645364927

@@ -9,13 +9,21 @@ export function validateFileExtension(
 	acceptedFileExtensions: string,
 	fileExtension: string
 ) {
-	const isValidExtension = acceptedFileExtensions
+	const extensions = acceptedFileExtensions
+		.trim()
 		.split(/\s*,\s*/)
-		.some(
-			(acceptedFileExtension) =>
-				acceptedFileExtension.toLowerCase() ===
-				fileExtension.toLowerCase()
-		);
+		.filter(Boolean);
+
+	if (extensions.includes('*')) {
+		return;
+	}
+
+	const normalizedFileExtension = fileExtension.toLowerCase();
+
+	const isValidExtension = extensions.some(
+		(acceptedFileExtension) =>
+			acceptedFileExtension.toLowerCase() === normalizedFileExtension
+	);
 
 	if (!isValidExtension) {
 		return {

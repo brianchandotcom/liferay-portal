@@ -133,11 +133,10 @@ public class ResourceTypesResourceTest
 			404, resourceTypesResource.getV2ResourceTypesHttpResponse());
 	}
 
-	private static String _pid;
-
 	@Inject
 	private JSONFactory _jsonFactory;
 
+	private String _pid;
 	private final List<String> _resourceTypeIds = List.of("Group", "User");
 	private final List<String> _schemaIds = List.of(
 		"urn:ietf:params:scim:schemas:core:2.0:Group",

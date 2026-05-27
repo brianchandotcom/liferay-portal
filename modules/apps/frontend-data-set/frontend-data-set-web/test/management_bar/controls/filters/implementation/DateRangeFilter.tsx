@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DateRangeFilter from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateRangeFilter';
+import {dateRangeFilterImplementation} from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
 import {EEntityFieldType} from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/utils/types';
 
-const {getOdataString} = DateRangeFilter;
+const {getOdataString} = dateRangeFilterImplementation;
 
 const fromDate = {day: 1, month: 1, year: 2025};
 const toDate = {day: 31, month: 1, year: 2025};

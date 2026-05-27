@@ -6,9 +6,11 @@
 package com.liferay.account.admin.web.internal.portlet.action.util;
 
 import com.liferay.account.constants.AccountTicketConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,9 +34,21 @@ public class TicketUtil {
 		try {
 			Ticket ticket = ticketLocalService.fetchTicket(ticketKey);
 
-			if ((ticket == null) ||
-				(ticket.getType() !=
-					AccountTicketConstants.TYPE_USER_INVITATION)) {
+			if (ticket == null) {
+				return null;
+			}
+
+			int ticketType = ticket.getType();
+
+			if ((ticketType != AccountTicketConstants.TYPE_USER_INVITATION) &&
+				(ticketType != TicketConstants.TYPE_INVITE_COLLABORATOR)) {
+
+				return null;
+			}
+
+			if ((ticketType == TicketConstants.TYPE_INVITE_COLLABORATOR) &&
+				!FeatureFlagManagerUtil.isEnabled(
+					ticket.getCompanyId(), "LPD-52006")) {
 
 				return null;
 			}

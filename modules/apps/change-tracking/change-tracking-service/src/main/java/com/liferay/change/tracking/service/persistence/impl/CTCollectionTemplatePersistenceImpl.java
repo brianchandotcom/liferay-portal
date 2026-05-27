@@ -73,8 +73,9 @@ public class CTCollectionTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CTCollectionTemplate>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CTCollectionTemplate, NoSuchCollectionTemplateException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the ct collection templates where companyId = &#63;.
@@ -115,16 +116,8 @@ public class CTCollectionTemplatePersistenceImpl
 			OrderByComparator<CTCollectionTemplate> orderByComparator)
 		throws NoSuchCollectionTemplateException {
 
-		CTCollectionTemplate ctCollectionTemplate = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctCollectionTemplate != null) {
-			return ctCollectionTemplate;
-		}
-
-		throw new NoSuchCollectionTemplateException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -431,16 +424,6 @@ public class CTCollectionTemplatePersistenceImpl
 				_SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE,
 				CTCollectionTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTCollectionTemplateImpl.class, CTCollectionTemplate.class,
-					"ctCollectionTemplate", "CTCollectionTemplate",
-					"ctCollectionTemplate.ctCollectionTemplateId",
-					"SELECT DISTINCT {ctCollectionTemplate.*} FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
-					"SELECT {CTCollectionTemplate.*} FROM (SELECT DISTINCT ctCollectionTemplate.ctCollectionTemplateId FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN CTCollectionTemplate ON TEMP_TABLE.ctCollectionTemplateId = CTCollectionTemplate.ctCollectionTemplateId",
-					"SELECT COUNT(DISTINCT ctCollectionTemplate.ctCollectionTemplateId) AS COUNT_VALUE FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
-					CTCollectionTemplateModelImpl.ORDER_BY_SQL,
-					CTCollectionTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctCollectionTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -509,4 +492,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:631816193
+// LIFERAY-SERVICE-BUILDER-HASH:-2102990341

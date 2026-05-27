@@ -30,7 +30,8 @@ public class AdvancedGroupedFDSFilters implements GroupedFDSFilters {
 
 		return JSONUtil.putAll(
 			JSONUtil.put("Empty Group", JSONUtil.putAll()),
-			JSONUtil.put("Group 1", JSONUtil.putAll("date", "color")),
+			JSONUtil.put(
+				"Group 1", JSONUtil.putAll("date", "dateTime", "color")),
 			JSONUtil.put(
 				"Group 2", JSONUtil.putAll("clientExtension", null, "size")),
 			JSONUtil.put(

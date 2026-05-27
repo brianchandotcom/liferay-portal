@@ -87,8 +87,9 @@ public class LayoutLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutLocalization>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout localizations where uuid = &#63;.
@@ -129,16 +130,8 @@ public class LayoutLocalizationPersistenceImpl
 			OrderByComparator<LayoutLocalization> orderByComparator)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		throw new NoSuchLayoutLocalizationException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,8 +172,9 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutLocalization>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.
@@ -194,21 +188,8 @@ public class LayoutLocalizationPersistenceImpl
 	public LayoutLocalization findByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByUUID_G(uuid, groupId);
-
-		if (layoutLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutLocalizationException(message);
-		}
-
-		return layoutLocalization;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,8 +237,9 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutLocalization>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout localizations where uuid = &#63; and companyId = &#63;.
@@ -300,16 +282,8 @@ public class LayoutLocalizationPersistenceImpl
 			OrderByComparator<LayoutLocalization> orderByComparator)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		throw new NoSuchLayoutLocalizationException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -354,8 +328,9 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<LayoutLocalization>
-		_collectionPersistenceFinderByPlid;
+	private CollectionPersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_collectionPersistenceFinderByPlid;
 
 	/**
 	 * Returns an ordered range of all the layout localizations where plid = &#63;.
@@ -395,16 +370,8 @@ public class LayoutLocalizationPersistenceImpl
 			long plid, OrderByComparator<LayoutLocalization> orderByComparator)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByPlid_First(
-			plid, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		throw new NoSuchLayoutLocalizationException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -445,8 +412,9 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private UniquePersistenceFinder<LayoutLocalization>
-		_uniquePersistenceFinderByL_P;
+	private UniquePersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_uniquePersistenceFinderByL_P;
 
 	/**
 	 * Returns the layout localization where languageId = &#63; and plid = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.
@@ -460,21 +428,8 @@ public class LayoutLocalizationPersistenceImpl
 	public LayoutLocalization findByL_P(String languageId, long plid)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByL_P(languageId, plid);
-
-		if (layoutLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByL_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {languageId, plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutLocalizationException(message);
-		}
-
-		return layoutLocalization;
+		return _uniquePersistenceFinderByL_P.find(
+			finderCache, new Object[] {languageId, plid});
 	}
 
 	/**
@@ -522,8 +477,9 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {languageId, plid});
 	}
 
-	private UniquePersistenceFinder<LayoutLocalization>
-		_uniquePersistenceFinderByG_L_P;
+	private UniquePersistenceFinder
+		<LayoutLocalization, NoSuchLayoutLocalizationException>
+			_uniquePersistenceFinderByG_L_P;
 
 	/**
 	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.
@@ -539,23 +495,8 @@ public class LayoutLocalizationPersistenceImpl
 			long groupId, String languageId, long plid)
 		throws NoSuchLayoutLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByG_L_P(
-			groupId, languageId, plid);
-
-		if (layoutLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByG_L_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, languageId, plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutLocalizationException(message);
-		}
-
-		return layoutLocalization;
+		return _uniquePersistenceFinderByG_L_P.find(
+			finderCache, new Object[] {groupId, languageId, plid});
 	}
 
 	/**
@@ -1122,4 +1063,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:906805808
+// LIFERAY-SERVICE-BUILDER-HASH:1726258919

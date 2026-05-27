@@ -23,7 +23,7 @@ import com.liferay.headless.asset.library.internal.odata.entity.v1_0.AssetLibrar
 import com.liferay.headless.asset.library.internal.util.AssetLibraryUtil;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DuplicateGroupExternalReferenceCodeException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -304,13 +304,25 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		String externalReferenceCode = assetLibrary.getExternalReferenceCode();
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+			if (group != null) {
+				throw new DuplicateGroupExternalReferenceCodeException(
+					externalReferenceCode);
+			}
+		}
+
 		return _toAssetLibrary(
 			_addOrUpdateDepotEntry(
 				assetLibrary,
 				_getLocalizedMap(
 					assetLibrary.getDescription(),
 					assetLibrary.getDescription_i18n()),
-				StringPool.BLANK,
+				externalReferenceCode,
 				_getLocalizedMap(
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),

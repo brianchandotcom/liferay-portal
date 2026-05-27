@@ -1,10 +1,49 @@
+import IndividualsOverviewCDP from '../IndividualsOverviewCDP';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useDataSources} from 'shared/context/dataSources';
+import {useQuery} from '@apollo/client';
+import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
+
+jest.mock('@apollo/client', () => ({
+	...jest.requireActual('@apollo/client'),
+	useQuery: jest.fn()
+}));
+
+jest.mock('shared/hooks/useRequest', () => ({
+	useRequest: jest.fn()
+}));
+
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: jest.fn()
+}));
+
+jest.mock('shared/context/dataSources', () => ({
+	useDataSources: jest.fn()
+}));
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		channelId: '123',
+		groupId: '456'
+	})
+}));
+
+jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
+	DropdownRangeKey: () => null
+}));
+
+jest.mock('../IndividualsList', () => ({
+	__esModule: true,
+	default: () => null
+}));
 
 const mockedIndividualMetrics = {
 	data: {
@@ -42,58 +81,52 @@ const mockedIndividualMetrics = {
 	}
 };
 
+const renderIndividualsOverviewCDP = () =>
+	render(
+		<Provider store={mockStore()}>
+			<BrowserRouter>
+				<IndividualsOverviewCDP />
+			</BrowserRouter>
+		</Provider>
+	);
+
 describe('IndividualsOverviewCDP', () => {
-	afterEach(() => {
-		jest.resetAllMocks();
-		jest.resetModules();
+	beforeEach(() => {
+		(useRequest as jest.Mock).mockReturnValue({
+			data: {total: 1},
+			loading: false
+		});
+		(useCurrentUser as jest.Mock).mockReturnValue({isAdmin: () => true});
+		(useDataSources as jest.Mock).mockReturnValue({empty: false});
 	});
 
-	it('should render Individuals Metrics Cards', async () => {
-		jest.doMock('@apollo/client', () => ({
-			...jest.requireActual('@apollo/client'),
-			useQuery: jest.fn(() => ({
-				data: mockedIndividualMetrics.data,
-				loading: false
-			}))
-		}));
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
 
-		jest.doMock('shared/hooks/useRequest', () => ({
-			useRequest: jest.fn(() => ({
-				data: {total: 1},
-				loading: false
-			}))
-		}));
+	it('should render Individuals Metrics Cards', () => {
+		(useQuery as jest.Mock).mockReturnValue({
+			data: mockedIndividualMetrics.data,
+			loading: false
+		});
 
-		jest.doMock('shared/hooks/useCurrentUser', () => ({
-			useCurrentUser: jest.fn(() => ({isAdmin: () => true}))
-		}));
+		const {getByText} = renderIndividualsOverviewCDP();
 
-		jest.doMock('shared/context/dataSources', () => ({
-			useDataSources: jest.fn(() => ({empty: false}))
-		}));
+		expect(getByText('Total Individuals')).toBeInTheDocument();
+		expect(getByText('Known Individuals')).toBeInTheDocument();
+		expect(getByText('Anonymous Individuals')).toBeInTheDocument();
+	});
 
-		jest.doMock('react-router-dom', () => ({
-			...jest.requireActual('react-router-dom'),
-			useParams: () => ({
-				channelId: '123',
-				groupId: '456'
-			})
-		}));
+	it('should render a centered loader inside each metric card while metrics are loading', () => {
+		(useQuery as jest.Mock).mockReturnValue({
+			data: undefined,
+			loading: true
+		});
 
-		const {default: IndividualsOverviewCDP} = await import(
-			'../IndividualsOverviewCDP'
-		);
+		const {container, queryByText} = renderIndividualsOverviewCDP();
 
-		const {getByText} = render(
-			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<IndividualsOverviewCDP />
-				</BrowserRouter>
-			</Provider>
-		);
+		expect(queryByText(/Individuals$/)).not.toBeInTheDocument();
 
-		expect(getByText('TOTAL INDIVIDUALS')).toBeInTheDocument();
-		expect(getByText('KNOWN INDIVIDUALS')).toBeInTheDocument();
-		expect(getByText('ANONYMOUS INDIVIDUALS')).toBeInTheDocument();
+		expect(container.querySelectorAll('.loading-root')).toHaveLength(3);
 	});
 });

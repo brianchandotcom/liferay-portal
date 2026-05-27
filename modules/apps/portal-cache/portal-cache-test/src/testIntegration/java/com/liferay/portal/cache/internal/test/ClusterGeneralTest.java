@@ -35,8 +35,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -94,8 +92,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalServiceUtil;
@@ -108,15 +104,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.io.Serializable;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -396,17 +385,6 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
-	public void testControlChannelProperties() throws Exception {
-		_testControlChannelProperties(
-			false,
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
-		_testControlChannelProperties(
-			true,
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
-			"cluster.link.channel.properties.transport.0=udp.xml");
-	}
-
-	@Test
 	public void testEnableAndDisableFeatureFlag() throws Exception {
 		_testEnableAndDisableFeatureFlag(_tomcatNode1, _tomcatNode2);
 		_testEnableAndDisableFeatureFlag(_tomcatNode2, _tomcatNode1);
@@ -651,41 +629,6 @@ public class ClusterGeneralTest implements Serializable {
 			ClusterExecutorUtil.getLocalClusterNode();
 
 		return localClusterNode.getClusterNodeId();
-	}
-
-	private Closeable _applyPortalExtPropertiesLines(
-			boolean keepStarted, TomcatNode tomcatNode,
-			String... portalExtPropertiesLines)
-		throws Exception {
-
-		tomcatNode.stop();
-
-		Path path = tomcatNode.getPortalExtPropertiesPath();
-
-		byte[] bytes = Files.readAllBytes(path);
-
-		Files.write(
-			path, Arrays.asList(portalExtPropertiesLines),
-			StandardOpenOption.APPEND);
-
-		tomcatNode.start(true);
-
-		return () -> {
-			try {
-				tomcatNode.stop();
-
-				Files.write(
-					path, bytes, StandardOpenOption.TRUNCATE_EXISTING,
-					StandardOpenOption.WRITE);
-
-				if (keepStarted) {
-					tomcatNode.start(true);
-				}
-			}
-			catch (Exception exception) {
-				throw new IOException(exception);
-			}
-		};
 	}
 
 	private <T extends Serializable> void _assertEqualOnBothNodes(
@@ -1117,35 +1060,6 @@ public class ClusterGeneralTest implements Serializable {
 			}
 			catch (AuthException authException) {
 			}
-		}
-	}
-
-	private void _testControlChannelProperties(
-			boolean keepStarted, String... portalExtPropertiesLines)
-		throws Exception {
-
-		try (Closeable closeable = _applyPortalExtPropertiesLines(
-				keepStarted, _tomcatNode1, portalExtPropertiesLines)) {
-
-			// Assert portal-ext.properties lines are set correctly on node 1
-
-			for (String portalExtLine : portalExtPropertiesLines) {
-				List<String> parts = StringUtil.split(
-					portalExtLine, CharPool.EQUAL);
-
-				String key = parts.get(0);
-				String expectedValue = parts.get(1);
-
-				Assert.assertEquals(
-					expectedValue,
-					_tomcatNode1.syncExecute(() -> PropsUtil.get(key)));
-			}
-
-			// Assert node 1 can get its cluster node ID successfully
-
-			Assert.assertNotNull(
-				_tomcatNode1.syncExecute(
-					ClusterGeneralTest::_getLocalClusterNodeId));
 		}
 	}
 

@@ -9,11 +9,18 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {DefaultPermissionsPage} from './pages/DefaultPermissionsPage';
 import {PermissionsPage} from './pages/PermissionsPage';
+import {
+	clickMenuItem,
+	createSpace,
+	deleteSpace,
+	getTableRowByText,
+	goToAllSpaces,
+	handleClickMenuItem,
+} from './utils/permissions';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -57,92 +64,11 @@ async function checkModalHeader(
 	}).toPass({timeout: 5000});
 }
 
-async function clickMenuItem(menuitem: string, page, objectName?: string) {
-	await expect(async () => {
-		if (!objectName) {
-			await page.getByLabel('Actions').click();
-
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: menuitem,
-				})
-				.click({timeout: 1000});
-		}
-		else {
-			await (await getTableRowByText(page, objectName))
-				.getByRole('button', {name: 'Actions'})
-				.click();
-
-			await handleClickMenuItem(menuitem, page);
-		}
-	}).toPass();
-}
-
 async function closeInfoAlert(page) {
 	await page
 		.locator('.alert-info')
 		.getByRole('button', {name: 'Close'})
 		.click();
-}
-
-async function createSpace(page, spaceName: string) {
-	await page.getByLabel('Add Space').first().click();
-	await page.getByLabel('Space Name').fill(spaceName);
-	await page.getByRole('button', {name: 'Continue'}).click();
-	await page.getByRole('button', {name: 'Continue'}).click();
-}
-
-async function deleteSpace(page, spaceName: string) {
-	await expect(async () => {
-		await clickMenuItem('Delete', page, spaceName);
-
-		await page.getByRole('button', {name: 'Delete'}).click();
-	}).toPass({timeout: 5000});
-
-	await waitForAlert(page, `${spaceName} was successfully deleted.`);
-}
-
-async function getTableRowByText(page, text: string) {
-	return page.locator('table.table tbody tr', {hasText: text}).first();
-}
-
-async function goToAllSpaces(page) {
-	await expect(async () => {
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
-
-		await expect(
-			page.getByRole('heading', {exact: true, name: 'All Spaces'})
-		).toBeVisible();
-	}).toPass({timeout: 10000});
-}
-
-async function handleClickMenuItem(menuitem: string, page) {
-	await expect(async () => {
-		if (menuitem.includes('Permissions')) {
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: 'Permissions',
-				})
-				.click({timeout: 1000});
-
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: menuitem,
-				})
-				.click({timeout: 1000});
-		}
-		else {
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: menuitem,
-				})
-				.click({timeout: 1000});
-		}
-	}).toPass({timeout: 5000});
 }
 
 async function resetPermissions(page, folderName?: string) {

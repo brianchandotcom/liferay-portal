@@ -58,13 +58,15 @@ export function getInitialSelection(
 		return true;
 	}
 
-	const selection: Record<string, HandlerSelection> = {};
+	return getInitialSelections(entry.previewPortletDataHandlerControls);
+}
 
-	entry.previewPortletDataHandlerControls.forEach((control) => {
-		selection[control.name] = getInitialSelection(control);
-	});
-
-	return selection;
+export function getInitialSelections(
+	controls: PreviewPortletDataHandlerControl[]
+): Record<string, HandlerSelection> {
+	return Object.fromEntries(
+		controls.map((control) => [control.name, getInitialSelection(control)])
+	);
 }
 
 export function updateSelection<V>(
@@ -76,4 +78,14 @@ export function updateSelection<V>(
 	const next: Record<string, V> = value ? {...rest, [key]: value} : rest;
 
 	return Object.keys(next).length ? next : undefined;
+}
+
+export function getSelectionSummary(
+	controls: {label: string; name: string}[],
+	selection: Record<string, HandlerSelection>
+): string {
+	return controls
+		.filter((control) => selection[control.name] !== undefined)
+		.map((control) => control.label)
+		.join(', ');
 }

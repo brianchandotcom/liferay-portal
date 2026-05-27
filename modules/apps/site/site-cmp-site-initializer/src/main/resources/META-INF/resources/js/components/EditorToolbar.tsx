@@ -14,10 +14,12 @@ import React, {useEffect, useId, useState} from 'react';
 export default function EditorToolbar({
 	backURL,
 	formSubmitURL,
+	isNew,
 	title,
 }: {
 	backURL: string;
 	formSubmitURL?: string;
+	isNew: boolean;
 	title: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
@@ -105,9 +107,13 @@ export default function EditorToolbar({
 							sessionStorage.setItem(
 								'com.liferay.site.cmp.site.initializer.successMessage',
 								sub(
-									Liferay.Language.get(
-										'x-was-published-successfully'
-									),
+									isNew
+										? Liferay.Language.get(
+												'x-was-created-successfully'
+											)
+										: Liferay.Language.get(
+												'x-was-updated-successfully'
+											),
 									`<strong>${value}</strong>`
 								),
 								sessionStorage.TYPES.NECESSARY

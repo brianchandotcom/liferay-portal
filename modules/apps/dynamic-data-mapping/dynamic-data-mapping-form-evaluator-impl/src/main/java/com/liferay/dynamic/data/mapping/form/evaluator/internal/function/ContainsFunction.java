@@ -29,14 +29,14 @@ public class ContainsFunction
 			return false;
 		}
 
+		if (object1 instanceof JSONArray) {
+			return apply((JSONArray)object1, object2);
+		}
+
 		if ((object1 instanceof JSONObjectImpl) &&
 			(object2 instanceof JSONObjectImpl)) {
 
 			return apply((JSONObjectImpl)object1, (JSONObjectImpl)object2);
-		}
-
-		if ((object1 instanceof JSONArray) && (object2 instanceof String)) {
-			return apply(object1.toString(), object2);
 		}
 
 		return apply(object1.toString(), object2.toString());
@@ -45,6 +45,26 @@ public class ContainsFunction
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	protected Boolean apply(JSONArray jsonArray, Object value) {
+		if ((jsonArray == null) || (value == null)) {
+			return false;
+		}
+
+		String valueString = value.toString();
+
+		if (Validator.isNull(valueString)) {
+			return false;
+		}
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (Objects.equals(String.valueOf(jsonArray.get(i)), valueString)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Boolean apply(JSONObject jsonObject1, JSONObject jsonObject2) {

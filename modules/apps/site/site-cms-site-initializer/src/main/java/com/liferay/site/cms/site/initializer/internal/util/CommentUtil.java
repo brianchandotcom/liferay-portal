@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,8 +37,13 @@ import java.util.Map;
 public class CommentUtil {
 
 	public static JSONObject getCommentJSONObject(
-			Comment comment, HttpServletRequest httpServletRequest)
+			Comment comment, DiscussionPermission discussionPermission,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Date createDate = comment.getCreateDate();
 
@@ -64,6 +70,14 @@ public class CommentUtil {
 			"dateDescription", modifiedDateDescription
 		).put(
 			"edited", !createDate.equals(modifiedDate)
+		).put(
+			"hasDeletePermission",
+			discussionPermission.hasDeletePermission(
+				themeDisplay.getPermissionChecker(), comment.getCommentId())
+		).put(
+			"hasUpdatePermission",
+			discussionPermission.hasUpdatePermission(
+				themeDisplay.getPermissionChecker(), comment.getCommentId())
 		).put(
 			"negativeVotes",
 			() -> {

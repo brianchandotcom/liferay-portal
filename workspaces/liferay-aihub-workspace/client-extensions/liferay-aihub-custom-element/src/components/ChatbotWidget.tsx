@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {EventSource} from 'eventsource';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
@@ -41,6 +42,7 @@ export default function ChatbotWidget({
 	const [open, setOpen] = useState(false);
 	const [subscribed, setSubscribed] = useState(false);
 
+	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
 		null
@@ -63,49 +65,86 @@ export default function ChatbotWidget({
 			return;
 		}
 
-		const eventSource = createEventSource();
+		let active = true;
 
-		eventSource.addEventListener('Chat Message Sent', (event) => {
-			if (loadingTimeoutRef.current) {
-				clearTimeout(loadingTimeoutRef.current);
-				loadingTimeoutRef.current = null;
-			}
+		createEventSource()
+			.then((eventSource) => {
+				if (!active) {
+					eventSource?.close();
 
-			try {
-				const data = JSON.parse((event as MessageEvent).data);
+					return;
+				}
 
-				setMessages((prev) => [
-					...prev,
-					{sender: 'assistant', text: data.data},
-				]);
-			}
-			catch (error) {
-				console.error('Error parsing chat message:', error);
+				if (!eventSource) {
+					setMessages((prev) => [
+						...prev,
+						{sender: 'error', text: ''},
+					]);
+					setLoading(false);
+
+					return;
+				}
+
+				eventSourceRef.current = eventSource;
+
+				eventSource.addEventListener('Chat Message Sent', (event) => {
+					if (loadingTimeoutRef.current) {
+						clearTimeout(loadingTimeoutRef.current);
+						loadingTimeoutRef.current = null;
+					}
+
+					try {
+						const data = JSON.parse((event as MessageEvent).data);
+
+						setMessages((prev) => [
+							...prev,
+							{sender: 'assistant', text: data.data},
+						]);
+					}
+					catch (error) {
+						console.error('Error parsing chat message:', error);
+
+						setMessages((prev) => [
+							...prev,
+							{sender: 'error', text: ''},
+						]);
+					}
+
+					setLoading(false);
+				});
+
+				eventSource.addEventListener('Subscribe', (event) => {
+					eventSourceReference.current = (event as MessageEvent).data;
+					setSubscribed(true);
+				});
+
+				eventSource.addEventListener('error', () => {
+					console.error('EventSource connection error');
+
+					setSubscribed(false);
+					setMessages((prev) => [
+						...prev,
+						{sender: 'error', text: ''},
+					]);
+					setLoading(false);
+				});
+			})
+			.catch((error) => {
+				console.error('Failed to create event source:', error);
 
 				setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
-			}
-
-			setLoading(false);
-		});
-
-		eventSource.addEventListener('Subscribe', (event) => {
-			eventSourceReference.current = (event as MessageEvent).data;
-			setSubscribed(true);
-		});
-
-		eventSource.addEventListener('error', () => {
-			console.error('EventSource connection error');
-
-			setSubscribed(false);
-			setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
-		});
+				setLoading(false);
+			});
 
 		return () => {
+			active = false;
+
 			if (loadingTimeoutRef.current) {
 				clearTimeout(loadingTimeoutRef.current);
 			}
 
-			eventSource.close();
+			eventSourceRef.current?.close();
+			eventSourceRef.current = null;
 			setSubscribed(false);
 		};
 	}, [chatbotConfiguration]);

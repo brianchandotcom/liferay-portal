@@ -1141,13 +1141,13 @@ public class UserODataRetrieverCustomFieldsTest {
 	}
 
 	@Inject
-	private static ExpandoColumnLocalService _expandoColumnLocalService;
-
-	private static ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
-		_serviceTracker;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
+
+	private ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
+		_serviceTracker;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

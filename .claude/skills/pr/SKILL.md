@@ -83,21 +83,17 @@ The body follows this format:
 ```markdown
 https://liferay.atlassian.net/browse/TICKET-ID
 
-## What is being fixed
+## What Is Being Fixed
 
-Explain the problem or bug that motivated the change — what was going
-wrong or what was missing.
+Explain the problem or bug that motivated the change — what was going wrong or what was missing.
 
-## How it is being fixed
+## How It Is Being Fixed
 
-Explain the approach taken across all commits. Describe the key changes
-and the reasoning behind the approach. Write in plain prose rather than
-bullet points.
+Explain the approach taken across all commits. Describe the key changes and the reasoning behind the approach. Write in plain prose rather than bullet points.
 
-## Why are there no tests?
+## Why Are There No Tests?
 
-This optional section is only included when the commits do not add any
-tests. It should contain the rationale provided by the user.
+This optional section is only included when the commits do not add any tests. It should contain the rationale provided by the user.
 ```
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.

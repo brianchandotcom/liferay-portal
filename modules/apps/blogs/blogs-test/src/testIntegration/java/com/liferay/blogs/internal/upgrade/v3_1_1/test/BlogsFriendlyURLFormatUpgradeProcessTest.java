@@ -140,11 +140,6 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 		"com.liferay.blogs.internal.upgrade.v3_1_1." +
 			"BlogsFriendlyURLFormatUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.blogs.internal.upgrade.registry.BlogsServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private BlogsEntry _blogsEntry;
 
 	@Inject
@@ -154,5 +149,10 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.blogs.internal.upgrade.registry.BlogsServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

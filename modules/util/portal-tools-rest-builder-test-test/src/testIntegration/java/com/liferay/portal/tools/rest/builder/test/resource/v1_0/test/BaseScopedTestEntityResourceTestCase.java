@@ -2729,4 +2729,4 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntityResource _scopedTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1230778735
+// LIFERAY-REST-BUILDER-HASH:1389067384

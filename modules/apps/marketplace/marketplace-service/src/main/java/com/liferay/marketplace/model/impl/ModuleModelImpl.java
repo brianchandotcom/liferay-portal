@@ -810,4 +810,4 @@ public class ModuleModelImpl
 	private Module _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:596787746
+// LIFERAY-SERVICE-BUILDER-HASH:1595365480

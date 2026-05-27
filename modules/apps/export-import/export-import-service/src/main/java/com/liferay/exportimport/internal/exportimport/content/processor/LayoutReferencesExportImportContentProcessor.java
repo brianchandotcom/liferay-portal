@@ -509,23 +509,23 @@ public class LayoutReferencesExportImportContentProcessor
 					company.getVirtualHostname(), serverPort, false);
 			}
 
-			NavigableMap<String, String> privateVirtualHostnames =
-				privateLayoutSet.getVirtualHostnames();
+			String privateDefaultVirtualHostname =
+				_portal.getDefaultVirtualHostname(false, privateLayoutSet);
 
-			if (!privateVirtualHostnames.isEmpty()) {
+			if (Validator.isNotNull(privateDefaultVirtualHostname)) {
 				privateLayoutSetPortalURL = _portal.getPortalURL(
-					privateVirtualHostnames.firstKey(), serverPort, false);
+					privateDefaultVirtualHostname, serverPort, false);
 			}
 			else {
 				privateLayoutSetPortalURL = companyPortalURL;
 			}
 
-			NavigableMap<String, String> publicVirtualHostnames =
-				publicLayoutSet.getVirtualHostnames();
+			String publicDefaultVirtualHostname =
+				_portal.getDefaultVirtualHostname(false, publicLayoutSet);
 
-			if (!publicVirtualHostnames.isEmpty()) {
+			if (Validator.isNotNull(publicDefaultVirtualHostname)) {
 				publicLayoutSetPortalURL = _portal.getPortalURL(
-					publicVirtualHostnames.firstKey(), serverPort, false);
+					publicDefaultVirtualHostname, serverPort, false);
 			}
 			else {
 				publicLayoutSetPortalURL = companyPortalURL;
@@ -552,20 +552,20 @@ public class LayoutReferencesExportImportContentProcessor
 					company.getVirtualHostname(), secureSecurePort, true);
 			}
 
-			NavigableMap<String, String> privateVirtualHostnames =
-				privateLayoutSet.getVirtualHostnames();
+			String privateDefaultVirtualHostname =
+				_portal.getDefaultVirtualHostname(false, privateLayoutSet);
 
-			if (!privateVirtualHostnames.isEmpty()) {
+			if (Validator.isNotNull(privateDefaultVirtualHostname)) {
 				privateLayoutSetSecurePortalURL = _portal.getPortalURL(
-					privateVirtualHostnames.firstKey(), secureSecurePort, true);
+					privateDefaultVirtualHostname, secureSecurePort, true);
 			}
 
-			NavigableMap<String, String> publicVirtualHostnames =
-				publicLayoutSet.getVirtualHostnames();
+			String publicDefaultVirtualHostname =
+				_portal.getDefaultVirtualHostname(false, publicLayoutSet);
 
-			if (!publicVirtualHostnames.isEmpty()) {
+			if (Validator.isNotNull(publicDefaultVirtualHostname)) {
 				publicLayoutSetSecurePortalURL = _portal.getPortalURL(
-					publicVirtualHostnames.firstKey(), secureSecurePort, true);
+					publicDefaultVirtualHostname, secureSecurePort, true);
 			}
 
 			if (_isDefaultGroup(group)) {
@@ -794,16 +794,15 @@ public class LayoutReferencesExportImportContentProcessor
 			return url;
 		}
 
-		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-		NavigableMap<String, String> publicLayoutSetVirtualHostnames =
-			publicLayoutSet.getVirtualHostnames();
+		String publicLayoutSetDefaultVirtualHostname =
+			_portal.getDefaultVirtualHostname(
+				false, group.getPublicLayoutSet());
 
 		String portalURL = StringPool.BLANK;
 
-		if (!publicLayoutSetVirtualHostnames.isEmpty()) {
+		if (Validator.isNotNull(publicLayoutSetDefaultVirtualHostname)) {
 			portalURL = _portal.getPortalURL(
-				publicLayoutSetVirtualHostnames.firstKey(), serverPort, secure);
+				publicLayoutSetDefaultVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalURL)) {
 				if (secure) {
@@ -817,15 +816,13 @@ public class LayoutReferencesExportImportContentProcessor
 			}
 		}
 
-		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+		String privateLayoutSetDefaultVirtualHostname =
+			_portal.getDefaultVirtualHostname(
+				false, group.getPrivateLayoutSet());
 
-		NavigableMap<String, String> privateLayoutSetVirtualHostnames =
-			privateLayoutSet.getVirtualHostnames();
-
-		if (!privateLayoutSetVirtualHostnames.isEmpty()) {
+		if (Validator.isNotNull(privateLayoutSetDefaultVirtualHostname)) {
 			portalURL = _portal.getPortalURL(
-				privateLayoutSetVirtualHostnames.firstKey(), serverPort,
-				secure);
+				privateLayoutSetDefaultVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalURL)) {
 				if (secure) {

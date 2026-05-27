@@ -86,7 +86,7 @@ public class MBDiscussionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBDiscussion>
+	private CollectionPersistenceFinder<MBDiscussion, NoSuchDiscussionException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,8 @@ public class MBDiscussionPersistenceImpl
 			String uuid, OrderByComparator<MBDiscussion> orderByComparator)
 		throws NoSuchDiscussionException {
 
-		MBDiscussion mbDiscussion = fetchByUuid_First(uuid, orderByComparator);
-
-		if (mbDiscussion != null) {
-			return mbDiscussion;
-		}
-
-		throw new NoSuchDiscussionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +169,7 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBDiscussion>
+	private UniquePersistenceFinder<MBDiscussion, NoSuchDiscussionException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -191,21 +184,8 @@ public class MBDiscussionPersistenceImpl
 	public MBDiscussion findByUUID_G(String uuid, long groupId)
 		throws NoSuchDiscussionException {
 
-		MBDiscussion mbDiscussion = fetchByUUID_G(uuid, groupId);
-
-		if (mbDiscussion == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDiscussionException(message);
-		}
-
-		return mbDiscussion;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -253,7 +233,7 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBDiscussion>
+	private CollectionPersistenceFinder<MBDiscussion, NoSuchDiscussionException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -297,16 +277,8 @@ public class MBDiscussionPersistenceImpl
 			OrderByComparator<MBDiscussion> orderByComparator)
 		throws NoSuchDiscussionException {
 
-		MBDiscussion mbDiscussion = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (mbDiscussion != null) {
-			return mbDiscussion;
-		}
-
-		throw new NoSuchDiscussionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -351,7 +323,7 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<MBDiscussion>
+	private UniquePersistenceFinder<MBDiscussion, NoSuchDiscussionException>
 		_uniquePersistenceFinderByThreadId;
 
 	/**
@@ -365,21 +337,8 @@ public class MBDiscussionPersistenceImpl
 	public MBDiscussion findByThreadId(long threadId)
 		throws NoSuchDiscussionException {
 
-		MBDiscussion mbDiscussion = fetchByThreadId(threadId);
-
-		if (mbDiscussion == null) {
-			String message =
-				_uniquePersistenceFinderByThreadId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDiscussionException(message);
-		}
-
-		return mbDiscussion;
+		return _uniquePersistenceFinderByThreadId.find(
+			finderCache, new Object[] {threadId});
 	}
 
 	/**
@@ -422,7 +381,8 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private UniquePersistenceFinder<MBDiscussion> _uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder<MBDiscussion, NoSuchDiscussionException>
+		_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchDiscussionException</code> if it could not be found.
@@ -436,22 +396,8 @@ public class MBDiscussionPersistenceImpl
 	public MBDiscussion findByC_C(long classNameId, long classPK)
 		throws NoSuchDiscussionException {
 
-		MBDiscussion mbDiscussion = fetchByC_C(classNameId, classPK);
-
-		if (mbDiscussion == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDiscussionException(message);
-		}
-
-		return mbDiscussion;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -965,4 +911,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1982009442
+// LIFERAY-SERVICE-BUILDER-HASH:2116844783

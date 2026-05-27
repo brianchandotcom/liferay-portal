@@ -117,22 +117,22 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                 class="timeline-panel-body-content-details"
               >
                 <div
-                  class="icon-group"
+                  class="align-items-center d-flex icon-group"
                 >
                   <span
-                    class="item-count"
+                    class="font-weight-semibold item-count text-secondary"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon mr-2"
+                    class="device-icon mr-6"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Unknown Device
 Firefox"
                   >
                     <svg
-                      class="lexicon-icon lexicon-icon-devices icon-root mainLighten28"
+                      class="lexicon-icon lexicon-icon-devices icon-root text-secondary"
                       color="mainLighten65"
                       id="anyIcon"
                       role="presentation"
@@ -436,22 +436,22 @@ Firefox"
                 class="timeline-panel-body-content-details"
               >
                 <div
-                  class="icon-group"
+                  class="align-items-center d-flex icon-group"
                 >
                   <span
-                    class="item-count"
+                    class="font-weight-semibold item-count text-secondary"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon mr-2"
+                    class="device-icon mr-6"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Mobile
 Firefox"
                   >
                     <svg
-                      class="lexicon-icon lexicon-icon-mobile-portrait icon-root mainLighten28"
+                      class="lexicon-icon lexicon-icon-mobile-portrait icon-root text-secondary"
                       role="presentation"
                     >
                       <use
@@ -722,26 +722,26 @@ Firefox"
                 class="timeline-panel-body-content-details"
               >
                 <div
-                  class="icon-group"
+                  class="align-items-center d-flex icon-group"
                 >
                   <span
-                    class="item-count"
+                    class="font-weight-semibold item-count text-secondary"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon mr-2"
+                    class="device-icon mr-6"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Desktop
 Firefox"
                   >
                     <svg
-                      class="lexicon-icon lexicon-icon-ac_display icon-root mainLighten28"
+                      class="lexicon-icon lexicon-icon-desktop icon-root text-secondary"
                       role="presentation"
                     >
                       <use
-                        href="#ac_display"
+                        href="#desktop"
                       />
                     </svg>
                   </span>

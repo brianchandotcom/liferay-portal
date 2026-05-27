@@ -1,0 +1,101 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-90204",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#P7M3",
+			"externalReferenceCode": "L_MCP_SERVER_PROFILE_DATA_MASK",
+			"friendlyURLSeparator": "l",
+			"label": {
+				"en_US": "MCP Server Profile Data Mask"
+			},
+			"modifiable": true,
+			"name": "MCPServerProfileDataMask",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": "true",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Active"
+					},
+					"name": "active",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Disable Reason"
+					},
+					"name": "disableReason",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Execution Order"
+					},
+					"name": "executionOrder",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Integer",
+					"defaultValue": "0",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "MCP Server Profile ID"
+					},
+					"name": "mcpServerProfileId",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "MCP Server Profile Data Masks"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": true
+		}
+	]
+}

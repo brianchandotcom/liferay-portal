@@ -46,6 +46,27 @@ public class ThumbnailURLReference implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFileBase64() {
+		return fileBase64;
+	}
+
+	public void setFileBase64(String fileBase64) {
+		this.fileBase64 = fileBase64;
+	}
+
+	public void setFileBase64(
+		UnsafeSupplier<String, Exception> fileBase64UnsafeSupplier) {
+
+		try {
+			fileBase64 = fileBase64UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileBase64;
+
 	public String getUrl() {
 		return url;
 	}
@@ -98,4 +119,4 @@ public class ThumbnailURLReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-914744945
+// LIFERAY-REST-BUILDER-HASH:1770941589

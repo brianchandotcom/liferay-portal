@@ -75,6 +75,9 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-list-channels/{productConfigurationListChannelId}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Removes the channel binding identified by id from its product configuration list. Calls CommerceChannelRelService.deleteCommerceChannelRel. Validation -- Service-level NoSuchCommerceChannelRelException -> 404. Side effects -- Removes the channel <-> configuration list association."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -158,6 +161,9 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists the channel bindings of the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> getProductConfigurationListIdProductConfigurationListChannelsPage. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -204,6 +210,9 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configuration-list-channels'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists the channel bindings of the product configuration list identified by id. Calls CommerceChannelRelService.getCommerceChannelRels (className=CPConfigurationList). Validation -- None at this layer."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -269,6 +278,9 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "order": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Binds a commerce channel to the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfigurationListChannel. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchCommerceChannelException -> 404 when channel lookup fails. Side effects -- Creates a CommerceChannelRel binding the channel to the configuration list."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -308,6 +320,9 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configuration-list-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "order": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Binds a commerce channel to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + CommerceChannelService.fetchCommerceChannelByExternalReferenceCode/getCommerceChannel + CommerceChannelRelService.addCommerceChannelRel. Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchCommerceChannelException -> 404 when channel lookup fails. Side effects -- Creates a CommerceChannelRel binding the channel to the configuration list."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1135,4 +1150,4 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 			BaseProductConfigurationListChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1982932204
+// LIFERAY-REST-BUILDER-HASH:-565847548

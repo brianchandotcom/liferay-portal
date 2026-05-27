@@ -82,8 +82,9 @@ public class DLFileVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where uuid = &#63;.
@@ -123,16 +124,9 @@ public class DLFileVersionPersistenceImpl
 			String uuid, OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -174,7 +168,7 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DLFileVersion>
+	private UniquePersistenceFinder<DLFileVersion, NoSuchFileVersionException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -189,21 +183,8 @@ public class DLFileVersionPersistenceImpl
 	public DLFileVersion findByUUID_G(String uuid, long groupId)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByUUID_G(uuid, groupId);
-
-		if (dlFileVersion == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileVersionException(message);
-		}
-
-		return dlFileVersion;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -252,8 +233,9 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where uuid = &#63; and companyId = &#63;.
@@ -296,16 +278,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -351,8 +326,9 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where companyId = &#63;.
@@ -392,16 +368,9 @@ public class DLFileVersionPersistenceImpl
 			long companyId, OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -443,8 +412,9 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByFileEntryId;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByFileEntryId;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63;.
@@ -485,16 +455,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByFileEntryId_First(
-			fileEntryId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId}));
+		return _collectionPersistenceFinderByFileEntryId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -536,8 +499,9 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByMimeType;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByMimeType;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where mimeType = &#63;.
@@ -577,16 +541,9 @@ public class DLFileVersionPersistenceImpl
 			String mimeType, OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByMimeType_First(
-			mimeType, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByMimeType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {mimeType}));
+		return _collectionPersistenceFinderByMimeType.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {mimeType},
+			orderByComparator);
 	}
 
 	/**
@@ -628,8 +585,9 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {mimeType});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByC_SU;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByC_SU;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where companyId = &#63; and storeUUID = &#63;.
@@ -673,16 +631,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByC_SU_First(
-			companyId, storeUUID, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByC_SU.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, storeUUID}));
+		return _collectionPersistenceFinderByC_SU.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, storeUUID}, orderByComparator);
 	}
 
 	/**
@@ -730,8 +681,9 @@ public class DLFileVersionPersistenceImpl
 			new Object[] {companyId, storeUUID});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByC_NotS;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByC_NotS;
 
 	/**
 	 * Returns all the document library file versions where companyId = &#63; and status &ne; &#63;.
@@ -830,16 +782,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByC_NotS_First(
-			companyId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_NotS.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -885,7 +830,7 @@ public class DLFileVersionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status});
 	}
 
-	private UniquePersistenceFinder<DLFileVersion>
+	private UniquePersistenceFinder<DLFileVersion, NoSuchFileVersionException>
 		_uniquePersistenceFinderByF_V;
 
 	/**
@@ -900,22 +845,9 @@ public class DLFileVersionPersistenceImpl
 	public DLFileVersion findByF_V(long fileEntryId, String version)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByF_V(fileEntryId, version);
-
-		if (dlFileVersion == null) {
-			String message =
-				_uniquePersistenceFinderByF_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fileEntryId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFileVersionException(message);
-		}
-
-		return dlFileVersion;
+		return _uniquePersistenceFinderByF_V.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, version});
 	}
 
 	/**
@@ -965,8 +897,9 @@ public class DLFileVersionPersistenceImpl
 			new Object[] {fileEntryId, version});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByF_S;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByF_S;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
@@ -1118,8 +1051,9 @@ public class DLFileVersionPersistenceImpl
 			new Object[] {fileEntryId, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByLtD_S;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByLtD_S;
 
 	/**
 	 * Returns all the document library file versions where displayDate &lt; &#63; and status = &#63;.
@@ -1219,16 +1153,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1276,8 +1203,9 @@ public class DLFileVersionPersistenceImpl
 			new Object[] {displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByG_F_S;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByG_F_S;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -1323,17 +1251,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByG_F_S_First(
-			groupId, folderId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByG_F_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, folderId, status}));
+		return _collectionPersistenceFinderByG_F_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, status}, orderByComparator);
 	}
 
 	/**
@@ -1384,8 +1304,9 @@ public class DLFileVersionPersistenceImpl
 			new Object[] {groupId, folderId, status});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByC_E_S;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByC_E_S;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where companyId = &#63; and expirationDate = &#63; and status = &#63;.
@@ -1554,8 +1475,9 @@ public class DLFileVersionPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<DLFileVersion>
-		_collectionPersistenceFinderByG_F_T_V;
+	private CollectionPersistenceFinder
+		<DLFileVersion, NoSuchFileVersionException>
+			_collectionPersistenceFinderByG_F_T_V;
 
 	/**
 	 * Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
@@ -1603,17 +1525,10 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByG_F_T_V_First(
-			groupId, folderId, title, version, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		throw new NoSuchFileVersionException(
-			_collectionPersistenceFinderByG_F_T_V.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, folderId, title, version}));
+		return _collectionPersistenceFinderByG_F_T_V.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, title, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2414,4 +2329,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:150311098
+// LIFERAY-SERVICE-BUILDER-HASH:1233105394

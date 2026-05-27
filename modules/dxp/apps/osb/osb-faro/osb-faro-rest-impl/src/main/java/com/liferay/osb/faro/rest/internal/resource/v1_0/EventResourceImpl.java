@@ -35,7 +35,7 @@ public class EventResourceImpl extends BaseEventResourceImpl {
 	@Override
 	public Page<Event> getWorkspaceGroupChannelEventsPage(
 			Long groupId, String channelId, Boolean includeAnonymousUsers,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination)
 		throws Exception {
 
@@ -57,7 +57,7 @@ public class EventResourceImpl extends BaseEventResourceImpl {
 					).put(
 						"rangeEnd", rangeEnd
 					).put(
-						"rangeKey", rangeKey
+						"rangeKey", TimeRange.getRangeKey(rangeKey)
 					).put(
 						"rangeStart", rangeStart
 					).put(

@@ -12,14 +12,27 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-jest.mock('shared/hooks/useFrontendDataSet', () => ({
-	useFrontendDataSet: () => {
-		const FakeDataSet = ({id}: {id: string}) => (
-			<div data-testid='fds-component' id={id} />
-		);
+type FakeFilter = {
+	id: string;
+	preloadedData?: {
+		exclude: boolean;
+		selectedItems: Array<{label?: string; value: string}>;
+	};
+};
 
-		return FakeDataSet;
+let lastFilters: FakeFilter[] | undefined;
+
+jest.mock('@liferay/frontend-data-set-web', () => ({
+	...jest.requireActual('@liferay/frontend-data-set-web'),
+	FrontendDataSet: ({filters, id}: {filters: FakeFilter[]; id: string}) => {
+		lastFilters = filters;
+
+		return <div data-testid='fds-component' id={id} />;
 	}
+}));
+
+jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
+	DropdownRangeKey: () => null
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
@@ -104,6 +117,7 @@ const renderList = (
 describe('List', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+		lastFilters = undefined;
 
 		mockedUseHistory.mockReturnValue({push: mockHistoryPush});
 		mockedUseRequest.mockImplementation(useRequestImpl());
@@ -140,6 +154,19 @@ describe('List', () => {
 			renderList();
 
 			expect(screen.getByTestId('fds-component')).toHaveAttribute('id');
+		});
+
+		it('should pass activityStatusFilter "ACTIVE" to AccountsDataSet by default', () => {
+			renderList();
+
+			const activityStatusFilter = lastFilters?.find(
+				f => f.id === 'activityStatus'
+			);
+
+			expect(activityStatusFilter?.preloadedData).toEqual({
+				exclude: false,
+				selectedItems: [{label: 'Active', value: 'ACTIVE'}]
+			});
 		});
 
 		it('should match the snapshot', async () => {

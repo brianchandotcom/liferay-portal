@@ -75,7 +75,7 @@ public class FaroUserPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -115,15 +115,8 @@ public class FaroUserPersistenceImpl
 			long groupId, OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -164,7 +157,7 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByLiveUserId;
 
 	/**
@@ -204,16 +197,8 @@ public class FaroUserPersistenceImpl
 			long liveUserId, OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByLiveUserId_First(
-			liveUserId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByLiveUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {liveUserId}));
+		return _collectionPersistenceFinderByLiveUserId.findFirst(
+			finderCache, new Object[] {liveUserId}, orderByComparator);
 	}
 
 	/**
@@ -254,7 +239,8 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {liveUserId});
 	}
 
-	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByKey;
+	private UniquePersistenceFinder<FaroUser, NoSuchFaroUserException>
+		_uniquePersistenceFinderByKey;
 
 	/**
 	 * Returns the faro user where key = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -265,21 +251,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public FaroUser findByKey(String key) throws NoSuchFaroUserException {
-		FaroUser faroUser = fetchByKey(key);
-
-		if (faroUser == null) {
-			String message =
-				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFaroUserException(message);
-		}
-
-		return faroUser;
+		return _uniquePersistenceFinderByKey.find(
+			finderCache, new Object[] {key});
 	}
 
 	/**
@@ -320,7 +293,8 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {key});
 	}
 
-	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByG_L;
+	private UniquePersistenceFinder<FaroUser, NoSuchFaroUserException>
+		_uniquePersistenceFinderByG_L;
 
 	/**
 	 * Returns the faro user where groupId = &#63; and liveUserId = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -334,22 +308,8 @@ public class FaroUserPersistenceImpl
 	public FaroUser findByG_L(long groupId, long liveUserId)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByG_L(groupId, liveUserId);
-
-		if (faroUser == null) {
-			String message =
-				_uniquePersistenceFinderByG_L.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, liveUserId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFaroUserException(message);
-		}
-
-		return faroUser;
+		return _uniquePersistenceFinderByG_L.find(
+			finderCache, new Object[] {groupId, liveUserId});
 	}
 
 	/**
@@ -397,7 +357,7 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, liveUserId});
 	}
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByG_R;
 
 	/**
@@ -440,16 +400,8 @@ public class FaroUserPersistenceImpl
 			OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByG_R_First(
-			groupId, roleId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByG_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, roleId}));
+		return _collectionPersistenceFinderByG_R.findFirst(
+			finderCache, new Object[] {groupId, roleId}, orderByComparator);
 	}
 
 	/**
@@ -494,7 +446,8 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, roleId});
 	}
 
-	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByG_E;
+	private UniquePersistenceFinder<FaroUser, NoSuchFaroUserException>
+		_uniquePersistenceFinderByG_E;
 
 	/**
 	 * Returns the faro user where groupId = &#63; and emailAddress = &#63; or throws a <code>NoSuchFaroUserException</code> if it could not be found.
@@ -508,22 +461,8 @@ public class FaroUserPersistenceImpl
 	public FaroUser findByG_E(long groupId, String emailAddress)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByG_E(groupId, emailAddress);
-
-		if (faroUser == null) {
-			String message =
-				_uniquePersistenceFinderByG_E.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, emailAddress});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFaroUserException(message);
-		}
-
-		return faroUser;
+		return _uniquePersistenceFinderByG_E.find(
+			finderCache, new Object[] {groupId, emailAddress});
 	}
 
 	/**
@@ -571,7 +510,7 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, emailAddress});
 	}
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByG_S;
 
 	/**
@@ -614,16 +553,8 @@ public class FaroUserPersistenceImpl
 			OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -668,7 +599,7 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, status});
 	}
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByL_S;
 
 	/**
@@ -711,16 +642,8 @@ public class FaroUserPersistenceImpl
 			OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByL_S_First(
-			liveUserId, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByL_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {liveUserId, status}));
+		return _collectionPersistenceFinderByL_S.findFirst(
+			finderCache, new Object[] {liveUserId, status}, orderByComparator);
 	}
 
 	/**
@@ -765,7 +688,7 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {liveUserId, status});
 	}
 
-	private CollectionPersistenceFinder<FaroUser>
+	private CollectionPersistenceFinder<FaroUser, NoSuchFaroUserException>
 		_collectionPersistenceFinderByE_S;
 
 	/**
@@ -808,16 +731,9 @@ public class FaroUserPersistenceImpl
 			OrderByComparator<FaroUser> orderByComparator)
 		throws NoSuchFaroUserException {
 
-		FaroUser faroUser = fetchByE_S_First(
-			emailAddress, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		throw new NoSuchFaroUserException(
-			_collectionPersistenceFinderByE_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {emailAddress, status}));
+		return _collectionPersistenceFinderByE_S.findFirst(
+			finderCache, new Object[] {emailAddress, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1314,4 +1230,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1154910224
+// LIFERAY-SERVICE-BUILDER-HASH:-695124804

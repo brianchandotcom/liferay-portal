@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.internal.operation;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -183,8 +184,21 @@ public class ExportPortalInstanceOperation extends BasePortalInstanceOperation {
 				scopedConfiguration.getScope(),
 				ExtendedObjectClassDefinition.Scope.GROUP)) {
 
-			Group group = _groupLocalService.getGroup(
-				(long)scopedConfiguration.getScopePK());
+			long groupId = (long)scopedConfiguration.getScopePK();
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Skipping configuration ",
+							scopedConfiguration.getConfigurationId(),
+							" because group ", groupId, " does not exist"));
+				}
+
+				return false;
+			}
 
 			if (group.getCompanyId() == companyId) {
 				return true;

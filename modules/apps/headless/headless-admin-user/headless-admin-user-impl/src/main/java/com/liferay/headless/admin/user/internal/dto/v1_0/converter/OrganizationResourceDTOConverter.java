@@ -230,6 +230,14 @@ public class OrganizationResourceDTOConverter
 
 									return country.getA2();
 								});
+							setAddressCountryExternalReferenceCode(
+								() -> {
+									if (country == null) {
+										return null;
+									}
+
+									return country.getExternalReferenceCode();
+								});
 							setAddressRegion(
 								() -> {
 									if (region == null) {
@@ -245,6 +253,14 @@ public class OrganizationResourceDTOConverter
 									}
 
 									return region.getRegionCode();
+								});
+							setAddressRegionExternalReferenceCode(
+								() -> {
+									if (region == null) {
+										return null;
+									}
+
+									return region.getExternalReferenceCode();
 								});
 						}
 					});

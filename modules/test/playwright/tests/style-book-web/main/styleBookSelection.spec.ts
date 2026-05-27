@@ -13,7 +13,6 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {doAndGoBack} from '../../../utils/doAndGoBack';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 
 const STYLE_BOOK_NAME = getRandomString();
@@ -48,16 +47,12 @@ const test = mergeTests(
 	styleBookPageTest
 );
 
-test.beforeEach(async ({page, site, styleBooksPage}) => {
+test.beforeEach(async ({site, styleBooksPage}) => {
 	await styleBooksPage.goto(site.friendlyUrlPath);
 
 	await styleBooksPage.create(STYLE_BOOK_NAME);
 
-	await fillAndClickOutside(
-		page,
-		page.getByLabel('Brand Color 4', {exact: true}).getByRole('textbox'),
-		TEST_COLOR
-	);
+	await styleBooksPage.updateTokenInputColor('Brand Color 4', TEST_COLOR);
 
 	await styleBooksPage.waitForAutoSave();
 

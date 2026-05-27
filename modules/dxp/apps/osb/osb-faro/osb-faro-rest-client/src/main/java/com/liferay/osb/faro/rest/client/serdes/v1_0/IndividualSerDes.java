@@ -189,9 +189,7 @@ public class IndividualSerDes {
 			sb.append("\"profileType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individual.getProfileType()));
-
+			sb.append(individual.getProfileType());
 			sb.append("\"");
 		}
 
@@ -415,7 +413,9 @@ public class IndividualSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileType")) {
 				if (jsonParserFieldValue != null) {
-					individual.setProfileType((String)jsonParserFieldValue);
+					individual.setProfileType(
+						Individual.ProfileType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -499,4 +499,4 @@ public class IndividualSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1362447347
+// LIFERAY-REST-BUILDER-HASH:-1584617762

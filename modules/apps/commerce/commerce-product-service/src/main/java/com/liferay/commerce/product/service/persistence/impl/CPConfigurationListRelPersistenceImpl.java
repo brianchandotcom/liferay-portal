@@ -83,8 +83,9 @@ public class CPConfigurationListRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPConfigurationListRel>
-		_collectionPersistenceFinderByCPConfigurationListId;
+	private CollectionPersistenceFinder
+		<CPConfigurationListRel, NoSuchCPConfigurationListRelException>
+			_collectionPersistenceFinderByCPConfigurationListId;
 
 	/**
 	 * Returns an ordered range of all the cp configuration list rels where CPConfigurationListId = &#63;.
@@ -125,19 +126,9 @@ public class CPConfigurationListRelPersistenceImpl
 			OrderByComparator<CPConfigurationListRel> orderByComparator)
 		throws NoSuchCPConfigurationListRelException {
 
-		CPConfigurationListRel cpConfigurationListRel =
-			fetchByCPConfigurationListId_First(
-				CPConfigurationListId, orderByComparator);
-
-		if (cpConfigurationListRel != null) {
-			return cpConfigurationListRel;
-		}
-
-		throw new NoSuchCPConfigurationListRelException(
-			_collectionPersistenceFinderByCPConfigurationListId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPConfigurationListId}));
+		return _collectionPersistenceFinderByCPConfigurationListId.findFirst(
+			finderCache, new Object[] {CPConfigurationListId},
+			orderByComparator);
 	}
 
 	/**
@@ -180,8 +171,9 @@ public class CPConfigurationListRelPersistenceImpl
 			finderCache, new Object[] {CPConfigurationListId});
 	}
 
-	private CollectionPersistenceFinder<CPConfigurationListRel>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<CPConfigurationListRel, NoSuchCPConfigurationListRelException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the cp configuration list rels where classNameId = &#63; and CPConfigurationListId = &#63;.
@@ -224,17 +216,9 @@ public class CPConfigurationListRelPersistenceImpl
 			OrderByComparator<CPConfigurationListRel> orderByComparator)
 		throws NoSuchCPConfigurationListRelException {
 
-		CPConfigurationListRel cpConfigurationListRel = fetchByC_C_First(
-			classNameId, CPConfigurationListId, orderByComparator);
-
-		if (cpConfigurationListRel != null) {
-			return cpConfigurationListRel;
-		}
-
-		throw new NoSuchCPConfigurationListRelException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, CPConfigurationListId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, CPConfigurationListId},
+			orderByComparator);
 	}
 
 	/**
@@ -280,8 +264,9 @@ public class CPConfigurationListRelPersistenceImpl
 			finderCache, new Object[] {classNameId, CPConfigurationListId});
 	}
 
-	private UniquePersistenceFinder<CPConfigurationListRel>
-		_uniquePersistenceFinderByC_C_C;
+	private UniquePersistenceFinder
+		<CPConfigurationListRel, NoSuchCPConfigurationListRelException>
+			_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the cp configuration list rel where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationListRelException</code> if it could not be found.
@@ -297,23 +282,9 @@ public class CPConfigurationListRelPersistenceImpl
 			long classNameId, long classPK, long CPConfigurationListId)
 		throws NoSuchCPConfigurationListRelException {
 
-		CPConfigurationListRel cpConfigurationListRel = fetchByC_C_C(
-			classNameId, classPK, CPConfigurationListId);
-
-		if (cpConfigurationListRel == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK, CPConfigurationListId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPConfigurationListRelException(message);
-		}
-
-		return cpConfigurationListRel;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache,
+			new Object[] {classNameId, classPK, CPConfigurationListId});
 	}
 
 	/**
@@ -818,4 +789,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-198975712
+// LIFERAY-SERVICE-BUILDER-HASH:-1841023910

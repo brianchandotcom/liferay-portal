@@ -187,6 +187,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				}
 			});
 		_testPostAssetLibrary(new MimeTypeLimit[0]);
+		_testPostAssetLibraryWithDuplicateExternalReferenceCode();
 		_testPostAssetLibraryWithNoSettings();
 
 		AssetLibrary randomAssetLibrary = randomAssetLibrary();
@@ -742,6 +743,34 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
 
 		_assertGroupDepotEntryType(assetLibrary);
+	}
+
+	private void _testPostAssetLibraryWithDuplicateExternalReferenceCode()
+		throws Exception {
+
+		AssetLibrary assetLibrary1 = testPostAssetLibrary_addAssetLibrary(
+			randomAssetLibrary());
+
+		AssetLibrary assetLibrary2 = randomAssetLibrary();
+
+		assetLibrary2.setExternalReferenceCode(
+			assetLibrary1.getExternalReferenceCode());
+
+		try {
+			testPostAssetLibrary_addAssetLibrary(assetLibrary2);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				_language.get(
+					LocaleUtil.getDefault(),
+					"this-external-reference-code-is-already-in-use"),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {

@@ -1730,4 +1730,4 @@ public abstract class BaseProductOptionResourceTestCase {
 		ProductOptionResource _productOptionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:205457716
+// LIFERAY-REST-BUILDER-HASH:-317905841

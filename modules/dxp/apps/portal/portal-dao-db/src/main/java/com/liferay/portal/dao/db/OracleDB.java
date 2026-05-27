@@ -406,6 +406,30 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	protected List<QueryInfo> getQueryInfos(
+			Connection connection, String sql, long threshold)
+		throws SQLException {
+
+		try {
+			return super.getQueryInfos(connection, sql, threshold);
+		}
+		catch (SQLException sqlException) {
+			if (sqlException.getErrorCode() == _ERROR_CODE_ORA_942) {
+				throw new SQLException(
+					StringBundler.concat(
+						"Grant select privileges on \"sys.v_$session\" and ",
+						"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
+						"\"DBA\", because the database user lacks the ",
+						"required select privileges"),
+					sqlException.getSQLState(), sqlException.getErrorCode(),
+					sqlException);
+			}
+
+			throw sqlException;
+		}
+	}
+
+	@Override
 	protected String getRenameTableSQL(
 		String oldTableName, String newTableName) {
 
@@ -564,6 +588,8 @@ public class OracleDB extends BaseDB {
 			return sb.toString();
 		}
 	}
+
+	private static final int _ERROR_CODE_ORA_942 = 942;
 
 	private static final String[] _ORACLE = {
 		"--", "1", "0",

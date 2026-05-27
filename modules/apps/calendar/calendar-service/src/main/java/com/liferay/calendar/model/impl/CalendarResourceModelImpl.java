@@ -113,6 +113,8 @@ public class CalendarResourceModelImpl
 
 	public static final String ENTITY_ALIAS = "calendarResource";
 
+	public static final String FILTER_PK_COLUMN_NAME = "calendarResourceId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY calendarResource.code ASC";
 
@@ -1586,4 +1588,4 @@ public class CalendarResourceModelImpl
 	private CalendarResource _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1432687940
+// LIFERAY-SERVICE-BUILDER-HASH:811767768

@@ -68,7 +68,7 @@ function GeneralTab({
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="success">
+				<ClayLabel displayType="success" inverse>
 					{Liferay.Language.get('repeatable-group')}
 				</ClayLabel>
 			</div>

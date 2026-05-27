@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -67,7 +68,9 @@ public class JSONWebServiceTrackerTest {
 
 	@Test
 	public void testWebServiceContextAppearsInTheSummary() throws IOException {
-		URL url = new URL("http://localhost:8080/api/jsonws");
+		URL url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/api/jsonws");
 
 		String body = URLUtil.toString(url);
 
@@ -83,8 +86,8 @@ public class JSONWebServiceTrackerTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:8080/api/jsonws/test.testweb/sum/a/", a,
-				"/b/", b));
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/api/jsonws/test.testweb/sum/a/", a, "/b/", b));
 
 		Assert.assertEquals(
 			a + b, GetterUtil.getInteger(URLUtil.toString(url)));

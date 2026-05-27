@@ -7,12 +7,14 @@ import {
 	ObjectActionAPI,
 	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
+import {CommerceAdminCatalogDetailsPage} from '../../../../pages/commerce/commerce-catalog-web/commerceAdminCatalogDetailsPage';
+import {CommerceAdminCatalogsPage} from '../../../../pages/commerce/commerce-catalog-web/commerceAdminCatalogsPage';
 import getRandomString from '../../../../utils/getRandomString';
 import {
 	performLoginViaApi,
@@ -20,7 +22,11 @@ import {
 	userData,
 } from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-import {createAccountWithSupplierUser, miniumSetUp} from '../../utils/commerce';
+import {
+	createAccountWithBuyerUser,
+	createAccountWithSupplierUser,
+	miniumSetUp,
+} from '../../utils/commerce';
 
 export const test = mergeTests(
 	commercePagesTest,
@@ -28,8 +34,27 @@ export const test = mergeTests(
 	loginTest()
 );
 
+let miniumCatalog: {id: number; name: string};
 let setupData: Array<{id: number | string; type: string}>;
 let site: Site;
+
+async function linkSupplierToMiniumCatalog(
+	commerceAdminCatalogDetailsPage: CommerceAdminCatalogDetailsPage,
+	commerceAdminCatalogsPage: CommerceAdminCatalogsPage,
+	page: Page,
+	supplierName: string
+) {
+	await commerceAdminCatalogsPage.goto();
+
+	await commerceAdminCatalogsPage.catalogLink(miniumCatalog.name).click();
+	await commerceAdminCatalogDetailsPage.linkSupplierAutocomplete.click();
+	await commerceAdminCatalogDetailsPage
+		.linkSupplierDropdownItem(supplierName)
+		.click();
+	await commerceAdminCatalogDetailsPage.saveButton.click();
+
+	await waitForAlert(page);
+}
 
 test.beforeAll(async ({browser}) => {
 	const page = await browser.newPage();
@@ -40,6 +65,7 @@ test.beforeAll(async ({browser}) => {
 
 	const miniumResult = await miniumSetUp(apiHelpers);
 
+	miniumCatalog = miniumResult.catalog;
 	site = miniumResult.site;
 	setupData = [...apiHelpers.data];
 
@@ -62,7 +88,7 @@ test.afterAll(async ({browser}) => {
 
 test(
 	'A user linked to a Supplier account can log in to the storefront',
-	{tag: ['@COMMERCE-11449', '@LPD-88485']},
+	{tag: ['@COMMERCE-11449', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, page}) => {
 		const {account, supplierUser} = await createAccountWithSupplierUser(
 			apiHelpers,
@@ -82,7 +108,7 @@ test(
 test(
 	'Catalog "Link to a Supplier" autocomplete shows only active supplier accounts',
 	{
-		tag: ['@COMMERCE-11824', '@LPD-88485'],
+		tag: ['@COMMERCE-11824', '@LPD-88485', '@LPD-89343'],
 	},
 	async ({
 		apiHelpers,
@@ -168,7 +194,7 @@ test(
 
 test(
 	'Renaming a catalog linked to a Supplier account preserves the link',
-	{tag: ['@COMMERCE-11825', '@LPD-88485']},
+	{tag: ['@COMMERCE-11825', '@LPD-88485', '@LPD-89343']},
 	async ({
 		apiHelpers,
 		commerceAdminCatalogDetailsPage,
@@ -227,7 +253,7 @@ test(
 
 test(
 	'Supplier user can manage only catalogs linked to their account',
-	{tag: ['@COMMERCE-11604', '@LPD-88485']},
+	{tag: ['@COMMERCE-11604', '@LPD-88485', '@LPD-89343']},
 	async ({
 		apiHelpers,
 		commerceAdminCatalogDetailsPage,
@@ -336,7 +362,7 @@ test(
 
 test(
 	'Supplier user can create own catalogs (auto-linked) and delete only those, not linked-but-not-owned catalogs',
-	{tag: ['@COMMERCE-10893', '@LPD-88485']},
+	{tag: ['@COMMERCE-10893', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminCatalogsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -420,7 +446,7 @@ test(
 
 test(
 	'Supplier user in multiple supplier accounts can pick which account to link when creating a catalog',
-	{tag: ['@COMMERCE-10893', '@LPD-88485']},
+	{tag: ['@COMMERCE-10893', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminCatalogsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -500,7 +526,7 @@ test(
 
 test(
 	'Channel "Link to a Supplier" select shows only active supplier accounts',
-	{tag: ['@COMMERCE-10923', '@LPD-88485']},
+	{tag: ['@COMMERCE-10923', '@LPD-88485', '@LPD-89343']},
 	async ({
 		apiHelpers,
 		commerceAdminChannelDetailsPage,
@@ -574,7 +600,7 @@ test(
 
 test(
 	'Supplier user can manage only the channel linked to their account',
-	{tag: ['@COMMERCE-11607', '@COMMERCE-11866', '@LPD-88485']},
+	{tag: ['@COMMERCE-11607', '@COMMERCE-11866', '@LPD-88485', '@LPD-89343']},
 	async ({
 		apiHelpers,
 		commerceAdminChannelDetailsPage,
@@ -691,7 +717,7 @@ test(
 
 test(
 	'Supplier user sees only the price list entries belonging to a linked catalog',
-	{tag: ['@COMMERCE-11757', '@LPD-88485']},
+	{tag: ['@COMMERCE-11757', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminPriceListsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -723,7 +749,7 @@ test(
 
 test(
 	'Supplier user sees only the promotion entries belonging to a linked catalog',
-	{tag: ['@COMMERCE-11843', '@COMMERCE-11757', '@LPD-88485']},
+	{tag: ['@COMMERCE-11843', '@COMMERCE-11757', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminPromotionsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -755,7 +781,7 @@ test(
 
 test(
 	'Supplier user can add and delete a price list for their linked catalog',
-	{tag: ['@COMMERCE-11758', '@LPD-88485']},
+	{tag: ['@COMMERCE-11758', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminPriceListsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -827,7 +853,7 @@ test(
 
 test(
 	'Supplier user can add and delete a promotion for their linked catalog',
-	{tag: ['@COMMERCE-11843', '@LPD-88485']},
+	{tag: ['@COMMERCE-11843', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminPromotionsPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -911,7 +937,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can add tier prices on a ${variant.label}`,
-		{tag: [variant.tag, '@COMMERCE-11841', '@LPD-88485']},
+		{tag: [variant.tag, '@COMMERCE-11841', '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1034,7 +1060,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can edit a price entry on a ${variant.label}`,
-		{tag: [variant.tag, '@LPD-88485']},
+		{tag: [variant.tag, '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1146,7 +1172,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can set an override discount on a ${variant.label} entry`,
-		{tag: [variant.tag, '@LPD-88485']},
+		{tag: [variant.tag, '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1250,7 +1276,7 @@ for (const variant of [
 
 test(
 	'Supplier user can manage products only on their linked catalog',
-	{tag: ['@COMMERCE-11611', '@LPD-88485']},
+	{tag: ['@COMMERCE-11611', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminProductPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -1397,7 +1423,7 @@ test(
 
 test(
 	'Supplier user can delete a product on their linked catalog',
-	{tag: ['@COMMERCE-11610', '@LPD-88485']},
+	{tag: ['@COMMERCE-11610', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminProductPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -1476,7 +1502,7 @@ test(
 
 test(
 	'Supplier user sees only the split sub-order routed to their linked channel',
-	{tag: ['@COMMERCE-11779', '@LPD-88485']},
+	{tag: ['@COMMERCE-11779', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminOrdersPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -1641,6 +1667,245 @@ test(
 	}
 );
 
+test(
+	'Supplier user can manage the full workflow of an order from Accept to Delivered',
+	{tag: ['@COMMERCE-11888', '@LPD-88485', '@LPD-89343']},
+	async ({
+		apiHelpers,
+		commerceAdminOrderDetailsPage,
+		commerceAdminOrdersPage,
+		commerceAdminShipmentsPage,
+		page,
+	}) => {
+		const randomSuffix = getRandomString().slice(0, 8);
+
+		const {account: supplierAccount, supplierUser} =
+			await createAccountWithSupplierUser(apiHelpers, site.id);
+
+		const supplierCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				accountId: supplierAccount.id,
+				name: `Supplier Catalog ${randomSuffix}`,
+			});
+
+		const supplierChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `Supplier Channel ${randomSuffix}`,
+				siteGroupId: 0,
+			});
+
+		await apiHelpers.headlessCommerceAdminChannel.patchChannelWithAccountId(
+			supplierAccount.id,
+			supplierChannel
+		);
+
+		const customerChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `Customer Channel ${randomSuffix}`,
+				siteGroupId: 0,
+			});
+
+		let supplierProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: supplierCatalog.id,
+				name: {en_US: `Supplier Product ${randomSuffix}`},
+			});
+
+		supplierProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.getProduct(
+				supplierProduct.productId
+			);
+
+		const supplierSku = supplierProduct.skus[0];
+
+		const otherCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: `Other Catalog ${randomSuffix}`,
+			});
+
+		let otherProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: otherCatalog.id,
+				name: {en_US: `Other Product ${randomSuffix}`},
+			});
+
+		otherProduct = await apiHelpers.headlessCommerceAdminCatalog.getProduct(
+			otherProduct.productId
+		);
+
+		const otherSku = otherProduct.skus[0];
+
+		const warehouse =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+				{
+					active: true,
+					latitude: 10,
+					longitude: 0,
+					warehouseItems: [
+						{quantity: 100, sku: supplierSku.sku},
+						{quantity: 100, sku: otherSku.sku},
+					],
+				}
+			);
+
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			customerChannel.id
+		);
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			supplierChannel.id
+		);
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: commerceOrderDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_COMMERCE_ORDER'
+			);
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_COMMERCE_ORDER',
+				{
+					active: true,
+					conditionExpression: 'orderStatus = 10',
+					label: {en_US: 'Split order by catalog'},
+					name: `SplitOrderByCatalog${randomSuffix}`,
+					objectActionExecutorKey: 'split-commerce-order-by-catalog',
+					objectActionTriggerKey: 'liferay/commerce_order_status',
+					parameters: {
+						objectDefinitionId: commerceOrderDefinition.id,
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const buyerAccount = await apiHelpers.headlessAdminUser.postAccount({
+			name: `Buyer Account ${randomSuffix}`,
+			type: 'business',
+		});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				buyerAccount.id,
+				{
+					city: 'Test City',
+					countryISOCode: 'US',
+					defaultBilling: true,
+					defaultShipping: true,
+					name: 'Test Address',
+					regionISOCode: 'CA',
+					street1: 'Test Street',
+					zip: '12345',
+				}
+			);
+
+		const customerOrder =
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: buyerAccount.id,
+				billingAddressId: address.id,
+				channelId: customerChannel.id,
+				orderItems: [
+					{quantity: 1, skuId: supplierSku.id},
+					{quantity: 1, skuId: otherSku.id},
+				],
+				orderStatus: '1',
+				paymentMethod: 'money-order',
+				paymentStatus: '2',
+				shippingAddressId: address.id,
+				shippingMethod: 'by-weight',
+				shippingOption: 'standard-option',
+			} as any);
+
+		await commerceAdminOrdersPage.goto();
+
+		await commerceAdminOrdersPage
+			.tableRowOrderIdLink(customerOrder.id)
+			.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.headerDetailsTitle
+		).toBeVisible();
+
+		await commerceAdminOrderDetailsPage.acceptOrderButton.click();
+
+		await waitForAlert(page);
+
+		let supplierSubOrderId: number;
+
+		await expect(async () => {
+			const ordersAfterSplit =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			const supplierSubOrder = (ordersAfterSplit.items ?? []).find(
+				(o: {channelId: number; id: number}) =>
+					o.channelId === supplierChannel.id
+			);
+
+			expect(supplierSubOrder).toBeDefined();
+
+			supplierSubOrderId = supplierSubOrder.id;
+		}).toPass({timeout: 15000});
+
+		await performUserSwitch(page, supplierUser.alternateName);
+
+		await commerceAdminOrdersPage.goto();
+
+		await commerceAdminOrdersPage
+			.tableRowOrderIdLink(supplierSubOrderId)
+			.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.headerDetailsTitle
+		).toBeVisible();
+
+		await commerceAdminOrderDetailsPage.createShipmentButton.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.orderStatusProcessing
+		).toBeVisible();
+
+		await commerceAdminShipmentsPage.addProductsToShipment.click();
+
+		await (
+			await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+				1,
+				supplierSku.sku
+			)
+		).check();
+		await commerceAdminShipmentsPage.shipmentsItemSubmitButton.click();
+		await commerceAdminShipmentsPage
+			.productsSkuLink(supplierSku.sku)
+			.click();
+		await commerceAdminShipmentsPage.addQuantityInShipment.fill('1');
+		await commerceAdminShipmentsPage.editProductSaveButton.click();
+
+		await waitForAlert(commerceAdminShipmentsPage.editProductFrame);
+
+		await commerceAdminShipmentsPage.editProductCloseButton.click();
+
+		await commerceAdminShipmentsPage
+			.shipmentStatusLink('Finish Processing')
+			.click();
+
+		await waitForAlert(page);
+
+		await commerceAdminShipmentsPage.shipmentStatusLink('Ship').click();
+
+		await waitForAlert(page);
+
+		await commerceAdminShipmentsPage.shipmentStatusLink('Deliver').click();
+
+		await waitForAlert(page);
+	}
+);
+
 for (const variant of [
 	{
 		baseSuffix: 'Base Price List',
@@ -1657,7 +1922,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user's Parent ${variant.label} autocomplete shows only entries from their linked catalog`,
-		{tag: [variant.tag, '@COMMERCE-11844', '@LPD-88485']},
+		{tag: [variant.tag, '@COMMERCE-11844', '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1740,7 +2005,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can edit a ${variant.label}'s details`,
-		{tag: [variant.tag, '@COMMERCE-11845', '@LPD-88485']},
+		{tag: [variant.tag, '@COMMERCE-11845', '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1851,7 +2116,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can set up a price modifier on a ${variant.label}`,
-		{tag: ['@COMMERCE-11772', '@LPD-88485']},
+		{tag: ['@COMMERCE-11772', '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -1978,7 +2243,7 @@ for (const variant of [
 ]) {
 	test(
 		`Supplier user can edit a price modifier on a ${variant.label}`,
-		{tag: [variant.tag, '@LPD-88485']},
+		{tag: [variant.tag, '@LPD-88485', '@LPD-89343']},
 		async ({
 			apiHelpers,
 			commerceAdminPriceListDetailsPage,
@@ -2067,9 +2332,282 @@ for (const variant of [
 	);
 }
 
+for (const variant of [
+	{
+		label: 'price list',
+		tag: '@COMMERCE-11772',
+		type: 'price-list' as const,
+	},
+	{
+		label: 'promotion',
+		tag: '@COMMERCE-11843',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user's price modifier edit on a ${variant.label} reaches the buyer storefront`,
+		{tag: [variant.tag, '@LPD-88485', '@LPD-89343']},
+		async ({
+			apiHelpers,
+			commerceAdminCatalogDetailsPage,
+			commerceAdminCatalogsPage,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+			productDetailsPage,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {buyerUser} = await createAccountWithBuyerUser(
+				apiHelpers,
+				site.id
+			);
+			const {account: supplierAccount, supplierUser} =
+				await createAccountWithSupplierUser(apiHelpers, site.id);
+
+			await linkSupplierToMiniumCatalog(
+				commerceAdminCatalogDetailsPage,
+				commerceAdminCatalogsPage,
+				page,
+				supplierAccount.name
+			);
+
+			const skuName = `MOD-SF-SKU-${randomSuffix}`;
+			const productName = `Modifier SF Product ${randomSuffix}`;
+			const basePrice = 24;
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: miniumCatalog.id,
+					name: {en_US: productName},
+					skus: [
+						{
+							cost: 0,
+							price: basePrice,
+							published: true,
+							purchasable: true,
+							sku: skuName,
+						},
+					],
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: miniumCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					priority: 10,
+					type: variant.type,
+				});
+
+			const modifierName = `Test Modifier ${randomSuffix}`;
+
+			const modifier =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceModifier(
+					entry.id,
+					{
+						active: false,
+						modifierAmount: 0,
+						modifierType: 'fixed-amount',
+						target: 'products',
+						title: modifierName,
+					}
+				);
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceModifierProduct(
+				modifier.id,
+				product.productId
+			);
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.priceModifiersTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.priceModifierLink(modifierName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.priceModifierAmountInput.fill(
+				'-22'
+			);
+			await commerceAdminPriceListDetailsPage.priceModifierActiveToggle.click();
+			await commerceAdminPriceListDetailsPage.priceModifierSaveButton.click();
+
+			await waitForAlert(
+				commerceAdminPriceListDetailsPage.sidePanelFrame
+			);
+
+			await performUserSwitch(page, buyerUser.alternateName);
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/p/${encodeURIComponent(productName)}`
+			);
+
+			await expect(
+				await productDetailsPage.priceField(
+					'$ 2.00',
+					productDetailsPage.priceContainer
+				)
+			).toBeVisible();
+		}
+	);
+}
+
+for (const variant of [
+	{
+		entryPrice: 100,
+		expectedStorefrontPrice: '$ 80.00',
+		label: 'price list',
+		skuBasePrice: 100,
+		tag: '@COMMERCE-11868',
+		type: 'price-list' as const,
+	},
+	{
+		entryPrice: 50,
+		expectedStorefrontPrice: '$ 40.00',
+		label: 'promotion',
+		skuBasePrice: 100,
+		tag: '@COMMERCE-11868',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user's override discount on a ${variant.label} entry reaches the buyer storefront`,
+		{tag: [variant.tag, '@LPD-88485', '@LPD-89343']},
+		async ({
+			apiHelpers,
+			commerceAdminCatalogDetailsPage,
+			commerceAdminCatalogsPage,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+			productDetailsPage,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {buyerUser} = await createAccountWithBuyerUser(
+				apiHelpers,
+				site.id
+			);
+			const {account: supplierAccount, supplierUser} =
+				await createAccountWithSupplierUser(apiHelpers, site.id);
+
+			await linkSupplierToMiniumCatalog(
+				commerceAdminCatalogDetailsPage,
+				commerceAdminCatalogsPage,
+				page,
+				supplierAccount.name
+			);
+
+			const skuName = `DISC-SF-SKU-${randomSuffix}`;
+			const productName = `Discount SF Product ${randomSuffix}`;
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: miniumCatalog.id,
+					name: {en_US: productName},
+					skus: [
+						{
+							cost: 0,
+							price: variant.skuBasePrice,
+							published: true,
+							purchasable: true,
+							sku: skuName,
+						},
+					],
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: miniumCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					priority: 10,
+					type: variant.type,
+				});
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: variant.entryPrice,
+				priceListId: entry.id,
+				skuId: product.skus[0].id,
+			});
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.entriesTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.skusTableRowLink(skuName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.sidePanelOverrideDiscountToggle.click();
+
+			await commerceAdminPriceListDetailsPage.sidePanelDiscountLevel1Input.fill(
+				'20'
+			);
+			await commerceAdminPriceListDetailsPage.sidePanelSaveButton.click();
+
+			await waitForAlert(
+				commerceAdminPriceListDetailsPage.sidePanelFrame
+			);
+
+			await performUserSwitch(page, buyerUser.alternateName);
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/p/${encodeURIComponent(productName)}`
+			);
+
+			await expect(
+				await productDetailsPage.priceField(
+					variant.expectedStorefrontPrice,
+					productDetailsPage.priceContainer
+				)
+			).toBeVisible();
+		}
+	);
+}
+
 test(
 	'Supplier user does not see Inventory, Warehouses or Discounts in the Commerce sidebar',
-	{tag: ['@COMMERCE-11820', '@COMMERCE-11842', '@LPD-88485']},
+	{tag: ['@COMMERCE-11820', '@COMMERCE-11842', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminPriceListsPage, page}) => {
 		const {supplierUser} = await createAccountWithSupplierUser(
 			apiHelpers,
@@ -2098,7 +2636,7 @@ test(
 
 test(
 	'A buyer user in a supplier account cannot access the Channels admin',
-	{tag: ['@COMMERCE-11820', '@LPD-88485']},
+	{tag: ['@COMMERCE-11820', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
 
@@ -2163,7 +2701,7 @@ test(
 
 test(
 	'Supplier user cannot access the Channel panel after the Access permission is removed',
-	{tag: ['@COMMERCE-11865', '@LPD-88485']},
+	{tag: ['@COMMERCE-11865', '@LPD-88485', '@LPD-89343']},
 	async ({apiHelpers, page}) => {
 		const companyId = await page.evaluate(() =>
 			(window as any).Liferay.ThemeDisplay.getCompanyId()

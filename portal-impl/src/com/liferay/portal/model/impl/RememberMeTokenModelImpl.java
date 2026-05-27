@@ -769,4 +769,4 @@ public class RememberMeTokenModelImpl
 	private RememberMeToken _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-378112675
+// LIFERAY-SERVICE-BUILDER-HASH:-241840315

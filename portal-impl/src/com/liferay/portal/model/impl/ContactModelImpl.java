@@ -1609,4 +1609,4 @@ public class ContactModelImpl
 	private Contact _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:777635234
+// LIFERAY-SERVICE-BUILDER-HASH:-102100756

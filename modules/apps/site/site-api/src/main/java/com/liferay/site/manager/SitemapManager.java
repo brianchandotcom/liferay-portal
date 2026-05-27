@@ -46,6 +46,10 @@ public interface SitemapManager {
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException;
 
+	public String getAssetTypeClassName(String assetTypeKey);
+
+	public Map<String, String> getAssetTypeKeys();
+
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException;
@@ -53,6 +57,11 @@ public interface SitemapManager {
 	public String getSitemap(
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	public String getSitemap(
+			String assetType, String layoutUuid, long groupId,
+			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

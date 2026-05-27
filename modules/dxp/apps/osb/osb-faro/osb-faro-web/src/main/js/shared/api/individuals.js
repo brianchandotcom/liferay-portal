@@ -89,6 +89,9 @@ export function search(params) {
 		orderIOMap = createOrderIOMap(NAME),
 		page = DEFAULT_PAGE,
 		query = '',
+		rangeEnd = null,
+		rangeKey = null,
+		rangeStart = null,
 		...otherParams
 	} = params;
 
@@ -106,7 +109,10 @@ export function search(params) {
 			individualSegmentId,
 			notIndividualSegmentId,
 			orderByFields,
-			query
+			query,
+			rangeEnd,
+			rangeKey,
+			rangeStart
 		},
 		method: 'POST',
 		path: `contacts/${groupId}/individual/search`

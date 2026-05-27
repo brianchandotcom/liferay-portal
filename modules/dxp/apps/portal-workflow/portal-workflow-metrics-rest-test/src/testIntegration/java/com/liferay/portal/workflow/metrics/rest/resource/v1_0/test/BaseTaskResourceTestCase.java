@@ -2157,4 +2157,4 @@ public abstract class BaseTaskResourceTestCase {
 		_taskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-272074853
+// LIFERAY-REST-BUILDER-HASH:-339135258

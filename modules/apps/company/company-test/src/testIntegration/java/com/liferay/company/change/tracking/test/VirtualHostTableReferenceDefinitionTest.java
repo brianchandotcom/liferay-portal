@@ -51,6 +51,6 @@ public class VirtualHostTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

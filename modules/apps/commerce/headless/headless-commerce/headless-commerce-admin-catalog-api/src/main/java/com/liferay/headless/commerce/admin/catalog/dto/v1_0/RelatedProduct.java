@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("RelatedProduct")
+@GraphQLName(
+	description = "Explicit product-to-product relationship identified by a type token; admin catalog write view scoped under a source product.",
+	value = "RelatedProduct"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Explicit product-to-product relationship identified by a type token; admin catalog write view scoped under a source product.",
 	requiredProperties = {"productId", "type"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -54,7 +58,10 @@ public class RelatedProduct implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key of the relationship row; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -86,14 +93,19 @@ public class RelatedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key of the relationship row; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sort order of the relationship within its source product; lower values appear first; defaults to 0.0 when omitted on create.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -127,14 +139,19 @@ public class RelatedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sort order of the relationship within its source product; lower values appear first; defaults to 0.0 when omitted on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the target product; used on create when `productId` is not supplied to look up the target within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -172,7 +189,9 @@ public class RelatedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the target product; used on create when `productId` is not supplied to look up the target within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
@@ -180,7 +199,10 @@ public class RelatedProduct implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the target product; required on create together with `type`.",
+		example = "30129"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -214,7 +236,9 @@ public class RelatedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the target product; required on create together with `type`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productId;
@@ -222,7 +246,10 @@ public class RelatedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "cross-sell")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Link type token; required on create; also accepted as a query parameter to filter the related-products listing.",
+		example = "cross-sell"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -254,7 +281,9 @@ public class RelatedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Link type token; required on create; also accepted as a query parameter to filter the related-products listing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String type;
@@ -458,4 +487,4 @@ public class RelatedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1620551131
+// LIFERAY-REST-BUILDER-HASH:-146959587

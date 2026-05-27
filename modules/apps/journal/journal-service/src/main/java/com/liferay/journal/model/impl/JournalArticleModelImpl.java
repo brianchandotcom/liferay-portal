@@ -136,6 +136,8 @@ public class JournalArticleModelImpl
 
 	public static final String ENTITY_ALIAS = "journalArticle";
 
+	public static final String FILTER_PK_COLUMN_NAME = "resourcePrimKey";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 
@@ -2277,4 +2279,4 @@ public class JournalArticleModelImpl
 	private JournalArticle _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1686193697
+// LIFERAY-SERVICE-BUILDER-HASH:-38089843

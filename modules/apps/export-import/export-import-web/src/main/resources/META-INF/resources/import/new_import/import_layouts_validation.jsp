@@ -30,7 +30,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<%
 	Date expirationDate = new Date(System.currentTimeMillis() + (PropsValues.SESSION_TIMEOUT * Time.MINUTE));
 
-	Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, expirationDate, new ServiceContext());
+	Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, null, expirationDate, new ServiceContext());
 	%>
 
 	<aui:script use="liferay-upload">

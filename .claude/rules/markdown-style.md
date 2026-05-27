@@ -28,7 +28,7 @@ After:
 
 ```bash
 curl \
-	--data '{"key": "value"}' \
+	--data "{\"key\": \"value\"}" \
 	--request POST \
 	--silent \
 	--url "https://example.com/api" \

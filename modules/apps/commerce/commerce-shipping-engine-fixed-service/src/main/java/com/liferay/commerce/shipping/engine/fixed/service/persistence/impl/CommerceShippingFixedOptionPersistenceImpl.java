@@ -79,8 +79,9 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceShippingFixedOption>
-		_collectionPersistenceFinderByCommerceShippingMethodId;
+	private CollectionPersistenceFinder
+		<CommerceShippingFixedOption, NoSuchShippingFixedOptionException>
+			_collectionPersistenceFinderByCommerceShippingMethodId;
 
 	/**
 	 * Returns an ordered range of all the commerce shipping fixed options where commerceShippingMethodId = &#63;.
@@ -121,19 +122,9 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			OrderByComparator<CommerceShippingFixedOption> orderByComparator)
 		throws NoSuchShippingFixedOptionException {
 
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			fetchByCommerceShippingMethodId_First(
-				commerceShippingMethodId, orderByComparator);
-
-		if (commerceShippingFixedOption != null) {
-			return commerceShippingFixedOption;
-		}
-
-		throw new NoSuchShippingFixedOptionException(
-			_collectionPersistenceFinderByCommerceShippingMethodId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceShippingMethodId}));
+		return _collectionPersistenceFinderByCommerceShippingMethodId.findFirst(
+			finderCache, new Object[] {commerceShippingMethodId},
+			orderByComparator);
 	}
 
 	/**
@@ -179,8 +170,9 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			finderCache, new Object[] {commerceShippingMethodId});
 	}
 
-	private UniquePersistenceFinder<CommerceShippingFixedOption>
-		_uniquePersistenceFinderByC_K;
+	private UniquePersistenceFinder
+		<CommerceShippingFixedOption, NoSuchShippingFixedOptionException>
+			_uniquePersistenceFinderByC_K;
 
 	/**
 	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or throws a <code>NoSuchShippingFixedOptionException</code> if it could not be found.
@@ -194,22 +186,8 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	public CommerceShippingFixedOption findByC_K(long companyId, String key)
 		throws NoSuchShippingFixedOptionException {
 
-		CommerceShippingFixedOption commerceShippingFixedOption = fetchByC_K(
-			companyId, key);
-
-		if (commerceShippingFixedOption == null) {
-			String message =
-				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchShippingFixedOptionException(message);
-		}
-
-		return commerceShippingFixedOption;
+		return _uniquePersistenceFinderByC_K.find(
+			finderCache, new Object[] {companyId, key});
 	}
 
 	/**
@@ -610,4 +588,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-844820374
+// LIFERAY-SERVICE-BUILDER-HASH:-661032861

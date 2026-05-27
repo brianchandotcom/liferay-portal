@@ -5,6 +5,7 @@
 
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import {StickerConfig} from '../../../common/types/StickerConfig';
+import getLocalizedValue from '../../../common/utils/getLocalizedValue';
 import {getFileMimeTypeObjectDefinitionStickerValue} from '../../props_transformer/utils/transformViewsItemProps';
 import {ReplaceItem} from '../contexts/FindAndReplaceContext';
 
@@ -49,7 +50,7 @@ export function enrichItem({
 function getTitle(item: ReplaceItem) {
 	const field = item.fields.find((field) => field.name === 'title');
 
-	return field?.value_i18n![
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	] as string;
+	return getLocalizedValue(
+		field?.value_i18n as Liferay.Language.LocalizedValue<string>
+	);
 }

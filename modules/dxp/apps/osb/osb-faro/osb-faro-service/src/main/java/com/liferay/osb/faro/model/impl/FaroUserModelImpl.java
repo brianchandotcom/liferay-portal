@@ -1024,4 +1024,4 @@ public class FaroUserModelImpl
 	private FaroUser _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2025441368
+// LIFERAY-SERVICE-BUILDER-HASH:-1656926058

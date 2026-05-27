@@ -117,6 +117,7 @@ export default {
 	'billing-address': 'Billing Address',
 	'billing-email': 'Billing Email',
 	'browse-catalog': 'Browse Catalog',
+	'browse-products': 'Browse Products',
 	'build': 'Build',
 	'bundle-name': 'Bundle Name',
 	'bundles': 'Bundles',
@@ -309,7 +310,10 @@ export default {
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'export': 'Export',
+	'export-complete': 'Export complete.',
 	'export-csv': 'Export CSV',
+	'exporting-orders-this-may-take-a-while':
+		'Exporting orders. This may take a while...',
 	'extend-trial': 'Extend Trial',
 	'extension': 'Extension',
 	'extension-optional': 'Extension (optional)',
@@ -349,6 +353,7 @@ export default {
 	'go-to-dashboard': 'Go to Dashboard',
 	'go-to-download': 'Go to Download',
 	'go-to-dxp': 'Go to DXP',
+	'go-to-liferay-data-platform': 'Go to Liferay Data Platform',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',
@@ -546,6 +551,7 @@ export default {
 	'order-info': 'Order Info',
 	'order-marked-as-paid': 'Order marked as paid.',
 	'order-received': 'Order Received',
+	'order-received-awaiting-signature': 'Order Received: Awaiting Signature',
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',
@@ -556,6 +562,7 @@ export default {
 	'paid-date': 'Paid Date',
 	'pay-with-bank-transfer': 'Pay with Bank Transfer',
 	'pay-with-card': 'Pay with Card',
+	'pay-with-invoice': 'Pay with Invoice',
 	'payment': 'Payment',
 	'payment-method': 'Payment Method',
 	'payment-status': 'Payment Status',
@@ -818,6 +825,8 @@ export default {
 		'This order must be completed before downloading this app.',
 	'this-product-is-no-longer-available':
 		'This product is no longer available.',
+	'this-purchase-will-be-billed-under-your-existing-payment-agreement-the-payment-method-cannot-be-changed-and-no-online-payment-is-required':
+		'This purchase will be billed under your existing payment agreement. The payment method cannot be changed, and no online payment is required.',
 	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-it-will-be-published-on-the-marketplace-in-the-meantime-no-information-or-data-from-this-app-submission-can-be-updated':
 		'This submission is currently under review by Liferay. Once the process is complete, it will be published on the Marketplace. In the meantime, no information or data from this app submission can be updated.',
 	'times-already-extended': 'Times Already Extended',

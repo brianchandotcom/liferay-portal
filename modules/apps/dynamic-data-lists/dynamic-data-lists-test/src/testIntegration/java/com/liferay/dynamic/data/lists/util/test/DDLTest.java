@@ -122,6 +122,6 @@ public class DDLTest {
 	}
 
 	@Inject
-	private static DDL _ddl;
+	private DDL _ddl;
 
 }

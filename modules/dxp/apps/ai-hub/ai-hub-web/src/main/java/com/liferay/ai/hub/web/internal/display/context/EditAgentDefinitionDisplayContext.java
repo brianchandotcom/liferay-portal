@@ -7,6 +7,7 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -14,10 +15,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
@@ -68,27 +70,26 @@ public class EditAgentDefinitionDisplayContext {
 				return accountEntry.getExternalReferenceCode();
 			}
 		).put(
-			"backURL", aiHubURL + "/agent-builder"
+			"backURL",
+			() -> {
+				String backURL = PortalUtil.escapeRedirect(
+					_httpServletRequest.getParameter("backURL"));
+
+				if (Validator.isNotNull(backURL)) {
+					return backURL;
+				}
+
+				return aiHubURL + "/agent-builder";
+			}
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
 		).put(
-			"readonly",
-			() -> {
-				String workflowDefinitionName =
-					_httpServletRequest.getParameter("workflowDefinitionName");
-
-				if ((workflowDefinitionName != null) &&
-					ArrayUtil.contains(
-						WorkflowDefinitionConstants.
-							SYSTEM_WORKFLOW_DEFINITION_NAMES,
-						workflowDefinitionName)) {
-
-					return true;
-				}
-
-				return false;
-			}
+			"readOnly",
+			DisplayContextUtil.isReadOnly(
+				_themeDisplay.getCompanyId(),
+				_httpServletRequest.getParameter("externalReferenceCode"),
+				"L_AI_HUB_AGENT_DEFINITION")
 		).put(
 			"workflowDefinitionURL",
 			() -> {

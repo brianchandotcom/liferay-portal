@@ -246,20 +246,28 @@ test('LPD-87025 Assert that the Pages screen shows the Open Pages link when the 
 	).toBeHidden();
 });
 
-test('LPD-87025 Assert that the Pages screen shows the no-pages message when the site has no pages', async ({
-	page,
-	site,
-	siteSettingsPage,
-}) => {
-	await siteSettingsPage.goToSiteSetting(
-		'Pages',
-		'Pages',
-		site.friendlyUrlPath
-	);
+test(
+	'LPD-87025 Assert that the Pages screen hides the Open Pages link when the site has no pages',
+	{tag: '@LPD-87025'},
+	async ({apiHelpers, page, site, siteSettingsPage}) => {
+		await siteSettingsPage.goToSiteSetting(
+			'Pages',
+			'Pages',
+			site.friendlyUrlPath
+		);
 
-	await expect(
-		page.getByText('This site does not have any pages.')
-	).toBeVisible();
+		const layoutSetPrototypes =
+			await apiHelpers.jsonWebServicesLayoutSetPrototype.getLayoutSetPrototypes();
 
-	await expect(page.getByRole('link', {name: 'Open Pages'})).toBeHidden();
-});
+		const hasActiveLayoutSetPrototype = layoutSetPrototypes.some(
+			({active}) => active
+		);
+
+		const locator = hasActiveLayoutSetPrototype
+			? page.getByRole('combobox', {name: 'Site Template'})
+			: page.getByText('This site does not have any pages.');
+
+		await expect(locator).toBeVisible();
+		await expect(page.getByRole('link', {name: 'Open Pages'})).toBeHidden();
+	}
+);

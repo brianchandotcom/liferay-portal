@@ -9,12 +9,24 @@
 
 <%
 CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingConfigurationDisplayContext = (CookiesPreferenceHandlingConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT);
+
+String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.getForceReconsentURL(renderResponse);
 %>
 
 <aui:link hashedFile="<%= true %>" href="cookies-banner-web/cookies_preference_handling_configuration/css/main.css" rel="stylesheet" type="text/css" />
 
 <fieldset>
 	<legend class="sr-only"><liferay-ui:message key="consent-manager-configuration" /></legend>
+
+	<div class="alert <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "alert-success" : "alert-warning" %> d-flex align-items-center justify-content-between">
+		<span>
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
+		</span>
+
+		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActiveButton" type="button">
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "deactivate" : "activate" %>' />
+		</button>
+	</div>
 
 	<div class="c-mt-5 row">
 		<div class="col-sm-12 form-group">
@@ -168,6 +180,8 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			</div>
 		</div>
 	</div>
+
+	<aui:input name="active" type="hidden" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() %>" />
 
 	<aui:input name="modifiedDate" type="hidden" />
 
@@ -376,25 +390,77 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			'<portlet:namespace />forcedReconsentButton'
 		);
 
-		var modifiedDate = document.getElementById(
-			'<portlet:namespace />modifiedDate'
-		);
-
-		if (forcedReconsentButton && modifiedDate) {
+		if (forcedReconsentButton) {
 			forcedReconsentButton.addEventListener('click', function (event) {
 				Liferay.Util.openConfirmModal({
 					message:
-						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',
+						'<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "you-are-about-to-force-reconsent" : "you-are-about-to-change-the-consent-renewal-period-when-active" %>' />',
 					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
-							form.reset();
+							Liferay.Util.fetch('<%= forceReconsentURL %>', {
+								method: 'POST',
+							}).then((response) => {
+								if (response.ok) {
+									var modifiedDateField = document.getElementById(
+										'<portlet:namespace />modifiedDate'
+									);
 
-							modifiedDate.value = new Date().getTime();
+									if (modifiedDateField) {
+										modifiedDateField.value =
+											new Date().getTime();
+									}
 
-							form.submit();
+									form.dataset.skipActivationWarn = 'true';
+
+									form.requestSubmit();
+								}
+								else {
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'your-request-failed-to-complete'
+										),
+										type: 'danger',
+									});
+								}
+							});
 						}
 					},
 				});
+			});
+		}
+
+		var activeInput = document.getElementById('<portlet:namespace />active');
+		var toggleActiveButton = document.getElementById(
+			'<portlet:namespace />toggleActiveButton'
+		);
+
+		if (activeInput && toggleActiveButton) {
+			toggleActiveButton.addEventListener('click', function (event) {
+				var isCurrentlyActive = activeInput.value === 'true';
+
+				var performToggle = function () {
+					form.reset();
+
+					activeInput.value = isCurrentlyActive ? 'false' : 'true';
+					form.dataset.skipActivationWarn = 'true';
+
+					form.requestSubmit();
+				};
+
+				if (isCurrentlyActive) {
+					Liferay.Util.openConfirmModal({
+						message:
+							'<liferay-ui:message key="you-are-about-to-deactivate-the-consent-manager" />',
+						onConfirm: function (isConfirmed) {
+							if (isConfirmed) {
+								performToggle();
+							}
+						},
+					});
+				}
+				else {
+					performToggle();
+				}
 			});
 		}
 
@@ -409,10 +475,6 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
-			if (modifiedDate) {
-				modifiedDate.value = new Date().getTime();
-			}
-
 			var dissentRenewalPeriod = document.getElementById(
 				'<portlet:namespace />dissentRenewalPeriod'
 			);
@@ -423,9 +485,13 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
+			if (form.dataset.skipActivationWarn === 'true') {
+				return;
+			}
+
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 
-			if (
+			var renewalPeriodChanged =
 				(consentRenewalPeriod.value !==
 					'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>' ||
 					consentRenewalPeriodTimeUnit.value !==
@@ -435,19 +501,45 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 					dissentRenewalPeriodTimeUnit.value !==
 						'<%= dissentRenewalPeriodTimeUnit %>') &&
 				enabled.checked &&
-				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>
+				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>;
+
+			if (renewalPeriodChanged) {
+				form.dataset.renewalPeriodChanged = 'true';
+			}
+			else {
+				delete form.dataset.renewalPeriodChanged;
+			}
+
+			if (
+				activeInput &&
+				activeInput.value !== 'true' &&
+				renewalPeriodChanged
 			) {
 				event.preventDefault();
 				event.stopImmediatePropagation();
 
 				Liferay.Util.openConfirmModal({
 					message:
-						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
-					onConfirm: (isConfirmed) => {
+						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period-when-active" />',
+					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
-							modifiedDate.value = new Date().getTime();
+							Liferay.Util.fetch('<%= forceReconsentURL %>', {
+								method: 'POST',
+							}).then((response) => {
+								if (response.ok) {
+									form.dataset.skipActivationWarn = 'true';
 
-							form.submit();
+									form.requestSubmit();
+								}
+								else {
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'your-request-failed-to-complete'
+										),
+										type: 'danger',
+									});
+								}
+							});
 						}
 					},
 				});

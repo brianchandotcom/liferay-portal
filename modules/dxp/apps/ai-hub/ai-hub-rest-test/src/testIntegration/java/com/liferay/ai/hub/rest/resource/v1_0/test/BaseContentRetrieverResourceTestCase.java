@@ -1368,4 +1368,4 @@ public abstract class BaseContentRetrieverResourceTestCase {
 		_contentRetrieverResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1200618425
+// LIFERAY-REST-BUILDER-HASH:-1914870186

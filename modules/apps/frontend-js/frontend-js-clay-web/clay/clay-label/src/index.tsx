@@ -8,6 +8,27 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
+type WithOptional<T, P extends keyof T> = Omit<T, P> & Partial<Pick<T, P>>;
+
+export type LabelDisplayType =
+	| 'danger'
+	| 'info'
+	| 'secondary'
+	| 'success'
+	| 'unstyled'
+	| 'warning';
+
+export type ContentLabelDisplayType =
+	| 'content-0'
+	| 'content-1'
+	| 'content-2'
+	| 'content-3'
+	| 'content-4'
+	| 'content-5'
+	| 'content-6'
+	| 'content-7'
+	| 'content-8';
+
 export const ItemAfter = React.forwardRef<
 	HTMLSpanElement,
 	React.HTMLAttributes<HTMLSpanElement>
@@ -58,7 +79,8 @@ export const ItemExpand = React.forwardRef<
 
 ItemExpand.displayName = 'ClayLabelItemExpand';
 
-interface IBaseProps extends React.BaseHTMLAttributes<HTMLSpanElement> {
+interface IBaseProps<T extends string = string>
+	extends React.BaseHTMLAttributes<HTMLSpanElement> {
 
 	/**
 	 * Flag to indicate if `label-dismissible` class should be applied.
@@ -68,13 +90,12 @@ interface IBaseProps extends React.BaseHTMLAttributes<HTMLSpanElement> {
 	/**
 	 * Determines the style of the label.
 	 */
-	displayType?:
-		| 'secondary'
-		| 'info'
-		| 'warning'
-		| 'danger'
-		| 'success'
-		| 'unstyled';
+	displayType: T;
+
+	/**
+	 * Flag to indicate if the label should be of the `inverse` variant.
+	 */
+	inverse?: boolean;
 
 	/**
 	 * Flag to indicate if the label should be of the `large` variant.
@@ -88,19 +109,23 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 			children,
 			className,
 			dismissible,
-			displayType = 'secondary',
+			displayType,
+			inverse = false,
 			large = false,
 			...otherProps
 		},
 		ref
 	) => {
+		const useInverse = inverse && displayType !== 'unstyled';
+
 		return (
 			<span
 				{...otherProps}
 				className={classNames('label', className, {
 					'label-dismissible': dismissible,
 					'label-lg': large,
-					[`label-${displayType}`]: displayType,
+					[`label-${displayType}`]: !useInverse && displayType,
+					[`label-inverse-${displayType}`]: useInverse,
 				})}
 				ref={ref}
 			>
@@ -112,7 +137,7 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 
 OldLabel.displayName = 'ClayLabel';
 
-interface IProps extends IBaseProps {
+interface IProps<T extends string = string> extends IBaseProps<T> {
 
 	/**
 	 * HTML properties that are applied to the 'x' button.
@@ -137,10 +162,7 @@ interface IProps extends IBaseProps {
 	withClose?: boolean;
 }
 
-const LabelComponent = React.forwardRef<
-	HTMLAnchorElement | HTMLSpanElement,
-	IProps
->(
+const BaseLabel = React.forwardRef<HTMLAnchorElement | HTMLSpanElement, IProps>(
 	(
 		{
 			children,
@@ -150,7 +172,7 @@ const LabelComponent = React.forwardRef<
 			withClose = true,
 			spritemap,
 			...otherProps
-		}: IProps,
+		},
 		ref
 	) => {
 		return (
@@ -191,9 +213,31 @@ const LabelComponent = React.forwardRef<
 	}
 );
 
+BaseLabel.displayName = 'ClayBaseLabel';
+
+const LabelComponent = React.forwardRef<
+	HTMLAnchorElement | HTMLSpanElement,
+	WithOptional<IProps<LabelDisplayType>, 'displayType'>
+>(({displayType = 'secondary', ...props}, ref) => (
+	<BaseLabel {...props} displayType={displayType} ref={ref} />
+));
+
 LabelComponent.displayName = 'ClayLabel';
 
 const Label = Object.assign(LabelComponent, {
+	ItemAfter,
+	ItemBefore,
+	ItemExpand,
+});
+
+const ContentLabelComponent = React.forwardRef<
+	HTMLAnchorElement | HTMLSpanElement,
+	Omit<IProps<ContentLabelDisplayType>, 'inverse'>
+>((props, ref) => <BaseLabel {...props} inverse ref={ref} />);
+
+ContentLabelComponent.displayName = 'ClayContentLabel';
+
+export const ContentLabel = Object.assign(ContentLabelComponent, {
 	ItemAfter,
 	ItemBefore,
 	ItemExpand,

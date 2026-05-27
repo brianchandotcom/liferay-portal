@@ -6,10 +6,11 @@
 import Button from '@clayui/button';
 import Icon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Status} from '@clayui/modal/lib/types';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {formatDistance} from 'date-fns';
-import {Fragment, useMemo} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
@@ -44,6 +45,63 @@ type AdministratorOrdersListViewProps = {
 	>;
 };
 
+function ExportOrdersButton({
+	filter,
+	filterSchema,
+}: {
+	filter: {[key: string]: string};
+	filterSchema?: FilterSchemaOption;
+}) {
+	const [isExporting, setIsExporting] = useState(false);
+
+	const handleClick = async () => {
+		if (isExporting) {
+			return;
+		}
+
+		setIsExporting(true);
+
+		Liferay.Util.openToast({
+			message: i18n.translate('exporting-orders-this-may-take-a-while'),
+			type: 'info',
+		});
+
+		try {
+			await marketplaceOAuth2.downloadOrderReport(filter, filterSchema);
+
+			Liferay.Util.openToast({
+				message: i18n.translate('export-complete'),
+				type: 'success',
+			});
+		}
+		catch {
+			Liferay.Util.openToast({
+				message: i18n.translate('oops-something-went-wrong'),
+				type: 'danger',
+			});
+		}
+		finally {
+			setIsExporting(false);
+		}
+	};
+
+	return (
+		<Button
+			className="align-items-center d-flex h-100 justify-content-center ml-3 mr-4"
+			disabled={isExporting}
+			displayType="unstyled"
+			onClick={handleClick}
+		>
+			{isExporting ? (
+				<ClayLoadingIndicator className="mr-2 my-0" />
+			) : (
+				<Icon className="mr-2" symbol="download" />
+			)}
+			<b>{i18n.translate('export')}</b>
+		</Button>
+	);
+}
+
 function redirectTo(path: string) {
 	return async function (order: Order) {
 		await CommerceSelectAccount.selectAccount(order.accountId);
@@ -77,23 +135,12 @@ export function AdministratorOrdersListView({
 						[key: string]: string;
 					},
 					filterSchema?: FilterSchemaOption
-				) => {
-					return (
-						<Button
-							className="align-items-center d-flex h-100 justify-content-center ml-3 mr-4"
-							displayType="unstyled"
-							onClick={() =>
-								marketplaceOAuth2.downloadOrderReport(
-									filter,
-									filterSchema
-								)
-							}
-						>
-							<Icon className="mr-2" symbol="download" />
-							<b>{i18n.translate('export')}</b>
-						</Button>
-					);
-				},
+				) => (
+					<ExportOrdersButton
+						filter={filter}
+						filterSchema={filterSchema}
+					/>
+				),
 
 				filterSchema: 'administratorOrders',
 				...managementToolbarProps,

@@ -269,12 +269,6 @@ public class JournalArticleIndexVersionsTest {
 			expectedCount, searchResponse.getCount());
 	}
 
-	@Inject
-	private static Searcher _searcher;
-
-	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -294,5 +288,11 @@ public class JournalArticleIndexVersionsTest {
 
 	@Inject
 	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

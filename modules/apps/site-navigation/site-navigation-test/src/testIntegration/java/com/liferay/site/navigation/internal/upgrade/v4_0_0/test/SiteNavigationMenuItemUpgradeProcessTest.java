@@ -271,6 +271,42 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeWithNonexistentJournalArticle() throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_addSiteNavigationMenuItem(
+				JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"classNameId",
+					_classNameLocalService.getClassNameId(JournalArticle.class)
+				).put(
+					"classPK", RandomTestUtil.randomLong()
+				).put(
+					"classTypeId", RandomTestUtil.randomLong()
+				).put(
+					"type", JournalArticle.class.getName()
+				).buildString());
+
+		_runUpgrade();
+
+		siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		Assert.assertEquals(
+			JournalArticle.class.getName(),
+			typeSettingsUnicodeProperties.get("className"));
+		Assert.assertNull(
+			typeSettingsUnicodeProperties.get("externalReferenceCode"));
+	}
+
+	@Test
 	public void testUpgradeWithObjectEntry() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -390,11 +426,6 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		"com.liferay.site.navigation.internal.upgrade.v4_0_0." +
 			"SiteNavigationMenuItemUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -423,5 +454,10 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 	@Inject
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

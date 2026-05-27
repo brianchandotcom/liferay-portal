@@ -1,0 +1,27 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "LICENSE-KEY-EXPIRATION-WARNING",
+	"name": "License Key Expiration Warning",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "customer-service@liferay.com",
+			"fromName": {
+				"en-US": "Liferay Support"
+			},
+			"to": {
+				"en-US": "[%USER_EMAIL_ADDRESS%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Liferay [%LICENSE_KEY_PRODUCT_GROUP%] Activation Key [%EXPIRATION_STATUS%]",
+		"es_ES": "El código de activación de Liferay [%LICENSE_KEY_PRODUCT_GROUP%] [%EXPIRATION_STATUS%]",
+		"ja_JP": "Liferay [%LICENSE_KEY_PRODUCT_GROUP%] アクティベーションキー[%EXPIRATION_STATUS%]",
+		"pt_BR": "A chave de ativação do Liferay [%LICENSE_KEY_PRODUCT_GROUP%] [%EXPIRATION_STATUS%]"
+	},
+	"type": "email"
+}

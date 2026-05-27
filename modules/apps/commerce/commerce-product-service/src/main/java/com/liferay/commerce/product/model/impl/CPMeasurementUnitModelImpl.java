@@ -1463,4 +1463,4 @@ public class CPMeasurementUnitModelImpl
 	private CPMeasurementUnit _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:465541818
+// LIFERAY-SERVICE-BUILDER-HASH:-1395471606

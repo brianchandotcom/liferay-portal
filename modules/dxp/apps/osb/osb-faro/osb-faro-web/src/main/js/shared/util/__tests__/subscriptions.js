@@ -5,6 +5,7 @@ import {
 	getPropIcon,
 	getPropLabel,
 	INDIVIDUALS,
+	isLDPPlan,
 	PAGEVIEWS,
 	SubscriptionNames
 } from '../subscriptions';
@@ -133,6 +134,30 @@ describe('subscriptions', () => {
 			const plan = formatPlanData(null);
 
 			expect(plan).toMatchSnapshot();
+		});
+	});
+
+	describe('isLDPPlan', () => {
+		it.each([
+			SubscriptionNames.LiferayDataPlatform,
+			SubscriptionNames.LiferayDataPlatformEnterprise
+		])('returns true for %s', name => {
+			expect(isLDPPlan(name)).toBe(true);
+		});
+
+		it.each([
+			SubscriptionNames.LiferayAnalyticsCloudBasic,
+			SubscriptionNames.LiferayAnalyticsCloudBusiness,
+			SubscriptionNames.LiferayAnalyticsCloudEnterprise,
+			SubscriptionNames.LiferaySaasEnterprisePlan,
+			SubscriptionNames.LxcBusinessPlan
+		])('returns false for non-LDP plan %s', name => {
+			expect(isLDPPlan(name)).toBe(false);
+		});
+
+		it('returns false when the subscription is missing (null/undefined)', () => {
+			expect(isLDPPlan(null)).toBe(false);
+			expect(isLDPPlan(undefined)).toBe(false);
 		});
 	});
 });

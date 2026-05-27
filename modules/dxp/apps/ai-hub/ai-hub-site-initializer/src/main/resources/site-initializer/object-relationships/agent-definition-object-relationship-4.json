@@ -1,0 +1,13 @@
+{
+	"deletionType": "disassociate",
+	"externalReferenceCode": "L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES",
+	"label": {
+		"en_US": "AI Hub Agent Definitions to AI Hub Model Armor Templates"
+	},
+	"name": "agentDefinitionsToModelArmorTemplates",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AIHubAgentDefinition$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubModelArmorTemplate$]",
+	"objectDefinitionName2": "AIHubModelArmorTemplate",
+	"system": true,
+	"type": "manyToMany"
+}

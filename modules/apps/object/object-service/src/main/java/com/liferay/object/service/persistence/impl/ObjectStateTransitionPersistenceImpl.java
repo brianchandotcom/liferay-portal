@@ -78,8 +78,9 @@ public class ObjectStateTransitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectStateTransition>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
@@ -120,16 +121,8 @@ public class ObjectStateTransitionPersistenceImpl
 			OrderByComparator<ObjectStateTransition> orderByComparator)
 		throws NoSuchObjectStateTransitionException {
 
-		ObjectStateTransition objectStateTransition = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		throw new NoSuchObjectStateTransitionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -171,8 +164,9 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectStateTransition>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object state transitions where uuid = &#63; and companyId = &#63;.
@@ -215,16 +209,8 @@ public class ObjectStateTransitionPersistenceImpl
 			OrderByComparator<ObjectStateTransition> orderByComparator)
 		throws NoSuchObjectStateTransitionException {
 
-		ObjectStateTransition objectStateTransition = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		throw new NoSuchObjectStateTransitionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -269,8 +255,9 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectStateTransition>
-		_collectionPersistenceFinderByObjectStateFlowId;
+	private CollectionPersistenceFinder
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
+			_collectionPersistenceFinderByObjectStateFlowId;
 
 	/**
 	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
@@ -311,19 +298,8 @@ public class ObjectStateTransitionPersistenceImpl
 			OrderByComparator<ObjectStateTransition> orderByComparator)
 		throws NoSuchObjectStateTransitionException {
 
-		ObjectStateTransition objectStateTransition =
-			fetchByObjectStateFlowId_First(
-				objectStateFlowId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		throw new NoSuchObjectStateTransitionException(
-			_collectionPersistenceFinderByObjectStateFlowId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectStateFlowId}));
+		return _collectionPersistenceFinderByObjectStateFlowId.findFirst(
+			finderCache, new Object[] {objectStateFlowId}, orderByComparator);
 	}
 
 	/**
@@ -365,8 +341,9 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {objectStateFlowId});
 	}
 
-	private CollectionPersistenceFinder<ObjectStateTransition>
-		_collectionPersistenceFinderBySourceObjectStateId;
+	private CollectionPersistenceFinder
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
+			_collectionPersistenceFinderBySourceObjectStateId;
 
 	/**
 	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
@@ -407,19 +384,8 @@ public class ObjectStateTransitionPersistenceImpl
 			OrderByComparator<ObjectStateTransition> orderByComparator)
 		throws NoSuchObjectStateTransitionException {
 
-		ObjectStateTransition objectStateTransition =
-			fetchBySourceObjectStateId_First(
-				sourceObjectStateId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		throw new NoSuchObjectStateTransitionException(
-			_collectionPersistenceFinderBySourceObjectStateId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {sourceObjectStateId}));
+		return _collectionPersistenceFinderBySourceObjectStateId.findFirst(
+			finderCache, new Object[] {sourceObjectStateId}, orderByComparator);
 	}
 
 	/**
@@ -461,8 +427,9 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {sourceObjectStateId});
 	}
 
-	private CollectionPersistenceFinder<ObjectStateTransition>
-		_collectionPersistenceFinderByTargetObjectStateId;
+	private CollectionPersistenceFinder
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
+			_collectionPersistenceFinderByTargetObjectStateId;
 
 	/**
 	 * Returns an ordered range of all the object state transitions where targetObjectStateId = &#63;.
@@ -503,19 +470,8 @@ public class ObjectStateTransitionPersistenceImpl
 			OrderByComparator<ObjectStateTransition> orderByComparator)
 		throws NoSuchObjectStateTransitionException {
 
-		ObjectStateTransition objectStateTransition =
-			fetchByTargetObjectStateId_First(
-				targetObjectStateId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		throw new NoSuchObjectStateTransitionException(
-			_collectionPersistenceFinderByTargetObjectStateId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {targetObjectStateId}));
+		return _collectionPersistenceFinderByTargetObjectStateId.findFirst(
+			finderCache, new Object[] {targetObjectStateId}, orderByComparator);
 	}
 
 	/**
@@ -1004,4 +960,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1098523773
+// LIFERAY-SERVICE-BUILDER-HASH:-1561774680

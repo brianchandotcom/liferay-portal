@@ -82,8 +82,9 @@ public class JSONStorageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<JSONStorageEntry>
-		_collectionPersistenceFinderByCN_CPK;
+	private CollectionPersistenceFinder
+		<JSONStorageEntry, NoSuchJSONStorageEntryException>
+			_collectionPersistenceFinderByCN_CPK;
 
 	/**
 	 * Returns an ordered range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
@@ -126,16 +127,9 @@ public class JSONStorageEntryPersistenceImpl
 			OrderByComparator<JSONStorageEntry> orderByComparator)
 		throws NoSuchJSONStorageEntryException {
 
-		JSONStorageEntry jsonStorageEntry = fetchByCN_CPK_First(
-			classNameId, classPK, orderByComparator);
-
-		if (jsonStorageEntry != null) {
-			return jsonStorageEntry;
-		}
-
-		throw new NoSuchJSONStorageEntryException(
-			_collectionPersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByCN_CPK.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -181,8 +175,9 @@ public class JSONStorageEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<JSONStorageEntry>
-		_collectionPersistenceFinderByC_CN_I_T_VL;
+	private CollectionPersistenceFinder
+		<JSONStorageEntry, NoSuchJSONStorageEntryException>
+			_collectionPersistenceFinderByC_CN_I_T_VL;
 
 	/**
 	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
@@ -234,17 +229,10 @@ public class JSONStorageEntryPersistenceImpl
 			OrderByComparator<JSONStorageEntry> orderByComparator)
 		throws NoSuchJSONStorageEntryException {
 
-		JSONStorageEntry jsonStorageEntry = fetchByC_CN_I_T_VL_First(
-			companyId, classNameId, index, type, valueLong, orderByComparator);
-
-		if (jsonStorageEntry != null) {
-			return jsonStorageEntry;
-		}
-
-		throw new NoSuchJSONStorageEntryException(
-			_collectionPersistenceFinderByC_CN_I_T_VL.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, index, type, valueLong}));
+		return _collectionPersistenceFinderByC_CN_I_T_VL.findFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, index, type, valueLong},
+			orderByComparator);
 	}
 
 	/**
@@ -306,8 +294,9 @@ public class JSONStorageEntryPersistenceImpl
 			new Object[] {companyId, classNameId, index, type, valueLong});
 	}
 
-	private CollectionPersistenceFinder<JSONStorageEntry>
-		_collectionPersistenceFinderByC_CN_K_T_VL;
+	private CollectionPersistenceFinder
+		<JSONStorageEntry, NoSuchJSONStorageEntryException>
+			_collectionPersistenceFinderByC_CN_K_T_VL;
 
 	/**
 	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
@@ -359,17 +348,10 @@ public class JSONStorageEntryPersistenceImpl
 			OrderByComparator<JSONStorageEntry> orderByComparator)
 		throws NoSuchJSONStorageEntryException {
 
-		JSONStorageEntry jsonStorageEntry = fetchByC_CN_K_T_VL_First(
-			companyId, classNameId, key, type, valueLong, orderByComparator);
-
-		if (jsonStorageEntry != null) {
-			return jsonStorageEntry;
-		}
-
-		throw new NoSuchJSONStorageEntryException(
-			_collectionPersistenceFinderByC_CN_K_T_VL.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, key, type, valueLong}));
+		return _collectionPersistenceFinderByC_CN_K_T_VL.findFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, key, type, valueLong},
+			orderByComparator);
 	}
 
 	/**
@@ -433,8 +415,9 @@ public class JSONStorageEntryPersistenceImpl
 			new Object[] {companyId, classNameId, key, type, valueLong});
 	}
 
-	private UniquePersistenceFinder<JSONStorageEntry>
-		_uniquePersistenceFinderByCN_CPK_P_I_K;
+	private UniquePersistenceFinder
+		<JSONStorageEntry, NoSuchJSONStorageEntryException>
+			_uniquePersistenceFinderByCN_CPK_P_I_K;
 
 	/**
 	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or throws a <code>NoSuchJSONStorageEntryException</code> if it could not be found.
@@ -453,26 +436,11 @@ public class JSONStorageEntryPersistenceImpl
 			int index, String key)
 		throws NoSuchJSONStorageEntryException {
 
-		JSONStorageEntry jsonStorageEntry = fetchByCN_CPK_P_I_K(
-			classNameId, classPK, parentJSONStorageEntryId, index, key);
-
-		if (jsonStorageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByCN_CPK_P_I_K.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						classNameId, classPK, parentJSONStorageEntryId, index,
-						key
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchJSONStorageEntryException(message);
-		}
-
-		return jsonStorageEntry;
+		return _uniquePersistenceFinderByCN_CPK_P_I_K.find(
+			finderCache,
+			new Object[] {
+				classNameId, classPK, parentJSONStorageEntryId, index, key
+			});
 	}
 
 	/**
@@ -1071,4 +1039,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:832496889
+// LIFERAY-SERVICE-BUILDER-HASH:660945077

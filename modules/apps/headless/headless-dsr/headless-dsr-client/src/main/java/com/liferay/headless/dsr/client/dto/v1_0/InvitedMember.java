@@ -65,6 +65,27 @@ public class InvitedMember implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		try {
+			ownerId = ownerIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long ownerId;
+
 	public String getRoleKey() {
 		return roleKey;
 	}
@@ -118,4 +139,4 @@ public class InvitedMember implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-19534272
+// LIFERAY-REST-BUILDER-HASH:1845436243

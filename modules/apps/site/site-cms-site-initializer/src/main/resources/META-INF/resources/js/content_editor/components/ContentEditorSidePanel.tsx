@@ -15,6 +15,7 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import VocabularyService from '../../common/services/VocabularyService';
 import {IAssetObjectEntry} from '../../common/types/AssetType';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import ObjectEntryService from '../../main_view/info_panel/services/ObjectEntryService';
@@ -53,6 +54,7 @@ type SidePanelProps = Props & {
 	dateConfig: datetimeUtils.DateConfig;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 	onUpdateSchedule: (props: UpdateScheduleProps) => void;
+	requiredVocabularyIds: number[] | null;
 	scheduleFields: ScheduleFields;
 };
 
@@ -150,6 +152,9 @@ export default function ContentEditorSidePanel(props: Props) {
 	});
 	const [categorizationFields, setCategorizationFields] =
 		useState<CategorizationFields | null>(null);
+	const [requiredVocabularyIds, setRequiredVocabularyIds] = useState<
+		number[] | null
+	>(null);
 
 	const isMounted = useIsMounted();
 
@@ -238,6 +243,35 @@ export default function ContentEditorSidePanel(props: Props) {
 		}
 	}, []);
 
+	useEffect(() => {
+		VocabularyService.getRequiredVocabularies({
+			assetLibraryId: props.assetLibraryId,
+			assetTypeId: props.assetType,
+			siteId: props.cmsGroupId,
+		})
+			.then((vocabularies) => {
+				if (!isMounted()) {
+					return;
+				}
+
+				setRequiredVocabularyIds(
+					vocabularies
+						.map(({id}) => id)
+						.filter(
+							(id): id is number =>
+								id !== undefined && id !== null
+						)
+				);
+			})
+			.catch((error) => {
+				console.error(error);
+
+				if (isMounted()) {
+					setRequiredVocabularyIds([]);
+				}
+			});
+	}, [isMounted, props.assetLibraryId, props.assetType, props.cmsGroupId]);
+
 	return (
 		<>
 			<SidePanel
@@ -246,6 +280,7 @@ export default function ContentEditorSidePanel(props: Props) {
 				dateConfig={dateConfig}
 				onUpdateCategorization={onUpdateCategorization}
 				onUpdateSchedule={onUpdateSchedule}
+				requiredVocabularyIds={requiredVocabularyIds}
 				scheduleFields={scheduleFields}
 			/>
 
@@ -277,6 +312,8 @@ export default function ContentEditorSidePanel(props: Props) {
 
 function SidePanel(props: SidePanelProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
+	const [hasCategoriesError, setHasCategoriesError] =
+		useState<boolean>(false);
 	const [hasError, setHasError] = useState<boolean>(false);
 	const [panel, setPanel] = useState<React.Key | null>(null);
 
@@ -289,7 +326,7 @@ function SidePanel(props: SidePanelProps) {
 			if (hasError) {
 				event.preventDefault();
 
-				setPanel(Liferay.Language.get('schedule'));
+				setPanel('schedule');
 				setHasError(true);
 			}
 		};
@@ -302,11 +339,61 @@ function SidePanel(props: SidePanelProps) {
 	}, [props.scheduleFields]);
 
 	useEffect(() => {
+		const validateCategorizationFields = ({event}: {event: MouseEvent}) => {
+			if (props.requiredVocabularyIds === null) {
+				event.preventDefault();
+
+				return;
+			}
+
+			if (!props.requiredVocabularyIds.length) {
+				return;
+			}
+
+			const selectedVocabularyIds = new Set(
+				(props.categorizationFields?.assetCategoryIds?.value || []).map(
+					({embeddedTaxonomyCategory}) =>
+						embeddedTaxonomyCategory?.taxonomyVocabularyId
+				)
+			);
+
+			const hasMissingRequiredVocabulary =
+				props.requiredVocabularyIds.some(
+					(id) => !selectedVocabularyIds.has(id)
+				);
+
+			if (hasMissingRequiredVocabulary) {
+				event.preventDefault();
+
+				setPanel('categorization');
+				setHasCategoriesError(true);
+				setHasError(true);
+			}
+		};
+
+		Liferay.on(EVENT_VALIDATE_FORM, validateCategorizationFields);
+
+		return () => {
+			Liferay.detach(EVENT_VALIDATE_FORM, validateCategorizationFields);
+		};
+	}, [props.categorizationFields, props.requiredVocabularyIds]);
+
+	useEffect(() => {
 		if (hasError) {
 			focusInvalidElement();
 			setHasError(false);
 		}
 	}, [hasError]);
+
+	useEffect(() => {
+		if (
+			hasCategoriesError &&
+			(props.categorizationFields?.assetCategoryIds?.value?.length || 0) >
+				0
+		) {
+			setHasCategoriesError(false);
+		}
+	}, [hasCategoriesError, props.categorizationFields]);
 
 	return (
 		<VerticalBar
@@ -320,7 +407,7 @@ function SidePanel(props: SidePanelProps) {
 					const Component = item.component;
 
 					return (
-						<VerticalBar.Panel key={item.title}>
+						<VerticalBar.Panel key={item.id}>
 							<div className="align-items-center d-flex justify-content-between pl-3 sidebar-header">
 								<div className="component-title">
 									{item.title}
@@ -353,7 +440,14 @@ function SidePanel(props: SidePanelProps) {
 								</div>
 							</div>
 
-							<Component {...props} />
+							{item.id === 'categorization' ? (
+								<CategorizationPanel
+									{...props}
+									hasCategoriesError={hasCategoriesError}
+								/>
+							) : (
+								<Component {...props} />
+							)}
 						</VerticalBar.Panel>
 					);
 				}}
@@ -361,13 +455,13 @@ function SidePanel(props: SidePanelProps) {
 
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
-					<VerticalBar.Item divider={item.divider} key={item.title}>
+					<VerticalBar.Item divider={item.divider} key={item.id}>
 						<ClayButtonWithIcon
 							aria-label={item.title}
 							data-canonical-name={item.title}
 							data-tooltip-align="left"
 							displayType={null}
-							ref={panel === item.title ? buttonRef : null}
+							ref={panel === item.id ? buttonRef : null}
 							symbol={item.icon}
 							title={item.title}
 						/>

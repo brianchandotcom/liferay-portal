@@ -3054,4 +3054,4 @@ public abstract class BaseWikiNodeResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1662203571
+// LIFERAY-REST-BUILDER-HASH:477574466

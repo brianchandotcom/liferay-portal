@@ -73,8 +73,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntryAudit>
-		_collectionPersistenceFinderByCommercePaymentEntryId;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntryAudit, NoSuchPaymentEntryAuditException>
+			_collectionPersistenceFinderByCommercePaymentEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
@@ -115,19 +116,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 			OrderByComparator<CommercePaymentEntryAudit> orderByComparator)
 		throws NoSuchPaymentEntryAuditException {
 
-		CommercePaymentEntryAudit commercePaymentEntryAudit =
-			fetchByCommercePaymentEntryId_First(
-				commercePaymentEntryId, orderByComparator);
-
-		if (commercePaymentEntryAudit != null) {
-			return commercePaymentEntryAudit;
-		}
-
-		throw new NoSuchPaymentEntryAuditException(
-			_collectionPersistenceFinderByCommercePaymentEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePaymentEntryId}));
+		return _collectionPersistenceFinderByCommercePaymentEntryId.findFirst(
+			finderCache, new Object[] {commercePaymentEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -448,18 +439,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryAuditImpl.class,
-					CommercePaymentEntryAudit.class,
-					"commercePaymentEntryAudit", "CommercePaymentEntryAudit",
-					"commercePaymentEntryAudit.commercePaymentEntryAuditId",
-					"SELECT DISTINCT {commercePaymentEntryAudit.*} FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					"SELECT {CommercePaymentEntryAudit.*} FROM (SELECT DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntryAudit ON TEMP_TABLE.commercePaymentEntryAuditId = CommercePaymentEntryAudit.commercePaymentEntryAuditId",
-					"SELECT COUNT(DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId) AS COUNT_VALUE FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
-					CommercePaymentEntryAuditModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryAuditModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntryAudit.", "commercePaymentEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -528,4 +507,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160756245
+// LIFERAY-SERVICE-BUILDER-HASH:1356596571

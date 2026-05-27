@@ -1,0 +1,32 @@
+{
+	"properties": {
+		"data": {
+			"description": "The bytes. Provide as an object with `data` (base64-encoded bytes), and optional `filename` and `contentType`.",
+			"properties": {
+				"contentType": {
+					"description": "MIME type of the file content.",
+					"type": "string"
+				},
+				"data": {
+					"description": "Base64-encoded file bytes.",
+					"type": "string"
+				},
+				"filename": {
+					"description": "Original file name.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"data"
+			],
+			"type": "object"
+		},
+		"name": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"data"
+	],
+	"type": "object"
+}

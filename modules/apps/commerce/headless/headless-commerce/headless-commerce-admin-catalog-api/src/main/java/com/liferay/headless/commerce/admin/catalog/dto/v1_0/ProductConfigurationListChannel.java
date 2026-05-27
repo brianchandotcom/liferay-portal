@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConfigurationListChannel")
+@GraphQLName(
+	description = "Association between a configuration list template and a channel, qualifying the template to apply only when the cart is checked out on that channel.",
+	value = "ProductConfigurationListChannel"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Association between a configuration list template and a channel, qualifying the template to apply only when the cart is checked out on that channel.",
 	requiredProperties = {"channelId", "productConfigurationListId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,9 @@ public class ProductConfigurationListChannel implements Serializable {
 			ProductConfigurationListChannel.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,14 +97,18 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lightweight projection of the linked channel such as identifier, name, type, site identifier, currency code, and external reference code for client convenience; read-only."
+	)
 	@Valid
 	public Channel getChannel() {
 		if (_channelSupplier != null) {
@@ -133,14 +143,19 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lightweight projection of the linked channel such as identifier, name, type, site identifier, currency code, and external reference code for client convenience; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
 	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the channel; on create, it is resolved first and falls back to `channelId`.",
+		example = "DAB-34098-789-N"
+	)
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -178,7 +193,9 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the channel; on create, it is resolved first and falls back to `channelId`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
@@ -186,7 +203,10 @@ public class ProductConfigurationListChannel implements Serializable {
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the linked channel; required when `channelExternalReferenceCode` does not resolve.",
+		example = "30324"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -220,7 +240,9 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the linked channel; required when `channelExternalReferenceCode` does not resolve."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long channelId;
@@ -229,7 +251,10 @@ public class ProductConfigurationListChannel implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display ordering hint for the channel relation; present in the schema but not persisted, so it currently has no effect.",
+		example = "1"
+	)
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -263,7 +288,9 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display ordering hint for the channel relation; present in the schema but not persisted, so it currently has no effect."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
@@ -271,7 +298,10 @@ public class ProductConfigurationListChannel implements Serializable {
 	private Supplier<Integer> _orderSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of this channel-to-configuration-list association; read-only.",
+		example = "30643"
+	)
 	public Long getProductConfigurationListChannelId() {
 		if (_productConfigurationListChannelIdSupplier != null) {
 			productConfigurationListChannelId =
@@ -310,14 +340,19 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of this channel-to-configuration-list association; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productConfigurationListChannelId;
 
 	@JsonIgnore
 	private Supplier<Long> _productConfigurationListChannelIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductConfigurationListExternalReferenceCode() {
 		if (_productConfigurationListExternalReferenceCodeSupplier != null) {
 			productConfigurationListExternalReferenceCode =
@@ -357,7 +392,9 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productConfigurationListExternalReferenceCode;
 
@@ -366,7 +403,10 @@ public class ProductConfigurationListChannel implements Serializable {
 		_productConfigurationListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation.",
+		example = "30130"
+	)
 	public Long getProductConfigurationListId() {
 		if (_productConfigurationListIdSupplier != null) {
 			productConfigurationListId =
@@ -402,7 +442,9 @@ public class ProductConfigurationListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productConfigurationListId;
@@ -646,4 +688,4 @@ public class ProductConfigurationListChannel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1162131477
+// LIFERAY-REST-BUILDER-HASH:-856760828

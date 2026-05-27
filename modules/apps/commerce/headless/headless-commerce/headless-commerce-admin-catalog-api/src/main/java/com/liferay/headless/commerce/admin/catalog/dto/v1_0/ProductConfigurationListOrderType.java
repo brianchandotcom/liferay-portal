@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConfigurationListOrderType")
+@GraphQLName(
+	description = "Association between a configuration list template and an order type, qualifying the template to apply only when the cart uses that order type.",
+	value = "ProductConfigurationListOrderType"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Association between a configuration list template and an order type, qualifying the template to apply only when the cart uses that order type.",
 	requiredProperties = {"orderTypeId", "productConfigurationListId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,9 @@ public class ProductConfigurationListOrderType implements Serializable {
 			ProductConfigurationListOrderType.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,14 +97,18 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lightweight projection of the linked order type such as identifier and localized name map keyed by language identifier; read-only."
+	)
 	@Valid
 	public OrderType getOrderType() {
 		if (_orderTypeSupplier != null) {
@@ -133,14 +143,19 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lightweight projection of the linked order type such as identifier and localized name map keyed by language identifier; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the order type.",
+		example = "DAB-34098-789-N"
+	)
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -178,7 +193,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "External reference code of the order type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
@@ -186,7 +201,10 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the linked order type; required.",
+		example = "30324"
+	)
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -220,7 +238,9 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the linked order type; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long orderTypeId;
@@ -229,7 +249,10 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display ordering hint for the order-type relation; present in the schema but not persisted, so it currently has no effect.",
+		example = "1"
+	)
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -263,14 +286,19 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display ordering hint for the order-type relation; present in the schema but not persisted, so it currently has no effect."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
 	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductConfigurationListExternalReferenceCode() {
 		if (_productConfigurationListExternalReferenceCodeSupplier != null) {
 			productConfigurationListExternalReferenceCode =
@@ -310,7 +338,9 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productConfigurationListExternalReferenceCode;
 
@@ -319,7 +349,10 @@ public class ProductConfigurationListOrderType implements Serializable {
 		_productConfigurationListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation.",
+		example = "30130"
+	)
 	public Long getProductConfigurationListId() {
 		if (_productConfigurationListIdSupplier != null) {
 			productConfigurationListId =
@@ -355,7 +388,9 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productConfigurationListId;
@@ -364,7 +399,10 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<Long> _productConfigurationListIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of this order-type-to-configuration-list association; read-only.",
+		example = "30643"
+	)
 	public Long getProductConfigurationListOrderTypeId() {
 		if (_productConfigurationListOrderTypeIdSupplier != null) {
 			productConfigurationListOrderTypeId =
@@ -403,7 +441,9 @@ public class ProductConfigurationListOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of this order-type-to-configuration-list association; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productConfigurationListOrderTypeId;
 
@@ -647,4 +687,4 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2105081777
+// LIFERAY-REST-BUILDER-HASH:451410988

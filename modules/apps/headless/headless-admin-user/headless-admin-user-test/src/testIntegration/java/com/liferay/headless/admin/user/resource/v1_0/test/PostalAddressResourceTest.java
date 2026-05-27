@@ -89,7 +89,7 @@ public class PostalAddressResourceTest
 			RandomTestUtil.randomString(), null, new String[0], null, null,
 			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-		_country = _countryLocalService.addCountry(
+		_country1 = _countryLocalService.addCountry(
 			null, "X" + RandomTestUtil.randomString(1),
 			"X" + RandomTestUtil.randomString(2), true, true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -154,7 +154,7 @@ public class PostalAddressResourceTest
 	protected PostalAddress randomPostalAddress() {
 		return new PostalAddress() {
 			{
-				addressCountry = _country.getTitle(LocaleUtil.getDefault());
+				addressCountry = _country1.getTitle(LocaleUtil.getDefault());
 				addressLocality = RandomTestUtil.randomString();
 				addressSubtype = StringPool.BLANK;
 				addressType = "billing";
@@ -382,7 +382,7 @@ public class PostalAddressResourceTest
 		return _toPostalAddress(
 			AddressLocalServiceUtil.addAddress(
 				postalAddress.getExternalReferenceCode(), _user.getUserId(),
-				className, classPK, _country.getCountryId(),
+				className, classPK, _country1.getCountryId(),
 				_getListTypeId(listTypeId), 0,
 				postalAddress.getAddressLocality(), null, false,
 				postalAddress.getName(), postalAddress.getPrimary(),
@@ -460,7 +460,7 @@ public class PostalAddressResourceTest
 	}
 
 	private void _testPatchPostalAddressWithAddressRegion() throws Exception {
-		Country country = _countryLocalService.addCountry(
+		_country2 = _countryLocalService.addCountry(
 			null, "X" + RandomTestUtil.randomString(1),
 			"X" + RandomTestUtil.randomString(2), true, true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -471,13 +471,13 @@ public class PostalAddressResourceTest
 			ServiceContextTestUtil.getServiceContext();
 
 		Region region1 = _regionLocalService.addRegion(
-			null, country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country2.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		PostalAddress postalAddress = randomPostalAddress();
 
-		postalAddress.setAddressCountry(country.getTitle());
+		postalAddress.setAddressCountry(_country2.getTitle());
 		postalAddress.setAddressRegion(region1.getTitle());
 
 		postalAddress = testPostAccountPostalAddress_addPostalAddress(
@@ -487,7 +487,7 @@ public class PostalAddressResourceTest
 			region1.getTitle(), postalAddress.getAddressRegion());
 
 		Region region2 = _regionLocalService.addRegion(
-			null, country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country2.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -626,7 +626,10 @@ public class PostalAddressResourceTest
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@DeleteAfterTestRun
-	private Country _country;
+	private Country _country1;
+
+	@DeleteAfterTestRun
+	private Country _country2;
 
 	@Inject
 	private CountryLocalService _countryLocalService;

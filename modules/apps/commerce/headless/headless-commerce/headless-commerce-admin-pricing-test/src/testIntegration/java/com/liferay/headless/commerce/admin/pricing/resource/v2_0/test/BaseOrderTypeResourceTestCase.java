@@ -1069,4 +1069,4 @@ public abstract class BaseOrderTypeResourceTestCase {
 			OrderTypeResource _orderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1889526297
+// LIFERAY-REST-BUILDER-HASH:1647672864

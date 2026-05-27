@@ -3,20 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import CollaboratorService from '../../../../../src/main/resources/META-INF/resources/js/common/services/CollaboratorService';
-import {openCMSModal} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
-import ShareModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
-import shareAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/shareAction';
+import {CollaboratorService} from 'frontend-js-components-web';
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/common/services/CollaboratorService',
-	() => ({
-		__esModule: true,
-		default: {
-			getCollaborators: jest.fn(),
-		},
-	})
-);
+import {openCMSModal} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
+import shareAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/shareAction';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal',
@@ -26,11 +16,14 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent',
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent',
 	() => jest.fn()
 );
 
 jest.mock('frontend-js-components-web', () => ({
+	CollaboratorService: {
+		getCollaborators: jest.fn(),
+	},
 	openToast: jest.fn(),
 }));
 
@@ -57,13 +50,11 @@ const baseItem = {
 };
 
 const getInitialCollaborators = () => {
-	const mockShareModalContent = ShareModalContent as unknown as jest.Mock;
-
 	const openCMSModalArgs = (openCMSModal as jest.Mock).mock.calls[0][0];
 
-	openCMSModalArgs.contentComponent({closeModal: jest.fn()});
+	const element = openCMSModalArgs.contentComponent({closeModal: jest.fn()});
 
-	return mockShareModalContent.mock.calls[0][0].initialCollaborators;
+	return element.props.initialCollaborators;
 };
 
 describe('shareAction', () => {

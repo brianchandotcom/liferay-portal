@@ -36,14 +36,14 @@ public interface EventResource {
 
 	public Page<Event> getWorkspaceGroupChannelEventsPage(
 			Long groupId, String channelId, Boolean includeAnonymousUsers,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupChannelEventsPageHttpResponse(
 				Long groupId, String channelId, Boolean includeAnonymousUsers,
-				String rangeEnd, Integer rangeKey, String rangeStart,
+				String rangeEnd, String rangeKey, String rangeStart,
 				String search, Pagination pagination)
 		throws Exception;
 
@@ -157,7 +157,7 @@ public interface EventResource {
 
 		public Page<Event> getWorkspaceGroupChannelEventsPage(
 				Long groupId, String channelId, Boolean includeAnonymousUsers,
-				String rangeEnd, Integer rangeKey, String rangeStart,
+				String rangeEnd, String rangeKey, String rangeStart,
 				String search, Pagination pagination)
 			throws Exception {
 
@@ -229,7 +229,7 @@ public interface EventResource {
 				getWorkspaceGroupChannelEventsPageHttpResponse(
 					Long groupId, String channelId,
 					Boolean includeAnonymousUsers, String rangeEnd,
-					Integer rangeKey, String rangeStart, String search,
+					String rangeKey, String rangeStart, String search,
 					Pagination pagination)
 			throws Exception {
 
@@ -311,4 +311,4 @@ public interface EventResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1666702507
+// LIFERAY-REST-BUILDER-HASH:-2027624707

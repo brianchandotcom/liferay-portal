@@ -73,8 +73,9 @@ public class ContactsCardTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ContactsCardTemplate>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<ContactsCardTemplate, NoSuchContactsCardTemplateException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the contacts card templates where groupId = &#63;.
@@ -115,16 +116,8 @@ public class ContactsCardTemplatePersistenceImpl
 			OrderByComparator<ContactsCardTemplate> orderByComparator)
 		throws NoSuchContactsCardTemplateException {
 
-		ContactsCardTemplate contactsCardTemplate = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (contactsCardTemplate != null) {
-			return contactsCardTemplate;
-		}
-
-		throw new NoSuchContactsCardTemplateException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -453,4 +446,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1566799102
+// LIFERAY-SERVICE-BUILDER-HASH:567696340

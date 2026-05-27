@@ -85,8 +85,8 @@ const DEFAULT_PICKLISTS = [
 
 const DEFAULT_CONFIG = {
 	countries: [
-		{a2: 'US', name: 'United States', prefix: '1'},
-		{a2: 'ES', name: 'Spain', prefix: '34'},
+		{a2: 'US', idd: '1', name: 'United States'},
+		{a2: 'ES', idd: '34', name: 'Spain'},
 	],
 } as Config;
 
@@ -457,13 +457,13 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await userEvent.click(screen.getByLabelText('prefix-type'));
+		await userEvent.click(screen.getByLabelText('country-source'));
 		await userEvent.click(screen.getByText('fixed'));
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				fixedCountryCode: 'US',
-				prefixType: 'fixed',
+				country: 'US',
+				countrySource: 'fixed',
 			},
 			type: 'update-field',
 			uuid,
@@ -475,27 +475,8 @@ describe('StructureFieldSettings', () => {
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				prefixType: 'defined-by-user',
+				countrySource: 'definedByUser',
 				uniqueValues: true,
-			},
-			type: 'update-field',
-			uuid,
-		});
-
-		await userEvent.click(screen.getByLabelText('limit-characters'));
-
-		const numberOfCharactersInput = screen.getByLabelText(
-			'maximum-number-of-characters'
-		);
-
-		await userEvent.type(numberOfCharactersInput, '15');
-		fireEvent.blur(numberOfCharactersInput);
-
-		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
-			settings: {
-				maxLength: 15,
-				prefixType: 'defined-by-user',
-				showCounter: true,
 			},
 			type: 'update-field',
 			uuid,
@@ -519,8 +500,8 @@ describe('StructureFieldSettings', () => {
 									type: 'phone-number',
 								}),
 								settings: {
-									fixedCountryCode: 'US',
-									prefixType: 'fixed',
+									country: 'US',
+									countrySource: 'fixed',
 								},
 								uuid,
 							},
@@ -531,13 +512,13 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await userEvent.click(screen.getByLabelText('prefix'));
+		await userEvent.click(screen.getByLabelText('country'));
 		await userEvent.click(screen.getByRole('option', {name: /Spain/}));
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				fixedCountryCode: 'ES',
-				prefixType: 'fixed',
+				country: 'ES',
+				countrySource: 'fixed',
 			},
 			type: 'update-field',
 			uuid,

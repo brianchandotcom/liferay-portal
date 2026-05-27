@@ -89,7 +89,7 @@ public class KBCommentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -130,15 +130,8 @@ public class KBCommentPersistenceImpl
 			String uuid, OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByUuid_First(uuid, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,7 +172,8 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<KBComment> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<KBComment, NoSuchCommentException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the kb comment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCommentException</code> if it could not be found.
@@ -193,21 +187,8 @@ public class KBCommentPersistenceImpl
 	public KBComment findByUUID_G(String uuid, long groupId)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByUUID_G(uuid, groupId);
-
-		if (kbComment == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCommentException(message);
-		}
-
-		return kbComment;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -255,7 +236,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -299,16 +280,8 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -353,7 +326,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -394,15 +367,8 @@ public class KBCommentPersistenceImpl
 			long groupId, OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -443,7 +409,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -487,16 +453,9 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -542,7 +501,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByG_S;
 
 	/**
@@ -586,16 +545,8 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -640,7 +591,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId, status});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -684,16 +635,9 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -739,7 +683,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByU_C_C;
 
 	/**
@@ -785,17 +729,9 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByU_C_C_First(
-			userId, classNameId, classPK, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByU_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, classNameId, classPK}));
+		return _collectionPersistenceFinderByU_C_C.findFirst(
+			finderCache, new Object[] {userId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -844,7 +780,7 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<KBComment>
+	private CollectionPersistenceFinder<KBComment, NoSuchCommentException>
 		_collectionPersistenceFinderByC_C_S;
 
 	/**
@@ -1621,4 +1557,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1301857018
+// LIFERAY-SERVICE-BUILDER-HASH:-1065149521

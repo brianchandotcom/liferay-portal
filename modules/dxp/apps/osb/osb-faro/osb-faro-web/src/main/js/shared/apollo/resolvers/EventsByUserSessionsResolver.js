@@ -61,6 +61,44 @@ export default () => ({
 		},
 		{
 			__typename: 'UserSession',
+			browserName: 'Chrome Mobile',
+			completeDate: 'Thu May 07 20:15:10 GMT 2026',
+			contentLanguageId: 'en-US',
+			createDate: 'Thu May 07 20:10:05 GMT 2026',
+			devicePixelRatio: '3',
+			deviceType: 'Smartphone',
+			events: [
+				{
+					__typename: 'Event',
+					applicationId: 'Page',
+					assetTitle: 'Home - learn-dev.lxc.liferay.com',
+					canonicalUrl: 'https://learn-dev.liferay.com/home',
+					createDate: 'Thu May 07 20:15:05 GMT 2026',
+					eventDate: '2026-05-07T20:15:05.000Z',
+					eventId: 'pageViewed',
+					name: 'pageViewed',
+					pageDescription: '',
+					pageKeywords: '',
+					pageTitle: 'Home - learn-dev.lxc.liferay.com',
+					properties: [
+						{
+							name: 'externalReferenceCode',
+							value: '2d420977-ed76-97d2-4478-379f03130595'
+						}
+					],
+					referrer: '',
+					url: 'https://learn-dev.liferay.com/home'
+				}
+			],
+			languageId: 'en-US',
+			screenHeight: '844',
+			screenWidth: '390',
+			timezoneOffset: '-03:00',
+			userAgent:
+				'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/121.0.0.0 Mobile/15E148 Safari/604.1'
+		},
+		{
+			__typename: 'UserSession',
 			browserName: 'Chrome',
 			completeDate: 'Thu May 07 19:57:32 GMT 2026',
 			contentLanguageId: 'en-US',

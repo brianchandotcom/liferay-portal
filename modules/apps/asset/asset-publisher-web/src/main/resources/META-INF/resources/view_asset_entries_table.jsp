@@ -75,9 +75,9 @@ if (stageableGroup.isLayout()) {
 						assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e);
+						_log.warn(exception);
 					}
 				}
 
@@ -85,22 +85,22 @@ if (stageableGroup.isLayout()) {
 					continue;
 				}
 
-				String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
-
 				request.setAttribute("view.jsp-assetEntry", assetEntry);
 				request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
+				AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 				Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 					"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
 				).put(
 					"fragments-editor-item-type", "fragments-editor-mapped-item"
 				).build();
-
 				String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
+				boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
+				String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 			%>
 
 				<tr class="<%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "table-active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
-					<td class="table-cell-expand table-title">
+					<td class="table-cell-expand table-title" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) : StringPool.BLANK %>>
 						<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 						<c:choose>
@@ -123,7 +123,7 @@ if (stageableGroup.isLayout()) {
 
 						<c:choose>
 							<c:when test='<%= Objects.equals(metadataField, "author") %>'>
-								<td class="table-cell-expand">
+								<td class="table-cell-expand" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_AUTHOR) : StringPool.BLANK %>>
 									<%= HtmlUtil.escape(PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName())) %>
 								</td>
 							</c:when>
@@ -179,9 +179,11 @@ if (stageableGroup.isLayout()) {
 								else if (Objects.equals(metadataField, "view-count")) {
 									value = String.valueOf(assetEntry.getViewCount());
 								}
+
+								boolean dateField = ArrayUtil.contains(new String[] {"create-date", "modified-date", "publish-date", "expiration-date"}, metadataField);
 								%>
 
-								<td class="table-cell-expand-smallest">
+								<td class="table-cell-expand-smallest" <%= (viewMode && dateField) ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, metadataField) : StringPool.BLANK %>>
 									<liferay-ui:message key="<%= value %>" />
 								</td>
 							</c:otherwise>

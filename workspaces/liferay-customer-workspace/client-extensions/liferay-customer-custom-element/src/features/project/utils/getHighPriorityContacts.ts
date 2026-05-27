@@ -79,8 +79,8 @@ const getAccountRolesId = async (
 };
 
 const getContactRoleByFilter = (filter: string): string | undefined => {
-	if (filter.includes('cloud')) {
-		return 'Cloud Native Contact';
+	if (filter.includes('paas')) {
+		return 'PaaS User';
 	}
 
 	if (filter.includes('critical')) {
@@ -99,8 +99,8 @@ const getContactRoleByFilter = (filter: string): string | undefined => {
 };
 
 const HIGH_PRIORITY_CONTACT_CATEGORIES = {
-	cloudNative: i18n.translate('cloud-native'),
 	criticalIncident: i18n.translate('critical-incident'),
+	paasUser: i18n.translate('paas-user'),
 	privacyBreach: i18n.translate('privacy-breach'),
 	securityBreach: i18n.translate('security-breach'),
 };
@@ -139,9 +139,9 @@ const removeContactRoleRaysource = async (
 };
 
 const rolesHighPriorityContact = [
-	'Cloud Native Contact',
 	'Critical Incident Contact',
 	'Data Breach Contact',
+	'PaaS User',
 	'Security Incident Contact',
 ];
 

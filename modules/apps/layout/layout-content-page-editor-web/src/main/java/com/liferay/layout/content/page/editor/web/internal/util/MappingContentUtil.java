@@ -9,6 +9,9 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
+import com.liferay.info.field.type.OptionInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -43,6 +47,18 @@ public class MappingContentUtil {
 		InfoField<?> infoField, Locale locale) {
 
 		return JSONUtil.put(
+			"attributes",
+			() -> {
+				JSONArray optionsJSONArray = _getOptionsJSONArray(
+					infoField, locale);
+
+				if (optionsJSONArray == null) {
+					return null;
+				}
+
+				return JSONUtil.put("options", optionsJSONArray);
+			}
+		).put(
 			"externalKey", infoField.getExternalUniqueId()
 		).put(
 			"key", infoField.getUniqueId()
@@ -192,6 +208,42 @@ public class MappingContentUtil {
 		}
 
 		return fieldSetsJSONArray;
+	}
+
+	private static JSONArray _getOptionsJSONArray(
+		InfoField infoField, Locale locale) {
+
+		InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+		Collection<OptionInfoFieldType> optionInfoFieldTypes = null;
+
+		if (infoFieldType instanceof MultiselectInfoFieldType) {
+			optionInfoFieldTypes =
+				(Collection<OptionInfoFieldType>)infoField.getAttribute(
+					MultiselectInfoFieldType.OPTIONS);
+		}
+		else if (infoFieldType instanceof SelectInfoFieldType) {
+			optionInfoFieldTypes =
+				(Collection<OptionInfoFieldType>)infoField.getAttribute(
+					SelectInfoFieldType.OPTIONS);
+		}
+
+		if (optionInfoFieldTypes == null) {
+			return null;
+		}
+
+		JSONArray optionsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (OptionInfoFieldType optionInfoFieldType : optionInfoFieldTypes) {
+			optionsJSONArray.put(
+				JSONUtil.put(
+					"label", optionInfoFieldType.getLabel(locale)
+				).put(
+					"value", optionInfoFieldType.getValue()
+				));
+		}
+
+		return optionsJSONArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

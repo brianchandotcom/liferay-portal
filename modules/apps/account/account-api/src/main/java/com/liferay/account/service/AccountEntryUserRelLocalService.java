@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -97,6 +98,11 @@ public interface AccountEntryUserRelLocalService
 			String middleName, String lastName, long prefixListTypeId,
 			long suffixListTypeId, String jobTitle,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Ticket addUserInvitationTicket(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -359,4 +365,4 @@ public interface AccountEntryUserRelLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:635671757
+// LIFERAY-SERVICE-BUILDER-HASH:-280396057

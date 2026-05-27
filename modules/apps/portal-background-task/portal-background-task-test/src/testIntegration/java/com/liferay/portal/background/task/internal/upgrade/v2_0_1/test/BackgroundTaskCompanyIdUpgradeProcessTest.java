@@ -147,13 +147,6 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 		).build();
 	}
 
-	private static UpgradeProcess _upgradeProcess;
-
-	@Inject(
-		filter = "component.name=com.liferay.portal.background.task.internal.upgrade.registry.BackgroundTaskServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private BackgroundTask _backgroundTask;
 
@@ -165,5 +158,12 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	private UpgradeProcess _upgradeProcess;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.background.task.internal.upgrade.registry.BackgroundTaskServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

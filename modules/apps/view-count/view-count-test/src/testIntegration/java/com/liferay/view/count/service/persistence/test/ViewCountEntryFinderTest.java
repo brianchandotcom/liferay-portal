@@ -135,26 +135,26 @@ public class ViewCountEntryFinderTest {
 
 	private static final int _INCREMENTS_COUNT = 1000;
 
-	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
 	private static final TransactionAttributeAdapter
 		_transactionAttributeAdapter = new TransactionAttributeAdapter(
 			TransactionAttributeBuilder.build(
 				Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class}));
 
-	@Inject
-	private static ViewCountEntryFinder _viewCountEntryFinder;
-
-	@Inject
-	private static ViewCountEntryLocalService _viewCountEntryLocalService;
-
 	@DeleteAfterTestRun
 	private ClassName _className;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	private ExecutorService _executorService;
 
 	@DeleteAfterTestRun
 	private ViewCountEntry _viewCountEntry;
+
+	@Inject
+	private ViewCountEntryFinder _viewCountEntryFinder;
+
+	@Inject
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

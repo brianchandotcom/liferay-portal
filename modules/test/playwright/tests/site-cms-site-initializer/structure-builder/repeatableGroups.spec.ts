@@ -78,7 +78,9 @@ test(
 		// Assert correct label style
 
 		await expect(
-			page.locator('.label-success', {hasText: 'Repeatable Group'})
+			page.locator('.label-inverse-success', {
+				hasText: 'Repeatable Group',
+			})
 		).toBeVisible();
 
 		// Check groups are persisted

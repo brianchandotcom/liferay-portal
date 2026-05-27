@@ -134,6 +134,8 @@ public class DDMTemplateModelImpl
 
 	public static final String ENTITY_ALIAS = "ddmTemplate";
 
+	public static final String FILTER_PK_COLUMN_NAME = "templateId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmTemplate.templateId ASC";
 
@@ -2122,4 +2124,4 @@ public class DDMTemplateModelImpl
 	private DDMTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-671953220
+// LIFERAY-SERVICE-BUILDER-HASH:1610487170

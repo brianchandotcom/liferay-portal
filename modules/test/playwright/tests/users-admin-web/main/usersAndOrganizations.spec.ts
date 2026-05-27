@@ -1946,3 +1946,66 @@ test(
 		await organizationUsersPage.organizationUsersTable.changeView('Table');
 	}
 );
+
+test(
+	'All ancestor organizations are added when a suborganization is assigned to a user',
+	{tag: '@LPD-90728'},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const parentOrganization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+		const organization1 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode:
+						parentOrganization.externalReferenceCode,
+				},
+			});
+		const organization2 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode: organization1.externalReferenceCode,
+				},
+			});
+		const organization3 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode: organization1.externalReferenceCode,
+				},
+			});
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization2.id,
+			'test@liferay.com'
+		);
+
+		apiHelpers.data.push({
+			id: `${organization2.id}_test@liferay.com`,
+			type: 'organizationUserAccountAssociation',
+		});
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink('test')
+		).click();
+
+		await page.waitForLoadState('networkidle');
+
+		await editUserPage.organizationsLink.click();
+
+		await expect(
+			editUserPage.organizationsTable.getByText(`${organization1.name}`)
+		).toBeVisible();
+		await expect(
+			editUserPage.organizationsTable.getByText(`${organization2.name}`)
+		).toBeVisible();
+		await expect(
+			editUserPage.organizationsTable.getByText(`${organization3.name}`)
+		).not.toBeVisible();
+		await expect(
+			editUserPage.organizationsTable.getByText(
+				`${parentOrganization.name}`
+			)
+		).toBeVisible();
+	}
+);

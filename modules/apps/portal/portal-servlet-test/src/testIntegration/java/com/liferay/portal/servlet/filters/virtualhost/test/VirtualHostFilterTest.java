@@ -187,6 +187,35 @@ public class VirtualHostFilterTest {
 		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
 	}
 
+	@Test
+	public void testProcessFilterRedirectToHomeURL() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"VIRTUAL_HOSTS_DEFAULT_SITE_NAME", StringPool.BLANK)) {
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(null, StringPool.SLASH);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			_virtualHostFilter.init(new MockFilterConfig());
+
+			ReflectionTestUtil.invoke(
+				_virtualHostFilter, "processFilter",
+				new Class<?>[] {
+					HttpServletRequest.class, HttpServletResponse.class,
+					FilterChain.class
+				},
+				mockHttpServletRequest, mockHttpServletResponse,
+				new MockFilterChain());
+
+			Assert.assertEquals(
+				_portalUtil.getHomeURL(mockHttpServletRequest),
+				mockHttpServletResponse.getRedirectedUrl());
+		}
+	}
+
 	private String _getForwardedURL(LayoutSet layoutSet, String requestURI) {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layoutSet, requestURI);

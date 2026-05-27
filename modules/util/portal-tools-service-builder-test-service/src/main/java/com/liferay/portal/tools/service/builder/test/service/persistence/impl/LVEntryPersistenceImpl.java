@@ -82,7 +82,7 @@ public class LVEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -122,15 +122,8 @@ public class LVEntryPersistenceImpl
 			String uuid, OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +164,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByUuid_Head;
 
 	/**
@@ -214,15 +207,8 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUuid_Head_First(uuid, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByUuid_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, head}));
+		return _collectionPersistenceFinderByUuid_Head.findFirst(
+			finderCache, new Object[] {uuid, head}, orderByComparator);
 	}
 
 	/**
@@ -267,7 +253,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByUUID_G;
 
 	/**
@@ -310,15 +296,8 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUUID_G_First(uuid, groupId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
+		return _collectionPersistenceFinderByUUID_G.findFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -363,7 +342,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private UniquePersistenceFinder<LVEntry>
+	private UniquePersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_uniquePersistenceFinderByUUID_G_Head;
 
 	/**
@@ -379,22 +358,8 @@ public class LVEntryPersistenceImpl
 	public LVEntry findByUUID_G_Head(String uuid, long groupId, boolean head)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUUID_G_Head(uuid, groupId, head);
-
-		if (lvEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLVEntryException(message);
-		}
-
-		return lvEntry;
+		return _uniquePersistenceFinderByUUID_G_Head.find(
+			finderCache, new Object[] {uuid, groupId, head});
 	}
 
 	/**
@@ -445,7 +410,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -488,16 +453,8 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -542,7 +499,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByUuid_C_Head;
 
 	/**
@@ -587,17 +544,9 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByUuid_C_Head_First(
-			uuid, companyId, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByUuid_C_Head.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {uuid, companyId, head}));
+		return _collectionPersistenceFinderByUuid_C_Head.findFirst(
+			finderCache, new Object[] {uuid, companyId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1792,7 +1741,7 @@ public class LVEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_HEAD_HEAD_2 =
 		"lvEntry.head = ? AND lvEntry.lvEntryId > 0";
 
-	private CollectionPersistenceFinder<LVEntry>
+	private CollectionPersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_collectionPersistenceFinderByG_UGK;
 
 	/**
@@ -1835,17 +1784,9 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByG_UGK_First(
-			groupId, uniqueGroupKey, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		throw new NoSuchLVEntryException(
-			_collectionPersistenceFinderByG_UGK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, uniqueGroupKey}));
+		return _collectionPersistenceFinderByG_UGK.findFirst(
+			finderCache, new Object[] {groupId, uniqueGroupKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1891,7 +1832,7 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {groupId, uniqueGroupKey});
 	}
 
-	private UniquePersistenceFinder<LVEntry>
+	private UniquePersistenceFinder<LVEntry, NoSuchLVEntryException>
 		_uniquePersistenceFinderByG_UGK_Head;
 
 	/**
@@ -1908,22 +1849,8 @@ public class LVEntryPersistenceImpl
 			long groupId, String uniqueGroupKey, boolean head)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByG_UGK_Head(groupId, uniqueGroupKey, head);
-
-		if (lvEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_UGK_Head.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, uniqueGroupKey, head});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLVEntryException(message);
-		}
-
-		return lvEntry;
+		return _uniquePersistenceFinderByG_UGK_Head.find(
+			finderCache, new Object[] {groupId, uniqueGroupKey, head});
 	}
 
 	/**
@@ -1979,7 +1906,8 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {groupId, uniqueGroupKey, head});
 	}
 
-	private UniquePersistenceFinder<LVEntry> _uniquePersistenceFinderByHeadId;
+	private UniquePersistenceFinder<LVEntry, NoSuchLVEntryException>
+		_uniquePersistenceFinderByHeadId;
 
 	/**
 	 * Returns the lv entry where headId = &#63; or throws a <code>NoSuchLVEntryException</code> if it could not be found.
@@ -1990,21 +1918,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public LVEntry findByHeadId(long headId) throws NoSuchLVEntryException {
-		LVEntry lvEntry = fetchByHeadId(headId);
-
-		if (lvEntry == null) {
-			String message =
-				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLVEntryException(message);
-		}
-
-		return lvEntry;
+		return _uniquePersistenceFinderByHeadId.find(
+			finderCache, new Object[] {headId});
 	}
 
 	/**
@@ -2942,4 +2857,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:358072360
+// LIFERAY-SERVICE-BUILDER-HASH:-1654256443

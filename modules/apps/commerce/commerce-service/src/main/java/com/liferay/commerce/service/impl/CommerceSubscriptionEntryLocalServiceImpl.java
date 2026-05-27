@@ -13,7 +13,7 @@ import com.liferay.commerce.internal.search.CommerceSubscriptionEntryIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
-import com.liferay.commerce.notification.util.CommerceNotificationHelper;
+import com.liferay.commerce.notification.CommerceNotificationSender;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryLocalServiceBaseImpl;
@@ -348,7 +348,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (commerceOrderItem != null) {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			_commerceNotificationHelper.sendNotifications(
+			_commerceNotificationSender.sendNotifications(
 				commerceOrder.getGroupId(), commerceOrder.getUserId(),
 				CommerceSubscriptionNotificationConstants.SUBSCRIPTION_RENEWED,
 				updatedSubscriptionEntry);
@@ -414,7 +414,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (commerceOrderItem != null) {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			_commerceNotificationHelper.sendNotifications(
+			_commerceNotificationSender.sendNotifications(
 				commerceOrder.getGroupId(), commerceOrder.getUserId(),
 				CommerceSubscriptionNotificationConstants.SUBSCRIPTION_RENEWED,
 				updatedSubscriptionEntry);
@@ -839,7 +839,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		CommerceSubscriptionEntryLocalServiceImpl.class);
 
 	@Reference
-	private CommerceNotificationHelper _commerceNotificationHelper;
+	private CommerceNotificationSender _commerceNotificationSender;
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;

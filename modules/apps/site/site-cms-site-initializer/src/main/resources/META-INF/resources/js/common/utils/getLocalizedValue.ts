@@ -5,7 +5,11 @@
 
 export default function getLocalizedValue(
 	value: Liferay.Language.LocalizedValue<string>,
-	languageId = Liferay.ThemeDisplay.getDefaultLanguageId()
+	languageId = Liferay.ThemeDisplay.getLanguageId()
 ) {
-	return value[languageId] || '';
+	return (
+		value?.[languageId] ||
+		value?.[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
+		''
+	);
 }

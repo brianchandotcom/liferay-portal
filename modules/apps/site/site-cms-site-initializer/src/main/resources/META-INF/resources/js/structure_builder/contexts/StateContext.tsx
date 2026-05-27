@@ -643,8 +643,7 @@ function reducer(state: State, action: Action): State {
 			const {name, uuid} = action;
 			const {structure} = state;
 
-			const defaultLanguageId =
-				Liferay.ThemeDisplay.getDefaultLanguageId();
+			const languageId = Liferay.ThemeDisplay.getLanguageId();
 
 			if (uuid === structure.uuid) {
 				return {
@@ -652,7 +651,7 @@ function reducer(state: State, action: Action): State {
 					renamingItemUuid: null,
 					structure: {
 						...structure,
-						label: {...structure.label, [defaultLanguageId]: name},
+						label: {...structure.label, [languageId]: name},
 					},
 				};
 			}
@@ -666,7 +665,7 @@ function reducer(state: State, action: Action): State {
 			const children = updateChild({
 				child: {
 					...child,
-					label: {...child.label, [defaultLanguageId]: name},
+					label: {...child.label, [languageId]: name},
 				},
 				root: structure,
 			});
@@ -1103,7 +1102,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 	const children = new Map();
 
 	const title = getDefaultField({
-		label: Liferay.Language.get('title'),
+		languageKey: 'title',
 		locked: true,
 		name: 'title',
 		parent: structureUuid,
@@ -1115,7 +1114,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 
 	if (type === 'L_CMS_FILE_TYPES') {
 		const file = getDefaultField({
-			label: Liferay.Language.get('file'),
+			languageKey: 'file',
 			locked: true,
 			name: 'file',
 			parent: structureUuid,

@@ -3,6 +3,19 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragment": {
+						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.HomeDashboardFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
 					"cssClasses": [
 						"bg-gradient--blue-white"
 					],

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -127,7 +128,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
 		Assert.assertEquals(
-			hostname + ":8080",
+			hostname + ":" + PortalUtil.getPortalServerPort(false),
 			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
 
 		VirtualHost virtualHost = _virtualHostLocalService.createVirtualHost(
@@ -153,13 +154,21 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		if (hostname.compareTo(virtualHostHostname) > 0) {
 			Assert.assertEquals(
-				virtualHostHostname + ":8080", lxcDXPDomains.get(0));
-			Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(1));
+				virtualHostHostname + ":" +
+					PortalUtil.getPortalServerPort(false),
+				lxcDXPDomains.get(0));
+			Assert.assertEquals(
+				hostname + ":" + PortalUtil.getPortalServerPort(false),
+				lxcDXPDomains.get(1));
 		}
 		else {
-			Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
 			Assert.assertEquals(
-				virtualHostHostname + ":8080", lxcDXPDomains.get(1));
+				hostname + ":" + PortalUtil.getPortalServerPort(false),
+				lxcDXPDomains.get(0));
+			Assert.assertEquals(
+				virtualHostHostname + ":" +
+					PortalUtil.getPortalServerPort(false),
+				lxcDXPDomains.get(1));
 		}
 
 		// Ext init

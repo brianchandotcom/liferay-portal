@@ -424,33 +424,38 @@ public class FormLayoutStructureItemMapper
 
 		return new LocalizationConfig() {
 			{
-				if (localizationConfigJSONObject.has(
-						"unlocalizedFieldsMessage")) {
+				setUnlocalizedFieldsMessage(
+					() -> {
+						if (!localizationConfigJSONObject.has(
+								"unlocalizedFieldsMessage")) {
 
-					setUnlocalizedFieldsMessage(
-						() -> _toFragmentInlineValue(
+							return null;
+						}
+
+						return _toFragmentInlineValue(
 							localizationConfigJSONObject.getJSONObject(
-								"unlocalizedFieldsMessage")));
-				}
+								"unlocalizedFieldsMessage"));
+					});
+				setUnlocalizedFieldsState(
+					() -> {
+						if (!localizationConfigJSONObject.has(
+								"unlocalizedFieldsState")) {
 
-				if (localizationConfigJSONObject.has(
-						"unlocalizedFieldsState")) {
+							return null;
+						}
 
-					setUnlocalizedFieldsState(
-						() -> {
-							if (Objects.equals(
-									localizationConfigJSONObject.getString(
-										"unlocalizedFieldsState"),
-									"disabled")) {
-
-								return LocalizationConfig.
-									UnlocalizedFieldsState.DISABLED;
-							}
+						if (Objects.equals(
+								localizationConfigJSONObject.getString(
+									"unlocalizedFieldsState"),
+								"disabled")) {
 
 							return LocalizationConfig.UnlocalizedFieldsState.
-								READ_ONLY;
-						});
-				}
+								DISABLED;
+						}
+
+						return LocalizationConfig.UnlocalizedFieldsState.
+							READ_ONLY;
+					});
 			}
 		};
 	}

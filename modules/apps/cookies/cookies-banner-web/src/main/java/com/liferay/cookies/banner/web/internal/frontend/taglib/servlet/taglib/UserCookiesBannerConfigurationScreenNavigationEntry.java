@@ -68,6 +68,9 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if ((selUser == null) ||
+			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+				ExtendedObjectClassDefinition.Scope.COMPANY,
+				user.getCompanyId()) ||
 			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingEnabled(
 				ExtendedObjectClassDefinition.Scope.COMPANY,
 				user.getCompanyId())) {

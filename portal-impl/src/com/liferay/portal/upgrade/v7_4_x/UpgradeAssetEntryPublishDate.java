@@ -32,7 +32,7 @@ public class UpgradeAssetEntryPublishDate extends UpgradeProcess {
 					"DLFileEntry on DLFileEntry.fileEntryId = ",
 					"AssetEntry.classPK and DLFileEntry.ctCollectionId = ",
 					"AssetEntry.ctCollectionId where AssetEntry.classNameId = ",
-					"?"))) {
+					"? and DLFileEntry.displayDate is not null"))) {
 
 			preparedStatement1.setLong(1, classNameId);
 

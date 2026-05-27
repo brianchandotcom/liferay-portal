@@ -1204,6 +1204,8 @@ test(
 		await editOrganizationPage.countrySelect.selectOption(`${country.key}`);
 		await editOrganizationPage.saveButton.click();
 
+		await waitForAlert(page);
+
 		try {
 			await usersAndOrganizationsPage.goToOrganizations();
 
@@ -1245,11 +1247,10 @@ test(
 
 			await usersAndOrganizationsPage.goToOrganizations();
 			await usersAndOrganizationsPage.changeView('Table');
-			await (
-				await usersAndOrganizationsPage.organizationsTable.rowCheckbox(
-					xssOrgName
-				)
-			).check();
+
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await usersAndOrganizationsPage.organizationsTable.selectAllItemsCheckbox.check();
 			await usersAndOrganizationsPage.deleteButton.click();
 
 			await waitForAlert(page);

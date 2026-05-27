@@ -1867,4 +1867,4 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		OrderTypeChannelResource _orderTypeChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1795034763
+// LIFERAY-REST-BUILDER-HASH:1624035962

@@ -180,9 +180,7 @@ public class AntivirusScannerHelper {
 
 						_auditRouter.route(
 							new AuditMessage(
-								EventTypes.DELETE, companyId, 0,
-								StringPool.BLANK, DLFileEntry.class.getName(),
-								String.valueOf(classPK), null,
+								companyId, 0, StringPool.BLANK,
 								JSONUtil.put(
 									"fileEntryId", classPK
 								).put(
@@ -196,7 +194,10 @@ public class AntivirusScannerHelper {
 								).put(
 									"virusName",
 									antivirusVirusFoundException.getVirusName()
-								)));
+								),
+								DLFileEntry.class.getName(),
+								String.valueOf(classPK), EventTypes.DELETE,
+								null));
 
 						ServiceContext serviceContext = new ServiceContext();
 

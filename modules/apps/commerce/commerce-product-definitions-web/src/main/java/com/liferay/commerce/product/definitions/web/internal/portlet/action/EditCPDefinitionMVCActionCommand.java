@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -330,7 +330,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long accountGroupRelId = ParamUtil.getLong(
 			actionRequest, "commerceAccountGroupRelId");
 
-		_accountGroupRelLocalService.deleteAccountGroupRel(accountGroupRelId);
+		_accountGroupRelService.deleteAccountGroupRel(accountGroupRelId);
 
 		_reindexCPDefinition(cpDefinitionId);
 	}
@@ -948,7 +948,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				continue;
 			}
 
-			_accountGroupRelLocalService.addAccountGroupRel(
+			_accountGroupRelService.addAccountGroupRel(
 				accountGroupId, CPDefinition.class.getName(), cpDefinitionId);
 		}
 
@@ -988,7 +988,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

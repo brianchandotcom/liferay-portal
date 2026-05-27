@@ -1,0 +1,39 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "both",
+					"label": "Display Mode",
+					"name": "displayMode",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Show Different Content (In Role / Out of Role)",
+								"value": "both"
+							},
+							{
+								"label": "Show Only When In Role",
+								"value": "inRoleOnly"
+							},
+							{
+								"label": "Show Only When Out of Role",
+								"value": "outOfRoleOnly"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "User",
+					"description": "Comma-separated role names (e.g. \"Administrator, Power User\"). Content shows only if the user has at least one of these roles. Defaults to \"User\", which every signed-in user has — effectively a signed-in check. Inherited roles are included.",
+					"label": "Required Roles",
+					"name": "roles",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

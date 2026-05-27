@@ -211,8 +211,10 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress = randomPostalAddress();
 
 		postalAddress.setAddressCountry(regex);
+		postalAddress.setAddressCountryExternalReferenceCode(regex);
 		postalAddress.setAddressLocality(regex);
 		postalAddress.setAddressRegion(regex);
+		postalAddress.setAddressRegionExternalReferenceCode(regex);
 		postalAddress.setAddressSubtype(regex);
 		postalAddress.setAddressType(regex);
 		postalAddress.setExternalReferenceCode(regex);
@@ -230,8 +232,12 @@ public abstract class BasePostalAddressResourceTestCase {
 		postalAddress = PostalAddressSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, postalAddress.getAddressCountry());
+		Assert.assertEquals(
+			regex, postalAddress.getAddressCountryExternalReferenceCode());
 		Assert.assertEquals(regex, postalAddress.getAddressLocality());
 		Assert.assertEquals(regex, postalAddress.getAddressRegion());
+		Assert.assertEquals(
+			regex, postalAddress.getAddressRegionExternalReferenceCode());
 		Assert.assertEquals(regex, postalAddress.getAddressSubtype());
 		Assert.assertEquals(regex, postalAddress.getAddressType());
 		Assert.assertEquals(regex, postalAddress.getExternalReferenceCode());
@@ -2257,6 +2263,19 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"addressCountryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (postalAddress.getAddressCountryExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"addressCountry_i18n", additionalAssertFieldName)) {
 
 				if (postalAddress.getAddressCountry_i18n() == null) {
@@ -2276,6 +2295,19 @@ public abstract class BasePostalAddressResourceTestCase {
 
 			if (Objects.equals("addressRegion", additionalAssertFieldName)) {
 				if (postalAddress.getAddressRegion() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"addressRegionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (postalAddress.getAddressRegionExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -2505,6 +2537,21 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"addressCountryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						postalAddress1.getAddressCountryExternalReferenceCode(),
+						postalAddress2.
+							getAddressCountryExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"addressCountry_i18n", additionalAssertFieldName)) {
 
 				if (!equals(
@@ -2532,6 +2579,21 @@ public abstract class BasePostalAddressResourceTestCase {
 				if (!Objects.deepEquals(
 						postalAddress1.getAddressRegion(),
 						postalAddress2.getAddressRegion())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"addressRegionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						postalAddress1.getAddressRegionExternalReferenceCode(),
+						postalAddress2.
+							getAddressRegionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2819,6 +2881,53 @@ public abstract class BasePostalAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("addressCountryExternalReferenceCode")) {
+			Object object =
+				postalAddress.getAddressCountryExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("addressCountry_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2872,6 +2981,53 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		if (entityFieldName.equals("addressRegion")) {
 			Object object = postalAddress.getAddressRegion();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("addressRegionExternalReferenceCode")) {
+			Object object =
+				postalAddress.getAddressRegionExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -3389,9 +3545,13 @@ public abstract class BasePostalAddressResourceTestCase {
 			{
 				addressCountry = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				addressCountryExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				addressLocality = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				addressRegion = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				addressRegionExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				addressSubtype = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -3681,4 +3841,4 @@ public abstract class BasePostalAddressResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:448632766
+// LIFERAY-REST-BUILDER-HASH:1195882055

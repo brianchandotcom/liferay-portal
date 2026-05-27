@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountGroup")
+@GraphQLName(
+	description = "Read-only reference to a Liferay account group used by catalog resources to target a set of accounts that share product configuration list visibility.",
+	value = "AccountGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountGroup")
 public class AccountGroup implements Serializable {
@@ -49,7 +52,10 @@ public class AccountGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the account group (FK identifier); read-only in catalog responses.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -81,14 +87,19 @@ public class AccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the account group (FK identifier); read-only in catalog responses."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AccountGroup Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the account group.",
+		example = "AccountGroup Name"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -120,7 +131,7 @@ public class AccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display name of the account group.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -283,4 +294,4 @@ public class AccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2132414948
+// LIFERAY-REST-BUILDER-HASH:605437756

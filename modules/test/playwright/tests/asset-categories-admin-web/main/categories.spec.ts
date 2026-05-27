@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
@@ -17,9 +16,6 @@ import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest
 const test = mergeTests(
 	apiHelpersTest,
 	assetCategoriesPagesTest,
-	featureFlagsTest({
-		'LPD-31228': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest()
 );

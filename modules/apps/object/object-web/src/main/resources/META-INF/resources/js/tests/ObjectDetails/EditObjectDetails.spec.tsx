@@ -45,6 +45,10 @@ jest.mock('frontend-js-web', () => ({
 	),
 }));
 
+jest.mock('@liferay/frontend-js-react-web', () => ({
+	useBrowserTabVisibility: () => true,
+}));
+
 afterAll(() => {
 	jest.restoreAllMocks();
 });

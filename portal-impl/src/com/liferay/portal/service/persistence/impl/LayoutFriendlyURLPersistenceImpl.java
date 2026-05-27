@@ -87,8 +87,9 @@ public class LayoutFriendlyURLPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where uuid = &#63;.
@@ -128,16 +129,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			String uuid, OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -179,8 +173,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutFriendlyURL>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.
@@ -194,21 +189,8 @@ public class LayoutFriendlyURLPersistenceImpl
 	public LayoutFriendlyURL findByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByUUID_G(uuid, groupId);
-
-		if (layoutFriendlyURL == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutFriendlyURLException(message);
-		}
-
-		return layoutFriendlyURL;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -257,8 +239,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where uuid = &#63; and companyId = &#63;.
@@ -301,16 +284,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -356,8 +332,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where groupId = &#63;.
@@ -398,16 +375,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -449,8 +419,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where companyId = &#63;.
@@ -491,16 +462,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -543,8 +507,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByPlid;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByPlid;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where plid = &#63;.
@@ -584,16 +549,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			long plid, OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByPlid_First(
-			plid, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid},
+			orderByComparator);
 	}
 
 	/**
@@ -635,8 +593,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {plid});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByC_F;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByC_F;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
@@ -680,17 +639,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByC_F_First(
-			companyId, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByC_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, friendlyURL}));
+		return _collectionPersistenceFinderByC_F.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, friendlyURL}, orderByComparator);
 	}
 
 	/**
@@ -738,8 +689,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			new Object[] {companyId, friendlyURL});
 	}
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByP_F;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByP_F;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
@@ -782,16 +734,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByP_F_First(
-			plid, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByP_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid, friendlyURL}));
+		return _collectionPersistenceFinderByP_F.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid, friendlyURL},
+			orderByComparator);
 	}
 
 	/**
@@ -1477,8 +1422,9 @@ public class LayoutFriendlyURLPersistenceImpl
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_3 =
 		"(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 
-	private CollectionPersistenceFinder<LayoutFriendlyURL>
-		_collectionPersistenceFinderByG_P_F;
+	private CollectionPersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_collectionPersistenceFinderByG_P_F;
 
 	/**
 	 * Returns an ordered range of all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -1524,17 +1470,10 @@ public class LayoutFriendlyURLPersistenceImpl
 			OrderByComparator<LayoutFriendlyURL> orderByComparator)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_First(
-			groupId, privateLayout, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		throw new NoSuchLayoutFriendlyURLException(
-			_collectionPersistenceFinderByG_P_F.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, privateLayout, friendlyURL}));
+		return _collectionPersistenceFinderByG_P_F.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, friendlyURL},
+			orderByComparator);
 	}
 
 	/**
@@ -1590,8 +1529,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			new Object[] {groupId, privateLayout, friendlyURL});
 	}
 
-	private UniquePersistenceFinder<LayoutFriendlyURL>
-		_uniquePersistenceFinderByG_P_F_L;
+	private UniquePersistenceFinder
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
+			_uniquePersistenceFinderByG_P_F_L;
 
 	/**
 	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.
@@ -1609,25 +1549,9 @@ public class LayoutFriendlyURLPersistenceImpl
 			String languageId)
 		throws NoSuchLayoutFriendlyURLException {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_L(
-			groupId, privateLayout, friendlyURL, languageId);
-
-		if (layoutFriendlyURL == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_F_L.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, privateLayout, friendlyURL, languageId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutFriendlyURLException(message);
-		}
-
-		return layoutFriendlyURL;
+		return _uniquePersistenceFinderByG_P_F_L.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, friendlyURL, languageId});
 	}
 
 	/**
@@ -2342,4 +2266,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1735571309
+// LIFERAY-SERVICE-BUILDER-HASH:-421020268

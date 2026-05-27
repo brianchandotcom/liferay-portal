@@ -1076,4 +1076,4 @@ public abstract class BaseExportProcessResourceTestCase {
 		_exportProcessResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1317272469
+// LIFERAY-REST-BUILDER-HASH:585369580

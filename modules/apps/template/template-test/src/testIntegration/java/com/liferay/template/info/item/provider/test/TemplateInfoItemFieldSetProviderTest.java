@@ -1384,9 +1384,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -1415,6 +1412,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 	@Inject
 	private JournalConverter _journalConverter;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private JSONFactory _jsonFactory;

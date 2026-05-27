@@ -98,7 +98,7 @@ public class LayoutPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -138,15 +138,9 @@ public class LayoutPersistenceImpl
 			String uuid, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByUuid_First(uuid, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -188,7 +182,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByUUID_G_P;
+	private UniquePersistenceFinder<Layout, NoSuchLayoutException>
+		_uniquePersistenceFinderByUUID_G_P;
 
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -204,22 +199,9 @@ public class LayoutPersistenceImpl
 			String uuid, long groupId, boolean privateLayout)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByUUID_G_P(uuid, groupId, privateLayout);
-
-		if (layout == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, privateLayout});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutException(message);
-		}
-
-		return layout;
+		return _uniquePersistenceFinderByUUID_G_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {uuid, groupId, privateLayout});
 	}
 
 	/**
@@ -276,7 +258,7 @@ public class LayoutPersistenceImpl
 			new Object[] {uuid, groupId, privateLayout});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -319,15 +301,9 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -373,7 +349,7 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -413,15 +389,9 @@ public class LayoutPersistenceImpl
 			long groupId, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -498,7 +468,7 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -538,15 +508,9 @@ public class LayoutPersistenceImpl
 			long companyId, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -588,7 +552,7 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByParentPlid;
 
 	/**
@@ -628,15 +592,9 @@ public class LayoutPersistenceImpl
 			long parentPlid, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByParentPlid_First(parentPlid, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByParentPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {parentPlid}));
+		return _collectionPersistenceFinderByParentPlid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {parentPlid},
+			orderByComparator);
 	}
 
 	/**
@@ -678,7 +636,7 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {parentPlid});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByIconImageId;
 
 	/**
@@ -718,16 +676,9 @@ public class LayoutPersistenceImpl
 			long iconImageId, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByIconImageId_First(
-			iconImageId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByIconImageId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {iconImageId}));
+		return _collectionPersistenceFinderByIconImageId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {iconImageId},
+			orderByComparator);
 	}
 
 	/**
@@ -769,7 +720,7 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {iconImageId});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByLayoutSetPrototypeLayoutERC;
 
 	/**
@@ -811,18 +762,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByLayoutSetPrototypeLayoutERC_First(
-			layoutSetPrototypeLayoutERC, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByLayoutSetPrototypeLayoutERC.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutSetPrototypeLayoutERC}));
+		return _collectionPersistenceFinderByLayoutSetPrototypeLayoutERC.
+			findFirst(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {layoutSetPrototypeLayoutERC}, orderByComparator);
 	}
 
 	/**
@@ -872,7 +815,7 @@ public class LayoutPersistenceImpl
 			new Object[] {layoutSetPrototypeLayoutERC});
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P;
 
 	/**
@@ -916,17 +859,9 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_First(
-			groupId, privateLayout, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, privateLayout}));
+		return _collectionPersistenceFinderByG_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout}, orderByComparator);
 	}
 
 	/**
@@ -1013,7 +948,7 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_T;
 
 	/**
@@ -1056,15 +991,9 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_T_First(groupId, type, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
+		return _collectionPersistenceFinderByG_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1148,7 +1077,7 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_MLPTEERC;
 
 	/**
@@ -1193,17 +1122,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_MLPTEERC_First(
-			groupId, masterLayoutPageTemplateEntryERC, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_MLPTEERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, masterLayoutPageTemplateEntryERC}));
+		return _collectionPersistenceFinderByG_MLPTEERC.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, masterLayoutPageTemplateEntryERC},
+			orderByComparator);
 	}
 
 	/**
@@ -1297,7 +1219,7 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, masterLayoutPageTemplateEntryERC}, groupId);
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByP_I;
 
 	/**
@@ -1341,17 +1263,9 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByP_I_First(
-			privateLayout, iconImageId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByP_I.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {privateLayout, iconImageId}));
+		return _collectionPersistenceFinderByP_I.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {privateLayout, iconImageId}, orderByComparator);
 	}
 
 	/**
@@ -1399,7 +1313,7 @@ public class LayoutPersistenceImpl
 			new Object[] {privateLayout, iconImageId});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -1551,7 +1465,7 @@ public class LayoutPersistenceImpl
 			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)});
 	}
 
-	private CollectionPersistenceFinder<Layout>
+	private CollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByPLPTEERC_PLPTESERC;
 
 	/**
@@ -1600,22 +1514,13 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByPLPTEERC_PLPTESERC_First(
-			portletLayoutPageTemplateEntryERC,
-			portletLayoutPageTemplateEntryScopeERC, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByPLPTEERC_PLPTESERC.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						portletLayoutPageTemplateEntryERC,
-						portletLayoutPageTemplateEntryScopeERC
-					}));
+		return _collectionPersistenceFinderByPLPTEERC_PLPTESERC.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				portletLayoutPageTemplateEntryERC,
+				portletLayoutPageTemplateEntryScopeERC
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -1680,7 +1585,8 @@ public class LayoutPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByG_P_L;
+	private UniquePersistenceFinder<Layout, NoSuchLayoutException>
+		_uniquePersistenceFinderByG_P_L;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -1696,22 +1602,9 @@ public class LayoutPersistenceImpl
 			long groupId, boolean privateLayout, long layoutId)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_L(groupId, privateLayout, layoutId);
-
-		if (layout == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_L.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, privateLayout, layoutId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutException(message);
-		}
-
-		return layout;
+		return _uniquePersistenceFinderByG_P_L.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, layoutId});
 	}
 
 	/**
@@ -2919,7 +2812,7 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL =
 		"layout.parentLayoutId IN (";
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P_T;
 
 	/**
@@ -3181,7 +3074,7 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P_S;
 
 	/**
@@ -3227,17 +3120,9 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_S_First(
-			groupId, privateLayout, system, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, privateLayout, system}));
+		return _collectionPersistenceFinderByG_P_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, system}, orderByComparator);
 	}
 
 	/**
@@ -3335,7 +3220,8 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout, system}, groupId);
 	}
 
-	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByG_P_F;
+	private UniquePersistenceFinder<Layout, NoSuchLayoutException>
+		_uniquePersistenceFinderByG_P_F;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -3351,22 +3237,9 @@ public class LayoutPersistenceImpl
 			long groupId, boolean privateLayout, String friendlyURL)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_F(groupId, privateLayout, friendlyURL);
-
-		if (layout == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, privateLayout, friendlyURL});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutException(message);
-		}
-
-		return layout;
+		return _uniquePersistenceFinderByG_P_F.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, friendlyURL});
 	}
 
 	/**
@@ -3423,7 +3296,7 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout, friendlyURL});
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P_LSPLE;
 
 	/**
@@ -3471,20 +3344,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_LSPLE_First(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC,
+		return _collectionPersistenceFinderByG_P_LSPLE.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, layoutSetPrototypeLayoutERC},
 			orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_P_LSPLE.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, privateLayout, layoutSetPrototypeLayoutERC
-				}));
 	}
 
 	/**
@@ -3587,7 +3450,7 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P_ST;
 
 	/**
@@ -6300,7 +6163,7 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_S_SYSTEM_2_SQL =
 		"layout.system_ = ?";
 
-	private FilterCollectionPersistenceFinder<Layout>
+	private FilterCollectionPersistenceFinder<Layout, NoSuchLayoutException>
 		_collectionPersistenceFinderByG_P_P_LteP;
 
 	/**
@@ -6418,20 +6281,10 @@ public class LayoutPersistenceImpl
 			int priority, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_P_LteP_First(
-			groupId, privateLayout, parentLayoutId, priority,
+		return _collectionPersistenceFinderByG_P_P_LteP.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, parentLayoutId, priority},
 			orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		throw new NoSuchLayoutException(
-			_collectionPersistenceFinderByG_P_P_LteP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, privateLayout, parentLayoutId, priority
-				}));
 	}
 
 	/**
@@ -6582,7 +6435,8 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<Layout, NoSuchLayoutException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the layout where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -6596,22 +6450,9 @@ public class LayoutPersistenceImpl
 	public Layout findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (layout == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutException(message);
-		}
-
-		return layout;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -7153,15 +6994,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId));
@@ -7300,15 +7132,6 @@ public class LayoutPersistenceImpl
 					new String[] {"groupId", "privateLayout"}, false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7338,15 +7161,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7379,15 +7193,6 @@ public class LayoutPersistenceImpl
 					null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7576,15 +7381,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7624,15 +7420,6 @@ public class LayoutPersistenceImpl
 					false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7707,15 +7494,6 @@ public class LayoutPersistenceImpl
 					0, 4, false, null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7756,15 +7534,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7896,15 +7665,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7999,4 +7759,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:252872862
+// LIFERAY-SERVICE-BUILDER-HASH:-881897696

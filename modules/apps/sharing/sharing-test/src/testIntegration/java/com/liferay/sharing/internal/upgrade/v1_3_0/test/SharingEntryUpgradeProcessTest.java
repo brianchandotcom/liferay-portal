@@ -118,11 +118,6 @@ public class SharingEntryUpgradeProcessTest {
 		}
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.sharing.internal.upgrade.registry.SharingServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -134,5 +129,10 @@ public class SharingEntryUpgradeProcessTest {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.sharing.internal.upgrade.registry.SharingServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

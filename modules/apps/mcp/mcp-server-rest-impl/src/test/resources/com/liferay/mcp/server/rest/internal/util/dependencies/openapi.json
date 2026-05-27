@@ -1,0 +1,328 @@
+{
+	"components": {
+		"schemas": {
+			"Binary": {
+				"properties": {
+					"data": {
+						"description": "The bytes",
+						"format": "binary",
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"data"
+				],
+				"type": "object"
+			},
+			"Child1": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Parent"
+					},
+					{
+						"properties": {
+							"string": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"string"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"Child2": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Parent"
+					},
+					{
+						"properties": {
+							"integer": {
+								"type": "integer"
+							}
+						},
+						"type": "object"
+					}
+				]
+			},
+			"Item": {
+				"example": "Should be removed",
+				"properties": {
+					"array": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"boolean": {
+						"type": "boolean"
+					},
+					"integer": {
+						"exclusiveMaximum": true,
+						"exclusiveMinimum": true,
+						"type": "integer"
+					},
+					"number": {
+						"type": "number"
+					},
+					"object1": {
+						"$ref": "#/components/schemas/Item"
+					},
+					"object2": {
+						"$ref": "#/components/schemas/Item"
+					},
+					"string": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"string"
+				],
+				"type": "object",
+				"x-custom-extension": "Should be removed",
+				"xml": {
+					"name": "Item"
+				}
+			},
+			"Parent": {
+				"discriminator": {
+					"propertyName": "kind"
+				},
+				"properties": {
+					"kind": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"kind",
+					"name"
+				],
+				"type": "object"
+			}
+		}
+	},
+	"paths": {
+		"/": {
+			"get": {
+				"operationId": "getItemsPage",
+				"summary": "This is the summary"
+			}
+		},
+		"/v1.0/binaries": {
+			"post": {
+				"operationId": "postBinary",
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/Binary"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/empty-content": {
+			"post": {
+				"operationId": "postEmptyContent",
+				"requestBody": {
+					"content": {
+					}
+				}
+			}
+		},
+		"/v1.0/items": {
+			"get": {
+				"description": "This is the description",
+				"operationId": "getItems",
+				"parameters": [
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"summary": "This is the summary"
+			},
+			"post": {
+				"operationId": "postItem",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/items/{itemId}": {
+			"get": {
+				"description": "This is the description",
+				"operationId": "getItem",
+				"parameters": [
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "active",
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "This is the description",
+						"in": "path",
+						"name": "itemId",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "This is the description",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "integer"
+						}
+					}
+				]
+			},
+			"parameters": [
+				{
+					"description": "This is the description",
+					"in": "path",
+					"name": "itemId",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"patch": {
+				"operationId": "patchItem",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "itemId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "putItem",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "itemId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/no-content": {
+			"post": {
+				"operationId": "postNoContent",
+				"requestBody": {
+				}
+			}
+		},
+		"/v1.0/no-schema": {
+			"post": {
+				"operationId": "postNoSchema",
+				"requestBody": {
+					"content": {
+						"application/json": {
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/parents": {
+			"post": {
+				"operationId": "postParent",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Parent"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/uploads": {
+			"post": {
+				"operationId": "postUpload",
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/Item"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -52,8 +52,9 @@ public class ObjectLayoutColumnModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectLayoutColumn.class.getName(),
+					ObjectLayoutColumn.class.getName(),
 					objectLayoutColumn.getObjectLayoutColumnId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectLayoutColumn, objectLayoutColumn)));
 		}
@@ -82,8 +83,8 @@ public class ObjectLayoutColumnModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectLayoutColumn.class.getName(),
-				objectLayoutColumn.getObjectLayoutColumnId(), null);
+				ObjectLayoutColumn.class.getName(),
+				objectLayoutColumn.getObjectLayoutColumnId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

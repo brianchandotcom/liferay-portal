@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "phone-number-input",
+	"icon": "phone",
+	"name": "phone-number",
+	"thumbnail": "text.svg",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"phone-number"
+		]
+	}
+}

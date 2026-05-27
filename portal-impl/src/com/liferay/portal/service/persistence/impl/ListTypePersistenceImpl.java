@@ -71,7 +71,7 @@ public class ListTypePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ListType>
+	private CollectionPersistenceFinder<ListType, NoSuchListTypeException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -111,15 +111,9 @@ public class ListTypePersistenceImpl
 			String uuid, OrderByComparator<ListType> orderByComparator)
 		throws NoSuchListTypeException {
 
-		ListType listType = fetchByUuid_First(uuid, orderByComparator);
-
-		if (listType != null) {
-			return listType;
-		}
-
-		throw new NoSuchListTypeException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -161,7 +155,7 @@ public class ListTypePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ListType>
+	private CollectionPersistenceFinder<ListType, NoSuchListTypeException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -204,16 +198,9 @@ public class ListTypePersistenceImpl
 			OrderByComparator<ListType> orderByComparator)
 		throws NoSuchListTypeException {
 
-		ListType listType = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (listType != null) {
-			return listType;
-		}
-
-		throw new NoSuchListTypeException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -259,7 +246,7 @@ public class ListTypePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ListType>
+	private CollectionPersistenceFinder<ListType, NoSuchListTypeException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -299,16 +286,9 @@ public class ListTypePersistenceImpl
 			long companyId, OrderByComparator<ListType> orderByComparator)
 		throws NoSuchListTypeException {
 
-		ListType listType = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (listType != null) {
-			return listType;
-		}
-
-		throw new NoSuchListTypeException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -350,7 +330,7 @@ public class ListTypePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<ListType>
+	private CollectionPersistenceFinder<ListType, NoSuchListTypeException>
 		_collectionPersistenceFinderByC_T;
 
 	/**
@@ -393,16 +373,9 @@ public class ListTypePersistenceImpl
 			OrderByComparator<ListType> orderByComparator)
 		throws NoSuchListTypeException {
 
-		ListType listType = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (listType != null) {
-			return listType;
-		}
-
-		throw new NoSuchListTypeException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -448,7 +421,8 @@ public class ListTypePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
-	private UniquePersistenceFinder<ListType> _uniquePersistenceFinderByC_N_T;
+	private UniquePersistenceFinder<ListType, NoSuchListTypeException>
+		_uniquePersistenceFinderByC_N_T;
 
 	/**
 	 * Returns the list type where companyId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.
@@ -463,22 +437,9 @@ public class ListTypePersistenceImpl
 	public ListType findByC_N_T(long companyId, String name, String type)
 		throws NoSuchListTypeException {
 
-		ListType listType = fetchByC_N_T(companyId, name, type);
-
-		if (listType == null) {
-			String message =
-				_uniquePersistenceFinderByC_N_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, name, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchListTypeException(message);
-		}
-
-		return listType;
+		return _uniquePersistenceFinderByC_N_T.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, type});
 	}
 
 	/**
@@ -907,4 +868,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-656537747
+// LIFERAY-SERVICE-BUILDER-HASH:524684758

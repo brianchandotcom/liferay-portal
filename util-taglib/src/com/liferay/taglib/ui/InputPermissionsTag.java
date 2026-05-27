@@ -235,7 +235,7 @@ public class InputPermissionsTag extends IncludeTag {
 				RoleConstants.ADMINISTRATOR, RoleConstants.GUEST,
 				RoleConstants.OWNER, RoleConstants.SITE_ADMINISTRATOR,
 				RoleConstants.SITE_MEMBER, RoleConstants.SITE_OWNER),
-			null, null, _getRoleTypes(group, modelName), 0, teamGroupId,
+			null, null, _getRoleTypes(group, modelName), null, 0, teamGroupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

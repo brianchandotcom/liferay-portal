@@ -192,8 +192,9 @@ public abstract class BaseSearchTermResourceTestCase {
 
 		Page<SearchTerm> page =
 			searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-				groupId, channelId, RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), Pagination.of(1, 10));
+				groupId, channelId, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -1035,4 +1036,4 @@ public abstract class BaseSearchTermResourceTestCase {
 		_searchTermResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1151368271
+// LIFERAY-REST-BUILDER-HASH:496675771

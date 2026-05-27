@@ -67,7 +67,7 @@
 								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
-								"numberOfTabs": 3,
+								"numberOfTabs": 4,
 								"persistSelectedTab": true
 							},
 							"fragmentFields": [
@@ -103,6 +103,18 @@
 										"text": {
 											"value_i18n": {
 												"en_US": "Data Sources"
+											}
+										}
+									}
+								},
+								{
+									"id": "title4",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Guardrails"
 											}
 										}
 									}
@@ -162,6 +174,27 @@
 										"definition": {
 											"fragment": {
 												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewContentRetrieversFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "4"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewModelArmorTemplatesFragmentRenderer"
 											},
 											"fragmentConfig": {
 											},

@@ -191,6 +191,7 @@ test(
 					'Version 1 of the content has been successfully restored.'
 				);
 
+				await expect(infoPanelPage.selectTab('More')).toBeVisible();
 				await expect(page.getByRole('tabpanel')).toContainText(
 					'Version 3'
 				);
@@ -206,7 +207,7 @@ test(
 				);
 
 				await expect(page.getByRole('tabpanel')).toContainText(
-					'expired'
+					'Expire'
 				);
 
 				await infoPanelPage.dropdownVersionAction('Version 1').click();
@@ -368,6 +369,7 @@ test(
 					'Version 1 of the content has been successfully restored.'
 				);
 
+				await expect(infoPanelPage.selectTab('More')).toBeVisible();
 				await expect(page.getByRole('tabpanel')).toContainText(
 					'Version 3'
 				);
@@ -383,7 +385,7 @@ test(
 				);
 
 				await expect(page.getByRole('tabpanel')).toContainText(
-					'expired'
+					'Expire'
 				);
 
 				await infoPanelPage.dropdownVersionAction('Version 1').click();

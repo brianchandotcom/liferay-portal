@@ -73,8 +73,9 @@ public class ContactsLayoutTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ContactsLayoutTemplate>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<ContactsLayoutTemplate, NoSuchContactsLayoutTemplateException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the contacts layout templates where groupId = &#63;.
@@ -115,16 +116,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
 		throws NoSuchContactsLayoutTemplateException {
 
-		ContactsLayoutTemplate contactsLayoutTemplate = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (contactsLayoutTemplate != null) {
-			return contactsLayoutTemplate;
-		}
-
-		throw new NoSuchContactsLayoutTemplateException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -166,8 +159,9 @@ public class ContactsLayoutTemplatePersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<ContactsLayoutTemplate>
-		_collectionPersistenceFinderByG_T;
+	private CollectionPersistenceFinder
+		<ContactsLayoutTemplate, NoSuchContactsLayoutTemplateException>
+			_collectionPersistenceFinderByG_T;
 
 	/**
 	 * Returns an ordered range of all the contacts layout templates where groupId = &#63; and type = &#63;.
@@ -210,16 +204,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
 		throws NoSuchContactsLayoutTemplateException {
 
-		ContactsLayoutTemplate contactsLayoutTemplate = fetchByG_T_First(
-			groupId, type, orderByComparator);
-
-		if (contactsLayoutTemplate != null) {
-			return contactsLayoutTemplate;
-		}
-
-		throw new NoSuchContactsLayoutTemplateException(
-			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
+		return _collectionPersistenceFinderByG_T.findFirst(
+			finderCache, new Object[] {groupId, type}, orderByComparator);
 	}
 
 	/**
@@ -586,4 +572,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1553323870
+// LIFERAY-SERVICE-BUILDER-HASH:-1441133665

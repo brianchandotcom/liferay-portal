@@ -7,26 +7,9 @@ import ChatbotItemTitle from './ChatbotItemTitle';
 
 import type {
 	IInternalRenderer,
-	IItemsActions,
 	IListSchema,
 	IView,
 } from '@liferay/frontend-data-set-web';
-
-function applyStyles(itemsActions: Array<IItemsActions>): Array<IItemsActions> {
-	return itemsActions.map((action: IItemsActions) => {
-		const newItems = action.items ? applyStyles(action.items) : undefined;
-		const itemsChanged = newItems !== action.items;
-
-		if (!itemsChanged) {
-			return action;
-		}
-
-		return {
-			...action,
-			...(itemsChanged && {items: newItems}),
-		};
-	});
-}
 
 export default function propsTransformer({itemsActions, ...otherProps}: any) {
 	const customListTitleRenderer: IInternalRenderer = {
@@ -41,25 +24,21 @@ export default function propsTransformer({itemsActions, ...otherProps}: any) {
 
 	const listSchema = listView.schema as IListSchema;
 
-	listView.setItemComponentProps = ({props}: {props: any}) => {
-		const updatedProps = {
-			...props,
-			schema: {
-				...listSchema,
-				description: '',
-				titleRendererName: 'customListTitleRenderer',
-			},
-		};
-
-		return updatedProps;
-	};
+	listView.setItemComponentProps = ({props}: {props: any}) => ({
+		...props,
+		schema: {
+			...listSchema,
+			description: '',
+			titleRendererName: 'customListTitleRenderer',
+		},
+	});
 
 	return {
 		...otherProps,
 		customRenderers: {
 			listSection: [customListTitleRenderer],
 		},
-		itemsActions: applyStyles(itemsActions),
+		itemsActions,
 		views,
 	};
 }

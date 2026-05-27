@@ -90,9 +90,10 @@ public class CTOnDemandUserTicketGeneratorImpl
 		}
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+			CTCollection.class.getName(), ctCollectionId,
 			CTOnDemandUserConstants.
 				AUDIT_EVENT_TYPE_CT_ON_DEMAND_USER_TICKET_GENERATED,
-			CTCollection.class.getName(), ctCollectionId, null);
+			null);
 
 		auditMessage.setAdditionalInfo(
 			JSONUtil.put(

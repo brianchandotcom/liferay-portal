@@ -262,6 +262,7 @@ declare module Liferay {
 		export function getTimeZone(): string;
 		export function getUserEmailAddress(): string;
 		export function getUserId(): string;
+		export function getUserName(): string;
 		export function isControlPanel(): boolean;
 		export function isImpersonated(): boolean;
 		export function isSignedIn(): boolean;

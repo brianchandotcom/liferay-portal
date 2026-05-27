@@ -351,15 +351,14 @@ public class UIItemsBuilderTest {
 		);
 	}
 
-	private static DLURLHelper _dlurlHelper;
-	private static FileEntry _fileEntry;
-	private static FileVersion _fileVersion;
-	private static MockedStatic<GroupPermissionUtil>
-		_groupPermissionUtilMockedStatic;
-	private static MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
-	private static MockedStatic<StagedModelDataHandlerRegistryUtil>
+	private DLURLHelper _dlurlHelper;
+	private FileEntry _fileEntry;
+	private FileVersion _fileVersion;
+	private MockedStatic<GroupPermissionUtil> _groupPermissionUtilMockedStatic;
+	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
+	private MockedStatic<StagedModelDataHandlerRegistryUtil>
 		_stagedModelDataHandlerRegistryUtilMockedStatic;
-	private static MockedStatic<StagingGroupHelperUtil>
+	private MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic;
 
 }

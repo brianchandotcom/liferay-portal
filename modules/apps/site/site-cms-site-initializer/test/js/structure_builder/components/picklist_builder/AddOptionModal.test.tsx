@@ -9,6 +9,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {Option} from '../../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
+import {setDefaultLanguageLabels} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/defaultLanguageLabels';
 import AddOptionModal from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/AddOptionModal';
 import * as PicklistContext from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
@@ -32,6 +33,7 @@ const renderComponent = async (
 describe('AddOptionModal', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
+		setDefaultLanguageLabels({labels: {}, locale: 'en_US'});
 	});
 
 	it('Generates random values if no option exists', async () => {
@@ -45,7 +47,7 @@ describe('AddOptionModal', () => {
 
 			const keyInput = screen.getByLabelText('key') as HTMLInputElement;
 
-			expect(keyInput.value).toMatch(/^option\d{6}$/);
+			expect(keyInput.value).toMatch(/^Option\d{6}$/);
 			expect(screen.getByLabelText('key')).not.toBeDisabled();
 
 			const ercInput = screen.getByLabelText('erc') as HTMLInputElement;
@@ -54,6 +56,80 @@ describe('AddOptionModal', () => {
 				/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i
 			);
 		});
+	});
+
+	it('seeds the default-language label using the singleton, not the current-locale translation', async () => {
+		setDefaultLanguageLabels({
+			labels: {
+				option: 'Option',
+			},
+			locale: 'en_US',
+		});
+
+		const getLanguageIdSpy = jest
+			.spyOn(Liferay.ThemeDisplay, 'getLanguageId')
+			.mockReturnValue('es_ES');
+
+		const getLanguageSpy = jest
+			.spyOn(Liferay.Language, 'get')
+			.mockImplementation((key: string) =>
+				key === 'option' ? 'Opción' : key
+			);
+
+		const mockAddOption = jest.fn();
+
+		jest.spyOn(PicklistContext, 'useAddOption').mockImplementation(
+			() => mockAddOption
+		);
+
+		try {
+			renderComponent(null);
+
+			await waitFor(() => {
+				expect(screen.getByText('add-option')).toBeInTheDocument();
+			});
+
+			await userEvent.click(screen.getByText('save'));
+
+			await waitFor(() => {
+				expect(mockAddOption).toHaveBeenCalledWith(
+					expect.objectContaining({
+						name: expect.objectContaining({
+							en_US: 'Option',
+							es_ES: 'Opción',
+						}),
+					})
+				);
+			});
+		}
+		finally {
+			getLanguageSpy.mockRestore();
+			getLanguageIdSpy.mockRestore();
+		}
+	});
+
+	it('generates an ASCII-only key when the current locale localizes "option" with non-ASCII characters', async () => {
+		const getLanguageSpy = jest
+			.spyOn(Liferay.Language, 'get')
+			.mockImplementation((key: string) =>
+				key === 'option' ? 'Opción' : key
+			);
+
+		try {
+			renderComponent(null);
+
+			await waitFor(() => {
+				const keyInput = screen.getByLabelText(
+					'key'
+				) as HTMLInputElement;
+
+				expect(keyInput.value).toMatch(/^[A-Za-z0-9]+$/);
+				expect(keyInput.value).toMatch(/^Option\d{6}$/);
+			});
+		}
+		finally {
+			getLanguageSpy.mockRestore();
+		}
 	});
 
 	it('fills the inputs with the values of the selected option', async () => {

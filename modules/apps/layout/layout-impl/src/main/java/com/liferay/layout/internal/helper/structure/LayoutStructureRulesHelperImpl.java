@@ -194,6 +194,25 @@ public class LayoutStructureRulesHelperImpl
 			return false;
 		}
 
+		if (fieldValue instanceof JSONArray) {
+			if (!(value instanceof JSONArray)) {
+				return false;
+			}
+
+			JSONArray fieldValueJSONArray = (JSONArray)fieldValue;
+			JSONArray valueJSONArray = (JSONArray)value;
+
+			for (int i = 0; i < valueJSONArray.length(); i++) {
+				if (JSONUtil.hasValue(
+						fieldValueJSONArray, valueJSONArray.get(i))) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		String fieldValueString = StringUtil.toLowerCase(fieldValue.toString());
 		String valueString = StringUtil.toLowerCase(value.toString());
 
@@ -421,7 +440,12 @@ public class LayoutStructureRulesHelperImpl
 				}
 			}
 
-			map.put(infoField.getUniqueId(), String.valueOf(value));
+			if (value instanceof JSONArray) {
+				map.put(infoField.getUniqueId(), value);
+			}
+			else {
+				map.put(infoField.getUniqueId(), String.valueOf(value));
+			}
 		}
 
 		return map;
@@ -516,10 +540,10 @@ public class LayoutStructureRulesHelperImpl
 			}
 
 			if (Objects.equals(optionsType, "not-equal")) {
-				return !Objects.equals(fieldValue, value);
+				return !_isEqual(fieldValue, value);
 			}
 
-			return Objects.equals(fieldValue, value);
+			return _isEqual(fieldValue, value);
 		}
 
 		if (Objects.equals(conditionJSONObject.getString("type"), "user")) {
@@ -538,7 +562,34 @@ public class LayoutStructureRulesHelperImpl
 			return true;
 		}
 
+		if (fieldValue instanceof JSONArray) {
+			return JSONUtil.isEmpty((JSONArray)fieldValue);
+		}
+
 		return Validator.isNull(fieldValue.toString());
+	}
+
+	private boolean _isEqual(Object fieldValue, Object value) {
+		if ((fieldValue instanceof JSONArray) && (value instanceof JSONArray)) {
+			JSONArray fieldValueJSONArray = (JSONArray)fieldValue;
+			JSONArray valueJSONArray = (JSONArray)value;
+
+			if (fieldValueJSONArray.length() != valueJSONArray.length()) {
+				return false;
+			}
+
+			for (int i = 0; i < valueJSONArray.length(); i++) {
+				if (!JSONUtil.hasValue(
+						fieldValueJSONArray, valueJSONArray.get(i))) {
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return Objects.equals(fieldValue, value);
 	}
 
 	private boolean _isGreaterThan(

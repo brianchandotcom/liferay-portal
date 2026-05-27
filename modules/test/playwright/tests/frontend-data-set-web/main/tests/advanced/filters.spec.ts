@@ -157,6 +157,7 @@ test(
 
 				await expect(group1.getByRole('menuitem')).toHaveText([
 					'Date Range',
+					'Date Time Range',
 					'Color',
 				]);
 
@@ -215,7 +216,13 @@ test(
 					page.getByRole('menuitem', {name: 'Color'})
 				).toBeVisible();
 				await expect(
-					page.getByRole('menuitem', {name: 'Date Range'})
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Date Range',
+					})
+				).toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Date Time Range'})
 				).toBeVisible();
 				await expect(
 					page.getByRole('menuitem', {name: 'Client Extension'})
@@ -603,6 +610,97 @@ test(
 
 				await expect(creatorFilterSummaryButton).not.toBeVisible();
 			});
+		});
+	}
+);
+
+test(
+	'Behavior of Date Time Range filter',
+	{tag: ['@LPD-89563']},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Open the Date Time Range filter from the dropdown', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+
+			await fdsSamplePage.filterMenu
+				.getByRole('menuitem', {name: 'Date Time Range'})
+				.click();
+		});
+
+		await test.step('Check the date-time picker form renders with the From and To labels', async () => {
+			const filterForm = page.locator('.fds-date-time-range');
+
+			await expect(filterForm).toBeVisible();
+
+			await expect(
+				filterForm.locator('label', {hasText: 'From'})
+			).toBeVisible();
+
+			await expect(
+				filterForm.locator('label', {hasText: 'To'})
+			).toBeVisible();
+		});
+
+		await test.step('Check the Add Filter button is disabled while both fields are empty', async () => {
+			await expect(
+				fdsSamplePage.filterShowResultsOrAddButton
+			).toBeDisabled();
+		});
+	}
+);
+
+test(
+	'Selection filter state resets after removing filter chip',
+	{
+		tag: ['@LPD-90770'],
+	},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Remove the preloaded Color filter chip', async () => {
+			await page.getByRole('button', {name: 'Remove Filter'}).click();
+
+			await page
+				.getByText('This is a description for sample 1.')
+				.waitFor();
+		});
+
+		await test.step('Open filter dropdown and navigate to Color', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+
+			await fdsSamplePage.filterMenu
+				.getByRole('menuitem', {name: 'Color'})
+				.click();
+		});
+
+		await test.step('Select only "Red" and add filter', async () => {
+			await fdsSamplePage.filterDropdownMenu
+				.getByRole('checkbox', {name: 'Red'})
+				.check();
+
+			await fdsSamplePage.filterShowResultsOrAddButton.click();
+
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+		});
+
+		await test.step('Remove the Color: Red filter chip', async () => {
+			await page.getByRole('button', {name: 'Remove Filter'}).click();
+
+			await page
+				.getByText('This is a description for sample 1.')
+				.waitFor();
+		});
+
+		await test.step('Reopen filter dropdown — Color panel shows directly', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+		});
+
+		await test.step('Assert Red is no longer checked', async () => {
+			await expect(
+				fdsSamplePage.filterDropdownMenu.getByRole('checkbox', {
+					name: 'Red',
+				})
+			).not.toBeChecked();
 		});
 	}
 );

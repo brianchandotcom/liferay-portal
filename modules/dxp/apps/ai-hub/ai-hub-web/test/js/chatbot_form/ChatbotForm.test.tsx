@@ -70,6 +70,7 @@ const defaultProps = {
 	companyLogoUploadTip: 'Upload a jpeg, jpg, png no larger than 1 KB',
 	externalReferenceCode: '',
 	portalURL: 'http://localhost:8080',
+	readOnly: false,
 };
 
 function getHiddenFileInput(): HTMLInputElement {

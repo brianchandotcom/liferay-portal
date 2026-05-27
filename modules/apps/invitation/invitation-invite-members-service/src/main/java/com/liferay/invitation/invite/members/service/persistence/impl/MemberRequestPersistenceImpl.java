@@ -78,7 +78,7 @@ public class MemberRequestPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<MemberRequest>
+	private UniquePersistenceFinder<MemberRequest, NoSuchMemberRequestException>
 		_uniquePersistenceFinderByKey;
 
 	/**
@@ -92,21 +92,8 @@ public class MemberRequestPersistenceImpl
 	public MemberRequest findByKey(String key)
 		throws NoSuchMemberRequestException {
 
-		MemberRequest memberRequest = fetchByKey(key);
-
-		if (memberRequest == null) {
-			String message =
-				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMemberRequestException(message);
-		}
-
-		return memberRequest;
+		return _uniquePersistenceFinderByKey.find(
+			finderCache, new Object[] {key});
 	}
 
 	/**
@@ -149,8 +136,9 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {key});
 	}
 
-	private CollectionPersistenceFinder<MemberRequest>
-		_collectionPersistenceFinderByReceiverUserId;
+	private CollectionPersistenceFinder
+		<MemberRequest, NoSuchMemberRequestException>
+			_collectionPersistenceFinderByReceiverUserId;
 
 	/**
 	 * Returns an ordered range of all the member requests where receiverUserId = &#63;.
@@ -191,16 +179,8 @@ public class MemberRequestPersistenceImpl
 			OrderByComparator<MemberRequest> orderByComparator)
 		throws NoSuchMemberRequestException {
 
-		MemberRequest memberRequest = fetchByReceiverUserId_First(
-			receiverUserId, orderByComparator);
-
-		if (memberRequest != null) {
-			return memberRequest;
-		}
-
-		throw new NoSuchMemberRequestException(
-			_collectionPersistenceFinderByReceiverUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {receiverUserId}));
+		return _collectionPersistenceFinderByReceiverUserId.findFirst(
+			finderCache, new Object[] {receiverUserId}, orderByComparator);
 	}
 
 	/**
@@ -242,8 +222,9 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {receiverUserId});
 	}
 
-	private CollectionPersistenceFinder<MemberRequest>
-		_collectionPersistenceFinderByR_S;
+	private CollectionPersistenceFinder
+		<MemberRequest, NoSuchMemberRequestException>
+			_collectionPersistenceFinderByR_S;
 
 	/**
 	 * Returns an ordered range of all the member requests where receiverUserId = &#63; and status = &#63;.
@@ -286,17 +267,9 @@ public class MemberRequestPersistenceImpl
 			OrderByComparator<MemberRequest> orderByComparator)
 		throws NoSuchMemberRequestException {
 
-		MemberRequest memberRequest = fetchByR_S_First(
-			receiverUserId, status, orderByComparator);
-
-		if (memberRequest != null) {
-			return memberRequest;
-		}
-
-		throw new NoSuchMemberRequestException(
-			_collectionPersistenceFinderByR_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {receiverUserId, status}));
+		return _collectionPersistenceFinderByR_S.findFirst(
+			finderCache, new Object[] {receiverUserId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -342,7 +315,7 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {receiverUserId, status});
 	}
 
-	private UniquePersistenceFinder<MemberRequest>
+	private UniquePersistenceFinder<MemberRequest, NoSuchMemberRequestException>
 		_uniquePersistenceFinderByG_R_S;
 
 	/**
@@ -359,23 +332,8 @@ public class MemberRequestPersistenceImpl
 			long groupId, long receiverUserId, int status)
 		throws NoSuchMemberRequestException {
 
-		MemberRequest memberRequest = fetchByG_R_S(
-			groupId, receiverUserId, status);
-
-		if (memberRequest == null) {
-			String message =
-				_uniquePersistenceFinderByG_R_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, receiverUserId, status});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMemberRequestException(message);
-		}
-
-		return memberRequest;
+		return _uniquePersistenceFinderByG_R_S.find(
+			finderCache, new Object[] {groupId, receiverUserId, status});
 	}
 
 	/**
@@ -795,4 +753,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1853187952
+// LIFERAY-SERVICE-BUILDER-HASH:2078955117

@@ -10,6 +10,8 @@ import {
 	ObjectField,
 	ObjectFolder,
 	ObjectFolderAPI,
+	ObjectRelationship,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect} from '@playwright/test';
 
@@ -44,6 +46,58 @@ export class ObjectAdminApiHelper {
 		return items[0];
 	}
 
+	async patchObjectDefinitionSetting(
+		objectDefinitionId: number,
+		name: string,
+		value: string
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}`,
+			{objectDefinitionSettings: [{name, value}]}
+		);
+	}
+
+	async patchObjectRelationshipEdge(
+		relationship: ObjectRelationship,
+		edge: boolean
+	) {
+		const objectRelationshipAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+		await objectRelationshipAPIClient.putObjectRelationship(
+			relationship.id!,
+			{...relationship, edge}
+		);
+	}
+
+	async postObjectDefinitionInheritanceRelationship(
+		parent: ObjectDefinition,
+		child: ObjectDefinition
+	): Promise<ObjectRelationship> {
+		const objectRelationshipAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+		const {body} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				parent.externalReferenceCode!,
+				{
+					edge: true,
+					label: {en_US: 'inheritanceRelationship' + getRandomInt()},
+					name: 'rel' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						parent.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						child.externalReferenceCode,
+					objectDefinitionId1: parent.id,
+					objectDefinitionId2: child.id,
+					objectDefinitionName2: child.name,
+					type: 'oneToMany',
+				}
+			);
+
+		return body;
+	}
+
 	async postObjectDefinitionObjectFieldBatch(
 		objectDefinitionId: number,
 		objectFields: Partial<ObjectField>[]
@@ -52,6 +106,21 @@ export class ObjectAdminApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/object-fields/batch`,
 			{data: objectFields}
 		);
+	}
+
+	async postObjectDefinitionPublish({
+		objectDefinitionId,
+	}: {
+		objectDefinitionId: number;
+	}): Promise<ObjectDefinition> {
+		const objectDefinitionAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		return (
+			await objectDefinitionAPIClient.postObjectDefinitionPublish(
+				objectDefinitionId
+			)
+		).body;
 	}
 
 	async postRandomObjectDefinition({
@@ -125,21 +194,6 @@ export class ObjectAdminApiHelper {
 
 		return (
 			await objectDefinitionAPIClient.postObjectDefinition(requestBody)
-		).body;
-	}
-
-	async postObjectDefinitionPublish({
-		objectDefinitionId,
-	}: {
-		objectDefinitionId: number;
-	}): Promise<ObjectDefinition> {
-		const objectDefinitionAPIClient =
-			await this.apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		return (
-			await objectDefinitionAPIClient.postObjectDefinitionPublish(
-				objectDefinitionId
-			)
 		).body;
 	}
 

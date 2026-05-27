@@ -63,6 +63,10 @@ export class StyleBooksPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page);
+
+		await expect(
+			this.page.getByTestId('styleBookEditorSidebarContent')
+		).toBeVisible();
 	}
 
 	getStyleBookCard(styleBookName: string) {

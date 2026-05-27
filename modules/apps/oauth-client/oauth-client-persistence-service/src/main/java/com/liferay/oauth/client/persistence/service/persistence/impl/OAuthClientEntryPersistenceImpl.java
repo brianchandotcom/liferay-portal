@@ -90,8 +90,9 @@ public class OAuthClientEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<OAuthClientEntry>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the o auth client entries where uuid = &#63;.
@@ -131,16 +132,8 @@ public class OAuthClientEntryPersistenceImpl
 			String uuid, OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (oAuthClientEntry != null) {
-			return oAuthClientEntry;
-		}
-
-		throw new NoSuchOAuthClientEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -215,8 +208,9 @@ public class OAuthClientEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<OAuthClientEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the o auth client entries where uuid = &#63; and companyId = &#63;.
@@ -259,16 +253,8 @@ public class OAuthClientEntryPersistenceImpl
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (oAuthClientEntry != null) {
-			return oAuthClientEntry;
-		}
-
-		throw new NoSuchOAuthClientEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -350,8 +336,9 @@ public class OAuthClientEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<OAuthClientEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the o auth client entries where companyId = &#63;.
@@ -392,16 +379,8 @@ public class OAuthClientEntryPersistenceImpl
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (oAuthClientEntry != null) {
-			return oAuthClientEntry;
-		}
-
-		throw new NoSuchOAuthClientEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -477,8 +456,9 @@ public class OAuthClientEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<OAuthClientEntry>
-		_collectionPersistenceFinderByUserId;
+	private FilterCollectionPersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the o auth client entries where userId = &#63;.
@@ -518,16 +498,8 @@ public class OAuthClientEntryPersistenceImpl
 			long userId, OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (oAuthClientEntry != null) {
-			return oAuthClientEntry;
-		}
-
-		throw new NoSuchOAuthClientEntryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -602,8 +574,9 @@ public class OAuthClientEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FilterCollectionPersistenceFinder<OAuthClientEntry>
-		_collectionPersistenceFinderByC_A;
+	private FilterCollectionPersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_collectionPersistenceFinderByC_A;
 
 	/**
 	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
@@ -646,17 +619,9 @@ public class OAuthClientEntryPersistenceImpl
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByC_A_First(
-			companyId, authServerWellKnownURI, orderByComparator);
-
-		if (oAuthClientEntry != null) {
-			return oAuthClientEntry;
-		}
-
-		throw new NoSuchOAuthClientEntryException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, authServerWellKnownURI}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			finderCache, new Object[] {companyId, authServerWellKnownURI},
+			orderByComparator);
 	}
 
 	/**
@@ -740,8 +705,9 @@ public class OAuthClientEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<OAuthClientEntry>
-		_uniquePersistenceFinderByC_A_C;
+	private UniquePersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_uniquePersistenceFinderByC_A_C;
 
 	/**
 	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
@@ -757,23 +723,9 @@ public class OAuthClientEntryPersistenceImpl
 			long companyId, String authServerWellKnownURI, String clientId)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
-
-		if (oAuthClientEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_A_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, authServerWellKnownURI, clientId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOAuthClientEntryException(message);
-		}
-
-		return oAuthClientEntry;
+		return _uniquePersistenceFinderByC_A_C.find(
+			finderCache,
+			new Object[] {companyId, authServerWellKnownURI, clientId});
 	}
 
 	/**
@@ -832,8 +784,9 @@ public class OAuthClientEntryPersistenceImpl
 			new Object[] {companyId, authServerWellKnownURI, clientId});
 	}
 
-	private UniquePersistenceFinder<OAuthClientEntry>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the o auth client entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
@@ -848,23 +801,8 @@ public class OAuthClientEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (oAuthClientEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOAuthClientEntryException(message);
-		}
-
-		return oAuthClientEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1227,16 +1165,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuthClientEntry::getUuid));
@@ -1264,16 +1192,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuthClientEntry::getUuid),
@@ -1304,16 +1222,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId));
@@ -1341,16 +1249,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, OAuthClientEntry::getUserId));
@@ -1380,16 +1278,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId),
@@ -1512,4 +1400,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:432743029
+// LIFERAY-SERVICE-BUILDER-HASH:-1013817041

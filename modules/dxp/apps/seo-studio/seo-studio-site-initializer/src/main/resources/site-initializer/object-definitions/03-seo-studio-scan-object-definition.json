@@ -40,7 +40,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "REQUEST_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Request Date"
 			},
@@ -60,7 +59,6 @@
 			"businessType": "Relationship",
 			"externalReferenceCode": "SEO_STUDIO_DOMAIN_TO_SEO_STUDIO_SCANS",
 			"indexed": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "SEO Studio Domain to SEO Studio Scans"
 			},
@@ -89,7 +87,6 @@
 			"externalReferenceCode": "SCAN_SCOPE",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Scan Scope"
 			},
@@ -105,7 +102,6 @@
 			"externalReferenceCode": "SCAN_TYPE",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Scan Type"
 			},
@@ -132,7 +128,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "START_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Start Date"
 			},
@@ -218,7 +213,6 @@
 			"externalReferenceCode": "TRIGGERED_BY",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Triggered By"
 			},
@@ -230,10 +224,9 @@
 		},
 		{
 			"DBType": "Long",
-			"businessType": "Long",
+			"businessType": "LongInteger",
 			"externalReferenceCode": "TRIGGERING_USER_ID",
 			"indexed": true,
-			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Triggering User ID"
 			},

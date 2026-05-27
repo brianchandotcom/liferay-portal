@@ -4,12 +4,13 @@
  */
 
 import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
+import {applyFDSSelectionFilter} from '../../../utils/applyFDSSelectionFilter';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -872,28 +873,9 @@ test(
 	}
 );
 
-async function applySpaceFilter(
-	page: Page,
-	{exclude = false, space}: {exclude?: boolean; space: string}
-) {
-	await page.getByRole('button', {exact: true, name: 'Filter'}).click();
-	await page.getByRole('menuitem', {exact: true, name: 'Space'}).click();
-	await page.getByRole('checkbox', {exact: true, name: space}).check();
-
-	if (exclude) {
-		await page.getByRole('switch', {exact: true, name: 'Exclude'}).click();
-	}
-
-	await page.getByRole('button', {exact: true, name: 'Add Filter'}).click();
-
-	const chipName = exclude ? `Space: (Exclude) ${space}` : `Space: ${space}`;
-
-	await expect(page.getByRole('button', {name: chipName})).toBeVisible();
-}
-
 test(
 	'Content Structures list can be filtered by space with include and exclude',
-	{tag: '@LPD-89342'},
+	{tag: ['@LPD-89342', '@LPD-91933']},
 	async ({apiHelpers, page, structureBuilderPage, structuresPage}) => {
 		const spaceName1 = `Space ${getRandomString()}`;
 		const spaceName2 = `Space ${getRandomString()}`;
@@ -918,19 +900,33 @@ test(
 		const row = structuresPage.getItem(structureLabel);
 
 		await structuresPage.goto();
-		await applySpaceFilter(page, {space: spaceName1});
+		await applyFDSSelectionFilter(page, {
+			filter: 'Space',
+			value: spaceName1,
+		});
 		await expect(row).toBeVisible();
 
 		await structuresPage.goto();
-		await applySpaceFilter(page, {space: spaceName2});
+		await applyFDSSelectionFilter(page, {
+			filter: 'Space',
+			value: spaceName2,
+		});
 		await expect(row).toBeHidden();
 
 		await structuresPage.goto();
-		await applySpaceFilter(page, {exclude: true, space: spaceName1});
+		await applyFDSSelectionFilter(page, {
+			exclude: true,
+			filter: 'Space',
+			value: spaceName1,
+		});
 		await expect(row).toBeHidden();
 
 		await structuresPage.goto();
-		await applySpaceFilter(page, {exclude: true, space: spaceName2});
+		await applyFDSSelectionFilter(page, {
+			exclude: true,
+			filter: 'Space',
+			value: spaceName2,
+		});
 		await expect(row).toBeVisible();
 	}
 );

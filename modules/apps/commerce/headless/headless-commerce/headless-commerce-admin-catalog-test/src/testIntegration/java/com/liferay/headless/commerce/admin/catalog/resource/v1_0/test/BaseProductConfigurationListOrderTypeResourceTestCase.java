@@ -2224,4 +2224,4 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 			_productConfigurationListOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1417374960
+// LIFERAY-REST-BUILDER-HASH:2137280219

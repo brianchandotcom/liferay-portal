@@ -30,6 +30,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
@@ -258,6 +259,12 @@ public class CommerceTestUtil {
 			commerceShippingFixedOption.getName());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		cpDefinition.setCPTaxCategoryId(
+			CommerceTaxTestUtil.addTaxCategoryId(groupId));
+
+		cpDefinition = CPDefinitionLocalServiceUtil.updateCPDefinition(
+			cpDefinition);
 
 		addCommerceTaxFixedRate(
 			userId, commerceOrder.getGroupId(),

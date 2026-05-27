@@ -63,12 +63,12 @@
 				.balloon-group-item:hover {
 					background-color: $gray-100;
 				}
+			}
 
-				.balloon-group-separator {
-					border-top: 1px solid $gray-300;
-					display: block;
-					margin: 0.5rem 0;
-				}
+			.balloon-group-separator {
+				border-top: 1px solid $gray-300;
+				display: block;
+				margin: 0.5rem 0;
 			}
 		}
 	}
@@ -104,4 +104,12 @@
 			}
 		}
 	}
+}
+
+.writing-assistant__content-disclaimer {
+	color: $secondary;
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: 1.5;
+	margin-top: 0.5rem;
 }

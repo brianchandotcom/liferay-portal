@@ -1,0 +1,572 @@
+[
+	{
+		"actionIds": [
+			"VIEW_CONTROL_PANEL"
+		],
+		"resourceName": "90",
+		"roleName": "Provisioning Administrator",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"MANAGE_USERS",
+			"VIEW_ACCOUNT_ROLES"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.account.model.AccountEntry",
+		"roleName": "Partner Manager",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.categories",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"ADD_VOCABULARY",
+			"PERMISSIONS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.categories",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.kernel.model.AssetVocabulary",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"MANAGE_TAG",
+			"PERMISSIONS",
+			"SUBSCRIBE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.asset.tags",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Liferay Staff",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Partner Manager",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Partner Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_DOCUMENT_TYPE",
+			"ADD_FOLDER",
+			"ADD_REPOSITORY",
+			"ADD_SHORTCUT",
+			"ADD_STRUCTURE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"DOWNLOAD",
+			"OVERRIDE_CHECKOUT",
+			"PERMISSIONS",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryType",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_DOCUMENT",
+			"ADD_SHORTCUT",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$DATA_DEFINITION_ID:ANNOUNCEMENT$]",
+		"resourceName": "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+		"roleName": "Guest",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_FOLDER",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_FOLDER",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_FEED",
+			"ADD_FOLDER",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"EXPIRE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalArticle",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"EXPIRE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalArticle",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"EXPIRE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalArticle",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFeed",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_ARTICLE",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_LAYOUT_PAGE_TEMPLATE_ENTRY",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.layout.page.template",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.layout.seo",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_LAYOUT",
+			"MANAGE_LAYOUTS",
+			"VIEW",
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$ROLE_ID:Liferay Staff$]",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Liferay Staff",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.User",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Article Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet",
+		"roleName": "Documentation Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_template_web_internal_portlet_TemplatePortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	}
+]

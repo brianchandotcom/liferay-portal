@@ -11,6 +11,7 @@ export class PermissionsPage {
 	readonly permissionsModalCancelButton: Locator;
 	readonly permissionsModalCloseButton: Locator;
 	readonly permissionsModalSaveButton: Locator;
+	readonly roleCell: (roleName: string) => Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -28,6 +29,9 @@ export class PermissionsPage {
 			'button',
 			{name: 'Save'}
 		);
+		this.roleCell = (roleName: string) => {
+			return this.permissionsModal.getByRole('cell', {name: roleName});
+		};
 	}
 
 	async checkPermissionsAndSave(

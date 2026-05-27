@@ -65,6 +65,12 @@ public class AccountGroupRelServiceUtil {
 			accountGroupId, className, classPK);
 	}
 
+	public static AccountGroupRel getAccountGroupRel(long accountGroupRelId)
+		throws PortalException {
+
+		return getService().getAccountGroupRel(accountGroupRelId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -83,4 +89,4 @@ public class AccountGroupRelServiceUtil {
 			AccountGroupRelServiceUtil.class, AccountGroupRelService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1355072304
+// LIFERAY-SERVICE-BUILDER-HASH:1878749048

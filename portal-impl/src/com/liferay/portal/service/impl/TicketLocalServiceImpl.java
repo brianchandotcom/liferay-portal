@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.TicketLocalServiceBaseImpl;
 
@@ -30,15 +31,16 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 			companyId, _classNameLocalService.getClassNameId(className),
 			classPK, type);
 
-		return addTicket(
-			companyId, className, classPK, type, extraInfo, expirationDate,
-			serviceContext);
+		return ticketLocalService.addTicket(
+			companyId, className, classPK, type, null, extraInfo,
+			expirationDate, serviceContext);
 	}
 
 	@Override
 	public Ticket addTicket(
 		long companyId, String className, long classPK, int type,
-		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
+		String emailAddress, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext) {
 
 		long ticketId = counterLocalService.increment();
 
@@ -50,6 +52,8 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		ticket.setClassPK(classPK);
 		ticket.setKey(PortalUUIDUtil.generate());
 		ticket.setType(type);
+		ticket.setEmailAddress(
+			StringUtil.toLowerCase(StringUtil.trim(emailAddress)));
 		ticket.setExtraInfo(extraInfo);
 		ticket.setExpirationDate(expirationDate);
 
@@ -80,6 +84,15 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	@Override
 	public Ticket getTicket(String key) throws PortalException {
 		return ticketPersistence.findByKey(key);
+	}
+
+	@Override
+	public List<Ticket> getTickets(
+		long companyId, int type, String emailAddress) {
+
+		return ticketPersistence.findByC_T_EA(
+			companyId, type,
+			StringUtil.toLowerCase(StringUtil.trim(emailAddress)));
 	}
 
 	@Override

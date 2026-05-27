@@ -5,6 +5,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayList from '@clayui/list';
+import ClaySticker from '@clayui/sticker';
 import ConnectorEntities from './ConnectorEntities';
 import Loading from 'shared/components/Loading';
 import React, {ComponentType, useEffect, useState} from 'react';
@@ -21,6 +23,10 @@ import {
 	getConnectorAvailableDataAlert
 } from './getConnectorAvailableDataAlert';
 import {ConnectorConfig, ConnectorStatus} from './types';
+import {
+	ConnectorStatusItem,
+	getInitialLogEntries
+} from './getConnectorStatusItems';
 import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
 import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
@@ -332,6 +338,51 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	);
 };
 
+interface IConnectorStatusListProps {
+	entries: ConnectorStatusItem[];
+}
+
+const ConnectorStatusList: React.FC<IConnectorStatusListProps> = ({
+	entries
+}) => (
+	<ClayList className='mb-0 mt-3'>
+		{entries.map(
+			({bold, icon, iconDisplayType, secondaryText, title}, index) => (
+				<ClayList.Item flex key={index}>
+					<ClayList.ItemField>
+						<ClaySticker displayType='unstyled'>
+							<ClayIcon
+								className={
+									iconDisplayType === 'success'
+										? 'text-success'
+										: 'text-secondary'
+								}
+								symbol={icon}
+							/>
+						</ClaySticker>
+					</ClayList.ItemField>
+
+					<ClayList.ItemField expand>
+						<ClayList.ItemTitle
+							className={
+								bold
+									? 'font-weight-bold'
+									: 'font-weight-normal text-secondary'
+							}
+						>
+							{title}
+						</ClayList.ItemTitle>
+
+						<ClayList.ItemText className='text-secondary'>
+							{secondaryText}
+						</ClayList.ItemText>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			)
+		)}
+	</ClayList>
+);
+
 interface IConnectorEntityListProps {
 	config: ConnectorConfig;
 	dataSource: DataSource;
@@ -409,10 +460,6 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 		variables: {groupId, id: dataSource.id}
 	});
 
-	if (countResponse.loading) {
-		return <Loading spacer />;
-	}
-
 	const counts = (countResponse.data ?? {}) as {
 		[entity: string]: number | undefined;
 	};
@@ -428,6 +475,17 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 		0
 	);
 	const hasData = totalCount > 0;
+
+	const connectorStatus = getConnectorStatus(dataSource);
+
+	if (countResponse.loading) {
+		return <Loading spacer />;
+	}
+
+	const logEntries: ConnectorStatusItem[] = getInitialLogEntries(
+		connectorStatus,
+		totalCount
+	);
 
 	const connectionStatusAlert = getConnectorConnectionStatusAlert(
 		dataSource,
@@ -452,6 +510,8 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 				>
 					{connectionStatusAlert.message}
 				</ClayAlert>
+
+				<ConnectorStatusList entries={logEntries} />
 			</div>
 
 			<div>
@@ -476,7 +536,7 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					)}
 
 				<ConnectorEntities
-					connectorStatus={getConnectorStatus(dataSource)}
+					connectorStatus={connectorStatus}
 					entities={config.entities}
 					syncedCounts={syncedCounts}
 				/>

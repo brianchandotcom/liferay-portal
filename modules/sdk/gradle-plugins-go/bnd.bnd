@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Go
 Bundle-SymbolicName: com.liferay.gradle.plugins.go
-Bundle-Version: 2.0.4
+Bundle-Version: 2.0.5
 Export-Package:\
 	com.liferay.gradle.plugins.go,\
 	com.liferay.gradle.plugins.go.task

@@ -10,8 +10,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +38,8 @@ import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +59,84 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return ObjectEntry.class.getName();
+	}
+
+	@Override
+	public Date getLastModifiedDate(long companyId, long groupId)
+		throws PortalException {
+
+		Date lastModifiedDate = null;
+
+		List<Long> companyObjectDefinitionIds = new ArrayList<>();
+		List<Long> siteObjectDefinitionIds = new ArrayList<>();
+
+		Long[] objectDefinitionIds =
+			_sitemapConfigurationManager.getCompanySitemapObjectDefinitionIds(
+				companyId);
+
+		for (long objectDefinitionId : objectDefinitionIds) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectDefinitionId);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				companyObjectDefinitionIds.add(
+					objectDefinition.getObjectDefinitionId());
+			}
+			else {
+				siteObjectDefinitionIds.add(
+					objectDefinition.getObjectDefinitionId());
+			}
+		}
+
+		if (!siteObjectDefinitionIds.isEmpty()) {
+			lastModifiedDate = _getLatestModifiedDate(
+				groupId, siteObjectDefinitionIds.toArray(new Long[0]));
+		}
+
+		if (!companyObjectDefinitionIds.isEmpty()) {
+			Date companyDate = _getLatestModifiedDate(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				companyObjectDefinitionIds.toArray(new Long[0]));
+
+			if ((companyDate != null) &&
+				((lastModifiedDate == null) ||
+				 companyDate.after(lastModifiedDate))) {
+
+				lastModifiedDate = companyDate;
+			}
+		}
+
+		return lastModifiedDate;
+	}
+
+	@Override
+	public boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		Long[] companySitemapObjectDefinitionIds =
+			_sitemapConfigurationManager.getCompanySitemapObjectDefinitionIds(
+				companyId);
+
+		for (Long companySitemapObjectDefinitionId :
+				companySitemapObjectDefinitionIds) {
+
+			if (_sitemapConfigurationManager.isObjectDefinitionCompanyIncluded(
+					companyId,
+					String.valueOf(companySitemapObjectDefinitionId))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -130,20 +213,21 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 	}
 
 	private List<ObjectEntry> _getApprovedObjectEntries(
-		long groupId, ObjectDefinition objectDefinition) {
+			long groupId, ObjectDefinition objectDefinition)
+		throws PortalException {
 
 		if (Objects.equals(
 				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-			return _objectEntryLocalService.getObjectEntries(
+			return _objectEntryService.getObjectEntries(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				objectDefinition.getObjectDefinitionId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
 
-		return _objectEntryLocalService.getObjectEntries(
+		return _objectEntryService.getObjectEntries(
 			groupId, objectDefinition.getObjectDefinitionId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
@@ -187,6 +271,39 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		return String.valueOf(objectEntry.getObjectEntryId());
+	}
+
+	private Date _getLatestModifiedDate(
+		long groupId, Long[] objectDefinitionIds) {
+
+		List<Date> modifiedDates = _objectEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				ObjectEntryTable.INSTANCE.modifiedDate
+			).from(
+				ObjectEntryTable.INSTANCE
+			).where(
+				ObjectEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					ObjectEntryTable.INSTANCE.objectDefinitionId.in(
+						objectDefinitionIds)
+				).and(
+					ObjectEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					ObjectEntryTable.INSTANCE.modifiedDate.isNotNull()
+				)
+			).orderBy(
+				ObjectEntryTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (modifiedDates.isEmpty()) {
+			return null;
+		}
+
+		return modifiedDates.get(0);
 	}
 
 	private ObjectDefinition _getObjectDefinitionFromLayoutPageTemplateEntry(
@@ -267,6 +384,9 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private Portal _portal;

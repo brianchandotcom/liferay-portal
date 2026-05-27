@@ -20,7 +20,11 @@ import DateNavigation from './DateNavigation';
 import DayNumber from './DayNumber';
 import DaysTable from './DaysTable';
 import {
+	clamp,
 	formatDate,
+	isAfter,
+	isBefore,
+	isSameDay,
 	isValid,
 	parseDate,
 	range as createRange,
@@ -128,6 +132,23 @@ interface IProps
 	 * Name of the input.
 	 */
 	inputName?: string;
+
+	/**
+	 * The latest date that can be selected, formatted using `dateFormat` (and
+	 * `dateFormat` followed by a time when `time` is `true`). Dates after `max`
+	 * are disabled in the calendar; when `time` is `true`, the time picker is
+	 * also constrained on the boundary day. If `min >= max`, a warning is
+	 * logged and both bounds are ignored.
+	 */
+	max?: string;
+
+	/**
+	 * The earliest date that can be selected, formatted using `dateFormat`
+	 * (and `dateFormat` followed by a time when `time` is `true`). Dates
+	 * before `min` are disabled in the calendar; when `time` is `true`, the
+	 * time picker is also constrained on the boundary day.
+	 */
+	min?: string;
 
 	/**
 	 * The names of the months.
@@ -248,6 +269,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 					'Use the calendar to choose a Date. Current selection {0}',
 				dialog: 'Choose date',
 				openCalendar: 'Open Calendar Picker',
+				outOfRange:
+					'The entered value is outside the allowed range and was not applied',
 				selectMonth: 'Select a month',
 				selectYear: 'Select a year',
 			},
@@ -263,6 +286,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			initialExpanded = false,
 			initialMonth,
 			inputName,
+			max,
+			min,
 			months = [
 				'January',
 				'February',
@@ -299,9 +324,89 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		}: IProps,
 		ref
 	) => {
+		const [parsedMin, parsedMax] = useMemo<
+			readonly [Date | undefined, Date | undefined]
+		>(() => {
+			const parseBound = (value?: string) => {
+				if (!value) {
+					return undefined;
+				}
+
+				const parsed = parseDate(
+					value,
+					time
+						? `${dateFormat} ${
+								use12Hours ? TIME_FORMAT_12H : TIME_FORMAT
+							}`
+						: dateFormat,
+					NEW_DATE
+				);
+
+				return isValid(parsed) ? parsed : undefined;
+			};
+
+			const minDate = parseBound(min);
+			const maxDate = parseBound(max);
+
+			if (minDate && maxDate && !isBefore(minDate, maxDate)) {
+
+				// eslint-disable-next-line no-console
+				console.warn(
+					'ClayDatePicker: `min` must be earlier than `max`. Both bounds will be ignored.'
+				);
+
+				return [undefined, undefined] as const;
+			}
+
+			return [minDate, maxDate] as const;
+		}, [min, max, dateFormat, time, use12Hours]);
+
+		const isDayDisabled = useCallback(
+			(date: Date) => {
+				if (
+					parsedMin &&
+					isBefore(date, parsedMin) &&
+					!isSameDay(date, parsedMin)
+				) {
+					return true;
+				}
+
+				if (
+					parsedMax &&
+					isAfter(date, parsedMax) &&
+					!isSameDay(date, parsedMax)
+				) {
+					return true;
+				}
+
+				return false;
+			},
+			[parsedMin, parsedMax]
+		);
+
+		const isDateTimeOutOfRange = useCallback(
+			(date: Date) => {
+				if (parsedMin && isBefore(date, parsedMin)) {
+					return true;
+				}
+
+				if (parsedMax && isAfter(date, parsedMax)) {
+					return true;
+				}
+
+				return false;
+			},
+			[parsedMin, parsedMax]
+		);
+
 		const getDefaultMonth = useCallback(
-			() => defaultMonth ?? initialMonth ?? new Date(),
-			[defaultMonth, initialMonth]
+			() =>
+				clamp(
+					defaultMonth ?? initialMonth ?? new Date(),
+					parsedMin,
+					parsedMax
+				),
+			[defaultMonth, initialMonth, parsedMin, parsedMax]
 		);
 
 		const [internalValue, setValue, isUncontrolled] = useControlledState({
@@ -408,6 +513,25 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		const triggerElementRef = useRef<HTMLDivElement | null>(null);
 
 		/**
+		 * Polite live region used to notify assistive technology when an
+		 * input or time edit is silently rejected because it falls outside
+		 * `[min, max]`. Clearing before assigning forces the announcement to
+		 * fire even when the same message would otherwise repeat.
+		 */
+		const liveRegionRef = useRef<HTMLDivElement | null>(null);
+
+		const announceOutOfRange = useCallback(() => {
+			const node = liveRegionRef.current;
+
+			if (!node || !ariaLabels.outOfRange) {
+				return;
+			}
+
+			node.textContent = '';
+			node.textContent = ariaLabels.outOfRange;
+		}, [ariaLabels.outOfRange]);
+
+		/**
 		 * Handles the change of the current month of the Date Picker
 		 * content and takes care of updating the weeks.
 		 */
@@ -427,6 +551,50 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 				setWeeks(dateNormalized);
 			}
 		};
+
+		const timePickerConfig = useMemo(() => {
+			if (!time || use12Hours || (!parsedMin && !parsedMax)) {
+				return undefined;
+			}
+
+			const [day] = daysSelected;
+
+			let hoursMin = 0;
+			let hoursMax = 23;
+			let minutesMin = 0;
+			let minutesMax = 59;
+
+			const currentHours = Number(currentTime.split(':')[0]);
+
+			if (parsedMin && isSameDay(day, parsedMin)) {
+				hoursMin = parsedMin.getHours();
+
+				if (currentHours === hoursMin) {
+					minutesMin = parsedMin.getMinutes();
+				}
+			}
+
+			if (parsedMax && isSameDay(day, parsedMax)) {
+				hoursMax = parsedMax.getHours();
+
+				if (currentHours === hoursMax) {
+					minutesMax = parsedMax.getMinutes();
+				}
+			}
+
+			return {
+				use12Hours: {
+					ampm: {am: 'AM', pm: 'PM'},
+					hours: {max: 12, min: 1},
+					minutes: {max: 59, min: 0},
+				},
+				use24Hours: {
+					ampm: {am: 'AM', pm: 'PM'},
+					hours: {max: hoursMax, min: hoursMin},
+					minutes: {max: minutesMax, min: minutesMin},
+				},
+			};
+		}, [time, use12Hours, daysSelected, currentTime, parsedMin, parsedMax]);
 
 		const memoizedYears = useMemo<Array<ISelectOption>>(
 			() =>
@@ -454,6 +622,12 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		 * Handles the click on element of the day
 		 */
 		const handleDayClicked = (date: Date) => {
+			if (isDayDisabled(date)) {
+				announceOutOfRange();
+
+				return;
+			}
+
 			const [startDate, endDate] = daysSelected;
 
 			let newDaysSelected: [Date, Date];
@@ -525,6 +699,36 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 					if (days) {
 						const [startDate, endDate] = days;
 
+						const referenceStart = time
+							? startDate!
+							: setDate(startDate!, {
+									hours: 12,
+									milliseconds: 0,
+									minutes: 0,
+									seconds: 0,
+								});
+						const referenceEnd = time
+							? endDate!
+							: setDate(endDate!, {
+									hours: 12,
+									milliseconds: 0,
+									minutes: 0,
+									seconds: 0,
+								});
+
+						const startOutOfRange = time
+							? isDateTimeOutOfRange(referenceStart)
+							: isDayDisabled(referenceStart);
+						const endOutOfRange = time
+							? isDateTimeOutOfRange(referenceEnd)
+							: isDayDisabled(referenceEnd);
+
+						if (startOutOfRange || endOutOfRange) {
+							announceOutOfRange();
+
+							return;
+						}
+
 						if (time) {
 							setCurrentTime(
 								startDate!.getHours(),
@@ -545,7 +749,16 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 					}
 				}
 			},
-			[dateFormat, use12Hours, time, years, yearsCheck]
+			[
+				dateFormat,
+				use12Hours,
+				time,
+				years,
+				yearsCheck,
+				isDayDisabled,
+				isDateTimeOutOfRange,
+				announceOutOfRange,
+			]
 		);
 
 		/**
@@ -572,6 +785,12 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		 */
 		const handleDotClicked = () => {
 			const currentDateTime = getDefaultMonth();
+
+			if (isDayDisabled(currentDateTime)) {
+				announceOutOfRange();
+
+				return;
+			}
 
 			const [, endDate] = daysSelected;
 
@@ -620,6 +839,40 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 
 			if (minutes === '--' && typeof hours === 'number') {
 				minutes = 0;
+			}
+
+			// In 12-hour mode the AM/PM toggle can't be disabled, so the user
+			// can land on a side that is fully outside [min, max] even with the
+			// hour/minute config locked down. Validate the combined date+time
+			// here and refuse to commit when out of range. This also catches
+			// invalid combinations typed into the 24-hour input.
+
+			if (
+				typeof hours === 'number' &&
+				typeof minutes === 'number' &&
+				(parsedMin || parsedMax)
+			) {
+				let hours24 = hours;
+
+				if (use12Hours) {
+					if (ampm === 'PM' && hours < 12) {
+						hours24 = hours + 12;
+					}
+					else if (ampm === 'AM' && hours === 12) {
+						hours24 = 0;
+					}
+				}
+
+				const dateTimeSelected = setDate(day, {
+					hours: hours24,
+					minutes,
+				});
+
+				if (isDateTimeOutOfRange(dateTimeSelected)) {
+					announceOutOfRange();
+
+					return;
+				}
 			}
 
 			if (internalValue) {
@@ -674,6 +927,13 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		return (
 			<FocusScope arrowKeysUpDown={false}>
 				<div className="date-picker">
+					<div
+						aria-atomic="true"
+						aria-live="polite"
+						className="sr-only"
+						ref={liveRegionRef}
+					/>
+
 					<ClayInput.Group ref={triggerElementRef}>
 						<ClayInput.GroupItem className="input-group-item-focusable">
 							<InputDate
@@ -777,6 +1037,9 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 												)}
 												key={key}
 												onClick={handleDayClicked}
+												outOfRange={isDayDisabled(
+													day.date
+												)}
 												range={range}
 											/>
 										)}
@@ -787,6 +1050,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 									<div className="date-picker-calendar-footer">
 										{time && (
 											<TimePicker
+												config={timePickerConfig}
 												currentTime={currentTime}
 												disabled={disabled}
 												onTimeChange={handleTimeChange}

@@ -67,8 +67,9 @@ public class ExportImportConfigurationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ExportImportConfiguration>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<ExportImportConfiguration, NoSuchConfigurationException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the export import configurations where groupId = &#63;.
@@ -109,16 +110,9 @@ public class ExportImportConfigurationPersistenceImpl
 			OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchConfigurationException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			fetchByGroupId_First(groupId, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		throw new NoSuchConfigurationException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -161,8 +155,9 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<ExportImportConfiguration>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<ExportImportConfiguration, NoSuchConfigurationException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the export import configurations where companyId = &#63;.
@@ -203,16 +198,9 @@ public class ExportImportConfigurationPersistenceImpl
 			OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchConfigurationException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		throw new NoSuchConfigurationException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -255,8 +243,9 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<ExportImportConfiguration>
-		_collectionPersistenceFinderByG_T;
+	private CollectionPersistenceFinder
+		<ExportImportConfiguration, NoSuchConfigurationException>
+			_collectionPersistenceFinderByG_T;
 
 	/**
 	 * Returns an ordered range of all the export import configurations where groupId = &#63; and type = &#63;.
@@ -299,16 +288,9 @@ public class ExportImportConfigurationPersistenceImpl
 			OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchConfigurationException {
 
-		ExportImportConfiguration exportImportConfiguration = fetchByG_T_First(
-			groupId, type, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		throw new NoSuchConfigurationException(
-			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
+		return _collectionPersistenceFinderByG_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -354,8 +336,9 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type});
 	}
 
-	private CollectionPersistenceFinder<ExportImportConfiguration>
-		_collectionPersistenceFinderByG_S;
+	private CollectionPersistenceFinder
+		<ExportImportConfiguration, NoSuchConfigurationException>
+			_collectionPersistenceFinderByG_S;
 
 	/**
 	 * Returns an ordered range of all the export import configurations where groupId = &#63; and status = &#63;.
@@ -398,16 +381,9 @@ public class ExportImportConfigurationPersistenceImpl
 			OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchConfigurationException {
 
-		ExportImportConfiguration exportImportConfiguration = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		throw new NoSuchConfigurationException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -453,8 +429,9 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, status});
 	}
 
-	private CollectionPersistenceFinder<ExportImportConfiguration>
-		_collectionPersistenceFinderByG_T_S;
+	private CollectionPersistenceFinder
+		<ExportImportConfiguration, NoSuchConfigurationException>
+			_collectionPersistenceFinderByG_T_S;
 
 	/**
 	 * Returns an ordered range of all the export import configurations where groupId = &#63; and type = &#63; and status = &#63;.
@@ -500,17 +477,9 @@ public class ExportImportConfigurationPersistenceImpl
 			OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchConfigurationException {
 
-		ExportImportConfiguration exportImportConfiguration =
-			fetchByG_T_S_First(groupId, type, status, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		throw new NoSuchConfigurationException(
-			_collectionPersistenceFinderByG_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, type, status}));
+		return _collectionPersistenceFinderByG_T_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, type, status}, orderByComparator);
 	}
 
 	/**
@@ -975,4 +944,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:786812174
+// LIFERAY-SERVICE-BUILDER-HASH:-1167985332

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="content" index-type="text" instance-id="lo0a0002" name="content" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[<p>Join Liferay product experts for a live walkthrough of how leading organizations are unifying their customer portals on a single digital experience platform. The session covers content strategy, identity federation, and integration patterns with CRM and billing systems, followed by an open Q&amp;A. Registration is free and a recording will be shared with all registrants the following week.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

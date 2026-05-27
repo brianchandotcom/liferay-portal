@@ -151,6 +151,11 @@
 					"const": "com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
 					"title": "AI Hub Configuration"
 				},
+				"secret": {
+					"default": "",
+					"title": "Secret",
+					"type": "string"
+				},
 				"serviceURL": {
 					"title": "Service URL",
 					"type": "string"
@@ -2131,7 +2136,7 @@
 				},
 				"translatedJSFilesMaxAge": {
 					"default": 3600,
-					"description": "Set the value of the \"max-age\" directive in the \"Cache-Control\" header for translated JavaScript files for translated JavaScript files (those that contain invocations to \"Liferay.Language.get()\" and do not have an associated language.json file).",
+					"description": "Set the value of the \"max-age\" directive in the \"Cache-Control\" header for translated JavaScript files (those that contain invocations to \"Liferay.Language.get()\" and do not have an associated language.json file).",
 					"title": "Translated JavaScript Files Max Age Directive Value",
 					"type": "number"
 				}
@@ -2543,6 +2548,25 @@
 				"pid"
 			],
 			"title": "Mail Settings"
+		},
+		{
+			"description": "The settings in this configuration let you control the MCP Server.",
+			"properties": {
+				"enabled": {
+					"default": false,
+					"title": "Enabled",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.mcp.server.internal.configuration.MCPServerConfiguration",
+					"description": "The settings in this configuration let you control the MCP Server.",
+					"title": "MCP Server"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "MCP Server"
 		},
 		{
 			"properties": {
@@ -4601,6 +4625,28 @@
 		},
 		{
 			"properties": {
+				"content": {
+					"default": "",
+					"title": "llms.txt Content",
+					"type": "string"
+				},
+				"enabled": {
+					"default": false,
+					"title": "Enable llms.txt",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.site.internal.configuration.LLMSCompanyConfiguration",
+					"title": "llms.txt"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "llms.txt"
+		},
+		{
+			"properties": {
 				"companySitemapGroupIds": {
 					"default": "",
 					"items": {
@@ -4640,6 +4686,11 @@
 					"default": true,
 					"title": "XML Sitemap Index Enabled",
 					"type": "boolean"
+				},
+				"xmlSitemapIndexMode": {
+					"default": "page-layout",
+					"title": "XML Sitemap Index Mode",
+					"type": "string"
 				}
 			},
 			"required": [
@@ -4946,6 +4997,7 @@
 				"com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration",
 				"com.liferay.mail.outlook.auth.connector.provider.internal.configuration.MailOutlookAuthConnectorCompanyConfiguration",
 				"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration",
+				"com.liferay.mcp.server.internal.configuration.MCPServerConfiguration",
 				"com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration",
 				"com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration",
 				"com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration",
@@ -4990,6 +5042,7 @@
 				"com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration",
 				"com.liferay.sharing.internal.configuration.SharingCompanyConfiguration",
 				"com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration",
+				"com.liferay.site.internal.configuration.LLMSCompanyConfiguration",
 				"com.liferay.site.internal.configuration.SitemapCompanyConfiguration",
 				"com.liferay.social.activity.internal.configuration.SocialActivityCompanyConfiguration",
 				"com.liferay.staging.configuration.StagingConfiguration",

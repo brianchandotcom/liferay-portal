@@ -16,6 +16,7 @@ import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentMembers
 import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.PageMetricResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.SearchTermResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.WorkspaceResourceImpl;
 import com.liferay.osb.faro.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.ChannelResource;
@@ -25,6 +26,7 @@ import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResour
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentResource;
 import com.liferay.osb.faro.rest.resource.v1_0.PageMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.SearchTermResource;
+import com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -68,6 +70,8 @@ public class ServletDataImpl implements ServletData {
 			_pageMetricResourceComponentServiceObjects);
 		Query.setSearchTermResourceComponentServiceObjects(
 			_searchTermResourceComponentServiceObjects);
+		Query.setWorkspaceResourceComponentServiceObjects(
+			_workspaceResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -110,15 +114,15 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"getWorkspaceGroupAccount"));
 					put(
-						"query#workspaceGroupAccounts",
+						"query#workspaceGroupChannelAccounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
-							"getWorkspaceGroupAccountsPage"));
+							"getWorkspaceGroupChannelAccountsPage"));
 					put(
-						"query#workspaceGroupAssetSummaries",
+						"query#workspaceGroupChannelAssetSummaries",
 						new ObjectValuePair<>(
 							AssetSummaryMetricResourceImpl.class,
-							"getWorkspaceGroupAssetSummariesPage"));
+							"getWorkspaceGroupChannelAssetSummariesPage"));
 					put(
 						"query#workspaceGroupChannel",
 						new ObjectValuePair<>(
@@ -135,40 +139,44 @@ public class ServletDataImpl implements ServletData {
 							EventResourceImpl.class,
 							"getWorkspaceGroupChannelEventsPage"));
 					put(
+						"query#workspaceGroupChannelIndividuals",
+						new ObjectValuePair<>(
+							IndividualResourceImpl.class,
+							"getWorkspaceGroupChannelIndividualsPage"));
+					put(
 						"query#workspaceGroupIndividual",
 						new ObjectValuePair<>(
 							IndividualResourceImpl.class,
 							"getWorkspaceGroupIndividual"));
 					put(
-						"query#workspaceGroupIndividuals",
+						"query#workspaceGroupChannelIndividualSegments",
 						new ObjectValuePair<>(
-							IndividualResourceImpl.class,
-							"getWorkspaceGroupIndividualsPage"));
+							IndividualSegmentResourceImpl.class,
+							"getWorkspaceGroupChannelIndividualSegmentsPage"));
 					put(
 						"query#workspaceGroupIndividualSegment",
 						new ObjectValuePair<>(
 							IndividualSegmentResourceImpl.class,
 							"getWorkspaceGroupIndividualSegment"));
 					put(
-						"query#workspaceGroupIndividualSegments",
-						new ObjectValuePair<>(
-							IndividualSegmentResourceImpl.class,
-							"getWorkspaceGroupIndividualSegmentsPage"));
-					put(
 						"query#workspaceGroupIndividualSegmentMemberships",
 						new ObjectValuePair<>(
 							IndividualSegmentMembershipResourceImpl.class,
 							"getWorkspaceGroupIndividualSegmentMembershipsPage"));
 					put(
-						"query#workspaceGroupPages",
+						"query#workspaceGroupChannelPages",
 						new ObjectValuePair<>(
 							PageMetricResourceImpl.class,
-							"getWorkspaceGroupPagesPage"));
+							"getWorkspaceGroupChannelPagesPage"));
 					put(
 						"query#workspaceGroupChannelSearchTerms",
 						new ObjectValuePair<>(
 							SearchTermResourceImpl.class,
 							"getWorkspaceGroupChannelSearchTermsPage"));
+					put(
+						"query#workspaces",
+						new ObjectValuePair<>(
+							WorkspaceResourceImpl.class, "getWorkspacesPage"));
 				}
 			};
 
@@ -208,5 +216,9 @@ public class ServletDataImpl implements ServletData {
 	private ComponentServiceObjects<SearchTermResource>
 		_searchTermResourceComponentServiceObjects;
 
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkspaceResource>
+		_workspaceResourceComponentServiceObjects;
+
 }
-// LIFERAY-REST-BUILDER-HASH:-517157000
+// LIFERAY-REST-BUILDER-HASH:-1151108569

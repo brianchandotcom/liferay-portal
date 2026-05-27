@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Content Retriever"
+		"en_US": "AI Hub Content Retriever"
 	},
 	"modifiable": true,
 	"name": "AIHubContentRetriever",
@@ -142,7 +142,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Content Retrievers"
+		"en_US": "AI Hub Content Retrievers"
 	},
 	"portlet": true,
 	"scope": "company",

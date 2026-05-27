@@ -10,6 +10,13 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.notification.test.util.NotificationTemplateUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -24,9 +31,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.portlet.MockPortletPreferences;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -74,7 +83,7 @@ public class InviteAccountUsersMVCActionCommandTest {
 	}
 
 	@Test
-	public void testInviteAccountUser() throws Exception {
+	public void testDoTransactionalCommand() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
@@ -88,11 +97,7 @@ public class InviteAccountUsersMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_invokeDoTransactionalCommand(mockLiferayPortletActionRequest);
 
 		List<User> accountEntryUsers = _accountEntry.fetchUsers();
 
@@ -112,6 +117,68 @@ public class InviteAccountUsersMVCActionCommandTest {
 
 			Assert.assertTrue(extraInfo.contains("buyer@liferay.com"));
 		}
+
+		_ticketLocalService.deleteTickets(
+			_company.getCompanyId(), AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountTicketConstants.TYPE_USER_INVITATION);
+
+		MockPortletPreferences mockPortletPreferences =
+			new MockPortletPreferences();
+
+		NotificationTemplate notificationTemplate = _addNotificationTemplate(
+			RandomTestUtil.randomString());
+
+		mockPortletPreferences.setValue(
+			"invitationNotificationTemplateExternalReferenceCode",
+			notificationTemplate.getExternalReferenceCode());
+
+		mockLiferayPortletActionRequest.setPreferences(mockPortletPreferences);
+
+		int count =
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount();
+
+		_invokeDoTransactionalCommand(mockLiferayPortletActionRequest);
+
+		tickets = _ticketLocalService.getTickets(
+			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+			AccountTicketConstants.TYPE_USER_INVITATION);
+
+		Assert.assertFalse(tickets.isEmpty());
+
+		Assert.assertEquals(
+			count + 1,
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount());
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationQueueEntries(
+				-1, -1);
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(notificationQueueEntries.size() - 1);
+
+		Assert.assertEquals(
+			notificationTemplate.getNotificationTemplateId(),
+			notificationQueueEntry.getNotificationTemplateId());
+	}
+
+	private NotificationTemplate _addNotificationTemplate(
+			String externalReferenceCode)
+		throws Exception {
+
+		NotificationContext notificationContext =
+			NotificationTemplateUtil.createNotificationContext(
+				NotificationConstants.TYPE_EMAIL);
+
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		notificationTemplate.setExternalReferenceCode(externalReferenceCode);
+
+		return _notificationTemplateLocalService.addNotificationTemplate(
+			notificationContext);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -130,6 +197,16 @@ public class InviteAccountUsersMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private void _invokeDoTransactionalCommand(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+	}
+
 	private AccountEntry _accountEntry;
 	private Company _company;
 
@@ -141,6 +218,13 @@ public class InviteAccountUsersMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/account_admin/invite_account_users")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private NotificationQueueEntryLocalService
+		_notificationQueueEntryLocalService;
+
+	@Inject
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	private ServiceContext _serviceContext;
 

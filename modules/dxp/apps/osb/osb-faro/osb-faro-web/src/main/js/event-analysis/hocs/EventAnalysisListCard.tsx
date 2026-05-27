@@ -277,7 +277,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 							symbol: 'ac_satellite'
 						}}
 						title={Liferay.Language.get(
-							'there-are-no-analysis-found'
+							'there-are-no-analyses-found'
 						)}
 					/>
 				}

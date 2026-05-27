@@ -80,8 +80,9 @@ public class KaleoInstanceTokenPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoInstanceToken>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<KaleoInstanceToken, NoSuchInstanceTokenException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63;.
@@ -122,16 +123,8 @@ public class KaleoInstanceTokenPersistenceImpl
 			OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws NoSuchInstanceTokenException {
 
-		KaleoInstanceToken kaleoInstanceToken = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoInstanceToken != null) {
-			return kaleoInstanceToken;
-		}
-
-		throw new NoSuchInstanceTokenException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -173,8 +166,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoInstanceToken>
-		_collectionPersistenceFinderByKaleoDefinitionVersionId;
+	private CollectionPersistenceFinder
+		<KaleoInstanceToken, NoSuchInstanceTokenException>
+			_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
 	 * Returns an ordered range of all the kaleo instance tokens where kaleoDefinitionVersionId = &#63;.
@@ -215,19 +209,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws NoSuchInstanceTokenException {
 
-		KaleoInstanceToken kaleoInstanceToken =
-			fetchByKaleoDefinitionVersionId_First(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoInstanceToken != null) {
-			return kaleoInstanceToken;
-		}
-
-		throw new NoSuchInstanceTokenException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -273,8 +257,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private CollectionPersistenceFinder<KaleoInstanceToken>
-		_collectionPersistenceFinderByKaleoInstanceId;
+	private CollectionPersistenceFinder
+		<KaleoInstanceToken, NoSuchInstanceTokenException>
+			_collectionPersistenceFinderByKaleoInstanceId;
 
 	/**
 	 * Returns an ordered range of all the kaleo instance tokens where kaleoInstanceId = &#63;.
@@ -315,16 +300,8 @@ public class KaleoInstanceTokenPersistenceImpl
 			OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws NoSuchInstanceTokenException {
 
-		KaleoInstanceToken kaleoInstanceToken = fetchByKaleoInstanceId_First(
-			kaleoInstanceId, orderByComparator);
-
-		if (kaleoInstanceToken != null) {
-			return kaleoInstanceToken;
-		}
-
-		throw new NoSuchInstanceTokenException(
-			_collectionPersistenceFinderByKaleoInstanceId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoInstanceId}));
+		return _collectionPersistenceFinderByKaleoInstanceId.findFirst(
+			finderCache, new Object[] {kaleoInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -366,8 +343,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			finderCache, new Object[] {kaleoInstanceId});
 	}
 
-	private CollectionPersistenceFinder<KaleoInstanceToken>
-		_collectionPersistenceFinderByC_PKITI;
+	private CollectionPersistenceFinder
+		<KaleoInstanceToken, NoSuchInstanceTokenException>
+			_collectionPersistenceFinderByC_PKITI;
 
 	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
@@ -410,17 +388,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws NoSuchInstanceTokenException {
 
-		KaleoInstanceToken kaleoInstanceToken = fetchByC_PKITI_First(
-			companyId, parentKaleoInstanceTokenId, orderByComparator);
-
-		if (kaleoInstanceToken != null) {
-			return kaleoInstanceToken;
-		}
-
-		throw new NoSuchInstanceTokenException(
-			_collectionPersistenceFinderByC_PKITI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentKaleoInstanceTokenId}));
+		return _collectionPersistenceFinderByC_PKITI.findFirst(
+			finderCache, new Object[] {companyId, parentKaleoInstanceTokenId},
+			orderByComparator);
 	}
 
 	/**
@@ -468,8 +438,9 @@ public class KaleoInstanceTokenPersistenceImpl
 			finderCache, new Object[] {companyId, parentKaleoInstanceTokenId});
 	}
 
-	private CollectionPersistenceFinder<KaleoInstanceToken>
-		_collectionPersistenceFinderByC_PKITI_CD;
+	private CollectionPersistenceFinder
+		<KaleoInstanceToken, NoSuchInstanceTokenException>
+			_collectionPersistenceFinderByC_PKITI_CD;
 
 	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
@@ -519,20 +490,12 @@ public class KaleoInstanceTokenPersistenceImpl
 			OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws NoSuchInstanceTokenException {
 
-		KaleoInstanceToken kaleoInstanceToken = fetchByC_PKITI_CD_First(
-			companyId, parentKaleoInstanceTokenId, completionDate,
+		return _collectionPersistenceFinderByC_PKITI_CD.findFirst(
+			finderCache,
+			new Object[] {
+				companyId, parentKaleoInstanceTokenId, completionDate
+			},
 			orderByComparator);
-
-		if (kaleoInstanceToken != null) {
-			return kaleoInstanceToken;
-		}
-
-		throw new NoSuchInstanceTokenException(
-			_collectionPersistenceFinderByC_PKITI_CD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					companyId, parentKaleoInstanceTokenId, completionDate
-				}));
 	}
 
 	/**
@@ -1126,4 +1089,4 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-551204109
+// LIFERAY-SERVICE-BUILDER-HASH:-2076888608

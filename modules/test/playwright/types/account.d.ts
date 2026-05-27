@@ -10,6 +10,7 @@ type TUserAccount = {
 	familyName?: string;
 	givenName?: string;
 	id?: string;
+	jobTitle?: string;
 	languageId?: string;
 	name?: string;
 	password?: string;

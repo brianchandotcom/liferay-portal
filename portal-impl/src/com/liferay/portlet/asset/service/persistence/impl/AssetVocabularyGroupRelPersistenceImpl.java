@@ -76,8 +76,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset vocabulary group rels where uuid = &#63;.
@@ -118,16 +119,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		throw new NoSuchVocabularyGroupRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -170,8 +164,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetVocabularyGroupRel>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset vocabulary group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchVocabularyGroupRelException</code> if it could not be found.
@@ -185,22 +180,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public AssetVocabularyGroupRel findByUUID_G(String uuid, long groupId)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByUUID_G(
-			uuid, groupId);
-
-		if (assetVocabularyGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVocabularyGroupRelException(message);
-		}
-
-		return assetVocabularyGroupRel;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -250,8 +231,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset vocabulary group rels where uuid = &#63; and companyId = &#63;.
@@ -294,16 +276,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		throw new NoSuchVocabularyGroupRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -349,8 +324,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the asset vocabulary group rels where groupId = &#63;.
@@ -391,16 +367,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		throw new NoSuchVocabularyGroupRelException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -443,8 +412,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
-		_collectionPersistenceFinderByVocabularyId;
+	private CollectionPersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_collectionPersistenceFinderByVocabularyId;
 
 	/**
 	 * Returns an ordered range of all the asset vocabulary group rels where vocabularyId = &#63;.
@@ -485,16 +455,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel =
-			fetchByVocabularyId_First(vocabularyId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		throw new NoSuchVocabularyGroupRelException(
-			_collectionPersistenceFinderByVocabularyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {vocabularyId}));
+		return _collectionPersistenceFinderByVocabularyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId},
+			orderByComparator);
 	}
 
 	/**
@@ -537,8 +500,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
 	}
 
-	private UniquePersistenceFinder<AssetVocabularyGroupRel>
-		_uniquePersistenceFinderByG_V;
+	private UniquePersistenceFinder
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
+			_uniquePersistenceFinderByG_V;
 
 	/**
 	 * Returns the asset vocabulary group rel where groupId = &#63; and vocabularyId = &#63; or throws a <code>NoSuchVocabularyGroupRelException</code> if it could not be found.
@@ -552,23 +516,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public AssetVocabularyGroupRel findByG_V(long groupId, long vocabularyId)
 		throws NoSuchVocabularyGroupRelException {
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByG_V(
-			groupId, vocabularyId);
-
-		if (assetVocabularyGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByG_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, vocabularyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVocabularyGroupRelException(message);
-		}
-
-		return assetVocabularyGroupRel;
+		return _uniquePersistenceFinderByG_V.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, vocabularyId});
 	}
 
 	/**
@@ -1079,4 +1029,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1733772769
+// LIFERAY-SERVICE-BUILDER-HASH:-1830479047

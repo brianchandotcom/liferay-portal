@@ -46,6 +46,6 @@ public class ResourcePermissionTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

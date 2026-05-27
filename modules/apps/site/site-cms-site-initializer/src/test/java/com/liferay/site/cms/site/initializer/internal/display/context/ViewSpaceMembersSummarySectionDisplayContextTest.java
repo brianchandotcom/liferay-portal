@@ -45,7 +45,7 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 
 		Assert.assertTrue(creationMenu.isEmpty());
 
-		CreationMenu creationMenu = _getCreationMenu(true);
+		creationMenu = _getCreationMenu(true);
 
 		Assert.assertFalse(creationMenu.isEmpty());
 	}

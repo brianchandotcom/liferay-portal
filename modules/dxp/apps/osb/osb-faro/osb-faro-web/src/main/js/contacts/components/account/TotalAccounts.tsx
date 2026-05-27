@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import ClayLayout from '@clayui/layout';
 import MetricCard from 'shared/components/MetricCard';
 import React from 'react';
 import {
@@ -7,6 +8,8 @@ import {
 	Metric
 } from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
+import {toThousands} from 'shared/util/numbers';
+import {useParams} from 'react-router';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const renderAccountValue = (metric?: Metric) =>
@@ -14,13 +17,17 @@ const renderAccountValue = (metric?: Metric) =>
 		metric?.value === 1
 			? Liferay.Language.get('x-account')
 			: Liferay.Language.get('x-accounts'),
-		[metric?.value ?? 0]
+		[toThousands(metric?.value ?? 0)]
 	);
 
 const TotalAccounts = ({groupId}: {groupId: string}) => {
+	const {channelId} = useParams<{
+		channelId: string;
+	}>();
 	const {data, loading} = useRequest({
 		dataSourceFn: API.accounts.fetchMetrics,
 		variables: {
+			channelId,
 			groupId
 		}
 	});
@@ -37,16 +44,15 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 			false
 		);
 
-	const cardContainerClassName = 'col-12 col-lg-4 d-flex';
-
 	return (
-		<div className='row g-4'>
-			<div className={cardContainerClassName}>
+		<ClayLayout.Row>
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('total-accounts')}
 					trend={getMetric(AccountMetricType.Total)?.trend}
@@ -54,25 +60,29 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 						getMetric(AccountMetricType.Total)
 					)}
 				/>
-			</div>
-			<div className={cardContainerClassName}>
+			</ClayLayout.Col>
+
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-new-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('new-accounts')}
 					trend={getMetric(AccountMetricType.New)?.trend}
 					value={renderAccountValue(getMetric(AccountMetricType.New))}
 				/>
-			</div>
-			<div className={cardContainerClassName}>
+			</ClayLayout.Col>
+
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-active-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('active-accounts')}
 					trend={getMetric(AccountMetricType.Active)?.trend}
@@ -80,8 +90,8 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 						getMetric(AccountMetricType.Active)
 					)}
 				/>
-			</div>
-		</div>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
 	);
 };
 

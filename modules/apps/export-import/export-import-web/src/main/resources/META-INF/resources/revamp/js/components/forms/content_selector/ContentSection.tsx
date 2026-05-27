@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import {sub} from 'frontend-js-web';
+import React, {useId} from 'react';
 
 import '../../../../css/utilities.scss';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
@@ -15,10 +16,12 @@ import {
 } from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
-	getInitialSelection,
+	getInitialSelections,
+	getSelectionSummary,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import CollapsibleGroup from './CollapsibleGroup';
 import PortletDataControl from './PortletDataControl';
 import SectionTags from './SectionTags';
 
@@ -39,6 +42,8 @@ export default function ContentSection({
 	showDeletions,
 	value,
 }: ContentSectionProps) {
+	const checkboxId = useId();
+
 	const portletContextsValue = value || {};
 
 	const controls =
@@ -50,52 +55,51 @@ export default function ContentSection({
 		isSelected(portletContextsValue[context.name], context)
 	);
 
-	const handleSelectAll = () => {
-		if (selected) {
-			onChange(undefined);
-		}
-		else {
-			const newValue: SectionSelection = {};
-
-			controls.forEach((context) => {
-				newValue[context.name] = getInitialSelection(context);
-			});
-
-			onChange(newValue);
-		}
-	};
-
 	return (
-		<div className="mt-0 sheet">
-			<ClayLayout.ContentRow padded>
-				<ClayLayout.ContentCol expand={false}>
-					<ClayCheckbox
-						checked={selected}
-						indeterminate={
-							!!Object.keys(portletContextsValue).length &&
-							!selected
+		<ClayLayout.Sheet className="mt-0">
+			<CollapsibleGroup
+				bodyClassName="content-section-controls mt-2 overflow-auto pl-2"
+				checkboxId={checkboxId}
+				disclosure={({expanded, ...disclosureProps}) => (
+					<ClayButtonWithIcon
+						{...disclosureProps}
+						aria-label={
+							expanded
+								? sub(
+										Liferay.Language.get('collapse-x'),
+										section.label
+									)
+								: sub(
+										Liferay.Language.get('expand-x'),
+										section.label
+									)
 						}
-						onChange={handleSelectAll}
+						className="text-secondary"
+						displayType="unstyled"
+						symbol={expanded ? 'angle-down' : 'angle-right'}
 					/>
-				</ClayLayout.ContentCol>
-
-				<ClayLayout.ContentCol expand>
-					<div className="align-items-center d-flex font-weight-bold h3 mb-0">
-						{section.label}
-
-						<SectionTags
-							additionCount={section.additionCount}
-							deletionCount={
-								showDeletions
-									? section.deletionCount
-									: undefined
-							}
-						/>
-					</div>
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
-
-			<div className="content-section-controls overflow-auto pl-4">
+				)}
+				indeterminate={
+					!!Object.keys(portletContextsValue).length && !selected
+				}
+				label={section.label}
+				labelClassName="font-weight-bold h3"
+				onToggle={() =>
+					onChange(
+						selected ? undefined : getInitialSelections(controls)
+					)
+				}
+				selected={selected}
+				summary={getSelectionSummary(controls, portletContextsValue)}
+				tags={
+					<SectionTags
+						additionCount={section.additionCount}
+						deletionCount={
+							showDeletions ? section.deletionCount : undefined
+						}
+					/>
+				}
+			>
 				{controls.map((context) => (
 					<PortletDataControl
 						control={context}
@@ -111,10 +115,11 @@ export default function ContentSection({
 						}
 						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						showDeletions={showDeletions}
+						topLevel
 						value={portletContextsValue[context.name]}
 					/>
 				))}
-			</div>
-		</div>
+			</CollapsibleGroup>
+		</ClayLayout.Sheet>
 	);
 }

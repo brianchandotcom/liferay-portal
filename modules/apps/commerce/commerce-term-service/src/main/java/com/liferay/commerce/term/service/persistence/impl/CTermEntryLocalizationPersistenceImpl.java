@@ -80,8 +80,9 @@ public class CTermEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTermEntryLocalization>
-		_collectionPersistenceFinderByCommerceTermEntryId;
+	private CollectionPersistenceFinder
+		<CTermEntryLocalization, NoSuchCTermEntryLocalizationException>
+			_collectionPersistenceFinderByCommerceTermEntryId;
 
 	/**
 	 * Returns an ordered range of all the c term entry localizations where commerceTermEntryId = &#63;.
@@ -122,19 +123,8 @@ public class CTermEntryLocalizationPersistenceImpl
 			OrderByComparator<CTermEntryLocalization> orderByComparator)
 		throws NoSuchCTermEntryLocalizationException {
 
-		CTermEntryLocalization cTermEntryLocalization =
-			fetchByCommerceTermEntryId_First(
-				commerceTermEntryId, orderByComparator);
-
-		if (cTermEntryLocalization != null) {
-			return cTermEntryLocalization;
-		}
-
-		throw new NoSuchCTermEntryLocalizationException(
-			_collectionPersistenceFinderByCommerceTermEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceTermEntryId}));
+		return _collectionPersistenceFinderByCommerceTermEntryId.findFirst(
+			finderCache, new Object[] {commerceTermEntryId}, orderByComparator);
 	}
 
 	/**
@@ -176,8 +166,9 @@ public class CTermEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {commerceTermEntryId});
 	}
 
-	private UniquePersistenceFinder<CTermEntryLocalization>
-		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId;
+	private UniquePersistenceFinder
+		<CTermEntryLocalization, NoSuchCTermEntryLocalizationException>
+			_uniquePersistenceFinderByCommerceTermEntryId_LanguageId;
 
 	/**
 	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchCTermEntryLocalizationException</code> if it could not be found.
@@ -192,25 +183,8 @@ public class CTermEntryLocalizationPersistenceImpl
 			long commerceTermEntryId, String languageId)
 		throws NoSuchCTermEntryLocalizationException {
 
-		CTermEntryLocalization cTermEntryLocalization =
-			fetchByCommerceTermEntryId_LanguageId(
-				commerceTermEntryId, languageId);
-
-		if (cTermEntryLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByCommerceTermEntryId_LanguageId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {commerceTermEntryId, languageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCTermEntryLocalizationException(message);
-		}
-
-		return cTermEntryLocalization;
+		return _uniquePersistenceFinderByCommerceTermEntryId_LanguageId.find(
+			finderCache, new Object[] {commerceTermEntryId, languageId});
 	}
 
 	/**
@@ -604,4 +578,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:114471369
+// LIFERAY-SERVICE-BUILDER-HASH:1726285893

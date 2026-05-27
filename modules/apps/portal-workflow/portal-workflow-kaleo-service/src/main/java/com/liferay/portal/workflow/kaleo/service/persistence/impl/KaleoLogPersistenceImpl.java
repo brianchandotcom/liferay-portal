@@ -81,7 +81,7 @@ public class KaleoLogPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -121,16 +121,8 @@ public class KaleoLogPersistenceImpl
 			long companyId, OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +163,7 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
@@ -212,18 +204,9 @@ public class KaleoLogPersistenceImpl
 			OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -269,7 +252,7 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByKaleoInstanceId;
 
 	/**
@@ -309,16 +292,8 @@ public class KaleoLogPersistenceImpl
 			long kaleoInstanceId, OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByKaleoInstanceId_First(
-			kaleoInstanceId, orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByKaleoInstanceId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoInstanceId}));
+		return _collectionPersistenceFinderByKaleoInstanceId.findFirst(
+			finderCache, new Object[] {kaleoInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -359,7 +334,7 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoInstanceId});
 	}
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByKaleoTaskInstanceTokenId;
 
 	/**
@@ -400,18 +375,9 @@ public class KaleoLogPersistenceImpl
 			OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByKaleoTaskInstanceTokenId_First(
-			kaleoTaskInstanceTokenId, orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByKaleoTaskInstanceTokenId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoTaskInstanceTokenId}));
+		return _collectionPersistenceFinderByKaleoTaskInstanceTokenId.findFirst(
+			finderCache, new Object[] {kaleoTaskInstanceTokenId},
+			orderByComparator);
 	}
 
 	/**
@@ -457,7 +423,7 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoTaskInstanceTokenId});
 	}
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByKITI_T;
 
 	/**
@@ -500,17 +466,9 @@ public class KaleoLogPersistenceImpl
 			OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByKITI_T_First(
-			kaleoInstanceTokenId, type, orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByKITI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {kaleoInstanceTokenId, type}));
+		return _collectionPersistenceFinderByKITI_T.findFirst(
+			finderCache, new Object[] {kaleoInstanceTokenId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -556,7 +514,7 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoInstanceTokenId, type});
 	}
 
-	private CollectionPersistenceFinder<KaleoLog>
+	private CollectionPersistenceFinder<KaleoLog, NoSuchLogException>
 		_collectionPersistenceFinderByKCN_KCPK_KITI_T;
 
 	/**
@@ -607,20 +565,12 @@ public class KaleoLogPersistenceImpl
 			String type, OrderByComparator<KaleoLog> orderByComparator)
 		throws NoSuchLogException {
 
-		KaleoLog kaleoLog = fetchByKCN_KCPK_KITI_T_First(
-			kaleoClassName, kaleoClassPK, kaleoInstanceTokenId, type,
+		return _collectionPersistenceFinderByKCN_KCPK_KITI_T.findFirst(
+			finderCache,
+			new Object[] {
+				kaleoClassName, kaleoClassPK, kaleoInstanceTokenId, type
+			},
 			orderByComparator);
-
-		if (kaleoLog != null) {
-			return kaleoLog;
-		}
-
-		throw new NoSuchLogException(
-			_collectionPersistenceFinderByKCN_KCPK_KITI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					kaleoClassName, kaleoClassPK, kaleoInstanceTokenId, type
-				}));
 	}
 
 	/**
@@ -1250,4 +1200,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-933090048
+// LIFERAY-SERVICE-BUILDER-HASH:1103345273

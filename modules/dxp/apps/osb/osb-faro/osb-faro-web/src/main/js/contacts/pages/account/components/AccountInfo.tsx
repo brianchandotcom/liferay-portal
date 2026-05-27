@@ -68,7 +68,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 
 	if (loading) {
 		return (
-			<Card className={classNames(className, 'p-3')}>
+			<Card className={classNames(className, 'p-3')} minHeight={284}>
 				<Card.Body>
 					<Loading />
 				</Card.Body>
@@ -95,7 +95,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 
 	return (
 		<>
-			<Card className={classNames(className, 'p-3')}>
+			<Card className={classNames(className, 'p-3')} minHeight={284}>
 				<Card.Title>
 					<Text size={4} weight='semi-bold'>
 						<span className='text-uppercase'>

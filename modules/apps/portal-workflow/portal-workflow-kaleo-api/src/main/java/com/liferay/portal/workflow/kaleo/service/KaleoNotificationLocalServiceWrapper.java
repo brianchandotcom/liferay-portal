@@ -277,6 +277,16 @@ public class KaleoNotificationLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<KaleoNotification>
+		getKaleoDefinitionVersionKaleoNotifications(
+			String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return _kaleoNotificationLocalService.
+			getKaleoDefinitionVersionKaleoNotifications(
+				kaleoClassName, kaleoDefinitionVersionId);
+	}
+
 	/**
 	 * Returns the kaleo notification with the primary key.
 	 *
@@ -415,4 +425,4 @@ public class KaleoNotificationLocalServiceWrapper
 	private KaleoNotificationLocalService _kaleoNotificationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-81628559
+// LIFERAY-SERVICE-BUILDER-HASH:1279338977

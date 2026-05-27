@@ -7790,6 +7790,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 		<attribute default="false" name="skip.wait.server.startup" />
+		<attribute default="false" name="skip.wait.server.startup.url" />
 
 		<sequential>
 			<lstopwatch action="start" name="start.app.server.@{app.server.bundle.index}" />
@@ -7798,6 +7799,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				app.server.bundle.index="@{app.server.bundle.index}"
 				delete.liferay.home="@{delete.liferay.home}"
 				skip.wait.server.startup="@{skip.wait.server.startup}"
+				skip.wait.server.startup.url="@{skip.wait.server.startup.url}"
 				test.docker.environment="${test.docker.environment}"
 				testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 			/>
@@ -7823,6 +7825,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="host" name="docker.network.name" />
 		<attribute default="false" name="skip.wait.server.startup" />
+		<attribute default="false" name="skip.wait.server.startup.url" />
 		<attribute default="false" name="test.docker.environment" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 
@@ -7892,7 +7895,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						<if>
 							<equals arg1="@{skip.wait.server.startup}" arg2="false" />
 							<then>
-								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" skip.wait.server.startup.url="@{skip.wait.server.startup.url}" />
 							</then>
 						</if>
 
@@ -9532,66 +9535,72 @@ war.path=${app.server.portal.dir}/</echo>
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="false" name="skip.wait.server.startup.url" />
 
 		<sequential>
 			<wait-for-app-server-log />
 
-			<local name="app.server.waiting.url" />
-
-			<get-operating-system-property property.name="operating.system.docker.image" />
-
-			<get-testcase-property property.name="portal.context" />
-			<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
-
-			<get-testcase-property property.name="portal.proxy.path" />
-			<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
-
 			<if>
-				<isset property="portal.context" />
+				<equals arg1="@{skip.wait.server.startup.url}" arg2="false" />
 				<then>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+					<local name="app.server.waiting.url" />
+
+					<get-operating-system-property property.name="operating.system.docker.image" />
+
+					<get-testcase-property property.name="portal.context" />
+					<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
+					<get-testcase-property property.name="portal.proxy.path" />
+					<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
+
+					<if>
+						<isset property="portal.context" />
+						<then>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+						</then>
+						<elseif>
+							<isset property="portal.proxy.path" />
+							<then>
+								<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
+							</then>
+						</elseif>
+						<elseif>
+							<isset property="operating.system.docker.image" />
+							<then>
+								<get-operating-system-property property.name="operating.system.host" />
+
+								<property name="app.server.waiting.url" value="http://${operating.system.host}:${test.app.server.leading.port.number}080/web/guest" />
+							</then>
+						</elseif>
+						<else>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+						</else>
+					</if>
+
+					<local name="app.server.waiting.timeout" />
+
+					<echo>Waiting for ${app.server.waiting.url} to load</echo>
+
+					<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" timeoutproperty="app.server.waiting.timeout">
+						<http url="${app.server.waiting.url}" />
+					</waitfor>
+
+					<if>
+						<isset property="app.server.waiting.timeout" />
+						<then>
+							<antcall target="print-jstack-logs">
+								<param name="process.name" value="Bootstrap" />
+							</antcall>
+
+							<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
+
+							<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
+						</then>
+					</if>
+
+					<echo>${app.server.waiting.url} has loaded</echo>
 				</then>
-				<elseif>
-					<isset property="portal.proxy.path" />
-					<then>
-						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
-					</then>
-				</elseif>
-				<elseif>
-					<isset property="operating.system.docker.image" />
-					<then>
-						<get-operating-system-property property.name="operating.system.host" />
-
-						<property name="app.server.waiting.url" value="http://${operating.system.host}:${test.app.server.leading.port.number}080/web/guest" />
-					</then>
-				</elseif>
-				<else>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-				</else>
 			</if>
-
-			<local name="app.server.waiting.timeout" />
-
-			<echo>Waiting for ${app.server.waiting.url} to load</echo>
-
-			<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" timeoutproperty="app.server.waiting.timeout">
-				<http url="${app.server.waiting.url}" />
-			</waitfor>
-
-			<if>
-				<isset property="app.server.waiting.timeout" />
-				<then>
-					<antcall target="print-jstack-logs">
-						<param name="process.name" value="Bootstrap" />
-					</antcall>
-
-					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
-
-					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
-				</then>
-			</if>
-
-			<echo>${app.server.waiting.url} has loaded</echo>
 
 			<if>
 				<and>
@@ -10967,14 +10976,6 @@ org.apache.catalina.ha.session.level=INFO]]>
 				<delete file="${liferay.home}/osgi/portal/${liferay.portal.dependency.jar}" verbose="true" />
 			</then>
 		</if>
-	</target>
-
-	<target name="delete-license-file">
-		<fail message="Please set the property ${license.xml.file}." unless="license.xml.file" />
-
-		<delete file="${liferay.home}/osgi/modules/${license.xml.file}" />
-
-		<delete dir="${liferay.home}/data/license" />
 	</target>
 
 	<target name="delete-liferay-home">
@@ -12449,9 +12450,7 @@ send_user $expect_out(buffer)]]></echo>
 
 									String attributeValue = element.attributeValue("message");
 
-									String text = element.getText();
-
-									if (attributeValue.length() > maxTextSize) {
+									if ((attributeValue != null) && (attributeValue.length() > maxTextSize)) {
 										element.setAttributeValue("message", attributeValue.substring(0, maxTextSize));
 									}
 								}
@@ -15918,6 +15917,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									#!/bin/bash
 
 									impdp ${oracle.admin.user}/${oracle.admin.password} dumpfile=oracle.dmp table_exists_action=replace
+
+									sqlplus ${oracle.admin.user}/${oracle.admin.password} << -'EOF'
+									grant select on sys.v_$session to ${database.username};
+									grant select on sys.v_$sql to ${database.username};
+									exit
+									EOF
 								]]>
 							</echo>
 
@@ -16133,6 +16138,13 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<arg value="dumpfile=${database.type}.dmp" />
 								<arg value="table_exists_action=replace" />
 							</exec>
+
+							<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+								<![CDATA[
+									grant select on sys.v_$session to lportal;
+									grant select on sys.v_$sql to lportal;
+								]]>
+							</sql>
 
 							<delete file="${data.pump.dir}/${database.type}.dmp" />
 						</then>
@@ -17871,9 +17883,19 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<isset property="skip.wait.server.startup.url" />
+			</not>
+			<then>
+				<var name="skip.wait.server.startup.url" value="false" />
+			</then>
+		</if>
+
 		<start-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 			skip.wait.server.startup="${skip.wait.server.startup}"
+			skip.wait.server.startup.url="${skip.wait.server.startup.url}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
 	</target>

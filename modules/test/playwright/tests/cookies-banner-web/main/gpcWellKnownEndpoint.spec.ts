@@ -16,6 +16,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	resetAllConsentManagerConfigurations,
+	saveOrUpdateConfiguration,
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
@@ -172,9 +173,7 @@ test(
 
 		await consentManagerConfigurationPage.globalPrivacyControlEnabledCheckbox.check();
 
-		await consentManagerConfigurationPage.updateButton.click();
-
-		await waitForAlert(page);
+		await saveOrUpdateConfiguration(page);
 
 		await expect(
 			consentManagerConfigurationPage.globalPrivacyControlEnabledCheckbox

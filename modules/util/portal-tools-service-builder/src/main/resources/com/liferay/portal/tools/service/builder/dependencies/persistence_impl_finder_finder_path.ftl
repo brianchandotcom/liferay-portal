@@ -24,12 +24,12 @@
 
 <#if entityFinder.collectionPersistenceFinderEnabled>
 	<#if entity.isPermissionCheckEnabled(entityFinder)>
-		private FilterCollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+		private FilterCollectionPersistenceFinder<${entity.name}, ${noSuchEntity}Exception> _collectionPersistenceFinderBy${entityFinder.name};
 	<#else>
-		private CollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+		private CollectionPersistenceFinder<${entity.name}, ${noSuchEntity}Exception> _collectionPersistenceFinderBy${entityFinder.name};
 	</#if>
 </#if>
 
 <#if entityFinder.uniquePersistenceFinderEnabled>
-	private UniquePersistenceFinder<${entity.name}> _uniquePersistenceFinderBy${entityFinder.name};
+	private UniquePersistenceFinder<${entity.name}, ${noSuchEntity}Exception> _uniquePersistenceFinderBy${entityFinder.name};
 </#if>

@@ -88,10 +88,10 @@ public class UserModelPreFilterContributorTest {
 		_companyLocalService.deleteCompany(company);
 	}
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static String _originalName;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OnDemandAdminManager _onDemandAdminManager;

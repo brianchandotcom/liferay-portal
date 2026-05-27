@@ -111,6 +111,8 @@ public class DDMDataProviderInstanceModelImpl
 
 	public static final String ENTITY_ALIAS = "ddmDataProviderInstance";
 
+	public static final String FILTER_PK_COLUMN_NAME = "dataProviderInstanceId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmDataProviderInstance.dataProviderInstanceId ASC";
 
@@ -1431,4 +1433,4 @@ public class DDMDataProviderInstanceModelImpl
 	private DDMDataProviderInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:337908002
+// LIFERAY-SERVICE-BUILDER-HASH:-536686286

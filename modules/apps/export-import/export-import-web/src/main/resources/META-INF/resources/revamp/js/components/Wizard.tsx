@@ -8,6 +8,7 @@ import {Form, Formik, FormikConfig, FormikHelpers, FormikValues} from 'formik';
 import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
+import SectionHeader from './SectionHeader';
 import {FormikDebug} from './forms/formik';
 
 interface WizardStepProps {
@@ -120,15 +121,7 @@ export function Wizard({
 						})}
 					</ClayMultiStepNav>
 
-					<header className="mb-1 sheet-header">
-						<div className="mb-1 sheet-title">{title}</div>
-
-						{description && (
-							<p className="sheet-text text-secondary">
-								{description}
-							</p>
-						)}
-					</header>
+					<SectionHeader subtitle={description} title={title} />
 
 					{step}
 

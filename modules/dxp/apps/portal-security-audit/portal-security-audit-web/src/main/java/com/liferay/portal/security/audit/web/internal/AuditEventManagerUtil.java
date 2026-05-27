@@ -46,10 +46,9 @@ public class AuditEventManagerUtil {
 
 	public static List<AuditEvent> getAuditEvents(
 		long companyId, long groupId, long userId, String userName,
-		Date createDateGT, Date createDateLT, String eventType,
-		String className, String classPK, String clientHost, String clientIP,
-		String serverName, int serverPort, String sessionID, boolean andSearch,
-		int start, int end,
+		Date createDateGT, Date createDateLT, String className, String classPK,
+		String clientHost, String clientIP, String eventType, String serverName,
+		int serverPort, String sessionID, boolean andSearch, int start, int end,
 		OrderByComparator
 			<com.liferay.portal.security.audit.storage.model.AuditEvent>
 				orderByComparator) {
@@ -58,7 +57,7 @@ public class AuditEventManagerUtil {
 
 		return auditEventManager.getAuditEvents(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
-			eventType, className, classPK, clientHost, clientIP, serverName,
+			className, classPK, clientHost, clientIP, eventType, serverName,
 			serverPort, sessionID, andSearch, start, end, orderByComparator);
 	}
 
@@ -70,16 +69,15 @@ public class AuditEventManagerUtil {
 
 	public static int getAuditEventsCount(
 		long companyId, long groupId, long userId, String userName,
-		Date createDateGT, Date createDateLT, String eventType,
-		String className, String classPK, String clientHost, String clientIP,
-		String serverName, int serverPort, String sessionID,
-		boolean andSearch) {
+		Date createDateGT, Date createDateLT, String className, String classPK,
+		String clientHost, String clientIP, String eventType, String serverName,
+		int serverPort, String sessionID, boolean andSearch) {
 
 		AuditEventManager auditEventManager = _auditEventManagerSnapshot.get();
 
 		return auditEventManager.getAuditEventsCount(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
-			eventType, className, classPK, clientHost, clientIP, serverName,
+			className, classPK, clientHost, clientIP, eventType, serverName,
 			serverPort, sessionID, andSearch);
 	}
 

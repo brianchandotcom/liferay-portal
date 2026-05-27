@@ -29,6 +29,16 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
+	async expireObjectEntryByExternalReferenceCode(
+		applicationName: string,
+		scopeKey: string,
+		externalReferenceCode: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${applicationName}/scopes/${scopeKey}/by-external-reference-code/${externalReferenceCode}/expire`
+		);
+	}
+
 	async getObjectDefinitionObjectEntries(
 		applicationName: string,
 		searchParams?: URLSearchParams

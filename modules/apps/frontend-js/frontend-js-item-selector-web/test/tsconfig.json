@@ -1,5 +1,5 @@
 {
-	"@generated": "7d5a56e19ee7b79f9ab2db4b36931cc2b000b25c",
+	"@generated": "fb7e2d22198d8f17c54b990ab5858f7b3968c62b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,6 +16,9 @@
 			],
 			"@liferay/frontend-js-react-web": [
 				"../../frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/layout-js-components-web": [
+				"../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-js-components-web": [
 				"../../frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -50,6 +53,9 @@
 		},
 		{
 			"path": "../../frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

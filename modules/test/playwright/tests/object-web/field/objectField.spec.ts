@@ -2436,12 +2436,12 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	});
 
 	test(
-		'can edit the prefix type and prefix for a phone number field',
+		'can edit the country source and country for a phone number field',
 		{tag: ['@LPD-83570']},
 		async ({apiHelpers, objectFieldsPage}) => {
 			let objectDefinition: ObjectDefinition;
-			let selectedPrefixType: string;
-			let selectedPrefix: string;
+			let selectedCountry: string;
+			let selectedCountrySource: string;
 
 			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
 
@@ -2474,44 +2474,44 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				});
 			});
 
-			await test.step('Edit the prefix type and prefix for the phone number field', async () => {
+			await test.step('Edit the country source and country for the phone number field', async () => {
 				await objectFieldsPage.openObjectField(objectFieldLabel);
 
-				await objectFieldsPage.prefixTypeDropdown.click();
+				await objectFieldsPage.countrySourceDropdown.click();
 
-				const prefixTypeOption =
+				const countrySourceOption =
 					objectFieldsPage.iframeLocator.getByRole('option', {
 						exact: true,
 						name: 'Fixed',
 					});
 
-				selectedPrefixType = await prefixTypeOption.innerText();
+				selectedCountrySource = await countrySourceOption.innerText();
 
-				await prefixTypeOption.click();
+				await countrySourceOption.click();
 
-				await objectFieldsPage.prefixDropdown.click();
+				await objectFieldsPage.countryPicker.click();
 
-				const prefixOption = objectFieldsPage.iframeLocator
+				const countryOption = objectFieldsPage.iframeLocator
 					.getByRole('option')
 					.nth(1);
 
-				await prefixOption.click();
+				await countryOption.click();
 
-				selectedPrefix =
-					await objectFieldsPage.prefixDropdown.innerText();
+				selectedCountry =
+					await objectFieldsPage.countryPicker.innerText();
 
 				await objectFieldsPage.saveObjectField();
 			});
 
-			await test.step('Verify the updated prefix type and prefix are saved', async () => {
+			await test.step('Verify the updated country source and country are saved', async () => {
 				await objectFieldsPage.openObjectField(objectFieldLabel);
 
-				await expect(objectFieldsPage.prefixTypeDropdown).toHaveText(
-					selectedPrefixType
+				await expect(objectFieldsPage.countrySourceDropdown).toHaveText(
+					selectedCountrySource
 				);
 
-				await expect(objectFieldsPage.prefixDropdown).toHaveText(
-					selectedPrefix
+				await expect(objectFieldsPage.countryPicker).toHaveText(
+					selectedCountry
 				);
 			});
 		}

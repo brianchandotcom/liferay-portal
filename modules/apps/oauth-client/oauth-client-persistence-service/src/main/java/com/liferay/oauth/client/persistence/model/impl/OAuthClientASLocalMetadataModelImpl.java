@@ -106,6 +106,9 @@ public class OAuthClientASLocalMetadataModelImpl
 
 	public static final String ENTITY_ALIAS = "oAuthClientASLocalMetadata";
 
+	public static final String FILTER_PK_COLUMN_NAME =
+		"oAuthClientASLocalMetadataId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId ASC";
 
@@ -1291,4 +1294,4 @@ public class OAuthClientASLocalMetadataModelImpl
 	private OAuthClientASLocalMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:114478209
+// LIFERAY-SERVICE-BUILDER-HASH:2046419335

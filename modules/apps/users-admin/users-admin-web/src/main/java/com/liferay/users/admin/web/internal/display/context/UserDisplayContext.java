@@ -53,10 +53,13 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 /**
  * @author Pei-Jung Lan
@@ -345,21 +348,17 @@ public class UserDisplayContext {
 			List<Organization> organizations)
 		throws PortalException {
 
-		List<Organization> parentOrganizations = new ArrayList<>();
+		Set<Organization> parentOrganizations = new LinkedHashSet<>();
 
 		for (Organization organization : organizations) {
-			Organization parentOrganization =
-				organization.getParentOrganization();
-
-			if ((parentOrganization != null) &&
-				!organizations.contains(parentOrganization) &&
-				!parentOrganizations.contains(parentOrganization)) {
-
-				parentOrganizations.add(parentOrganization);
-			}
+			parentOrganizations.addAll(
+				ListUtil.filter(
+					OrganizationLocalServiceUtil.getParentOrganizations(
+						organization.getOrganizationId()),
+					Predicate.not(organizations::contains)));
 		}
 
-		return parentOrganizations;
+		return new ArrayList<>(parentOrganizations);
 	}
 
 	private long[] _getSelectedOrganizationIds() throws PortalException {

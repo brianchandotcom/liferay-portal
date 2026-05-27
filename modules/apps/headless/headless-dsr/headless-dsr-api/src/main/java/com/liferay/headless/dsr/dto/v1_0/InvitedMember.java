@@ -127,6 +127,47 @@ public class InvitedMember implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getOwnerId() {
+		if (_ownerIdSupplier != null) {
+			ownerId = _ownerIdSupplier.get();
+
+			_ownerIdSupplier = null;
+		}
+
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+
+		_ownerIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		_ownerIdSupplier = () -> {
+			try {
+				return ownerIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long ownerId;
+
+	@JsonIgnore
+	private Supplier<Long> _ownerIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRoleKey() {
 		if (_roleKeySupplier != null) {
 			roleKey = _roleKeySupplier.get();
@@ -161,7 +202,7 @@ public class InvitedMember implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleKey;
 
 	@JsonIgnore
@@ -220,6 +261,18 @@ public class InvitedMember implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		Long ownerId = getOwnerId();
+
+		if (ownerId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(ownerId);
 		}
 
 		String roleKey = getRoleKey();
@@ -339,4 +392,4 @@ public class InvitedMember implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-386030802
+// LIFERAY-REST-BUILDER-HASH:-312594586

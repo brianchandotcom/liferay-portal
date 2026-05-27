@@ -26,6 +26,7 @@ import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.OptionInfoFieldType;
+import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.PicklistMultiselectInfoFieldType;
 import com.liferay.info.field.type.PicklistSelectInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -59,13 +60,18 @@ import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -78,6 +84,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,7 +104,9 @@ import java.time.temporal.TemporalAccessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -549,6 +558,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				infoField, inputTemplateNode);
 		}
 		else if (infoField.getInfoFieldType() instanceof
+					PhoneNumberInfoFieldType) {
+
+			_addPhoneNumberInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode, locale);
+		}
+		else if (infoField.getInfoFieldType() instanceof
 					RelationshipInfoFieldType) {
 
 			_addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
@@ -718,6 +733,19 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 	}
 
+	private void _addPhoneNumberInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode,
+		Locale locale) {
+
+		inputTemplateNode.addAttribute(
+			"countries", _getCountriesJSONObjects(locale));
+		inputTemplateNode.addAttribute(
+			"prefix", infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX));
+		inputTemplateNode.addAttribute(
+			"prefixType",
+			infoField.getAttribute(PhoneNumberInfoFieldType.PREFIX_TYPE));
+	}
+
 	private void _addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
 		InfoField infoField, InputTemplateNode inputTemplateNode, String label,
 		String value) {
@@ -819,6 +847,67 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private List<JSONObject> _getCountriesJSONObjects(Locale locale) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return Collections.emptyList();
+		}
+
+		long companyId = serviceContext.getCompanyId();
+
+		if (companyId == 0) {
+			return Collections.emptyList();
+		}
+
+		Set<String> a2s = new HashSet<>();
+
+		for (String languageId : PropsValues.LOCALES) {
+			Locale availableLocale = LocaleUtil.fromLanguageId(
+				languageId, false);
+
+			String a2 = availableLocale.getCountry();
+
+			if (Validator.isNotNull(a2)) {
+				a2s.add(a2);
+			}
+		}
+
+		List<JSONObject> countriesJSONObjects = new ArrayList<>();
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		for (Country country :
+				_countryLocalService.getCompanyCountries(companyId, true)) {
+
+			String a2 = country.getA2();
+
+			if (!a2s.contains(a2)) {
+				continue;
+			}
+
+			String idd = country.getIdd();
+
+			if (Validator.isNull(idd)) {
+				continue;
+			}
+
+			countriesJSONObjects.add(
+				JSONUtil.put(
+					"a2", a2
+				).put(
+					"name", country.getTitle(languageId)
+				).put(
+					"prefix", idd
+				));
+		}
+
+		return ListUtil.sort(
+			countriesJSONObjects,
+			Comparator.comparing(country -> country.getString("name")));
 	}
 
 	private Locale _getCurrentLocale(
@@ -1338,6 +1427,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryInputTemplateNodeContextHelperImpl.class);
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

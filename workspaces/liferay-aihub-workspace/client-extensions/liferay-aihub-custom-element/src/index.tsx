@@ -6,7 +6,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
-import {setAIHubURL} from './api';
+import {setURLs} from './api';
 import ChatbotWidget from './components/ChatbotWidget';
 import {WidgetConfiguration} from './types';
 
@@ -23,20 +23,11 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 		);
 	}
 	else {
-		const aiHubURL =
-			scriptTag.getAttribute('ai-hub-url') ||
-			'https://ai.hub.liferay.com';
-
-		if (!aiHubURL) {
-			console.warn(
-				'Attribute "ai-hub-url" is missing from the widget script tag.'
-			);
-		}
-
 		const widgetConfiguration: WidgetConfiguration = {
-			aiHubURL,
+			aiHubURL: scriptTag.getAttribute('ai-hub-url') || '',
 			chatbotExternalReferenceCode:
 				scriptTag.getAttribute('chatbot-external-reference-code') || '',
+			liferayDXPURL: scriptTag.getAttribute('liferay-dxp-url') || '',
 		};
 
 		const element = document.createElement('div');
@@ -45,7 +36,10 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 
 		document.body.appendChild(element);
 
-		setAIHubURL(widgetConfiguration.aiHubURL);
+		setURLs(
+			widgetConfiguration.aiHubURL,
+			widgetConfiguration.liferayDXPURL
+		);
 
 		createRoot(element).render(
 			<ChatbotWidget widgetConfiguration={widgetConfiguration} />

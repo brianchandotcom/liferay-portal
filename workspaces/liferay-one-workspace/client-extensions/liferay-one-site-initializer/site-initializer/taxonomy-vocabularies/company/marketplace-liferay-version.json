@@ -1,0 +1,18 @@
+{
+	"assetTypes": [
+		{
+			"required": false,
+			"subtype": "AllAssetSubtypes",
+			"type": "Product"
+		}
+	],
+	"availableLanguages": [
+		"en-US"
+	],
+	"externalReferenceCode": "MARKETPLACE_LIFERAY_VERSION",
+	"name": "marketplace-liferay-version",
+	"name_i18n": {
+		"en_US": "Marketplace Liferay Version"
+	},
+	"viewableBy": "Anyone"
+}

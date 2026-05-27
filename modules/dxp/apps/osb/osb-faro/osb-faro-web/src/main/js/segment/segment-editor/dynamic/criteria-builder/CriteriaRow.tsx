@@ -3,6 +3,7 @@ import autobind from 'autobind-decorator';
 import BehaviorInput from '../inputs/BehaviorInput';
 import BooleanInput from '../inputs/BooleanInput';
 import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import CustomBooleanInput from '../inputs/CustomBooleanInput';
 import CustomDateInput from '../inputs/CustomDateInput';
 import CustomDateTimeInput from '../inputs/CustomDateTimeInput';
@@ -30,6 +31,13 @@ import {
 	withReferencedObjectsConsumer
 } from '../context/referencedObjects';
 import {compose} from 'redux';
+import {
+	Conjunctions,
+	isKnown,
+	isUnknown,
+	PropertyTypes,
+	RelationalOperators
+} from '../utils/constants';
 import {connect, ConnectedProps} from 'react-redux';
 import {
 	ConnectDragPreview,
@@ -50,12 +58,6 @@ import {
 import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
 import {get} from 'lodash';
-import {
-	isKnown,
-	isUnknown,
-	PropertyTypes,
-	RelationalOperators
-} from '../utils/constants';
 import {Map} from 'immutable';
 import {Option, Picker} from '@clayui/core';
 import {Property} from 'shared/util/records';
@@ -72,13 +74,19 @@ const acceptedDragTypes = [DragTypes.CriteriaRow, DragTypes.Property];
 const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
+		disabled,
 		index: destIndex
 	}: {
 		criteriaGroupId: string;
+		disabled?: boolean;
 		index: number;
 	},
 	monitor: DropTargetMonitor
 ): boolean => {
+	if (disabled) {
+		return false;
+	}
+
 	const {criteriaGroupId: startGroupId, index: startIndex} =
 		monitor.getItem();
 
@@ -97,7 +105,8 @@ const drop = (
 		criterion,
 		index: destIndex,
 		onChange,
-		onMove
+		onMove,
+		sequential
 	}: {
 		addProperty: AddProperty;
 		criteriaGroupId: string;
@@ -105,6 +114,7 @@ const drop = (
 		index: number;
 		onChange: (newGroup: CriterionGroup) => void;
 		onMove: OnMove;
+		sequential?: boolean;
 	},
 	monitor: DropTargetMonitor
 ): void => {
@@ -145,7 +155,10 @@ const drop = (
 
 	const itemType = monitor.getItemType();
 
-	const newGroup = createNewGroup([criterion, newCriterion]);
+	const newGroup = createNewGroup(
+		[criterion, newCriterion],
+		sequential ? Conjunctions.Or : Conjunctions.And
+	);
 
 	if (itemType === DragTypes.Property) {
 		onChange(newGroup);
@@ -200,6 +213,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	connectDropTarget: ConnectDropTarget;
 	criteriaGroupId: string;
 	criterion: Criterion;
+	disabled?: boolean;
 	dragging?: boolean;
 	groupId: string;
 	id?: string;
@@ -211,6 +225,8 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	onMove: OnMove;
 	referencedProperties: Map<string, Map<string, Property>>;
 	segmentType: SegmentTypes;
+	sequential?: boolean;
+	stepNumber?: number;
 	timeZoneId: string;
 }
 
@@ -485,7 +501,8 @@ class CriteriaRow extends React.Component<
 				connectDragSource,
 				connectDropTarget,
 				dragging,
-				hover
+				hover,
+				stepNumber
 			},
 			state: {selectedProperty}
 		} = this;
@@ -511,6 +528,17 @@ class CriteriaRow extends React.Component<
 							<div className='drag-icon'>
 								<ClayIcon className='icon-root' symbol='drag' />
 							</div>
+						)}
+
+						{stepNumber !== undefined && (
+							<ClaySticker
+								className='mr-4'
+								displayType='secondary'
+								shape='circle'
+								size='sm'
+							>
+								{stepNumber}
+							</ClaySticker>
 						)}
 
 						{selectedProperty ? (

@@ -96,8 +96,9 @@ public class CommercePricingClassPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommercePricingClass>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommercePricingClass, NoSuchPricingClassException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce pricing classes where uuid = &#63;.
@@ -138,16 +139,8 @@ public class CommercePricingClassPersistenceImpl
 			OrderByComparator<CommercePricingClass> orderByComparator)
 		throws NoSuchPricingClassException {
 
-		CommercePricingClass commercePricingClass = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		throw new NoSuchPricingClassException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -223,8 +216,9 @@ public class CommercePricingClassPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommercePricingClass>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommercePricingClass, NoSuchPricingClassException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce pricing classes where uuid = &#63; and companyId = &#63;.
@@ -267,16 +261,8 @@ public class CommercePricingClassPersistenceImpl
 			OrderByComparator<CommercePricingClass> orderByComparator)
 		throws NoSuchPricingClassException {
 
-		CommercePricingClass commercePricingClass = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		throw new NoSuchPricingClassException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +344,9 @@ public class CommercePricingClassPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommercePricingClass>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommercePricingClass, NoSuchPricingClassException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce pricing classes where companyId = &#63;.
@@ -400,16 +387,8 @@ public class CommercePricingClassPersistenceImpl
 			OrderByComparator<CommercePricingClass> orderByComparator)
 		throws NoSuchPricingClassException {
 
-		CommercePricingClass commercePricingClass = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		throw new NoSuchPricingClassException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -486,8 +465,9 @@ public class CommercePricingClassPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommercePricingClass>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommercePricingClass, NoSuchPricingClassException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce pricing class where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPricingClassException</code> if it could not be found.
@@ -502,23 +482,8 @@ public class CommercePricingClassPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchPricingClassException {
 
-		CommercePricingClass commercePricingClass = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commercePricingClass == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPricingClassException(message);
-		}
-
-		return commercePricingClass;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -964,16 +929,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CommercePricingClass::getUuid));
@@ -1001,16 +956,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CommercePricingClass::getUuid),
@@ -1042,16 +987,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1148,4 +1083,4 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:954609613
+// LIFERAY-SERVICE-BUILDER-HASH:998052036

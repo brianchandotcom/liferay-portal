@@ -76,6 +76,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the product configuration entry identified by id. Calls CPConfigurationEntryService.deleteCPConfigurationEntry. Validation -- Service-level NoSuchCPConfigurationEntryException -> 404. Side effects -- Removes the configuration override (master entries are protected by ModelResourcePermission)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -156,6 +159,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the product configuration entry identified by external reference code. Calls CPConfigurationEntryService.getCPConfigurationEntryByExternalReferenceCode + deleteProductConfiguration. Validation -- NoSuchCPConfigurationEntryException -> 404 when ERC not found. Side effects -- Removes the configuration override."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -190,6 +196,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the consolidated product configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode -> getProductIdConfiguration. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -226,6 +235,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the product configuration entry identified by id. Calls CPConfigurationEntryService.getCPConfigurationEntry (via DTO converter). Validation -- NoSuchCPConfigurationEntryException -> 404 when id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -260,6 +272,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the product configuration entry identified by external reference code. Calls CPConfigurationEntryService.getCPConfigurationEntryByExternalReferenceCode + getProductConfiguration. Validation -- NoSuchCPConfigurationEntryException -> 404 when ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -296,6 +311,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configurations'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists product configuration entries attached to the product configuration list identified by external reference code. Calls CPConfigurationListService.getCPConfigurationListByExternalReferenceCode -> getProductConfigurationListIdProductConfigurationsPage. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found. List query support — filterable fields -- purchasable, shippable, categoryIds, categoryNames, createDate, modifiedDate, maxOrderQuantity, minOrderQuantity, multipleOrderQuantity, entityName, productType; sortable fields -- purchasable, shippable, categoryIds, categoryNames, createDate, modifiedDate, maxOrderQuantity, minOrderQuantity, multipleOrderQuantity, entityName, productType."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -368,6 +386,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configurations'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists product configuration entries attached to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + SearchUtil.search over CPConfigurationEntry (scoped by configuration list id). Validation -- NoSuchCPConfigurationListException -> 404 when id not found. Side effects -- None (showDifferences toggles delta computation against the master entry). List query support — filterable fields -- purchasable, shippable, categoryIds, categoryNames, createDate, modifiedDate, maxOrderQuantity, minOrderQuantity, multipleOrderQuantity, entityName, productType; sortable fields -- purchasable, shippable, categoryIds, categoryNames, createDate, modifiedDate, maxOrderQuantity, minOrderQuantity, multipleOrderQuantity, entityName, productType."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -440,6 +461,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the consolidated product configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductConfigurationDTOConverter (over CPDefinition id). Validation -- NoSuchCPDefinitionException -> 404 when product id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -474,6 +498,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the consolidated product configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode -> patchProductIdConfiguration. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the master CPConfigurationEntry plus CPDefinitionInventory and CPDAvailabilityEstimate."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -514,6 +541,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/{id}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the product configuration entry identified by id. Calls CPConfigurationEntryService.getCPConfigurationEntry + updateCPConfigurationEntry. Validation -- NoSuchCPConfigurationEntryException -> 404 when id not found. Side effects -- Updates inventory, shipping, and tax fields on the entry."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -550,6 +580,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/by-externalReferenceCode/{externalReferenceCode}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the product configuration entry identified by external reference code. Calls CPConfigurationEntryService.getCPConfigurationEntryByExternalReferenceCode + patchProductConfiguration. Validation -- NoSuchCPConfigurationEntryException -> 404 when ERC not found. Side effects -- Updates inventory, shipping, and tax fields on the entry."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -589,6 +622,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the consolidated product configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + CPConfigurationEntryService.updateCPConfigurationEntry (when master entry exists) + ProductConfigurationUtil.updateCPDefinitionInventory + updateCPDAvailabilityEstimate. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the master CPConfigurationEntry plus CPDefinitionInventory and CPDAvailabilityEstimate."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -627,6 +663,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a product configuration entry under the product configuration list identified by external reference code. Calls CPConfigurationListService.getCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfiguration. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchCPDefinitionException -> 404 when entityType=product and the referenced product is missing. Side effects -- Creates a CPConfigurationEntry under the configuration list, scoped to a product or to the list as a template."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -666,6 +705,9 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "differences": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a product configuration entry under the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + CPConfigurationEntryService.addCPConfigurationEntry (resolving entityType=product or entityType=template). Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchCPDefinitionException -> 404 when entityType=product and the referenced product is missing. Side effects -- Creates a CPConfigurationEntry under the configuration list."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1536,4 +1578,4 @@ public abstract class BaseProductConfigurationResourceImpl
 		LogFactoryUtil.getLog(BaseProductConfigurationResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1183583821
+// LIFERAY-REST-BUILDER-HASH:1459999611

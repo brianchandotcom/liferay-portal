@@ -85,7 +85,7 @@ public class AccountRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -126,16 +126,8 @@ public class AccountRolePersistenceImpl
 			long companyId, OrderByComparator<AccountRole> orderByComparator)
 		throws NoSuchRoleException {
 
-		AccountRole accountRole = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (accountRole != null) {
-			return accountRole;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -211,7 +203,7 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
@@ -420,7 +412,7 @@ public class AccountRolePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(accountEntryIds)});
 	}
 
-	private UniquePersistenceFinder<AccountRole>
+	private UniquePersistenceFinder<AccountRole, NoSuchRoleException>
 		_uniquePersistenceFinderByRoleId;
 
 	/**
@@ -432,21 +424,8 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public AccountRole findByRoleId(long roleId) throws NoSuchRoleException {
-		AccountRole accountRole = fetchByRoleId(roleId);
-
-		if (accountRole == null) {
-			String message =
-				_uniquePersistenceFinderByRoleId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return accountRole;
+		return _uniquePersistenceFinderByRoleId.find(
+			finderCache, new Object[] {roleId});
 	}
 
 	/**
@@ -487,7 +466,7 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {roleId});
 	}
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByC_A;
 
 	/**
@@ -715,7 +694,7 @@ public class AccountRolePersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<AccountRole>
+	private UniquePersistenceFinder<AccountRole, NoSuchRoleException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -730,23 +709,8 @@ public class AccountRolePersistenceImpl
 	public AccountRole findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchRoleException {
 
-		AccountRole accountRole = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (accountRole == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return accountRole;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1052,15 +1016,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId));
@@ -1088,15 +1043,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountRole::getAccountEntryId));
@@ -1133,15 +1079,6 @@ public class AccountRolePersistenceImpl
 					new String[] {"companyId", "accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class, "accountRole",
-					"AccountRole", "accountRole.accountRoleId",
-					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
-					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
-					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
-					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
-					AccountRoleModelImpl.ORDER_BY_SQL,
-					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId),
@@ -1233,4 +1170,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2081669354
+// LIFERAY-SERVICE-BUILDER-HASH:-15170479

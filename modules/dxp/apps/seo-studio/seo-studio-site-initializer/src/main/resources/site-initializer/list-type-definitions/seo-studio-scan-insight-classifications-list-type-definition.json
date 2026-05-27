@@ -2,19 +2,19 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_CLASSIFICATIONS",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CLASSIFICATION_INFORMATIONAL",
+			"externalReferenceCode": "INFORMATIONAL",
 			"key": "informational",
 			"name": "Informational",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CLASSIFICATION_OPPORTUNITY",
+			"externalReferenceCode": "OPPORTUNITY",
 			"key": "opportunity",
 			"name": "Opportunity",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CLASSIFICATION_PROBLEM",
+			"externalReferenceCode": "PROBLEM",
 			"key": "problem",
 			"name": "Problem",
 			"system": true

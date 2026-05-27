@@ -97,13 +97,14 @@ public class JournalArticlePermissionCheckerTest
 		return JournalConstants.RESOURCE_NAME;
 	}
 
+	private JournalArticle _article;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
 	)
-	private static ModelResourcePermission<JournalArticle>
+	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
-	private JournalArticle _article;
 	private JournalServiceConfiguration _journalServiceConfiguration;
 	private JournalArticle _subarticle;
 

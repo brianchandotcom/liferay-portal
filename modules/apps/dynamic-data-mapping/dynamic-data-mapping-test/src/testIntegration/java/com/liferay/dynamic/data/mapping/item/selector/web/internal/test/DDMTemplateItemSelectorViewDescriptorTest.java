@@ -95,36 +95,46 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 	public void testSearchContainerExcludesCrossSiteTemplatesForAssetLibraryStructure()
 		throws Exception {
 
-		Group group1 = GroupTestUtil.addGroup();
-		Group group2 = GroupTestUtil.addGroup();
+		_setUpDepotEntry();
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext());
+		DDMTemplate depotDDMTemplate = _addDDMTemplate(
+			_depotEntry.getGroupId());
+		DDMTemplate group1DDMTemplate = _addDDMTemplate(_group1.getGroupId());
+		DDMTemplate group2DDMTemplate = _addDDMTemplate(_group2.getGroupId());
 
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), group1.getGroupId());
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), group2.getGroupId());
+		List<DDMTemplate> ddmTemplates = _getDDMTemplates(
+			0, _group1.getGroupId());
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			depotEntry.getGroupId(), JournalArticle.class.getName());
+		Assert.assertTrue(ddmTemplates.contains(group1DDMTemplate));
+		Assert.assertFalse(ddmTemplates.contains(depotDDMTemplate));
+		Assert.assertFalse(ddmTemplates.contains(group2DDMTemplate));
+	}
 
-		DDMTemplate group1Template = DDMTemplateTestUtil.addTemplate(
-			group1.getGroupId(), ddmStructure.getStructureId(),
-			ddmStructure.getClassNameId(), TemplateConstants.LANG_TYPE_FTL,
+	@Test
+	public void testSearchContainerReturnsNoTemplatesWhenNavigatingToUnrelatedSite()
+		throws Exception {
+
+		_setUpDepotEntry();
+
+		_addDDMTemplate(_depotEntry.getGroupId());
+		_addDDMTemplate(_group2.getGroupId());
+
+		List<DDMTemplate> ddmTemplates = _getDDMTemplates(
+			_group1.getGroupId(), _group2.getGroupId());
+
+		Assert.assertTrue(ddmTemplates.toString(), ddmTemplates.isEmpty());
+	}
+
+	private DDMTemplate _addDDMTemplate(long groupId) throws Exception {
+		return DDMTemplateTestUtil.addTemplate(
+			groupId, _ddmStructure.getStructureId(),
+			_ddmStructure.getClassNameId(), TemplateConstants.LANG_TYPE_FTL,
 			_SCRIPT, LocaleUtil.getSiteDefault());
-		DDMTemplate group2Template = DDMTemplateTestUtil.addTemplate(
-			group2.getGroupId(), ddmStructure.getStructureId(),
-			ddmStructure.getClassNameId(), TemplateConstants.LANG_TYPE_FTL,
-			_SCRIPT, LocaleUtil.getSiteDefault());
-		DDMTemplate depotTemplate = DDMTemplateTestUtil.addTemplate(
-			depotEntry.getGroupId(), ddmStructure.getStructureId(),
-			ddmStructure.getClassNameId(), TemplateConstants.LANG_TYPE_FTL,
-			_SCRIPT, LocaleUtil.getSiteDefault());
+	}
+
+	private List<DDMTemplate> _getDDMTemplates(
+			long refererGroupId, long scopeGroupId)
+		throws Exception {
 
 		DDMTemplateItemSelectorCriterion ddmTemplateItemSelectorCriterion =
 			new DDMTemplateItemSelectorCriterion();
@@ -132,14 +142,15 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 		ddmTemplateItemSelectorCriterion.setClassNameId(
 			PortalUtil.getClassNameId(JournalArticle.class.getName()));
 		ddmTemplateItemSelectorCriterion.setDDMStructureId(
-			ddmStructure.getStructureId());
+			_ddmStructure.getStructureId());
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setScopeGroupId(group1.getGroupId());
-		themeDisplay.setSiteGroupId(group1.getGroupId());
+		themeDisplay.setRefererGroupId(refererGroupId);
+		themeDisplay.setScopeGroupId(scopeGroupId);
+		themeDisplay.setSiteGroupId(scopeGroupId);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -174,14 +185,29 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 				ddmTemplateItemSelectorViewDescriptor, "getSearchContainer",
 				new Class<?>[0]);
 
-		List<DDMTemplate> ddmTemplates = searchContainer.getResults();
+		return searchContainer.getResults();
+	}
 
-		Assert.assertTrue(
-			ddmTemplates.toString(), ddmTemplates.contains(group1Template));
-		Assert.assertTrue(
-			ddmTemplates.toString(), ddmTemplates.contains(depotTemplate));
-		Assert.assertFalse(
-			ddmTemplates.toString(), ddmTemplates.contains(group2Template));
+	private void _setUpDepotEntry() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			_depotEntry.getGroupId(), JournalArticle.class.getName());
+
+		_group1 = GroupTestUtil.addGroup();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group1.getGroupId());
+
+		_group2 = GroupTestUtil.addGroup();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group2.getGroupId());
 	}
 
 	private static final String _SCRIPT = "${variable}";
@@ -189,8 +215,12 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private DDMStructure _ddmStructure;
+
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
@@ -198,6 +228,8 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	private Group _group1;
+	private Group _group2;
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 

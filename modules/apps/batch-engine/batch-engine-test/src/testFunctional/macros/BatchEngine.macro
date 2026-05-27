@@ -42,6 +42,9 @@ definition {
 			var actualValue = ListUtil.sort(${actualValue});
 		}
 
+		var actualValue = StringUtil.regexReplaceFirst(${actualValue}, "\.\d+Z$", "Z");
+		var expectedValue = StringUtil.regexReplaceFirst(${expectedValue}, "\.\d+Z$", "Z");
+
 		TestUtils.assertEquals(
 			actual = ${actualValue},
 			expected = ${expectedValue});

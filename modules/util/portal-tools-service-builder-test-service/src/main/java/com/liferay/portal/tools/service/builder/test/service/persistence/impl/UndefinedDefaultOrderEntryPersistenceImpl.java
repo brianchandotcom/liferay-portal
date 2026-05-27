@@ -65,8 +65,9 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<UndefinedDefaultOrderEntry>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<UndefinedDefaultOrderEntry, NoSuchUndefinedDefaultOrderEntryException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the undefined default order entry where name = &#63; or throws a <code>NoSuchUndefinedDefaultOrderEntryException</code> if it could not be found.
@@ -79,22 +80,8 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	public UndefinedDefaultOrderEntry findByName(String name)
 		throws NoSuchUndefinedDefaultOrderEntryException {
 
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry = fetchByName(
-			name);
-
-		if (undefinedDefaultOrderEntry == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUndefinedDefaultOrderEntryException(message);
-		}
-
-		return undefinedDefaultOrderEntry;
+		return _uniquePersistenceFinderByName.find(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -140,8 +127,9 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			finderCache, new Object[] {name});
 	}
 
-	private CollectionPersistenceFinder<UndefinedDefaultOrderEntry>
-		_collectionPersistenceFinderByName_Collection;
+	private CollectionPersistenceFinder
+		<UndefinedDefaultOrderEntry, NoSuchUndefinedDefaultOrderEntryException>
+			_collectionPersistenceFinderByName_Collection;
 
 	/**
 	 * Returns an ordered range of all the undefined default order entries where name = &#63;.
@@ -182,16 +170,8 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator)
 		throws NoSuchUndefinedDefaultOrderEntryException {
 
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
-			fetchByName_Collection_First(name, orderByComparator);
-
-		if (undefinedDefaultOrderEntry != null) {
-			return undefinedDefaultOrderEntry;
-		}
-
-		throw new NoSuchUndefinedDefaultOrderEntryException(
-			_collectionPersistenceFinderByName_Collection.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
+		return _collectionPersistenceFinderByName_Collection.findFirst(
+			finderCache, new Object[] {name}, orderByComparator);
 	}
 
 	/**
@@ -519,4 +499,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:164193818
+// LIFERAY-SERVICE-BUILDER-HASH:1269072957

@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConfigurationListAccountGroup")
+@GraphQLName(
+	description = "Association between a configuration list template and an account group, qualifying the template to apply only when the cart's account belongs to the group.",
+	value = "ProductConfigurationListAccountGroup"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Association between a configuration list template and an account group, qualifying the template to apply only when the cart's account belongs to the group.",
 	requiredProperties = {"accountGroupId", "productConfigurationListId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -57,7 +61,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 			ProductConfigurationListAccountGroup.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lightweight projection of the linked account group such as identifier and name for client convenience; read-only."
+	)
 	@Valid
 	public AccountGroup getAccountGroup() {
 		if (_accountGroupSupplier != null) {
@@ -92,14 +98,19 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lightweight projection of the linked account group such as identifier and name for client convenience; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AccountGroup accountGroup;
 
 	@JsonIgnore
 	private Supplier<AccountGroup> _accountGroupSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the account group; read-only.",
+		example = "DAB-34098-789-N"
+	)
 	public String getAccountGroupExternalReferenceCode() {
 		if (_accountGroupExternalReferenceCodeSupplier != null) {
 			accountGroupExternalReferenceCode =
@@ -138,7 +149,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the account group; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountGroupExternalReferenceCode;
 
@@ -146,7 +159,10 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the linked account group; required.",
+		example = "30324"
+	)
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -180,7 +196,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the linked account group; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long accountGroupId;
@@ -188,7 +206,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -224,7 +244,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name (typically `delete` only); each entry carries the URL template and HTTP method; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -232,7 +254,10 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of this account-group-to-configuration-list association; read-only.",
+		example = "30643"
+	)
 	public Long getProductConfigurationListAccountGroupId() {
 		if (_productConfigurationListAccountGroupIdSupplier != null) {
 			productConfigurationListAccountGroupId =
@@ -272,14 +297,19 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of this account-group-to-configuration-list association; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productConfigurationListAccountGroupId;
 
 	@JsonIgnore
 	private Supplier<Long> _productConfigurationListAccountGroupIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductConfigurationListExternalReferenceCode() {
 		if (_productConfigurationListExternalReferenceCodeSupplier != null) {
 			productConfigurationListExternalReferenceCode =
@@ -319,7 +349,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent configuration list, surfaced for client navigation; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productConfigurationListExternalReferenceCode;
 
@@ -328,7 +360,10 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		_productConfigurationListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation.",
+		example = "30130"
+	)
 	public Long getProductConfigurationListId() {
 		if (_productConfigurationListIdSupplier != null) {
 			productConfigurationListId =
@@ -364,7 +399,9 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent configuration list; required on create to anchor the relation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productConfigurationListId;
@@ -598,4 +635,4 @@ public class ProductConfigurationListAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:654532132
+// LIFERAY-REST-BUILDER-HASH:-1899362884

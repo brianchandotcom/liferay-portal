@@ -83,8 +83,9 @@ public class KaleoDefinitionVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoDefinitionVersion>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<KaleoDefinitionVersion, NoSuchDefinitionVersionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the kaleo definition versions where companyId = &#63;.
@@ -125,16 +126,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws NoSuchDefinitionVersionException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoDefinitionVersion != null) {
-			return kaleoDefinitionVersion;
-		}
-
-		throw new NoSuchDefinitionVersionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -176,8 +169,9 @@ public class KaleoDefinitionVersionPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoDefinitionVersion>
-		_collectionPersistenceFinderByC_N;
+	private CollectionPersistenceFinder
+		<KaleoDefinitionVersion, NoSuchDefinitionVersionException>
+			_collectionPersistenceFinderByC_N;
 
 	/**
 	 * Returns an ordered range of all the kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -220,16 +214,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws NoSuchDefinitionVersionException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByC_N_First(
-			companyId, name, orderByComparator);
-
-		if (kaleoDefinitionVersion != null) {
-			return kaleoDefinitionVersion;
-		}
-
-		throw new NoSuchDefinitionVersionException(
-			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
+		return _collectionPersistenceFinderByC_N.findFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -274,8 +260,9 @@ public class KaleoDefinitionVersionPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private UniquePersistenceFinder<KaleoDefinitionVersion>
-		_uniquePersistenceFinderByC_N_V;
+	private UniquePersistenceFinder
+		<KaleoDefinitionVersion, NoSuchDefinitionVersionException>
+			_uniquePersistenceFinderByC_N_V;
 
 	/**
 	 * Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionVersionException</code> if it could not be found.
@@ -291,23 +278,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 			long companyId, String name, String version)
 		throws NoSuchDefinitionVersionException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByC_N_V(
-			companyId, name, version);
-
-		if (kaleoDefinitionVersion == null) {
-			String message =
-				_uniquePersistenceFinderByC_N_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, name, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDefinitionVersionException(message);
-		}
-
-		return kaleoDefinitionVersion;
+		return _uniquePersistenceFinderByC_N_V.find(
+			finderCache, new Object[] {companyId, name, version});
 	}
 
 	/**
@@ -807,4 +779,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2051041619
+// LIFERAY-SERVICE-BUILDER-HASH:-704638955

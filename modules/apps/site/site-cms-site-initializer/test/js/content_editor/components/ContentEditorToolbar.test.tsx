@@ -35,7 +35,7 @@ jest.mock('frontend-js-web', () => {
 	};
 });
 
-const renderComponent = () => {
+const renderComponent = (isNew = false) => {
 	return render(
 		<>
 			<ContentEditorToolbar
@@ -45,6 +45,7 @@ const renderComponent = () => {
 				getPreviewDataURL="getPreviewDataURL"
 				hasWorkflow={false}
 				headerTitle="New Content edit"
+				isNew={isNew}
 				title="New Content"
 				type="Basic Web Content"
 			/>
@@ -78,8 +79,12 @@ describe('ContentEditorToolbar', () => {
 			},
 			Language: {
 				get: jest.fn((key) => {
-					if (key === 'x-was-published-successfully') {
-						return '{0} was published successfully';
+					if (key === 'x-was-created-successfully') {
+						return '{0} was created successfully';
+					}
+
+					if (key === 'x-was-updated-successfully') {
+						return '{0} was updated successfully';
 					}
 
 					return key;
@@ -137,7 +142,34 @@ describe('ContentEditorToolbar', () => {
 
 		expect(sessionStorage.setItem).toHaveBeenCalledWith(
 			'com.liferay.site.cms.site.initializer.successMessage',
-			expect.stringContaining('<strong>My Test Content</strong>'),
+			'<strong>My Test Content</strong> was updated successfully',
+			'NECESSARY'
+		);
+	});
+
+	it('shows created message when publishing a new entry with ctrl + alt + Enter', () => {
+		renderComponent(true);
+
+		const form = screen.getByTestId('form') as HTMLFormElement;
+
+		form.checkValidity = jest.fn(() => true);
+
+		form.addEventListener('submit', (event: Event) =>
+			event.preventDefault()
+		);
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				altKey: true,
+				bubbles: true,
+				ctrlKey: true,
+				key: 'Enter',
+			})
+		);
+
+		expect(sessionStorage.setItem).toHaveBeenCalledWith(
+			'com.liferay.site.cms.site.initializer.successMessage',
+			'<strong>My Test Content</strong> was created successfully',
 			'NECESSARY'
 		);
 	});

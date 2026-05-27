@@ -119,13 +119,13 @@ public class RedirectURLConfigurationUpgradeProcessTest {
 		return _configurationAdmin.listConfigurations(filterString);
 	}
 
-	private static UpgradeProcess _upgradeProcess;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
+
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"

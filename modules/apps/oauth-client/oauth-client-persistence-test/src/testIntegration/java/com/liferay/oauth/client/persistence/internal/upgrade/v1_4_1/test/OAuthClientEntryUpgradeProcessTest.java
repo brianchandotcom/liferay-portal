@@ -163,11 +163,6 @@ public class OAuthClientEntryUpgradeProcessTest {
 		"com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1." +
 			"OAuthClientEntryUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private MultiVMPool _multiVMPool;
 
@@ -176,5 +171,10 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 	private String _pid1;
 	private String _pid2;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

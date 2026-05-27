@@ -844,4 +844,4 @@ public abstract class BaseProvisioningRequestResourceTestCase {
 		_provisioningRequestResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:665874748
+// LIFERAY-REST-BUILDER-HASH:268353027

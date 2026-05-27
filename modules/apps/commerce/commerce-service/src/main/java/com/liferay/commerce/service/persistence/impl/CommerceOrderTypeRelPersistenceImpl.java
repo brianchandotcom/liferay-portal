@@ -90,8 +90,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceOrderTypeRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce order type rels where uuid = &#63;.
@@ -132,16 +133,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		throw new NoSuchOrderTypeRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -183,8 +176,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderTypeRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce order type rels where uuid = &#63; and companyId = &#63;.
@@ -227,16 +221,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		throw new NoSuchOrderTypeRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -281,8 +267,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderTypeRel>
-		_collectionPersistenceFinderByCommerceOrderTypeId;
+	private CollectionPersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_collectionPersistenceFinderByCommerceOrderTypeId;
 
 	/**
 	 * Returns an ordered range of all the commerce order type rels where commerceOrderTypeId = &#63;.
@@ -323,19 +310,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel =
-			fetchByCommerceOrderTypeId_First(
-				commerceOrderTypeId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		throw new NoSuchOrderTypeRelException(
-			_collectionPersistenceFinderByCommerceOrderTypeId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceOrderTypeId}));
+		return _collectionPersistenceFinderByCommerceOrderTypeId.findFirst(
+			finderCache, new Object[] {commerceOrderTypeId}, orderByComparator);
 	}
 
 	/**
@@ -377,8 +353,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			finderCache, new Object[] {commerceOrderTypeId});
 	}
 
-	private CollectionPersistenceFinder<CommerceOrderTypeRel>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the commerce order type rels where classNameId = &#63; and commerceOrderTypeId = &#63;.
@@ -421,17 +398,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByC_C_First(
-			classNameId, commerceOrderTypeId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		throw new NoSuchOrderTypeRelException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, commerceOrderTypeId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, commerceOrderTypeId},
+			orderByComparator);
 	}
 
 	/**
@@ -477,8 +446,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			finderCache, new Object[] {classNameId, commerceOrderTypeId});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderTypeRel>
-		_uniquePersistenceFinderByC_C_C;
+	private UniquePersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the commerce order type rel where classNameId = &#63; and classPK = &#63; and commerceOrderTypeId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
@@ -494,23 +464,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			long classNameId, long classPK, long commerceOrderTypeId)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByC_C_C(
-			classNameId, classPK, commerceOrderTypeId);
-
-		if (commerceOrderTypeRel == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK, commerceOrderTypeId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderTypeRelException(message);
-		}
-
-		return commerceOrderTypeRel;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache,
+			new Object[] {classNameId, classPK, commerceOrderTypeId});
 	}
 
 	/**
@@ -569,8 +525,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			new Object[] {classNameId, classPK, commerceOrderTypeId});
 	}
 
-	private UniquePersistenceFinder<CommerceOrderTypeRel>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
@@ -585,23 +542,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchOrderTypeRelException {
 
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceOrderTypeRel == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchOrderTypeRelException(message);
-		}
-
-		return commerceOrderTypeRel;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1175,4 +1117,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1549471473
+// LIFERAY-SERVICE-BUILDER-HASH:-137150088

@@ -90,10 +90,10 @@ public class ImpersonationAction extends Action {
 				);
 
 				AuditMessage auditMessage = new AuditMessage(
-					EventTypes.IMPERSONATE, themeDisplay.getCompanyId(),
-					realUser.getUserId(), realUser.getFullName(),
+					themeDisplay.getCompanyId(), realUser.getUserId(),
+					realUser.getFullName(), additionalInfoJSONObject,
 					User.class.getName(), String.valueOf(user.getUserId()),
-					null, additionalInfoJSONObject);
+					EventTypes.IMPERSONATE, null);
 
 				_auditRouter.route(auditMessage);
 			}

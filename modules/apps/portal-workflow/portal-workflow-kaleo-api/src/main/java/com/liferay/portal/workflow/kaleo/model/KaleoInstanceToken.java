@@ -70,5 +70,7 @@ public interface KaleoInstanceToken
 	public void setCurrentKaleoNode(KaleoNode kaleoNode)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean shouldIndex();
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2021610894
+// LIFERAY-SERVICE-BUILDER-HASH:-1023168790

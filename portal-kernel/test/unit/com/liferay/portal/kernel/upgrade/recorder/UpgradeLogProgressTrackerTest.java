@@ -118,6 +118,146 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testCaptureProgressCorrectsTotalWhenCountDrops()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			long driftedCount = _TOTAL_ROW_COUNT / 2;
+
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT, driftedCount);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_assertProgress(log, wrappedResultSet, 2, driftedCount + 2);
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
+	public void testCaptureProgressLogsSQLOnceAcrossIntervals()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			Mockito.when(
+				log.isDebugEnabled()
+			).thenReturn(
+				true
+			);
+
+			UpgradeLogProgressTracker.start();
+
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			Mockito.verify(
+				log, Mockito.times(1)
+			).debug(
+				StringBundler.concat(
+					_getProgressId(wrappedResultSet), " is iterating SQL: ",
+					_SELECT_SQL)
+			);
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
+	public void testCaptureProgressLogsTentativeTotal() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_assertProgress(log, wrappedResultSet, 1, _TOTAL_ROW_COUNT + 1);
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
+	public void testCaptureProgressLogsTotalWhenCountIsStable()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT, _TOTAL_ROW_COUNT);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_assertProgress(log, wrappedResultSet, 2, _TOTAL_ROW_COUNT);
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
 	public void testClearParametersResetsUnsafeFlag() throws Exception {
 		try (SafeCloseable enabledSafeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -211,32 +351,23 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 
 			wrappedResultSet.close();
 			wrappedResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 
 			Mockito.verify(
 				log, Mockito.times(1)
 			).info(
-				progressId + " is finished."
+				_getProgressId(wrappedResultSet) + " is finished."
 			);
 		}
 		finally {
@@ -260,7 +391,7 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
@@ -299,7 +430,7 @@ public class UpgradeLogProgressTrackerTest {
 							ResultSet resultSet = _mockResultSet();
 
 							ResultSet wrappedResultSet = _wrapResultSet(
-								_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+								resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 							wrappedResultSet.next();
 							wrappedResultSet.close();
@@ -493,7 +624,7 @@ public class UpgradeLogProgressTrackerTest {
 			);
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			Assert.assertEquals(
 				columnValue, wrappedResultSet.getString(columnName));
@@ -613,32 +744,21 @@ public class UpgradeLogProgressTrackerTest {
 			Assert.assertTrue(wrappedInnerResultSet.next());
 			Assert.assertTrue(wrappedOuterResultSet.next());
 
-			String innerProgressId = _getProgressId(wrappedInnerResultSet);
-			String outerProgressId = _getProgressId(wrappedOuterResultSet);
+			Assert.assertNotEquals(
+				_getProgressId(wrappedInnerResultSet),
+				_getProgressId(wrappedOuterResultSet));
 
-			Assert.assertNotEquals(innerProgressId, outerProgressId);
-
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(innerProgressId));
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedInnerResultSet);
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 
 			wrappedInnerResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(innerProgressId));
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedInnerResultSet);
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 
 			wrappedOuterResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -661,7 +781,7 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
@@ -698,7 +818,7 @@ public class UpgradeLogProgressTrackerTest {
 			);
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
@@ -736,28 +856,7 @@ public class UpgradeLogProgressTrackerTest {
 			PreparedStatement[] preparedStatements = _mockPreparedStatements(
 				_SELECT_SQL);
 
-			PreparedStatement countPreparedStatement = preparedStatements[0];
 			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
 
 			ResultSet resultSet = _mockResultSet();
 
@@ -772,26 +871,27 @@ public class UpgradeLogProgressTrackerTest {
 
 			_resetLogTime(wrappedResultSet);
 
+			Object invocationHandler = ProxyUtil.getInvocationHandler(
+				wrappedResultSet);
+
 			ReflectionTestUtil.setFieldValue(
-				ProxyUtil.getInvocationHandler(wrappedResultSet), "_rowCount",
-				_TOTAL_ROW_COUNT);
+				invocationHandler, "_firstCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_rowCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_totalRowCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_totalRowCountComputed", true);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed ",
-					_TOTAL_ROW_COUNT + 1, " rows.")
-			);
+			_assertProgress(log, wrappedResultSet, _TOTAL_ROW_COUNT + 1);
 
 			Map<String, Long> lastKnownTotalCounts =
 				UpgradeLogProgressTracker.getLastKnownTotalCounts();
 
-			Assert.assertNull(lastKnownTotalCounts.get(progressId));
+			Assert.assertNull(
+				lastKnownTotalCounts.get(_getProgressId(wrappedResultSet)));
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -817,7 +917,7 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
@@ -856,27 +956,14 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
-
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertProgress(log, wrappedResultSet, 1);
+			_assertLastKnownProgress(1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -899,7 +986,7 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
@@ -909,95 +996,8 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 2 rows."
-			);
-		}
-		finally {
-			UpgradeLogProgressTracker.stop();
-		}
-	}
-
-	@Test
-	public void testNextLogsWithTotalAndPercentage() throws Exception {
-		try (SafeCloseable enabledSafeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_LOG_PROGRESS_ENABLED", true);
-			SafeCloseable intervalSafeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
-
-			Log log = _getLog();
-
-			UpgradeLogProgressTracker.start();
-
-			PreparedStatement[] preparedStatements = _mockPreparedStatements(
-				_SELECT_SQL);
-
-			PreparedStatement countPreparedStatement = preparedStatements[0];
-			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
-
-			ResultSet resultSet = _mockResultSet();
-
-			Mockito.when(
-				wrappedPreparedStatement.executeQuery()
-			).thenReturn(
-				resultSet
-			);
-
-			ResultSet wrappedResultSet =
-				wrappedPreparedStatement.executeQuery();
-
-			_resetLogTime(wrappedResultSet);
-
-			Assert.assertTrue(wrappedResultSet.next());
-
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed 1 of ",
-					_TOTAL_ROW_COUNT, " rows. (0%)")
-			);
-
-			Map<String, Long> lastKnownTotalCounts =
-				UpgradeLogProgressTracker.getLastKnownTotalCounts();
-
-			Assert.assertEquals(
-				Long.valueOf(_TOTAL_ROW_COUNT),
-				lastKnownTotalCounts.get(progressId));
+			_assertProgress(log, wrappedResultSet, 1);
+			_assertProgress(log, wrappedResultSet, 2);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1044,13 +1044,7 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
+			_assertProgress(log, wrappedResultSet, 1);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1152,28 +1146,19 @@ public class UpgradeLogProgressTrackerTest {
 			ResultSet resultSet = _mockResultSet();
 
 			ResultSet wrappedResultSet = _wrapResultSet(
-				_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+				resultSet, _UPGRADE_PROCESS_CLASS_NAME);
 
 			_resetLogTime(wrappedResultSet);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
+			_assertLastKnownProgress(1, wrappedResultSet);
 
-			Long expectedRowCount = 1L;
+			Statement statement = wrappedResultSet.getStatement();
 
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
+			statement.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
-
-			Statement wrappedStatement = wrappedResultSet.getStatement();
-
-			wrappedStatement.close();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1501,6 +1486,93 @@ public class UpgradeLogProgressTrackerTest {
 		}
 	}
 
+	private void _assertLastKnownProgress(
+		long expectedRowCount, ResultSet resultSet) {
+
+		Map<String, Long> lastKnownProgresses =
+			UpgradeLogProgressTracker.getLastKnownProgresses();
+
+		Assert.assertEquals(
+			Long.valueOf(expectedRowCount),
+			lastKnownProgresses.get(_getProgressId(resultSet)));
+	}
+
+	private void _assertProgress(Log log, ResultSet resultSet, long rowCount) {
+		Mockito.verify(
+			log
+		).info(
+			StringBundler.concat(
+				_getProgressId(resultSet), " is still executing. Processed ",
+				rowCount, " rows.")
+		);
+	}
+
+	private void _assertProgress(
+		Log log, ResultSet resultSet, long rowCount, long totalCount) {
+
+		long percentage = (rowCount * 100L) / totalCount;
+
+		String progressId = _getProgressId(resultSet);
+
+		Mockito.verify(
+			log
+		).info(
+			StringBundler.concat(
+				progressId, " is still executing. Processed ", rowCount, " of ",
+				totalCount, " rows. (", percentage, "%)")
+		);
+
+		Map<String, Long> lastKnownTotalCounts =
+			UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+		Assert.assertEquals(
+			Long.valueOf(totalCount), lastKnownTotalCounts.get(progressId));
+	}
+
+	private ResultSet _executeQueryWithCount(long... counts) throws Exception {
+		PreparedStatement[] preparedStatements = _mockPreparedStatements(
+			_SELECT_SQL);
+
+		PreparedStatement countPreparedStatement = preparedStatements[0];
+		PreparedStatement wrappedPreparedStatement = preparedStatements[1];
+
+		ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			countPreparedStatement.executeQuery()
+		).thenReturn(
+			countResultSet
+		);
+
+		Mockito.when(
+			countResultSet.next()
+		).thenReturn(
+			true
+		);
+
+		Long[] additionalCounts = new Long[counts.length - 1];
+
+		for (int i = 0; i < additionalCounts.length; i++) {
+			additionalCounts[i] = counts[i + 1];
+		}
+
+		Mockito.when(
+			countResultSet.getLong(1)
+		).thenReturn(
+			counts[0], additionalCounts
+		);
+
+		ResultSet resultSet = _mockResultSet();
+
+		Mockito.when(
+			wrappedPreparedStatement.executeQuery()
+		).thenReturn(
+			resultSet
+		);
+
+		return wrappedPreparedStatement.executeQuery();
+	}
+
 	private Log _getLog() {
 		Log log = Mockito.mock(Log.class);
 
@@ -1516,9 +1588,9 @@ public class UpgradeLogProgressTrackerTest {
 		return log;
 	}
 
-	private String _getProgressId(ResultSet wrappedResultSet) {
+	private String _getProgressId(ResultSet resultSet) {
 		return ReflectionTestUtil.getFieldValue(
-			ProxyUtil.getInvocationHandler(wrappedResultSet), "_progressId");
+			ProxyUtil.getInvocationHandler(resultSet), "_progressId");
 	}
 
 	private String _invokeGetCountSQL(String sql) throws Exception {
@@ -1577,14 +1649,13 @@ public class UpgradeLogProgressTrackerTest {
 		return resultSet;
 	}
 
-	private void _resetLogTime(ResultSet wrappedResultSet) {
+	private void _resetLogTime(ResultSet resultSet) {
 		ReflectionTestUtil.setFieldValue(
-			ProxyUtil.getInvocationHandler(wrappedResultSet), "_lastLogTime",
-			0L);
+			ProxyUtil.getInvocationHandler(resultSet), "_lastLogTime", 0L);
 	}
 
 	private ResultSet _wrapResultSet(
-			String upgradeProcessClassName, ResultSet resultSet)
+			ResultSet resultSet, String upgradeProcessClassName)
 		throws Exception {
 
 		Connection connection = Mockito.mock(Connection.class);

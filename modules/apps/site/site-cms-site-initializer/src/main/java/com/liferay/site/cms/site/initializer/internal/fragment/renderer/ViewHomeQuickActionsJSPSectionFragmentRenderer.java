@@ -5,12 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQuickActionsDisplayContext;
@@ -37,9 +33,7 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewHomeQuickActionsDisplayContext(
-			_depotEntryLocalService, groupLocalService,
-			_objectDefinitionService, _objectEntryFolderLocalService,
-			_objectEntryFolderModelResourcePermission,
+			groupLocalService, _objectDefinitionService,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -50,18 +44,6 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	}
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
-
-	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
 
 }

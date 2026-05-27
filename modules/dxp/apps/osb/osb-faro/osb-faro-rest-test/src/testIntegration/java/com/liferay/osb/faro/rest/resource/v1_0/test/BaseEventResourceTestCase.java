@@ -210,8 +210,9 @@ public abstract class BaseEventResourceTestCase {
 			testGetWorkspaceGroupChannelEventsPage_getIrrelevantChannelId();
 
 		Page<Event> page = eventResource.getWorkspaceGroupChannelEventsPage(
-			groupId, channelId, null, RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 10));
+			groupId, channelId, null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -1674,4 +1675,4 @@ public abstract class BaseEventResourceTestCase {
 		_eventResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1003243289
+// LIFERAY-REST-BUILDER-HASH:840749797

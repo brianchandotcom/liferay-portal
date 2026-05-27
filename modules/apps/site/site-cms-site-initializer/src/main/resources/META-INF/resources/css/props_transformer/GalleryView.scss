@@ -1,8 +1,23 @@
 @import 'atlas-variables';
 
 .fds-gallery-view {
+	$gallery-preview-height: unquote('max(320px, calc(100dvh - 475px))');
+
 	&__preview {
-		height: 570px;
+		height: $gallery-preview-height;
+
+		.c-empty-state {
+			align-self: center;
+			margin: 0;
+		}
+
+		.c-empty-state-image {
+			max-width: 200px;
+		}
+
+		.c-empty-state-title {
+			margin-top: 1rem;
+		}
 
 		&-wrapper > * {
 			margin: 0;
@@ -15,7 +30,7 @@
 	}
 
 	.preview-file .preview-file-container.preview-file-max-height {
-		height: 570px;
+		height: $gallery-preview-height;
 		max-height: 100%;
 	}
 

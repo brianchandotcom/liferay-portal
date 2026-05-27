@@ -1,13 +1,23 @@
 {
+	"masterPage": {
+		"key": "liferay-one"
+	},
 	"pageElement": {
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"bg-white",
+						"overflow-hidden"
+					],
 					"fragmentStyle": {
-						"paddingBottom": "7",
-						"paddingLeft": "5",
-						"paddingRight": "5",
-						"paddingTop": "7"
+						"backgroundFragmentImage": {
+							"url": {
+								"value": "/documents/d/one/hero_banner_background.svg"
+							}
+						},
+						"paddingBottom": "6",
+						"paddingTop": "6"
 					},
 					"indexed": true,
 					"layout": {
@@ -30,20 +40,57 @@
 									"modulesPerRow": 2,
 									"numberOfColumns": 2,
 									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
 									"verticalAlignment": "middle"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"size": 7
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 6
 										},
 										"pageElements": [
 											{
 												"definition": {
 													"indexed": true,
 													"layout": {
-														"contentDisplay": "FlexColumn",
-														"paddingRight": 4
+														"contentDisplay": "FlexColumn"
 													}
 												},
 												"pageElements": [
@@ -63,14 +110,18 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "One Portal. Every Liferay Service"
+																				"en_US": "One Portal. Every Liferay Service",
+																				"es_ES": "Un Portal. Todos los servicios de Liferay",
+																				"ja_JP": "ひとつのポータル。すべてのLiferayサービス",
+																				"pt_BR": "Um Portal. Todos os serviços Liferay"
 																			}
 																		}
 																	}
 																}
 															],
 															"fragmentStyle": {
-																"marginBottom": "3"
+																"marginBottom": "4",
+																"marginTop": "0"
 															},
 															"indexed": true
 														},
@@ -78,6 +129,9 @@
 													},
 													{
 														"definition": {
+															"cssClasses": [
+																"text-paragraph-lg"
+															],
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
@@ -89,7 +143,10 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "<p>Marketplace, Support, Account, and Admin, all unified into one experience. Browse the catalogue freely, or sign in to manage everything you've bought.</p>"
+																				"en_US": "Marketplace, Support, Subscriptions and Account unified into one experience. Browse the catalogue freely or manage your Account.",
+																				"es_ES": "Marketplace, Soporte, Suscripciones y Cuenta unificados en una sola experiencia. Explora el catálogo libremente o gestiona tu Cuenta.",
+																				"ja_JP": "Marketplace、サポート、サブスクリプション、アカウントをひとつの体験に統合。カタログを自由に閲覧、またはアカウントを管理できます。",
+																				"pt_BR": "Marketplace, Suporte, Assinaturas e Conta unificados em uma única experiência. Explore o catálogo livremente ou gerencie sua Conta."
 																			}
 																		}
 																	}
@@ -107,9 +164,8 @@
 														"definition": {
 															"indexed": true,
 															"layout": {
-																"align": "Center",
 																"contentDisplay": "FlexRow",
-																"gap": 3
+																"flexWrap": "Wrap"
 															}
 														},
 														"pageElements": [
@@ -131,19 +187,28 @@
 																					"value": {
 																						"href": {
 																							"value_i18n": {
-																								"en_US": "/web/one/marketplace"
+																								"en_US": "/marketplace",
+																								"es_ES": "/marketplace",
+																								"ja_JP": "/marketplace",
+																								"pt_BR": "/marketplace"
 																							}
 																						}
 																					}
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Browse Marketplace"
+																						"en_US": "Browse Marketplace",
+																						"es_ES": "Explorar Marketplace",
+																						"ja_JP": "Marketplaceを見る",
+																						"pt_BR": "Explorar Marketplace"
 																					}
 																				}
 																			}
 																		}
 																	],
+																	"fragmentStyle": {
+																		"marginRight": "2"
+																	},
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -155,7 +220,7 @@
 																	},
 																	"fragmentConfig": {
 																		"buttonSize": "nm",
-																		"buttonType": "secondary",
+																		"buttonType": "outline-primary",
 																		"type": "link"
 																	},
 																	"fragmentFields": [
@@ -166,14 +231,20 @@
 																					"value": {
 																						"href": {
 																							"value_i18n": {
-																								"en_US": "/web/one/my-account"
+																								"en_US": "/c/portal/login",
+																								"es_ES": "/c/portal/login",
+																								"ja_JP": "/c/portal/login",
+																								"pt_BR": "/c/portal/login"
 																							}
 																						}
 																					}
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "View Account"
+																						"en_US": "Sign In",
+																						"es_ES": "Iniciar sesión",
+																						"ja_JP": "サインイン",
+																						"pt_BR": "Entrar"
 																					}
 																				}
 																			}
@@ -194,7 +265,26 @@
 									},
 									{
 										"definition": {
-											"size": 5
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 6
 										},
 										"pageElements": [
 											{
@@ -211,12 +301,8 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero-illustration.png#]"
-																			}
+																		"value_i18n": {
+																			"en_US": "/documents/d/one/hero_banner_illustration_image.svg"
 																		}
 																	}
 																},
@@ -245,13 +331,10 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
-						"paddingBottom": 4,
-						"paddingLeft": 4,
-						"paddingRight": 4,
 						"paddingTop": 4,
 						"widthType": "Fixed"
 					},
-					"name": "Nav Cards"
+					"name": "Service Cards"
 				},
 				"pageElements": [
 					{
@@ -261,11 +344,48 @@
 							"modulesPerRow": 4,
 							"numberOfColumns": 4,
 							"reverseOrder": false,
-							"verticalAlignment": "top"
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							]
 						},
 						"pageElements": [
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
@@ -273,18 +393,19 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"h-100"
 											],
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "/web/one/my-account"
+														"en_US": "/my-account",
+														"es_ES": "/my-account",
+														"ja_JP": "/my-account",
+														"pt_BR": "/my-account"
 													}
 												}
 											},
 											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
 												"paddingBottom": "4",
 												"paddingLeft": "4",
 												"paddingRight": "4",
@@ -293,11 +414,7 @@
 											"indexed": true,
 											"layout": {
 												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
+												"contentDisplay": "FlexColumn"
 											}
 										},
 										"pageElements": [
@@ -306,20 +423,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "image-square",
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-account.png#]"
-																			}
+																		"value_i18n": {
+																			"en_US": "/documents/d/one/service_card_account-svg"
 																		}
 																	}
 																},
@@ -329,9 +440,9 @@
 														}
 													],
 													"fragmentStyle": {
-														"height": "56px",
+														"height": "32px",
 														"marginBottom": "3",
-														"width": "56px"
+														"width": "32px"
 													},
 													"indexed": true
 												},
@@ -343,7 +454,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h3"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -353,14 +464,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Account"
+																		"en_US": "Account",
+																		"es_ES": "Cuenta",
+																		"ja_JP": "アカウント",
+																		"pt_BR": "Conta"
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "2"
+														"marginBottom": "2",
+														"marginTop": "0"
 													},
 													"indexed": true
 												},
@@ -368,6 +483,10 @@
 											},
 											{
 												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
@@ -379,12 +498,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "<p>Manage your Liferay account, subscriptions, and open permissions easily and efficiently.</p>"
+																		"en_US": "Manage your Liferay account, subscriptions, permissions, fast and efficient.",
+																		"es_ES": "Gestiona tu cuenta, suscripciones y permisos de Liferay, rápido y eficiente.",
+																		"ja_JP": "Liferayアカウント、サブスクリプション、権限を迅速かつ効率的に管理します。",
+																		"pt_BR": "Gerencie sua conta, assinaturas e permissões Liferay de forma rápida e eficiente."
 																	}
 																}
 															}
 														}
 													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -397,6 +522,25 @@
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
@@ -404,18 +548,19 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"h-100"
 											],
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "/web/one/support"
+														"en_US": "https://liferay.atlassian.net/servicedesk/customer/portals",
+														"es_ES": "https://liferay.atlassian.net/servicedesk/customer/portals",
+														"ja_JP": "https://liferay.atlassian.net/servicedesk/customer/portals",
+														"pt_BR": "https://liferay.atlassian.net/servicedesk/customer/portals"
 													}
 												}
 											},
 											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
 												"paddingBottom": "4",
 												"paddingLeft": "4",
 												"paddingRight": "4",
@@ -424,11 +569,7 @@
 											"indexed": true,
 											"layout": {
 												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
+												"contentDisplay": "FlexColumn"
 											}
 										},
 										"pageElements": [
@@ -437,20 +578,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "image-square",
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-support.png#]"
-																			}
+																		"value_i18n": {
+																			"en_US": "/documents/d/one/service_card_support-svg"
 																		}
 																	}
 																},
@@ -460,9 +595,9 @@
 														}
 													],
 													"fragmentStyle": {
-														"height": "56px",
+														"height": "32px",
 														"marginBottom": "3",
-														"width": "56px"
+														"width": "32px"
 													},
 													"indexed": true
 												},
@@ -474,7 +609,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h3"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -484,14 +619,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Support"
+																		"en_US": "Support",
+																		"es_ES": "Soporte",
+																		"ja_JP": "サポート",
+																		"pt_BR": "Suporte"
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "2"
+														"marginBottom": "2",
+														"marginTop": "0"
 													},
 													"indexed": true
 												},
@@ -499,6 +638,10 @@
 											},
 											{
 												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
@@ -510,12 +653,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "<p>Get help with tickets, access Liferay products, and find answers in our knowledge base.</p>"
+																		"en_US": "Get help with your Liferay products, submit tickets, and find answers in our knowledge base.",
+																		"es_ES": "Obtén ayuda con tus productos Liferay, envía tickets y encuentra respuestas en nuestra base de conocimientos.",
+																		"ja_JP": "Liferay製品のサポートを受け、チケットを送信し、ナレッジベースで回答を見つけることができます。",
+																		"pt_BR": "Obtenha ajuda com seus produtos Liferay, envie tickets e encontre respostas em nossa base de conhecimentos."
 																	}
 																}
 															}
 														}
 													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -528,6 +677,25 @@
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
@@ -535,18 +703,19 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"h-100"
 											],
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "https://learn.liferay.com"
+														"en_US": "https://learn.liferay.com/",
+														"es_ES": "https://learn.liferay.com/",
+														"ja_JP": "https://learn.liferay.com/",
+														"pt_BR": "https://learn.liferay.com/"
 													}
 												}
 											},
 											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
 												"paddingBottom": "4",
 												"paddingLeft": "4",
 												"paddingRight": "4",
@@ -555,11 +724,7 @@
 											"indexed": true,
 											"layout": {
 												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
+												"contentDisplay": "FlexColumn"
 											}
 										},
 										"pageElements": [
@@ -568,20 +733,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "image-square",
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-learn.png#]"
-																			}
+																		"value_i18n": {
+																			"en_US": "/documents/d/one/service_card_learn-svg"
 																		}
 																	}
 																},
@@ -591,9 +750,9 @@
 														}
 													],
 													"fragmentStyle": {
-														"height": "56px",
+														"height": "32px",
 														"marginBottom": "3",
-														"width": "56px"
+														"width": "32px"
 													},
 													"indexed": true
 												},
@@ -605,7 +764,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h3"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -615,14 +774,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Learn"
+																		"en_US": "Learn",
+																		"es_ES": "Aprender",
+																		"ja_JP": "学ぶ",
+																		"pt_BR": "Aprender"
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "2"
+														"marginBottom": "2",
+														"marginTop": "0"
 													},
 													"indexed": true
 												},
@@ -630,6 +793,10 @@
 											},
 											{
 												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
@@ -641,12 +808,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "<p>Explore courses and learning paths to master Liferay DXP and other products.</p>"
+																		"en_US": "Explore courses and learning paths to master Liferay DXP and other products.",
+																		"es_ES": "Explora cursos y rutas de aprendizaje para dominar Liferay DXP y otros productos.",
+																		"ja_JP": "Liferay DXPおよびその他の製品をマスターするためのコースと学習パスをご覧ください。",
+																		"pt_BR": "Explore cursos e trilhas de aprendizagem para dominar o Liferay DXP e outros produtos."
 																	}
 																}
 															}
 														}
 													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -659,6 +832,25 @@
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
@@ -666,18 +858,19 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"h-100"
 											],
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "/web/one/marketplace"
+														"en_US": "/marketplace",
+														"es_ES": "/marketplace",
+														"ja_JP": "/marketplace",
+														"pt_BR": "/marketplace"
 													}
 												}
 											},
 											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
 												"paddingBottom": "4",
 												"paddingLeft": "4",
 												"paddingRight": "4",
@@ -686,11 +879,7 @@
 											"indexed": true,
 											"layout": {
 												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
+												"contentDisplay": "FlexColumn"
 											}
 										},
 										"pageElements": [
@@ -699,20 +888,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "image-square",
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-marketplace.png#]"
-																			}
+																		"value_i18n": {
+																			"en_US": "/documents/d/one/service_card_marketplace-svg"
 																		}
 																	}
 																},
@@ -722,9 +905,9 @@
 														}
 													],
 													"fragmentStyle": {
-														"height": "56px",
+														"height": "32px",
 														"marginBottom": "3",
-														"width": "56px"
+														"width": "32px"
 													},
 													"indexed": true
 												},
@@ -736,7 +919,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h3"
+														"headingLevel": "h5"
 													},
 													"fragmentFields": [
 														{
@@ -746,14 +929,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Marketplace"
+																		"en_US": "Marketplace",
+																		"es_ES": "Marketplace",
+																		"ja_JP": "Marketplace",
+																		"pt_BR": "Marketplace"
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "2"
+														"marginBottom": "2",
+														"marginTop": "0"
 													},
 													"indexed": true
 												},
@@ -761,6 +948,10 @@
 											},
 											{
 												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
@@ -772,12 +963,18 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "<p>Find apps, themes, and other resources to extend and power your Liferay DXP platform.</p>"
+																		"en_US": "Find apps, themes, and other resources to extend your Liferay DXP platform.",
+																		"es_ES": "Encuentra aplicaciones, temas y otros recursos para ampliar tu plataforma Liferay DXP.",
+																		"ja_JP": "Liferay DXPプラットフォームを拡張するためのアプリ、テーマ、その他のリソースをご覧ください。",
+																		"pt_BR": "Encontre aplicativos, temas e outros recursos para estender sua plataforma Liferay DXP."
 																	}
 																}
 															}
 														}
 													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -820,8 +1017,7 @@
 									"layout": {
 										"align": "Center",
 										"contentDisplay": "FlexRow",
-										"justify": "SpaceBetween",
-										"marginBottom": 4
+										"justify": "SpaceBetween"
 									}
 								},
 								"pageElements": [
@@ -841,7 +1037,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Announcements"
+																"en_US": "Announcements",
+																"es_ES": "Anuncios",
+																"ja_JP": "アナウンスメント",
+																"pt_BR": "Avisos"
 															}
 														}
 													}
@@ -869,14 +1068,20 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/one/support/announcements"
+																		"en_US": "/web/one/support/announcements",
+																		"es_ES": "/web/one/support/announcements",
+																		"ja_JP": "/web/one/support/announcements",
+																		"pt_BR": "/web/one/support/announcements"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "View All"
+																"en_US": "View All →",
+																"es_ES": "Ver todos →",
+																"ja_JP": "全てを見る →",
+																"pt_BR": "Ver tudo →"
 															}
 														}
 													}
@@ -888,6 +1093,37 @@
 									}
 								],
 								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "See what's new with Liferay",
+														"es_ES": "Descubre las novedades de Liferay",
+														"ja_JP": "Liferayの最新情報をチェック",
+														"pt_BR": "Veja as novidades da Liferay"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightNormal",
+										"marginBottom": "4",
+										"textColor": "brandColor2"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
 							},
 							{
 								"definition": {
@@ -926,8 +1162,8 @@
 									"listItemStyle": "",
 									"listStyle": "",
 									"numberOfColumns": 1,
-									"numberOfItems": 4,
-									"numberOfItemsPerPage": 4,
+									"numberOfItems": 3,
+									"numberOfItemsPerPage": 3,
 									"numberOfPages": 5,
 									"paginationType": "None",
 									"showAllItems": false,
@@ -942,6 +1178,7 @@
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$]:hover {\n\toutline: 2px solid var(--color-action-primary-hover);\n\toutline-offset: 2px;\n}",
 													"fragmentLink": {
 														"href": {
 															"mapping": {
@@ -956,6 +1193,9 @@
 														"backgroundColor": "colorBrandPrimaryLighten5",
 														"borderRadius": "borderRadiusLg",
 														"marginBottom": "3",
+														"marginLeft": "1",
+														"marginRight": "1",
+														"marginTop": "1",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -966,6 +1206,7 @@
 														"align": "End",
 														"contentDisplay": "FlexRow",
 														"justify": "SpaceBetween",
+														"marginBottom": 1,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
 														"paddingRight": 2,
@@ -975,6 +1216,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": ""
+															},
 															"indexed": true,
 															"layout": {
 															}
@@ -1005,14 +1249,20 @@
 																			}
 																		}
 																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
 																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: -webkit-box;\n\tline-clamp: 1;\n\toverflow: hidden;\n\t-webkit-box-orient: vertical;\n\t-webkit-line-clamp: 1;\n}",
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
 																	},
 																	"fragmentFields": [
 																		{
@@ -1022,33 +1272,7 @@
 																				},
 																				"text": {
 																					"mapping": {
-																						"fieldKey": "description",
-																						"itemReference": {
-																							"contextSource": "CollectionItem"
-																						}
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-date"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-date",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"mapping": {
-																						"fieldKey": "publishDate",
+																						"fieldKey": "content",
 																						"itemReference": {
 																							"contextSource": "CollectionItem"
 																						}
@@ -1058,52 +1282,85 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold"
+																		"fontWeight": "fontWeightNormal",
+																		"marginBottom": "3",
+																		"textColor": "brandColor2"
 																	},
 																	"indexed": true
 																},
 																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-button"
 															},
-															"fragmentConfig": {
-																"buttonSize": "nm",
-																"buttonType": "link",
-																"type": "link"
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"mapping": {
-																						"fieldKey": "displayPageURL",
-																						"itemReference": {
-																							"contextSource": "CollectionItem"
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"contentDisplay": "FlexRow"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-date"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-date",
+																					"value": {
+																						"date": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_publishDate",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
 																						}
 																					}
 																				}
-																			}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightNormal",
+																				"marginRight": "3",
+																				"textColor": "brandColor2"
+																			},
+																			"indexed": true
 																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Read more →"
-																			}
-																		}
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "liferay-one-category-badges",
+																				"siteKey": "One"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "categories",
+																					"value": {
+																						"html": {
+																							"mapping": {
+																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Article Categories$]",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
 																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
 													}
 												],
 												"type": "Section"
@@ -1122,5 +1379,11 @@
 			}
 		],
 		"type": "Root"
-	}
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-one"
+		}
+	},
+	"version": 1.1
 }

@@ -179,28 +179,10 @@ public class TestrayCaseResultResourceImpl
 				values,
 				value -> new TestrayCaseResult() {
 					{
-						error = GetterUtil.getString(value.get("errors_"));
-						duration = GetterUtil.getLong(value.get("duration_"));
-						gitHash = GetterUtil.getString(value.get("githash_"));
-						issues = GetterUtil.getString(value.get("issues_"));
-						status = GetterUtil.getString(value.get("duestatus_"));
-						testrayBuildId = GetterUtil.getLong(
-							value.get("c_buildid_"));
-						testrayCaseResultId = GetterUtil.getLong(
-							value.get("c_caseresultid_"));
-						testrayProductVersionName = GetterUtil.getString(
-							value.get("productversion"));
-						testrayRoutineId = GetterUtil.getLong(
-							value.get("c_routineid_"));
-						testrayRoutineName = GetterUtil.getString(
-							value.get("routinename"));
-						testrayRunName = GetterUtil.getString(
-							value.get("runname"));
-						testrayTeamName = GetterUtil.getString(
-							value.get("teamname"));
-						userName = GetterUtil.getString(value.get("name"));
-						warning = GetterUtil.getInteger(value.get("warnings_"));
-
+						setDuration(
+							() -> GetterUtil.getLong(value.get("duration_")));
+						setError(
+							() -> GetterUtil.getString(value.get("errors_")));
 						setExecutionDate(
 							() -> {
 								if (value.get("executiondate") == null) {
@@ -211,6 +193,36 @@ public class TestrayCaseResultResourceImpl
 									"executiondate"
 								).toString();
 							});
+						setGitHash(
+							() -> GetterUtil.getString(value.get("githash_")));
+						setIssues(
+							() -> GetterUtil.getString(value.get("issues_")));
+						setStatus(
+							() -> GetterUtil.getString(
+								value.get("duestatus_")));
+						setTestrayBuildId(
+							() -> GetterUtil.getLong(value.get("c_buildid_")));
+						setTestrayCaseResultId(
+							() -> GetterUtil.getLong(
+								value.get("c_caseresultid_")));
+						setTestrayProductVersionName(
+							() -> GetterUtil.getString(
+								value.get("productversion")));
+						setTestrayRoutineId(
+							() -> GetterUtil.getLong(
+								value.get("c_routineid_")));
+						setTestrayRoutineName(
+							() -> GetterUtil.getString(
+								value.get("routinename")));
+						setTestrayRunName(
+							() -> GetterUtil.getString(value.get("runname")));
+						setTestrayTeamName(
+							() -> GetterUtil.getString(value.get("teamname")));
+						setUserName(
+							() -> GetterUtil.getString(value.get("name")));
+						setWarning(
+							() -> GetterUtil.getInteger(
+								value.get("warnings_")));
 					}
 				}),
 			pagination, totalCount);
@@ -378,29 +390,39 @@ public class TestrayCaseResultResourceImpl
 				values,
 				value -> new TestrayCaseResult() {
 					{
-						comment = GetterUtil.getString(value.get("comment_"));
-						duration = GetterUtil.getLong(value.get("duration_"));
-						error = GetterUtil.getString(value.get("errors_"));
-						flaky = GetterUtil.getBoolean(
-							String.valueOf(value.get("flaky_")));
-						issues = GetterUtil.getString(value.get("issues_"));
-						priority = GetterUtil.getLong(value.get("priority_"));
-						status = GetterUtil.getString(value.get("duestatus_"));
-						testrayCaseName = GetterUtil.getString(
-							value.get("casename"));
-						testrayCaseResultId = GetterUtil.getLong(
-							value.get("c_caseresultid_"));
-						testrayCaseTypeName = GetterUtil.getString(
-							value.get("casetypename"));
-						testrayComponentName = GetterUtil.getString(
-							value.get("componentname"));
-						testrayRunName = GetterUtil.getString(
-							value.get("runname"));
-						testrayRunNumber = GetterUtil.getLong(
-							value.get("runnumber"));
-						testrayTeamName = GetterUtil.getString(
-							value.get("teamname"));
-
+						setComment(
+							() -> GetterUtil.getString(value.get("comment_")));
+						setDuration(
+							() -> GetterUtil.getLong(value.get("duration_")));
+						setError(
+							() -> GetterUtil.getString(value.get("errors_")));
+						setFlaky(
+							() -> GetterUtil.getBoolean(
+								String.valueOf(value.get("flaky_"))));
+						setIssues(
+							() -> GetterUtil.getString(value.get("issues_")));
+						setPriority(
+							() -> GetterUtil.getLong(value.get("priority_")));
+						setStatus(
+							() -> GetterUtil.getString(
+								value.get("duestatus_")));
+						setTestrayCaseName(
+							() -> GetterUtil.getString(value.get("casename")));
+						setTestrayCaseResultId(
+							() -> GetterUtil.getLong(
+								value.get("c_caseresultid_")));
+						setTestrayCaseTypeName(
+							() -> GetterUtil.getString(
+								value.get("casetypename")));
+						setTestrayComponentName(
+							() -> GetterUtil.getString(
+								value.get("componentname")));
+						setTestrayRunName(
+							() -> GetterUtil.getString(value.get("runname")));
+						setTestrayRunNumber(
+							() -> GetterUtil.getLong(value.get("runnumber")));
+						setTestrayTeamName(
+							() -> GetterUtil.getString(value.get("teamname")));
 						setUserName(
 							() -> {
 								FullNameGenerator fullNameGenerator =

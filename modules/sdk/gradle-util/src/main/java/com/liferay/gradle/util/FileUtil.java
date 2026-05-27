@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.regex.Matcher;
 
 import org.gradle.api.AntBuilder;
 import org.gradle.api.GradleException;
@@ -111,6 +112,9 @@ public class FileUtil {
 		if (System.getenv("JENKINS_HOME") != null) {
 			tryLocalNetwork = true;
 		}
+		else if (_getProperty(project, "mirrors.hostname") != null) {
+			tryLocalNetwork = true;
+		}
 
 		return get(project, url, destinationFile, false, tryLocalNetwork);
 	}
@@ -153,13 +157,12 @@ public class FileUtil {
 		if (!mirrorsCacheArtifactFile.exists()) {
 			mirrorsCacheArtifactDir.mkdirs();
 
-			String mirrorsUrl = url.replaceFirst(
-				"https?:\\/\\/", "http://mirrors.lax.liferay.com/");
-
 			if (tryLocalNetwork) {
 				try {
 					_get(
-						project, mirrorsUrl, null, null,
+						project, _getMirrorsURL(project, url),
+						_getProperty(project, "mirrors.username"),
+						_getProperty(project, "mirrors.password"),
 						mirrorsCacheArtifactFile, ignoreErrors);
 				}
 				catch (Exception exception) {
@@ -573,6 +576,35 @@ public class FileUtil {
 		String userHome = System.getProperty("user.home");
 
 		return new File(userHome, ".liferay/mirrors");
+	}
+
+	private static String _getMirrorsURL(Project project, String url) {
+		String mirrorsHostname = _getProperty(project, "mirrors.hostname");
+
+		if (mirrorsHostname == null) {
+			mirrorsHostname = "mirrors.lax.liferay.com";
+		}
+
+		String scheme = "http://";
+
+		if (Boolean.parseBoolean(_getProperty(project, "mirrors.ssl"))) {
+			scheme = "https://";
+		}
+
+		return url.replaceFirst(
+			"https?://",
+			Matcher.quoteReplacement(scheme + mirrorsHostname + "/"));
+	}
+
+	private static String _getProperty(Project project, String name) {
+		String property = GradleUtil.getProperty(
+			project, name, System.getProperty(name));
+
+		if (Validator.isNotNull(property)) {
+			return property;
+		}
+
+		return null;
 	}
 
 	private static void _invokeAntMethod(

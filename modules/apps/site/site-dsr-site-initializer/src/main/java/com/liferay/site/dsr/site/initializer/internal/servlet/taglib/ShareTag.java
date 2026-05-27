@@ -6,14 +6,19 @@
 package com.liferay.site.dsr.site.initializer.internal.servlet.taglib;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectEntryServiceUtil;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.dsr.site.initializer.internal.servlet.ServletContextUtil;
@@ -32,7 +37,7 @@ public class ShareTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_hasUpdateModelResourcePermission) {
+		if (_hasAssignMembersPermission) {
 			return super.doEndTag();
 		}
 
@@ -52,11 +57,17 @@ public class ShareTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			_hasUpdateModelResourcePermission =
-				ObjectEntryServiceUtil.hasModelResourcePermission(
-					themeDisplay.getUser(), _roomId, ActionKeys.UPDATE);
+			ObjectEntry objectEntry =
+				ObjectEntryLocalServiceUtil.fetchObjectEntry(_roomId);
 
-			if (!_hasUpdateModelResourcePermission) {
+			if (objectEntry == null) {
+				return SKIP_BODY;
+			}
+
+			_hasAssignMembersPermission = _hasAssignMembersPermission(
+				themeDisplay.getPermissionChecker(), objectEntry);
+
+			if (!_hasAssignMembersPermission) {
 				return SKIP_BODY;
 			}
 		}
@@ -116,7 +127,7 @@ public class ShareTag extends IncludeTag {
 		super.cleanUp();
 
 		_groupId = 0;
-		_hasUpdateModelResourcePermission = false;
+		_hasAssignMembersPermission = false;
 		_roomId = 0;
 	}
 
@@ -131,12 +142,32 @@ public class ShareTag extends IncludeTag {
 			"liferay-site-dsr-site-initializer:share:roomId", _roomId);
 	}
 
+	private boolean _hasAssignMembersPermission(
+			PermissionChecker permissionChecker, ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
+
+		if (modelResourcePermission.contains(
+				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return GroupPermissionUtil.contains(
+			permissionChecker, _groupId, ActionKeys.ASSIGN_MEMBERS);
+	}
+
 	private static final String _PAGE = "/share/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(ShareTag.class);
 
 	private long _groupId;
-	private boolean _hasUpdateModelResourcePermission;
+	private boolean _hasAssignMembersPermission;
 	private long _roomId;
 
 }

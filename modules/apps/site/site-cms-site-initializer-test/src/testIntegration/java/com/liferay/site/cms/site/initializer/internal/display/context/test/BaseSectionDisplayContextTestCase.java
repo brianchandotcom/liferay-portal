@@ -722,6 +722,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			"&nestedFields=embedded,embeddedTaxonomyCategory,",
 			"file.metadata,file.previewURL,file.thumbnailURL,",
 			"numberOfObjectEntries,numberOfObjectEntryFolders,",
+			"systemProperties.collaboratorBrief,",
 			"systemProperties.objectDefinitionBrief&sort=dateModified:desc");
 	}
 
@@ -1104,7 +1105,7 @@ public abstract class BaseSectionDisplayContextTestCase
 					new int[] {
 						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
 					},
-					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					null, 0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				role -> HashMapBuilder.put(
 					"key", role.getName()
 				).put(

@@ -11,8 +11,12 @@ import {
 	CustomFunctionOperators,
 	isKnown,
 	isUnknown,
+	MAX_NESTED_OR_CRITERIA,
+	MAX_SEQUENTIAL_CRITERIA,
+	NestedOrLimitState,
 	NotOperators,
 	PropertyTypes,
+	SequentialLimitState,
 	SUPPORTED_OPERATORS_MAP
 } from './constants';
 import {Criteria, Criterion, CriterionGroup, Operator} from './types';
@@ -70,8 +74,11 @@ export function createTagProperty({
 /**
  * Creates a new group object with items.
  */
-export const createNewGroup = (items: Criteria[]): CriterionGroup => ({
-	conjunctionName: Conjunctions.And,
+export const createNewGroup = (
+	items: Criteria[],
+	conjunctionName: Conjunctions = Conjunctions.And
+): CriterionGroup => ({
+	conjunctionName,
 	criteriaGroupId: generateGroupId(),
 	items
 });
@@ -127,6 +134,67 @@ export const getPropertyContextFromRaw = (
 
 	return properties.length > 1 ? properties[0] : null;
 };
+
+const _getLimitState = (
+	length: number,
+	max: number
+): 'exceedsLimit' | 'reachedLimit' | null => {
+	if (length > max) {
+		return 'exceedsLimit';
+	}
+
+	if (length === max) {
+		return 'reachedLimit';
+	}
+
+	return null;
+};
+
+/**
+ * Returns the current state of the nested OR limit for the given group, or
+ * null when the limit does not apply. Callers must skip the root group; this
+ * helper assumes the input is nested.
+ */
+export const getNestedOrLimitState = (
+	criteria: CriterionGroup | null | undefined
+): NestedOrLimitState | null => {
+	if (!criteria || criteria.conjunctionName !== Conjunctions.Or) {
+		return null;
+	}
+
+	return _getLimitState(criteria.items?.length ?? 0, MAX_NESTED_OR_CRITERIA);
+};
+
+/**
+ * Returns the current state of the sequential criteria limit for the root
+ * AND group, or null when the limit does not apply. Callers must check that
+ * sequential mode is enabled and that the group is the root.
+ */
+export const getSequentialLimitState = (
+	criteria: CriterionGroup | null | undefined
+): SequentialLimitState | null => {
+	if (!criteria || criteria.conjunctionName !== Conjunctions.And) {
+		return null;
+	}
+
+	return _getLimitState(criteria.items?.length ?? 0, MAX_SEQUENTIAL_CRITERIA);
+};
+
+export const hasRootAndExceeded = (
+	criteria: CriterionGroup | null | undefined
+): boolean => getSequentialLimitState(criteria) === 'exceedsLimit';
+
+export const hasNestedOrExceeded = (
+	criteria: CriterionGroup | Criterion | null | undefined
+): boolean =>
+	!!criteria &&
+	isCriterionGroup(criteria) &&
+	criteria.items.some(
+		item =>
+			isCriterionGroup(item) &&
+			(getNestedOrLimitState(item) === 'exceedsLimit' ||
+				hasNestedOrExceeded(item))
+	);
 
 /**
  * Gets the list of operators for a supported type.

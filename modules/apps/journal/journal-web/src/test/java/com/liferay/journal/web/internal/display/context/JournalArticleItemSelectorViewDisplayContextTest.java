@@ -463,31 +463,28 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 		Assert.assertEquals(scope, mockLiferayPortletURL.getParameter("scope"));
 	}
 
-	private static MockedStatic<GroupLocalServiceUtil>
-		_groupLocalServiceUtilMockedStatic;
-	private static MockedStatic<JournalFolderLocalServiceUtil>
-		_journalFolderLocalServiceUtilMockedStatic;
-	private static MockedStatic<JournalFolderServiceUtil>
-		_journalFolderServiceUtilMockedStatic;
-	private static MockedStatic<PortletURLBuilder>
-		_portletURLBuilderMockedStatic;
-	private static MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
-	private static MockedStatic<SearchDisplayStyleUtil>
-		_searchDisplayStyleUtilMockedStatic;
-	private static MockedStatic<SearchOrderByUtil>
-		_searchOrderByUtilMockedStatic;
-
 	private final JournalFolder _ancestorJournalFolder = Mockito.mock(
 		JournalFolder.class);
 	private final BeanProperties _beanProperties = Mockito.mock(
 		BeanProperties.class);
 	private final Group _group = Mockito.mock(Group.class);
+	private MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic;
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final JournalFolder _journalFolder = Mockito.mock(
 		JournalFolder.class);
+	private MockedStatic<JournalFolderLocalServiceUtil>
+		_journalFolderLocalServiceUtilMockedStatic;
+	private MockedStatic<JournalFolderServiceUtil>
+		_journalFolderServiceUtilMockedStatic;
 	private final Language _language = Mockito.mock(Language.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
+	private MockedStatic<PortletURLBuilder> _portletURLBuilderMockedStatic;
+	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
+	private MockedStatic<SearchDisplayStyleUtil>
+		_searchDisplayStyleUtilMockedStatic;
+	private MockedStatic<SearchOrderByUtil> _searchOrderByUtilMockedStatic;
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

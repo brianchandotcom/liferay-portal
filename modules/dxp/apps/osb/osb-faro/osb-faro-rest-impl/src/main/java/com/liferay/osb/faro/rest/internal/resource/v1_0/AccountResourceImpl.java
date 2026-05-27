@@ -44,7 +44,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
-	public Page<Account> getWorkspaceGroupAccountsPage(
+	public Page<Account> getWorkspaceGroupChannelAccountsPage(
 			Long groupId, String channelId, String search,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {

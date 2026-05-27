@@ -87,8 +87,9 @@ public class CPDefinitionInventoryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPDefinitionInventory>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPDefinitionInventory, NoSuchCPDefinitionInventoryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp definition inventories where uuid = &#63;.
@@ -129,16 +130,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws NoSuchCPDefinitionInventoryException {
 
-		CPDefinitionInventory cpDefinitionInventory = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpDefinitionInventory != null) {
-			return cpDefinitionInventory;
-		}
-
-		throw new NoSuchCPDefinitionInventoryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class CPDefinitionInventoryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionInventory>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPDefinitionInventory, NoSuchCPDefinitionInventoryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp definition inventory where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionInventoryException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class CPDefinitionInventoryPersistenceImpl
 	public CPDefinitionInventory findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPDefinitionInventoryException {
 
-		CPDefinitionInventory cpDefinitionInventory = fetchByUUID_G(
-			uuid, groupId);
-
-		if (cpDefinitionInventory == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionInventoryException(message);
-		}
-
-		return cpDefinitionInventory;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class CPDefinitionInventoryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionInventory>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPDefinitionInventory, NoSuchCPDefinitionInventoryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp definition inventories where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			OrderByComparator<CPDefinitionInventory> orderByComparator)
 		throws NoSuchCPDefinitionInventoryException {
 
-		CPDefinitionInventory cpDefinitionInventory = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionInventory != null) {
-			return cpDefinitionInventory;
-		}
-
-		throw new NoSuchCPDefinitionInventoryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class CPDefinitionInventoryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionInventory>
-		_uniquePersistenceFinderByCPDefinitionId;
+	private UniquePersistenceFinder
+		<CPDefinitionInventory, NoSuchCPDefinitionInventoryException>
+			_uniquePersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns the cp definition inventory where CPDefinitionId = &#63; or throws a <code>NoSuchCPDefinitionInventoryException</code> if it could not be found.
@@ -371,22 +345,8 @@ public class CPDefinitionInventoryPersistenceImpl
 	public CPDefinitionInventory findByCPDefinitionId(long CPDefinitionId)
 		throws NoSuchCPDefinitionInventoryException {
 
-		CPDefinitionInventory cpDefinitionInventory = fetchByCPDefinitionId(
-			CPDefinitionId);
-
-		if (cpDefinitionInventory == null) {
-			String message =
-				_uniquePersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionInventoryException(message);
-		}
-
-		return cpDefinitionInventory;
+		return _uniquePersistenceFinderByCPDefinitionId.find(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -909,4 +869,4 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-450703000
+// LIFERAY-SERVICE-BUILDER-HASH:1971022072

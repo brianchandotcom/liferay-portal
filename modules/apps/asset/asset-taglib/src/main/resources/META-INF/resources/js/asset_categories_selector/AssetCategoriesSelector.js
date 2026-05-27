@@ -9,12 +9,10 @@ import React from 'react';
 import AssetVocabularyCategoriesSelector from './AssetVocabularyCategoriesSelector';
 
 function AssetCategoriesSelector({
-	eventName,
 	groupIds,
 	id,
 	inputName,
 	onVocabulariesChange,
-	portletURL,
 	showLabel,
 	useDataCategoriesAttribute,
 	useFallbackInput,
@@ -30,7 +28,6 @@ function AssetCategoriesSelector({
 
 				return (
 					<AssetVocabularyCategoriesSelector
-						eventName={eventName}
 						groupIds={groupIds}
 						id={`namespace_assetCategoriesSelector_${vocabulary.id}`}
 						inputName={vocabularyInputName}
@@ -48,7 +45,6 @@ function AssetCategoriesSelector({
 								...vocabularies.slice(index + 1),
 							]);
 						}}
-						portletURL={portletURL}
 						required={vocabulary.required}
 						selectedItems={
 							vocabulary.selectedItems
@@ -68,13 +64,11 @@ function AssetCategoriesSelector({
 }
 
 AssetCategoriesSelector.propTypes = {
-	eventName: PropTypes.string.isRequired,
 	groupIds: PropTypes.array.isRequired,
 	id: PropTypes.string.isRequired,
 	inputName: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	onVocabulariesChange: PropTypes.func.isRequired,
-	portletURL: PropTypes.string.isRequired,
 	showLabel: PropTypes.bool,
 	useDataCategoriesAttribute: PropTypes.bool,
 	useFallbackInput: PropTypes.bool,

@@ -102,6 +102,8 @@ public class UserGroupModelImpl
 
 	public static final String ENTITY_ALIAS = "userGroup";
 
+	public static final String FILTER_PK_COLUMN_NAME = "userGroupId";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroup.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroup.name ASC";
@@ -1192,4 +1194,4 @@ public class UserGroupModelImpl
 	private UserGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1560780849
+// LIFERAY-SERVICE-BUILDER-HASH:1697668085

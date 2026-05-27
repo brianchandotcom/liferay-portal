@@ -14,6 +14,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,6 +78,9 @@ public class CalendarBookingInfoItemFormProvider
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				CalendarBooking.class.getName(), StringPool.BLANK,
 				CalendarBooking.class.getSimpleName(), 0)
+		).infoFieldSetEntry(
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				CalendarBooking.class.getName())
 		).labelInfoLocalizedValue(
 			new ModelResourceLocalizedValue(CalendarBooking.class.getName())
 		).name(
@@ -87,5 +91,8 @@ public class CalendarBookingInfoItemFormProvider
 	@Reference
 	private DisplayPageInfoItemFieldSetProvider
 		_displayPageInfoItemFieldSetProvider;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

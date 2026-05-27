@@ -41,14 +41,15 @@ public interface AccountResource {
 			Long groupId, String accountId)
 		throws Exception;
 
-	public Page<Account> getWorkspaceGroupAccountsPage(
+	public Page<Account> getWorkspaceGroupChannelAccountsPage(
 			Long groupId, String channelId, String search,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkspaceGroupAccountsPageHttpResponse(
-			Long groupId, String channelId, String search,
-			Pagination pagination, String sortString)
+	public HttpInvoker.HttpResponse
+			getWorkspaceGroupChannelAccountsPageHttpResponse(
+				Long groupId, String channelId, String search,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -265,13 +266,13 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Account> getWorkspaceGroupAccountsPage(
+		public Page<Account> getWorkspaceGroupChannelAccountsPage(
 				Long groupId, String channelId, String search,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkspaceGroupAccountsPageHttpResponse(
+				getWorkspaceGroupChannelAccountsPageHttpResponse(
 					groupId, channelId, search, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -334,7 +335,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkspaceGroupAccountsPageHttpResponse(
+				getWorkspaceGroupChannelAccountsPageHttpResponse(
 					Long groupId, String channelId, String search,
 					Pagination pagination, String sortString)
 			throws Exception {
@@ -360,10 +361,6 @@ public interface AccountResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (channelId != null) {
-				httpInvoker.parameter("channelId", String.valueOf(channelId));
-			}
-
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
@@ -382,9 +379,10 @@ public interface AccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/faro-rest/v1.0/workspace/{groupId}/accounts");
+						"/o/faro-rest/v1.0/workspace/{groupId}/channels/{channelId}/accounts");
 
 			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("channelId", channelId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -406,4 +404,4 @@ public interface AccountResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1001428424
+// LIFERAY-REST-BUILDER-HASH:224150624

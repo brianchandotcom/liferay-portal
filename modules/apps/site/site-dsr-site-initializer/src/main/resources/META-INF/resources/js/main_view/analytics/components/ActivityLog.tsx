@@ -144,13 +144,14 @@ const formatData = (data: IActivityLogEntry[]) => {
 	}, {});
 };
 
-function ActivityLog() {
+function ActivityLog({isAnalyticsEnabled}: {isAnalyticsEnabled: boolean}) {
 	const [data, setData] = useState<TActivityLog>({});
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'userSessions', path: '/user-sessions'}]},
+		settings: {isAnalyticsEnabled},
 		variables: {
 			entityType: 'INDIVIDUAL',
 			keywords: '',
@@ -175,34 +176,44 @@ function ActivityLog() {
 			title={Liferay.Language.get('activity-log')}
 		>
 			<div ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !Object.keys(data).length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
-				) : (
-					Object.entries(data).map(
-						([date, userLogs]: [string, IUserLogsEntry[]]) => (
-							<>
-								<div className="activity-logs-date fw-600 mb-3 px-3 py-2 text-secondary">
-									{date}
-								</div>
+				{isAnalyticsEnabled ? (
+					isLoading ? (
+						<Loader />
+					) : !Object.keys(data).length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						Object.entries(data).map(
+							([date, userLogs]: [string, IUserLogsEntry[]]) => (
+								<>
+									<div className="activity-logs-date fw-600 mb-3 px-3 py-2 text-secondary">
+										{date}
+									</div>
 
-								{userLogs.map(
-									(
-										userLogsEntry: IUserLogsEntry,
-										index: number
-									) => (
-										<UserLogEntry
-											key={index}
-											{...userLogsEntry}
-										/>
-									)
-								)}
-							</>
+									{userLogs.map(
+										(
+											userLogsEntry: IUserLogsEntry,
+											index: number
+										) => (
+											<UserLogEntry
+												key={index}
+												{...userLogsEntry}
+											/>
+										)
+									)}
+								</>
+							)
 						)
 					)
+				) : (
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
+					</div>
 				)}
 			</div>
 		</AnalyticsFrame>

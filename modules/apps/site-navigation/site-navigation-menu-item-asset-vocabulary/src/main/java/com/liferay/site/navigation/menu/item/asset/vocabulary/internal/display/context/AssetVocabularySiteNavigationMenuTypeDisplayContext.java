@@ -7,18 +7,20 @@ package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorCriterion;
-import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
-import com.liferay.item.selector.ItemSelector;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,6 +42,7 @@ import jakarta.portlet.PortletResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,11 +51,10 @@ import java.util.Map;
 public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 	public AssetVocabularySiteNavigationMenuTypeDisplayContext(
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		HttpServletRequest httpServletRequest,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		_httpServletRequest = httpServletRequest;
-		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
@@ -77,11 +79,17 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				scopeExternalReferenceCode, _themeDisplay.getCompanyId());
 		}
 
-		_assetVocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByExternalReferenceCode(
-					_typeSettingsUnicodeProperties.get("externalReferenceCode"),
-					group.getGroupId());
+		if (group == null) {
+			_assetVocabulary = null;
+		}
+		else {
+			_assetVocabulary =
+				AssetVocabularyLocalServiceUtil.
+					fetchAssetVocabularyByExternalReferenceCode(
+						_typeSettingsUnicodeProperties.get(
+							"externalReferenceCode"),
+						group.getGroupId());
+		}
 	}
 
 	public Map<String, Object> getAssetVocabularyContextualSidebarContext()
@@ -179,7 +187,7 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 				if (scopeExternalReferenceCode != null) {
 					group =
-						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+						GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 							scopeExternalReferenceCode,
 							_themeDisplay.getCompanyId());
 				}
@@ -202,37 +210,31 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).build();
 	}
 
-	private Map<String, Object> _getChooseAssetVocabularyButtonContext() {
+	private Map<String, Object> _getChooseAssetVocabularyButtonContext()
+		throws Exception {
+
+		long companyGroupId = _themeDisplay.getCompanyGroupId();
+
+		Group companyGroup = GroupLocalServiceUtil.fetchGroup(companyGroupId);
+
+		String companyExternalReferenceCode = StringPool.BLANK;
+
+		if (companyGroup != null) {
+			companyExternalReferenceCode = GetterUtil.getString(
+				companyGroup.getExternalReferenceCode());
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
 		return HashMapBuilder.<String, Object>put(
-			"assetVocabularySelectorURL",
-			() -> {
-				AssetVocabularyItemSelectorCriterion
-					assetVocabularyItemSelectorCriterion =
-						new AssetVocabularyItemSelectorCriterion();
-
-				assetVocabularyItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new AssetVocabularyItemSelectorReturnType());
-				assetVocabularyItemSelectorCriterion.
-					setIncludeAncestorSiteAndDepotGroupIds(true);
-				assetVocabularyItemSelectorCriterion.
-					setIncludeInternalVocabularies(false);
-
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						_httpServletRequest);
-
-				return PortletURLBuilder.create(
-					_itemSelector.getItemSelectorURL(
-						requestBackedPortletURLFactory,
-						_liferayPortletResponse.getNamespace() +
-							"selectAssetVocabulary",
-						assetVocabularyItemSelectorCriterion)
-				).buildString();
-			}
+			"assetLibraries",
+			_getConnectedAssetLibrariesJSONArray(scopeGroup.getGroupId())
 		).put(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectAssetVocabulary"
+			"companyExternalReferenceCode", companyExternalReferenceCode
+		).put(
+			"companyGroupId", String.valueOf(companyGroupId)
+		).put(
+			"currentSiteId", String.valueOf(scopeGroup.getGroupId())
 		).put(
 			"getAssetVocabularyDetailsURL",
 			() -> {
@@ -247,12 +249,61 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 				return itemDetailsURL.toString();
 			}
+		).put(
+			"siteExternalReferenceCode",
+			GetterUtil.getString(scopeGroup.getExternalReferenceCode())
+		).put(
+			"siteName", scopeGroup.getDescriptiveName(_themeDisplay.getLocale())
 		).build();
 	}
 
+	private JSONArray _getConnectedAssetLibrariesJSONArray(long scopeGroupId) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		try {
+			List<DepotEntry> depotEntries =
+				DepotEntryLocalServiceUtil.getGroupConnectedDepotEntries(
+					scopeGroupId, DepotConstants.TYPE_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			for (DepotEntry depotEntry : depotEntries) {
+				Group depotGroup = GroupLocalServiceUtil.fetchGroup(
+					depotEntry.getGroupId());
+
+				if (depotGroup == null) {
+					continue;
+				}
+
+				jsonArray.put(
+					JSONUtil.put(
+						"externalReferenceCode",
+						GetterUtil.getString(
+							depotGroup.getExternalReferenceCode())
+					).put(
+						"id", String.valueOf(depotGroup.getGroupId())
+					).put(
+						"name",
+						depotGroup.getDescriptiveName(_themeDisplay.getLocale())
+					));
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to enumerate connected asset libraries for group " +
+						scopeGroupId,
+					exception);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetVocabularySiteNavigationMenuTypeDisplayContext.class);
+
 	private final AssetVocabulary _assetVocabulary;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;

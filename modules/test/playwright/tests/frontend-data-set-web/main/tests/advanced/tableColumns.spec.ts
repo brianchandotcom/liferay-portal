@@ -12,7 +12,9 @@ import {loginTest} from '../../../../../fixtures/loginTest';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
 import {waitForAlert} from '../../../../../utils/waitForAlert';
 import {systemDataSetsPageTest} from '../../../../frontend-data-set-admin-web/main/fixtures/systemDataSetsPageTest';
+import {SystemDataSetsPage} from '../../../../frontend-data-set-admin-web/main/pages/SystemDataSetsPage';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+import {FDSSamplePage} from '../../pages/FDSSamplePage';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -27,14 +29,54 @@ const test = mergeTests(
 
 let fdsSamplePageURL: string;
 
-test.beforeEach(async ({fdsSamplePage, page, site}) => {
+async function deleteAdvancedSampleCustomization({
+	fdsSamplePage,
+	systemDataSetsPage,
+}: {
+	fdsSamplePage: FDSSamplePage;
+	systemDataSetsPage: SystemDataSetsPage;
+}) {
+	await systemDataSetsPage.goto();
+
+	const advancedSampleRow = systemDataSetsPage.pageContainer
+		.locator('.fds tr')
+		.filter({hasText: 'Advanced Sample'});
+
+	if ((await advancedSampleRow.count()) === 0) {
+		return;
+	}
+
+	await advancedSampleRow.locator('.dropdown-toggle').click();
+
+	await fdsSamplePage.dropdownMenu
+		.getByRole('menuitem', {name: 'Delete'})
+		.click();
+
+	const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+
+	await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+	await waitForAlert(systemDataSetsPage.page);
+
+	await expect(advancedSampleRow).not.toBeAttached();
+}
+
+test.beforeEach(async ({fdsSamplePage, page, site, systemDataSetsPage}) => {
+	await deleteAdvancedSampleCustomization({
+		fdsSamplePage,
+		systemDataSetsPage,
+	});
+
 	const {url} = await fdsSamplePage.setupFDSSampleWidget({site});
 
 	fdsSamplePageURL = url;
 
 	await fdsSamplePage.selectTab('Advanced');
 
-	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+	await waitForFDS({
+		page,
+		visualizationMode: EFDSVisualizationMode.TABLE,
+	});
 });
 
 test('Resize columns', {tag: '@LPD-54497'}, async ({fdsSamplePage, page}) => {
@@ -164,32 +206,10 @@ test(
 		}
 		finally {
 			await test.step('Delete used system data set', async () => {
-				await systemDataSetsPage.goto();
-
-				const fdsRows =
-					systemDataSetsPage.pageContainer.locator('.fds tr');
-
-				const advancedSampleRow = fdsRows.filter({
-					hasText: 'Advanced Sample',
+				await deleteAdvancedSampleCustomization({
+					fdsSamplePage,
+					systemDataSetsPage,
 				});
-
-				if ((await advancedSampleRow.count()) === 0) {
-					return;
-				}
-
-				await advancedSampleRow.locator('.dropdown-toggle').click();
-
-				await fdsSamplePage.dropdownMenu
-					.getByRole('menuitem', {name: 'Delete'})
-					.click();
-
-				const deleteModal = systemDataSetsPage.page.getByRole('dialog');
-
-				await deleteModal.getByRole('button', {name: 'Delete'}).click();
-
-				await waitForAlert(systemDataSetsPage.page);
-
-				await expect(advancedSampleRow).not.toBeAttached();
 			});
 		}
 	}

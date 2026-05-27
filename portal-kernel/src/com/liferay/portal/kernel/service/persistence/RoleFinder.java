@@ -16,8 +16,8 @@ public interface RoleFinder {
 
 	public int countByGroupRoleAndTeamRole(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId);
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId);
 
 	public int countByKeywords(
 		long companyId, String keywords, Integer[] types);
@@ -46,8 +46,8 @@ public interface RoleFinder {
 
 	public int filterCountByGroupRoleAndTeamRole(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId);
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId);
 
 	public int filterCountByKeywords(
 		long companyId, String keywords, Integer[] types,
@@ -74,7 +74,7 @@ public interface RoleFinder {
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		filterFindByGroupRoleAndTeamRole(
 			long companyId, String name, java.util.List<String> excludedNames,
-			String title, String description, int[] types,
+			String title, String description, int[] types, String subtype,
 			long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	public java.util.List<com.liferay.portal.kernel.model.Role>
@@ -120,7 +120,7 @@ public interface RoleFinder {
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		findByGroupRoleAndTeamRole(
 			long companyId, String name, java.util.List<String> excludedNames,
-			String title, String description, int[] types,
+			String title, String description, int[] types, String subtype,
 			long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	public java.util.List<com.liferay.portal.kernel.model.Role> findByKeywords(
@@ -163,4 +163,4 @@ public interface RoleFinder {
 			<com.liferay.portal.kernel.model.Role> orderByComparator);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1414766380
+// LIFERAY-SERVICE-BUILDER-HASH:1408306840

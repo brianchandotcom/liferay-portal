@@ -61,9 +61,9 @@ public class LoginPostAction extends Action {
 		invokerFilterChain.doFilter(httpServletRequest, httpServletResponse);
 
 		AuditMessage auditMessage = new AuditMessage(
-			EventTypes.LOGIN, user.getCompanyId(), user.getUserId(),
-			user.getFullName(), User.class.getName(),
-			String.valueOf(user.getUserId()));
+			user.getCompanyId(), user.getUserId(), user.getFullName(),
+			User.class.getName(), String.valueOf(user.getUserId()),
+			EventTypes.LOGIN);
 
 		_auditRouter.route(auditMessage);
 	}

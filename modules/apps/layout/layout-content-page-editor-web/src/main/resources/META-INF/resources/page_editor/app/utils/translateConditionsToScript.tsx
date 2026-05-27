@@ -13,7 +13,7 @@ export function translateConditionsToScript(
 ) {
 	const conditionScript = conditions.map((condition) => {
 		if (condition.type === 'field') {
-			return _toFieldComparison(
+			return toFieldComparison(
 				condition.field || '',
 				condition.options?.type,
 				condition.options?.value || '',
@@ -21,7 +21,7 @@ export function translateConditionsToScript(
 			);
 		}
 		else if (condition.type === 'form') {
-			return _toFieldComparison(
+			return toFieldComparison(
 				`input__${condition.field?.replaceAll('-', '_')}`,
 				condition.options?.type,
 				condition.options?.value || ''
@@ -62,12 +62,38 @@ export function translateConditionsToScript(
 	}
 }
 
-function _toFieldComparison(
+function toFieldComparison(
 	field: string,
 	type: NonNullable<Condition['options']>['type'] | undefined,
-	value: string,
+	value: string | string[],
 	fieldType?: string
 ) {
+	if (fieldType === 'multiselect') {
+		value = Array.isArray(value) ? value : [];
+
+		const containsAnyExpression = `(${value
+			.map((key) => `contains(${field}, "${key}")`)
+			.join(' OR ')})`;
+
+		if (type === 'contains') {
+			return containsAnyExpression;
+		}
+
+		if (type === 'does-not-contain') {
+			return `NOT(${containsAnyExpression})`;
+		}
+
+		const sortedJoinedValue = [...value].sort().join(',');
+
+		if (type === 'equal') {
+			return `${field} == "${sortedJoinedValue}"`;
+		}
+
+		if (type === 'not-equal') {
+			return `${field} != "${sortedJoinedValue}"`;
+		}
+	}
+
 	if (type === 'is-empty') {
 		return `isEmpty(${field})`;
 	}
@@ -85,7 +111,7 @@ function _toFieldComparison(
 	}
 
 	if (fieldType === 'number') {
-		const operator = _toNumericOperator(type);
+		const operator = toNumericOperator(type);
 
 		return `${field} ${operator} ${value || '0'}`;
 	}
@@ -111,7 +137,7 @@ function _toFieldComparison(
 	return `${field} ${operator} "${value}"`;
 }
 
-function _toNumericOperator(
+function toNumericOperator(
 	type: NonNullable<Condition['options']>['type'] | undefined
 ) {
 	switch (type) {

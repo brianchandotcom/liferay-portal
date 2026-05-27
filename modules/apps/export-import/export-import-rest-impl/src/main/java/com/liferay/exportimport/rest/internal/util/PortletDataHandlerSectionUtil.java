@@ -128,33 +128,34 @@ public class PortletDataHandlerSectionUtil {
 
 		return TransformUtil.transformToArray(
 			previewPortletDataHandlersMap.entrySet(),
-			entry -> new PreviewPortletDataHandlerSection() {
-				{
-					long additionCount = 0;
-					long deletionCount = 0;
+			entry -> {
+				long additionCount = 0;
+				long deletionCount = 0;
 
-					for (PreviewPortletDataHandler previewPortletDataHandler :
-							entry.getValue()) {
+				List<PreviewPortletDataHandler> previewPortletDataHandlerList =
+					entry.getValue();
 
-						additionCount +=
-							previewPortletDataHandler.getAdditionCount();
-						deletionCount +=
-							previewPortletDataHandler.getDeletionCount();
-					}
+				for (PreviewPortletDataHandler previewPortletDataHandler :
+						previewPortletDataHandlerList) {
 
-					long finalAdditionCount = additionCount;
-					long finalDeletionCount = deletionCount;
-
-					setAdditionCount(() -> finalAdditionCount);
-					setDeletionCount(() -> finalDeletionCount);
-					setLabel(() -> LanguageUtil.get(locale, entry.getKey()));
-					setName(entry::getKey);
-					setPreviewPortletDataHandlers(
-						() -> entry.getValue(
-						).toArray(
-							new PreviewPortletDataHandler[0]
-						));
+					additionCount +=
+						previewPortletDataHandler.getAdditionCount();
+					deletionCount +=
+						previewPortletDataHandler.getDeletionCount();
 				}
+
+				return new PreviewPortletDataHandlerSection() {
+					{
+						setAdditionCount(() -> additionCount);
+						setDeletionCount(() -> deletionCount);
+						setLabel(
+							() -> LanguageUtil.get(locale, entry.getKey()));
+						setName(entry::getKey);
+						setPreviewPortletDataHandlers(
+							() -> previewPortletDataHandlerList.toArray(
+								new PreviewPortletDataHandler[0]));
+					}
+				};
 			},
 			PreviewPortletDataHandlerSection.class);
 	}
@@ -189,12 +190,11 @@ public class PortletDataHandlerSectionUtil {
 						String portletTitle = portletDataHandler.getTitle(
 							locale);
 
-						if (portletTitle == null) {
-							portletTitle = PortalUtil.getPortletTitle(
-								portlet, locale);
+						if (portletTitle != null) {
+							return portletTitle;
 						}
 
-						return portletTitle;
+						return PortalUtil.getPortletTitle(portlet, locale);
 					});
 				setName(
 					() ->

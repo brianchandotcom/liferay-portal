@@ -8,15 +8,14 @@ import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
+import {openTreeItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openSelectionModal} from 'frontend-js-components-web';
-import {createPortletURL, fetch, sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 function AssetVocabulariesCategoriesSelector({
-	eventName,
 	id,
 	isValid = true,
 	formGroupClassName = '',
@@ -24,7 +23,6 @@ function AssetVocabulariesCategoriesSelector({
 	inputName,
 	label,
 	onSelectedItemsChange = () => {},
-	portletURL,
 	required,
 	selectedItems = [],
 	showVocabularyLabel = true,
@@ -137,45 +135,24 @@ function AssetVocabulariesCategoriesSelector({
 	};
 
 	const handleSelectButtonClick = () => {
-		const url = createPortletURL(portletURL, {
-			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
-			selectedCategories: selectedItems.map((item) => item.value).join(),
-			selectedCategoryIds: selectedItems.map((item) => item.value).join(),
-			singleSelect,
-			vocabularyIds: sourceItemsVocabularyIds.concat(),
-		});
-
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('done'),
-			height: '70vh',
-			iframeBodyCssClass: '',
-			multiple: true,
-			onSelect: (selectedItems) => {
-				if (selectedItems) {
-					const newValues = Object.keys(selectedItems).reduce(
-						(acc, itemKey) => {
-							const item = selectedItems[itemKey];
-							if (!item.unchecked) {
-								acc.push({
-									label: item.title,
-									value: item.classPK,
-								});
-							}
-
-							return acc;
-						},
-						[]
-					);
-
-					onSelectedItemsChange(newValues);
-				}
+		openTreeItemSelectorModal({
+			multiSelect: !singleSelect,
+			onItemsChange: (categories) => {
+				onSelectedItemsChange(
+					categories.map((category) => ({
+						label: category.name,
+						value: category.id,
+					}))
+				);
 			},
-			selectEventName: eventName,
-			size: 'md',
+			selectedItems: selectedItems.map((item) => ({
+				id: Number(item.value),
+				name: item.label,
+			})),
 			title: label
 				? sub(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),
-			url: url.toString(),
+			vocabularyIds: sourceItemsVocabularyIds,
 		});
 	};
 
@@ -298,13 +275,11 @@ function AssetVocabulariesCategoriesSelector({
 }
 
 AssetVocabulariesCategoriesSelector.propTypes = {
-	eventName: PropTypes.string.isRequired,
 	groupIds: PropTypes.array.isRequired,
 	id: PropTypes.string,
 	inputName: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	onSelectedItemsChange: PropTypes.func,
-	portletURL: PropTypes.string.isRequired,
 	required: PropTypes.bool,
 	selectedItems: PropTypes.array,
 	singleSelect: PropTypes.bool,

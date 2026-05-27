@@ -118,11 +118,10 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 		}
 	}
 
-	private static String _pid;
-
 	@Inject
 	private JSONFactory _jsonFactory;
 
+	private String _pid;
 	private final List<String> _schemaIds = List.of(
 		"urn:ietf:params:scim:schemas:core:2.0:Group",
 		"urn:ietf:params:scim:schemas:core:2.0:User",

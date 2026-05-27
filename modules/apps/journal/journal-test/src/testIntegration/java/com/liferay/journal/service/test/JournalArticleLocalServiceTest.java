@@ -3087,12 +3087,6 @@ public class JournalArticleLocalServiceTest {
 		}
 	}
 
-	@Inject(
-		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
-	)
-	private static ModelResourcePermission<JournalArticle>
-		_journalArticleModelResourcePermission;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -3147,6 +3141,12 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Inject
 	private JournalConverter _journalConverter;

@@ -5,7 +5,10 @@
 
 package com.liferay.site.internal.manager;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
+import com.liferay.site.constants.SitemapConstants;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 
@@ -215,6 +219,16 @@ public class SitemapManagerImpl implements SitemapManager {
 	}
 
 	@Override
+	public String getAssetTypeClassName(String assetTypeKey) {
+		return _assetTypeClassNames.get(assetTypeKey);
+	}
+
+	@Override
+	public Map<String, String> getAssetTypeKeys() {
+		return _assetTypeKeys;
+	}
+
+	@Override
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -227,6 +241,37 @@ public class SitemapManagerImpl implements SitemapManager {
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		return getSitemap(
+			null, layoutUuid, groupId, privateLayout, themeDisplay);
+	}
+
+	@Override
+	public String getSitemap(
+			String assetType, String layoutUuid, long groupId,
+			boolean privateLayout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (Validator.isNotNull(assetType)) {
+			long companyId = themeDisplay.getCompanyId();
+
+			SitemapURLProvider sitemapURLProvider =
+				_serviceTrackerMap.getService(assetType);
+
+			if ((sitemapURLProvider == null) ||
+				!_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
+					companyId) ||
+				!StringUtil.equals(
+					_sitemapConfigurationManager.xmlSitemapIndexMode(companyId),
+					SitemapConstants.INDEX_MODE_ASSET_TYPE) ||
+				!sitemapURLProvider.isInclude(companyId, groupId)) {
+
+				return null;
+			}
+
+			return _getAssetTypeSitemap(
+				groupId, privateLayout, themeDisplay, assetType);
+		}
 
 		if (Validator.isNull(layoutUuid) &&
 			_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
@@ -255,6 +300,68 @@ public class SitemapManagerImpl implements SitemapManager {
 		_serviceTrackerMap.close();
 	}
 
+	private Document _createSitemapDocument(
+		String rootElementName, String rootElementNamespace) {
+
+		Document document = _saxReader.createDocument();
+
+		document.setXMLEncoding(StringPool.UTF8);
+
+		Element rootElement = document.addElement(
+			rootElementName, rootElementNamespace);
+
+		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		rootElement.addAttribute(
+			"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		rootElement.addAttribute(
+			"xsi:schemaLocation",
+			"http://www.w3.org/1999/xhtml " +
+				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
+
+		return document;
+	}
+
+	private Date _getAssetTypeGroupLastModifiedDate(
+			String className, long companyId, long groupId)
+		throws PortalException {
+
+		SitemapURLProvider sitemapURLProvider = _serviceTrackerMap.getService(
+			className);
+
+		if (sitemapURLProvider == null) {
+			return null;
+		}
+
+		return sitemapURLProvider.getLastModifiedDate(companyId, groupId);
+	}
+
+	private String _getAssetTypeSitemap(
+			long groupId, boolean privateLayout, ThemeDisplay themeDisplay,
+			String assetType)
+		throws PortalException {
+
+		Document document = _createSitemapDocument(
+			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+		Element rootElement = document.getRootElement();
+
+		_initEntriesAndSize(rootElement);
+
+		SitemapURLProvider sitemapURLProvider = _serviceTrackerMap.getService(
+			assetType);
+
+		for (LayoutSet curLayoutSet :
+				_getLayoutSets(groupId, null, privateLayout, themeDisplay)) {
+
+			sitemapURLProvider.visitLayoutSet(
+				rootElement, curLayoutSet, themeDisplay);
+		}
+
+		_removeEntriesAndSize(rootElement);
+
+		return document.asXML();
+	}
+
 	private String _getFriendlyURL(String path, long groupId) {
 		int[] groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(path);
 
@@ -269,22 +376,18 @@ public class SitemapManagerImpl implements SitemapManager {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId == 0) {
-			companyId = _companyIds.computeIfAbsent(
-				groupId,
-				key -> {
-					try {
-						Group group = _groupLocalService.getGroup(key);
+			try {
+				Group group = _groupLocalService.getGroup(groupId);
 
-						return group.getCompanyId();
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
+				companyId = group.getCompanyId();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
 
-						return 0L;
-					}
-				});
+				companyId = 0;
+			}
 		}
 
 		for (Locale availableLocale :
@@ -319,21 +422,64 @@ public class SitemapManagerImpl implements SitemapManager {
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Document document = _saxReader.createDocument();
-
-		document.setXMLEncoding(StringPool.UTF8);
-
-		Element rootElement = document.addElement(
+		Document document = _createSitemapDocument(
 			"sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		Element rootElement = document.getRootElement();
 
 		_initEntriesAndSize(rootElement);
 
-		for (LayoutSet layoutSet :
-				_getLayoutSets(groupId, null, privateLayout, themeDisplay)) {
+		if (StringUtil.equals(
+				_sitemapConfigurationManager.xmlSitemapIndexMode(
+					themeDisplay.getCompanyId()),
+				SitemapConstants.INDEX_MODE_ASSET_TYPE)) {
 
-			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+			String portalURL = themeDisplay.getPortalURL();
+
+			for (Map.Entry<String, String> entry : _assetTypeKeys.entrySet()) {
+				String className = entry.getKey();
+
+				SitemapURLProvider sitemapURLProvider =
+					_serviceTrackerMap.getService(className);
+
+				if ((sitemapURLProvider == null) ||
+					!sitemapURLProvider.isInclude(
+						themeDisplay.getCompanyId(), groupId)) {
+
+					continue;
+				}
+
+				Element sitemapElement = rootElement.addElement("sitemap");
+
+				Element locationElement = sitemapElement.addElement("loc");
+
+				locationElement.addText(
+					StringBundler.concat(
+						portalURL, _portal.getPathContext(), "/sitemap-",
+						entry.getValue(), ".xml?groupId=", groupId,
+						"&privateLayout=", privateLayout));
+
+				Date lastModifiedDate = _getAssetTypeGroupLastModifiedDate(
+					className, themeDisplay.getCompanyId(), groupId);
+
+				if (lastModifiedDate != null) {
+					Element lastModifiedElement = sitemapElement.addElement(
+						"lastmod");
+
+					DateFormat w3cDateFormat = DateUtil.getISO8601Format();
+
+					lastModifiedElement.addText(
+						w3cDateFormat.format(lastModifiedDate));
+				}
+			}
+		}
+		else {
+			for (LayoutSet layoutSet :
+					_getLayoutSets(
+						groupId, null, privateLayout, themeDisplay)) {
+
+				_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+			}
 		}
 
 		_removeEntriesAndSize(rootElement);
@@ -409,20 +555,10 @@ public class SitemapManagerImpl implements SitemapManager {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Document document = _saxReader.createDocument();
-
-		document.setXMLEncoding(StringPool.UTF8);
-
-		Element rootElement = document.addElement(
+		Document document = _createSitemapDocument(
 			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
-		rootElement.addAttribute(
-			"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		rootElement.addAttribute(
-			"xsi:schemaLocation",
-			"http://www.w3.org/1999/xhtml " +
-				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		Element rootElement = document.getRootElement();
 
 		_initEntriesAndSize(rootElement);
 
@@ -649,10 +785,23 @@ public class SitemapManagerImpl implements SitemapManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapManagerImpl.class.getName());
 
+	private static final Map<String, String> _assetTypeClassNames;
+	private static final Map<String, String> _assetTypeKeys = Map.of(
+		AssetCategory.class.getName(), "categories",
+		JournalArticle.class.getName(), "web-content", Layout.class.getName(),
+		"pages", ObjectEntry.class.getName(), "object-entries");
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
-	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
+	static {
+		Map<String, String> assetTypeClassNames = new ConcurrentHashMap<>();
+
+		for (Map.Entry<String, String> entry : _assetTypeKeys.entrySet()) {
+			assetTypeClassNames.put(entry.getValue(), entry.getKey());
+		}
+
+		_assetTypeClassNames = Collections.unmodifiableMap(assetTypeClassNames);
+	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -13,12 +13,12 @@ Resolve a single test failure end-to-end.
 
 ## Preconditions
 
-Verify all of these once at the start of the run. Fail fast with a clear message if any is missing.
+Verify all of these once at the start of the run. Fail fast with a clear message when any is missing.
 
-- The current working directory is a git checkout of `liferay-portal`.
+- The current working directory is a Git checkout of `liferay-portal`.
 - The working tree is clean (`git status --porcelain` is empty).
 - The checkout is on `master`.
-- The Liferay portal is running (required for `Java Integration`, `Playwright`, and `Poshi`). Start it if it is not.
+- The Liferay portal is running (required for `Java Integration`, `Playwright`, and `Poshi`). Start it when it is not.
 
 ## Input
 
@@ -125,7 +125,7 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 
 ### Claim the Failure
 
-1. Check Jira for an LPD ticket whose summary contains `<test-name>`, is labeled `claude-test-fix`, and was **created on or after `<failureDate>`**. A ticket matching those criteria already covers this failure (in progress when still open, already shipped when resolved), so skip it; if there are other candidates, retry with the next one.
+1. Check Jira for an LPD ticket whose summary contains `<test-name>`, is labeled `claude-test-fix`, and was **created on or after `<failureDate>`**. A ticket matching those criteria already covers this failure (in progress when still open, already shipped when resolved), so skip it; when there are other candidates, retry with the next one.
 
 1. Invoke the `jira-task` skill with summary `<test-name>` and a description that names the case result ID, the source build, and the failure trace excerpt. Add the `claude-test-fix` label.
 

@@ -90,8 +90,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where uuid = &#63;.
@@ -132,16 +133,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -217,8 +210,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where uuid = &#63; and companyId = &#63;.
@@ -261,16 +255,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,8 +338,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where companyId = &#63;.
@@ -394,16 +381,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -480,8 +459,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByC_A;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByC_A;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where companyId = &#63; and active = &#63;.
@@ -524,16 +504,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByC_A_First(companyId, active, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -615,8 +587,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			finderCache, new Object[] {companyId, active}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByC_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where companyId = &#63; and countryTwoLettersISOCode = &#63;.
@@ -659,18 +632,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByC_C_First(
-				companyId, countryTwoLettersISOCode, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, countryTwoLettersISOCode}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {companyId, countryTwoLettersISOCode},
+			orderByComparator);
 	}
 
 	/**
@@ -756,8 +720,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceInventoryWarehouse>
-		_collectionPersistenceFinderByC_A_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_collectionPersistenceFinderByC_A_C;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory warehouses where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
@@ -804,18 +769,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			fetchByC_A_C_First(
-				companyId, active, countryTwoLettersISOCode, orderByComparator);
-
-		if (commerceInventoryWarehouse != null) {
-			return commerceInventoryWarehouse;
-		}
-
-		throw new NoSuchInventoryWarehouseException(
-			_collectionPersistenceFinderByC_A_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, countryTwoLettersISOCode}));
+		return _collectionPersistenceFinderByC_A_C.findFirst(
+			finderCache,
+			new Object[] {companyId, active, countryTwoLettersISOCode},
+			orderByComparator);
 	}
 
 	/**
@@ -916,8 +873,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<CommerceInventoryWarehouse>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommerceInventoryWarehouse, NoSuchInventoryWarehouseException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce inventory warehouse where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchInventoryWarehouseException</code> if it could not be found.
@@ -932,23 +890,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchInventoryWarehouseException {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceInventoryWarehouse == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchInventoryWarehouseException(message);
-		}
-
-		return commerceInventoryWarehouse;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1337,18 +1280,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1377,18 +1308,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1421,18 +1340,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1465,18 +1372,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1512,18 +1407,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1572,18 +1455,6 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceInventoryWarehouseImpl.class,
-					CommerceInventoryWarehouse.class,
-					"commerceInventoryWarehouse", "CIWarehouse",
-					"commerceInventoryWarehouse.CIWarehouseId",
-					"SELECT DISTINCT {commerceInventoryWarehouse.*} FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					"SELECT {CIWarehouse.*} FROM (SELECT DISTINCT commerceInventoryWarehouse.CIWarehouseId FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					") TEMP_TABLE INNER JOIN CIWarehouse ON TEMP_TABLE.CIWarehouseId = CIWarehouse.CIWarehouseId",
-					"SELECT COUNT(DISTINCT commerceInventoryWarehouse.CIWarehouseId) AS COUNT_VALUE FROM CIWarehouse commerceInventoryWarehouse WHERE ",
-					CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL,
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1688,4 +1559,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-61728932
+// LIFERAY-SERVICE-BUILDER-HASH:1216075046

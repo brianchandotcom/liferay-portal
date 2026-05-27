@@ -98,7 +98,7 @@ public class GroupPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -138,15 +138,9 @@ public class GroupPersistenceImpl
 			String uuid, OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByUuid_First(uuid, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -188,7 +182,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the group where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -202,21 +197,8 @@ public class GroupPersistenceImpl
 	public Group findByUUID_G(String uuid, long groupId)
 		throws NoSuchGroupException {
 
-		Group group = fetchByUUID_G(uuid, groupId);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -265,7 +247,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -308,15 +290,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -362,7 +338,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -402,15 +378,9 @@ public class GroupPersistenceImpl
 			long companyId, OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -452,7 +422,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByLiveGroupId;
 
 	/**
@@ -492,15 +462,9 @@ public class GroupPersistenceImpl
 			long liveGroupId, OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByLiveGroupId_First(liveGroupId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByLiveGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {liveGroupId}));
+		return _collectionPersistenceFinderByLiveGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {liveGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -542,7 +506,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {liveGroupId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -586,17 +550,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -644,7 +600,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_P;
 
 	/**
@@ -688,17 +644,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_P_First(
-			companyId, parentGroupId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentGroupId}));
+		return _collectionPersistenceFinderByC_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentGroupId}, orderByComparator);
 	}
 
 	/**
@@ -746,9 +694,10 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_GK;
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_GK;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByC_GK;
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and groupKey = &#63;, optionally using the finder cache.
@@ -805,22 +754,9 @@ public class GroupPersistenceImpl
 	public Group findByC_GK(long companyId, String groupKey)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_GK(companyId, groupKey);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByC_GK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, groupKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByC_GK.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, groupKey});
 	}
 
 	/**
@@ -884,7 +820,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(groupKeys)});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_F;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByC_F;
 
 	/**
 	 * Returns the group where companyId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -898,22 +835,9 @@ public class GroupPersistenceImpl
 	public Group findByC_F(long companyId, String friendlyURL)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_F(companyId, friendlyURL);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByC_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, friendlyURL});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByC_F.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, friendlyURL});
 	}
 
 	/**
@@ -963,7 +887,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, friendlyURL});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -1006,15 +930,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_S_First(companyId, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, site}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, site},
+			orderByComparator);
 	}
 
 	/**
@@ -1060,7 +978,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, site});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_A;
 
 	/**
@@ -1103,15 +1021,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_A_First(companyId, active, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1157,7 +1069,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_CPK;
 
 	/**
@@ -1201,16 +1113,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_CPK_First(
-			classNameId, classPK, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_CPK.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1258,7 +1163,7 @@ public class GroupPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByT_A;
 
 	/**
@@ -1301,15 +1206,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByT_A_First(type, active, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByT_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, active}));
+		return _collectionPersistenceFinderByT_A.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1354,7 +1253,7 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type, active});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByGtG_C_P;
 
 	/**
@@ -1464,17 +1363,10 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByGtG_C_P_First(
-			groupId, companyId, parentGroupId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByGtG_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, parentGroupId}));
+		return _collectionPersistenceFinderByGtG_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, parentGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1530,7 +1422,8 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, parentGroupId});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_C_C;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -1545,22 +1438,9 @@ public class GroupPersistenceImpl
 	public Group findByC_C_C(long companyId, long classNameId, long classPK)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_C_C(companyId, classNameId, classPK);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByC_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -1614,7 +1494,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_C_P;
 
 	/**
@@ -1661,17 +1541,10 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_C_P_First(
-			companyId, classNameId, parentGroupId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, parentGroupId}));
+		return _collectionPersistenceFinderByC_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, parentGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1727,7 +1600,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, parentGroupId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_C_S;
 
 	/**
@@ -1773,17 +1646,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_C_S_First(
-			companyId, classNameId, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId, site}));
+		return _collectionPersistenceFinderByC_C_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, site}, orderByComparator);
 	}
 
 	/**
@@ -1834,7 +1699,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, site});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_P_S;
 
 	/**
@@ -1880,17 +1745,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_P_S_First(
-			companyId, parentGroupId, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentGroupId, site}));
+		return _collectionPersistenceFinderByC_P_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentGroupId, site}, orderByComparator);
 	}
 
 	/**
@@ -1943,7 +1800,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, site});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_L_GK;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByC_L_GK;
 
 	/**
 	 * Returns the group where companyId = &#63; and liveGroupId = &#63; and groupKey = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -1958,22 +1816,9 @@ public class GroupPersistenceImpl
 	public Group findByC_L_GK(long companyId, long liveGroupId, String groupKey)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_L_GK(companyId, liveGroupId, groupKey);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByC_L_GK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, liveGroupId, groupKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByC_L_GK.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, liveGroupId, groupKey});
 	}
 
 	/**
@@ -2030,7 +1875,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, liveGroupId, groupKey});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_LikeT_S;
 
 	/**
@@ -2138,17 +1983,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_LikeT_S_First(
-			companyId, treePath, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_LikeT_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, treePath, site}));
+		return _collectionPersistenceFinderByC_LikeT_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, treePath, site}, orderByComparator);
 	}
 
 	/**
@@ -2201,7 +2038,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, treePath, site});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_LikeN_S;
 
 	/**
@@ -2308,17 +2145,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_LikeN_S_First(
-			companyId, name, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_LikeN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, name, site}));
+		return _collectionPersistenceFinderByC_LikeN_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, site}, orderByComparator);
 	}
 
 	/**
@@ -2369,7 +2198,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, name, site});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_S_A;
 
 	/**
@@ -2415,17 +2244,9 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_S_A_First(
-			companyId, site, active, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_S_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, site, active}));
+		return _collectionPersistenceFinderByC_S_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, site, active}, orderByComparator);
 	}
 
 	/**
@@ -2476,7 +2297,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, site, active});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByGtG_C_C_P;
 
 	/**
@@ -2593,17 +2414,10 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByGtG_C_C_P_First(
-			groupId, companyId, classNameId, parentGroupId, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByGtG_C_C_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, classNameId, parentGroupId}));
+		return _collectionPersistenceFinderByGtG_C_C_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, parentGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -2662,7 +2476,7 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, parentGroupId});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByGtG_C_P_S;
 
 	/**
@@ -2779,17 +2593,10 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByGtG_C_P_S_First(
-			groupId, companyId, parentGroupId, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByGtG_C_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, companyId, parentGroupId, site}));
+		return _collectionPersistenceFinderByGtG_C_P_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, parentGroupId, site},
+			orderByComparator);
 	}
 
 	/**
@@ -2848,7 +2655,8 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, parentGroupId, site});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_C_L_GK;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByC_C_L_GK;
 
 	/**
 	 * Returns the group where companyId = &#63; and classNameId = &#63; and liveGroupId = &#63; and groupKey = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -2865,25 +2673,9 @@ public class GroupPersistenceImpl
 			long companyId, long classNameId, long liveGroupId, String groupKey)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_C_L_GK(
-			companyId, classNameId, liveGroupId, groupKey);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_L_GK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						companyId, classNameId, liveGroupId, groupKey
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByC_C_L_GK.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, liveGroupId, groupKey});
 	}
 
 	/**
@@ -2945,7 +2737,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, liveGroupId, groupKey});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_P_LikeN_S;
 
 	/**
@@ -3062,17 +2854,10 @@ public class GroupPersistenceImpl
 			OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_P_LikeN_S_First(
-			companyId, parentGroupId, name, site, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_P_LikeN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentGroupId, name, site}));
+		return _collectionPersistenceFinderByC_P_LikeN_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentGroupId, name, site},
+			orderByComparator);
 	}
 
 	/**
@@ -3131,7 +2916,7 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, name, site});
 	}
 
-	private CollectionPersistenceFinder<Group>
+	private CollectionPersistenceFinder<Group, NoSuchGroupException>
 		_collectionPersistenceFinderByC_P_S_I;
 
 	/**
@@ -3180,17 +2965,10 @@ public class GroupPersistenceImpl
 			boolean inheritContent, OrderByComparator<Group> orderByComparator)
 		throws NoSuchGroupException {
 
-		Group group = fetchByC_P_S_I_First(
-			companyId, parentGroupId, site, inheritContent, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		throw new NoSuchGroupException(
-			_collectionPersistenceFinderByC_P_S_I.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, parentGroupId, site, inheritContent}));
+		return _collectionPersistenceFinderByC_P_S_I.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentGroupId, site, inheritContent},
+			orderByComparator);
 	}
 
 	/**
@@ -3251,7 +3029,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, site, inheritContent});
 	}
 
-	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<Group, NoSuchGroupException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
@@ -3265,22 +3044,9 @@ public class GroupPersistenceImpl
 	public Group findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchGroupException {
 
-		Group group = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (group == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchGroupException(message);
-		}
-
-		return group;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -5937,4 +5703,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-414554693
+// LIFERAY-SERVICE-BUILDER-HASH:-402649143

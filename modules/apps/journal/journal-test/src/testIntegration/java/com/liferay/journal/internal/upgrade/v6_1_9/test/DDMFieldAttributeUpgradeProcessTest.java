@@ -125,12 +125,7 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	private static final long _STORAGE_ID = 0;
 
 	@Inject
-	private static DDMFieldLocalService _ddmFieldLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Inject
 	private EntityCache _entityCache;
@@ -140,5 +135,10 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

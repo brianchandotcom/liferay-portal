@@ -708,6 +708,24 @@ for (const spaConfiguration of spaConfigurations) {
 					await removeFilter('Status: Approved, Draft', page);
 					await assertNoActiveFiltersInURL('advanced', page);
 				});
+
+				await test.step('Clear all filters in the UI', async () => {
+					await activateFilter(
+						['Yellow', 'Green'],
+						'Color',
+						fdsSamplePage,
+						page
+					);
+					await checkFilter(
+						true,
+						'color',
+						'Color: Yellow, Green',
+						true
+					);
+
+					await fdsSamplePage.activeFiltersToolbar.clearButton.click();
+					await assertNoActiveFiltersInURL('advanced', page);
+				});
 			}
 		);
 
@@ -1179,20 +1197,20 @@ for (const spaConfiguration of spaConfigurations) {
 
 					await menuItem.click();
 
-					await assertFieldVisibility('ID', 9, false);
+					await assertFieldVisibility('ID', 10, false);
 
 					await page
 						.getByRole('menu')
 						.getByRole('menuitem', {name: 'author'})
 						.click();
 
-					await assertFieldVisibility('Author', 8, false);
+					await assertFieldVisibility('Author', 9, false);
 				});
 
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
 
-					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('Author', 10, true);
 
 					await page.goBack();
 
@@ -1202,20 +1220,20 @@ for (const spaConfiguration of spaConfigurations) {
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
 
-					await assertFieldVisibility('ID', 9, false);
-					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('ID', 10, false);
+					await assertFieldVisibility('Author', 10, true);
 
 					await page.goForward();
 
-					await assertFieldVisibility('ID', 8, false);
-					await assertFieldVisibility('Author', 8, false);
+					await assertFieldVisibility('ID', 9, false);
+					await assertFieldVisibility('Author', 9, false);
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
 
-					await assertFieldVisibility('ID', 9, false);
-					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('ID', 10, false);
+					await assertFieldVisibility('Author', 10, true);
 
 					await fdsSamplePage.table.manageColumnsVisibilityButton.click();
 					await page.getByRole('menu').waitFor();
@@ -1226,18 +1244,18 @@ for (const spaConfiguration of spaConfigurations) {
 
 					await titleMenuItem.click();
 
-					await assertFieldVisibility('Author', 8, true);
-					await assertFieldVisibility('Title', 8, false);
+					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('Title', 9, false);
 
 					await page.goBack();
 
-					await assertFieldVisibility('Author', 9, true);
-					await assertFieldVisibility('Title', 9, true);
+					await assertFieldVisibility('Author', 10, true);
+					await assertFieldVisibility('Title', 10, true);
 
 					await page.goForward();
 
-					await assertFieldVisibility('Author', 8, true);
-					await assertFieldVisibility('Title', 8, false);
+					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('Title', 9, false);
 
 					expect(await page.goForward()).toBeNull();
 				});

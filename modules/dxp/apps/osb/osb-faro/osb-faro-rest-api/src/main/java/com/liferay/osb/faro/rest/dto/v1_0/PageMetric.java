@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "Analytics metrics for a single tracked page over the selected date range. Use `getSitePagesPage` to list these metrics for a site.",
+	description = "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupChannelPagesPage` to list these metrics for a site.",
 	value = "PageMetric"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -50,7 +50,7 @@ public class PageMetric implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The canonical URL of the page."
+		description = "Identifier of the tracked page (the page's canonical URL)."
 	)
 	public String getAssetId() {
 		if (_assetIdSupplier != null) {
@@ -85,7 +85,9 @@ public class PageMetric implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The canonical URL of the page.")
+	@GraphQLField(
+		description = "Identifier of the tracked page (the page's canonical URL)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetId;
 
@@ -998,4 +1000,4 @@ public class PageMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-724898080
+// LIFERAY-REST-BUILDER-HASH:-1783256004

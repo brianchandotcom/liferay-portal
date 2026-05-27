@@ -14,6 +14,10 @@ import {
 	performUserSwitchViaApi,
 	userData,
 } from '../../../../utils/performLogin';
+import {
+	SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+	SITE_CMS_SPACE_NAME,
+} from '../../../setup/site-cms-site/constants/space';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 import {SpaceSummaryPage} from '../pages/SpaceSummaryPage';
 
@@ -121,6 +125,58 @@ test(
 				role: 'Space Content Reviewer',
 				spaceSummaryPage,
 			}));
+	}
+);
+
+test(
+	'A Space Administrator sees assigned role names in the View All Members list',
+	{tag: '@LPD-89984'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const reviewer = await apiHelpers.headlessAdminUser.postUserAccount();
+		const reviewerFullName = `${reviewer.givenName} ${reviewer.familyName}`;
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			reviewer.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			reviewer.externalReferenceCode,
+			['Asset Library Content Reviewer']
+		);
+
+		const spaceAdmin = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[spaceAdmin.alternateName] = {
+			name: spaceAdmin.givenName,
+			password: 'test',
+			surname: spaceAdmin.familyName,
+		};
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			spaceAdmin.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			spaceAdmin.externalReferenceCode,
+			['Asset Library Administrator']
+		);
+
+		await performUserSwitchViaApi(page, spaceAdmin.alternateName);
+
+		await spaceSummaryPage.goto(SITE_CMS_SPACE_NAME);
+		await spaceSummaryPage.viewAllMembersLink.click();
+
+		const reviewerRow = page
+			.getByRole('listitem')
+			.filter({hasText: reviewerFullName});
+
+		await expect(
+			reviewerRow.locator('.permission-select-trigger-text')
+		).toHaveText('Space Content Reviewer');
 	}
 );
 

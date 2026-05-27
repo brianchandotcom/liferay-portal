@@ -1003,4 +1003,4 @@ public class ReadingTimeEntryModelImpl
 	private ReadingTimeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-988545123
+// LIFERAY-SERVICE-BUILDER-HASH:1055049667

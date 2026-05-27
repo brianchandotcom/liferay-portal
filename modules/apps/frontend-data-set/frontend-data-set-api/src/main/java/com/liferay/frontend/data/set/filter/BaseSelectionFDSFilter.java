@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
@@ -19,6 +20,11 @@ public abstract class BaseSelectionFDSFilter implements FDSFilter {
 
 	public String getAPIURL() {
 		return null;
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.STRING;
 	}
 
 	public String getItemKey() {

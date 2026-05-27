@@ -3,7 +3,7 @@
 		"auto_approve": false,
 		"parallelism": 10,
 		"provider": "aws",
-		"version": "1.0.5"
+		"version": "1.0.6"
 	},
 	"variables": {
 		"deployment_name": "liferay-aws-test",

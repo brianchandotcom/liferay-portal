@@ -5,10 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {
+	COUNTRY_SOURCE,
 	CountryInfo,
-	PREFIX_TYPE,
+	CountrySource,
 	PhoneNumberInput,
-	PrefixType,
 } from '@liferay/object-js-components-web';
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
@@ -26,6 +26,8 @@ const PHONE_NUMBER_PATTERN = /^\+[0-9]{7,15}$/;
 
 interface BasePhoneNumberProps {
 	countries?: CountryInfo[];
+	country?: string;
+	countrySource?: CountrySource;
 	disabled?: boolean;
 	displayErrors?: boolean;
 	errorMessage?: string;
@@ -35,9 +37,8 @@ interface BasePhoneNumberProps {
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
 	onFocus?: (event: React.FocusEvent) => void;
+	pageValidationFailed?: boolean;
 	predefinedValue?: string;
-	prefix?: string;
-	prefixType?: PrefixType;
 	readOnly?: boolean;
 	valid?: boolean;
 	[key: string]: unknown;
@@ -58,61 +59,49 @@ type PhoneNumberProps =
 	| (NonLocalizablePhoneNumberProps & {localizedObjectField?: false});
 
 const getValidationState = (value: string) => {
-	if (!value) {
-		return {displayErrors: false, errorMessage: undefined, valid: true};
+	if (value && !PHONE_NUMBER_PATTERN.test(value)) {
+		return {
+			displayErrors: true,
+			errorMessage: Liferay.Language.get(
+				'please-enter-a-valid-phone-number'
+			),
+			valid: false,
+		};
 	}
 
-	const valid = PHONE_NUMBER_PATTERN.test(value);
-
-	return {
-		displayErrors: !valid,
-		errorMessage: valid
-			? undefined
-			: Liferay.Language.get('please-enter-a-valid-phone-number'),
-		valid,
-	};
+	return {};
 };
 
 const LocalizablePhoneNumber = ({
 	countries = [],
-	displayErrors,
-	errorMessage,
+	country,
+	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	fieldName,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	predefinedValue,
-	prefix,
-	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
-	valid = true,
 	value = {} as LocalizedValue<string>,
 	...otherProps
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
-	const [validationState, setValidationState] = useState({
-		displayErrors,
-		errorMessage,
-		valid,
-	});
+	const [touched, setTouched] = useState(false);
 
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || otherProps.disabled;
 
+	const validationState =
+		touched || otherProps.pageValidationFailed
+			? getValidationState(currentValue)
+			: {};
+
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidationState(getValidationState(currentValue));
+		setTouched(true);
 
 		onBlur?.(event);
-	};
-
-	const handleLanguageClicked = (localeId: Liferay.Language.Locale) => {
-		if (validationState.displayErrors) {
-			setValidationState(
-				getValidationState(value[localeId] ?? predefinedValue ?? '')
-			);
-		}
 	};
 
 	const handleChange = (event: {target: {value: string}}) => {
@@ -120,14 +109,6 @@ const LocalizablePhoneNumber = ({
 			...value,
 			[editingLanguageId]: event.target.value,
 		} as LocalizedValue<string>;
-
-		// Re-getValidationState on change only while an error is already visible,
-		// so the message clears live as the user fixes it (typing or
-		// country switch) without flashing on first entry.
-
-		if (validationState.displayErrors) {
-			setValidationState(getValidationState(event.target.value));
-		}
 
 		onChange?.({target: {value: newValue}});
 	};
@@ -142,6 +123,8 @@ const LocalizablePhoneNumber = ({
 			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
+					country={country}
+					countrySource={countrySource}
 					disabled={disabled}
 					id={otherProps.id as string}
 					key={editingLanguageId}
@@ -149,8 +132,6 @@ const LocalizablePhoneNumber = ({
 					onBlur={handleBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
-					prefix={prefix}
-					prefixType={prefixType}
 					value={currentValue}
 				/>
 
@@ -158,7 +139,6 @@ const LocalizablePhoneNumber = ({
 					<LocalesDropdown
 						availableLocales={availableLocales}
 						fieldName={fieldName}
-						onLanguageClicked={handleLanguageClicked}
 						value={value}
 					/>
 				</ClayInput.GroupItem>
@@ -169,47 +149,37 @@ const LocalizablePhoneNumber = ({
 
 const NonLocalizablePhoneNumber = ({
 	countries = [],
-	displayErrors,
-	errorMessage,
+	country,
+	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	predefinedValue,
-	prefix,
-	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
-	valid = true,
 	value: initialValue,
 	...otherProps
 }: NonLocalizablePhoneNumberProps) => {
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
-	const [validationState, setValidationState] = useState({
-		displayErrors,
-		errorMessage,
-		valid,
-	});
+	const [touched, setTouched] = useState(false);
 
 	const disabled = readOnly || otherProps.disabled;
 
+	const validationState =
+		touched || otherProps.pageValidationFailed
+			? getValidationState(combinedValue)
+			: {};
+
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidationState(getValidationState(combinedValue));
+		setTouched(true);
 
 		onBlur?.(event);
 	};
 
 	const handleChange = (event: {target: {value: string}}) => {
 		setCombinedValue(event.target.value);
-
-		// Re-getValidationState on change only while an error is already visible,
-		// so the message clears as the user fixes it without flashing on
-		// first entry.
-
-		if (validationState.displayErrors) {
-			setValidationState(getValidationState(event.target.value));
-		}
 
 		onChange?.(event);
 	};
@@ -224,14 +194,14 @@ const NonLocalizablePhoneNumber = ({
 			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
+					country={country}
+					countrySource={countrySource}
 					disabled={disabled}
 					id={otherProps.id as string}
 					name={name}
 					onBlur={handleBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
-					prefix={prefix}
-					prefixType={prefixType}
 					value={initialValue || predefinedValue}
 				/>
 			</ClayInput.Group>

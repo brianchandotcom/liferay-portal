@@ -72,7 +72,7 @@ public class AuditEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AuditEvent>
+	private CollectionPersistenceFinder<AuditEvent, NoSuchEventException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -113,16 +113,8 @@ public class AuditEventPersistenceImpl
 			long companyId, OrderByComparator<AuditEvent> orderByComparator)
 		throws NoSuchEventException {
 
-		AuditEvent auditEvent = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (auditEvent != null) {
-			return auditEvent;
-		}
-
-		throw new NoSuchEventException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			dummyFinderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -431,4 +423,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1550229463
+// LIFERAY-SERVICE-BUILDER-HASH:-1305802561

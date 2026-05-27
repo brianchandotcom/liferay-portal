@@ -187,14 +187,16 @@ export class ContentsPage {
 
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		await this.page.getByRole('button', {name: 'Delete Folder'}).click();
-
 		if (recycleBinEnabled) {
 			await waitForAlert(this.page, `Success:${folderName} was moved`, {
 				autoClose: false,
 			});
 		}
 		else {
+			await this.page
+				.getByRole('button', {name: 'Delete Folder'})
+				.click();
+
 			await waitForAlert(
 				this.page,
 				`Success:${folderName} has been permanently deleted.`

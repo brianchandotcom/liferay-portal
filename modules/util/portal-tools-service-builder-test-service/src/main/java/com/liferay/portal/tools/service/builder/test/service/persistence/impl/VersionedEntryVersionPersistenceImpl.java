@@ -62,8 +62,9 @@ public class VersionedEntryVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<VersionedEntryVersion>
-		_collectionPersistenceFinderByVersionedEntryId;
+	private CollectionPersistenceFinder
+		<VersionedEntryVersion, NoSuchVersionedEntryVersionException>
+			_collectionPersistenceFinderByVersionedEntryId;
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where versionedEntryId = &#63;.
@@ -104,17 +105,8 @@ public class VersionedEntryVersionPersistenceImpl
 			OrderByComparator<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException {
 
-		VersionedEntryVersion versionedEntryVersion =
-			fetchByVersionedEntryId_First(versionedEntryId, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		throw new NoSuchVersionedEntryVersionException(
-			_collectionPersistenceFinderByVersionedEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {versionedEntryId}));
+		return _collectionPersistenceFinderByVersionedEntryId.findFirst(
+			finderCache, new Object[] {versionedEntryId}, orderByComparator);
 	}
 
 	/**
@@ -156,8 +148,9 @@ public class VersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {versionedEntryId});
 	}
 
-	private UniquePersistenceFinder<VersionedEntryVersion>
-		_uniquePersistenceFinderByVersionedEntryId_Version;
+	private UniquePersistenceFinder
+		<VersionedEntryVersion, NoSuchVersionedEntryVersionException>
+			_uniquePersistenceFinderByVersionedEntryId_Version;
 
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchVersionedEntryVersionException</code> if it could not be found.
@@ -172,24 +165,8 @@ public class VersionedEntryVersionPersistenceImpl
 			long versionedEntryId, int version)
 		throws NoSuchVersionedEntryVersionException {
 
-		VersionedEntryVersion versionedEntryVersion =
-			fetchByVersionedEntryId_Version(versionedEntryId, version);
-
-		if (versionedEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByVersionedEntryId_Version.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {versionedEntryId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVersionedEntryVersionException(message);
-		}
-
-		return versionedEntryVersion;
+		return _uniquePersistenceFinderByVersionedEntryId_Version.find(
+			finderCache, new Object[] {versionedEntryId, version});
 	}
 
 	/**
@@ -242,8 +219,9 @@ public class VersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {versionedEntryId, version});
 	}
 
-	private CollectionPersistenceFinder<VersionedEntryVersion>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<VersionedEntryVersion, NoSuchVersionedEntryVersionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where groupId = &#63;.
@@ -284,16 +262,8 @@ public class VersionedEntryVersionPersistenceImpl
 			OrderByComparator<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException {
 
-		VersionedEntryVersion versionedEntryVersion = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		throw new NoSuchVersionedEntryVersionException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -335,8 +305,9 @@ public class VersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<VersionedEntryVersion>
-		_collectionPersistenceFinderByGroupId_Version;
+	private CollectionPersistenceFinder
+		<VersionedEntryVersion, NoSuchVersionedEntryVersionException>
+			_collectionPersistenceFinderByGroupId_Version;
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where groupId = &#63; and version = &#63;.
@@ -379,16 +350,8 @@ public class VersionedEntryVersionPersistenceImpl
 			OrderByComparator<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException {
 
-		VersionedEntryVersion versionedEntryVersion =
-			fetchByGroupId_Version_First(groupId, version, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		throw new NoSuchVersionedEntryVersionException(
-			_collectionPersistenceFinderByGroupId_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, version}));
+		return _collectionPersistenceFinderByGroupId_Version.findFirst(
+			finderCache, new Object[] {groupId, version}, orderByComparator);
 	}
 
 	/**
@@ -772,4 +735,4 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1626467209
+// LIFERAY-SERVICE-BUILDER-HASH:-441966055

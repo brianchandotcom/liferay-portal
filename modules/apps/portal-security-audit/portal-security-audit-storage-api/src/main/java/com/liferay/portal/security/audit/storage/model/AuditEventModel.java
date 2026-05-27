@@ -149,19 +149,33 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the event type of this audit event.
+	 * Returns the account entry ID of this audit event.
 	 *
-	 * @return the event type of this audit event
+	 * @return the account entry ID of this audit event
 	 */
-	@AutoEscape
-	public String getEventType();
+	public long getAccountEntryId();
 
 	/**
-	 * Sets the event type of this audit event.
+	 * Sets the account entry ID of this audit event.
 	 *
-	 * @param eventType the event type of this audit event
+	 * @param accountEntryId the account entry ID of this audit event
 	 */
-	public void setEventType(String eventType);
+	public void setAccountEntryId(long accountEntryId);
+
+	/**
+	 * Returns the additional info of this audit event.
+	 *
+	 * @return the additional info of this audit event
+	 */
+	@AutoEscape
+	public String getAdditionalInfo();
+
+	/**
+	 * Sets the additional info of this audit event.
+	 *
+	 * @param additionalInfo the additional info of this audit event
+	 */
+	public void setAdditionalInfo(String additionalInfo);
 
 	/**
 	 * Returns the class name of this audit event.
@@ -194,21 +208,6 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	public void setClassPK(String classPK);
 
 	/**
-	 * Returns the message of this audit event.
-	 *
-	 * @return the message of this audit event
-	 */
-	@AutoEscape
-	public String getMessage();
-
-	/**
-	 * Sets the message of this audit event.
-	 *
-	 * @param message the message of this audit event
-	 */
-	public void setMessage(String message);
-
-	/**
 	 * Returns the client host of this audit event.
 	 *
 	 * @return the client host of this audit event
@@ -237,6 +236,51 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	 * @param clientIP the client ip of this audit event
 	 */
 	public void setClientIP(String clientIP);
+
+	/**
+	 * Returns the context name of this audit event.
+	 *
+	 * @return the context name of this audit event
+	 */
+	@AutoEscape
+	public String getContextName();
+
+	/**
+	 * Sets the context name of this audit event.
+	 *
+	 * @param contextName the context name of this audit event
+	 */
+	public void setContextName(String contextName);
+
+	/**
+	 * Returns the event type of this audit event.
+	 *
+	 * @return the event type of this audit event
+	 */
+	@AutoEscape
+	public String getEventType();
+
+	/**
+	 * Sets the event type of this audit event.
+	 *
+	 * @param eventType the event type of this audit event
+	 */
+	public void setEventType(String eventType);
+
+	/**
+	 * Returns the message of this audit event.
+	 *
+	 * @return the message of this audit event
+	 */
+	@AutoEscape
+	public String getMessage();
+
+	/**
+	 * Sets the message of this audit event.
+	 *
+	 * @param message the message of this audit event
+	 */
+	public void setMessage(String message);
 
 	/**
 	 * Returns the server name of this audit event.
@@ -282,21 +326,6 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	 */
 	public void setSessionID(String sessionID);
 
-	/**
-	 * Returns the additional info of this audit event.
-	 *
-	 * @return the additional info of this audit event
-	 */
-	@AutoEscape
-	public String getAdditionalInfo();
-
-	/**
-	 * Sets the additional info of this audit event.
-	 *
-	 * @param additionalInfo the additional info of this audit event
-	 */
-	public void setAdditionalInfo(String additionalInfo);
-
 	@Override
 	public AuditEvent cloneWithOriginalValues();
 
@@ -305,4 +334,4 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102425204
+// LIFERAY-SERVICE-BUILDER-HASH:733688777

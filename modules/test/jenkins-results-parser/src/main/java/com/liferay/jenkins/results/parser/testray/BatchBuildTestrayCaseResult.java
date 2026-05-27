@@ -32,8 +32,6 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -226,9 +224,8 @@ public class BatchBuildTestrayCaseResult
 
 			for (String teamComponentName : teamComponentNames.split(",")) {
 				if (teamComponentName.equals(componentName)) {
-					teamName = teamName.replace("-", " ");
-
-					return WordUtils.capitalize(teamName);
+					return _upperCaseFirstLetterOfEachWord(
+						teamName.replace("-", " "));
 				}
 			}
 		}
@@ -768,6 +765,18 @@ public class BatchBuildTestrayCaseResult
 	private TestrayAttachment _getWarningsTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
+	}
+
+	private String _upperCaseFirstLetterOfEachWord(String string) {
+		StringBuilder sb = new StringBuilder(string);
+
+		for (int i = 0; i < sb.length(); i++) {
+			if ((i == 0) || (sb.charAt(i - 1) == ' ')) {
+				sb.setCharAt(i, Character.toUpperCase(sb.charAt(i)));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final Pattern _dockerLogsURLPattern = Pattern.compile(

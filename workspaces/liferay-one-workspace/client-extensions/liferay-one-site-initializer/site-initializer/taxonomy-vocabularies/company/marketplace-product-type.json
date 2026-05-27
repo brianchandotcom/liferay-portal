@@ -9,7 +9,8 @@
 	"availableLanguages": [
 		"en-US"
 	],
-	"name": "Marketplace Product Type",
+	"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE",
+	"name": "marketplace-product-type",
 	"name_i18n": {
 		"en_US": "Marketplace Product Type"
 	},

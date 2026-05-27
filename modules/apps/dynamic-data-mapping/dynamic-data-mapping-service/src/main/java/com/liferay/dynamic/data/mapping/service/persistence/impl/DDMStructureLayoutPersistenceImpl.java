@@ -87,8 +87,9 @@ public class DDMStructureLayoutPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63;.
@@ -129,16 +130,8 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,8 +172,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DDMStructureLayout>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -194,21 +188,8 @@ public class DDMStructureLayoutPersistenceImpl
 	public DDMStructureLayout findByUUID_G(String uuid, long groupId)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByUUID_G(uuid, groupId);
-
-		if (ddmStructureLayout == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStructureLayoutException(message);
-		}
-
-		return ddmStructureLayout;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,8 +237,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -300,16 +282,8 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -354,8 +328,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where groupId = &#63;.
@@ -396,16 +371,8 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -446,8 +413,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByStructureLayoutKey;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByStructureLayoutKey;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
@@ -488,18 +456,8 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByStructureLayoutKey_First(
-			structureLayoutKey, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByStructureLayoutKey.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {structureLayoutKey}));
+		return _collectionPersistenceFinderByStructureLayoutKey.findFirst(
+			finderCache, new Object[] {structureLayoutKey}, orderByComparator);
 	}
 
 	/**
@@ -541,8 +499,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {structureLayoutKey});
 	}
 
-	private UniquePersistenceFinder<DDMStructureLayout>
-		_uniquePersistenceFinderByStructureVersionId;
+	private UniquePersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_uniquePersistenceFinderByStructureVersionId;
 
 	/**
 	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -555,24 +514,8 @@ public class DDMStructureLayoutPersistenceImpl
 	public DDMStructureLayout findByStructureVersionId(long structureVersionId)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByStructureVersionId(
-			structureVersionId);
-
-		if (ddmStructureLayout == null) {
-			String message =
-				_uniquePersistenceFinderByStructureVersionId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {structureVersionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStructureLayoutException(message);
-		}
-
-		return ddmStructureLayout;
+		return _uniquePersistenceFinderByStructureVersionId.find(
+			finderCache, new Object[] {structureVersionId});
 	}
 
 	/**
@@ -619,8 +562,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {structureVersionId});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByG_C;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByG_C;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where groupId = &#63; and classNameId = &#63;.
@@ -663,16 +607,9 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -718,8 +655,9 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private UniquePersistenceFinder<DDMStructureLayout>
-		_uniquePersistenceFinderByG_C_S;
+	private UniquePersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_uniquePersistenceFinderByG_C_S;
 
 	/**
 	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -735,23 +673,9 @@ public class DDMStructureLayoutPersistenceImpl
 			long groupId, long classNameId, String structureLayoutKey)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByG_C_S(
-			groupId, classNameId, structureLayoutKey);
-
-		if (ddmStructureLayout == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, structureLayoutKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStructureLayoutException(message);
-		}
-
-		return ddmStructureLayout;
+		return _uniquePersistenceFinderByG_C_S.find(
+			finderCache,
+			new Object[] {groupId, classNameId, structureLayoutKey});
 	}
 
 	/**
@@ -810,8 +734,9 @@ public class DDMStructureLayoutPersistenceImpl
 			new Object[] {groupId, classNameId, structureLayoutKey});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureLayout>
-		_collectionPersistenceFinderByG_C_SV;
+	private CollectionPersistenceFinder
+		<DDMStructureLayout, NoSuchStructureLayoutException>
+			_collectionPersistenceFinderByG_C_SV;
 
 	/**
 	 * Returns an ordered range of all the ddm structure layouts where groupId = &#63; and classNameId = &#63; and structureVersionId = &#63;.
@@ -857,17 +782,10 @@ public class DDMStructureLayoutPersistenceImpl
 			OrderByComparator<DDMStructureLayout> orderByComparator)
 		throws NoSuchStructureLayoutException {
 
-		DDMStructureLayout ddmStructureLayout = fetchByG_C_SV_First(
-			groupId, classNameId, structureVersionId, orderByComparator);
-
-		if (ddmStructureLayout != null) {
-			return ddmStructureLayout;
-		}
-
-		throw new NoSuchStructureLayoutException(
-			_collectionPersistenceFinderByG_C_SV.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, structureVersionId}));
+		return _collectionPersistenceFinderByG_C_SV.findFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, structureVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1550,4 +1468,4 @@ public class DDMStructureLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1198119447
+// LIFERAY-SERVICE-BUILDER-HASH:1275114109

@@ -84,7 +84,7 @@ public class BasicEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BasicEntry>
+	private CollectionPersistenceFinder<BasicEntry, NoSuchBasicEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -125,16 +125,8 @@ public class BasicEntryPersistenceImpl
 			long groupId, OrderByComparator<BasicEntry> orderByComparator)
 		throws NoSuchBasicEntryException {
 
-		BasicEntry basicEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (basicEntry != null) {
-			return basicEntry;
-		}
-
-		throw new NoSuchBasicEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -175,7 +167,8 @@ public class BasicEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private UniquePersistenceFinder<BasicEntry> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<BasicEntry, NoSuchBasicEntryException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the basic entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchBasicEntryException</code> if it could not be found.
@@ -189,21 +182,8 @@ public class BasicEntryPersistenceImpl
 	public BasicEntry findByC_N(long companyId, String name)
 		throws NoSuchBasicEntryException {
 
-		BasicEntry basicEntry = fetchByC_N(companyId, name);
-
-		if (basicEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBasicEntryException(message);
-		}
-
-		return basicEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -894,4 +874,4 @@ public class BasicEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:676392749
+// LIFERAY-SERVICE-BUILDER-HASH:1449938057

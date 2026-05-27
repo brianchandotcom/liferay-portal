@@ -90,7 +90,7 @@ public class COREntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -130,15 +130,8 @@ public class COREntryPersistenceImpl
 			String uuid, OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -213,7 +206,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -256,16 +249,8 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -347,7 +332,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByC_A;
 
 	/**
@@ -390,16 +375,8 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByC_A_First(
-			companyId, active, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -481,7 +458,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {companyId, active}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByC_LikeType;
 
 	/**
@@ -580,16 +557,8 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByC_LikeType_First(
-			companyId, type, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByC_LikeType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_LikeType.findFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -704,7 +673,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByLtD_S;
 
 	/**
@@ -803,16 +772,8 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -927,7 +888,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByLtE_S;
 
 	/**
@@ -1026,17 +987,9 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {expirationDate, status}));
+		return _collectionPersistenceFinderByLtE_S.findFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1152,7 +1105,7 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {expirationDate, status});
 	}
 
-	private FilterCollectionPersistenceFinder<COREntry>
+	private FilterCollectionPersistenceFinder<COREntry, NoSuchCOREntryException>
 		_collectionPersistenceFinderByC_A_LikeType;
 
 	/**
@@ -1259,17 +1212,9 @@ public class COREntryPersistenceImpl
 			OrderByComparator<COREntry> orderByComparator)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByC_A_LikeType_First(
-			companyId, active, type, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		throw new NoSuchCOREntryException(
-			_collectionPersistenceFinderByC_A_LikeType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, type}));
+		return _collectionPersistenceFinderByC_A_LikeType.findFirst(
+			finderCache, new Object[] {companyId, active, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1402,7 +1347,8 @@ public class COREntryPersistenceImpl
 			finderCache, new Object[] {companyId, active, type}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<COREntry> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<COREntry, NoSuchCOREntryException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.
@@ -1416,22 +1362,8 @@ public class COREntryPersistenceImpl
 	public COREntry findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (corEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCOREntryException(message);
-		}
-
-		return corEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1778,15 +1710,6 @@ public class COREntryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, COREntry::getUuid));
@@ -1812,15 +1735,6 @@ public class COREntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, COREntry::getUuid),
@@ -1853,15 +1767,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "active_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1887,15 +1792,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1923,15 +1819,6 @@ public class COREntryPersistenceImpl
 					new String[] {"displayDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "displayDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getDisplayDate),
@@ -1959,15 +1846,6 @@ public class COREntryPersistenceImpl
 					new String[] {"expirationDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "expirationDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getExpirationDate),
@@ -1999,15 +1877,6 @@ public class COREntryPersistenceImpl
 					new String[] {"companyId", "active_", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					COREntryImpl.class, COREntry.class, "corEntry", "COREntry",
-					"corEntry.COREntryId",
-					"SELECT DISTINCT {corEntry.*} FROM COREntry corEntry WHERE ",
-					"SELECT {COREntry.*} FROM (SELECT DISTINCT corEntry.COREntryId FROM COREntry corEntry WHERE ",
-					") TEMP_TABLE INNER JOIN COREntry ON TEMP_TABLE.COREntryId = COREntry.COREntryId",
-					"SELECT COUNT(DISTINCT corEntry.COREntryId) AS COUNT_VALUE FROM COREntry corEntry WHERE ",
-					COREntryModelImpl.ORDER_BY_SQL,
-					COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -2103,4 +1972,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:10518695
+// LIFERAY-SERVICE-BUILDER-HASH:-961447443

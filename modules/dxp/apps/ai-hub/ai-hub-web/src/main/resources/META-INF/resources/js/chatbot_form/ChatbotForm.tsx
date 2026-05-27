@@ -107,6 +107,7 @@ export default function ChatbotForm({
 	companyLogoUploadTip,
 	externalReferenceCode,
 	portalURL,
+	readOnly,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
@@ -116,10 +117,12 @@ export default function ChatbotForm({
 	companyLogoUploadTip: string;
 	externalReferenceCode: string;
 	portalURL: string;
+	readOnly: boolean;
 }) {
 	const [availableAgentDefinitions, setAvailableAgentDefinitions] = useState<
 		AgentDefinitionOption[]
 	>([]);
+	const [agentDefinitionsLoaded, setAgentDefinitionsLoaded] = useState(false);
 	const [formData, setFormData] = useState<Chatbot>({} as Chatbot);
 	const [
 		existingChatbotExternalReferenceCode,
@@ -150,6 +153,9 @@ export default function ChatbotForm({
 			})
 			.catch((error) => {
 				console.error(error);
+			})
+			.finally(() => {
+				setAgentDefinitionsLoaded(true);
 			});
 	}, []);
 
@@ -354,7 +360,6 @@ export default function ChatbotForm({
 					placeholderMessage_i18n: {},
 					r_accountToAIHubChatbots_accountEntryERC:
 						accountEntryExternalReferenceCode,
-					showCompanyLogo: true,
 					title_i18n: {},
 				});
 
@@ -387,7 +392,6 @@ export default function ChatbotForm({
 					placeholderMessage_i18n: chatbot.placeholderMessage_i18n,
 					r_accountToAIHubChatbots_accountEntryERC:
 						chatbot.r_accountToAIHubChatbots_accountEntryERC,
-					showCompanyLogo: chatbot.showCompanyLogo,
 					title_i18n: chatbot.title_i18n,
 				});
 
@@ -443,6 +447,7 @@ export default function ChatbotForm({
 						aria-label={Liferay.Language.get('save')}
 						data-title="Save Button"
 						data-title-set-as-html
+						disabled={readOnly}
 						onClick={handleSubmit}
 						size="sm"
 					>
@@ -467,6 +472,7 @@ export default function ChatbotForm({
 										</h2>
 
 										<ClayToggle
+											disabled={readOnly}
 											label={Liferay.Language.get(
 												'enable-chatbot'
 											)}
@@ -488,6 +494,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="title"
 											label={Liferay.Language.get(
 												'title'
@@ -523,6 +530,7 @@ export default function ChatbotForm({
 										</label>
 
 										<ClayInput
+											disabled={readOnly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
 											onChange={handleInputChange}
@@ -547,6 +555,7 @@ export default function ChatbotForm({
 
 										<textarea
 											className="form-control"
+											disabled={readOnly}
 											id="description"
 											name="description"
 											onChange={handleInputChange}
@@ -575,7 +584,10 @@ export default function ChatbotForm({
 														'company-logo'
 													)
 												)}
-												disabled={companyLogoLoading}
+												disabled={
+													companyLogoLoading ||
+													readOnly
+												}
 												displayType="secondary"
 												onClick={
 													handleSelectCompanyLogo
@@ -604,6 +616,7 @@ export default function ChatbotForm({
 													</span>
 
 													<Button
+														disabled={readOnly}
 														displayType="danger"
 														onClick={
 															handleClearCompanyLogo
@@ -647,29 +660,35 @@ export default function ChatbotForm({
 											)}
 										</label>
 
-										<ClayMultiSelect
-											allowDuplicateValues={false}
-											allowsCustomLabel={false}
-											inputName="assignedAgents"
-											items={selectedAgentDefinitions}
-											locator={{
-												label: 'title',
-												value: 'externalReferenceCode',
-											}}
-											onItemsChange={(items) => {
-												setSelectedAgentDefinitions(
-													items
-												);
-											}}
-											sourceItems={
-												availableAgentDefinitions
-											}
-											spritemap={Liferay.Icons.spritemap}
-										/>
+										{agentDefinitionsLoaded && (
+											<ClayMultiSelect
+												allowDuplicateValues={false}
+												allowsCustomLabel={false}
+												disabled={readOnly}
+												inputName="assignedAgents"
+												items={selectedAgentDefinitions}
+												locator={{
+													label: 'title',
+													value: 'externalReferenceCode',
+												}}
+												onItemsChange={(items) => {
+													setSelectedAgentDefinitions(
+														items
+													);
+												}}
+												sourceItems={
+													availableAgentDefinitions
+												}
+												spritemap={
+													Liferay.Icons.spritemap
+												}
+											/>
+										)}
 									</ClayForm.Group>
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="notificationMessage"
 											label={Liferay.Language.get(
 												'notification-message'
@@ -695,6 +714,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="placeholderMessage"
 											label={Liferay.Language.get(
 												'placeholder-message'
@@ -720,6 +740,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="introMessage"
 											label={Liferay.Language.get(
 												'intro-message'
@@ -741,25 +762,6 @@ export default function ChatbotForm({
 											}
 										/>
 									</ClayForm.Group>
-
-									<ClayToggle
-										label={Liferay.Language.get(
-											'show-company-logo'
-										)}
-										onBlur={(
-											event: React.FocusEvent<HTMLInputElement>
-										) => {
-											event.stopPropagation();
-										}}
-										onToggle={() =>
-											setFormData((prev) => ({
-												...prev,
-												showCompanyLogo:
-													!prev.showCompanyLogo,
-											}))
-										}
-										toggled={formData.showCompanyLogo}
-									/>
 								</ClayPanel.Body>
 							</ClayPanel>
 

@@ -80,8 +80,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMDataProviderInstanceLink>
-		_collectionPersistenceFinderByDataProviderInstanceId;
+	private CollectionPersistenceFinder
+		<DDMDataProviderInstanceLink, NoSuchDataProviderInstanceLinkException>
+			_collectionPersistenceFinderByDataProviderInstanceId;
 
 	/**
 	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
@@ -122,19 +123,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			OrderByComparator<DDMDataProviderInstanceLink> orderByComparator)
 		throws NoSuchDataProviderInstanceLinkException {
 
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			fetchByDataProviderInstanceId_First(
-				dataProviderInstanceId, orderByComparator);
-
-		if (ddmDataProviderInstanceLink != null) {
-			return ddmDataProviderInstanceLink;
-		}
-
-		throw new NoSuchDataProviderInstanceLinkException(
-			_collectionPersistenceFinderByDataProviderInstanceId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {dataProviderInstanceId}));
+		return _collectionPersistenceFinderByDataProviderInstanceId.findFirst(
+			finderCache, new Object[] {dataProviderInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -177,8 +168,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			finderCache, new Object[] {dataProviderInstanceId});
 	}
 
-	private CollectionPersistenceFinder<DDMDataProviderInstanceLink>
-		_collectionPersistenceFinderByStructureId;
+	private CollectionPersistenceFinder
+		<DDMDataProviderInstanceLink, NoSuchDataProviderInstanceLinkException>
+			_collectionPersistenceFinderByStructureId;
 
 	/**
 	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
@@ -219,16 +211,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			OrderByComparator<DDMDataProviderInstanceLink> orderByComparator)
 		throws NoSuchDataProviderInstanceLinkException {
 
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			fetchByStructureId_First(structureId, orderByComparator);
-
-		if (ddmDataProviderInstanceLink != null) {
-			return ddmDataProviderInstanceLink;
-		}
-
-		throw new NoSuchDataProviderInstanceLinkException(
-			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
+		return _collectionPersistenceFinderByStructureId.findFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -270,8 +254,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private UniquePersistenceFinder<DDMDataProviderInstanceLink>
-		_uniquePersistenceFinderByD_S;
+	private UniquePersistenceFinder
+		<DDMDataProviderInstanceLink, NoSuchDataProviderInstanceLinkException>
+			_uniquePersistenceFinderByD_S;
 
 	/**
 	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or throws a <code>NoSuchDataProviderInstanceLinkException</code> if it could not be found.
@@ -286,23 +271,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			long dataProviderInstanceId, long structureId)
 		throws NoSuchDataProviderInstanceLinkException {
 
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink = fetchByD_S(
-			dataProviderInstanceId, structureId);
-
-		if (ddmDataProviderInstanceLink == null) {
-			String message =
-				_uniquePersistenceFinderByD_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {dataProviderInstanceId, structureId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDataProviderInstanceLinkException(message);
-		}
-
-		return ddmDataProviderInstanceLink;
+		return _uniquePersistenceFinderByD_S.find(
+			finderCache, new Object[] {dataProviderInstanceId, structureId});
 	}
 
 	/**
@@ -762,4 +732,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1359114912
+// LIFERAY-SERVICE-BUILDER-HASH:-245840008

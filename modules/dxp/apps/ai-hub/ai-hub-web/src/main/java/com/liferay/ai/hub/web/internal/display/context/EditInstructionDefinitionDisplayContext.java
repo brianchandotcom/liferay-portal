@@ -7,7 +7,7 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.ai.hub.web.internal.util.ActionUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,10 +45,17 @@ public class EditInstructionDefinitionDisplayContext {
 				return accountEntry.getExternalReferenceCode();
 			}
 		).put(
-			"backURL", ActionUtil.getAIHubURL(_themeDisplay) + "/agent-builder"
+			"backURL",
+			DisplayContextUtil.getAIHubURL(_themeDisplay) + "/agent-builder"
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
+		).put(
+			"readOnly",
+			DisplayContextUtil.isReadOnly(
+				_themeDisplay.getCompanyId(),
+				_httpServletRequest.getParameter("externalReferenceCode"),
+				"L_AI_HUB_INSTRUCTION_DEFINITION")
 		).build();
 	}
 

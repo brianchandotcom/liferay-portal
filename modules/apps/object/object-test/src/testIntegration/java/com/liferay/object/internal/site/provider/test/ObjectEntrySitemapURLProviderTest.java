@@ -25,11 +25,21 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -133,21 +143,10 @@ public class ObjectEntrySitemapURLProviderTest {
 	public void testVisitLayout() throws Exception {
 		Element rootElement = _getRootElement();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectField", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(),
-				_portal.getClassNameId(_objectDefinition.getClassName()), null,
-				true, WorkflowConstants.STATUS_APPROVED);
+			_addDisplayPageTemplate();
 
 		_assertRootElement(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
@@ -168,6 +167,46 @@ public class ObjectEntrySitemapURLProviderTest {
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
 
 		Assert.assertFalse(rootElement.hasContent());
+	}
+
+	@Test
+	public void testVisitLayoutAsGuestUser() throws Exception {
+		Element rootElement = _getRootElement();
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		_addObjectEntry();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addDisplayPageTemplate();
+
+		Role role = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_group.getCompanyId(), _objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry.getObjectEntryId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		User guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(guestUser));
+
+			_assertRootElement(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				_objectDefinition, objectEntry, rootElement);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	private static void _initThemeDisplay() throws Exception {
@@ -192,6 +231,25 @@ public class ObjectEntrySitemapURLProviderTest {
 		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
+	}
+
+	private LayoutPageTemplateEntry _addDisplayPageTemplate() throws Exception {
+		return DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(_objectDefinition.getClassName()), null,
+			true, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	private ObjectEntry _addObjectEntry() throws Exception {
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectField", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertRootElement(
@@ -311,6 +369,15 @@ public class ObjectEntrySitemapURLProviderTest {
 	private Portal _portal;
 
 	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private SAXReader _saxReader;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

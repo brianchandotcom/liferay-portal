@@ -124,10 +124,10 @@ public class LoginAuthFailure implements AuthFailure {
 		);
 
 		AuditMessage auditMessage = new AuditMessage(
-			EventTypes.LOGIN_FAILURE, user.getCompanyId(), user.getUserId(),
-			user.getFullName(), User.class.getName(),
-			String.valueOf(user.getPrimaryKey()), null,
-			additionalInfoJSONObject);
+			user.getCompanyId(), user.getUserId(), user.getFullName(),
+			additionalInfoJSONObject, User.class.getName(),
+			String.valueOf(user.getPrimaryKey()), EventTypes.LOGIN_FAILURE,
+			null);
 
 		auditMessage.setUserLogin(userLogin);
 

@@ -1,7 +1,10 @@
 import * as API from 'shared/api';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
+import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
+import URLConstants from 'shared/util/url-constants';
 import {
 	ACCOUNT_NAME,
 	COUNTRY,
@@ -16,8 +19,11 @@ import {
 	ProfileTypes,
 	RelationalOperators
 } from 'segment/segment-editor/dynamic/utils/constants';
-import {FilterOptionType} from 'shared/types';
+import {FilterByType, FilterOptionType, RangeSelectors} from 'shared/types';
+import {getSafeRangeSelectors} from 'shared/util/util';
 import {IndividualsListCDPColumns} from 'shared/util/table-columns';
+import {Map, Set} from 'immutable';
+import {Sizes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
@@ -63,6 +69,20 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 				value: ProfileTypes.ANONYMOUS
 			}
 		]
+	},
+	{
+		key: 'activityStatus',
+		label: Liferay.Language.get('activity-status'),
+		values: [
+			{
+				label: Liferay.Language.get('active'),
+				value: 'ACTIVE'
+			},
+			{
+				label: Liferay.Language.get('inactive'),
+				value: 'INACTIVE'
+			}
+		]
 	}
 ];
 
@@ -79,13 +99,23 @@ function transformCountriesInQueryString(countries: string[]) {
 		.join(Conjunctions.Or);
 }
 
-const IndividualsList = () => {
+interface IIndividualsList {
+	rangeSelectors: RangeSelectors;
+}
+
+const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;
 	}>();
 
+	const {rangeEnd, rangeKey, rangeStart} =
+		getSafeRangeSelectors(rangeSelectors);
+
 	const paginationParams = useStatefulPagination(undefined, {
+		initialFilterBy: Map({
+			activityStatus: Set(['ACTIVE'])
+		}) as FilterByType,
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
@@ -118,13 +148,52 @@ const IndividualsList = () => {
 		return DEFAULT_FILTER_BY_OPTIONS;
 	}, [countriesData, countriesLoading]);
 
+	const activityStatusValues =
+		paginationParams.filterBy.get('activityStatus');
+
 	const selectedFilters = {
+		activityStatus:
+			activityStatusValues?.size === 2
+				? undefined
+				: activityStatusValues?.first(),
 		filter: transformCountriesInQueryString(
 			paginationParams.filterBy.get('countries')?.toArray()
 		),
 		profileTypes:
 			paginationParams.filterBy.get('profileTypes')?.toArray() || []
 	};
+
+	const renderNoResults = () => (
+		<NoResultsDisplay
+			description={
+				<>
+					{Liferay.Language.get(
+						'connect-a-data-source-with-people-data'
+					)}
+
+					<ClayLink
+						className='d-block mb-3'
+						href={URLConstants.DataSourceConnection}
+						key='DOCUMENTATION'
+						target='_blank'
+					>
+						{Liferay.Language.get(
+							'access-our-documentation-to-learn-more'
+						)}
+					</ClayLink>
+				</>
+			}
+			icon={{
+				border: false,
+				size: Sizes.XXXLarge,
+				symbol: 'ac_satellite'
+			}}
+			spacer
+			title={Liferay.Language.get(
+				'no-individuals-synced-from-data-sources'
+			)}
+		/>
+	);
 
 	return (
 		<Card>
@@ -148,15 +217,20 @@ const IndividualsList = () => {
 						]}
 						dataSourceFn={API.individuals.search}
 						dataSourceParams={{
+							activityStatus: selectedFilters.activityStatus,
 							channelId,
 							filter: selectedFilters.filter,
 							groupId,
 							profileTypes: selectedFilters.profileTypes.length
 								? selectedFilters.profileTypes
-								: undefined
+								: undefined,
+							rangeEnd,
+							rangeKey,
+							rangeStart
 						}}
 						filterByOptions={FILTER_BY_OPTIONS}
 						key='individuals-list-table'
+						noResultsRenderer={renderNoResults}
 						orderByOptions={ORDER_BY_OPTIONS}
 						rowIdentifier='id'
 					/>

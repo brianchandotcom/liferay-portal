@@ -949,9 +949,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	private static final String _CLASS_NAME = DBPartitionTest.class.getName();
 
 	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
@@ -962,5 +959,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private PortletPersistence _portletPersistence;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 }

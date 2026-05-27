@@ -93,8 +93,9 @@ public class CommerceShipmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceShipment>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceShipment, NoSuchShipmentException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce shipments where uuid = &#63;.
@@ -134,16 +135,8 @@ public class CommerceShipmentPersistenceImpl
 			String uuid, OrderByComparator<CommerceShipment> orderByComparator)
 		throws NoSuchShipmentException {
 
-		CommerceShipment commerceShipment = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commerceShipment != null) {
-			return commerceShipment;
-		}
-
-		throw new NoSuchShipmentException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -184,7 +177,7 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceShipment>
+	private UniquePersistenceFinder<CommerceShipment, NoSuchShipmentException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -199,21 +192,8 @@ public class CommerceShipmentPersistenceImpl
 	public CommerceShipment findByUUID_G(String uuid, long groupId)
 		throws NoSuchShipmentException {
 
-		CommerceShipment commerceShipment = fetchByUUID_G(uuid, groupId);
-
-		if (commerceShipment == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchShipmentException(message);
-		}
-
-		return commerceShipment;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -261,8 +241,9 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceShipment>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceShipment, NoSuchShipmentException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce shipments where uuid = &#63; and companyId = &#63;.
@@ -305,16 +286,8 @@ public class CommerceShipmentPersistenceImpl
 			OrderByComparator<CommerceShipment> orderByComparator)
 		throws NoSuchShipmentException {
 
-		CommerceShipment commerceShipment = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commerceShipment != null) {
-			return commerceShipment;
-		}
-
-		throw new NoSuchShipmentException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -359,8 +332,9 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceShipment>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<CommerceShipment, NoSuchShipmentException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the commerce shipments where groupId = &#63;.
@@ -569,8 +543,9 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {groupIds}, groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceShipment>
-		_collectionPersistenceFinderByG_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceShipment, NoSuchShipmentException>
+			_collectionPersistenceFinderByG_C;
 
 	/**
 	 * Returns an ordered range of all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
@@ -800,8 +775,9 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {groupIds, commerceAddressId}, groupIds);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceShipment>
-		_collectionPersistenceFinderByG_S;
+	private FilterCollectionPersistenceFinder
+		<CommerceShipment, NoSuchShipmentException>
+			_collectionPersistenceFinderByG_S;
 
 	/**
 	 * Returns an ordered range of all the commerce shipments where groupId = &#63; and status = &#63;.
@@ -1028,7 +1004,7 @@ public class CommerceShipmentPersistenceImpl
 			finderCache, new Object[] {groupIds, status}, groupIds);
 	}
 
-	private UniquePersistenceFinder<CommerceShipment>
+	private UniquePersistenceFinder<CommerceShipment, NoSuchShipmentException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1044,23 +1020,8 @@ public class CommerceShipmentPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchShipmentException {
 
-		CommerceShipment commerceShipment = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commerceShipment == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchShipmentException(message);
-		}
-
-		return commerceShipment;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1493,16 +1454,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId));
@@ -1530,16 +1481,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1575,16 +1516,6 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceShipmentImpl.class, CommerceShipment.class,
-					"commerceShipment", "CommerceShipment",
-					"commerceShipment.commerceShipmentId",
-					"SELECT DISTINCT {commerceShipment.*} FROM CommerceShipment commerceShipment WHERE ",
-					"SELECT {CommerceShipment.*} FROM (SELECT DISTINCT commerceShipment.commerceShipmentId FROM CommerceShipment commerceShipment WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceShipment ON TEMP_TABLE.commerceShipmentId = CommerceShipment.commerceShipmentId",
-					"SELECT COUNT(DISTINCT commerceShipment.commerceShipmentId) AS COUNT_VALUE FROM CommerceShipment commerceShipment WHERE ",
-					CommerceShipmentModelImpl.ORDER_BY_SQL,
-					CommerceShipmentModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1679,4 +1610,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1091231279
+// LIFERAY-SERVICE-BUILDER-HASH:986394926

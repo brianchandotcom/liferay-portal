@@ -286,7 +286,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 						</>
 					}
 					spacer
-					title={Liferay.Language.get('there-is-no-data-found')}
+					title={Liferay.Language.get('no-data-was-found')}
 				/>
 			);
 		}

@@ -992,4 +992,4 @@ public class DispatchLogModelImpl
 	private DispatchLog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1551553953
+// LIFERAY-SERVICE-BUILDER-HASH:-257838987

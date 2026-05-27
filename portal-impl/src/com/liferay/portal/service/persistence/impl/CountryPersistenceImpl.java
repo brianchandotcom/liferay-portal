@@ -89,7 +89,7 @@ public class CountryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -129,15 +129,9 @@ public class CountryPersistenceImpl
 			String uuid, OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByUuid_First(uuid, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -214,7 +208,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -257,16 +251,9 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -350,7 +337,7 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -390,15 +377,9 @@ public class CountryPersistenceImpl
 			long companyId, OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -476,7 +457,7 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByActive;
 
 	/**
@@ -516,15 +497,9 @@ public class CountryPersistenceImpl
 			boolean active, OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByActive_First(active, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
+		return _collectionPersistenceFinderByActive.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {active},
+			orderByComparator);
 	}
 
 	/**
@@ -601,7 +576,8 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
-	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_A2;
+	private UniquePersistenceFinder<Country, NoSuchCountryException>
+		_uniquePersistenceFinderByC_A2;
 
 	/**
 	 * Returns the country where companyId = &#63; and a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -615,21 +591,8 @@ public class CountryPersistenceImpl
 	public Country findByC_A2(long companyId, String a2)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A2(companyId, a2);
-
-		if (country == null) {
-			String message =
-				_uniquePersistenceFinderByC_A2.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, a2});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCountryException(message);
-		}
-
-		return country;
+		return _uniquePersistenceFinderByC_A2.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a2});
 	}
 
 	/**
@@ -678,7 +641,8 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a2});
 	}
 
-	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_A3;
+	private UniquePersistenceFinder<Country, NoSuchCountryException>
+		_uniquePersistenceFinderByC_A3;
 
 	/**
 	 * Returns the country where companyId = &#63; and a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -692,21 +656,8 @@ public class CountryPersistenceImpl
 	public Country findByC_A3(long companyId, String a3)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A3(companyId, a3);
-
-		if (country == null) {
-			String message =
-				_uniquePersistenceFinderByC_A3.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, a3});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCountryException(message);
-		}
-
-		return country;
+		return _uniquePersistenceFinderByC_A3.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a3});
 	}
 
 	/**
@@ -755,7 +706,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a3});
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_Active;
 
 	/**
@@ -798,16 +749,9 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_Active_First(
-			companyId, active, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_Active.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
+		return _collectionPersistenceFinderByC_Active.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -891,7 +835,8 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_Name;
+	private UniquePersistenceFinder<Country, NoSuchCountryException>
+		_uniquePersistenceFinderByC_Name;
 
 	/**
 	 * Returns the country where companyId = &#63; and name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -905,21 +850,8 @@ public class CountryPersistenceImpl
 	public Country findByC_Name(long companyId, String name)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_Name(companyId, name);
-
-		if (country == null) {
-			String message =
-				_uniquePersistenceFinderByC_Name.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCountryException(message);
-		}
-
-		return country;
+		return _uniquePersistenceFinderByC_Name.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
 	/**
@@ -968,7 +900,8 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
-	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_Number;
+	private UniquePersistenceFinder<Country, NoSuchCountryException>
+		_uniquePersistenceFinderByC_Number;
 
 	/**
 	 * Returns the country where companyId = &#63; and number = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -982,21 +915,8 @@ public class CountryPersistenceImpl
 	public Country findByC_Number(long companyId, String number)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_Number(companyId, number);
-
-		if (country == null) {
-			String message =
-				_uniquePersistenceFinderByC_Number.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, number});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCountryException(message);
-		}
-
-		return country;
+		return _uniquePersistenceFinderByC_Number.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, number});
 	}
 
 	/**
@@ -1045,7 +965,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, number});
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_A_B;
 
 	/**
@@ -1092,17 +1012,10 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A_B_First(
-			companyId, active, billingAllowed, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_A_B.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, billingAllowed}));
+		return _collectionPersistenceFinderByC_A_B.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed},
+			orderByComparator);
 	}
 
 	/**
@@ -1201,7 +1114,7 @@ public class CountryPersistenceImpl
 			new Object[] {companyId, active, billingAllowed}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_A_S;
 
 	/**
@@ -1248,17 +1161,10 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A_S_First(
-			companyId, active, shippingAllowed, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_A_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, shippingAllowed}));
+		return _collectionPersistenceFinderByC_A_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed},
+			orderByComparator);
 	}
 
 	/**
@@ -1357,7 +1263,7 @@ public class CountryPersistenceImpl
 			new Object[] {companyId, active, shippingAllowed}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_A_B_G;
 
 	/**
@@ -1409,20 +1315,12 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A_B_G_First(
-			countryId, active, billingAllowed, groupFilterEnabled,
+		return _collectionPersistenceFinderByC_A_B_G.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			},
 			orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_A_B_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled
-				}));
 	}
 
 	/**
@@ -1541,7 +1439,7 @@ public class CountryPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_A_G_S;
 
 	/**
@@ -1593,20 +1491,12 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A_G_S_First(
-			countryId, active, groupFilterEnabled, shippingAllowed,
+		return _collectionPersistenceFinderByC_A_G_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			},
 			orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_A_G_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					countryId, active, groupFilterEnabled, shippingAllowed
-				}));
 	}
 
 	/**
@@ -1724,7 +1614,7 @@ public class CountryPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country, NoSuchCountryException>
 		_collectionPersistenceFinderByC_A_B_G_S;
 
 	/**
@@ -1779,21 +1669,13 @@ public class CountryPersistenceImpl
 			OrderByComparator<Country> orderByComparator)
 		throws NoSuchCountryException {
 
-		Country country = fetchByC_A_B_G_S_First(
-			countryId, active, billingAllowed, groupFilterEnabled,
-			shippingAllowed, orderByComparator);
-
-		if (country != null) {
-			return country;
-		}
-
-		throw new NoSuchCountryException(
-			_collectionPersistenceFinderByC_A_B_G_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled,
-					shippingAllowed
-				}));
+		return _collectionPersistenceFinderByC_A_B_G_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled,
+				shippingAllowed
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -1922,7 +1804,8 @@ public class CountryPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<Country, NoSuchCountryException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -1936,22 +1819,9 @@ public class CountryPersistenceImpl
 	public Country findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCountryException {
 
-		Country country = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (country == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCountryException(message);
-		}
-
-		return country;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -2398,15 +2268,6 @@ public class CountryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid));
@@ -2432,15 +2293,6 @@ public class CountryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid),
@@ -2469,15 +2321,6 @@ public class CountryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -2503,15 +2346,6 @@ public class CountryPersistenceImpl
 					new String[] {"active_"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
@@ -2572,15 +2406,6 @@ public class CountryPersistenceImpl
 					new String[] {"companyId", "active_"}, false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2649,15 +2474,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2699,15 +2515,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -2758,15 +2565,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2820,15 +2618,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2887,15 +2676,6 @@ public class CountryPersistenceImpl
 					false),
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
-					CountryModelImpl.ORDER_BY_SQL,
-					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -2967,4 +2747,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-811860500
+// LIFERAY-SERVICE-BUILDER-HASH:-983568933

@@ -6,6 +6,7 @@
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {CountryCodePicker} from '@liferay/object-js-components-web';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -13,13 +14,11 @@ import {config} from '../../config';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {Field, PhoneNumberField} from '../../utils/field';
-import MaxLengthInput from '../MaxLengthInput';
-import PhonePrefixSelector from '../settings/PhonePrefixSelector';
 
-const PREFIX_TYPE_OPTIONS = [
+const COUNTRY_SOURCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('defined-by-user'),
-		value: 'defined-by-user',
+		value: 'definedByUser',
 	},
 	{
 		label: Liferay.Language.get('fixed'),
@@ -32,8 +31,105 @@ export default function getPhoneNumberFieldComponents(): {
 	SecondSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
 } {
 	return {
+		FirstSectionComponent,
 		SecondSectionComponent,
 	};
+}
+
+function FirstSectionComponent({
+	disabled,
+	field,
+}: {
+	disabled?: boolean;
+	field: Field;
+}) {
+	const phoneNumberField = field as PhoneNumberField;
+
+	const dispatch = useStateDispatch();
+
+	const countryId = useId();
+	const countrySourceId = useId();
+
+	return (
+		<>
+			<ClayForm.Group className="mb-3">
+				<label htmlFor={countrySourceId}>
+					{Liferay.Language.get('country-source')}
+
+					<ClayIcon
+						className="ml-1 reference-mark"
+						focusable="false"
+						role="presentation"
+						symbol="asterisk"
+					/>
+				</label>
+
+				<Picker
+					aria-label={Liferay.Language.get('country-source')}
+					disabled={disabled}
+					id={countrySourceId}
+					items={COUNTRY_SOURCE_OPTIONS}
+					onSelectionChange={(value: React.Key) => {
+						const settings: PhoneNumberField['settings'] = {
+							...phoneNumberField.settings,
+							countrySource:
+								value as PhoneNumberField['settings']['countrySource'],
+						};
+
+						if (value === 'fixed' && !settings.country) {
+							settings.country = config.countries[0]?.a2;
+						}
+						else if (value === 'definedByUser') {
+							delete settings.country;
+						}
+
+						dispatch({
+							settings,
+							type: 'update-field',
+							uuid: field.uuid,
+						});
+					}}
+					selectedKey={phoneNumberField.settings.countrySource}
+				>
+					{(item) => <Option key={item.value}>{item.label}</Option>}
+				</Picker>
+			</ClayForm.Group>
+
+			{phoneNumberField.settings.countrySource === 'fixed' && (
+				<div className="form-group-autofit">
+					<ClayForm.Group className="form-group-item-shrink mb-3">
+						<label htmlFor={countryId}>
+							{Liferay.Language.get('country')}
+
+							<ClayIcon
+								className="ml-1 reference-mark"
+								focusable="false"
+								role="presentation"
+								symbol="asterisk"
+							/>
+						</label>
+
+						<CountryCodePicker
+							countries={config.countries}
+							disabled={disabled}
+							id={countryId}
+							onSelectionChange={(country) => {
+								dispatch({
+									settings: {
+										...phoneNumberField.settings,
+										country: country.a2,
+									},
+									type: 'update-field',
+									uuid: field.uuid,
+								});
+							}}
+							selectedKey={phoneNumberField.settings.country}
+						/>
+					</ClayForm.Group>
+				</div>
+			)}
+		</>
+	);
 }
 
 function SecondSectionComponent({
@@ -50,104 +146,23 @@ function SecondSectionComponent({
 
 	const isPublished = publishedChildren.has(field.uuid);
 
-	const prefixTypeId = useId();
-	const prefixId = useId();
-
 	return (
-		<>
-			<ClayForm.Group className="mb-3">
-				<label htmlFor={prefixTypeId}>
-					{Liferay.Language.get('prefix-type')}
-
-					<ClayIcon
-						className="ml-1 reference-mark"
-						focusable="false"
-						role="presentation"
-						symbol="asterisk"
-					/>
-				</label>
-
-				<Picker
-					aria-label={Liferay.Language.get('prefix-type')}
-					disabled={disabled || isPublished}
-					id={prefixTypeId}
-					items={PREFIX_TYPE_OPTIONS}
-					onSelectionChange={(value: React.Key) => {
-						const settings: PhoneNumberField['settings'] = {
+		<ClayForm.Group className="mb-3">
+			<ClayCheckbox
+				checked={phoneNumberField.settings.uniqueValues || false}
+				disabled={disabled || isPublished}
+				label={Liferay.Language.get('accept-unique-values-only')}
+				onChange={(event) => {
+					dispatch({
+						settings: {
 							...phoneNumberField.settings,
-							prefixType:
-								value as PhoneNumberField['settings']['prefixType'],
-						};
-
-						if (value === 'fixed' && !settings.fixedCountryCode) {
-							settings.fixedCountryCode = config.countries[0]?.a2;
-						}
-						else if (value === 'defined-by-user') {
-							delete settings.fixedCountryCode;
-						}
-
-						dispatch({
-							settings,
-							type: 'update-field',
-							uuid: field.uuid,
-						});
-					}}
-					selectedKey={phoneNumberField.settings.prefixType}
-				>
-					{(item) => <Option key={item.value}>{item.label}</Option>}
-				</Picker>
-			</ClayForm.Group>
-
-			{phoneNumberField.settings.prefixType === 'fixed' && (
-				<ClayForm.Group className="mb-3">
-					<label htmlFor={prefixId}>
-						{Liferay.Language.get('prefix')}
-
-						<ClayIcon
-							className="ml-1 reference-mark"
-							focusable="false"
-							role="presentation"
-							symbol="asterisk"
-						/>
-					</label>
-
-					<PhonePrefixSelector
-						disabled={disabled || isPublished}
-						id={prefixId}
-						onChange={(fixedCountryCode) => {
-							dispatch({
-								settings: {
-									...phoneNumberField.settings,
-									fixedCountryCode,
-								},
-								type: 'update-field',
-								uuid: field.uuid,
-							});
-						}}
-						value={phoneNumberField.settings.fixedCountryCode}
-					/>
-				</ClayForm.Group>
-			)}
-
-			<ClayForm.Group className="mb-3">
-				<ClayCheckbox
-					checked={phoneNumberField.settings.uniqueValues || false}
-					disabled={disabled || isPublished}
-					label={Liferay.Language.get('accept-unique-values-only')}
-					onChange={(event) => {
-						dispatch({
-							settings: {
-								...phoneNumberField.settings,
-								uniqueValues: event.target.checked,
-							},
-							type: 'update-field',
-							uuid: field.uuid,
-						});
-					}}
-				/>
-			</ClayForm.Group>
-
-			<MaxLengthInput disabled={disabled} field={field} />
-		</>
+							uniqueValues: event.target.checked,
+						},
+						type: 'update-field',
+						uuid: field.uuid,
+					});
+				}}
+			/>
+		</ClayForm.Group>
 	);
 }

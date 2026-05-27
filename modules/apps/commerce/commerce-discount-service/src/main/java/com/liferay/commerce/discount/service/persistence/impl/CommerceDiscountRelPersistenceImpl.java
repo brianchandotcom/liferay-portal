@@ -72,8 +72,9 @@ public class CommerceDiscountRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceDiscountRel>
-		_collectionPersistenceFinderByCommerceDiscountId;
+	private CollectionPersistenceFinder
+		<CommerceDiscountRel, NoSuchDiscountRelException>
+			_collectionPersistenceFinderByCommerceDiscountId;
 
 	/**
 	 * Returns an ordered range of all the commerce discount rels where commerceDiscountId = &#63;.
@@ -114,19 +115,8 @@ public class CommerceDiscountRelPersistenceImpl
 			OrderByComparator<CommerceDiscountRel> orderByComparator)
 		throws NoSuchDiscountRelException {
 
-		CommerceDiscountRel commerceDiscountRel =
-			fetchByCommerceDiscountId_First(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		throw new NoSuchDiscountRelException(
-			_collectionPersistenceFinderByCommerceDiscountId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceDiscountId}));
+		return _collectionPersistenceFinderByCommerceDiscountId.findFirst(
+			finderCache, new Object[] {commerceDiscountId}, orderByComparator);
 	}
 
 	/**
@@ -168,8 +158,9 @@ public class CommerceDiscountRelPersistenceImpl
 			finderCache, new Object[] {commerceDiscountId});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountRel>
-		_collectionPersistenceFinderByCD_CN;
+	private CollectionPersistenceFinder
+		<CommerceDiscountRel, NoSuchDiscountRelException>
+			_collectionPersistenceFinderByCD_CN;
 
 	/**
 	 * Returns an ordered range of all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63;.
@@ -212,17 +203,9 @@ public class CommerceDiscountRelPersistenceImpl
 			OrderByComparator<CommerceDiscountRel> orderByComparator)
 		throws NoSuchDiscountRelException {
 
-		CommerceDiscountRel commerceDiscountRel = fetchByCD_CN_First(
-			commerceDiscountId, classNameId, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		throw new NoSuchDiscountRelException(
-			_collectionPersistenceFinderByCD_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceDiscountId, classNameId}));
+		return _collectionPersistenceFinderByCD_CN.findFirst(
+			finderCache, new Object[] {commerceDiscountId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -268,8 +251,9 @@ public class CommerceDiscountRelPersistenceImpl
 			finderCache, new Object[] {commerceDiscountId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountRel>
-		_collectionPersistenceFinderByCN_CPK;
+	private CollectionPersistenceFinder
+		<CommerceDiscountRel, NoSuchDiscountRelException>
+			_collectionPersistenceFinderByCN_CPK;
 
 	/**
 	 * Returns an ordered range of all the commerce discount rels where classNameId = &#63; and classPK = &#63;.
@@ -312,16 +296,9 @@ public class CommerceDiscountRelPersistenceImpl
 			OrderByComparator<CommerceDiscountRel> orderByComparator)
 		throws NoSuchDiscountRelException {
 
-		CommerceDiscountRel commerceDiscountRel = fetchByCN_CPK_First(
-			classNameId, classPK, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		throw new NoSuchDiscountRelException(
-			_collectionPersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByCN_CPK.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -367,8 +344,9 @@ public class CommerceDiscountRelPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountRel>
-		_collectionPersistenceFinderByCD_CN_CPK;
+	private CollectionPersistenceFinder
+		<CommerceDiscountRel, NoSuchDiscountRelException>
+			_collectionPersistenceFinderByCD_CN_CPK;
 
 	/**
 	 * Returns an ordered range of all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -414,17 +392,10 @@ public class CommerceDiscountRelPersistenceImpl
 			OrderByComparator<CommerceDiscountRel> orderByComparator)
 		throws NoSuchDiscountRelException {
 
-		CommerceDiscountRel commerceDiscountRel = fetchByCD_CN_CPK_First(
-			commerceDiscountId, classNameId, classPK, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		throw new NoSuchDiscountRelException(
-			_collectionPersistenceFinderByCD_CN_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceDiscountId, classNameId, classPK}));
+		return _collectionPersistenceFinderByCD_CN_CPK.findFirst(
+			finderCache,
+			new Object[] {commerceDiscountId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -894,4 +865,4 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:325569481
+// LIFERAY-SERVICE-BUILDER-HASH:1302889446

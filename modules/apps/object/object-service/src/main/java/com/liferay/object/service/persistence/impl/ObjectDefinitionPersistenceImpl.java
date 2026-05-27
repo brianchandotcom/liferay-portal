@@ -93,8 +93,9 @@ public class ObjectDefinitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object definitions where uuid = &#63;.
@@ -134,16 +135,8 @@ public class ObjectDefinitionPersistenceImpl
 			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -218,8 +211,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object definitions where uuid = &#63; and companyId = &#63;.
@@ -262,16 +256,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -353,8 +339,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63;.
@@ -395,16 +382,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -480,8 +459,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByObjectFolderId;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByObjectFolderId;
 
 	/**
 	 * Returns an ordered range of all the object definitions where objectFolderId = &#63;.
@@ -522,16 +502,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByObjectFolderId_First(
-			objectFolderId, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByObjectFolderId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFolderId}));
+		return _collectionPersistenceFinderByObjectFolderId.findFirst(
+			finderCache, new Object[] {objectFolderId}, orderByComparator);
 	}
 
 	/**
@@ -608,8 +580,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {objectFolderId});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByAccountEntryRestricted;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByAccountEntryRestricted;
 
 	/**
 	 * Returns an ordered range of all the object definitions where accountEntryRestricted = &#63;.
@@ -650,18 +623,9 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByAccountEntryRestricted_First(
-			accountEntryRestricted, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByAccountEntryRestricted.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {accountEntryRestricted}));
+		return _collectionPersistenceFinderByAccountEntryRestricted.findFirst(
+			finderCache, new Object[] {accountEntryRestricted},
+			orderByComparator);
 	}
 
 	/**
@@ -741,8 +705,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {accountEntryRestricted});
 	}
 
-	private UniquePersistenceFinder<ObjectDefinition>
-		_uniquePersistenceFinderByClassName;
+	private UniquePersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_uniquePersistenceFinderByClassName;
 
 	/**
 	 * Returns the object definition where className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -755,21 +720,8 @@ public class ObjectDefinitionPersistenceImpl
 	public ObjectDefinition findByClassName(String className)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByClassName(className);
-
-		if (objectDefinition == null) {
-			String message =
-				_uniquePersistenceFinderByClassName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {className});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectDefinitionException(message);
-		}
-
-		return objectDefinition;
+		return _uniquePersistenceFinderByClassName.find(
+			finderCache, new Object[] {className});
 	}
 
 	/**
@@ -814,8 +766,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {className});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderBySystem;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderBySystem;
 
 	/**
 	 * Returns an ordered range of all the object definitions where system = &#63;.
@@ -856,16 +809,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchBySystem_First(
-			system, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderBySystem.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {system}));
+		return _collectionPersistenceFinderBySystem.findFirst(
+			finderCache, new Object[] {system}, orderByComparator);
 	}
 
 	/**
@@ -940,8 +885,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {system});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_U;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and userId = &#63;.
@@ -984,16 +930,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_U_First(
-			companyId, userId, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
+		return _collectionPersistenceFinderByC_U.findFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1075,8 +1013,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<ObjectDefinition>
-		_uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -1090,22 +1029,8 @@ public class ObjectDefinitionPersistenceImpl
 	public ObjectDefinition findByC_C(long companyId, String className)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_C(companyId, className);
-
-		if (objectDefinition == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, className});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectDefinitionException(message);
-		}
-
-		return objectDefinition;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {companyId, className});
 	}
 
 	/**
@@ -1153,8 +1078,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, className});
 	}
 
-	private UniquePersistenceFinder<ObjectDefinition>
-		_uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -1168,21 +1094,8 @@ public class ObjectDefinitionPersistenceImpl
 	public ObjectDefinition findByC_N(long companyId, String name)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_N(companyId, name);
-
-		if (objectDefinition == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectDefinitionException(message);
-		}
-
-		return objectDefinition;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -1230,8 +1143,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and status = &#63;.
@@ -1274,16 +1188,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1365,8 +1271,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, status}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByS_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByS_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where system = &#63; and status = &#63;.
@@ -1409,16 +1316,8 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByS_S_First(
-			system, status, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByS_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {system, status}));
+		return _collectionPersistenceFinderByS_S.findFirst(
+			finderCache, new Object[] {system, status}, orderByComparator);
 	}
 
 	/**
@@ -1500,8 +1399,9 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {system, status});
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_A_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_A_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
@@ -1546,17 +1446,9 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_A_S_First(
-			companyId, active, status, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByC_A_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, status}));
+		return _collectionPersistenceFinderByC_A_S.findFirst(
+			finderCache, new Object[] {companyId, active, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1645,8 +1537,9 @@ public class ObjectDefinitionPersistenceImpl
 			0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_M_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_M_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and modifiable = &#63; and system = &#63;.
@@ -1691,17 +1584,9 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_M_S_First(
-			companyId, modifiable, system, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByC_M_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, modifiable, system}));
+		return _collectionPersistenceFinderByC_M_S.findFirst(
+			finderCache, new Object[] {companyId, modifiable, system},
+			orderByComparator);
 	}
 
 	/**
@@ -1796,8 +1681,9 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_A_S_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_A_S_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
@@ -1844,17 +1730,9 @@ public class ObjectDefinitionPersistenceImpl
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_A_S_S_First(
-			companyId, active, system, status, orderByComparator);
-
-		if (objectDefinition != null) {
-			return objectDefinition;
-		}
-
-		throw new NoSuchObjectDefinitionException(
-			_collectionPersistenceFinderByC_A_S_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, active, system, status}));
+		return _collectionPersistenceFinderByC_A_S_S.findFirst(
+			finderCache, new Object[] {companyId, active, system, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1954,8 +1832,9 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<ObjectDefinition>
-		_collectionPersistenceFinderByC_OFI_A_E_S_S;
+	private FilterCollectionPersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_collectionPersistenceFinderByC_OFI_A_E_S_S;
 
 	/**
 	 * Returns an ordered range of all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
@@ -2296,8 +2175,9 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<ObjectDefinition>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<ObjectDefinition, NoSuchObjectDefinitionException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the object definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -2312,23 +2192,8 @@ public class ObjectDefinitionPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (objectDefinition == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectDefinitionException(message);
-		}
-
-		return objectDefinition;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -2695,16 +2560,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectDefinition::getUuid));
@@ -2732,16 +2587,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectDefinition::getUuid),
@@ -2772,16 +2617,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId));
@@ -2811,16 +2646,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "objectFolderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2852,16 +2677,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "accountEntryRestricted",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2902,16 +2717,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectDefinition::isSystem));
@@ -2939,16 +2744,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3015,16 +2810,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3059,16 +2844,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectDefinition::isSystem),
@@ -3106,16 +2881,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3156,16 +2921,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3210,16 +2965,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3281,16 +3026,6 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					"objectDefinition", "ObjectDefinition",
-					"objectDefinition.objectDefinitionId",
-					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
-					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
-					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3401,4 +3136,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1781816132
+// LIFERAY-SERVICE-BUILDER-HASH:-801177311

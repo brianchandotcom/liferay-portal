@@ -227,10 +227,10 @@ public class DisplayPortletTest {
 	private static final String _KNOWLEDGE_BASE_SEARCH_KEYWORDS =
 		"KNOWLEDGE_BASE_SEARCH_KEYWORDS";
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "jakarta.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY

@@ -86,7 +86,7 @@ public class ReadingTimeEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ReadingTimeEntry>
+	private CollectionPersistenceFinder<ReadingTimeEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,16 +127,8 @@ public class ReadingTimeEntryPersistenceImpl
 			String uuid, OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ReadingTimeEntry readingTimeEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (readingTimeEntry != null) {
-			return readingTimeEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -177,7 +169,7 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<ReadingTimeEntry>
+	private UniquePersistenceFinder<ReadingTimeEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -192,21 +184,8 @@ public class ReadingTimeEntryPersistenceImpl
 	public ReadingTimeEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException {
 
-		ReadingTimeEntry readingTimeEntry = fetchByUUID_G(uuid, groupId);
-
-		if (readingTimeEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return readingTimeEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -254,7 +233,7 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<ReadingTimeEntry>
+	private CollectionPersistenceFinder<ReadingTimeEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -298,16 +277,8 @@ public class ReadingTimeEntryPersistenceImpl
 			OrderByComparator<ReadingTimeEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ReadingTimeEntry readingTimeEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (readingTimeEntry != null) {
-			return readingTimeEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -352,7 +323,7 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<ReadingTimeEntry>
+	private UniquePersistenceFinder<ReadingTimeEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_C_C;
 
 	/**
@@ -369,23 +340,8 @@ public class ReadingTimeEntryPersistenceImpl
 			long groupId, long classNameId, long classPK)
 		throws NoSuchEntryException {
 
-		ReadingTimeEntry readingTimeEntry = fetchByG_C_C(
-			groupId, classNameId, classPK);
-
-		if (readingTimeEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return readingTimeEntry;
+		return _uniquePersistenceFinderByG_C_C.find(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -904,4 +860,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1803583965
+// LIFERAY-SERVICE-BUILDER-HASH:-972392651

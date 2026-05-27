@@ -8,12 +8,14 @@ package com.liferay.marketplace.model;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.commerce.admin.catalog.client.custom.field.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.custom.field.CustomValue;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.time.ZoneOffset;
@@ -32,12 +34,13 @@ import org.json.JSONObject;
 public class SalesforceOpportunity {
 
 	public SalesforceOpportunity(
-		Country country, String licenseType, Order order,
+		Country country, String licenseType, Order order, Sku sku,
 		UserAccount userAccount) {
 
 		_country = country;
 		_licenseType = licenseType;
 		_order = order;
+		_sku = sku;
 		_userAccount = userAccount;
 	}
 
@@ -147,6 +150,24 @@ public class SalesforceOpportunity {
 	}
 
 	private JSONArray _getLineItemsJSONArray() {
+		String productId = null;
+
+		for (CustomField customField : _sku.getCustomFields()) {
+			if (Objects.equals(
+					customField.getName(), "salesforce-product-id")) {
+
+				CustomValue customValue = customField.getCustomValue();
+
+				Object data = customValue.getData();
+
+				if (data != null) {
+					productId = data.toString();
+				}
+
+				break;
+			}
+		}
+
 		JSONArray jsonArray = new JSONArray();
 
 		for (OrderItem orderItem : _order.getOrderItems()) {
@@ -162,9 +183,7 @@ public class SalesforceOpportunity {
 				).put(
 					"orderType", "New"
 				).put(
-					"productId",
-					StringUtil.removeSubstring(
-						orderItem.getSkuExternalReferenceCode(), "SF-")
+					"productId", productId
 				).put(
 					"quantity", orderItem.getQuantity()
 				).put(
@@ -178,9 +197,21 @@ public class SalesforceOpportunity {
 	}
 
 	private JSONObject _getPrimaryContactJSONObject() {
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			_order);
+
+		JSONObject provisioningFormJSONObject =
+			orderMetadataJSONObject.getJSONObject("provisioningForm");
+
+		return _getPrimaryContactJSONObject(provisioningFormJSONObject);
+	}
+
+	private JSONObject _getPrimaryContactJSONObject(JSONObject jsonObject) {
 		return new JSONObject(
 		).put(
-			"email", _order.getCreatorEmailAddress()
+			"email",
+			jsonObject.optString(
+				"ownerEmailAddress", _order.getCreatorEmailAddress())
 		).put(
 			"firstName", _userAccount.getGivenName()
 		).put(
@@ -211,7 +242,11 @@ public class SalesforceOpportunity {
 			"projectContacts",
 			new JSONArray(
 			).put(
-				_getPrimaryContactJSONObject().put("role", "LDP Administrator")
+				_getPrimaryContactJSONObject(
+					provisioningFormJSONObject
+				).put(
+					"role", "LDP Administrator"
+				)
 			)
 		).put(
 			"projectId",
@@ -242,6 +277,7 @@ public class SalesforceOpportunity {
 	private final Country _country;
 	private final String _licenseType;
 	private final Order _order;
+	private final Sku _sku;
 	private final UserAccount _userAccount;
 
 }

@@ -154,14 +154,14 @@ public class ElasticsearchConfigurationUpgradeProcessTest {
 		"com.liferay.portal.search.elasticsearch8.internal.upgrade.v1_0_0." +
 			"ElasticsearchConfigurationUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.search.elasticsearch8.internal.upgrade.registry.ElasticsearchUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	private Dictionary<String, Object> _originalProperties;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.search.elasticsearch8.internal.upgrade.registry.ElasticsearchUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

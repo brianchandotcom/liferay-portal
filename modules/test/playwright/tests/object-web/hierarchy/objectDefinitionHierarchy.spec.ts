@@ -28,6 +28,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
+		'LPD-69877': {enabled: true},
 	}),
 	loginTest(),
 	objectPagesTest
@@ -35,6 +36,145 @@ export const test = mergeTests(
 
 test.beforeEach(({page}) => {
 	page.setViewportSize({height: 1080, width: 1920});
+});
+
+test.describe('Allow Standalone Entries toggle', () => {
+
+	// The inheritance relationship created inside the test cannot be deleted
+	// directly (edge relationships are protected by the BE), so we convert it
+	// to non-edge here. afterEach runs even when the test body throws, so
+	// the automatic apiHelpers cleanup chain stays unblocked.
+
+	let relationshipForCleanup: ObjectRelationship | undefined;
+
+	test.afterEach(async ({apiHelpers}) => {
+		if (relationshipForCleanup) {
+			await apiHelpers.objectAdmin.patchObjectRelationshipEdge(
+				relationshipForCleanup,
+				false
+			);
+
+			relationshipForCleanup = undefined;
+		}
+	});
+
+	test('is disabled when the child has standalone entries', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		modelBuilderDiagramPage,
+		modelBuilderRightSidebarPage,
+	}) => {
+		const child =
+			await test.step('Create the parent and child object definitions with inheritance', async () => {
+				const parent =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						panelCategoryKey: 'control_panel.object',
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: parent.id!,
+					type: 'objectDefinition',
+				});
+
+				const child =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						panelCategoryKey: 'control_panel.object',
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: child.id!,
+					type: 'objectDefinition',
+				});
+
+				relationshipForCleanup =
+					await apiHelpers.objectAdmin.postObjectDefinitionInheritanceRelationship(
+						parent,
+						child
+					);
+
+				apiHelpers.data.push({
+					id: relationshipForCleanup.id!,
+					type: 'objectRelationship',
+				});
+
+				await apiHelpers.objectAdmin.patchObjectDefinitionSetting(
+					child.id!,
+					'allowStandaloneObjectEntry',
+					'true'
+				);
+
+				return child;
+			});
+
+		await test.step('Confirm the toggle is checked and enabled when no standalone entries exist', async () => {
+			await editObjectDetailsPage.goto(child.label!['en_US']);
+
+			await expect(
+				editObjectDetailsPage.allowStandaloneEntriesToggle
+			).toBeChecked();
+
+			await expect(
+				editObjectDetailsPage.allowStandaloneEntriesToggle
+			).toBeEnabled();
+
+			await modelBuilderDiagramPage.goto({
+				objectFolderName: 'Default',
+			});
+
+			await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+			await modelBuilderDiagramPage.objectDefinitionNodes
+				.getByText(child.label!['en_US'], {exact: true})
+				.click();
+
+			await expect(
+				modelBuilderRightSidebarPage.allowStandaloneEntriesToggle
+			).toBeChecked();
+
+			await expect(
+				modelBuilderRightSidebarPage.allowStandaloneEntriesToggle
+			).toBeEnabled();
+		});
+
+		await test.step('Create a standalone entry', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{textField: 'standalone-' + getRandomInt()},
+				child.restContextPath!.replace(/^\/o\//, '')
+			);
+		});
+
+		await test.step('Confirm the toggle is checked and disabled when a standalone entry exists', async () => {
+			await editObjectDetailsPage.goto(child.label!['en_US']);
+
+			await expect(
+				editObjectDetailsPage.allowStandaloneEntriesToggle
+			).toBeChecked();
+
+			await expect(
+				editObjectDetailsPage.allowStandaloneEntriesToggle
+			).toBeDisabled();
+
+			await modelBuilderDiagramPage.goto({
+				objectFolderName: 'Default',
+			});
+
+			await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+			await modelBuilderDiagramPage.objectDefinitionNodes
+				.getByText(child.label!['en_US'], {exact: true})
+				.click();
+
+			await expect(
+				modelBuilderRightSidebarPage.allowStandaloneEntriesToggle
+			).toBeChecked();
+
+			await expect(
+				modelBuilderRightSidebarPage.allowStandaloneEntriesToggle
+			).toBeDisabled();
+		});
+	});
 });
 
 test.describe('Manage root model elements through View Object Entries', () => {

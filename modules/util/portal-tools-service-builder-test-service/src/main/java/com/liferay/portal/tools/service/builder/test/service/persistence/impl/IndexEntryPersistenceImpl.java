@@ -80,7 +80,7 @@ public class IndexEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByOwnerId;
 
 	/**
@@ -121,16 +121,8 @@ public class IndexEntryPersistenceImpl
 			long ownerId, OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByOwnerId_First(
-			ownerId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByOwnerId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerId}));
+		return _collectionPersistenceFinderByOwnerId.findFirst(
+			finderCache, new Object[] {ownerId}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +163,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByPlid;
 
 	/**
@@ -212,15 +204,8 @@ public class IndexEntryPersistenceImpl
 			long plid, OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByPlid_First(plid, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
+		return _collectionPersistenceFinderByPlid.findFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -261,7 +246,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByPortletId;
 
 	/**
@@ -302,16 +287,8 @@ public class IndexEntryPersistenceImpl
 			String portletId, OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByPortletId_First(
-			portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
+		return _collectionPersistenceFinderByPortletId.findFirst(
+			finderCache, new Object[] {portletId}, orderByComparator);
 	}
 
 	/**
@@ -352,7 +329,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {portletId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByO_P;
 
 	/**
@@ -396,16 +373,9 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByO_P_First(
-			ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByO_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerType, portletId}));
+		return _collectionPersistenceFinderByO_P.findFirst(
+			finderCache, new Object[] {ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -451,7 +421,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerType, portletId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByP_P;
 
 	/**
@@ -495,16 +465,8 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByP_P_First(
-			plid, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByP_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid, portletId}));
+		return _collectionPersistenceFinderByP_P.findFirst(
+			finderCache, new Object[] {plid, portletId}, orderByComparator);
 	}
 
 	/**
@@ -549,7 +511,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {plid, portletId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByO_O_P;
 
 	/**
@@ -595,17 +557,9 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByO_O_P_First(
-			ownerId, ownerType, plid, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByO_O_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {ownerId, ownerType, plid}));
+		return _collectionPersistenceFinderByO_O_P.findFirst(
+			finderCache, new Object[] {ownerId, ownerType, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -654,7 +608,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, plid});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByO_O_PI;
 
 	/**
@@ -700,17 +654,9 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByO_O_PI_First(
-			ownerId, ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByO_O_PI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {ownerId, ownerType, portletId}));
+		return _collectionPersistenceFinderByO_O_PI.findFirst(
+			finderCache, new Object[] {ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -759,7 +705,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByO_P_P;
 
 	/**
@@ -805,17 +751,9 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByO_P_P_First(
-			ownerType, plid, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByO_P_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {ownerType, plid, portletId}));
+		return _collectionPersistenceFinderByO_P_P.findFirst(
+			finderCache, new Object[] {ownerType, plid, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -864,7 +802,7 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerType, plid, portletId});
 	}
 
-	private CollectionPersistenceFinder<IndexEntry>
+	private CollectionPersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_collectionPersistenceFinderByC_O_O_LikeP;
 
 	/**
@@ -981,17 +919,10 @@ public class IndexEntryPersistenceImpl
 			OrderByComparator<IndexEntry> orderByComparator)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByC_O_O_LikeP_First(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		throw new NoSuchIndexEntryException(
-			_collectionPersistenceFinderByC_O_O_LikeP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, ownerId, ownerType, portletId}));
+		return _collectionPersistenceFinderByC_O_O_LikeP.findFirst(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -1050,7 +981,7 @@ public class IndexEntryPersistenceImpl
 			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
-	private UniquePersistenceFinder<IndexEntry>
+	private UniquePersistenceFinder<IndexEntry, NoSuchIndexEntryException>
 		_uniquePersistenceFinderByO_O_P_P;
 
 	/**
@@ -1068,23 +999,8 @@ public class IndexEntryPersistenceImpl
 			long ownerId, int ownerType, long plid, String portletId)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByO_O_P_P(
-			ownerId, ownerType, plid, portletId);
-
-		if (indexEntry == null) {
-			String message =
-				_uniquePersistenceFinderByO_O_P_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {ownerId, ownerType, plid, portletId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchIndexEntryException(message);
-		}
-
-		return indexEntry;
+		return _uniquePersistenceFinderByO_O_P_P.find(
+			finderCache, new Object[] {ownerId, ownerType, plid, portletId});
 	}
 
 	/**
@@ -1144,7 +1060,8 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, plid, portletId});
 	}
 
-	private UniquePersistenceFinder<IndexEntry> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<IndexEntry, NoSuchIndexEntryException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the index entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchIndexEntryException</code> if it could not be found.
@@ -1158,22 +1075,8 @@ public class IndexEntryPersistenceImpl
 	public IndexEntry findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchIndexEntryException {
 
-		IndexEntry indexEntry = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (indexEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchIndexEntryException(message);
-		}
-
-		return indexEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1900,4 +1803,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1028886214
+// LIFERAY-SERVICE-BUILDER-HASH:-1909754925

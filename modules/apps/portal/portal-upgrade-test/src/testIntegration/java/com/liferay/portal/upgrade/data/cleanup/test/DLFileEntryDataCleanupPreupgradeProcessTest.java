@@ -326,9 +326,6 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 		}
 	}
 
-	private static List<ClassName> _classNames;
-	private static List<SystemEvent> _systemEvents;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -338,6 +335,7 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private List<ClassName> _classNames;
 	private Connection _connection;
 	private DBInspector _dbInspector;
 
@@ -370,5 +368,7 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;
+
+	private List<SystemEvent> _systemEvents;
 
 }

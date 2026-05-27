@@ -123,7 +123,7 @@
 				"en_US": "Purpose"
 			},
 			"name": "purpose",
-			"required": true,
+			"required": false,
 			"type": "String"
 		}
 	],

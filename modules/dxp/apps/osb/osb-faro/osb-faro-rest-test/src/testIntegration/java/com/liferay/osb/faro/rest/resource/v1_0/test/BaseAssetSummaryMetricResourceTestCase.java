@@ -174,7 +174,6 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 
 		assetSummaryMetric.setAssetId(regex);
 		assetSummaryMetric.setAssetTitle(regex);
-		assetSummaryMetric.setAssetType(regex);
 
 		String json = AssetSummaryMetricSerDes.toJSON(assetSummaryMetric);
 
@@ -184,33 +183,43 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 
 		Assert.assertEquals(regex, assetSummaryMetric.getAssetId());
 		Assert.assertEquals(regex, assetSummaryMetric.getAssetTitle());
-		Assert.assertEquals(regex, assetSummaryMetric.getAssetType());
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPage() throws Exception {
-		Long groupId = testGetWorkspaceGroupAssetSummariesPage_getGroupId();
+	public void testGetWorkspaceGroupChannelAssetSummariesPage()
+		throws Exception {
+
+		Long groupId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getGroupId();
 		Long irrelevantGroupId =
-			testGetWorkspaceGroupAssetSummariesPage_getIrrelevantGroupId();
+			testGetWorkspaceGroupChannelAssetSummariesPage_getIrrelevantGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getChannelId();
+		String irrelevantChannelId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getIrrelevantChannelId();
 
 		Page<AssetSummaryMetric> page =
-			assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-				groupId, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), null, Pagination.of(1, 10),
-				null);
+			assetSummaryMetricResource.
+				getWorkspaceGroupChannelAssetSummariesPage(
+					groupId, channelId, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+					null);
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantGroupId != null) {
+		if ((irrelevantGroupId != null) && (irrelevantChannelId != null)) {
 			AssetSummaryMetric irrelevantAssetSummaryMetric =
-				testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-					irrelevantGroupId, randomIrrelevantAssetSummaryMetric());
+				testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+					irrelevantGroupId, irrelevantChannelId,
+					randomIrrelevantAssetSummaryMetric());
 
 			page =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					irrelevantGroupId, null, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 1), null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						irrelevantGroupId, irrelevantChannelId, null, null,
+						null, null, Pagination.of(1, (int)totalCount + 1),
+						null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -219,20 +228,23 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 				(List<AssetSummaryMetric>)page.getItems());
 			assertValid(
 				page,
-				testGetWorkspaceGroupAssetSummariesPage_getExpectedActions(
-					irrelevantGroupId));
+				testGetWorkspaceGroupChannelAssetSummariesPage_getExpectedActions(
+					irrelevantGroupId, irrelevantChannelId));
 		}
 
 		AssetSummaryMetric assetSummaryMetric1 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, randomAssetSummaryMetric());
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, randomAssetSummaryMetric());
 
 		AssetSummaryMetric assetSummaryMetric2 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, randomAssetSummaryMetric());
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, randomAssetSummaryMetric());
 
-		page = assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-			groupId, null, null, null, null, null, Pagination.of(1, 10), null);
+		page =
+			assetSummaryMetricResource.
+				getWorkspaceGroupChannelAssetSummariesPage(
+					groupId, channelId, null, null, null, null,
+					Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -242,13 +254,13 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 			assetSummaryMetric2, (List<AssetSummaryMetric>)page.getItems());
 		assertValid(
 			page,
-			testGetWorkspaceGroupAssetSummariesPage_getExpectedActions(
-				groupId));
+			testGetWorkspaceGroupChannelAssetSummariesPage_getExpectedActions(
+				groupId, channelId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetWorkspaceGroupAssetSummariesPage_getExpectedActions(
-				Long groupId)
+			testGetWorkspaceGroupChannelAssetSummariesPage_getExpectedActions(
+				Long groupId, String channelId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -257,29 +269,33 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPageWithPagination()
+	public void testGetWorkspaceGroupChannelAssetSummariesPageWithPagination()
 		throws Exception {
 
-		Long groupId = testGetWorkspaceGroupAssetSummariesPage_getGroupId();
+		Long groupId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getChannelId();
 
 		Page<AssetSummaryMetric> assetSummaryMetricsPage =
-			assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-				groupId, null, null, null, null, null, null, null);
+			assetSummaryMetricResource.
+				getWorkspaceGroupChannelAssetSummariesPage(
+					groupId, channelId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			assetSummaryMetricsPage.getTotalCount());
 
 		AssetSummaryMetric assetSummaryMetric1 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, randomAssetSummaryMetric());
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, randomAssetSummaryMetric());
 
 		AssetSummaryMetric assetSummaryMetric2 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, randomAssetSummaryMetric());
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, randomAssetSummaryMetric());
 
 		AssetSummaryMetric assetSummaryMetric3 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, randomAssetSummaryMetric());
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, randomAssetSummaryMetric());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
@@ -287,12 +303,13 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<AssetSummaryMetric> page1 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -301,24 +318,26 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 				(List<AssetSummaryMetric>)page1.getItems());
 
 			Page<AssetSummaryMetric> page2 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				assetSummaryMetric2,
 				(List<AssetSummaryMetric>)page2.getItems());
 
 			Page<AssetSummaryMetric> page3 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				assetSummaryMetric3,
@@ -326,9 +345,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		}
 		else {
 			Page<AssetSummaryMetric> page1 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
 
 			List<AssetSummaryMetric> assetSummaryMetrics1 =
 				(List<AssetSummaryMetric>)page1.getItems();
@@ -338,9 +358,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 				assetSummaryMetrics1.size());
 
 			Page<AssetSummaryMetric> page2 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -352,9 +373,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 				assetSummaryMetrics2.size());
 
 			Page<AssetSummaryMetric> page3 =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
 				assetSummaryMetric1,
@@ -369,10 +391,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPageWithSortDateTime()
+	public void testGetWorkspaceGroupChannelAssetSummariesPageWithSortDateTime()
 		throws Exception {
 
-		testGetWorkspaceGroupAssetSummariesPageWithSort(
+		testGetWorkspaceGroupChannelAssetSummariesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, assetSummaryMetric1, assetSummaryMetric2) -> {
 				BeanTestUtil.setProperty(
@@ -382,10 +404,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPageWithSortDouble()
+	public void testGetWorkspaceGroupChannelAssetSummariesPageWithSortDouble()
 		throws Exception {
 
-		testGetWorkspaceGroupAssetSummariesPageWithSort(
+		testGetWorkspaceGroupChannelAssetSummariesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, assetSummaryMetric1, assetSummaryMetric2) -> {
 				BeanTestUtil.setProperty(
@@ -396,10 +418,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPageWithSortInteger()
+	public void testGetWorkspaceGroupChannelAssetSummariesPageWithSortInteger()
 		throws Exception {
 
-		testGetWorkspaceGroupAssetSummariesPageWithSort(
+		testGetWorkspaceGroupChannelAssetSummariesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, assetSummaryMetric1, assetSummaryMetric2) -> {
 				BeanTestUtil.setProperty(
@@ -410,10 +432,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupAssetSummariesPageWithSortString()
+	public void testGetWorkspaceGroupChannelAssetSummariesPageWithSortString()
 		throws Exception {
 
-		testGetWorkspaceGroupAssetSummariesPageWithSort(
+		testGetWorkspaceGroupChannelAssetSummariesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, assetSummaryMetric1, assetSummaryMetric2) -> {
 				Class<?> clazz = assetSummaryMetric1.getClass();
@@ -462,7 +484,7 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 			});
 	}
 
-	protected void testGetWorkspaceGroupAssetSummariesPageWithSort(
+	protected void testGetWorkspaceGroupChannelAssetSummariesPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer
 				<EntityField, AssetSummaryMetric, AssetSummaryMetric, Exception>
@@ -475,7 +497,10 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 			return;
 		}
 
-		Long groupId = testGetWorkspaceGroupAssetSummariesPage_getGroupId();
+		Long groupId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getGroupId();
+		String channelId =
+			testGetWorkspaceGroupChannelAssetSummariesPage_getChannelId();
 
 		AssetSummaryMetric assetSummaryMetric1 = randomAssetSummaryMetric();
 		AssetSummaryMetric assetSummaryMetric2 = randomAssetSummaryMetric();
@@ -486,23 +511,25 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		}
 
 		assetSummaryMetric1 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, assetSummaryMetric1);
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, assetSummaryMetric1);
 
 		assetSummaryMetric2 =
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				groupId, assetSummaryMetric2);
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				groupId, channelId, assetSummaryMetric2);
 
 		Page<AssetSummaryMetric> page =
-			assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-				groupId, null, null, null, null, null, null, null);
+			assetSummaryMetricResource.
+				getWorkspaceGroupChannelAssetSummariesPage(
+					groupId, channelId, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<AssetSummaryMetric> ascPage =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
 
 			assertContains(
 				assetSummaryMetric1,
@@ -512,10 +539,11 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 				(List<AssetSummaryMetric>)ascPage.getItems());
 
 			Page<AssetSummaryMetric> descPage =
-				assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
-					groupId, null, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
+				assetSummaryMetricResource.
+					getWorkspaceGroupChannelAssetSummariesPage(
+						groupId, channelId, null, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
 
 			assertContains(
 				assetSummaryMetric2,
@@ -527,15 +555,16 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	protected AssetSummaryMetric
-			testGetWorkspaceGroupAssetSummariesPage_addAssetSummaryMetric(
-				Long groupId, AssetSummaryMetric assetSummaryMetric)
+			testGetWorkspaceGroupChannelAssetSummariesPage_addAssetSummaryMetric(
+				Long groupId, String channelId,
+				AssetSummaryMetric assetSummaryMetric)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupAssetSummariesPage_getGroupId()
+	protected Long testGetWorkspaceGroupChannelAssetSummariesPage_getGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -543,7 +572,22 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 	}
 
 	protected Long
-			testGetWorkspaceGroupAssetSummariesPage_getIrrelevantGroupId()
+			testGetWorkspaceGroupChannelAssetSummariesPage_getIrrelevantGroupId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String
+			testGetWorkspaceGroupChannelAssetSummariesPage_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetWorkspaceGroupChannelAssetSummariesPage_getIrrelevantChannelId()
 		throws Exception {
 
 		return null;
@@ -1186,49 +1230,8 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		}
 
 		if (entityFieldName.equals("assetType")) {
-			Object object = assetSummaryMetric.getAssetType();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("downloads")) {
@@ -1334,8 +1337,6 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 			{
 				assetId = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				assetTitle = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				assetType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				downloads = RandomTestUtil.randomDouble();
 				downloadsTrendPercentage = RandomTestUtil.randomDouble();
@@ -1574,4 +1575,4 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		_assetSummaryMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:767041380
+// LIFERAY-REST-BUILDER-HASH:2088177729

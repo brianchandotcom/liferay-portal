@@ -146,6 +146,8 @@ public abstract class BaseCMISModel {
 		).put(
 			ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER
 		).put(
+			ActionKeys.ADVANCED_UPDATE, Action.CAN_UPDATE_PROPERTIES
+		).put(
 			ActionKeys.DELETE, Action.CAN_DELETE_OBJECT
 		).put(
 			ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT

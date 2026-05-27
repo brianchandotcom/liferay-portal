@@ -52,8 +52,8 @@ public class ObjectLayoutRowModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectLayoutRow.class.getName(),
-					objectLayoutRow.getObjectLayoutRowId(),
+					ObjectLayoutRow.class.getName(),
+					objectLayoutRow.getObjectLayoutRowId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectLayoutRow, objectLayoutRow)));
 		}
@@ -80,8 +80,8 @@ public class ObjectLayoutRowModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectLayoutRow.class.getName(),
-				objectLayoutRow.getObjectLayoutRowId(), null);
+				ObjectLayoutRow.class.getName(),
+				objectLayoutRow.getObjectLayoutRowId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

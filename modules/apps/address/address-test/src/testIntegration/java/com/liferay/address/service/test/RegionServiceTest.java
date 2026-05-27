@@ -207,11 +207,11 @@ public class RegionServiceTest {
 		}
 	}
 
-	private void _assertMessage(String actionKey, String message, long userId) {
+	private void _assertMessage(String actionId, String message, long userId) {
 		Assert.assertTrue(
 			message.contains(
 				StringBundler.concat(
-					"User ", userId, " must have ", actionKey,
+					"User ", userId, " must have ", actionId,
 					" permission for")));
 	}
 

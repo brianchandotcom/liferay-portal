@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_SOLUTION_TAGS_CITIZEN_PORTAL",
+	"name": "citizen-portal",
+	"name_i18n": {
+		"en_US": "Citizen Portal"
+	},
+	"viewableBy": "Anyone"
+}

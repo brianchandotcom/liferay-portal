@@ -16,7 +16,6 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -27,10 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
-import java.math.BigDecimal;
-
 import java.util.Calendar;
-import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,7 +57,7 @@ public class EditCommercePriceModifierMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				_updateCommercePriceModifier(
+				_addOrUpdateCommercePriceModifier(
 					commercePriceModifierId, actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -95,6 +91,68 @@ public class EditCommercePriceModifierMVCActionCommand
 		}
 	}
 
+	private CommercePriceModifier _addOrUpdateCommercePriceModifier(
+			long commercePriceModifierId, ActionRequest actionRequest)
+		throws Exception {
+
+		String modifierType = ParamUtil.getString(
+			actionRequest, "modifierType");
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		int displayDateHour = ParamUtil.getInteger(
+			actionRequest, "displayDateHour", calendar.get(Calendar.HOUR));
+		int displayDateAmPm = ParamUtil.getInteger(
+			actionRequest, "displayDateAmPm", calendar.get(Calendar.AM_PM));
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		int expirationDateHour = ParamUtil.getInteger(
+			actionRequest, "expirationDateHour");
+
+		if (ParamUtil.getInteger(actionRequest, "expirationDateAmPm") ==
+				Calendar.PM) {
+
+			expirationDateHour += 12;
+		}
+
+		return _commercePriceModifierService.addOrUpdateCommercePriceModifier(
+			null, commercePriceModifierId,
+			ParamUtil.getLong(actionRequest, "commercePriceListGroupId"),
+			ParamUtil.getLong(actionRequest, "commercePriceListId"),
+			ParamUtil.getString(actionRequest, "title"),
+			ParamUtil.getString(actionRequest, "target"),
+			_commercePriceFormatter.parse(
+				actionRequest,
+				!modifierType.equals(
+					CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE),
+				CommercePriceModifier.class.getName(), "modifierAmount"),
+			modifierType, ParamUtil.getDouble(actionRequest, "priority"),
+			ParamUtil.getBoolean(actionRequest, "active"),
+			ParamUtil.getInteger(
+				actionRequest, "displayDateMonth",
+				calendar.get(Calendar.MONTH)),
+			ParamUtil.getInteger(
+				actionRequest, "displayDateDay",
+				calendar.get(Calendar.DAY_OF_MONTH)),
+			ParamUtil.getInteger(
+				actionRequest, "displayDateYear", calendar.get(Calendar.YEAR)),
+			displayDateHour,
+			ParamUtil.getInteger(
+				actionRequest, "displayDateMinute",
+				calendar.get(Calendar.MINUTE)),
+			ParamUtil.getInteger(actionRequest, "expirationDateMonth"),
+			ParamUtil.getInteger(actionRequest, "expirationDateDay"),
+			ParamUtil.getInteger(actionRequest, "expirationDateYear"),
+			expirationDateHour,
+			ParamUtil.getInteger(actionRequest, "expirationDateMinute"),
+			ParamUtil.getBoolean(actionRequest, "neverExpire", true),
+			ServiceContextFactory.getInstance(
+				CommercePriceModifier.class.getName(), actionRequest));
+	}
+
 	private void _deleteCommercePriceModifiers(
 			long commercePriceModifierId, ActionRequest actionRequest)
 		throws Exception {
@@ -119,94 +177,6 @@ public class EditCommercePriceModifierMVCActionCommand
 			_commercePriceModifierService.deleteCommercePriceModifier(
 				deleteCommercePriceModifierId);
 		}
-	}
-
-	private CommercePriceModifier _updateCommercePriceModifier(
-			long commercePriceModifierId, ActionRequest actionRequest)
-		throws Exception {
-
-		String title = ParamUtil.getString(actionRequest, "title");
-		String target = ParamUtil.getString(actionRequest, "target");
-		long commercePriceListId = ParamUtil.getLong(
-			actionRequest, "commercePriceListId");
-
-		String modifierType = ParamUtil.getString(
-			actionRequest, "modifierType");
-
-		BigDecimal modifierAmount = _commercePriceFormatter.parse(
-			actionRequest,
-			!modifierType.equals(
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE),
-			CommercePriceModifier.class.getName(), "modifierAmount");
-
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		Date date = new Date();
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
-
-		int displayDateMonth = ParamUtil.getInteger(
-			actionRequest, "displayDateMonth", calendar.get(Calendar.MONTH));
-		int displayDateDay = ParamUtil.getInteger(
-			actionRequest, "displayDateDay",
-			calendar.get(Calendar.DAY_OF_MONTH));
-		int displayDateYear = ParamUtil.getInteger(
-			actionRequest, "displayDateYear", calendar.get(Calendar.YEAR));
-		int displayDateHour = ParamUtil.getInteger(
-			actionRequest, "displayDateHour", calendar.get(Calendar.HOUR));
-		int displayDateMinute = ParamUtil.getInteger(
-			actionRequest, "displayDateMinute", calendar.get(Calendar.MINUTE));
-		int displayDateAmPm = ParamUtil.getInteger(
-			actionRequest, "displayDateAmPm", calendar.get(Calendar.AM_PM));
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
-		int expirationDateMonth = ParamUtil.getInteger(
-			actionRequest, "expirationDateMonth");
-		int expirationDateDay = ParamUtil.getInteger(
-			actionRequest, "expirationDateDay");
-		int expirationDateYear = ParamUtil.getInteger(
-			actionRequest, "expirationDateYear");
-		int expirationDateHour = ParamUtil.getInteger(
-			actionRequest, "expirationDateHour");
-		int expirationDateMinute = ParamUtil.getInteger(
-			actionRequest, "expirationDateMinute");
-		int expirationDateAmPm = ParamUtil.getInteger(
-			actionRequest, "expirationDateAmPm");
-
-		if (expirationDateAmPm == Calendar.PM) {
-			expirationDateHour += 12;
-		}
-
-		boolean neverExpire = ParamUtil.getBoolean(
-			actionRequest, "neverExpire", true);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommercePriceModifier.class.getName(), actionRequest);
-
-		if (commercePriceModifierId > 0) {
-			long commercePriceListGroupId = ParamUtil.getLong(
-				actionRequest, "commercePriceListGroupId");
-
-			return _commercePriceModifierService.updateCommercePriceModifier(
-				commercePriceModifierId, commercePriceListGroupId, title,
-				target, commercePriceListId, modifierType, modifierAmount,
-				priority, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
-		}
-
-		return _commercePriceModifierService.addCommercePriceModifier(
-			0, title, target, commercePriceListId, modifierType, modifierAmount,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Reference

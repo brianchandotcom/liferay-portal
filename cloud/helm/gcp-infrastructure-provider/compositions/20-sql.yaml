@@ -61,6 +61,7 @@ spec:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
     managementPolicies: ["Create", "Observe", "Update"]
+{{- if not (and (eq $dataPlane $targetActiveDataPlane) (eq $restorePhase "provisioning")) }}
 ---
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: User
@@ -79,6 +80,7 @@ spec:
                 dataPlane: {{ $dataPlane }}
         type: CLOUD_IAM_SERVICE_ACCOUNT
     managementPolicies: ["Create", "Observe", "Update"]
+{{- end }}
 {{- end }}
 {{- range $dataPlane := list "blue" "green" }}
 {{- $databaseInstanceName := printf "%s-db-instance-%s" $xr.metadata.name $dataPlane }}
@@ -105,7 +107,7 @@ spec:
         resourceRef:
             name: {{ $databaseInstanceName }}
 {{- end }}
-{{- if or (has $dataPlane $dataPlanes) (and $.observed.resources (index $.observed.resources $userResourceName)) }}
+{{- if and (or (has $dataPlane $dataPlanes) (and $.observed.resources (index $.observed.resources $userResourceName))) (not (and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane))) }}
 ---
 apiVersion: protection.crossplane.io/v1beta1
 kind: Usage

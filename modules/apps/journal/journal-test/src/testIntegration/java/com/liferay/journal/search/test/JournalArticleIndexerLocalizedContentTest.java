@@ -397,18 +397,15 @@ public class JournalArticleIndexerLocalizedContentTest {
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static Portal _portal;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private IndexerFixture<JournalArticle> _indexerFixture;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@DeleteAfterTestRun
 	private List<JournalArticle> _journalArticles;
@@ -417,6 +414,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

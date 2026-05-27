@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -299,6 +301,42 @@ public class PortletFileRepositoryTest {
 				null, fileEntry, StringPool.AMPERSAND + queryString));
 	}
 
+	@Test
+	@TestInfo("LPD-91226")
+	public void testUpdatePortletFileEntry() throws Exception {
+		FileEntry fileEntry = _addPortletFileEntry(
+			RandomTestUtil.randomString());
+
+		byte[] bytes = RandomTestUtil.randomBytes();
+
+		FileEntry updatedFileEntry;
+
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {
+			updatedFileEntry = PortletFileRepositoryUtil.updatePortletFileEntry(
+				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+				inputStream, fileEntry.getFileName(), fileEntry.getMimeType(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+
+		_assertUpdatedFileEntry(bytes, fileEntry, updatedFileEntry);
+
+		bytes = RandomTestUtil.randomBytes();
+
+		File file = FileUtil.createTempFile(bytes);
+
+		try {
+			updatedFileEntry = PortletFileRepositoryUtil.updatePortletFileEntry(
+				TestPropsValues.getUserId(), fileEntry.getFileEntryId(), file,
+				fileEntry.getFileName(), fileEntry.getMimeType(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+
+		_assertUpdatedFileEntry(bytes, fileEntry, updatedFileEntry);
+	}
+
 	private FileEntry _addPortletFileEntry(String name) throws Exception {
 		try (InputStream inputStream = new UnsyncByteArrayInputStream(
 				TestDataConstants.TEST_BYTE_ARRAY)) {
@@ -316,6 +354,28 @@ public class PortletFileRepositoryTest {
 			_group.getGroupId(), TestPropsValues.getUserId(), _portletId,
 			_folder.getFolderId(), name,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertUpdatedFileEntry(
+			byte[] expectedBytes, FileEntry fileEntry,
+			FileEntry updatedFileEntry)
+		throws Exception {
+
+		Assert.assertEquals(fileEntry.getUuid(), updatedFileEntry.getUuid());
+		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			updatedFileEntry.getExternalReferenceCode());
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), updatedFileEntry.getFileEntryId());
+		Assert.assertEquals(
+			fileEntry.getFolderId(), updatedFileEntry.getFolderId());
+		Assert.assertEquals(
+			fileEntry.getVersion(), updatedFileEntry.getVersion());
+
+		try (InputStream inputStream = updatedFileEntry.getContentStream()) {
+			Assert.assertArrayEquals(
+				expectedBytes, FileUtil.getBytes(inputStream));
+		}
 	}
 
 	@Inject

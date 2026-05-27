@@ -4,7 +4,8 @@ export enum Entity {
 	Accounts = 'accounts',
 	Events = 'events',
 	Individuals = 'individuals',
-	Sites = 'sites'
+	Sites = 'sites',
+	Users = 'users'
 }
 
 export interface ConnectorEntityCellProps {
@@ -52,6 +53,7 @@ export interface ConnectorConfig {
 
 	helpUrl?: string;
 	languages: Languages;
+	requiresLDP?: boolean;
 	singleton?: boolean;
 	slug: string;
 	type: string;

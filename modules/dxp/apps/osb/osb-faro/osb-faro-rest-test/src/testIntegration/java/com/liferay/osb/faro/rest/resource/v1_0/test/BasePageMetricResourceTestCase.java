@@ -187,26 +187,32 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPage() throws Exception {
-		Long groupId = testGetWorkspaceGroupPagesPage_getGroupId();
+	public void testGetWorkspaceGroupChannelPagesPage() throws Exception {
+		Long groupId = testGetWorkspaceGroupChannelPagesPage_getGroupId();
 		Long irrelevantGroupId =
-			testGetWorkspaceGroupPagesPage_getIrrelevantGroupId();
+			testGetWorkspaceGroupChannelPagesPage_getIrrelevantGroupId();
+		String channelId = testGetWorkspaceGroupChannelPagesPage_getChannelId();
+		String irrelevantChannelId =
+			testGetWorkspaceGroupChannelPagesPage_getIrrelevantChannelId();
 
-		Page<PageMetric> page = pageMetricResource.getWorkspaceGroupPagesPage(
-			groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
+		Page<PageMetric> page =
+			pageMetricResource.getWorkspaceGroupChannelPagesPage(
+				groupId, channelId, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantGroupId != null) {
+		if ((irrelevantGroupId != null) && (irrelevantChannelId != null)) {
 			PageMetric irrelevantPageMetric =
-				testGetWorkspaceGroupPagesPage_addPageMetric(
-					irrelevantGroupId, randomIrrelevantPageMetric());
+				testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+					irrelevantGroupId, irrelevantChannelId,
+					randomIrrelevantPageMetric());
 
-			page = pageMetricResource.getWorkspaceGroupPagesPage(
-				irrelevantGroupId, null, null, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 1), null);
+			page = pageMetricResource.getWorkspaceGroupChannelPagesPage(
+				irrelevantGroupId, irrelevantChannelId, null, null, null, null,
+				null, Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -214,30 +220,35 @@ public abstract class BasePageMetricResourceTestCase {
 				irrelevantPageMetric, (List<PageMetric>)page.getItems());
 			assertValid(
 				page,
-				testGetWorkspaceGroupPagesPage_getExpectedActions(
-					irrelevantGroupId));
+				testGetWorkspaceGroupChannelPagesPage_getExpectedActions(
+					irrelevantGroupId, irrelevantChannelId));
 		}
 
-		PageMetric pageMetric1 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, randomPageMetric());
+		PageMetric pageMetric1 =
+			testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+				groupId, channelId, randomPageMetric());
 
-		PageMetric pageMetric2 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, randomPageMetric());
+		PageMetric pageMetric2 =
+			testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+				groupId, channelId, randomPageMetric());
 
-		page = pageMetricResource.getWorkspaceGroupPagesPage(
-			groupId, null, null, null, null, null, null, Pagination.of(1, 10),
-			null);
+		page = pageMetricResource.getWorkspaceGroupChannelPagesPage(
+			groupId, channelId, null, null, null, null, null,
+			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(pageMetric1, (List<PageMetric>)page.getItems());
 		assertContains(pageMetric2, (List<PageMetric>)page.getItems());
 		assertValid(
-			page, testGetWorkspaceGroupPagesPage_getExpectedActions(groupId));
+			page,
+			testGetWorkspaceGroupChannelPagesPage_getExpectedActions(
+				groupId, channelId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetWorkspaceGroupPagesPage_getExpectedActions(Long groupId)
+			testGetWorkspaceGroupChannelPagesPage_getExpectedActions(
+				Long groupId, String channelId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -246,25 +257,29 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPageWithPagination()
+	public void testGetWorkspaceGroupChannelPagesPageWithPagination()
 		throws Exception {
 
-		Long groupId = testGetWorkspaceGroupPagesPage_getGroupId();
+		Long groupId = testGetWorkspaceGroupChannelPagesPage_getGroupId();
+		String channelId = testGetWorkspaceGroupChannelPagesPage_getChannelId();
 
 		Page<PageMetric> pageMetricsPage =
-			pageMetricResource.getWorkspaceGroupPagesPage(
-				groupId, null, null, null, null, null, null, null, null);
+			pageMetricResource.getWorkspaceGroupChannelPagesPage(
+				groupId, channelId, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(pageMetricsPage.getTotalCount());
 
-		PageMetric pageMetric1 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, randomPageMetric());
+		PageMetric pageMetric1 =
+			testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+				groupId, channelId, randomPageMetric());
 
-		PageMetric pageMetric2 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, randomPageMetric());
+		PageMetric pageMetric2 =
+			testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+				groupId, channelId, randomPageMetric());
 
-		PageMetric pageMetric3 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, randomPageMetric());
+		PageMetric pageMetric3 =
+			testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+				groupId, channelId, randomPageMetric());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
@@ -272,8 +287,8 @@ public abstract class BasePageMetricResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<PageMetric> page1 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -284,8 +299,8 @@ public abstract class BasePageMetricResourceTestCase {
 			assertContains(pageMetric1, (List<PageMetric>)page1.getItems());
 
 			Page<PageMetric> page2 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -294,8 +309,8 @@ public abstract class BasePageMetricResourceTestCase {
 			assertContains(pageMetric2, (List<PageMetric>)page2.getItems());
 
 			Page<PageMetric> page3 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -305,8 +320,8 @@ public abstract class BasePageMetricResourceTestCase {
 		}
 		else {
 			Page<PageMetric> page1 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(1, totalCount + 2), null);
 
 			List<PageMetric> pageMetrics1 = (List<PageMetric>)page1.getItems();
@@ -315,8 +330,8 @@ public abstract class BasePageMetricResourceTestCase {
 				pageMetrics1.toString(), totalCount + 2, pageMetrics1.size());
 
 			Page<PageMetric> page2 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -327,8 +342,8 @@ public abstract class BasePageMetricResourceTestCase {
 				pageMetrics2.toString(), 1, pageMetrics2.size());
 
 			Page<PageMetric> page3 =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(pageMetric1, (List<PageMetric>)page3.getItems());
@@ -338,10 +353,10 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPageWithSortDateTime()
+	public void testGetWorkspaceGroupChannelPagesPageWithSortDateTime()
 		throws Exception {
 
-		testGetWorkspaceGroupPagesPageWithSort(
+		testGetWorkspaceGroupChannelPagesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, pageMetric1, pageMetric2) -> {
 				BeanTestUtil.setProperty(
@@ -351,10 +366,10 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPageWithSortDouble()
+	public void testGetWorkspaceGroupChannelPagesPageWithSortDouble()
 		throws Exception {
 
-		testGetWorkspaceGroupPagesPageWithSort(
+		testGetWorkspaceGroupChannelPagesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, pageMetric1, pageMetric2) -> {
 				BeanTestUtil.setProperty(
@@ -365,10 +380,10 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPageWithSortInteger()
+	public void testGetWorkspaceGroupChannelPagesPageWithSortInteger()
 		throws Exception {
 
-		testGetWorkspaceGroupPagesPageWithSort(
+		testGetWorkspaceGroupChannelPagesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, pageMetric1, pageMetric2) -> {
 				BeanTestUtil.setProperty(pageMetric1, entityField.getName(), 0);
@@ -377,10 +392,10 @@ public abstract class BasePageMetricResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkspaceGroupPagesPageWithSortString()
+	public void testGetWorkspaceGroupChannelPagesPageWithSortString()
 		throws Exception {
 
-		testGetWorkspaceGroupPagesPageWithSort(
+		testGetWorkspaceGroupChannelPagesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, pageMetric1, pageMetric2) -> {
 				Class<?> clazz = pageMetric1.getClass();
@@ -429,7 +444,7 @@ public abstract class BasePageMetricResourceTestCase {
 			});
 	}
 
-	protected void testGetWorkspaceGroupPagesPageWithSort(
+	protected void testGetWorkspaceGroupChannelPagesPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, PageMetric, PageMetric, Exception>
 				unsafeTriConsumer)
@@ -441,7 +456,8 @@ public abstract class BasePageMetricResourceTestCase {
 			return;
 		}
 
-		Long groupId = testGetWorkspaceGroupPagesPage_getGroupId();
+		Long groupId = testGetWorkspaceGroupChannelPagesPage_getGroupId();
+		String channelId = testGetWorkspaceGroupChannelPagesPage_getChannelId();
 
 		PageMetric pageMetric1 = randomPageMetric();
 		PageMetric pageMetric2 = randomPageMetric();
@@ -450,19 +466,20 @@ public abstract class BasePageMetricResourceTestCase {
 			unsafeTriConsumer.accept(entityField, pageMetric1, pageMetric2);
 		}
 
-		pageMetric1 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, pageMetric1);
+		pageMetric1 = testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+			groupId, channelId, pageMetric1);
 
-		pageMetric2 = testGetWorkspaceGroupPagesPage_addPageMetric(
-			groupId, pageMetric2);
+		pageMetric2 = testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+			groupId, channelId, pageMetric2);
 
-		Page<PageMetric> page = pageMetricResource.getWorkspaceGroupPagesPage(
-			groupId, null, null, null, null, null, null, null, null);
+		Page<PageMetric> page =
+			pageMetricResource.getWorkspaceGroupChannelPagesPage(
+				groupId, channelId, null, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<PageMetric> ascPage =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
@@ -470,8 +487,8 @@ public abstract class BasePageMetricResourceTestCase {
 			assertContains(pageMetric2, (List<PageMetric>)ascPage.getItems());
 
 			Page<PageMetric> descPage =
-				pageMetricResource.getWorkspaceGroupPagesPage(
-					groupId, null, null, null, null, null, null,
+				pageMetricResource.getWorkspaceGroupChannelPagesPage(
+					groupId, channelId, null, null, null, null, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
@@ -480,22 +497,36 @@ public abstract class BasePageMetricResourceTestCase {
 		}
 	}
 
-	protected PageMetric testGetWorkspaceGroupPagesPage_addPageMetric(
-			Long groupId, PageMetric pageMetric)
+	protected PageMetric testGetWorkspaceGroupChannelPagesPage_addPageMetric(
+			Long groupId, String channelId, PageMetric pageMetric)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupPagesPage_getGroupId()
+	protected Long testGetWorkspaceGroupChannelPagesPage_getGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupPagesPage_getIrrelevantGroupId()
+	protected Long testGetWorkspaceGroupChannelPagesPage_getIrrelevantGroupId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String testGetWorkspaceGroupChannelPagesPage_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetWorkspaceGroupChannelPagesPage_getIrrelevantChannelId()
 		throws Exception {
 
 		return null;
@@ -1555,4 +1586,4 @@ public abstract class BasePageMetricResourceTestCase {
 		_pageMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1729434821
+// LIFERAY-REST-BUILDER-HASH:1431787590

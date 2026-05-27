@@ -83,8 +83,9 @@ public class SegmentsExperimentRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SegmentsExperimentRel>
-		_collectionPersistenceFinderBySegmentsExperimentId;
+	private CollectionPersistenceFinder
+		<SegmentsExperimentRel, NoSuchExperimentRelException>
+			_collectionPersistenceFinderBySegmentsExperimentId;
 
 	/**
 	 * Returns an ordered range of all the segments experiment rels where segmentsExperimentId = &#63;.
@@ -125,19 +126,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			OrderByComparator<SegmentsExperimentRel> orderByComparator)
 		throws NoSuchExperimentRelException {
 
-		SegmentsExperimentRel segmentsExperimentRel =
-			fetchBySegmentsExperimentId_First(
-				segmentsExperimentId, orderByComparator);
-
-		if (segmentsExperimentRel != null) {
-			return segmentsExperimentRel;
-		}
-
-		throw new NoSuchExperimentRelException(
-			_collectionPersistenceFinderBySegmentsExperimentId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {segmentsExperimentId}));
+		return _collectionPersistenceFinderBySegmentsExperimentId.findFirst(
+			finderCache, new Object[] {segmentsExperimentId},
+			orderByComparator);
 	}
 
 	/**
@@ -180,8 +171,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			finderCache, new Object[] {segmentsExperimentId});
 	}
 
-	private CollectionPersistenceFinder<SegmentsExperimentRel>
-		_collectionPersistenceFinderBySegmentsExperienceId;
+	private CollectionPersistenceFinder
+		<SegmentsExperimentRel, NoSuchExperimentRelException>
+			_collectionPersistenceFinderBySegmentsExperienceId;
 
 	/**
 	 * Returns an ordered range of all the segments experiment rels where segmentsExperienceId = &#63;.
@@ -222,19 +214,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			OrderByComparator<SegmentsExperimentRel> orderByComparator)
 		throws NoSuchExperimentRelException {
 
-		SegmentsExperimentRel segmentsExperimentRel =
-			fetchBySegmentsExperienceId_First(
-				segmentsExperienceId, orderByComparator);
-
-		if (segmentsExperimentRel != null) {
-			return segmentsExperimentRel;
-		}
-
-		throw new NoSuchExperimentRelException(
-			_collectionPersistenceFinderBySegmentsExperienceId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {segmentsExperienceId}));
+		return _collectionPersistenceFinderBySegmentsExperienceId.findFirst(
+			finderCache, new Object[] {segmentsExperienceId},
+			orderByComparator);
 	}
 
 	/**
@@ -277,8 +259,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			finderCache, new Object[] {segmentsExperienceId});
 	}
 
-	private UniquePersistenceFinder<SegmentsExperimentRel>
-		_uniquePersistenceFinderByS_S;
+	private UniquePersistenceFinder
+		<SegmentsExperimentRel, NoSuchExperimentRelException>
+			_uniquePersistenceFinderByS_S;
 
 	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.
@@ -293,23 +276,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			long segmentsExperimentId, long segmentsExperienceId)
 		throws NoSuchExperimentRelException {
 
-		SegmentsExperimentRel segmentsExperimentRel = fetchByS_S(
-			segmentsExperimentId, segmentsExperienceId);
-
-		if (segmentsExperimentRel == null) {
-			String message =
-				_uniquePersistenceFinderByS_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {segmentsExperimentId, segmentsExperienceId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExperimentRelException(message);
-		}
-
-		return segmentsExperimentRel;
+		return _uniquePersistenceFinderByS_S.find(
+			finderCache,
+			new Object[] {segmentsExperimentId, segmentsExperienceId});
 	}
 
 	/**
@@ -802,4 +771,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-553186800
+// LIFERAY-SERVICE-BUILDER-HASH:-1240708871

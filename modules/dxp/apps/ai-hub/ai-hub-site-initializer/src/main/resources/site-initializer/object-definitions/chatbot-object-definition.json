@@ -7,7 +7,7 @@
 	"externalReferenceCode": "L_AI_HUB_CHATBOT",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Chatbot"
+		"en_US": "AI Hub Chatbot"
 	},
 	"modifiable": true,
 	"name": "AIHubChatbot",
@@ -132,19 +132,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"defaultValue": true,
-			"externalReferenceCode": "SHOW_COMPANY_LOGO",
-			"indexed": true,
-			"label": {
-				"en_US": "Show Company Logo"
-			},
-			"name": "showCompanyLogo",
-			"system": true,
-			"type": "Boolean"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "null",
@@ -193,7 +180,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Chatbots"
+		"en_US": "AI Hub Chatbots"
 	},
 	"portlet": true,
 	"scope": "company",

@@ -9,7 +9,7 @@ import com.liferay.osb.faro.rest.dto.v1_0.PageMetric;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.converter.FaroDTOConverterContext;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.util.FaroPaginationUtil;
 import com.liferay.osb.faro.rest.internal.graphql.client.FaroGraphQLClient;
-import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupPagesPageResponse;
+import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelPagesPageResponse;
 import com.liferay.osb.faro.rest.resource.v1_0.PageMetricResource;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.portal.kernel.search.Sort;
@@ -34,42 +34,43 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageMetricResourceImpl extends BasePageMetricResourceImpl {
 
 	@Override
-	public Page<PageMetric> getWorkspaceGroupPagesPage(
+	public Page<PageMetric> getWorkspaceGroupChannelPagesPage(
 			Long groupId, String channelId, String dataSourceId,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		int cur = FaroPaginationUtil.getCur(pagination);
 		int delta = FaroPaginationUtil.getDelta(pagination);
 
-		GetWorkspaceGroupPagesPageResponse getWorkspaceGroupPagesPageResponse =
-			_faroGraphQLClient.execute(
-				GetWorkspaceGroupPagesPageResponse.class,
-				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				"getWorkspaceGroupPagesPage",
-				HashMapBuilder.<String, Object>put(
-					"channelId", channelId
-				).put(
-					"dataSourceId", dataSourceId
-				).put(
-					"keywords", search
-				).put(
-					"rangeEnd", rangeEnd
-				).put(
-					"rangeKey", rangeKey
-				).put(
-					"rangeStart", rangeStart
-				).put(
-					"size", delta
-				).put(
-					"sort", FaroPaginationUtil.toGraphQLSort(sorts)
-				).put(
-					"start", (cur - 1) * delta
-				).build());
+		GetWorkspaceGroupChannelPagesPageResponse
+			getWorkspaceGroupChannelPagesPageResponse =
+				_faroGraphQLClient.execute(
+					GetWorkspaceGroupChannelPagesPageResponse.class,
+					_faroProjectLocalService.getFaroProjectByGroupId(groupId),
+					"getWorkspaceGroupChannelPagesPage",
+					HashMapBuilder.<String, Object>put(
+						"channelId", channelId
+					).put(
+						"dataSourceId", dataSourceId
+					).put(
+						"keywords", search
+					).put(
+						"rangeEnd", rangeEnd
+					).put(
+						"rangeKey", TimeRange.getRangeKey(rangeKey)
+					).put(
+						"rangeStart", rangeStart
+					).put(
+						"size", delta
+					).put(
+						"sort", FaroPaginationUtil.toGraphQLSort(sorts)
+					).put(
+						"start", (cur - 1) * delta
+					).build());
 
-		GetWorkspaceGroupPagesPageResponse.PageMetricBag pageMetricBag =
-			getWorkspaceGroupPagesPageResponse.getPageMetricBag();
+		GetWorkspaceGroupChannelPagesPageResponse.PageMetricBag pageMetricBag =
+			getWorkspaceGroupChannelPagesPageResponse.getPageMetricBag();
 
 		if (pageMetricBag == null) {
 			return Page.of(Collections.emptyList(), pagination, 0);
@@ -103,7 +104,7 @@ public class PageMetricResourceImpl extends BasePageMetricResourceImpl {
 		target = "(component.name=com.liferay.osb.faro.rest.internal.dto.v1_0.converter.PageMetricDTOConverter)"
 	)
 	private DTOConverter
-		<GetWorkspaceGroupPagesPageResponse.PageMetric, PageMetric>
+		<GetWorkspaceGroupChannelPagesPageResponse.PageMetric, PageMetric>
 			_pageMetricDTOConverter;
 
 }

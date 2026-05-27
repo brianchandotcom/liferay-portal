@@ -77,8 +77,9 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<FriendlyURLEntryMapping>
-		_uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder
+		<FriendlyURLEntryMapping, NoSuchFriendlyURLEntryMappingException>
+			_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
@@ -92,23 +93,8 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	public FriendlyURLEntryMapping findByC_C(long classNameId, long classPK)
 		throws NoSuchFriendlyURLEntryMappingException {
 
-		FriendlyURLEntryMapping friendlyURLEntryMapping = fetchByC_C(
-			classNameId, classPK);
-
-		if (friendlyURLEntryMapping == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFriendlyURLEntryMappingException(message);
-		}
-
-		return friendlyURLEntryMapping;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -493,4 +479,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-612302441
+// LIFERAY-SERVICE-BUILDER-HASH:1098386594

@@ -3,8 +3,8 @@ import GeomapChart from './GeomapChart';
 import GeoMapLangKey from './geo-map-lang-key';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
-import ReactDOMServer from 'react-dom/server';
 import {Colors} from 'shared/util/charts';
+import {createRoot} from 'react-dom/client';
 import {toThousands} from 'shared/util/numbers';
 
 const OTHERS = 'others';
@@ -139,7 +139,12 @@ const mergeData = (countries: ICountry[]) => {
 	};
 };
 
-const Tooltip = (payload: IFeature, metricLabel: string) => (
+interface ITooltipProps {
+	metricLabel: string;
+	payload: IFeature;
+}
+
+const Tooltip = ({metricLabel, payload}: ITooltipProps) => (
 	<>
 		<div className='arrow' />
 
@@ -206,6 +211,8 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			.style('position', 'absolute')
 			.style('display', 'none');
 
+		const tooltipRoot = createRoot(tooltip.node() as HTMLElement);
+
 		const handleMouseOver = (
 			_feature: IFeature,
 			index: number,
@@ -215,10 +222,11 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 
 			d3.select(node).style('fill', chartRef.current._color.selected);
 
-			const html = (feature: IFeature) =>
-				ReactDOMServer.renderToString(Tooltip(feature, metricLabel));
+			tooltipRoot.render(
+				<Tooltip metricLabel={metricLabel} payload={_feature} />
+			);
 
-			tooltip.html(html(_feature)).style('display', null);
+			tooltip.style('display', null);
 		};
 
 		const handleMouseOut = (
@@ -276,6 +284,10 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			.on('mouseover', handleMouseOver);
 
 		chartRef.current._fillFn = fillFn;
+
+		return () => {
+			tooltipRoot.unmount();
+		};
 	}, []);
 
 	useEffect(() => {

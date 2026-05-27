@@ -7,6 +7,9 @@ package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+
+import jakarta.portlet.MimeResponse;
 
 /**
  * @author Rachael Koestartyo
@@ -79,6 +82,21 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 	public boolean getCookiesPreferenceHandlingStoreConsent() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);
+	}
+
+	public String getForceReconsentURL(MimeResponse mimeResponse) {
+		return ResourceURLBuilder.createResourceURL(
+			mimeResponse
+		).setParameter(
+			"scope", _scope.getValue()
+		).setResourceID(
+			"/cookies_banner/force_reconsent"
+		).buildString();
+	}
+
+	public boolean isCookiesPreferenceHandlingActive() {
+		return _cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+			_scope, _scopePK);
 	}
 
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;

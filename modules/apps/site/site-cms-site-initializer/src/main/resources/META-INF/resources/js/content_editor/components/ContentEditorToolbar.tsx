@@ -23,9 +23,12 @@ import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
 import {
+	PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
 	PREVIEW_CHANNEL_SESSION_KEY,
 	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	PREVIEW_EXTERNAL_URL_SESSION_KEY,
 	PREVIEW_VISIBLE_SESSION_KEY,
+	PREVIEW_WIDTH_SESSION_KEY,
 } from './preview/sessionKeys';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
@@ -47,6 +50,7 @@ export default function ContentEditorToolbar({
 	getPreviewDataURL,
 	hasWorkflow,
 	headerTitle,
+	isNew,
 	title,
 	type,
 }: {
@@ -56,6 +60,7 @@ export default function ContentEditorToolbar({
 	getPreviewDataURL: string;
 	hasWorkflow: boolean;
 	headerTitle: string;
+	isNew: boolean;
 	title: string;
 	type: string;
 }) {
@@ -138,9 +143,11 @@ export default function ContentEditorToolbar({
 		setSuccessMessage(
 			hasWorkflow
 				? Liferay.Language.get('x-was-submitted-for-workflow')
-				: Liferay.Language.get('x-was-published-successfully')
+				: isNew
+					? Liferay.Language.get('x-was-created-successfully')
+					: Liferay.Language.get('x-was-updated-successfully')
 		);
-	}, [backURL, hasWorkflow, setSuccessMessage]);
+	}, [backURL, hasWorkflow, isNew, setSuccessMessage]);
 
 	useEffect(() => {
 		const form = getForm();
@@ -424,5 +431,8 @@ function clearSessionStates() {
 		PREVIEW_VISIBLE_SESSION_KEY,
 		PREVIEW_CHANNEL_SESSION_KEY,
 		PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+		PREVIEW_EXTERNAL_URL_SESSION_KEY,
+		PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
+		PREVIEW_WIDTH_SESSION_KEY,
 	].forEach((key) => sessionStorage.removeItem(key));
 }

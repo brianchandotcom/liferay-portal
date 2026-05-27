@@ -291,10 +291,10 @@ public class SXPElementLocalServiceTest {
 			userId, ServiceContextTestUtil.getServiceContext());
 	}
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static String _originalName;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private SXPElementLocalService _sxpElementLocalService;

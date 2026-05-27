@@ -3,6 +3,8 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-120"
     name: cluster-bootstrap
     namespace: cluster-bootstrap-system
 spec:
@@ -38,6 +40,8 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-100"
     labels:
         name: cluster-bootstrap-system
     name: cluster-bootstrap-system

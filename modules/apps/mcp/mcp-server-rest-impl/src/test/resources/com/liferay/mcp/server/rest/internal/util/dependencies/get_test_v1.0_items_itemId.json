@@ -1,0 +1,20 @@
+{
+	"properties": {
+		"active": {
+			"description": "This is the description",
+			"type": "boolean"
+		},
+		"itemId": {
+			"description": "This is the description",
+			"type": "string"
+		},
+		"page": {
+			"description": "This is the description",
+			"type": "integer"
+		}
+	},
+	"required": [
+		"itemId"
+	],
+	"type": "object"
+}

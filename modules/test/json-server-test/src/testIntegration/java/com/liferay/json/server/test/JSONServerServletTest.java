@@ -834,9 +834,9 @@ public class JSONServerServletTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.json.server.internal.servlet.JSONServerServlet";
 
-	@Inject(filter = "osgi.http.whiteboard.servlet.name=" + _CLASS_NAME)
-	private static Servlet _servlet;
-
 	private final ObjectMapper _objectMapper = new ObjectMapper();
+
+	@Inject(filter = "osgi.http.whiteboard.servlet.name=" + _CLASS_NAME)
+	private Servlet _servlet;
 
 }

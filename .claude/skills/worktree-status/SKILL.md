@@ -62,7 +62,7 @@ Show a summary table of every Git worktree with its HTTP port, running status, o
 1. Detect the running status by matching `-Dcatalina.base` against each worktree's `<tomcat>` directory. Use process matching, not port scanning — port scanning cannot distinguish which Tomcat owns which port.
 
 	```bash
-	ps -eo args | grep --only-matching '\-Dcatalina\.base=[^ ]*' | sed 's/-Dcatalina.base=//'
+	ps -eo args | grep --only-matching "\-Dcatalina\.base=[^ ]*" | sed "s/-Dcatalina.base=//"
 	```
 
 Render the output like this:

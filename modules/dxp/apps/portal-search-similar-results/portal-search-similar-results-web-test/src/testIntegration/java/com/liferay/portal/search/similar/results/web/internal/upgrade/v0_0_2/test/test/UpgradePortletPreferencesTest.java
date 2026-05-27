@@ -41,6 +41,6 @@ public class UpgradePortletPreferencesTest
 	@Inject(
 		filter = "component.name=com.liferay.portal.search.similar.results.web.internal.upgrade.registry.SearchSimiliarResultsWebUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -173,7 +173,7 @@ public class ListTypeLocalServiceTest {
 	private static Company _company;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

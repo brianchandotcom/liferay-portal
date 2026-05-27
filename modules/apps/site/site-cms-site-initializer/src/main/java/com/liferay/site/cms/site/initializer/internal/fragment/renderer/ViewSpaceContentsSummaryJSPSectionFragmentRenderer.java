@@ -7,12 +7,9 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceContentsSummarySectionDisplayContext;
@@ -48,9 +45,7 @@ public class ViewSpaceContentsSummaryJSPSectionFragmentRenderer
 			_depotEntryLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 			httpServletRequest, _language, _objectDefinitionService,
-			_objectDefinitionSettingLocalService,
-			_objectEntryFolderLocalService,
-			_objectEntryFolderModelResourcePermission, _portal,
+			_objectEntryFolderLocalService, _portal,
 			translationInfoItemFieldValuesExporterRegistry);
 	}
 
@@ -72,17 +67,7 @@ public class ViewSpaceContentsSummaryJSPSectionFragmentRenderer
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-
-	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

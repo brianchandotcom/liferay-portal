@@ -360,8 +360,8 @@ public class RoleServiceHttp {
 		getGroupRolesAndTeamRoles(
 			HttpPrincipal httpPrincipal, long companyId, String name,
 			java.util.List<String> excludedNames, String title,
-			String description, int[] types, long excludedTeamRoleId,
-			long teamGroupId, int start, int end) {
+			String description, int[] types, String subtype,
+			long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -370,7 +370,7 @@ public class RoleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, name, excludedNames, title, description,
-				types, excludedTeamRoleId, teamGroupId, start, end);
+				types, subtype, excludedTeamRoleId, teamGroupId, start, end);
 
 			Object returnObj = null;
 
@@ -397,7 +397,8 @@ public class RoleServiceHttp {
 	public static int getGroupRolesAndTeamRolesCount(
 		HttpPrincipal httpPrincipal, long companyId, String name,
 		java.util.List<String> excludedNames, String title, String description,
-		int[] types, long excludedTeamRoleId, long teamGroupId) {
+		int[] types, String subtype, long excludedTeamRoleId,
+		long teamGroupId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -406,7 +407,7 @@ public class RoleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, name, excludedNames, title, description,
-				types, excludedTeamRoleId, teamGroupId);
+				types, subtype, excludedTeamRoleId, teamGroupId);
 
 			Object returnObj = null;
 
@@ -1177,13 +1178,13 @@ public class RoleServiceHttp {
 	private static final Class<?>[] _getGroupRolesAndTeamRolesParameterTypes8 =
 		new Class[] {
 			long.class, String.class, java.util.List.class, String.class,
-			String.class, int[].class, long.class, long.class, int.class,
-			int.class
+			String.class, int[].class, String.class, long.class, long.class,
+			int.class, int.class
 		};
 	private static final Class<?>[]
 		_getGroupRolesAndTeamRolesCountParameterTypes9 = new Class[] {
 			long.class, String.class, java.util.List.class, String.class,
-			String.class, int[].class, long.class, long.class
+			String.class, int[].class, String.class, long.class, long.class
 		};
 	private static final Class<?>[] _getOrAddEmptyRoleParameterTypes10 =
 		new Class[] {
@@ -1243,4 +1244,4 @@ public class RoleServiceHttp {
 	};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:107301783
+// LIFERAY-SERVICE-BUILDER-HASH:866506827

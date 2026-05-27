@@ -1,0 +1,11 @@
+Bundle-Name: Liferay MCP Server REST Implementation
+Bundle-SymbolicName: com.liferay.mcp.server.rest.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.ethlo.*,\
+	\
+	!javax.annotation.*,\
+	\
+	*
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore
+Liferay-Client-Extension-Batch: com/liferay/mcp/server/rest/internal/batch

@@ -32,6 +32,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -42,14 +43,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
-
-import java.util.Calendar;
 
 import org.frutilla.FrutillaRule;
 
@@ -522,22 +520,15 @@ public class CommercePriceListLowestDiscoveryTest {
 			commercePriceList2.getCommercePriceListId(),
 			discoveredPriceList.getCommercePriceListId());
 
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			_user.getTimeZone());
-
 		CommercePriceModifier commercePriceModifier =
-			_commercePriceModifierLocalService.addCommercePriceModifier(
-				_commerceCatalog.getGroupId(), RandomTestUtil.randomString(),
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				_commerceCatalog.getGroupId(), _user,
 				commercePriceList3.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
-				BigDecimal.valueOf(-50.0), 1.0, true,
-				calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH),
-				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH),
-				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE), true, _serviceContext);
+				RandomTestUtil.randomString(),
+				CommercePriceModifierConstants.TARGET_CATALOG,
+				BigDecimal.valueOf(-50.0),
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, 1.0,
+				true, _serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),

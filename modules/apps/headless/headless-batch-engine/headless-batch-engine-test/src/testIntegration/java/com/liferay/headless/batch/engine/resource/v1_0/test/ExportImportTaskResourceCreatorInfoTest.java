@@ -441,8 +441,9 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://", host, ":8080/o/headless-batch-engine/v1.0",
-				"/import-task/com.liferay.object.admin.rest.dto.v1_0.",
+				"http://", host, ":", PortalUtil.getPortalServerPort(false),
+				"/o/headless-batch-engine/v1.0/import-task",
+				"/com.liferay.object.admin.rest.dto.v1_0.",
 				"ObjectDefinition?createStrategy=", createStrategy,
 				"&importCreatorStrategy=", importCreatorStrategy));
 
@@ -468,8 +469,10 @@ public class ExportImportTaskResourceCreatorInfoTest {
 				_invoke(
 					host,
 					StringBundler.concat(
-						"http://", host, ":8080/o/headless-batch-engine/v1.0",
-						"/import-task/by-external-reference-code/",
+						"http://", host, ":",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-batch-engine/v1.0/import-task",
+						"/by-external-reference-code/",
 						externalReferenceCode)));
 
 			if (Objects.equals(

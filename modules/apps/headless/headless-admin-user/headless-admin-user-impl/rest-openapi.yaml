@@ -576,6 +576,10 @@ components:
                                 The organization's country isocode.
                             readOnly: true
                             type: string
+                        addressCountryExternalReferenceCode:
+                            description:
+                                The organization's country external reference code.
+                            type: string
                         addressCountry_i18n:
                             additionalProperties:
                                 type: string
@@ -589,6 +593,10 @@ components:
                             description:
                                 The organization's region code.
                             readOnly: true
+                            type: string
+                        addressRegionExternalReferenceCode:
+                            description:
+                                The organization's region external reference code.
                             type: string
                         id:
                             description:
@@ -790,6 +798,10 @@ components:
                     description:
                         The address's country (e.g., USA).
                     type: string
+                addressCountryExternalReferenceCode:
+                    description:
+                        The address' country external reference code.
+                    type: string
                 addressCountry_i18n:
                     additionalProperties:
                         type: string
@@ -801,6 +813,10 @@ components:
                 addressRegion:
                     description:
                         The address's region (e.g., state).
+                    type: string
+                addressRegionExternalReferenceCode:
+                    description:
+                        The address' region external reference code.
                     type: string
                 addressSubtype:
                     description:
@@ -925,6 +941,10 @@ components:
                 roleType:
                     description:
                         The role's type.
+                    type: string
+                subtype:
+                    description:
+                        The role's subtype.
                     type: string
             type: object
         RoleBrief:

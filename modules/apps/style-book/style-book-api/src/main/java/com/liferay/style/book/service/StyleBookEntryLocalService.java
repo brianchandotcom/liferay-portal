@@ -65,6 +65,7 @@ public interface StyleBookEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the style book entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link StyleBookEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long userId, long groupId,
 			boolean defaultStyleBookEntry, String frontendTokensValues,
@@ -91,6 +92,7 @@ public interface StyleBookEntryLocalService
 			StyleBookEntry publishedStyleBookEntry, int version)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry copyStyleBookEntry(
 			long userId, long groupId, long sourceStyleBookEntryId,
 			ServiceContext serviceContext)
@@ -145,6 +147,7 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
 	public StyleBookEntry deleteStyleBookEntry(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -414,6 +417,7 @@ public interface StyleBookEntryLocalService
 		VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
 			versionServiceListener);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateDefaultStyleBookEntry(
 			long styleBookEntryId, boolean defaultStyleBookEntry)
 		throws PortalException;
@@ -423,24 +427,29 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry updateDraft(StyleBookEntry draftStyleBookEntry)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateFrontendTokensValues(
 			long styleBookEntryId, String frontendTokensValues)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateStyleBookEntry(
 			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
 			long previewFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name,
 			ServiceContext serviceContext)
@@ -477,4 +486,4 @@ public interface StyleBookEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1191108349
+// LIFERAY-SERVICE-BUILDER-HASH:1659206569

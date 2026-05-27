@@ -316,30 +316,31 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static GroupService _groupService;
-
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static Portal _portal;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
+	@Inject
+	private GroupService _groupService;
+
 	private Indexer<JournalArticle> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@DeleteAfterTestRun
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
 	private Group _jpGroup;
+
+	@Inject
+	private Portal _portal;
+
 	private UserSearchFixture _userSearchFixture;
 	private Group _usGroup;
 

@@ -75,7 +75,7 @@ public class CTProcessPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CTProcess>
+	private FilterCollectionPersistenceFinder<CTProcess, NoSuchProcessException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -116,16 +116,8 @@ public class CTProcessPersistenceImpl
 			long companyId, OrderByComparator<CTProcess> orderByComparator)
 		throws NoSuchProcessException {
 
-		CTProcess ctProcess = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		throw new NoSuchProcessException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -201,7 +193,7 @@ public class CTProcessPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CTProcess>
+	private FilterCollectionPersistenceFinder<CTProcess, NoSuchProcessException>
 		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
@@ -242,16 +234,8 @@ public class CTProcessPersistenceImpl
 			long ctCollectionId, OrderByComparator<CTProcess> orderByComparator)
 		throws NoSuchProcessException {
 
-		CTProcess ctProcess = fetchByCtCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		throw new NoSuchProcessException(
-			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
+		return _collectionPersistenceFinderByCtCollectionId.findFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -327,7 +311,7 @@ public class CTProcessPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FilterCollectionPersistenceFinder<CTProcess>
+	private FilterCollectionPersistenceFinder<CTProcess, NoSuchProcessException>
 		_collectionPersistenceFinderByC_T;
 
 	/**
@@ -371,16 +355,9 @@ public class CTProcessPersistenceImpl
 			OrderByComparator<CTProcess> orderByComparator)
 		throws NoSuchProcessException {
 
-		CTProcess ctProcess = fetchByC_T_First(
-			ctCollectionId, type, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		throw new NoSuchProcessException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {ctCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -680,15 +657,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCompanyId));
@@ -716,15 +684,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId));
@@ -754,15 +713,6 @@ public class CTProcessPersistenceImpl
 					new String[] {"ctCollectionId", "type_"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, "ctProcess",
-					"CTProcess", "ctProcess.ctProcessId",
-					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
-					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
-					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
-					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
-					CTProcessModelImpl.ORDER_BY_SQL,
-					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId),
@@ -836,4 +786,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2139897132
+// LIFERAY-SERVICE-BUILDER-HASH:-709389497

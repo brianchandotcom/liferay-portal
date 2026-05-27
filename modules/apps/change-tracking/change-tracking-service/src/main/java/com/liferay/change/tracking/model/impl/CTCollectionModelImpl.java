@@ -106,6 +106,8 @@ public class CTCollectionModelImpl
 
 	public static final String ENTITY_ALIAS = "ctCollection";
 
+	public static final String FILTER_PK_COLUMN_NAME = "ctCollectionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctCollection.createDate ASC";
 
@@ -1248,4 +1250,4 @@ public class CTCollectionModelImpl
 	private CTCollection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1335110339
+// LIFERAY-SERVICE-BUILDER-HASH:49190194

@@ -90,7 +90,7 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 		Assert.assertEquals("now", fdsFilterContext.get("max"));
 	}
 
-	private DateTimeRangeFDSFilterContextContributor
+	private final DateTimeRangeFDSFilterContextContributor
 		_dateTimeRangeFDSFilterContextContributor =
 			new DateTimeRangeFDSFilterContextContributor();
 

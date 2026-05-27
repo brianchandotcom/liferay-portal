@@ -1,26 +1,26 @@
-.phone-number-input-country-code-picker {
+.phone-number-input-prefix-picker {
 	position: relative;
 }
 
-.phone-number-input-country-code-picker > .form-control-select-secondary {
+.phone-number-input-prefix-picker > .form-control-select-secondary {
 	position: relative;
 	z-index: 2;
 }
 
-.phone-number-input-country-code-flag:empty {
+.phone-number-input-prefix-flag:empty {
 	display: none;
 }
 
-.phone-number-input-country-code-menu {
+.phone-number-input-prefix-menu {
 	max-height: 18rem;
 	min-width: 16rem;
 	overflow-y: auto;
 }
 
-.phone-number-input-country-code-menu.show {
+.phone-number-input-prefix-menu.show {
 	display: block;
 }
 
-.phone-number-input-country-code-menu-item-code {
+.phone-number-input-prefix-menu-item-code {
 	min-width: 45px;
 }

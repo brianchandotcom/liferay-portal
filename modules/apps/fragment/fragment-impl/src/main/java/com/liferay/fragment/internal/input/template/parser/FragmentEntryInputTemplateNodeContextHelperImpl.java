@@ -900,9 +900,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				JSONUtil.put(
 					"a2", a2
 				).put(
-					"idd", idd
-				).put(
 					"name", country.getTitle(languageId)
+				).put(
+					"prefix", idd
 				));
 		}
 

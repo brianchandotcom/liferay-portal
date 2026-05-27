@@ -432,11 +432,23 @@ public class KeywordResourceImpl
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-17564") ||
-			!group.isCMS() || ArrayUtil.isEmpty(keyword.getAssetLibraries())) {
+			!group.isCMS()) {
 
 			return _assetTagService.addTag(
 				externalReferenceCode, siteId, keyword.getName(),
 				new ServiceContext());
+		}
+
+		if (ArrayUtil.isEmpty(keyword.getAssetLibraries())) {
+			AssetTag assetTag = _assetTagService.addTag(
+				externalReferenceCode, siteId, keyword.getName(),
+				new ServiceContext());
+
+			_assetTagGroupRelLocalService.setAssetTagGroupRels(
+				assetTag.getTagId(),
+				new long[] {GroupConstants.ANY_PARENT_GROUP_ID});
+
+			return assetTag;
 		}
 
 		long[] assetLibraryGroupIds = TaxonomyGroupUtil.getAssetLibraryGroupIds(

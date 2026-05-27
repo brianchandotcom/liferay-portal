@@ -12,7 +12,7 @@ jobs:
                 uses: helm/kind-action@v1
             -   name: Install Helm
                 uses: azure/setup-helm@v4
-            -   name: Validate Helm chart via server-side dry-run
+            -   name: Validate Helm chart
                 run: helm install liferay . --dry-run=server
                 working-directory: ./cloud/helm/default
 on:

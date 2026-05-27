@@ -6,6 +6,7 @@
 package com.liferay.ai.hub.web.internal.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -95,11 +97,16 @@ public class DisplayContextUtil {
 				getObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode, companyId);
 
+		ObjectEntry objectEntry = ObjectEntryServiceUtil.getObjectEntry(
+			externalReferenceCode, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			objectDefinition.getObjectDefinitionId());
+
+		if (MapUtil.getBoolean(objectEntry.getValues(), "system")) {
+			return true;
+		}
+
 		return !ObjectEntryServiceUtil.hasModelResourcePermission(
-			ObjectEntryServiceUtil.getObjectEntry(
-				externalReferenceCode, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				objectDefinition.getObjectDefinitionId()),
-			ActionKeys.UPDATE);
+			objectEntry, ActionKeys.UPDATE);
 	}
 
 }

@@ -190,7 +190,7 @@ public class JournalConverterImpl implements JournalConverter {
 					ddmFormField.getType(),
 					DDMFormFieldTypeConstants.FIELDSET)) {
 
-				_updateFieldsDisplay(
+				_populateFieldsDisplayValue(
 					ddmFormFieldName, StringUtil.randomString(), sb);
 			}
 
@@ -237,7 +237,7 @@ public class JournalConverterImpl implements JournalConverter {
 				}
 			}
 
-			_updateFieldsDisplay(
+			_populateFieldsDisplayValue(
 				ddmFormFieldName,
 				dynamicElementElement.attributeValue("instance-id"), sb);
 
@@ -540,6 +540,22 @@ public class JournalConverterImpl implements JournalConverter {
 		return jsonArray.toString();
 	}
 
+	private void _populateFieldsDisplayValue(
+		String fieldName, String instanceId, StringBundler sb) {
+
+		if (Validator.isNull(instanceId)) {
+			instanceId = StringUtil.randomString();
+		}
+
+		if (sb.index() > 0) {
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.append(fieldName);
+		sb.append(DDM.INSTANCE_SEPARATOR);
+		sb.append(instanceId);
+	}
+
 	private String[] _splitFieldsDisplayValue(Field fieldsDisplayField) {
 		String value = (String)fieldsDisplayField.getValue();
 
@@ -759,22 +775,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 			ddmFieldsCounter.incrementKey(ddmFormFieldName);
 		}
-	}
-
-	private void _updateFieldsDisplay(
-		String fieldName, String instanceId, StringBundler sb) {
-
-		if (Validator.isNull(instanceId)) {
-			instanceId = StringUtil.randomString();
-		}
-
-		if (sb.index() > 0) {
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.append(fieldName);
-		sb.append(DDM.INSTANCE_SEPARATOR);
-		sb.append(instanceId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

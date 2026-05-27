@@ -111,9 +111,9 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 						<StatesRenderer.Loading />
 						<StatesRenderer.Empty>
 							<ClayEmptyState
-								className='mt-n5'
+								className='mt-n5 text-center'
 								description={Liferay.Language.get(
-									'account-attributes-will-appear-here-once-they-are-available'
+									'account-attributes-will-appear-here-when-available'
 								)}
 								small
 								title={Liferay.Language.get(

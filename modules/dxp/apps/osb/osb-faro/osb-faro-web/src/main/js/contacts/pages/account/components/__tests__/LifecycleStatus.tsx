@@ -397,9 +397,7 @@ describe('LifecycleStatus', () => {
 				screen.getByText('No Lifecycle Data Available')
 			).toBeInTheDocument();
 			expect(
-				screen.getByText(
-					'Lifecycle data will appear here once it is synced.'
-				)
+				screen.getByText('Lifecycle data will appear here when synced.')
 			).toBeInTheDocument();
 			expect(
 				container.querySelector('.lifecycle-status-multistep')

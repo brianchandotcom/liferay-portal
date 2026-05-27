@@ -744,7 +744,7 @@ public class LayoutUtil {
 	}
 
 	private static StyleBookEntryReference _getStyleBookEntryReference(
-			long companyId, Settings settings, long scopeGroupId)
+			long companyId, long scopeGroupId, Settings settings)
 		throws Exception {
 
 		if (settings == null) {
@@ -1101,8 +1101,8 @@ public class LayoutUtil {
 
 		StyleBookEntryReference styleBookEntryReference =
 			_getStyleBookEntryReference(
-				layout.getCompanyId(), settings,
-				serviceContext.getScopeGroupId());
+				layout.getCompanyId(), serviceContext.getScopeGroupId(),
+				settings);
 
 		layout = _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,

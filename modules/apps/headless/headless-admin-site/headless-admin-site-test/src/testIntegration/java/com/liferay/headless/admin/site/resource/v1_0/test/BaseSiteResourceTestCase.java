@@ -207,6 +207,7 @@ public abstract class BaseSiteResourceTestCase {
 		site.setExternalReferenceCode(regex);
 		site.setFriendlyUrlPath(regex);
 		site.setKey(regex);
+		site.setLogo(regex);
 		site.setName(regex);
 		site.setParentSiteExternalReferenceCode(regex);
 		site.setTemplateKey(regex);
@@ -223,6 +224,7 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(regex, site.getExternalReferenceCode());
 		Assert.assertEquals(regex, site.getFriendlyUrlPath());
 		Assert.assertEquals(regex, site.getKey());
+		Assert.assertEquals(regex, site.getLogo());
 		Assert.assertEquals(regex, site.getName());
 		Assert.assertEquals(regex, site.getParentSiteExternalReferenceCode());
 		Assert.assertEquals(regex, site.getTemplateKey());
@@ -913,6 +915,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("logo", additionalAssertFieldName)) {
+				if (site.getLogo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("manualMembership", additionalAssertFieldName)) {
 				if (site.getManualMembership() == null) {
 					valid = false;
@@ -1339,6 +1349,14 @@ public abstract class BaseSiteResourceTestCase {
 				if (!Objects.deepEquals(
 						site1.getLocales(), site2.getLocales())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("logo", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(site1.getLogo(), site2.getLogo())) {
 					return false;
 				}
 
@@ -1938,6 +1956,52 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("logo")) {
+			Object object = site.getLogo();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("manualMembership")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2208,6 +2272,7 @@ public abstract class BaseSiteResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				inheritLocales = RandomTestUtil.randomBoolean();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				logo = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				manualMembership = RandomTestUtil.randomBoolean();
 				membershipRestriction = RandomTestUtil.randomInt();
 				mentionsEnabled = RandomTestUtil.randomBoolean();
@@ -2486,4 +2551,4 @@ public abstract class BaseSiteResourceTestCase {
 		_siteResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:385866049
+// LIFERAY-REST-BUILDER-HASH:1579821345

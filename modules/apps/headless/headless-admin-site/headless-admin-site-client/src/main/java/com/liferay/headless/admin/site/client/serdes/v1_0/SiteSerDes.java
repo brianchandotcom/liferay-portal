@@ -238,6 +238,20 @@ public class SiteSerDes {
 			sb.append("]");
 		}
 
+		if (site.getLogo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logo\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(site.getLogo()));
+
+			sb.append("\"");
+		}
+
 		if (site.getManualMembership() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -563,6 +577,13 @@ public class SiteSerDes {
 			map.put("locales", String.valueOf(site.getLocales()));
 		}
 
+		if (site.getLogo() == null) {
+			map.put("logo", null);
+		}
+		else {
+			map.put("logo", String.valueOf(site.getLogo()));
+		}
+
 		if (site.getManualMembership() == null) {
 			map.put("manualMembership", null);
 		}
@@ -754,6 +775,9 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "locales")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "logo")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "manualMembership")) {
 				return false;
 			}
@@ -913,6 +937,11 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "locales")) {
 				if (jsonParserFieldValue != null) {
 					site.setLocales(toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "logo")) {
+				if (jsonParserFieldValue != null) {
+					site.setLogo((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "manualMembership")) {
@@ -1103,4 +1132,4 @@ public class SiteSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2028564599
+// LIFERAY-REST-BUILDER-HASH:1709493374

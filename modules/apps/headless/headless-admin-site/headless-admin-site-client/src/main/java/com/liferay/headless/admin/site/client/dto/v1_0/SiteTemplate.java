@@ -130,6 +130,25 @@ public class SiteTemplate implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public void setLogo(UnsafeSupplier<String, Exception> logoUnsafeSupplier) {
+		try {
+			logo = logoUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String logo;
+
 	public String getName() {
 		return name;
 	}
@@ -276,4 +295,4 @@ public class SiteTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-592031663
+// LIFERAY-REST-BUILDER-HASH:2070902475

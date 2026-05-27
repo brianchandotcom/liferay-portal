@@ -15,6 +15,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import {captureAnalyticsEvents} from './utils/captureAnalyticsEvents';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -62,56 +63,22 @@ test(
 			title: 'MyPage 2',
 		});
 
-		const pageViewedTitles: string[] = [];
-		const pageViewedEvents: Array<{
-			channelId: string;
-			dataSourceId: string;
-		}> = [];
+		const capturedEvents = captureAnalyticsEvents(page);
 
-		page.on('request', (request) => {
-			if (request.method() !== 'POST') {
-				return;
-			}
-
-			const postData = request.postData();
-
-			if (!postData || !postData.includes('"eventId":"pageViewed"')) {
-				return;
-			}
-
-			try {
-				const eventBucket = JSON.parse(postData);
-
-				const title = eventBucket.context?.title;
-
-				if (typeof title === 'string') {
-					pageViewedTitles.push(title);
-				}
-
-				if (eventBucket.channelId && eventBucket.dataSourceId) {
-					pageViewedEvents.push({
-						channelId: eventBucket.channelId,
-						dataSourceId: eventBucket.dataSourceId,
-					});
-				}
-			}
-			catch {
-
-				// Ignore non-JSON bodies; only analytics POSTs are valid here.
-
-			}
-		});
+		const pageViewedWithTitle = (titleFragment: string) =>
+			capturedEvents.some(
+				(event) =>
+					event.eventId === 'pageViewed' &&
+					typeof event.context.title === 'string' &&
+					event.context.title.includes(titleFragment)
+			);
 
 		await test.step('Go to My Page 1', async () => {
 			await page.goto(
 				`/web${site.friendlyUrlPath}${layout1.friendlyUrlPath}`
 			);
 
-			await expect
-				.poll(() =>
-					pageViewedTitles.some((t) => t.includes('MyPage 1'))
-				)
-				.toBe(true);
+			await expect.poll(() => pageViewedWithTitle('MyPage 1')).toBe(true);
 		});
 
 		await test.step('Go to My Page 2', async () => {
@@ -119,15 +86,15 @@ test(
 				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
 			);
 
-			await expect
-				.poll(() =>
-					pageViewedTitles.some((t) => t.includes('MyPage 2'))
-				)
-				.toBe(true);
+			await expect.poll(() => pageViewedWithTitle('MyPage 2')).toBe(true);
 		});
 
 		await test.step('Verify channelId and dataSourceId in pageViewed events', async () => {
-			await expect.poll(() => pageViewedEvents.length).toBeGreaterThan(0);
+			const pageViewedEvents = capturedEvents.filter(
+				(event) => event.eventId === 'pageViewed'
+			);
+
+			expect(pageViewedEvents.length).toBeGreaterThan(0);
 
 			for (const event of pageViewedEvents) {
 				expect(event.channelId).toBe(channel.id);

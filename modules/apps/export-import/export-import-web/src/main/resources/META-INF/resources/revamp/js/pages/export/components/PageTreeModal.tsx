@@ -25,7 +25,8 @@ export interface PageTreeModalConfiguration {
 
 interface Props
 	extends Omit<PageTreeModalConfiguration, 'privateLayoutsEnabled'> {
-	initialSelectedIds: number[];
+	initialAll?: boolean;
+	initialSelectedIds: string[];
 	onClose: () => void;
 	onSubmit: (
 		result: {layoutIds?: number[]; privateLayout: boolean} | null
@@ -34,6 +35,7 @@ interface Props
 }
 
 export default function PageTreeModal({
+	initialAll = false,
 	initialSelectedIds,
 	liveGroupId,
 	onClose,
@@ -45,7 +47,10 @@ export default function PageTreeModal({
 
 	const [items, setItems] = useState<unknown[] | null>(null);
 	const [error, setError] = useState(false);
+	const [selectedLayoutIds, setSelectedLayoutIds] =
+		useState<string[]>(initialSelectedIds);
 	const treeRef = useRef<HTMLDivElement>(null);
+	const initialAllRef = useRef(initialAll);
 	const initialSelectedIdsRef = useRef(initialSelectedIds);
 	const treeId = `exportPageTreeModal_${privateLayout ? 'private' : 'public'}`;
 
@@ -67,7 +72,29 @@ export default function PageTreeModal({
 				method: 'post',
 			});
 
-			if (initialIds.length) {
+			let nextSelectedLayoutIds: string[] | undefined;
+
+			if (initialAllRef.current) {
+				const selectAllResponse = await fetch(
+					SESSION_TREE_JS_CLICK_URL,
+					{
+						body: new URLSearchParams({
+							cmd: 'layoutCheck',
+							groupId: String(liveGroupId),
+							plid: '0',
+							privateLayout: String(privateLayout),
+							recursive: 'true',
+							treeId: sessionTreeId,
+						}),
+						method: 'post',
+					}
+				);
+
+				const payload = await selectAllResponse.json();
+
+				nextSelectedLayoutIds = (payload ?? []).map(String);
+			}
+			else if (initialIds.length) {
 				await fetch(SESSION_TREE_JS_CLICK_URL, {
 					body: new URLSearchParams({
 						cmd: 'expand',
@@ -93,6 +120,10 @@ export default function PageTreeModal({
 
 			if (cancelled) {
 				return;
+			}
+
+			if (nextSelectedLayoutIds) {
+				setSelectedLayoutIds(nextSelectedLayoutIds);
 			}
 
 			setItems([
@@ -174,7 +205,7 @@ export default function PageTreeModal({
 							key={treeId}
 							portletNamespace={PAGES_TREE_NAMESPACE}
 							privateLayout={privateLayout}
-							selectedLayoutIds={initialSelectedIds.map(String)}
+							selectedLayoutIds={selectedLayoutIds}
 							treeId={treeId}
 						/>
 					</div>

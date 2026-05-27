@@ -131,7 +131,8 @@ export default function LayoutSetControl({
 			{showModal && (
 				<PageTreeModal
 					{...modalConfiguration}
-					initialSelectedIds={layoutIds}
+					initialAll={isAll}
+					initialSelectedIds={layoutIds.map(String)}
 					onClose={() => setShowModal(false)}
 					onSubmit={(result) => {
 						setShowModal(false);

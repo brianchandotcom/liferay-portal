@@ -117,19 +117,19 @@ describe('VerticalNav basic rendering', () => {
 
 	describe('keyboard arrows indicator', () => {
 		it('does not render the indicator by default', () => {
-			const {container} = renderStaticWithProps();
+			renderStaticWithProps();
 
 			expect(
-				container.querySelector('.clay-keyboard-arrows-indicator')
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
 			).not.toBeInTheDocument();
 		});
 
 		it('renders the floating indicator with direction "all" when enabled', () => {
-			const {container} = renderStaticWithProps({
+			renderStaticWithProps({
 				displayKeyboardArrowsIndicator: true,
 			});
 
-			const indicator = container.querySelector(
+			const indicator = document.body.querySelector(
 				'.clay-keyboard-arrows-indicator'
 			);
 

@@ -1929,7 +1929,7 @@ public class JenkinsResultsParserUtil {
 	public static String getEnvironmentVariable(
 		String environmentVariableName) {
 
-		String environmentVariableValue = System.getenv(
+		String environmentVariableValue = _environment.get(
 			environmentVariableName);
 
 		if ((environmentVariableValue == null) ||
@@ -4957,6 +4957,10 @@ public class JenkinsResultsParserUtil {
 		_buildPropertiesURLs = urls;
 	}
 
+	public static void setEnvironment(Environment environment) {
+		_environment = environment;
+	}
+
 	public static void sleep(long duration) {
 		try {
 			Thread.sleep(duration);
@@ -7383,6 +7387,7 @@ public class JenkinsResultsParserUtil {
 		"(?<ecrDockerImageName>((?<repository>[^/\\s]+)/)?" +
 			"(?<name>[^/:\\s]+)(:(?<version>[^@:\\s]+))?)" +
 				"(@sha256:[^\\s]+)?");
+	private static Environment _environment = new DefaultEnvironment();
 	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
 		"admin", "liferay", "test");
 	private static JSONArray _gitDirectoriesJSONArray;

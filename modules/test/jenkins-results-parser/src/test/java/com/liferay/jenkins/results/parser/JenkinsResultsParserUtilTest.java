@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 /**
  * @author Peter Yoo
  */
@@ -84,6 +86,37 @@ public class JenkinsResultsParserUtilTest
 			_fixURLMultipleTimes(
 				"https://test-1-1.liferay.com/job(master)?" +
 					"AXIS_VARIABLE=0 1&label_exp=!master&job=test(7.2.x)"));
+	}
+
+	@Test
+	public void testGetEnvironmentVariable() {
+		Environment environment = mockEnvironment();
+
+		Mockito.when(
+			environment.get("JENKINS_URL")
+		).thenReturn(
+			"https://test-1-1"
+		);
+
+		testEquals(
+			"https://test-1-1",
+			JenkinsResultsParserUtil.getEnvironmentVariable("JENKINS_URL"));
+	}
+
+	@Test
+	public void testGetEnvironmentVariableWithMissingVariable() {
+		mockEnvironment();
+
+		try {
+			JenkinsResultsParserUtil.getEnvironmentVariable(
+				"MISSING_ENVIRONMENT_VARIABLE");
+
+			errorCollector.addError(
+				new Throwable(
+					"A missing environment variable should throw an exception"));
+		}
+		catch (RuntimeException runtimeException) {
+		}
 	}
 
 	@Test

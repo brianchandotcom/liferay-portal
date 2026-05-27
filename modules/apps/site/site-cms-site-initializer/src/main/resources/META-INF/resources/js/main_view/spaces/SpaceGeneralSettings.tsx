@@ -267,7 +267,18 @@ export default function SpaceGeneralSettings({
 								}
 								id={`${id}friendlyURL`}
 								name="friendlyURL"
-								onBlur={handleBlur}
+								onBlur={(event) => {
+									const value = event.target.value.trim();
+
+									if (value && !value.startsWith('/')) {
+										setFieldValue(
+											'friendlyURL',
+											'/' + value
+										);
+									}
+
+									handleBlur(event);
+								}}
 								onChange={handleChange}
 								required
 								value={values.friendlyURL}

@@ -90,14 +90,14 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 			<StatesRenderer.Loading />
 			<StatesRenderer.Empty>
 				<ClayEmptyState
-					className='py-3'
+					className='py-3 text-center'
 					description={
 						isFiles
 							? Liferay.Language.get(
-									'files-will-appear-here-once-they-are-available'
+									'files-will-appear-here-when-available'
 							  )
 							: Liferay.Language.get(
-									'assets-will-appear-here-once-they-are-available'
+									'assets-will-appear-here-when-available'
 							  )
 					}
 					small
@@ -179,9 +179,9 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 											<div className='mr-3'>
 												<ClaySticker
 													className={classNames(
-														mimeType.className,
-														'bg-transparent'
+														mimeType.className
 													)}
+													displayType='unstyled'
 												>
 													<ClayIcon
 														symbol={mimeType.icon}
@@ -285,33 +285,19 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 			</Card.Title>
 			<Card.Body className='p-0'>
 				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
-					<ClayTabs.Item
-						innerProps={{
-							'aria-controls': 'tabpanel-top-assets-content'
-						}}
-					>
+					<ClayTabs.Item>
 						{Liferay.Language.get('content')}
 					</ClayTabs.Item>
-					<ClayTabs.Item
-						innerProps={{
-							'aria-controls': 'tabpanel-top-assets-files'
-						}}
-					>
+					<ClayTabs.Item>
 						{Liferay.Language.get('files')}
 					</ClayTabs.Item>
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane
-						aria-labelledby='tab-top-assets-content'
-						className='pb-0'
-					>
+					<ClayTabs.TabPane className='pb-0'>
 						{tabContent}
 					</ClayTabs.TabPane>
-					<ClayTabs.TabPane
-						aria-labelledby='tab-top-assets-files'
-						className='pb-0'
-					>
+					<ClayTabs.TabPane className='pb-0'>
 						{tabContent}
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>

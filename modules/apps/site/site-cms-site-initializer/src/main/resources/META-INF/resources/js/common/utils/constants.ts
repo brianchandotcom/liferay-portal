@@ -8,7 +8,10 @@ export const OBJECT_DEFINITION_CLASS_NAME =
 export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
-export const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
+export const ENTERPRISE_URL =
+	'https://www.liferay.com/web/lr/cms-upgrade?utm_medium=referral&utm_source=cms-ft&utm_content=cms-ft-upgrade&utm_cid=701VO00000wwP6IYAU';
+
+export const ERC_MAX_LENGTH = 75;
 
 export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
 

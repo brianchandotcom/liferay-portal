@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import fs from 'fs';
 import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -65,11 +66,17 @@ test(
 		const applicationName = 'cms/basic-documents';
 		const spaceName = 'Default';
 
+		const fileBase64 = fs
+			.readFileSync(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			)
+			.toString('base64');
+
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
-					name: `file_${getRandomString()}.png`,
+					fileBase64,
+					name: `file_${getRandomString()}.jpg`,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
 				title: `title ${getRandomString()}`,
@@ -197,7 +204,7 @@ async function testCanViewVersion(
 	title: string,
 	view: 'Table' | 'Gallery'
 ) {
-	await expect(page.getByRole('heading', {name: title})).toBeVisible();
+	await expect(page.getByText(title, {exact: true})).toBeVisible();
 
 	if (view === 'Table') {
 		assetsPage.execItemAction({action: 'View History', filter: title});

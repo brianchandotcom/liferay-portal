@@ -1386,7 +1386,7 @@ test.describe('Schedule Publication', () => {
 			// Check that it remains on the page and the error is shown
 
 			await expect(
-				page.getByRole('heading', {name: 'Edit Basic Web Content'})
+				page.getByRole('heading', {name: 'New Basic Web Content'})
 			).toBeAttached();
 
 			await expect(

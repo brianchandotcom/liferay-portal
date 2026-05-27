@@ -69,7 +69,7 @@ describe('EnterpriseOnlyPlaceholder', () => {
 		expect(detailsLink).toBeInTheDocument();
 		expect(detailsLink).toHaveAttribute(
 			'href',
-			'https://www.liferay.com/web/lr/cms-upgrade'
+			'https://www.liferay.com/web/lr/cms-upgrade?utm_medium=referral&utm_source=cms-ft&utm_content=cms-ft-upgrade&utm_cid=701VO00000wwP6IYAU'
 		);
 	});
 });

@@ -4,10 +4,12 @@
  */
 
 import Button from '@clayui/button';
+import {KeyboardArrowsIndicator} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
 import {
+	ClayPortal,
 	FocusScope,
 	InternalDispatch,
 	sub,
@@ -91,6 +93,16 @@ interface IProps
 	 * Flag to disable the component, buttons, open the datepicker, etc...
 	 */
 	disabled?: boolean;
+
+	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the calendar
+	 * panel, hinting that all four arrow keys are active for navigating
+	 * the date grid (up and down between weeks, left and right between
+	 * days). The indicator floats to the right of the panel and flips to
+	 * the left when it would overflow the viewport. It is only rendered
+	 * while the panel is open.
+	 */
+	displayKeyboardArrowsIndicator?: boolean;
 
 	/**
 	 * Determines if menu is expanded or not (controlled).
@@ -279,6 +291,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			defaultMonth,
 			defaultValue,
 			disabled,
+			displayKeyboardArrowsIndicator = false,
 			expanded,
 			firstDayOfWeek = 0,
 			footerElement,
@@ -530,6 +543,13 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			node.textContent = '';
 			node.textContent = ariaLabels.outOfRange;
 		}, [ariaLabels.outOfRange]);
+
+		/**
+		 * Anchor for the floating `KeyboardArrowsIndicator` — points to
+		 * the calendar dropdown panel so the tooltip sits alongside the
+		 * grid the user is navigating.
+		 */
+		const menuElementRef = useRef<HTMLDivElement>(null);
 
 		/**
 		 * Handles the change of the current month of the Date Picker
@@ -984,6 +1004,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 							id={ariaControls}
 							lock
 							onActiveChange={setExpandedValue}
+							ref={menuElementRef}
 							role="dialog"
 							triggerRef={chooseDateRef}
 						>
@@ -1070,6 +1091,17 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 							</div>
 						</DropDown.Menu>
 					)}
+
+					{!useNative &&
+						expandedValue &&
+						displayKeyboardArrowsIndicator && (
+							<ClayPortal>
+								<KeyboardArrowsIndicator
+									anchorRef={menuElementRef}
+									direction="all"
+								/>
+							</ClayPortal>
+						)}
 				</div>
 			</FocusScope>
 		);

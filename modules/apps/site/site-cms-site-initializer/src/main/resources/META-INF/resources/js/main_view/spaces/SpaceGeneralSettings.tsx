@@ -24,6 +24,7 @@ import {
 } from '../../common/components/forms/validations';
 import SpaceService from '../../common/services/SpaceService';
 import {LogoColor, Space} from '../../common/types/Space';
+import {ERC_MAX_LENGTH} from '../../common/utils/constants';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import SpaceBaseFields from './SpaceBaseFields';
 import SpacePanel from './SpacePanel';
@@ -138,7 +139,7 @@ export default function SpaceGeneralSettings({
 		validate: (values): Errors =>
 			validate(
 				{
-					erc: [required],
+					erc: [maxLength(ERC_MAX_LENGTH), required],
 					friendlyURL: [
 						(value) =>
 							!value

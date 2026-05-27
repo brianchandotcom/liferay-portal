@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -49,8 +50,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -388,6 +391,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
+	@TestInfo("LPD-90751")
 	public void testGetSiteKeywordsPage() throws Exception {
 		super.testGetSiteKeywordsPage();
 
@@ -404,6 +408,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
+
+		_testGetSiteKeywordsPageWithSpaceDepotEntry();
 
 		_cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			testCompany, RoleConstants.CMS_ADMINISTRATOR);
@@ -794,6 +800,47 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				scopeKey = depotEntryGroup.getGroupKey();
 			}
 		};
+	}
+
+	private void _testGetSiteKeywordsPageWithSpaceDepotEntry()
+		throws Exception {
+
+		Group originalTestGroup = testGroup;
+
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(), null,
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		Group depotEntryGroup = depotEntry.getGroup();
+
+		Keyword keyword1 = _postKeywordWithAssetLibraries();
+		Keyword keyword2 = _postKeywordWithAssetLibraries(
+			new AssetLibrary() {
+				{
+					id = depotEntryGroup.getGroupId();
+					scopeKey = depotEntryGroup.getGroupKey();
+				}
+			});
+
+		Page<Keyword> page = keywordResource.getSiteKeywordsPage(
+			depotEntryGroup.getGroupId(), null, null, null,
+			Pagination.of(1, 100), null);
+
+		Set<String> keywordNames = new HashSet<>();
+
+		for (Keyword keyword : page.getItems()) {
+			keywordNames.add(keyword.getName());
+		}
+
+		Assert.assertTrue(
+			keywordNames.toString(), keywordNames.contains(keyword1.getName()));
+		Assert.assertTrue(
+			keywordNames.toString(), keywordNames.contains(keyword2.getName()));
+
+		testGroup = originalTestGroup;
 	}
 
 	private void _testGetSiteKeywordsPageWithUser(User user) throws Exception {

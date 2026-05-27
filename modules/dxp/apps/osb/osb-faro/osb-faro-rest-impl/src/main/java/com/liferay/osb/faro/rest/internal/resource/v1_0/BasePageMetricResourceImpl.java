@@ -96,7 +96,7 @@ public abstract class BasePageMetricResourceImpl
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				example = "views:desc",
+				example = "viewsMetric:desc",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "sort"
 			)
@@ -593,4 +593,4 @@ public abstract class BasePageMetricResourceImpl
 		LogFactoryUtil.getLog(BasePageMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:696356052
+// LIFERAY-REST-BUILDER-HASH:961703108

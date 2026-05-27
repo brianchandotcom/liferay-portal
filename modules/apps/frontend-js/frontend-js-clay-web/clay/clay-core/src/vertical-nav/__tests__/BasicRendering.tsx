@@ -114,4 +114,30 @@ describe('VerticalNav basic rendering', () => {
 			}
 		});
 	});
+
+	describe('keyboard arrows indicator', () => {
+		it('does not render the indicator by default', () => {
+			const {container} = renderStaticWithProps();
+
+			expect(
+				container.querySelector('.clay-keyboard-arrows-indicator')
+			).not.toBeInTheDocument();
+		});
+
+		it('renders the floating indicator with direction "all" when enabled', () => {
+			const {container} = renderStaticWithProps({
+				displayKeyboardArrowsIndicator: true,
+			});
+
+			const indicator = container.querySelector(
+				'.clay-keyboard-arrows-indicator'
+			);
+
+			expect(indicator).toBeInTheDocument();
+			expect(indicator).toHaveClass('clay-keyboard-arrows-all');
+			expect(indicator).toHaveClass(
+				'clay-keyboard-arrows-indicator-floating'
+			);
+		});
+	});
 });

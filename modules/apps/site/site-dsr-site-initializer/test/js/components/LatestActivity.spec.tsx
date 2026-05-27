@@ -7,7 +7,9 @@ import '@testing-library/jest-dom';
 import {cleanup, render, screen} from '@testing-library/react';
 import React from 'react';
 
+import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
+import {latestActivityDevEnvData} from '../fixtures/analyticsDevEnvData';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
@@ -78,6 +80,12 @@ describe('LatestActivity', () => {
 	afterEach(() => {
 		cleanup();
 		jest.clearAllMocks();
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: latestActivityDevEnvData,
+			sendRequest: jest.fn(),
+		}));
 	});
 
 	it('renders the component with provided data', () => {
@@ -103,6 +111,35 @@ describe('LatestActivity', () => {
 		);
 
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
+	});
+
+	it('renders "anonymous" when the event has no individualName', () => {
+		const anonymousResponse = {
+			events: {
+				eventEntries: [
+					{
+						createDate: '2026-03-26T14:30:00Z',
+						individualName: undefined,
+						name: 'pageViewed',
+					},
+				],
+			},
+		};
+
+		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
+			isLoading: false,
+			response: anonymousResponse,
+			sendRequest: jest.fn(),
+		}));
+
+		render(
+			<LatestActivity
+				isAnalyticsEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(screen.getByText('anonymous')).toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

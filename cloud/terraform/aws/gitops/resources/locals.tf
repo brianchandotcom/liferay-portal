@@ -99,13 +99,13 @@ locals {
 			chart_name=var.liferay_helm_chart_name
 		},
 		var.liferay_helm_chart_name == "liferay-default" ? {
-			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-default")
+			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-default")
 			ecr_credentials_sync_required=false
 			region=var.region
 			values_scope_prefix=""
 		} : {},
 		var.liferay_helm_chart_name == "liferay-aws" ? {
-			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws")
+			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws")
 			ecr_credentials_sync_required=false
 			region=var.region
 			values_scope_prefix="liferay-default."

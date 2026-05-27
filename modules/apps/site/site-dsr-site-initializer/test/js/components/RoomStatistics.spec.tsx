@@ -8,16 +8,25 @@ import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import RoomStatistics from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/RoomStatistics';
+import {roomStatisticsDevEnvData} from '../fixtures/analyticsDevEnvData';
 
 const {Liferay: originalLiferay} = global.window;
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === '1-day') {
+		return '1 day';
+	}
+
 	if (key === '1-hour') {
 		return '1 hour';
 	}
 
 	if (key === '1-minute') {
 		return '1 minute';
+	}
+
+	if (key === 'x-days') {
+		return 'x days';
 	}
 
 	if (key === 'x-hours') {
@@ -56,28 +65,36 @@ jest.mock(
 	})
 );
 
+let mockAnalyticsResponse: any;
+
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
-	() => {
-		const {
-			roomStatisticsDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
-
-		return {
-			__esModule: true,
-			default: jest.fn(() => ({
-				isLoading: false,
-				response: roomStatisticsDevEnvData,
-				sendRequest: jest.fn(),
-			})),
-		};
-	}
+	() => ({
+		__esModule: true,
+		default: jest.fn(() => ({
+			isLoading: false,
+			response: mockAnalyticsResponse,
+			sendRequest: jest.fn(),
+		})),
+	})
 );
+
+const withTotalSessionDuration = (totalSessionDuration: number) => ({
+	...roomStatisticsDevEnvData,
+	siteVisitorBehavior: {
+		...roomStatisticsDevEnvData.siteVisitorBehavior,
+		totalSessionDuration,
+	},
+});
 
 describe('RoomStatistics', () => {
 	beforeAll(() => {
 		window['Liferay'] = {
 			...originalLiferay,
+			Language: {
+				...originalLiferay.Language,
+				get: mockLiferayLanguageGet,
+			},
 
 			detach: (name, fn): void => {
 				window.removeEventListener(name as string, fn as EventListener);
@@ -119,6 +136,10 @@ describe('RoomStatistics', () => {
 		};
 	});
 
+	beforeEach(() => {
+		mockAnalyticsResponse = roomStatisticsDevEnvData;
+	});
+
 	afterAll(() => {
 		cleanup();
 
@@ -140,11 +161,51 @@ describe('RoomStatistics', () => {
 			<RoomStatistics isAnalyticsEnabled={true} />
 		);
 
-		expect(getByText('0-hours 45-minutes')).toBeInTheDocument();
+		expect(getByText('0 hours 45 minutes')).toBeInTheDocument();
 		expect(getByText('100')).toBeInTheDocument();
 		expect(getByText('20')).toBeInTheDocument();
 		expect(getByText('10')).toBeInTheDocument();
 		expect(getByText('5')).toBeInTheDocument();
+	});
+
+	it('renders 1 day when totalSessionDuration is 24h', () => {
+		mockAnalyticsResponse = withTotalSessionDuration(24 * 60);
+
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
+
+		expect(getByText('1 day')).toBeInTheDocument();
+	});
+
+	it('renders 1 day 1 hour when totalSessionDuration is 25h30', () => {
+		mockAnalyticsResponse = withTotalSessionDuration(25 * 60 + 30);
+
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
+
+		expect(getByText('1 day 1 hour')).toBeInTheDocument();
+	});
+
+	it('renders 2 days when totalSessionDuration is 48h', () => {
+		mockAnalyticsResponse = withTotalSessionDuration(48 * 60);
+
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
+
+		expect(getByText('2 days')).toBeInTheDocument();
+	});
+
+	it('renders 2 days 2 hours when totalSessionDuration is 50h15', () => {
+		mockAnalyticsResponse = withTotalSessionDuration(50 * 60 + 15);
+
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={true} />
+		);
+
+		expect(getByText('2 days 2 hours')).toBeInTheDocument();
 	});
 
 	it('renders the not-configured message when analytics cloud is not configured', () => {

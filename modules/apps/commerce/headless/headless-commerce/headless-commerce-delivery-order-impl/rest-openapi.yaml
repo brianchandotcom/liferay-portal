@@ -1877,11 +1877,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.read
             summary: Gets a list of attachments related to an order.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64:
@@ -1951,11 +1946,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.write
             summary: Creates an attachment related to an order.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}:
@@ -1986,11 +1976,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.write
             summary: Deletes an attachment by external reference code.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/delivery-term:
@@ -2672,11 +2657,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.read
             summary: Gets a list of attachments related to an order.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/attachments/by-base64:
@@ -2753,11 +2733,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.write
             summary: Creates an attachment related to an order.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/attachments/{attachmentId}:
@@ -2802,11 +2777,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceDeliveryOrder.write
             summary: Deletes an attachment.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/delivery-term:

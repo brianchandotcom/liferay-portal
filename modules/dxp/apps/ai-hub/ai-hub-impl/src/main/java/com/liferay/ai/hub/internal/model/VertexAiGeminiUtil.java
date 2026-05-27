@@ -9,9 +9,12 @@ import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
+import dev.langchain4j.model.vertexai.gemini.HarmCategory;
+import dev.langchain4j.model.vertexai.gemini.SafetyThreshold;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -40,6 +43,8 @@ public class VertexAiGeminiUtil {
 			vertexAIConfiguration.modelName()
 		).project(
 			vertexAIConfiguration.projectId()
+		).safetySettings(
+			_safetyThresholds
 		).build();
 	}
 
@@ -64,7 +69,20 @@ public class VertexAiGeminiUtil {
 			vertexAIConfiguration.modelName()
 		).project(
 			vertexAIConfiguration.projectId()
+		).safetySettings(
+			_safetyThresholds
 		).build();
 	}
+
+	private static final Map<HarmCategory, SafetyThreshold> _safetyThresholds =
+		Map.of(
+			HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+			SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE,
+			HarmCategory.HARM_CATEGORY_HARASSMENT,
+			SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE,
+			HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+			SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE,
+			HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+			SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE);
 
 }

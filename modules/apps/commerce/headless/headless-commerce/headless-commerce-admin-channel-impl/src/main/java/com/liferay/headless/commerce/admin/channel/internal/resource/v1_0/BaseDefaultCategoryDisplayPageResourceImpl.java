@@ -47,6 +47,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/default-category-display-pages'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the channel-level default category display page bound to the parent Channel, addressed by external reference code (ERC). Idempotent. A follow-up call on an entity that has already been deleted returns 404. Calls CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode. Validation -- NoSuchChannelException -> 404 when channel erc not found. Side effects -- resets the channel group's default category display-page setting. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -81,6 +84,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the channel-level default category display page bound to the parent Channel, addressed by internal ID. Idempotent. A follow-up call on an entity that has already been deleted returns 404. Calls CommerceChannelLocalService.getCommerceChannel. Validation -- NoSuchChannelException -> 404 when channel id not found. Side effects -- resets the channel group's default category display-page setting. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -113,6 +119,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/default-category-display-pages'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the channel-level default category display page associated with the parent Channel, addressed by external reference code (ERC). Calls CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode. Validation -- NoSuchChannelException -> 404 when channel erc not found; NoSuchCPDisplayLayoutException -> 404 when no default category layout set. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -150,6 +159,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the channel-level default category display page associated with the parent Channel, addressed by internal ID. Calls CommerceChannelLocalService.getCommerceChannel. Validation -- NoSuchChannelException -> 404 when channel id not found; NoSuchCPDisplayLayoutException -> 404 when no default category layout set. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -184,6 +196,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/default-category-display-pages' -d $'{"pageUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a new channel-level default category display page under the parent Channel, addressed by external reference code (ERC). Calls CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode + LayoutLocalService.fetchLayoutByUuidAndGroupId. Validation -- NoSuchChannelException -> 404 when channel erc not found; NoSuchLayoutException -> 404 when page uuid not found in the channel site group. Side effects -- sets the channel group's default category display-page setting. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -223,6 +238,9 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages' -d $'{"pageUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a new channel-level default category display page under the parent Channel, addressed by internal ID. Calls CommerceChannelLocalService.getCommerceChannel + LayoutLocalService.fetchLayoutByUuidAndGroupId. Validation -- NoSuchChannelException -> 404 when channel id not found; NoSuchLayoutException -> 404 when page uuid not found in the channel site group. Side effects -- sets the channel group's default category display-page setting. List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -699,4 +717,4 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 		LogFactoryUtil.getLog(BaseDefaultCategoryDisplayPageResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-388946620
+// LIFERAY-REST-BUILDER-HASH:13573403

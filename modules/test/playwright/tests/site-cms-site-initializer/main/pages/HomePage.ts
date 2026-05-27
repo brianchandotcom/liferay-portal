@@ -31,21 +31,26 @@ export class HomePage {
 			name: 'Assigned to My Roles',
 		});
 		this.basicDocumentButton = page.getByRole('button', {
+			exact: true,
 			name: 'Basic Document',
 		});
 		this.basicWebContentButton = page.getByRole('button', {
+			exact: true,
 			name: 'Basic Web Content',
 		});
 		this.blogButton = page.getByRole('button', {
+			exact: true,
 			name: 'Blog',
 		});
 		this.knowledgeBaseButton = page.getByRole('button', {
+			exact: true,
 			name: 'Knowledge Base',
 		});
 		this.viewAllButton = page.getByRole('link', {
 			name: 'View All',
 		});
 		this.vocabularyButton = page.getByRole('button', {
+			exact: true,
 			name: 'Vocabulary',
 		});
 		this.workflowTaskFilterButton = page.getByRole('button', {

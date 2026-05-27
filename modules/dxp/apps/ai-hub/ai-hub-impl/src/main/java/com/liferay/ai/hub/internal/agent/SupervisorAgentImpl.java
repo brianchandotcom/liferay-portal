@@ -244,9 +244,19 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				SupervisorResponseStrategy.SCORED
 			).build();
 
+		String data = supervisorAgent.invoke(message);
+
+		if (Validator.isBlank(data)) {
+			DTOConverterContext dtoConverterContext =
+				agentContext.getDTOConverterContext();
+
+			data = _language.get(
+				dtoConverterContext.getLocale(),
+				"i-cannot-fulfill-this-request");
+		}
+
 		SseUtil.send(
-			supervisorAgent.invoke(message), "Chat Message Sent", null,
-			agentContext.getSseEventSinkKey());
+			data, "Chat Message Sent", null, agentContext.getSseEventSinkKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

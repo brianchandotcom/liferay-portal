@@ -125,9 +125,9 @@ definition {
 			var response = ObjectDefinitionAPI.getObjectEntries(
 				en_US_plural_label = "students",
 				scopeKey = "true");
-			var totalFieldsList = "creator,dateCreated,dateModified,externalReferenceCode,id,keywords,name,scopeKey,status";
+			var nonDateFieldsList = "creator,externalReferenceCode,id,keywords,name,scopeKey,status";
 
-			for (var fieldName : list ${totalFieldsList}) {
+			for (var fieldName : list ${nonDateFieldsList}) {
 				var expectedValue = JSONPathUtil.getProperty(
 					property = "$.items..[0]${fieldName}",
 					response = ${response});
@@ -136,6 +136,26 @@ definition {
 					expectedValue = ${expectedValue},
 					fileName = "export.json",
 					jsonObject = "$..[0]${fieldName}");
+			}
+
+			// The batch export serializes dates with millisecond precision
+			// (LPD-85261), while the headless REST response still drops them,
+			// so compare the seconds-precision prefix instead of the full value.
+
+			var dateFieldsList = "dateCreated,dateModified";
+			var exportFileContent = TestCase.getTempFileContent(fileName = "export.json");
+
+			for (var fieldName : list ${dateFieldsList}) {
+				var expectedValue = JSONPathUtil.getProperty(
+					property = "$.items..[0]${fieldName}",
+					response = ${response});
+
+				var expectedValuePrefix = StringUtil.replace(${expectedValue}, "Z", "");
+				var actualValue = JSONUtil.getWithJSONPath(${exportFileContent}, "$..[0]${fieldName}");
+
+				TestUtils.assertContain(
+					actual = ${actualValue},
+					expected = ${expectedValuePrefix});
 			}
 		}
 	}

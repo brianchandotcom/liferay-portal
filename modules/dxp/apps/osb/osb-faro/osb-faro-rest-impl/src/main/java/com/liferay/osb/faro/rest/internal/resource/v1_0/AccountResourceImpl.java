@@ -40,7 +40,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextAcceptLanguage.getPreferredLocale()),
 			_contactsEngineClient.getAccount(
 				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				accountId));
+				accountId, null));
 	}
 
 	@Override

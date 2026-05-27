@@ -90,6 +90,10 @@
 					"value": "true"
 				},
 				{
+					"name": "domain",
+					"value": "project"
+				},
+				{
 					"name": "visible",
 					"value": "true"
 				}
@@ -433,6 +437,10 @@
 				{
 					"name": "acceptAllGroups",
 					"value": "true"
+				},
+				{
+					"name": "domain",
+					"value": "project"
 				},
 				{
 					"name": "visible",

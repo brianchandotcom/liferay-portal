@@ -29,15 +29,15 @@
 			"DBType": "Long",
 			"businessType": "Attachment",
 			"defaultValue": "null",
-			"externalReferenceCode": "COMPANY_LOGO",
+			"externalReferenceCode": "AVATAR",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Company Logo"
+				"en_US": "Avatar"
 			},
 			"localized": false,
-			"name": "companyLogo",
+			"name": "avatar",
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",

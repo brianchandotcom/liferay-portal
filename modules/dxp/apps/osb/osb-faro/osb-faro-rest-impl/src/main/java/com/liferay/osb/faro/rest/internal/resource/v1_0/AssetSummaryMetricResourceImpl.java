@@ -63,7 +63,9 @@ public class AssetSummaryMetricResourceImpl
 					).put(
 						"size", delta
 					).put(
-						"sort", FaroPaginationUtil.toGraphQLSort(sorts)
+						"sort",
+						FaroPaginationUtil.toGraphQLSort(
+							new Sort("viewsMetric", 6, true), sorts)
 					).put(
 						"start", (cur - 1) * delta
 					).build());

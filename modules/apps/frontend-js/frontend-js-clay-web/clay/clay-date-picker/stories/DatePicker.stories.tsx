@@ -283,6 +283,19 @@ export function InDropdownMenu() {
 		</>
 	);
 }
+export function KeyboardArrowsIndicator() {
+	return (
+		<ClayDatePickerWithState
+			defaultExpanded
+			displayKeyboardArrowsIndicator
+			placeholder="YYYY-MM-DD"
+			years={{
+				end: new Date().getFullYear(),
+				start: 1998,
+			}}
+		/>
+	);
+}
 export function MinMax() {
 	const today = new Date();
 	const format = (date: Date) =>

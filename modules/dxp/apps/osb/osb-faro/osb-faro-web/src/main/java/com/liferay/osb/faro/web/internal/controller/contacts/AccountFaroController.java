@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
+import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountDetails;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
@@ -56,28 +57,45 @@ public class AccountFaroController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroFDSResultsDisplay getAccountDetailsFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize)
+			@QueryParam("channelId") Long channelId)
 		throws Exception {
 
 		List<AccountDetails.Field> fields =
 			contactsEngineClient.getAccountDetails(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				channelId
 			).getFields();
 
+		for (AccountDetails.Field field : fields) {
+			String fieldName = field.getName();
+
+			field.setSourceName(fieldName);
+
+			String languageKey =
+				FieldMappingConstants.getAccountFieldMappingLanguageKey(
+					fieldName);
+
+			if (languageKey != null) {
+				field.setName(languageKey);
+			}
+		}
+
 		return new FaroFDSResultsDisplay(
-			new Results<>(fields, fields.size()), page, pageSize);
+			new Results<>(fields, fields.size()), 0, fields.size());
 	}
 
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public AccountDisplay getAccountDisplay(
-			@PathParam("groupId") long groupId, @PathParam("id") String id)
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("channelId") Long channelId)
 		throws Exception {
 
 		return new AccountDisplay(
 			contactsEngineClient.getAccount(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id));
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				channelId));
 	}
 
 	@GET

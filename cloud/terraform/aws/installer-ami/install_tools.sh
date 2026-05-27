@@ -150,7 +150,7 @@ function main {
 		"docker.io/liferay/dxp:${dxp_image_tag}" \
 		"${image_dir}/dxp:${dxp_image_tag}"
 
-	local oci_endpoint="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws"
+	local oci_endpoint="oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws"
 
 	if [ "${DXP_AWS_CHART_VERSION}" != "" ]
 	then

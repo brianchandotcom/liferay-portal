@@ -92,7 +92,7 @@ public abstract class BaseAssetSummaryMetricResourceImpl
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				example = "views:desc",
+				example = "viewsMetric:desc",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "sort"
 			)
@@ -590,4 +590,4 @@ public abstract class BaseAssetSummaryMetricResourceImpl
 		LogFactoryUtil.getLog(BaseAssetSummaryMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-233918837
+// LIFERAY-REST-BUILDER-HASH:1693948923

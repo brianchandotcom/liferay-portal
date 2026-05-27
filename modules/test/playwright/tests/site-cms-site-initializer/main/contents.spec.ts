@@ -467,7 +467,7 @@ test(
 
 test(
 	'Content with Upload fragment opens new Item Selector',
-	{tag: '@LPD-67215'},
+	{tag: ['@LPD-67215', '@LPD-92364']},
 	async ({apiHelpers, contentsPage, page, structureBuilderPage}) => {
 		const applicationName = 'cms/basic-documents';
 		const fileName = `file_${getRandomString()}.png`;
@@ -539,7 +539,7 @@ test(
 
 			await contentsPage.saveContent();
 
-			await page.getByLabel(contentTitle).click();
+			await page.getByRole('link', {name: contentTitle}).click();
 
 			await expect(page.getByText(`Edit ${contentTitle}`)).toBeVisible();
 
@@ -555,7 +555,9 @@ test(
 
 			await expect(page.getByText(`${fileName} Selected`)).toBeVisible();
 
-			await expect(page.getByLabel(`Select ${fileName}`)).toBeChecked();
+			await expect(
+				page.getByRole('button', {name: 'Clear'})
+			).toBeVisible();
 		});
 
 		await test.step('Delete file', async () => {

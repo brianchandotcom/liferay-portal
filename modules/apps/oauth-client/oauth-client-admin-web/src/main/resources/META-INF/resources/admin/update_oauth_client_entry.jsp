@@ -58,6 +58,8 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<aui:input helpMessage="metadata-cache-time-help" label="metadata-cache-time" name="metadataCacheTime" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getMetadataCacheTime() : OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT %>" />
 
+				<aui:input helpMessage="token-connection-timeout-help" label="token-connection-timeout" name="tokenConnectionTimeout" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getTokenConnectionTimeout() : OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT %>" />
+
 				<aui:input
 					cssClass="client-info-textarea"
 					helpMessage="oauth-client-info-json-help"

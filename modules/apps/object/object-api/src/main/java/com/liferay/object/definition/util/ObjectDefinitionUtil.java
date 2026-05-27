@@ -197,6 +197,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubModelArmorTemplate", "/ai-hub/model-armor-templates"
 		).put(
+			"AIHubReport", "/ai-hub/reports"
+		).put(
 			"APIApplication", "/headless-builder/applications"
 		).put(
 			"APIEndpoint", "/headless-builder/endpoints"

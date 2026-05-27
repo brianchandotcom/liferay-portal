@@ -133,8 +133,11 @@ public class TrashEntryLocalServiceTest {
 				).build()
 			).build());
 
-		_moveToTrash(true, expiredObjectEntry);
-		_moveToTrash(false, objectEntry);
+		_moveToTrash(expiredObjectEntry);
+
+		_expireTrashEntry(expiredObjectEntry);
+
+		_moveToTrash(objectEntry);
 
 		_trashEntryLocalService.checkEntries();
 
@@ -156,8 +159,8 @@ public class TrashEntryLocalServiceTest {
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		_moveToTrash(false, objectEntry1);
-		_moveToTrash(false, objectEntry2);
+		_moveToTrash(objectEntry1);
+		_moveToTrash(objectEntry2);
 
 		String className = _objectDefinition.getClassName();
 
@@ -192,7 +195,7 @@ public class TrashEntryLocalServiceTest {
 		ObjectEntry objectEntry = _addObjectEntry(
 			objectEntryFolder.getObjectEntryFolderId());
 
-		_moveToTrash(false, objectEntry);
+		_moveToTrash(objectEntry);
 
 		ObjectEntry trashedObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
@@ -223,7 +226,7 @@ public class TrashEntryLocalServiceTest {
 		ObjectEntry objectEntry = _addObjectEntry(
 			objectEntryFolder.getObjectEntryFolderId());
 
-		_moveToTrash(false, objectEntry);
+		_moveToTrash(objectEntry);
 
 		_objectEntryFolderLocalService.deleteObjectEntryFolder(
 			objectEntryFolder.getObjectEntryFolderId());
@@ -278,29 +281,26 @@ public class TrashEntryLocalServiceTest {
 		}
 	}
 
-	private void _moveToTrash(boolean expired, ObjectEntry objectEntry)
-		throws Exception {
+	private void _expireTrashEntry(ObjectEntry objectEntry) throws Exception {
+		int maxAgeMinutes = _trashHelper.getMaxAge(_depotEntry.getGroup());
 
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		Date createDate = trashEntry.getCreateDate();
+
+		trashEntry.setCreateDate(
+			new Date(
+				createDate.getTime() - (maxAgeMinutes * Time.MINUTE) -
+					Time.DAY));
+
+		_trashEntryLocalService.updateTrashEntry(trashEntry);
+	}
+
+	private void _moveToTrash(ObjectEntry objectEntry) throws Exception {
 		_objectEntryLocalService.moveObjectEntryToTrash(
 			TestPropsValues.getUserId(), objectEntry,
 			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));
-
-		if (expired) {
-			int maxAgeMinutes = _trashHelper.getMaxAge(_depotEntry.getGroup());
-
-			TrashEntry trashEntry = _trashEntryLocalService.getEntry(
-				_objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId());
-
-			Date createDate = trashEntry.getCreateDate();
-
-			trashEntry.setCreateDate(
-				new Date(
-					createDate.getTime() - (maxAgeMinutes * Time.MINUTE) -
-						Time.DAY));
-
-			_trashEntryLocalService.updateTrashEntry(trashEntry);
-		}
 	}
 
 	private Group _updateTrashEntriesMaxAge(Group group, int days) {

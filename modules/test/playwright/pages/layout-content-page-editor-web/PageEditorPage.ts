@@ -1949,6 +1949,10 @@ export class PageEditorPage {
 		}
 	}
 
+	async toggleSidebars({timeout}: {timeout?: number} = {}) {
+		await this.page.getByLabel('Toggle Sidebars').click({timeout});
+	}
+
 	async undoAction() {
 		await this.undoButton.click();
 

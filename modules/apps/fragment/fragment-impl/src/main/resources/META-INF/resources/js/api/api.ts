@@ -8,6 +8,7 @@ export {LocalizationSelect} from './LocalizationSelect';
 export {focusInput} from './focusInput';
 export {getTranslationInput} from './getTranslationInput';
 export {handleInputLengthError, showInputError} from './handleInputError';
+export {registerInputFeedback} from './registerInputFeedback';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {updateDLVideo} from './updateDLVideo';

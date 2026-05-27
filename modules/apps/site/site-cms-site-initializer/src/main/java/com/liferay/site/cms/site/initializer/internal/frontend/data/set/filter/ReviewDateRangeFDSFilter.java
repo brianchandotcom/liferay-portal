@@ -11,8 +11,6 @@ import com.liferay.frontend.data.set.filter.DateTimeFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
-import java.util.Calendar;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -51,12 +49,7 @@ public class ReviewDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem() {
-		Calendar calendar = Calendar.getInstance();
-
-		return new DateTimeFDSFilterItem(
-			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
 	}
 
 	@Override

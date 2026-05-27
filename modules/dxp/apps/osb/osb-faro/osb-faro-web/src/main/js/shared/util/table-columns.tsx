@@ -369,7 +369,7 @@ export const IndividualsListCDPColumns = {
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {channelId, groupId, id})
 		},
 		className: 'table-cell-expand',
-		label: `${Liferay.Language.get('member-name')} | ${Liferay.Language.get(
+		label: `${Liferay.Language.get('individual')} | ${Liferay.Language.get(
 			'email'
 		)}`,
 		sortable: true

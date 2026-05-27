@@ -99,7 +99,7 @@ public class GuardrailsUtil {
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorHandler));
+							modelArmorHandler, workflowContext));
 				}
 				else if (Objects.equals(listEntry.getKey(), "output")) {
 					outputGuardrails.add(
@@ -110,7 +110,7 @@ public class GuardrailsUtil {
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorHandler));
+							modelArmorHandler, workflowContext));
 				}
 			}
 		}

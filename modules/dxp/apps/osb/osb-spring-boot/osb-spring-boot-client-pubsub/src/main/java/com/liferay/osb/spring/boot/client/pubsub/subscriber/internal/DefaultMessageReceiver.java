@@ -1,22 +1,24 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.distributed.messaging.google.pubsub.connector;
+package com.liferay.osb.spring.boot.client.pubsub.subscriber.internal;
 
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 
-import com.liferay.osb.distributed.messaging.Message;
-import com.liferay.osb.distributed.messaging.subscribing.router.MessageRouter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osb.spring.boot.client.pubsub.Message;
+import com.liferay.osb.spring.boot.client.pubsub.router.MessageRouter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Amos Fong
+ * @author Kyle Bischof
  */
 public class DefaultMessageReceiver implements MessageReceiver {
 
@@ -40,7 +42,7 @@ public class DefaultMessageReceiver implements MessageReceiver {
 		try {
 			Message message = new Message(messageBody);
 
-			message.setStringAttributes(pubsubMessage.getAttributes());
+			message.setStringAttributes(pubsubMessage.getAttributesMap());
 			message.setTopic(_topic);
 
 			_messageRouter.route(_topic, message);
@@ -48,13 +50,13 @@ public class DefaultMessageReceiver implements MessageReceiver {
 			ackReplyConsumer.ack();
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(String.valueOf(exception), exception);
 
 			ackReplyConsumer.nack();
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static final Logger _log = LoggerFactory.getLogger(
 		DefaultMessageReceiver.class);
 
 	private final MessageRouter _messageRouter;

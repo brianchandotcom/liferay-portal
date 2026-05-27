@@ -1,27 +1,43 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.distributed.messaging.subscribing.router;
+package com.liferay.osb.spring.boot.client.pubsub.router;
 
-import com.liferay.osb.distributed.messaging.Message;
-import com.liferay.osb.distributed.messaging.subscribing.MessageSubscriber;
-import com.liferay.osgi.util.StringPlus;
+import com.liferay.osb.spring.boot.client.pubsub.Message;
+import com.liferay.osb.spring.boot.client.pubsub.subscriber.MessageSubscriber;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Amos Fong
+ * @author Kyle Bischof
  */
 public class BaseMessageRouter implements MessageRouter {
 
+	public void addRoute(
+		MessageSubscriber messageSubscriber, List<String> topicPatterns) {
+
+		if ((topicPatterns == null) || topicPatterns.isEmpty()) {
+			_log.error("Topic patterns are empty");
+
+			return;
+		}
+
+		_messageSubscriberMap.put(messageSubscriber, topicPatterns);
+
+		_cachedMessageSubscriberMap.clear();
+	}
+
+	@Override
 	public void route(String topic, Message message) {
 		List<MessageSubscriber> messageSubscribers = getMessageSubscribers(
 			topic);
@@ -44,19 +60,6 @@ public class BaseMessageRouter implements MessageRouter {
 		if (_log.isDebugEnabled() && messageSubscribers.isEmpty()) {
 			_log.debug("No subscribers were found for topic " + topic);
 		}
-	}
-
-	protected void addRoute(
-		MessageSubscriber messageSubscriber, Map<String, Object> properties) {
-
-		List<String> topicPatterns = StringPlus.asList(
-			properties.get("topic.pattern"));
-
-		if (topicPatterns.isEmpty()) {
-			_log.error("Topic patterns are empty");
-		}
-
-		_messageSubscriberMap.put(messageSubscriber, topicPatterns);
 	}
 
 	protected List<MessageSubscriber> getMessageSubscribers(String topic) {
@@ -86,7 +89,7 @@ public class BaseMessageRouter implements MessageRouter {
 		return messageSubscribers;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static final Logger _log = LoggerFactory.getLogger(
 		BaseMessageRouter.class);
 
 	private final Map<String, List<MessageSubscriber>>

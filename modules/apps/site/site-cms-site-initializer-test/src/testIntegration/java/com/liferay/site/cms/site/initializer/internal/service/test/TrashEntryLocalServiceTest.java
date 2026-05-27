@@ -91,7 +91,7 @@ public class TrashEntryLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(),
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
 					StringUtil.toLowerCase(RandomTestUtil.randomString()))),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 

@@ -85,10 +85,10 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ObjectDataContext',
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/FormDataContext',
 	() => {
 		return {
-			useObjectFields: () => {
+			useFormMappingFields: () => {
 				return [
 					{
 						key: 'requiredField',
@@ -113,7 +113,7 @@ jest.mock(
 					},
 				];
 			},
-			useObjectLabel: () => 'Object 1',
+			useFormMappingFieldsLabel: () => 'Object 1',
 		};
 	}
 );

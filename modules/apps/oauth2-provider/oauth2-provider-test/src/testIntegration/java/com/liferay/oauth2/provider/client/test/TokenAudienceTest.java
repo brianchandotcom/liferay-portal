@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.oauth2.provider.resource.test;
+package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.client.test.BaseClientTestCase;
-import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,7 +39,7 @@ import org.osgi.framework.BundleActivator;
  * @author Jorge García Jiménez
  */
 @RunWith(Arquillian.class)
-public class ResourceIndicatorsTest extends BaseClientTestCase {
+public class TokenAudienceTest extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule
@@ -49,7 +47,7 @@ public class ResourceIndicatorsTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testIntrospectionEmitsAudAsJSONArray() throws Exception {
+	public void testTokenIntrospectionAudience() throws Exception {
 		WebTarget tokenWebTarget = getTokenWebTarget();
 
 		Invocation.Builder tokenInvocationBuilder = tokenWebTarget.request();
@@ -97,16 +95,13 @@ public class ResourceIndicatorsTest extends BaseClientTestCase {
 
 		JSONArray audJSONArray = jsonObject.getJSONArray("aud");
 
-		Assert.assertNotNull(
-			"introspection response missing aud", audJSONArray);
+		Assert.assertNotNull(audJSONArray);
 		Assert.assertEquals(1, audJSONArray.length());
 		Assert.assertEquals(_RESOURCE_URI, audJSONArray.getString(0));
 	}
 
 	@Test
-	public void testTokenWithMalformedResourceReturnsInvalidTarget()
-		throws Exception {
-
+	public void testTokenRequestWithInvalidResource() throws Exception {
 		WebTarget tokenWebTarget = getTokenWebTarget();
 
 		Invocation.Builder invocationBuilder = tokenWebTarget.request();
@@ -133,18 +128,18 @@ public class ResourceIndicatorsTest extends BaseClientTestCase {
 
 	@Override
 	protected BundleActivator getBundleActivator() {
-		return new ResourceIndicatorsTestPreparatorBundleActivator();
+		return new TokenAudienceTestPreparatorBundleActivator();
 	}
 
 	private static final String _CLIENT_ID =
-		"oauthResourceIndicatorsTestApplication";
+		"oauthTokenAudienceTestApplication";
 
 	private static final String _CLIENT_SECRET =
-		"oauthResourceIndicatorsTestApplicationSecret";
+		"oauthTokenAudienceTestApplicationSecret";
 
 	private static final String _RESOURCE_URI = "https://mcp.example.com/o/mcp";
 
-	private class ResourceIndicatorsTestPreparatorBundleActivator
+	private class TokenAudienceTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override

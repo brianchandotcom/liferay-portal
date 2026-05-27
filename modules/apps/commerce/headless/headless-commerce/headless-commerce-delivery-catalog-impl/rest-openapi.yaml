@@ -1269,11 +1269,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of channels.
             tags:
                 -   Channel
@@ -2627,11 +2622,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags: ["Account"]
     "/channels/{channelId}/currencies":
@@ -3346,11 +3336,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminCatalog.read
             summary: Gets a list of grouped product.
             tags:
                 -   LinkedProduct

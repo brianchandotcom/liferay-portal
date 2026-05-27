@@ -285,23 +285,6 @@ components:
                     example: black
                     type: string
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        CommerceOpenApiAdmin.admin: Grants access to admin operations
-                        CommerceOpenApiAdmin.read: Grants read access
-                        CommerceOpenApiAdmin.write: Grants write access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     description:
         "Liferay Commerce Admin Admin Shipment API. A Java client JAR is available for use with the group ID
@@ -342,11 +325,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Shipment Item by external reference code.
             tags:
                 -   ShipmentItem
@@ -408,11 +386,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Shipment Item by external reference code.
             tags:
                 -   ShipmentItem
@@ -482,11 +455,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Shipment Item by external reference code.
             tags:
                 -   ShipmentItem
@@ -521,11 +489,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Shipment Item by ID.
             tags:
                 -   ShipmentItem
@@ -588,11 +551,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Shipment Item by ID.
             tags:
                 -   ShipmentItem
@@ -664,11 +622,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Shipment Item by ID.
             tags:
                 -   ShipmentItem
@@ -751,11 +704,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a List of Shipments.
             tags:
                 -   Shipment
@@ -820,11 +768,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Shipment.
             tags:
                 -   Shipment
@@ -1140,11 +1083,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Shipment Items related to a Shipment.
             tags:
                 -   ShipmentItem
@@ -1221,11 +1159,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Shipment Item.
             tags:
                 -   ShipmentItem
@@ -1301,11 +1234,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Shipment Item.
             tags:
                 -   ShipmentItem
@@ -1367,11 +1295,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -1441,11 +1364,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Shipping Address by external reference code.
             tags:
                 -   ShippingAddress
@@ -1556,11 +1474,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Deletes a Shipment by ID.
             tags:
                 -   Shipment
@@ -1623,11 +1536,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a Shipment by ID.
             tags:
                 -   Shipment
@@ -1699,11 +1607,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Shipment by ID.
             tags:
                 -   Shipment
@@ -1781,11 +1684,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Shipment Items related to a Shipment.
             tags:
                 -   ShipmentItem
@@ -1863,11 +1761,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Creates a Shipment Item.
             tags:
                 -   ShipmentItem
@@ -1929,11 +1822,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.read
             summary: Gets a shipping Address related to an Order.
             tags:
                 -   ShippingAddress
@@ -2005,11 +1893,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiAdmin.write
             summary: Updates a Shipping Address by ID.
             tags:
                 -   ShippingAddress

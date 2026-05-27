@@ -303,23 +303,6 @@ components:
                 -   commerceCountryId
                 -   name
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        HeadlessCommerceAdminSiteSetting.admin: Grants access to admin operations
-                        HeadlessCommerceAdminSiteSetting.read: Grants read access
-                        HeadlessCommerceAdminSiteSetting.write: Grants write access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     description:
         "Liferay Commerce Admin Site Setting API. A Java client JAR is available for use with the group ID
@@ -361,11 +344,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes an Availability Estimate by ID.
             tags:
                 -   AvailabilityEstimate
@@ -428,11 +406,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets an Availability Estimate by ID.
             tags:
                 -   AvailabilityEstimate
@@ -500,11 +473,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates an Availability Estimate by ID.
             tags:
                 -   AvailabilityEstimate
@@ -583,11 +551,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Availability Estimate.
             tags:
                 -   AvailabilityEstimate
@@ -665,11 +628,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates or Updates an Availability Estimate.
             tags:
                 -   AvailabilityEstimate
@@ -748,11 +706,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Tax Category.
             tags:
                 -   TaxCategory
@@ -830,11 +783,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates a Tax Category.
             tags:
                 -   TaxCategory
@@ -923,11 +871,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Warehouse.
             tags:
                 -   Warehouse
@@ -1005,11 +948,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates a Warehouse.
             tags:
                 -   Warehouse
@@ -1085,11 +1023,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a List of Measurement Unit.
             tags:
                 -   MeasurementUnit
@@ -1154,11 +1087,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates or updates a Measurement Unit.
             tags:
                 -   MeasurementUnit
@@ -1192,11 +1120,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by external reference code.
             tags:
                 -   MeasurementUnit
@@ -1258,11 +1181,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by external reference code.
             tags:
                 -   MeasurementUnit
@@ -1329,11 +1247,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by external reference code.
             tags:
                 -   MeasurementUnit
@@ -1410,11 +1323,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates or updates a Measurement Unit.
             tags:
                 -   MeasurementUnit
@@ -1448,11 +1356,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by key.
             tags:
                 -   MeasurementUnit
@@ -1514,11 +1417,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by key.
             tags:
                 -   MeasurementUnit
@@ -1585,11 +1483,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by key.
             tags:
                 -   MeasurementUnit
@@ -1671,11 +1564,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a List of Measurement Unit by type.
             tags:
                 -   MeasurementUnit
@@ -1710,11 +1598,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by ID.
             tags:
                 -   MeasurementUnit
@@ -1777,11 +1660,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by ID.
             tags:
                 -   MeasurementUnit
@@ -1849,11 +1727,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by ID.
             tags:
                 -   MeasurementUnit
@@ -1887,11 +1760,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Tax Category by ID.
             tags:
                 -   TaxCategory
@@ -1954,11 +1822,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Tax Category by ID.
             tags:
                 -   TaxCategory
@@ -2026,11 +1889,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Tax Category by ID.
             tags:
                 -   TaxCategory
@@ -2064,11 +1922,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Warehouse by ID.
             tags:
                 -   Warehouse
@@ -2131,11 +1984,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Warehouse by ID.
             tags:
                 -   Warehouse
@@ -2203,11 +2051,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Warehouse by ID.
             tags:
                 -   Warehouse

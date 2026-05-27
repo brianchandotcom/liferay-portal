@@ -702,21 +702,6 @@ components:
                     format: float
                     type: number
             type: object
-    securitySchemes:
-        BasicAuth:
-            scheme: basic
-            type: http
-        BearerAuth:
-            scheme: bearer
-            type: http
-        OAuth2:
-            flows:
-                authorizationCode:
-                    authorizationUrl: /oauth/authorize
-                    scopes:
-                        CommerceOpenApiForecast.read: Grants read access
-                    tokenUrl: /oauth/token
-            type: oauth2
 info:
     description:
         "Liferay Commerce ML API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -936,11 +921,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiForecast.read
             tags:
                 -   AccountCategoryForecast
     /accountForecasts/by-monthlyRevenue:
@@ -1213,11 +1193,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiForecast.read
             tags:
                 -   AccountForecast
     /skuForecasts/by-monthlyDemand:
@@ -1489,10 +1464,5 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            security:
-                -   BasicAuth: []
-                -   BearerAuth: []
-                -   OAuth2:
-                        -   CommerceOpenApiForecast.read
             tags:
                 -   SkuForecast

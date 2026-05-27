@@ -10,9 +10,13 @@ import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCas
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -47,12 +51,24 @@ public class JournalArticleTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return JournalTestUtil.updateArticle(
+		JournalArticle journalArticle = JournalTestUtil.updateArticle(
 			_journalArticle, _journalArticle.getTitleMap(),
 			_journalArticle.getContent(), false, false,
 			ServiceContextTestUtil.getServiceContext());
+
+		_mbMessageLocalService.addDiscussionMessage(
+			TestPropsValues.getUserId(),
+			TestPropsValues.getUser(
+			).getFullName(),
+			journalArticle.getGroupId(), JournalArticle.class.getName(),
+			journalArticle.getId(), WorkflowConstants.ACTION_PUBLISH);
+
+		return journalArticle;
 	}
 
 	private JournalArticle _journalArticle;
+
+	@Inject
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

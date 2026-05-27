@@ -57,79 +57,68 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 
 			if (useFinderCache) {
 				finderArgs = buildFinderArgs(values);
-			}
 
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
+				Object result = finderCache.getResult(
 					_fetchPath, finderArgs, basePersistenceImpl);
-			}
 
-			if (result instanceof BaseModel) {
-				T entity = (T)result;
+				if ((result instanceof BaseModel) &&
+					matchesAll((T)result, values)) {
 
-				if (!matchesAll(entity, values)) {
-					result = null;
+					return (T)result;
+				}
+				else if (result instanceof List<?>) {
+					return null;
 				}
 			}
 
-			if (result == null) {
-				String sql = buildSQLWhere(sqlSelectWhere, values);
+			String sql = buildSQLWhere(sqlSelectWhere, values);
 
-				Session session = null;
+			Session session = null;
 
-				try {
-					session = basePersistenceImpl.openSession();
+			try {
+				session = basePersistenceImpl.openSession();
 
-					Query query = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					bindQueryParams(queryPos, values);
+				bindQueryParams(queryPos, values);
 
-					List<T> list = query.list();
+				List<T> list = query.list();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(_fetchPath, finderArgs, list);
-						}
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(_fetchPath, finderArgs, list);
 					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
 
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									StringBundler.concat(
-										"Unique finder on ",
-										basePersistenceImpl.getModelClass(),
-										" returned more than one result for ",
-										"values (", StringUtil.merge(values),
-										")"));
-							}
-						}
+					return null;
+				}
 
-						T entity = list.get(0);
+				if (list.size() > 1) {
+					Collections.sort(list, Collections.reverseOrder());
 
-						result = entity;
-
-						basePersistenceImpl.cacheResult(entity);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unique finder on ",
+								basePersistenceImpl.getModelClass(),
+								" returned more than one result for values (",
+								StringUtil.merge(values), ")"));
 					}
 				}
-				catch (Exception exception) {
-					throw basePersistenceImpl.processException(exception);
-				}
-				finally {
-					basePersistenceImpl.closeSession(session);
-				}
-			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
+				T entity = list.get(0);
 
-			return (T)result;
+				basePersistenceImpl.cacheResult(entity);
+
+				return entity;
+			}
+			catch (Exception exception) {
+				throw basePersistenceImpl.processException(exception);
+			}
+			finally {
+				basePersistenceImpl.closeSession(session);
+			}
 		}
 	}
 

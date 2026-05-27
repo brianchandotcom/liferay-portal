@@ -72,7 +72,7 @@ export function showInputError({
 	}
 }
 
-function hideInputError({
+export function hideInputError({
 	errorContainer,
 	errorMessageContainer,
 	formGroup,

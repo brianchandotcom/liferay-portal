@@ -25,10 +25,19 @@ function main() {
 		({
 			focusInput,
 			handleInputLengthError,
+			registerInputFeedback,
 			registerLocalizedInput,
 			registerUnlocalizedInput,
 			showInputError,
 		}) => {
+			registerInputFeedback({
+				errorContainer: error,
+				errorMessageContainer: errorMessage,
+				formGroup,
+				fragmentElement,
+				inputElement,
+			});
+
 			const hasError = formGroup.classList.contains('has-error');
 
 			if (hasError) {

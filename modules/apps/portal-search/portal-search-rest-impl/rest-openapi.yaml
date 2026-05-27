@@ -28,43 +28,85 @@ components:
                 expectedDimensions:
                     type: integer
         FacetConfiguration:
+            description:
+                Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the
+                search results. The response's aggregations field returns the facet buckets. Examples TBA.
             properties:
                 aggregationName:
                     description:
-                        The name of the aggregation.
+                        Unique name for the aggregation. Required to distinguish between instances of the same facet
+                        type (instances that share the same name property).
                     type: string
                 attributes:
                     additionalProperties:
                         type: object
                     description:
-                        Additional attributes for the facet.
+                        Additional attributes required by some facets. The custom, date-range, and nested facets require
+                        a String attribute called field to set the field to aggregate results by. The date-range facet
+                        also requires a format String (such as yyyyMMddHHmmss) and a ranges object array to provide the
+                        ranges. The nested facet requires filterField, filterValue, and path String attributes. The
+                        vocabulary facet requires a String array of asset vocabulary IDs as vocabularyIds.
                     type: object
                 frequencyThreshold:
                     description:
-                        Frequency threshold for showing the terms.
+                        Minimum frequency required for terms to appear in the list of facet terms.
                     type: integer
                 maxTerms:
                     description:
-                        Maximum number of terms to be shown.
+                        Maximum number of facet terms to display, regardless of how many matching terms are found for
+                        the facet.
                     type: integer
                 name:
                     description:
-                        The name of the facet.
+                        Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag,
+                        type, vocabulary, and user. The custom facet uses top-level index fields only; Object and Web
+                        Content Structure fields are indexed as nested fields, so use the nested facet for those
+                        entities.
                     type: string
                 values:
                     description:
-                        The values / selections to be filtered by.
+                        Post-filter the results by selecting values. Equivalent to clicking facet terms in the facet
+                        widget.
                     items:
                         type: object
                     type: array
             type: object
         SearchRequestBody:
+            description:
+                Request body for POST /search. Carries search context attributes (including blueprint selection and
+                empty-search behavior) and any facet aggregations to be returned alongside the results.
+            example:
+                attributes:
+                    search.empty.search: true
+                    search.experiences.blueprint.external.reference.code: PRODUCT_SEARCH
+                    search.experiences.scope.group.id: "20121"
+                facetConfigurations:
+                    -   aggregationName: asset_type
+                        maxTerms: 10
+                        name: type
             properties:
                 attributes:
                     additionalProperties:
                         type: object
+                    description:
+                        Custom search context attributes. Recognized keys are search.empty.search (set to true to return
+                        results when the search parameter is omitted from the request - equivalent to the emptySearch
+                        GET query parameter), search.experiences.blueprint.external.reference.code (External Reference
+                        Code of a Search Blueprint controlling the query and configuration - preferred over passing the
+                        blueprint ID; Search Blueprints require DXP Enterprise-tier with the Liferay Enterprise Search
+                        (LES) add-on subscription), search.experiences.blueprint.id (ID of a Search Blueprint - prefer
+                        search.experiences.blueprint.external.reference.code when available),
+                        search.experiences.scope.group.id (set when the blueprint contains elements that require a group
+                        context, such as 'Limit Search to the Current Site', 'Boost Contents in a Category for a User
+                        Segment', or 'Staging Aware'), and any other key prefixed with search.experiences. (dynamic
+                        parameters declared in the blueprint's Parameter Configuration - see
+                        https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints/search-blueprints-configuration-reference#parameter-configuration
+                        for more information).
                     type: object
                 facetConfigurations:
+                    description:
+                        Facet aggregation configurations to apply to the search. Each entry describes a facet to compute
+                        alongside the results; the response's aggregations field returns the facet buckets.
                     items:
                         $ref: "#/components/schemas/FacetConfiguration"
                     type: array

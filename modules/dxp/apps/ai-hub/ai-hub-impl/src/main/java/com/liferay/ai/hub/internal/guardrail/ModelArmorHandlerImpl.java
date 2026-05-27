@@ -213,9 +213,9 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 			GetterUtil.getString(properties.get("location"))
 		).maliciousUriFilterEnabled(
 			GetterUtil.getBoolean(properties.get("maliciousUriFilterEnabled"))
-		).multiLanguageDetectionEnabled(
+		).multilanguageDetectionEnabled(
 			GetterUtil.getBoolean(
-				properties.get("multiLanguageDetectionEnabled"))
+				properties.get("multilanguageDetectionEnabled"))
 		).name(
 			GetterUtil.getString(properties.get("name"))
 		).piAndJailbreakConfidenceLevel(

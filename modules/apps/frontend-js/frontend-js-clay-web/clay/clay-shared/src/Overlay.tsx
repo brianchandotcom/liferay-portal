@@ -180,9 +180,19 @@ export function Overlay({
 			) >= 0;
 
 		if (currentMenuRef && isOpen) {
-			const elements = suppress
-				? suppress.map((ref) => ref.current!)
-				: [currentMenuRef];
+			const parentMenuElements = previousOverlayStacks
+				.map(({menu}) => menu.current)
+				.filter(
+					(element): element is Element =>
+						!!element && element !== currentMenuRef
+				);
+
+			const elements = [
+				...(suppress
+					? suppress.map((ref) => ref.current!)
+					: [currentMenuRef]),
+				...parentMenuElements,
+			];
 
 			const hiddenElement =
 				currentMenuRef.closest('[aria-hidden]') ||

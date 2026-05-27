@@ -118,7 +118,7 @@ public class FaroProjectFilterTest {
 		Mockito.when(
 			jsonObject.getString("name")
 		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME
+			ProductConstants.DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_NAME
 		);
 
 		Mockito.when(
@@ -193,7 +193,7 @@ public class FaroProjectFilterTest {
 		Mockito.when(
 			jsonObject.getString("name")
 		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME
+			ProductConstants.DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_NAME
 		);
 
 		Mockito.when(
@@ -372,7 +372,7 @@ public class FaroProjectFilterTest {
 		Mockito.when(
 			jsonObject.getString("name")
 		).thenReturn(
-			ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME
+			ProductConstants.DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_NAME
 		);
 
 		Mockito.when(

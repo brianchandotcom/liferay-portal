@@ -129,6 +129,13 @@ describe('WorkflowPanel', () => {
 			);
 		});
 
+		it('lists the workflow definitions as options', () => {
+			renderPanel();
+
+			expect(screen.getByText('Workflow 1')).toBeInTheDocument();
+			expect(screen.getByText('Workflow 2')).toBeInTheDocument();
+		});
+
 		it('marks the field as touched on selection change', () => {
 			const {setFieldTouched} = renderPanel();
 
@@ -158,13 +165,6 @@ describe('WorkflowPanel', () => {
 			});
 
 			expect(screen.getByText('Workflow required')).toBeInTheDocument();
-		});
-
-		it('lists the workflow definitions as options', () => {
-			renderPanel();
-
-			expect(screen.getByText('Workflow 1')).toBeInTheDocument();
-			expect(screen.getByText('Workflow 2')).toBeInTheDocument();
 		});
 	});
 

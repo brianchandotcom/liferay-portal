@@ -114,34 +114,6 @@ describe('GuardrailsPanel', () => {
 		cleanup();
 	});
 
-	it('renders the title and assigned-guardrails label', () => {
-		render(
-			<GuardrailsPanel
-				modelArmorTemplates={buildPicker()}
-				readOnly={false}
-			/>
-		);
-
-		expect(screen.getByText('guardrails')).toBeInTheDocument();
-		expect(screen.getByText('assigned-guardrails')).toBeInTheDocument();
-	});
-
-	it('renders the currently selected templates using the name field', () => {
-		const picker = buildPicker({
-			selected: [
-				{externalReferenceCode: 'MAT_1', name: 'Guard A'},
-				{externalReferenceCode: 'MAT_2', name: 'Guard B'},
-			],
-		});
-
-		render(
-			<GuardrailsPanel modelArmorTemplates={picker} readOnly={false} />
-		);
-
-		expect(screen.getByText('Guard A')).toBeInTheDocument();
-		expect(screen.getByText('Guard B')).toBeInTheDocument();
-	});
-
 	it('calls setSelected when a source item is added', () => {
 		const picker = buildPicker({
 			sourceList: [{externalReferenceCode: 'MAT_1', name: 'Guard A'}],
@@ -188,5 +160,33 @@ describe('GuardrailsPanel', () => {
 		expect(
 			screen.getByTestId('multi-select-input-assignedGuardrails')
 		).toBeDisabled();
+	});
+
+	it('renders the currently selected templates using the name field', () => {
+		const picker = buildPicker({
+			selected: [
+				{externalReferenceCode: 'MAT_1', name: 'Guard A'},
+				{externalReferenceCode: 'MAT_2', name: 'Guard B'},
+			],
+		});
+
+		render(
+			<GuardrailsPanel modelArmorTemplates={picker} readOnly={false} />
+		);
+
+		expect(screen.getByText('Guard A')).toBeInTheDocument();
+		expect(screen.getByText('Guard B')).toBeInTheDocument();
+	});
+
+	it('renders the title and assigned-guardrails label', () => {
+		render(
+			<GuardrailsPanel
+				modelArmorTemplates={buildPicker()}
+				readOnly={false}
+			/>
+		);
+
+		expect(screen.getByText('guardrails')).toBeInTheDocument();
+		expect(screen.getByText('assigned-guardrails')).toBeInTheDocument();
 	});
 });

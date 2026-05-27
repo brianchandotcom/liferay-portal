@@ -114,48 +114,19 @@ describe('DataSourcesPanel', () => {
 		cleanup();
 	});
 
-	it('renders the title and assigned-sources label', () => {
-		render(
-			<DataSourcesPanel
-				contentRetrievers={buildPicker()}
-				readOnly={false}
-			/>
-		);
-
-		expect(screen.getByText('data-sources')).toBeInTheDocument();
-		expect(screen.getByText('assigned-sources')).toBeInTheDocument();
-	});
-
-	it('renders the currently selected content retrievers using the title field', () => {
-		const picker = buildPicker({
-			selected: [
-				{externalReferenceCode: 'CR_1', title: 'First'},
-				{externalReferenceCode: 'CR_2', title: 'Second'},
-			],
-		});
+	it('calls setInputValue when the user types into the field', () => {
+		const picker = buildPicker();
 
 		render(
 			<DataSourcesPanel contentRetrievers={picker} readOnly={false} />
 		);
 
-		expect(screen.getByText('First')).toBeInTheDocument();
-		expect(screen.getByText('Second')).toBeInTheDocument();
-	});
-
-	it('renders source items as add options', () => {
-		const picker = buildPicker({
-			sourceList: [
-				{externalReferenceCode: 'CR_1', title: 'First'},
-				{externalReferenceCode: 'CR_2', title: 'Second'},
-			],
-		});
-
-		render(
-			<DataSourcesPanel contentRetrievers={picker} readOnly={false} />
+		fireEvent.change(
+			screen.getByTestId('multi-select-input-assignedSources'),
+			{target: {value: 'partial'}}
 		);
 
-		expect(screen.getByTestId('add-CR_1')).toBeInTheDocument();
-		expect(screen.getByTestId('add-CR_2')).toBeInTheDocument();
+		expect(picker.setInputValue).toHaveBeenCalledWith('partial');
 	});
 
 	it('calls setSelected when a source item is added', () => {
@@ -193,21 +164,6 @@ describe('DataSourcesPanel', () => {
 		]);
 	});
 
-	it('calls setInputValue when the user types into the field', () => {
-		const picker = buildPicker();
-
-		render(
-			<DataSourcesPanel contentRetrievers={picker} readOnly={false} />
-		);
-
-		fireEvent.change(
-			screen.getByTestId('multi-select-input-assignedSources'),
-			{target: {value: 'partial'}}
-		);
-
-		expect(picker.setInputValue).toHaveBeenCalledWith('partial');
-	});
-
 	it('disables the multi-select when readOnly is true', () => {
 		render(
 			<DataSourcesPanel
@@ -219,5 +175,49 @@ describe('DataSourcesPanel', () => {
 		expect(
 			screen.getByTestId('multi-select-input-assignedSources')
 		).toBeDisabled();
+	});
+
+	it('renders source items as add options', () => {
+		const picker = buildPicker({
+			sourceList: [
+				{externalReferenceCode: 'CR_1', title: 'First'},
+				{externalReferenceCode: 'CR_2', title: 'Second'},
+			],
+		});
+
+		render(
+			<DataSourcesPanel contentRetrievers={picker} readOnly={false} />
+		);
+
+		expect(screen.getByTestId('add-CR_1')).toBeInTheDocument();
+		expect(screen.getByTestId('add-CR_2')).toBeInTheDocument();
+	});
+
+	it('renders the currently selected content retrievers using the title field', () => {
+		const picker = buildPicker({
+			selected: [
+				{externalReferenceCode: 'CR_1', title: 'First'},
+				{externalReferenceCode: 'CR_2', title: 'Second'},
+			],
+		});
+
+		render(
+			<DataSourcesPanel contentRetrievers={picker} readOnly={false} />
+		);
+
+		expect(screen.getByText('First')).toBeInTheDocument();
+		expect(screen.getByText('Second')).toBeInTheDocument();
+	});
+
+	it('renders the title and assigned-sources label', () => {
+		render(
+			<DataSourcesPanel
+				contentRetrievers={buildPicker()}
+				readOnly={false}
+			/>
+		);
+
+		expect(screen.getByText('data-sources')).toBeInTheDocument();
+		expect(screen.getByText('assigned-sources')).toBeInTheDocument();
 	});
 });

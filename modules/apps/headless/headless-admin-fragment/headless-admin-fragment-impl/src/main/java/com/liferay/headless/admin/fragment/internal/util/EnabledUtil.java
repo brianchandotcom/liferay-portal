@@ -14,11 +14,8 @@ import com.liferay.portal.kernel.model.Company;
 public class EnabledUtil {
 
 	public static void checkEnabled(Company company) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				company.getCompanyId(), "LPD-39244")) {
-
-			throw new UnsupportedOperationException();
-		}
+		FeatureFlagManagerUtil.checkEnabled(
+			company.getCompanyId(), "LPD-39244");
 	}
 
 }

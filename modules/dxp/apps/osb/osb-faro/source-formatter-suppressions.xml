@@ -23,6 +23,5 @@
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
 		<suppress checks="SHSubshellCheck" files="set_nexus_credentials\.sh" />
 		<suppress checks="SQLLongNamesCheck" files=".*" />
-		<suppress checks="YMLLongLinesCheck" files="osb-faro-rest-impl/rest-openapi\.yaml" />
 	</source-check>
 </suppressions>

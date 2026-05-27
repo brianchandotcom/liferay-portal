@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
+import {UserLoginPage} from '../../../pages/users-admin-web/UserLoginPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -58,8 +59,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(90000);
-
 		const accountManagementPage = new AccountManagementPage(page);
 		const userSelectorPage = new UserSelectorPage(page);
 
@@ -154,8 +153,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(90000);
-
 		const accountManagementPage = new AccountManagementPage(page);
 
 		const site = await apiHelpers.headlessAdminSite.postSite({
@@ -243,24 +240,21 @@ test(
 		});
 
 		await test.step('Sign in as the newly registered user via the portal login form', async () => {
+			const userLoginPage = new UserLoginPage(inviteePage);
+
 			await expect(async () => {
 				await inviteePage.goto('/');
 
-				await inviteePage
-					.getByRole('button', {name: 'Sign In'})
-					.click({timeout: 2000});
-				await inviteePage
-					.getByLabel('Email Address')
-					.fill(invitedEmail);
-				await inviteePage.getByLabel('Password').fill(password);
-				await inviteePage
-					.getByRole('button', {name: 'Sign In'})
-					.last()
-					.click({timeout: 2000});
+				await userLoginPage.signInNavButton.click({timeout: 2000});
 
-				await expect(
-					inviteePage.getByTitle('User Profile Menu')
-				).toBeVisible({timeout: 5000});
+				await userLoginPage.emailAddressInput.fill(invitedEmail);
+				await userLoginPage.passwordInput.fill(password);
+
+				await userLoginPage.signInButton.click({timeout: 2000});
+
+				await expect(userLoginPage.userProfileMenuButton).toBeVisible({
+					timeout: 5000,
+				});
 			}).toPass({timeout: 30000});
 
 			await inviteeContext.close();

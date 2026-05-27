@@ -21,6 +21,9 @@ type FakeFilter = {
 };
 
 type FakeCustomDataRenderers = {
+	accountActivityStatusRenderer: (props: {
+		value: string;
+	}) => React.ReactElement | null | false;
 	accountNameRenderer: (props: {
 		itemData: {id: string | number};
 		value: string;
@@ -240,5 +243,60 @@ describe('AccountsDataSet', () => {
 		expect(lastApiURL).toBe(
 			'fake-url&rangeKey=CUSTOM&rangeEnd=2024-01-31&rangeStart=2024-01-01'
 		);
+	});
+
+	it('should render "Active" label for ACTIVE activity status', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
+		);
+
+		const {getByText} = render(
+			lastCustomDataRenderers!.accountActivityStatusRenderer({
+				value: 'ACTIVE'
+			}) as React.ReactElement
+		);
+
+		expect(getByText('Active')).toBeInTheDocument();
+	});
+
+	it('should render "Inactive" label for INACTIVE activity status', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
+		);
+
+		const {getByText} = render(
+			lastCustomDataRenderers!.accountActivityStatusRenderer({
+				value: 'INACTIVE'
+			}) as React.ReactElement
+		);
+
+		expect(getByText('Inactive')).toBeInTheDocument();
+	});
+
+	it('should render nothing when activity status value is empty', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
+		);
+
+		const result = lastCustomDataRenderers!.accountActivityStatusRenderer({
+			value: ''
+		});
+
+		expect(result).toBeFalsy();
 	});
 });

@@ -62,35 +62,40 @@ const DEFAULT_CATEGORIES: ITopCategory[] = [
 		id: 'c-1',
 		impressionsMetric: {value: 12000},
 		name: 'Department Names',
-		viewsMetric: {value: 9000}
+		viewsMetric: {value: 9000},
+		vocabularyName: 'Department'
 	}),
 	buildCategory({
 		downloadsMetric: {value: 6700},
 		id: 'c-2',
 		impressionsMetric: {value: 9500},
 		name: 'Specialties',
-		viewsMetric: {value: 7000}
+		viewsMetric: {value: 7000},
+		vocabularyName: 'Specialty'
 	}),
 	buildCategory({
 		downloadsMetric: {value: 3400},
 		id: 'c-3',
 		impressionsMetric: {value: 6000},
 		name: 'Document Types',
-		viewsMetric: {value: 4500}
+		viewsMetric: {value: 4500},
+		vocabularyName: 'Document Type'
 	}),
 	buildCategory({
 		downloadsMetric: {value: 2900},
 		id: 'c-4',
 		impressionsMetric: {value: 4800},
 		name: 'Employment Status',
-		viewsMetric: {value: 3200}
+		viewsMetric: {value: 3200},
+		vocabularyName: 'Employment Type'
 	}),
 	buildCategory({
 		downloadsMetric: {value: 1500},
 		id: 'c-5',
 		impressionsMetric: {value: 3100},
 		name: 'Facility Status',
-		viewsMetric: {value: 2000}
+		viewsMetric: {value: 2000},
+		vocabularyName: 'Category'
 	})
 ];
 
@@ -175,14 +180,58 @@ describe('TopCategoriesAndTags', () => {
 			expect(screen.getAllByText('3.1K').length).toBeGreaterThan(0);
 		});
 
-		it('should render the Name and metric column headers', () => {
+		it('should render the Category Name and Vocabulary column headers on the Category tab', () => {
 			const {container} = render(<TopCategoriesAndTags />);
 
 			const tabPanel = container.querySelector(
 				'.tab-pane'
 			) as HTMLElement;
 
-			expect(within(tabPanel).getByText('Name')).toBeInTheDocument();
+			expect(
+				within(tabPanel).getByText('Category Name')
+			).toBeInTheDocument();
+			expect(
+				within(tabPanel).getByText('Vocabulary')
+			).toBeInTheDocument();
+		});
+
+		it('should render the vocabulary name of every category returned', () => {
+			render(<TopCategoriesAndTags />);
+
+			expect(
+				screen.getAllByText('Department').length
+			).toBeGreaterThan(0);
+			expect(
+				screen.getAllByText('Document Type').length
+			).toBeGreaterThan(0);
+			expect(
+				screen.getAllByText('Employment Type').length
+			).toBeGreaterThan(0);
+		});
+
+		it('should use the Tag Name header and omit the Vocabulary column on the Tag tab', () => {
+			const {container} = render(<TopCategoriesAndTags />);
+
+			mockUseRequestWith({
+				data: {
+					items: [
+						buildTag({
+							id: 't-promo',
+							impressionsMetric: {value: 250},
+							name: 'promo'
+						})
+					]
+				}
+			});
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Tag'}));
+
+			const tabPanel = container.querySelector(
+				'.tab-pane'
+			) as HTMLElement;
+
+			expect(within(tabPanel).getByText('Tag Name')).toBeInTheDocument();
+			expect(within(tabPanel).queryByText('Vocabulary')).toBeNull();
 		});
 	});
 

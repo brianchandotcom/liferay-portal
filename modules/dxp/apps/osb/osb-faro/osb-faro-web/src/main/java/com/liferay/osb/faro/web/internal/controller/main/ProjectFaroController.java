@@ -969,7 +969,8 @@ public class ProjectFaroController extends BaseFaroController {
 
 				if (trial) {
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_ID);
+						ProductConstants.
+							DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_ID);
 				}
 				else {
 					osbOfferingEntry.setProductEntryId(
@@ -993,7 +994,8 @@ public class ProjectFaroController extends BaseFaroController {
 					OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
 
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_ID);
+						ProductConstants.
+							DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_ID);
 
 					osbOfferingEntry.setQuantity(1);
 					osbOfferingEntry.setStartDate(

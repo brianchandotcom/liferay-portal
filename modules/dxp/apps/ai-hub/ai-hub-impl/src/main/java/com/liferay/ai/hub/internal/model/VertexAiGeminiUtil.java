@@ -44,7 +44,7 @@ public class VertexAiGeminiUtil {
 		).project(
 			vertexAIConfiguration.projectId()
 		).safetySettings(
-			_safetySettings
+			_safetyThresholds
 		).build();
 	}
 
@@ -70,11 +70,11 @@ public class VertexAiGeminiUtil {
 		).project(
 			vertexAIConfiguration.projectId()
 		).safetySettings(
-			_safetySettings
+			_safetyThresholds
 		).build();
 	}
 
-	private static final Map<HarmCategory, SafetyThreshold> _safetySettings =
+	private static final Map<HarmCategory, SafetyThreshold> _safetyThresholds =
 		Map.of(
 			HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
 			SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE,

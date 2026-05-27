@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -245,7 +245,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private ClusterExecutor _clusterExecutor;
 
 	private final Set<ClusterMasterTokenTransitionListener>
-		_clusterMasterTokenTransitionListeners = new HashSet<>();
+		_clusterMasterTokenTransitionListeners = new CopyOnWriteArraySet<>();
 	private boolean _enabled;
 	private volatile String _localClusterNodeId;
 	private ServiceRegistration<ClusterEventListener> _serviceRegistration;

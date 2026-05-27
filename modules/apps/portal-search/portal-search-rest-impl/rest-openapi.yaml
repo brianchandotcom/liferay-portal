@@ -163,7 +163,11 @@ paths:
     "/search":
         get:
             description:
-                "Search the company index for matching content."
+                "Use this API to search for matching content, products and other indexed data. Use the POST /search API
+                if you also want facets (aggregations) to be returned or you need to specify additional search context
+                attributes for your blueprint. Refer to
+                https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more
+                information."
             operationId: getSearchPage
             parameters:
                 -   in: query
@@ -234,7 +238,11 @@ paths:
             tags: ["SearchResult"]
         post:
             description:
-                "Search the company index for matching content."
+                "Use this API to search for matching content, products and other indexed data. Use the available request
+                body attributes to request facets (aggregations) to be also returned or to specify additional search
+                context attributes for your blueprint. Refer to
+                https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more
+                information."
             operationId: postSearchPage
             parameters:
                 -   in: query

@@ -6,7 +6,9 @@ import {Page} from '@playwright/test';
  */
 export async function waitForLoading(page: Page) {
 	await page.waitForFunction(() => {
-		const loaders = document.querySelectorAll('.loading-animation');
+		const loaders = document.querySelectorAll(
+			'.data-set .loading-animation'
+		);
 
 		return !loaders.length;
 	});

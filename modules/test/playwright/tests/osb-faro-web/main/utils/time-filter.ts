@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {waitForLoading} from './loading';
 import {CardSelectors} from './selectors';
 
@@ -25,15 +26,11 @@ export async function changeTimeFilter({
 		element = card;
 	}
 
-	const timeFilterButton = element.locator('.dropdown-range-key-root button');
-
-	await timeFilterButton.click();
-
-	await page
-		.getByRole('menuitem', {
-			name: timeFilterPeriod,
-		})
-		.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: timeFilterPeriod}),
+		trigger: element.locator('.dropdown-range-key-root button'),
+	});
 
 	await waitForLoading(page);
 }

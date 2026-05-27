@@ -91,7 +91,7 @@ export class ObjectRelationshipsPage {
 	async saveObjectRelationship() {
 		await this.saveObjectRelationshipButton.click();
 
-		await this.page.locator('.fds-side-panel').waitFor({state: 'hidden'});
+		await this.saveObjectRelationshipButton.waitFor({state: 'hidden'});
 
 		await waitForPageToBeLoaded(this.page);
 	}

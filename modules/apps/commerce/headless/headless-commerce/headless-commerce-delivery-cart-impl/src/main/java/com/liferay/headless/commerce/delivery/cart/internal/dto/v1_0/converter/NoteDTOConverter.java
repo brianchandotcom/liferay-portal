@@ -42,6 +42,9 @@ public class NoteDTOConverter
 			_commerceOrderNoteService.getCommerceOrderNote(
 				(Long)dtoConverterContext.getId());
 
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderNote.getCommerceOrderId());
+
 		return new CartComment() {
 			{
 				setAuthor(commerceOrderNote::getUserName);
@@ -59,14 +62,9 @@ public class NoteDTOConverter
 					commerceOrderNote::getExternalReferenceCode);
 				setId(commerceOrderNote::getCommerceOrderNoteId);
 				setModifiedDate(commerceOrderNote::getModifiedDate);
-				setOrderId(
-					() -> {
-						CommerceOrder commerceOrder =
-							_commerceOrderService.getCommerceOrder(
-								commerceOrderNote.getCommerceOrderId());
-
-						return commerceOrder.getCommerceOrderId();
-					});
+				setOrderExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
+				setOrderId(commerceOrder::getCommerceOrderId);
 				setRestricted(commerceOrderNote::isRestricted);
 			}
 		};

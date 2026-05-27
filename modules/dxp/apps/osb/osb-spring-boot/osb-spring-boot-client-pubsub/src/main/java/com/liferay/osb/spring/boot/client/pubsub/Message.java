@@ -7,6 +7,7 @@ package com.liferay.osb.spring.boot.client.pubsub;
 
 import com.liferay.petra.string.StringBundler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,27 +17,15 @@ import java.util.Map;
  */
 public class Message {
 
-	public Message() {
-	}
-
-	public Message(Map<String, Object> attributes, Object payload) {
-		setAttributes(attributes);
-		setPayload(payload);
-	}
-
-	public Message(Object payload) {
-		setPayload(payload);
-	}
-
 	public Message(
-		String topic, Map<String, Object> attributes, Object payload) {
+		Map<String, String> attributes, String payload, String topic) {
 
-		setTopic(topic);
 		setAttributes(attributes);
 		setPayload(payload);
+		setTopic(topic);
 	}
 
-	public Object get(String key) {
+	public String get(String key) {
 		if (_attributes == null) {
 			return null;
 		}
@@ -44,36 +33,23 @@ public class Message {
 		return _attributes.get(key);
 	}
 
-	public Map<String, Object> getAttributes() {
+	public Map<String, String> getAttributes() {
+		if (_attributes == null) {
+			return Collections.emptyMap();
+		}
+
 		return _attributes;
 	}
 
-	public String getDestinationName() {
-		return _topic;
-	}
-
-	public Object getPayload() {
+	public String getPayload() {
 		return _payload;
-	}
-
-	public Map<String, String> getStringAttributes() {
-		Map<String, String> stringAttributes = new HashMap<>();
-
-		if (_attributes != null) {
-			for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
-				stringAttributes.put(
-					entry.getKey(), String.valueOf(entry.getValue()));
-			}
-		}
-
-		return stringAttributes;
 	}
 
 	public String getTopic() {
 		return _topic;
 	}
 
-	public void put(String key, Object value) {
+	public void put(String key, String value) {
 		if (_attributes == null) {
 			_attributes = new HashMap<>();
 		}
@@ -81,20 +57,12 @@ public class Message {
 		_attributes.put(key, value);
 	}
 
-	public void setAttributes(Map<String, Object> attributes) {
+	public void setAttributes(Map<String, String> attributes) {
 		_attributes = attributes;
 	}
 
-	public void setDestinationName(String destinationName) {
-		_topic = destinationName;
-	}
-
-	public void setPayload(Object payload) {
+	public void setPayload(String payload) {
 		_payload = payload;
-	}
-
-	public void setStringAttributes(Map<String, String> attributes) {
-		_attributes = new HashMap<>(attributes);
 	}
 
 	public void setTopic(String topic) {
@@ -116,8 +84,8 @@ public class Message {
 		return sb.toString();
 	}
 
-	private Map<String, Object> _attributes;
-	private Object _payload;
+	private Map<String, String> _attributes;
+	private String _payload;
 	private String _topic;
 
 }

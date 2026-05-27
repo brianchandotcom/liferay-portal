@@ -5,6 +5,7 @@
 
 import React, {useEffect, useState} from 'react';
 
+import FeedbackActionsRow from '../../ReportFeedback/FeedbackActionsRow';
 import ConfirmationBalloon from './ConfirmationBalloon';
 
 export default function WritingAssistantConfirmationAction({
@@ -12,11 +13,13 @@ export default function WritingAssistantConfirmationAction({
 	handleAccept,
 	handleDiscard,
 	hideBalloon,
+	onReport,
 }: {
 	containerRef: HTMLElement;
 	handleAccept: () => void;
 	handleDiscard: () => void;
 	hideBalloon: () => void;
+	onReport?: () => void;
 }) {
 	const [active, setActive] = useState(true);
 
@@ -40,12 +43,6 @@ export default function WritingAssistantConfirmationAction({
 				hideBalloon();
 			},
 			symbolLeft: 'times',
-		},
-		{
-			disabled: true,
-			name: Liferay.Language.get('regenerate'),
-			onClick: () => {},
-			symbolLeft: 'reset',
 		},
 	];
 
@@ -71,5 +68,31 @@ export default function WritingAssistantConfirmationAction({
 		return null;
 	}
 
-	return <ConfirmationBalloon actions={actions} />;
+	return (
+		<ConfirmationBalloon
+			actions={actions}
+			actionsRow={
+				<FeedbackActionsRow
+					onRegenerate={() => {}}
+					onReport={() => {
+						if (onReport) {
+							setActive(false);
+							hideBalloon();
+							onReport();
+						}
+					}}
+					onThumbsUp={() =>
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'thanks-for-your-feedback'
+							),
+							type: 'success',
+						})
+					}
+					regenerateDisabled
+					showRegenerate
+				/>
+			}
+		/>
+	);
 }

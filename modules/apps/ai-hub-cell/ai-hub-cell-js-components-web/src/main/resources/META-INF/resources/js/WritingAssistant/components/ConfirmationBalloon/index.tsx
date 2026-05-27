@@ -8,7 +8,13 @@ import React from 'react';
 
 import '../../../../css/ckeditor5/balloon.scss';
 
-function ConfirmationBalloon({actions}: {actions: any[]}) {
+function ConfirmationBalloon({
+	actions,
+	actionsRow,
+}: {
+	actions: any[];
+	actionsRow?: React.ReactNode;
+}) {
 	const handleClick = (action: any) => {
 		if (action.disabled) {
 			return;
@@ -51,6 +57,8 @@ function ConfirmationBalloon({actions}: {actions: any[]}) {
 						</li>
 					))}
 				</ul>
+
+				{actionsRow}
 			</ClayIconSpriteContext.Provider>
 		</div>
 	);

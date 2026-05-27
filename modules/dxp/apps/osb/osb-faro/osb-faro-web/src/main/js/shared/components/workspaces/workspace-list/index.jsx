@@ -9,6 +9,14 @@ import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
 
 const isSubscriptionLimitReached = subscription => {
+	if (
+		subscription?.get('name') !== SubscriptionNames.LiferayDataPlatform &&
+		subscription?.get('name') !==
+			SubscriptionNames.LiferayDataPlatformPrivateBeta
+	) {
+		return false;
+	}
+
 	const hasReached = (limit, count) => limit > 0 && count >= limit;
 
 	return (
@@ -83,11 +91,6 @@ export default class WorkspaceList extends React.Component {
 							state
 						} = project;
 
-						const hasLimitReached =
-							faroSubscription?.get('name') ===
-								SubscriptionNames.LiferayDataPlatform &&
-							isSubscriptionLimitReached(faroSubscription);
-
 						return (
 							<WorkspaceListItem
 								accountName={name}
@@ -99,7 +102,9 @@ export default class WorkspaceList extends React.Component {
 								corpProjectName={corpProjectName}
 								disabled={checkDisabled(project)}
 								groupId={groupId}
-								hasLimitReached={hasLimitReached}
+								hasLimitReached={isSubscriptionLimitReached(
+									faroSubscription
+								)}
 								href={this.getRoute(project)}
 								isJoinableProjects={isJoinableProjects}
 								key={name}

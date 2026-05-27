@@ -8,6 +8,8 @@ package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
+import com.liferay.ai.hub.internal.guardrail.listener.InputGuardrailExecutedListenerImpl;
+import com.liferay.ai.hub.internal.guardrail.listener.OutputGuardrailExecutedListenerImpl;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.GuardrailsUtil;
@@ -197,6 +199,10 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
+			).aiServiceListeners(
+				List.of(
+					new InputGuardrailExecutedListenerImpl(executionContext),
+					new OutputGuardrailExecutedListenerImpl(executionContext))
 			).inputGuardrails(
 				inputGuardrails
 			).invocationParameters(

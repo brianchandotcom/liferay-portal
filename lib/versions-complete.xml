@@ -1215,13 +1215,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!neethi.jar</file-name>
-				<version>3.1.1</version>
+				<version>3.2.2</version>
 				<project-name>Apache Neethi</project-name>
-				<project-url>http://www.apache.org/</project-url>
+				<project-url>https://www.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1437,6 +1437,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!HdrHistogram.jar</file-name>
+				<version>2.2.2</version>
+				<project-name>HdrHistogram</project-name>
+				<project-url>http://hdrhistogram.github.io/HdrHistogram/</project-url>
+				<licenses>
+					<license>
+						<license-name>Public Domain, per Creative Commons CC0</license-name>
+						<license-url>http://creativecommons.org/publicdomain/zero/1.0/</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!archaius-core.jar</file-name>
 				<version>0.4.1</version>
 				<project-name>com.netflix.archaius:archaius-core</project-name>
@@ -1468,17 +1480,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!org.hdrhistogram.jar</file-name>
-				<version>2.1.9.JAKARTA-LIFERAY-PATCHED-1</version>
-				<project-name>HdrHistogram Jakarta</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7310,13 +7311,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sharepoint.soap.repository.jar!neethi.jar</file-name>
-				<version>3.1.1</version>
+				<version>3.2.2</version>
 				<project-name>Apache Neethi</project-name>
-				<project-url>http://www.apache.org/</project-url>
+				<project-url>https://www.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

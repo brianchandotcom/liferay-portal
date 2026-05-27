@@ -57,7 +57,7 @@ public class AsahFaroBackendClientImplTest {
 		Mockito.when(
 			_analyticsConfiguration.liferayAnalyticsFaroBackendURL()
 		).thenReturn(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false)
+			"http://localhost:8080"
 		);
 
 		Mockito.when(

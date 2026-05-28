@@ -118,6 +118,11 @@ spec:
                                     type: string
                                 search:
                                     properties:
+                                        elasticsearch:
+                                            properties:
+                                                enabled:
+                                                    type: boolean
+                                            type: object
                                         opensearch:
                                             properties:
                                                 autoSoftwareUpdateEnabled:

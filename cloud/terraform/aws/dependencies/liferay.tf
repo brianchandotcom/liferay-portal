@@ -356,14 +356,23 @@ resource "kubernetes_secret" "managed_service_details" {
 		"DATABASE_PASSWORD"=random_password.postgres_password.result
 		"DATABASE_PORT"=local.db_active.port
 		"DATABASE_USERNAME"=random_string.postgres_username.result
-		"OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
-		"OPENSEARCH_PASSWORD"=random_password.opensearch_password.result
-		"OPENSEARCH_USERNAME"=random_string.opensearch_username.result
 		"S3_BUCKET_ID"=local.bucket_active.s3_bucket_id
 		"S3_BUCKET_REGION"=var.region
 	}
 	metadata {
 		name="managed-service-details"
+		namespace=kubernetes_namespace.liferay.metadata[0].name
+	}
+	type="Opaque"
+}
+resource "kubernetes_secret" "search_connection_details" {
+	data={
+		"SEARCH_PASSWORD"=random_password.opensearch_password.result
+		"SEARCH_URL"="https://${aws_opensearch_domain.os.endpoint}:443"
+		"SEARCH_USERNAME"=random_string.opensearch_username.result
+	}
+	metadata {
+		name="search-connection-details"
 		namespace=kubernetes_namespace.liferay.metadata[0].name
 	}
 	type="Opaque"

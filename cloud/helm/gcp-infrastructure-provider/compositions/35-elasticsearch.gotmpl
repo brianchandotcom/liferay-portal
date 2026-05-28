@@ -50,26 +50,26 @@ apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
 metadata:
     annotations:
-        crossplane.io/external-name: elasticsearch-connection-details
-        gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-connection-details-secret
+        crossplane.io/external-name: search-connection-details
+        gotemplating.fn.crossplane.io/composition-resource-name: search-connection-details-secret
     labels:
         {{- $labels | toYaml | nindent 8 }}
-    name: {{ $xr.metadata.name }}-elasticsearch-connection-details-secret
+    name: {{ $xr.metadata.name }}-search-connection-details-secret
 spec:
     forProvider:
         manifest:
             apiVersion: v1
             data:
-                ELASTICSEARCH_PASSWORD: {{ $secretObjectAtProviderManifestDataPassword }}
+                SEARCH_PASSWORD: {{ $secretObjectAtProviderManifestDataPassword }}
             kind: Secret
             metadata:
                 labels:
                     {{- $labels | toYaml | nindent 20 }}
-                name: elasticsearch-connection-details
+                name: search-connection-details
                 namespace: {{ $namespace }}
             stringData:
-                ELASTICSEARCH_URL: http://{{ $searchName }}-es-http.{{ $searchNamespace }}.svc:9200
-                ELASTICSEARCH_USERNAME: elastic
+                SEARCH_URL: http://{{ $searchName }}-es-http.{{ $searchNamespace }}.svc:9200
+                SEARCH_USERNAME: elastic
             type: Opaque
     managementPolicies: {{ $managementPolicies }}
 {{- end }}

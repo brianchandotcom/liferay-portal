@@ -46,6 +46,10 @@ public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 
 	@Override
 	public void setAudiencesList(List<String> audiencesList) {
+		if (audiencesList == null) {
+			return;
+		}
+
 		setAudiences(StringUtil.merge(audiencesList, StringPool.NEW_LINE));
 	}
 

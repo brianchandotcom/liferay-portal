@@ -44,7 +44,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		long companyId, long userId, String userName, long oAuth2ApplicationId,
 		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
 		Date accessTokenCreateDate, Date accessTokenExpirationDate,
-		List<String> audiences, String remoteHostInfo, String remoteIPInfo,
+		List<String> audiencesList, String remoteHostInfo, String remoteIPInfo,
 		String refreshTokenContent, Date refreshTokenCreateDate,
 		Date refreshTokenExpirationDate) {
 
@@ -65,11 +65,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		oAuth2Authorization.setAccessTokenCreateDate(accessTokenCreateDate);
 		oAuth2Authorization.setAccessTokenExpirationDate(
 			accessTokenExpirationDate);
-
-		if (audiences != null) {
-			oAuth2Authorization.setAudiencesList(audiences);
-		}
-
+		oAuth2Authorization.setAudiencesList(audiencesList);
 		oAuth2Authorization.setRemoteHostInfo(remoteHostInfo);
 		oAuth2Authorization.setRemoteIPInfo(remoteIPInfo);
 		oAuth2Authorization.setRefreshTokenContent(refreshTokenContent);

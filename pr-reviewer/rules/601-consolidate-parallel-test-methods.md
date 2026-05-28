@@ -1,0 +1,11 @@
+# 601: Consolidate Parallel Test Methods
+
+When several `@Test` methods do nothing but call the same assertion with a different input — trivial one liners that differ only by an argument — prefer consolidating them into one `@Test` method that exercises each case. Inline the cases as comment separated sections when the setup is trivial, or factor a `_<testMethodName>` helper and call it once per case when the setup is nontrivial and would otherwise be repeated.
+
+This is a matter of taste, not an absolute. Separate, descriptively named scenario methods (`testFooWithNullInput`, `testFooWithEmptyInput`) are acceptable and often clearer, so do not flag a handful of well named scenario methods. Consolidate when the methods are numerous or each is a trivial delegation, and otherwise follow the file's existing convention (rule 001). Integration tests lean toward grouping because their setup is expensive; unit tests group once the count grows large, but a test class is never required to make every assertion its own method.
+
+**Rationale:** A pile of near identical trivial test methods is grouped only by chance — adjacency and a shared prefix — and adds ceremony without clarity, so folding them into one method makes the set explicit. But a small number of distinct, well named scenarios reads fine as separate methods, which is why this is a judgment call rather than a hard rule.
+
+A violation is a group of trivial `@Test` methods that each only call the same assertion helper with a different argument, as in the example, and especially when there are several. A few descriptively named scenario methods are not a violation.
+
+**Example:** https://github.com/brianchandotcom/liferay-portal/pull/175426 — three `@Test` methods (`testNoSuchModelExceptionReturnsNotFound`, `testPrincipalExceptionReturnsNotFound`, `testSecurityExceptionReturnsNotFound`) each call `_assertNotFoundResponse` with a different path. Because they are pure delegations differing only by the path, they should become one `testNotFoundResponse` method that calls a `_testNotFoundResponse` helper three times, once per path.

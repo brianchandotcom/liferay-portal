@@ -135,6 +135,63 @@ describe('LifecycleChart', () => {
 		expect(getByText('no activity')).toBeInTheDocument();
 	});
 
+	it('should render avg. day values rounded to two decimals', () => {
+		const stagesWithLongDecimals: ILifecycleStage[] = [
+			{
+				accountCount: 1,
+				averageStageDuration: 9.8333333,
+				conversionRateToNextStage: 10,
+				description: '',
+				percentage: 10,
+				stageType: LifecycleStages.AWARE
+			},
+			{
+				accountCount: 1,
+				averageStageDuration: 4.6789,
+				conversionRateToNextStage: 10,
+				description: '',
+				percentage: 10,
+				stageType: LifecycleStages.ENGAGED
+			},
+			{
+				accountCount: 1,
+				averageStageDuration: 12,
+				conversionRateToNextStage: 10,
+				description: '',
+				percentage: 10,
+				stageType: LifecycleStages.PIPELINE
+			},
+			{
+				accountCount: 1,
+				averageStageDuration: 4.5,
+				conversionRateToNextStage: 10,
+				description: '',
+				percentage: 10,
+				stageType: LifecycleStages.ONBOARDING
+			},
+			{
+				accountCount: 0,
+				averageStageDuration: 0,
+				conversionRateToNextStage: null,
+				description: '',
+				percentage: 0,
+				stageType: LifecycleStages.ESTABLISHED
+			}
+		];
+
+		const {getByText, queryByText} = renderChart({
+			stages: stagesWithLongDecimals
+		});
+
+		expect(getByText('9.83')).toBeInTheDocument();
+		expect(getByText('4.68')).toBeInTheDocument();
+		expect(getByText('12.00')).toBeInTheDocument();
+		expect(getByText('4.50')).toBeInTheDocument();
+
+		expect(queryByText('9.8333333')).toBeNull();
+		expect(queryByText('4.6789')).toBeNull();
+	});
+
 	it('should render progression labels from conversionRateToNextStage', () => {
 		const {container} = renderChart({stages: sampleStages});
 

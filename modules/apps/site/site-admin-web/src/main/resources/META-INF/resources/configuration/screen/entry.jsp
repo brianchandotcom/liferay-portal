@@ -10,7 +10,7 @@
 <%
 SiteSettingsConfigurationScreenContributor siteSettingsConfigurationScreenContributor = (SiteSettingsConfigurationScreenContributor)request.getAttribute(SiteAdminWebKeys.SITE_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR);
 
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

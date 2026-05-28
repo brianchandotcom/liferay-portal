@@ -223,6 +223,20 @@ public interface FriendlyURLEntryModel
 	public void setClassNameId(long classNameId);
 
 	/**
+	 * Returns the parent class pk of this friendly url entry.
+	 *
+	 * @return the parent class pk of this friendly url entry
+	 */
+	public long getParentClassPK();
+
+	/**
+	 * Sets the parent class pk of this friendly url entry.
+	 *
+	 * @param parentClassPK the parent class pk of this friendly url entry
+	 */
+	public void setParentClassPK(long parentClassPK);
+
+	/**
 	 * Returns the class pk of this friendly url entry.
 	 *
 	 * @return the class pk of this friendly url entry
@@ -258,4 +272,4 @@ public interface FriendlyURLEntryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1590196614
+// LIFERAY-SERVICE-BUILDER-HASH:-1780117221

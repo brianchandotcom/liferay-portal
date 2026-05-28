@@ -12,6 +12,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
+		<field name="parentClassPK" type="long" />
 		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryLocalization">
@@ -23,6 +24,7 @@
 		<field name="languageId" type="String" />
 		<field name="groupId" type="long" />
 		<field name="classNameId" type="long" />
+		<field name="parentClassPK" type="long" />
 		<field name="classPK" type="long" />
 		<field name="urlTitle" type="String">
 			<hint name="max-length">255</hint>

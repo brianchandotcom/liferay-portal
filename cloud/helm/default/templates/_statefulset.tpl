@@ -17,6 +17,7 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}
     namespace: {{ include "liferay.namespace" .root }}
 spec:
+    {{- $statefulset := merge (dict "liferayname" (include "liferay.name" .root)) .statefulset }}
     {{- if not .statefulset.autoscaling.enabled }}
     replicas: {{ .statefulset.replicaCount }}
     {{- end }}
@@ -118,11 +119,13 @@ spec:
                 {{- end }}
             {{- end }}
             {{- if or .statefulset.initContainers .statefulset.customInitContainers }}
-            {{- $statefulset := merge .statefulset (dict "liferayname" (include "liferay.name" .root)) }}
             initContainers:
                 {{- range .statefulset.initContainers }}
                 {{- if .containerTemplate }}
-                {{- tpl .containerTemplate $statefulset | nindent 16 }}
+                {{- $rendered := tpl .containerTemplate $statefulset | trim }}
+                {{- if $rendered }}
+                {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- else }}
                 -   #
                     {{- toYaml . | nindent 18 }}
@@ -131,7 +134,10 @@ spec:
                 {{- range $k, $v := .statefulset.customInitContainers }}
                 {{- range $entry := $v }}
                 {{- if $entry.containerTemplate }}
-                {{- tpl $entry.containerTemplate $statefulset | nindent 16 }}
+                {{- $rendered := tpl $entry.containerTemplate $statefulset | trim }}
+                {{- if $rendered }}
+                {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- else }}
                 -   #
                     {{- toYaml $entry | nindent 18 }}

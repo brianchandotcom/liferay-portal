@@ -1490,31 +1490,31 @@ spec:
                         kind: Object
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-opensearch-connection-details-secret
-                                gotemplating.fn.crossplane.io/composition-resource-name: opensearch-connection-details-secret
+                                crossplane.io/external-name: {{ $baseName }}-search-connection-details-secret
+                                gotemplating.fn.crossplane.io/composition-resource-name: search-connection-details-secret
                             labels:
                                 app: liferay
-                                component: opensearch-connection-details-secret
+                                component: search-connection-details-secret
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-opensearch-connection-details-secret
+                            name: {{ $baseName }}-search-connection-details-secret
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
                                 manifest:
                                     apiVersion: v1
                                     data:
-                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | b64enc | quote }}
-                                        OPENSEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
-                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
+                                        SEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
+                                        SEARCH_URL: {{ printf "https://%s:443" $searchEndpoint | b64enc | quote }}
+                                        SEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
                                     kind: Secret
                                     metadata:
                                         labels:
                                             app: liferay
-                                            component: opensearch-connection-details-secret
+                                            component: search-connection-details-secret
                                             environmentId: {{ $environmentId }}
                                             projectId: {{ $projectId }}
-                                        name: opensearch-connection-details
+                                        name: search-connection-details
                                         namespace: {{ $namespace }}
                                         ownerReferences:
                                             -   apiVersion: aws.liferay.com/v1alpha1
@@ -1527,10 +1527,10 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         {{- end -}}
 
-                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch }}
+                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch -}}
                         {{- if $elasticsearchSpec.enabled }}
                         {{- $elasticsearchName := printf "%s-es" $xr.metadata.name -}}
-                        {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName -}}
+                        {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -1563,11 +1563,12 @@ spec:
                                         name: {{ $elasticsearchSecretName }}
                                         namespace: {{ $namespace }}
                             managementPolicies: ["Observe"]
-                        {{- if .observed.resources }}
-                        {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" (index .observed.resources "elasticsearch-observer") -}}
+                        {{- if .observed.resources -}}
+                        {{- $elasticsearchObserver := default dict (index .observed.resources "elasticsearch-observer") -}}
+                        {{- $elasticsearchSecretObserver := default dict (index .observed.resources "elasticsearch-secret-observer") -}}
+                        {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" $elasticsearchObserver -}}
                         {{- $isElasticsearchReady := or (eq $elasticsearchHealth "green") (eq $elasticsearchHealth "yellow") -}}
-
-                        {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" (index .observed.resources "elasticsearch-secret-observer") -}}
+                        {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" $elasticsearchSecretObserver -}}
 
                         {{- if and $isElasticsearchReady $elasticsearchPassword }}
                         ---
@@ -1575,29 +1576,29 @@ spec:
                         kind: Object
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-elasticsearch-connection-details-secret
-                                gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-connection-details-secret
+                                crossplane.io/external-name: {{ $baseName }}-search-connection-details-secret
+                                gotemplating.fn.crossplane.io/composition-resource-name: search-connection-details-secret
                             labels:
                                 app: liferay
-                                component: elasticsearch-connection-details-secret
+                                component: search-connection-details-secret
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-elasticsearch-connection-details-secret
+                            name: {{ $baseName }}-search-connection-details-secret
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
                                 manifest:
                                     apiVersion: v1
                                     data:
-                                        ELASTICSEARCH_PASSWORD: {{ $elasticsearchPassword }}
+                                        SEARCH_PASSWORD: {{ $elasticsearchPassword }}
                                     kind: Secret
                                     metadata:
                                         labels:
                                             app: liferay
-                                            component: elasticsearch-connection-details-secret
+                                            component: search-connection-details-secret
                                             environmentId: {{ $environmentId }}
                                             projectId: {{ $projectId }}
-                                        name: elasticsearch-connection-details
+                                        name: search-connection-details
                                         namespace: {{ $namespace }}
                                         ownerReferences:
                                             -   apiVersion: aws.liferay.com/v1alpha1
@@ -1607,8 +1608,8 @@ spec:
                                                 name: {{ .observed.composite.resource.metadata.name }}
                                                 uid: {{ .observed.composite.resource.metadata.uid }}
                                     stringData:
-                                        ELASTICSEARCH_URL: http://{{ $elasticsearchName }}-es-http.{{ $namespace }}.svc:9200
-                                        ELASTICSEARCH_USERNAME: elastic
+                                        SEARCH_URL: http://{{ $elasticsearchName }}-es-http.{{ $namespace }}.svc:9200
+                                        SEARCH_USERNAME: elastic
                                     type: Opaque
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}

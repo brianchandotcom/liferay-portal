@@ -9,6 +9,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.address.dto.v1_0.Region;
 import com.liferay.headless.admin.address.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.headless.admin.address.internal.odata.entity.v1_0.RegionEntityModel;
 import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -28,9 +29,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -344,10 +343,7 @@ public class RegionResourceImpl
 		return _regionResourceDTOConverter.toDTO(serviceBuilderRegion);
 	}
 
-	private static final EntityModel _entityModel =
-		() -> EntityModel.toEntityFieldsMap(
-			new DoubleEntityField("position", locale -> "position"),
-			new StringEntityField("name", locale -> "name"));
+	private static final EntityModel _entityModel = new RegionEntityModel();
 
 	@Reference
 	private CountryService _countryService;

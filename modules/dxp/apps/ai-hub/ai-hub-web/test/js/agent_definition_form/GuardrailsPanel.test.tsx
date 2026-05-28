@@ -116,7 +116,7 @@ describe('GuardrailsPanel', () => {
 
 	it('calls setSelected when a source item is added', () => {
 		const picker = buildPicker({
-			sourceList: [{externalReferenceCode: 'MAT_1', name: 'Guard A'}],
+			sourceList: [{externalReferenceCode: 'MAT_1', title: 'Guard A'}],
 		});
 
 		render(
@@ -126,15 +126,15 @@ describe('GuardrailsPanel', () => {
 		fireEvent.click(screen.getByTestId('add-MAT_1'));
 
 		expect(picker.setSelected).toHaveBeenCalledWith([
-			{externalReferenceCode: 'MAT_1', name: 'Guard A'},
+			{externalReferenceCode: 'MAT_1', title: 'Guard A'},
 		]);
 	});
 
 	it('calls setSelected without the removed item when remove is clicked', () => {
 		const picker = buildPicker({
 			selected: [
-				{externalReferenceCode: 'MAT_1', name: 'Guard A'},
-				{externalReferenceCode: 'MAT_2', name: 'Guard B'},
+				{externalReferenceCode: 'MAT_1', title: 'Guard A'},
+				{externalReferenceCode: 'MAT_2', title: 'Guard B'},
 			],
 		});
 
@@ -145,7 +145,7 @@ describe('GuardrailsPanel', () => {
 		fireEvent.click(screen.getByTestId('remove-MAT_1'));
 
 		expect(picker.setSelected).toHaveBeenCalledWith([
-			{externalReferenceCode: 'MAT_2', name: 'Guard B'},
+			{externalReferenceCode: 'MAT_2', title: 'Guard B'},
 		]);
 	});
 
@@ -162,11 +162,11 @@ describe('GuardrailsPanel', () => {
 		).toBeDisabled();
 	});
 
-	it('renders the currently selected templates using the name field', () => {
+	it('renders the currently selected templates using the title field', () => {
 		const picker = buildPicker({
 			selected: [
-				{externalReferenceCode: 'MAT_1', name: 'Guard A'},
-				{externalReferenceCode: 'MAT_2', name: 'Guard B'},
+				{externalReferenceCode: 'MAT_1', title: 'Guard A'},
+				{externalReferenceCode: 'MAT_2', title: 'Guard B'},
 			],
 		});
 

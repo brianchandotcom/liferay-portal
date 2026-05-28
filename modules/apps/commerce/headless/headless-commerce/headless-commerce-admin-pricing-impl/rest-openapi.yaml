@@ -2,6 +2,10 @@ components:
     parameters:
         externalReferenceCodePathParam:
             in: path
+            description:
+                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The
+                code is the integration-supplied idempotency key, unique within the resource scope; POST against this
+                path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -12,8 +16,23 @@ components:
                 minLength: 1
                 type: string
             style: simple
+        filterQueryParam:
+            in: query
+            description:
+                OData v4 filter expression that narrows the result set. Only the price-list listing endpoint honours
+                this parameter, and the filterable field is `name` (sourced from PriceListEntityModel). Example --
+                filter=name eq "Default Price List".
+            explode: true
+            name: filter
+            required: false
+            schema:
+                type: string
+            style: form
         idPathParam:
             in: path
+            description:
+                Internal numeric identifier of the target resource. Counterpart to the `by-externalReferenceCode` path
+                variant; identifiers are server-assigned and stable across the resource's lifetime.
             explode: false
             name: id
             required: true
@@ -27,6 +46,8 @@ components:
             style: simple
         pageQueryParam:
             in: query
+            description:
+                One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.
             explode: true
             name: page
             required: false
@@ -35,11 +56,26 @@ components:
             style: form
         pageSizeQueryParam:
             in: query
+            description:
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
+                portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
             schema:
                 type: integer
+            style: form
+        sortQueryParam:
+            in: query
+            description:
+                Sort expression with one or more field:asc|desc pairs separated by commas. Only the price-list listing
+                endpoint honours this parameter, and the sortable field is `name` (sourced from PriceListEntityModel).
+                Example -- sort=name:asc.
+            explode: true
+            name: sort
+            required: false
+            schema:
+                type: string
             style: form
     responses:
         NotFound:
@@ -64,97 +100,188 @@ components:
                 Authentication information is missing or invalid
     schemas:
         Discount:
+            description:
+                Promotional discount program scoped to a single company. Backed by discount; carries the target slice
+                (subtotal, total, products, categories, skus, product-groups, or shipping), the limitation policy that
+                caps reuse, an optional couponCode gate, the percentage tiers (or fixed-amount cap), and four cascading
+                rel collections (account-group, category, product, rule). Workflow-aware -- the runtime only honours
+                discounts whose status is approved (Approved).
             properties:
                 active:
+                    description:
+                        Whether the discount is currently enabled. Inverted from discount.isActive in the runtime; when
+                        false the price calculation engine skips the discount during cart evaluation.
                     example: true
                     type: boolean
                 couponCode:
+                    description:
+                        Optional coupon code that the buyer must supply at checkout when `useCouponCode` is true.
+                        Case-sensitive; matched on the persisted record; ignored when `useCouponCode` is false.
                     example: SAVE20
                     type: string
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form Expando custom fields attached to the underlying discount entity. Keys are Expando
+                        attribute names; values follow each attribute's declared column type. Read and write through
+                        ExpandoBridge on the entity.
+                    example:
+                        customField1: value1
                     type: object
                 discountAccountGroups:
+                    description:
+                        Account-group bindings cascaded on upsert. Each entry attaches the discount to one AccountGroup;
+                        supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountAccountGroup"
                     type: array
                 discountCategories:
+                    description:
+                        AssetCategory bindings cascaded on upsert. Each entry restricts the discount to one category;
+                        supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountCategory"
                     type: array
                 discountProducts:
+                    description:
+                        product bindings cascaded on upsert. Each entry restricts the discount to one product; supplying
+                        this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountProduct"
                     type: array
                 discountRules:
+                    description:
+                        Validator rules cascaded on upsert. Each entry attaches a pre-qualification, post-qualification,
+                        or target validator; supplying this array on POST/PUT replaces the previous rules.
                     items:
                         $ref: "#/components/schemas/DiscountRule"
                     type: array
                 displayDate:
+                    description:
+                        Date and time at which the discount becomes eligible for cart evaluation. Accepted in the
+                        request locale and time zone, normalized to the portal's time zone, and compared against the
+                        current server clock at price calculation time.
+                    example: 2025-01-01
                     format: date
                     type: string
                 expirationDate:
+                    description:
+                        Date and time after which the discount stops applying. Ignored when `neverExpire` is true;
+                        accepted in the request locale and time zone and normalized to the portal's time zone.
+                    example: 2099-12-31
                     format: date
                     type: string
                 externalReferenceCode:
-                    example: AB-34098-789-N
+                    description:
+                        Idempotency key for create and update. Must be unique per discount within the company; matched
+                        on the persisted record; indexed for exact-match search.
+                    example: DISC-SUMMER-2025
                     type: string
                 id:
+                    description:
+                        Internal numeric identifier of the discount; read-only and assigned by the service on create.
+                        Stable across the discount's lifetime.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 limitationTimes:
-                    example: 0
+                    description:
+                        Cap on the total number of applications across orders. Interpreted together with
+                        `limitationType` -- `unlimited` ignores this value, `limited` enforces a global cap,
+                        `limited-for-accounts` enforces a per-account cap, and `limited-for-accounts-and-total` enforces
+                        both. Stored as int; 0 means unlimited.
+                    example: 100
                     format: int32
                     minimum: 0
                     type: integer
                 limitationType:
+                    description:
+                        Strategy that decides how the discount usage cap is enforced. One of `unlimited`, `limited`,
+                        `limited-for-accounts`, `limited-for-accounts-and-total` (sourced from a discount constant).
+                        Required on create.
                     example: unlimited
                     type: string
                 maximumDiscountAmount:
-                    example: 25
+                    description:
+                        Maximum monetary amount that can be discounted in a single application. Expressed in the order's
+                        currency with the same scale as the price entries; honoured only when `usePercentage` is true
+                        and the computed percentage payout exceeds this cap.
+                    example: 50
                     format: bigdecimal
                     minimum: 0
                     type: number
                 neverExpire:
-                    example: true
+                    description:
+                        When true the discount has no expiration date and `expirationDate` is ignored. Defaults to true
+                        on the DTO when `expirationDate` is null; persisted as expirationDate == null in the backend.
+                    example: false
                     type: boolean
                 numberOfUse:
-                    example: 5
+                    description:
+                        How many times the discount has been applied to a placed order. Read-only; incremented by the
+                        runtime when the discount fires on a checkout.
+                    example: 12
                     format: int32
                     minimum: 0
                     type: integer
                 percentageLevel1:
+                    description:
+                        First tier of the discount percentage. Used when `usePercentage` is true; expressed as a decimal
+                        where 20 means 20%. Targets like `subtotal` and `total` only consume Level 1; SKU and category
+                        targets can chain Levels 1-4.
                     example: 20
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel2:
+                    description:
+                        Second tier of the discount percentage. Applies to multi-tier discount targets (chained off
+                        Level 1). Expressed as a decimal; 0 means no second tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel3:
+                    description:
+                        Third tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a
+                        decimal; 0 means no third tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel4:
+                    description:
+                        Fourth tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a
+                        decimal; 0 means no fourth tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 target:
+                    description:
+                        Slice of the order the discount applies to. One of `subtotal`, `total`, `products`,
+                        `categories`, `skus`, `product-groups`, `shipping` (sourced from a discount constant). Required
+                        on create. The choice decides which of the four rel collections (categories, products, account
+                        groups) the price calculation engine consults.
                     example: subtotal
                     type: string
                 title:
-                    example: 20% Off
+                    description:
+                        Human-readable title of the discount. Shown in the admin UI, in usage reports, and in any
+                        HATEOAS link that references the discount.
+                    example: Summer 20% Off
                     type: string
                 useCouponCode:
+                    description:
+                        When true the discount only applies when the buyer supplies the matching `couponCode` at
+                        checkout. Storefront enforces this via the cart's coupon-code workflow.
                     example: true
                     type: boolean
                 usePercentage:
+                    description:
+                        When true the discount payout is computed from `percentageLevel1` ... `percentageLevel4`. When
+                        false the discount uses the `maximumDiscountAmount` fixed-amount payout.
                     example: true
                     type: boolean
             required:
@@ -163,24 +290,43 @@ components:
                 -   title
             type: object
         DiscountAccountGroup:
+            description:
+                Account-group binding that restricts a discount to a specific AccountGroup. Backed by discount account
+                group link; one row per (discount, accountGroup) pair, the pair is enforced unique by the underlying
+                service.
             properties:
                 accountGroupExternalReferenceCode:
-                    example: PAB-34098-789-N
+                    description:
+                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be
+                        supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
+                    example: ACG-PARTNERS
                     type: string
                 accountGroupId:
-                    example: 30130
+                    description:
+                        Internal numeric identifier of the target AccountGroup. Either this or
+                        `accountGroupExternalReferenceCode` must be supplied on create.
+                    example: 41001
                     format: int64
                     minimum: 0
                     type: integer
                 discountExternalReferenceCode:
-                    example: DAB-34098-789-N
+                    description:
+                        External reference code of the parent discount. Populated by the server on response; on create
+                        the discount is resolved from the URL path.
+                    example: DISC-SUMMER-2025
                     type: string
                 discountId:
-                    example: 30324
+                    description:
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on
+                        create the discount is resolved from the URL path.
+                    example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
+                    description:
+                        Internal numeric identifier of the discount account group link; read-only and assigned by the
+                        service on create.
                     example: 30643
                     format: int64
                     minimum: 0
@@ -188,99 +334,164 @@ components:
                     type: integer
             type: object
         DiscountCategory:
+            description:
+                Category binding that restricts a discount to products tagged with a specific AssetCategory. Backed by
+                discount link where classNameId resolves to AssetCategory; honoured only when the parent discount's
+                `target` is `categories`.
             properties:
                 categoryExternalReferenceCode:
-                    example: PAB-34098-789-N
+                    description:
+                        External reference code of the target AssetCategory. Either this or `categoryId` must be
+                        supplied on create; resolved through AssetCategoryLocalService.fetchByExternalReferenceCode.
+                    example: CAT-LAPTOPS
                     type: string
                 categoryId:
-                    example: 30130
+                    description:
+                        Internal numeric identifier of the target AssetCategory. Either this or
+                        `categoryExternalReferenceCode` must be supplied on create.
+                    example: 41002
                     format: int64
                     minimum: 0
                     type: integer
                 discountExternalReferenceCode:
-                    example: DAB-34098-789-N
+                    description:
+                        External reference code of the parent discount. Populated by the server on response; on create
+                        the discount is resolved from the URL path.
+                    example: DISC-SUMMER-2025
                     type: string
                 discountId:
-                    example: 30324
+                    description:
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on
+                        create the discount is resolved from the URL path.
+                    example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
-                    example: 30643
+                    description:
+                        Internal numeric identifier of the discount link (AssetCategory binding); read-only and assigned
+                        by the service on create.
+                    example: 30644
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
             type: object
         DiscountProduct:
+            description:
+                Product binding that restricts a discount to a specific product. Backed by discount link where
+                classNameId resolves to product; honoured only when the parent discount's `target` is `products`.
             properties:
                 discountExternalReferenceCode:
-                    example: DAB-34098-789-N
+                    description:
+                        External reference code of the parent discount. Populated by the server on response; on create
+                        the discount is resolved from the URL path.
+                    example: DISC-SUMMER-2025
                     type: string
                 discountId:
-                    example: 30324
+                    description:
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on
+                        create the discount is resolved from the URL path.
+                    example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
-                    example: 30643
+                    description:
+                        Internal numeric identifier of the discount link (product binding); read-only and assigned by
+                        the service on create.
+                    example: 30645
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 productExternalReferenceCode:
-                    example: PAB-34098-789-N
+                    description:
+                        External reference code of the target product. Either this or `productId` must be supplied on
+                        create; resolved through the catalog service.
+                    example: PROD-HAND-SAW
                     type: string
                 productId:
-                    example: 30130
+                    description:
+                        Internal numeric identifier of the target product. Either this or `productExternalReferenceCode`
+                        must be supplied on create.
+                    example: 42001
                     format: int64
                     minimum: 0
                     type: integer
             type: object
         DiscountRule:
+            description:
+                Validator rule attached to a discount. Backed by discount rule; the `type` string selects the discount
+                rule type implementation (registered via OSGi), and `typeSettings` carries the JSON configuration the
+                validator consumes at price-calculation time.
             properties:
                 discountId:
-                    example: 30324
+                    description:
+                        Internal numeric identifier of the parent discount. Read-only; populated by the server from the
+                        URL path on create.
+                    example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 id:
-                    example: 30643
+                    description:
+                        Internal numeric identifier of the discount rule; read-only and assigned by the service on
+                        create.
+                    example: 30646
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 type:
+                    description:
+                        Validator type that selects the discount rule type implementation. Common values include
+                        `cart-total`, `categories`, `products`, and `coupon`. Required on create; unknown types raise
+                        DiscountRuleTypeException -> 400.
                     example: cart-total
                     type: string
                 typeSettings:
+                    description:
+                        JSON-encoded configuration consumed by the matching discount rule type. The shape depends on
+                        `type` -- for `cart-total` it carries a numeric threshold, for `categories` it carries the
+                        eligible category list, and so on.
                     example: "22.50"
                     type: string
             required:
                 -   type
             type: object
         Error:
+            description:
+                Standard error envelope returned by the JAX-RS exception mappers in the impl module. Wraps the HTTP
+                status, an internal error code, and a human-readable message and description for failed requests;
+                emitted as application/json or application/xml based on the request's Accept header.
             properties:
                 errorCode:
                     description:
-                        Internal error code mapping
+                        Internal Liferay error code that classifies the failure. Stable across releases for the same
+                        error condition; used by integration code to branch on specific failure modes without parsing
+                        the message.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
-                    example: Unable to find currency. Currency code should be expressed with
-                        3-letter ISO 4217 format.
+                    description:
+                        Detailed, human-readable explanation of the failure intended for log entries and
+                        developer-facing tooling. May embed lookup keys that identify the offending entity.
+                    example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
-                    example: No CommerceCurrency exists with the key {groupId=41811, code=US
-                        Dollar}
+                    description:
+                        Short, human-readable summary of the failure intended for end-user display. May embed lookup
+                        keys that identify the offending entity.
+                    example: No currency exists with the key (companyId=41811, code=USD)
                     readOnly: true
                     type: string
                 status:
                     description:
-                        HTTP Status code
+                        HTTP status code returned with the response. Mirrors the numeric status of the response line.
                     example: 404
                     readOnly: true
                     type: integer
@@ -291,51 +502,91 @@ components:
                 -   status
             type: object
         PriceEntry:
+            description:
+                Per-SKU price entry inside a price list. Backed by price entry; binds a SKU to a regular price and an
+                optional promo price. Entries with one or more tier price overrides expose `hasTierPrice` as true.
             properties:
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form Expando custom fields attached to the underlying price entry entity. Keys are Expando
+                        attribute names; values follow each attribute's declared column type.
+                    example:
+                        customField1: value1
                     type: object
                 externalReferenceCode:
-                    example: AB-34098-789-N
+                    description:
+                        Idempotency key for create and update. Must be unique per price entry within the company;
+                        matched on the persisted record.
+                    example: PE-HAND-SAW-DEFAULT
                     type: string
                 hasTierPrice:
+                    description:
+                        Whether the entry has one or more tier price overrides. Read-only; computed by the runtime from
+                        the tier-price collection on every fetch.
                     example: true
                     type: boolean
                 id:
+                    description:
+                        Internal numeric identifier of the price entry; read-only and assigned by the service on create.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 price:
-                    example: 30130
+                    description:
+                        Regular selling price for the SKU within this price list. Expressed in the price list's currency
+                        with the price-list scale (typically 2 decimals); rejected when negative.
+                    example: 99.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 priceListExternalReferenceCode:
-                    example: PLAB-34098-789-N
+                    description:
+                        External reference code of the parent price list. Populated by the server on response; on create
+                        the parent is resolved from the URL path.
+                    example: PL-DEFAULT-USD
                     type: string
                 priceListId:
+                    description:
+                        Internal numeric identifier of the parent price list. Populated by the server on response; on
+                        create the parent is resolved from the URL path.
                     example: 20078
                     format: int64
                     minimum: 0
                     type: integer
                 promoPrice:
-                    example: 30130
+                    description:
+                        Promotional price applied when a promotion is active for the SKU. Expressed in the price list's
+                        currency; rejected when negative.
+                    example: 89.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 sku:
-                    example: BL500IC
+                    description:
+                        SKU code of the target SKU. Read-only on update; on create the SKU is resolved by `skuId` or
+                        `skuExternalReferenceCode`.
+                    example: HAND-SAW-A1
                     type: string
                 skuExternalReferenceCode:
-                    example: CAB-34098-789-N
+                    description:
+                        External reference code of the target SKU. Either this or `skuId` must be supplied on create;
+                        resolved through the catalog service.
+                    example: SKU-HAND-SAW-A1
                     type: string
                 skuId:
-                    example: 30130
+                    description:
+                        Internal numeric identifier of the target SKU. Either this or `skuExternalReferenceCode` must be
+                        supplied on create.
+                    example: 42101
                     format: int64
                     minimum: 0
                     type: integer
                 tierPrices:
+                    description:
+                        Quantity-break overrides cascaded on upsert. Supplying this array on POST/PATCH replaces the
+                        previous tier-price collection.
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
@@ -343,51 +594,97 @@ components:
                 -   price
             type: object
         PriceList:
+            description:
+                Versioned price catalog scoped to a catalog. Backed by price list; carries the currency, the resolution
+                priority, an optional display/expiration window, and nested priceEntries and priceListAccountGroups
+                collections. The DTO field `active` is the logical inverse of the backend `inactive` flag.
             properties:
                 active:
+                    description:
+                        Whether the price list is currently enabled. Inverse of the backend `inactive` flag; when false
+                        the runtime skips the list during price resolution.
                     example: true
                     type: boolean
                 catalogId:
+                    description:
+                        Internal numeric identifier of the parent catalog. Resolved by the converter on the price list's
+                        groupId; 0 when the lookup fails.
                     example: 23130
                     format: int64
                     minimum: 0
                     type: integer
                 currencyCode:
-                    example: EUR
+                    description:
+                        ISO 4217 code of the currency the prices are expressed in. Must match an existing currency in
+                        the company scope (matched on the persisted record).
+                    example: USD
                     type: string
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form Expando custom fields attached to the underlying price list entity. Keys are Expando
+                        attribute names; values follow each attribute's declared column type.
+                    example:
+                        customField1: value1
                     type: object
                 displayDate:
+                    description:
+                        Date and time at which the price list becomes eligible for price resolution. Accepted in the
+                        request locale and time zone, normalized to the portal's time zone.
+                    example: 2025-01-01
                     format: date
                     type: string
                 expirationDate:
+                    description:
+                        Date and time after which the price list stops applying. Ignored when `neverExpire` is true;
+                        accepted in the request locale and time zone.
+                    example: 2099-12-31
                     format: date
                     type: string
                 externalReferenceCode:
-                    example: AB-34098-789-N
+                    description:
+                        Idempotency key for create and update. Must be unique per price list within the company; matched
+                        on the persisted record.
+                    example: PL-DEFAULT-USD
                     type: string
                 id:
+                    description:
+                        Internal numeric identifier of the price list; read-only and assigned by the service on create.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 name:
-                    example: Laptops, Beverages
+                    description:
+                        Human-readable name of the price list shown in the admin UI. Indexed for search and exposed as
+                        the OData `name` field for filter and sort.
+                    example: Default USD Price List
                     type: string
                 neverExpire:
-                    example: true
+                    description:
+                        When true the price list has no expiration date and `expirationDate` is ignored. Defaults to
+                        true on the DTO when `expirationDate` is null.
+                    example: false
                     type: boolean
                 priceEntries:
+                    description:
+                        Per-SKU price entries cascaded on upsert. Supplying this array on POST/PUT replaces the previous
+                        price-entry collection.
                     items:
                         $ref: "#/components/schemas/PriceEntry"
                     type: array
                 priceListAccountGroups:
+                    description:
+                        Account-group bindings cascaded on upsert. Supplying this array on POST/PUT replaces the
+                        previous binding collection.
                     items:
                         $ref: "#/components/schemas/PriceListAccountGroup"
                     type: array
                 priority:
-                    example: 1.2
+                    description:
+                        Resolution priority used when more than one eligible price list applies to a buyer. Higher
+                        values win; ties are broken by externalReferenceCode lexicographic order.
+                    example: 1.0
                     format: double
                     type: number
             required:
@@ -395,76 +692,153 @@ components:
                 -   name
             type: object
         PriceListAccountGroup:
+            description:
+                Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list
+                account group link; the `order` integer controls the resolution priority when multiple account-group
+                bindings match the buyer.
             properties:
                 accountGroupExternalReferenceCode:
-                    example: DAB-34098-789-N
+                    description:
+                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be
+                        supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
+                    example: ACG-PARTNERS
                     type: string
                 accountGroupId:
-                    example: 30324
+                    description:
+                        Internal numeric identifier of the target AccountGroup. Either this or
+                        `accountGroupExternalReferenceCode` must be supplied on create.
+                    example: 41001
                     format: int64
                     minimum: 0
                     type: integer
                 id:
-                    example: 30643
+                    description:
+                        Internal numeric identifier of the price list account group link; read-only and assigned by the
+                        service on create.
+                    example: 30647
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 order:
+                    description:
+                        Resolution priority within the (price list, account group) bindings. Used as a tie-breaker when
+                        multiple account-group bindings match the buyer; lower values evaluated first.
                     example: 1
                     format: int32
                     minimum: 0
                     type: integer
                 priceListExternalReferenceCode:
-                    example: PAB-34098-789-N
+                    description:
+                        External reference code of the parent price list. Populated by the server on response; on create
+                        the parent is resolved from the URL path.
+                    example: PL-DEFAULT-USD
                     type: string
                 priceListId:
+                    description:
+                        Internal numeric identifier of the parent price list. Populated by the server on response; on
+                        create the parent is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
             type: object
         TierPrice:
+            description:
+                Quantity-break override on a price entry. Backed by tier price; the DTO's `minimumQuantity` maps to the
+                backend `minQuantity` BigDecimal threshold above which `price` (and optional `promoPrice`) supersede the
+                parent price entry.
             properties:
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form Expando custom fields attached to the underlying tier price entity. Keys are Expando
+                        attribute names; values follow each attribute's declared column type.
+                    example:
+                        customField1: value1
                     type: object
                 externalReferenceCode:
-                    example: AB-34098-789-N
+                    description:
+                        Idempotency key for create and update. Must be unique per tier price within the company; matched
+                        on the persisted record.
+                    example: TP-HAND-SAW-Q10
                     type: string
                 id:
+                    description:
+                        Internal numeric identifier of the tier price; read-only and assigned by the service on create.
                     example: 31130
                     format: int64
                     minimum: 0
                     type: integer
                 minimumQuantity:
-                    example: 5
+                    description:
+                        Quantity threshold above which the tier `price` (and optional `promoPrice`) supersedes the
+                        parent price entry. Maps to tier price.minQuantity (BigDecimal); supplied as integer in the DTO
+                        and converted on persistence.
+                    example: 10
                     format: int32
                     minimum: 0
                     type: integer
                 price:
-                    example: 25
+                    description:
+                        Override price applied at or above `minimumQuantity`. Expressed in the parent price list's
+                        currency with the price-list scale; rejected when negative.
+                    example: 89.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 priceEntryExternalReferenceCode:
-                    example: CAB-34098-789-N
+                    description:
+                        External reference code of the parent price entry. Populated by the server on response; on
+                        create the parent is resolved from the URL path.
+                    example: PE-HAND-SAW-DEFAULT
                     type: string
                 priceEntryId:
+                    description:
+                        Internal numeric identifier of the parent price entry. Populated by the server on response; on
+                        create the parent is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 promoPrice:
-                    example: 20
+                    description:
+                        Promotional override price applied at or above `minimumQuantity` when a promotion is active.
+                        Expressed in the parent price list's currency; rejected when negative.
+                    example: 79.99
                     format: bigdecimal
                     minimum: 0
                     type: number
             type: object
 info:
     description:
-        "Liferay Commerce Admin Pricing API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.48'."
+        "Administrative REST API for the Liferay Commerce pricing domain. It manages discount programs and price-list
+        catalogs used to price products for buyers -- discounts (with their coupon codes, tier percentages, expiration
+        windows, and account-group/category/product/rule scope), price lists (with their per-SKU price entries,
+        tier-quantity break prices, and account-group eligibility), and the rules that decide when each program applies.
+        The API targets back-office administrators and integration tooling; storefront price resolution belongs to
+        headless-commerce-delivery-cart and the runtime the price calculation engine services instead. Most resources
+        are addressable both by internal ID (`/<id>`) and by external reference code
+        (`/by-externalReferenceCode/<externalReferenceCode>`); POST against the external-reference-code path is upsert.
+        PATCH applies JSON Merge Patch (only the supplied fields are modified), while PUT replaces the resource. For the
+        catalog, account, channel, order, and payment surfaces see the matching `headless-commerce-admin-*` modules. --
+        Common workflows: Define a tiered discount end-to-end -- (1) POST /discounts with title, target (for example
+        `products` or `subtotal`), limitationType, and the percentage levels (or a fixed maximumDiscountAmount) to
+        create the discount (POST /discounts/by-externalReferenceCode/<externalReferenceCode> is upsert); (2) POST
+        /discounts/<id>/discountAccountGroups, /discountCategories, and /discountProducts to scope eligibility; (3) POST
+        /discounts/<id>/discountRules to attach pre-qualification, post-qualification, or target validators carrying a
+        JSON typeSettings payload; (4) PATCH /discounts/<id> to flip `active`, rotate the couponCode, or adjust the
+        displayDate/expirationDate window. -- Publish a contract or promotion price list -- (1) POST /priceLists with
+        name, currencyCode, catalogId, and priority to create the price list; (2) POST /priceLists/<id>/priceEntries per
+        SKU with sku (or skuExternalReferenceCode), price, and optional promoPrice to set the per-SKU price; (3) POST
+        /priceEntries/<id>/tierPrices to add quantity-break overrides keyed by minimumQuantity; (4) POST
+        /priceLists/<id>/priceListAccountGroups to limit visibility to specific AccountGroups with an ordering priority.
+        -- Maintain an existing price entry -- (1) GET /priceLists/<id>/priceEntries (or
+        /priceLists/by-externalReferenceCode/<externalReferenceCode>/priceEntries) to enumerate the per-SKU entries; (2)
+        PATCH /priceEntries/<id> (or /priceEntries/by-externalReferenceCode/<externalReferenceCode>) to adjust price or
+        promoPrice; (3) PATCH /tierPrices/<id> or DELETE /tierPrices/<id> to refresh or retire a quantity-break
+        override.. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.48'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -474,33 +848,14 @@ openapi: 3.0.0
 paths:
     /discount/by-externalReferenceCode/{externalReferenceCode}/discountRules:
         get:
+            description:
+                Lists the discount rule entries attached to a discount addressed by externalReferenceCode. ERC resolved
+                before the rule lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountRulesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -553,19 +908,12 @@ paths:
             tags:
                 -   DiscountRule
         post:
+            description:
+                Creates a discount rule under a discount addressed by externalReferenceCode. Same create pipeline as
+                postDiscountIdDiscountRule with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountRule
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -605,6 +953,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount rule.
                 404:
                     content:
                         application/json:
@@ -615,6 +973,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount rule from being created or updated (for
+                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
+                        out of range).
                 500:
                     content:
                         application/json:
@@ -630,20 +1000,11 @@ paths:
                 -   DiscountRule
     /discountAccountGroups/{id}:
         delete:
+            description:
+                Deletes a single discount account group link by internal ID. Delegates to the service.
             operationId: deleteDiscountAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -658,25 +1019,27 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount account group
+                        binding.
             summary: Deletes a Discount Account Group by ID.
             tags:
                 -   DiscountAccountGroup
     /discountCategories/{id}:
         delete:
+            description:
+                Deletes a single discount link (AssetCategory binding) by internal ID. Delegates to the service.
             operationId: deleteDiscountCategory
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -691,25 +1054,27 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount category
+                        binding.
             summary: Deletes a Discount Category by ID.
             tags:
                 -   DiscountCategory
     /discountProducts/{id}:
         delete:
+            description:
+                Deletes a single discount link (product binding) by internal ID. Delegates to the service.
             operationId: deleteDiscountProduct
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -724,25 +1089,32 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount product
+                        binding.
+            security:
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminPricing.write
             summary: Deletes a Discount Product by ID.
             tags:
                 -   DiscountProduct
     /discountRules/{id}:
         delete:
+            description:
+                Deletes a single discount rule by internal ID. Delegates to the service.
             operationId: deleteDiscountRule
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -757,24 +1129,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount rule.
             summary: Deletes a Discount Rule by ID.
             tags:
                 -   DiscountRule
         get:
+            description:
+                Fetches a discount rule by internal ID. Delegates to the service. Validation -- a not-found error for
+                discount rule -> 404 when the ID is unknown.
             operationId: getDiscountRule
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 200:
                     content:
@@ -799,6 +1173,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount rule.
                 404:
                     content:
                         application/json:
@@ -823,20 +1207,11 @@ paths:
             tags:
                 -   DiscountRule
         patch:
+            description:
+                Partially updates a discount rule by internal ID. JSON Merge Patch over type and typeSettings.
             operationId: patchDiscountRule
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -866,6 +1241,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount rule.
                 404:
                     content:
                         application/json:
@@ -876,6 +1261,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount rule from being created or updated (for
+                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
+                        out of range).
                 500:
                     content:
                         application/json:
@@ -891,22 +1288,13 @@ paths:
                 -   DiscountRule
     /discounts:
         get:
+            description:
+                Lists active discount entries scoped to the current company. Delegates to the service with Pagination.
+                No OData filter or sort surface is exposed; results follow the service default ordering.
             operationId: getDiscountsPage
             parameters:
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -956,6 +1344,13 @@ paths:
             tags:
                 -   Discount
         post:
+            description:
+                Creates or updates a discount via upsert-by-ERC. Delegates to the service with the supplied DTO and
+                cascades the nested discountAccountGroups, discountCategories, discountProducts, and discountRules
+                collections through the matching `add` helpers. Validation -- a title validation error, a target
+                validation error, a coupon-code validation error, DiscountLimitationTypeException,
+                DiscountMaxPriceValueException, DiscountMinPriceValueException, DiscountDisplayDateException, and
+                DiscountExpirationDateException all map to 400 Bad Request via module-local exception mappers.
             operationId: postDiscount
             requestBody:
                 content:
@@ -996,6 +1391,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1006,6 +1411,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1021,19 +1438,12 @@ paths:
                 -   Discount
     /discounts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes a discount addressed by externalReferenceCode. Same cascade semantics as deleteDiscount; 404
+                when the ERC is unknown.
             operationId: deleteDiscountByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     description:
@@ -1048,23 +1458,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
             summary: Deletes a Discount by external reference code.
             tags:
                 -   Discount
         get:
+            description:
+                Fetches a discount by externalReferenceCode (ERC). Delegates to the service. Validation -- 404 when no
+                discount with that ERC exists in the company scope.
             operationId: getDiscountByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -1089,6 +1502,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1113,19 +1536,12 @@ paths:
             tags:
                 -   Discount
         patch:
+            description:
+                Partially updates a discount addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
+                the ERC is unknown.
             operationId: patchDiscountByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1155,6 +1571,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1165,6 +1591,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1179,19 +1617,12 @@ paths:
             tags:
                 -   Discount
         put:
+            description:
+                Creates or replaces a discount addressed by externalReferenceCode. Same upsert pipeline as postDiscount
+                -- delegates to the service and cascades the nested rel collections.
             operationId: putDiscountByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1231,6 +1662,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1241,6 +1682,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1256,33 +1709,14 @@ paths:
                 -   Discount
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountAccountGroups:
         get:
+            description:
+                Lists the account-group rels attached to a discount addressed by externalReferenceCode. Resolves the
+                discount (404 when ERC unknown), then delegates to the service.
             operationId: getDiscountByExternalReferenceCodeDiscountAccountGroupsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1332,19 +1766,12 @@ paths:
             tags:
                 -   DiscountAccountGroup
         post:
+            description:
+                Attaches an AccountGroup to a discount addressed by externalReferenceCode. Same create pipeline as
+                postDiscountIdDiscountAccountGroup with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1384,6 +1811,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1394,6 +1831,28 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- the discount is already bound to this account group.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1409,33 +1868,14 @@ paths:
                 -   DiscountAccountGroup
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountCategories:
         get:
+            description:
+                Lists the AssetCategory bindings attached to a discount addressed by externalReferenceCode. ERC resolved
+                before the rel lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountCategoriesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1485,19 +1925,12 @@ paths:
             tags:
                 -   DiscountCategory
         post:
+            description:
+                Attaches an AssetCategory to a discount addressed by externalReferenceCode. Same create pipeline as
+                postDiscountIdDiscountCategory with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountCategory
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1537,6 +1970,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1547,6 +1990,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1562,33 +2017,14 @@ paths:
                 -   DiscountCategory
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountProducts:
         get:
+            description:
+                Lists the product bindings attached to a discount addressed by externalReferenceCode. ERC resolved
+                before the rel lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountProductsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1638,19 +2074,12 @@ paths:
             tags:
                 -   DiscountProduct
         post:
+            description:
+                Attaches a product product to a discount addressed by externalReferenceCode. Same create pipeline as
+                postDiscountIdDiscountProduct with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountProduct
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1690,6 +2119,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1700,6 +2139,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1715,20 +2166,13 @@ paths:
                 -   DiscountProduct
     /discounts/{id}:
         delete:
+            description:
+                Deletes a discount by internal ID. Delegates to the service. Side effects -- cascades the deletion of
+                discount account group link, discount link (account, category, product, channel, order-type), and
+                discount rule rows.
             operationId: deleteDiscount
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -1743,24 +2187,27 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
             summary: Deletes a Discount by ID.
             tags:
                 -   Discount
         get:
+            description:
+                Fetches a discount by internal ID. Delegates to the service and returns a Discount DTO including its
+                account-group, category, product, and rule rels. Validation -- a not-found error for discount -> 404
+                when the ID is unknown.
             operationId: getDiscount
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 200:
                     content:
@@ -1785,6 +2232,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1809,20 +2266,13 @@ paths:
             tags:
                 -   Discount
         patch:
+            description:
+                Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields , then
+                cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when
+                the ID is unknown.
             operationId: patchDiscount
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -1852,6 +2302,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -1862,6 +2322,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1877,34 +2349,13 @@ paths:
                 -   Discount
     /discounts/{id}/discountAccountGroups:
         get:
+            description:
+                Lists the account-group rels attached to a discount addressed by internal ID. Delegates to the service.
             operationId: getDiscountIdDiscountAccountGroupsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1954,20 +2405,12 @@ paths:
             tags:
                 -   DiscountAccountGroup
         post:
+            description:
+                Attaches an AccountGroup to a discount addressed by internal ID. Delegates to the service. Validation --
+                a duplicate-key error -> 409 Conflict when the (discount, accountGroup) pair already exists.
             operationId: postDiscountIdDiscountAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -2007,6 +2450,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -2017,6 +2470,28 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- the discount is already bound to this account group.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2032,34 +2507,14 @@ paths:
                 -   DiscountAccountGroup
     /discounts/{id}/discountCategories:
         get:
+            description:
+                Lists the AssetCategory bindings attached to a discount addressed by internal ID. Reads discount link
+                rows filtered by the AssetCategory class name.
             operationId: getDiscountIdDiscountCategoriesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -2109,20 +2564,12 @@ paths:
             tags:
                 -   DiscountCategory
         post:
+            description:
+                Attaches an AssetCategory to a discount addressed by internal ID. Delegates to the service with the
+                AssetCategory class name. The category is resolved by ID or externalReferenceCode from the supplied DTO.
             operationId: postDiscountIdDiscountCategory
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -2162,6 +2609,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -2172,6 +2629,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2187,34 +2656,14 @@ paths:
                 -   DiscountCategory
     /discounts/{id}/discountProducts:
         get:
+            description:
+                Lists the product bindings attached to a discount addressed by internal ID. Reads discount link rows
+                filtered by the product class name.
             operationId: getDiscountIdDiscountProductsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -2264,20 +2713,12 @@ paths:
             tags:
                 -   DiscountProduct
         post:
+            description:
+                Attaches a product product to a discount addressed by internal ID. Delegates to the service with the
+                product class name. The product is resolved by ID or externalReferenceCode from the supplied DTO.
             operationId: postDiscountIdDiscountProduct
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -2317,6 +2758,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -2327,6 +2778,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2342,34 +2805,14 @@ paths:
                 -   DiscountProduct
     /discounts/{id}/discountRules:
         get:
+            description:
+                Lists the discount rule entries attached to a discount addressed by internal ID. Delegates to the
+                service.
             operationId: getDiscountIdDiscountRulesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -2422,20 +2865,13 @@ paths:
             tags:
                 -   DiscountRule
         post:
+            description:
+                Creates a discount rule under a discount addressed by internal ID. Delegates to the service with the
+                supplied type (validator type, for example `cart-total`) and typeSettings JSON. Validation --
+                DiscountRuleTypeException -> 400 Bad Request when the type is unknown.
             operationId: postDiscountIdDiscountRule
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -2475,6 +2911,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this discount.
                 404:
                     content:
                         application/json:
@@ -2485,6 +2931,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the discount from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2500,19 +2958,11 @@ paths:
                 -   DiscountRule
     /priceEntries/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes a price entry addressed by externalReferenceCode. Same cascade semantics; 404 when ERC unknown.
             operationId: deletePriceEntryByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     description:
@@ -2527,23 +2977,25 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
             summary: Deletes a Price Entry by external reference code.
             tags:
                 -   PriceEntry
         get:
+            description:
+                Fetches a price entry by externalReferenceCode. 404 when no entry with that ERC exists.
             operationId: getPriceEntryByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -2568,6 +3020,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -2592,19 +3054,12 @@ paths:
             tags:
                 -   PriceEntry
         patch:
+            description:
+                Partially updates a price entry addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
+                ERC unknown.
             operationId: patchPriceEntryByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -2634,6 +3089,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -2644,6 +3109,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price entry from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2659,33 +3136,14 @@ paths:
                 -   PriceEntry
     /priceEntries/by-externalReferenceCode/{externalReferenceCode}/tierPrices:
         get:
+            description:
+                Lists the tier price rows under a price entry addressed by externalReferenceCode. ERC resolved before
+                the lookup; 404 when ERC unknown.
             operationId: getPriceEntryByExternalReferenceCodeTierPricesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -2738,19 +3196,12 @@ paths:
             tags:
                 -   TierPrice
         post:
+            description:
+                Creates a tier price under the parent price entry by externalReferenceCode. Same create pipeline as
+                postPriceEntryIdTierPrice with ERC-based parent resolution.
             operationId: postPriceEntryByExternalReferenceCodeTierPrice
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -2790,6 +3241,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -2800,6 +3261,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price
+                        entry.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price entry from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2815,20 +3299,12 @@ paths:
                 -   TierPrice
     /priceEntries/{id}:
         delete:
+            description:
+                Deletes a price entry by internal ID. Delegates to the service. Side effects -- cascades the deletion of
+                all tier price rows pointing at the entry.
             operationId: deletePriceEntry
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -2843,24 +3319,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
             summary: Deletes a Price Entry by ID.
             tags:
                 -   PriceEntry
         get:
+            description:
+                Fetches a price entry by internal ID. Delegates to the service. Validation -- NoSuchPriceEntryException
+                -> 404 when the ID is unknown.
             operationId: getPriceEntry
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 200:
                     content:
@@ -2885,6 +3363,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -2909,20 +3397,12 @@ paths:
             tags:
                 -   PriceEntry
         patch:
+            description:
+                Partially updates a price entry by internal ID. JSON Merge Patch over price, promoPrice, and the nested
+                tierPrices collection.
             operationId: patchPriceEntry
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -2952,6 +3432,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -2962,6 +3452,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price entry from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2977,34 +3479,14 @@ paths:
                 -   PriceEntry
     /priceEntries/{id}/tierPrices:
         get:
+            description:
+                Lists the tier price rows under a price entry addressed by internal ID. Delegates to the service.
+                Validation -- NoSuchPriceEntryException -> 404 when the parent ID is unknown.
             operationId: getPriceEntryIdTierPricesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -3057,20 +3539,14 @@ paths:
             tags:
                 -   TierPrice
         post:
+            description:
+                Creates a tier price under the parent price entry by internal ID. Calls
+                TierPriceUtil.addOrUpdateCommerceTierPriceEntry -> the service; the request body's minimumQuantity maps
+                to the backend minQuantity BigDecimal. Validation -- a duplicate-key error -> 409 Conflict when the
+                (priceEntry, minimumQuantity) pair already exists; TierPriceMinimumQuantityException -> 400 Bad Request.
             operationId: postPriceEntryIdTierPrice
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -3110,6 +3586,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price entry.
                 404:
                     content:
                         application/json:
@@ -3120,6 +3606,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price
+                        entry.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price entry from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3135,20 +3644,11 @@ paths:
                 -   TierPrice
     /priceListAccountGroups/{id}:
         delete:
+            description:
+                Deletes a single price list account group link by internal ID. Delegates to the service.
             operationId: deletePriceListAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -3163,33 +3663,31 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list account
+                        group binding.
             summary: Deletes a Price List Account Group by ID.
             tags:
                 -   PriceListAccountGroup
     /priceLists:
         get:
+            description:
+                Lists price list entries scoped to the current company. Calls SearchUtil.search backed by price list.
+                Filterable -- `name` (sourced from PriceListEntityModel). Sortable -- `name`.
             operationId: getPriceListsPage
             parameters:
-                -   in: query
-                    name: filter
-                    required: false
-                    schema:
-                        type: string
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: sort
-                    required: false
-                    schema:
-                        type: string
+                -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
+                -   $ref: "#/components/parameters/sortQueryParam"
             responses:
                 200:
                     content:
@@ -3239,6 +3737,11 @@ paths:
             tags:
                 -   PriceList
         post:
+            description:
+                Creates or updates a price list via upsert-by-ERC. Delegates to the service with the supplied DTO and
+                cascades the nested priceEntries and priceListAccountGroups collections. Validation --
+                PriceListDisplayDateException, PriceListExpirationDateException, PriceListMinPriceValueException,
+                PriceListMaxPriceValueException, and RequiredBasePriceListException -> 400 Bad Request.
             operationId: postPriceList
             requestBody:
                 content:
@@ -3279,6 +3782,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3289,6 +3802,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3304,19 +3829,11 @@ paths:
                 -   PriceList
     /priceLists/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes a price list addressed by externalReferenceCode. Same cascade semantics; 404 when ERC unknown.
             operationId: deletePriceListByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     description:
@@ -3331,23 +3848,25 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
             summary: Deletes a Price List by external reference code.
             tags:
                 -   PriceList
         get:
+            description:
+                Fetches a price list by externalReferenceCode. 404 when no list with that ERC exists.
             operationId: getPriceListByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -3372,6 +3891,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3396,19 +3925,12 @@ paths:
             tags:
                 -   PriceList
         patch:
+            description:
+                Partially updates a price list addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
+                ERC unknown.
             operationId: patchPriceListByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -3438,6 +3960,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3448,6 +3980,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3462,19 +4006,12 @@ paths:
             tags:
                 -   PriceList
         put:
+            description:
+                Creates or replaces a price list addressed by externalReferenceCode. Same upsert pipeline as
+                postPriceList -- delegates to the service.
             operationId: putPriceListByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -3514,6 +4051,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3524,6 +4071,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3539,33 +4098,14 @@ paths:
                 -   PriceList
     /priceLists/by-externalReferenceCode/{externalReferenceCode}/priceEntries:
         get:
+            description:
+                Lists the price entry rows under a price list addressed by externalReferenceCode. ERC resolved before
+                the entry lookup; 404 when ERC unknown.
             operationId: getPriceListByExternalReferenceCodePriceEntriesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -3615,19 +4155,12 @@ paths:
             tags:
                 -   PriceEntry
         post:
+            description:
+                Upserts a price entry under the parent price list by externalReferenceCode. Same pipeline as
+                postPriceListIdPriceEntry with ERC-based price-list resolution.
             operationId: postPriceListByExternalReferenceCodePriceEntry
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -3667,6 +4200,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3677,6 +4220,28 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- a price entry for this SKU already exists in the price list.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3692,33 +4257,14 @@ paths:
                 -   PriceEntry
     /priceLists/by-externalReferenceCode/{externalReferenceCode}/priceListAccountGroup:
         get:
+            description:
+                Lists the account-group rels attached to a price list addressed by externalReferenceCode. ERC resolved
+                before the rel lookup; 404 when ERC unknown.
             operationId: getPriceListByExternalReferenceCodePriceListAccountGroupPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -3768,19 +4314,12 @@ paths:
             tags:
                 -   PriceListAccountGroup
         post:
+            description:
+                Attaches an AccountGroup to a price list addressed by externalReferenceCode. Same create pipeline as
+                postPriceListIdPriceListAccountGroup with ERC-based price-list resolution.
             operationId: postPriceListByExternalReferenceCodePriceListAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -3820,6 +4359,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3830,6 +4379,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account
+                        group.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3845,20 +4417,12 @@ paths:
                 -   PriceListAccountGroup
     /priceLists/{id}:
         delete:
+            description:
+                Deletes a price list by internal ID. Delegates to the service. Side effects -- cascades the deletion of
+                all price entry, tier price, and account/account-group/channel/order-type rel rows pointing at the list.
             operationId: deletePriceList
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -3873,24 +4437,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
             summary: Deletes a Price List by ID.
             tags:
                 -   PriceList
         get:
+            description:
+                Fetches a price list by internal ID. Delegates to the service. Validation -- NoSuchPriceListException ->
+                404 when the ID is unknown.
             operationId: getPriceList
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 200:
                     content:
@@ -3915,6 +4481,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3939,20 +4515,12 @@ paths:
             tags:
                 -   PriceList
         patch:
+            description:
+                Partially updates a price list by internal ID. JSON Merge Patch over the supplied fields, then cascades
+                any supplied nested collections.
             operationId: patchPriceList
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -3982,6 +4550,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -3992,6 +4570,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4007,34 +4597,14 @@ paths:
                 -   PriceList
     /priceLists/{id}/priceEntries:
         get:
+            description:
+                Lists the price entry rows under a price list addressed by internal ID. Delegates to the service.
+                Validation -- NoSuchPriceListException -> 404 when the parent ID is unknown.
             operationId: getPriceListIdPriceEntriesPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -4084,20 +4654,15 @@ paths:
             tags:
                 -   PriceEntry
         post:
+            description:
+                Upserts a price entry under the parent price list by internal ID. Delegates to the service. The SKU is
+                resolved by skuId or skuExternalReferenceCode; nested tierPrices are cascaded through TierPriceUtil.
+                Validation -- a duplicate-key error -> 409 Conflict when the (priceList, sku) pair already exists;
+                PriceListMinPriceValueException, PriceListMaxPriceValueException, and PriceEntryUnitOfMeasureException
+                -> 400 Bad Request.
             operationId: postPriceListIdPriceEntry
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -4137,6 +4702,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -4147,6 +4722,28 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        a duplicate-key error -- a price entry for this SKU already exists in the price list.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4162,34 +4759,14 @@ paths:
                 -   PriceEntry
     /priceLists/{id}/priceListAccountGroups:
         get:
+            description:
+                Lists the account-group rels attached to a price list addressed by internal ID. Delegates to the
+                service.
             operationId: getPriceListIdPriceListAccountGroupsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    explode: true
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
+                -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -4239,20 +4816,14 @@ paths:
             tags:
                 -   PriceListAccountGroup
         post:
+            description:
+                Attaches an AccountGroup to a price list addressed by internal ID. Delegates to the service; the `order`
+                integer in the request body sets the resolution priority. Validation --
+                DuplicatePriceListAccountGroupRelException -> 409 Conflict when the (priceList, accountGroup) pair
+                already exists.
             operationId: postPriceListIdPriceListAccountGroup
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -4292,6 +4863,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this price list.
                 404:
                     content:
                         application/json:
@@ -4302,6 +4883,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account
+                        group.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the price list from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4317,19 +4921,11 @@ paths:
                 -   PriceListAccountGroup
     /tierPrices/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes a tier price addressed by externalReferenceCode. Same delete pipeline; 404 when ERC unknown.
             operationId: deleteTierPriceByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     description:
@@ -4344,23 +4940,25 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
             summary: Deletes a Tier Price by external reference code.
             tags:
                 -   TierPrice
         get:
+            description:
+                Fetches a tier price by externalReferenceCode. 404 when no entry with that ERC exists.
             operationId: getTierPriceByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -4385,6 +4983,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
                 404:
                     content:
                         application/json:
@@ -4409,19 +5017,12 @@ paths:
             tags:
                 -   TierPrice
         patch:
+            description:
+                Partially updates a tier price addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
+                ERC unknown.
             operationId: patchTierPriceByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -4451,6 +5052,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
                 404:
                     content:
                         application/json:
@@ -4461,6 +5072,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the tier price from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4476,20 +5099,11 @@ paths:
                 -   TierPrice
     /tierPrices/{id}:
         delete:
+            description:
+                Deletes a tier price by internal ID. Delegates to the service.
             operationId: deleteTierPrice
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 204:
                     description:
@@ -4504,24 +5118,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
             summary: Deletes a Tier Price by ID.
             tags:
                 -   TierPrice
         get:
+            description:
+                Fetches a tier price by internal ID. Delegates to the service. Validation --
+                NoSuchTierPriceEntryException -> 404 when the ID is unknown.
             operationId: getTierPrice
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             responses:
                 200:
                     content:
@@ -4546,6 +5162,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
                 404:
                     content:
                         application/json:
@@ -4570,20 +5196,12 @@ paths:
             tags:
                 -   TierPrice
         patch:
+            description:
+                Partially updates a tier price by internal ID. JSON Merge Patch over price, promoPrice, and
+                minimumQuantity.
             operationId: patchTierPrice
             parameters:
-                -   in: path
-                    explode: false
-                    name: id
-                    required: true
-                    schema:
-                        description:
-                            The resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/idPathParam"
             requestBody:
                 content:
                     application/json:
@@ -4613,6 +5231,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this tier price.
                 404:
                     content:
                         application/json:
@@ -4623,6 +5251,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the tier price from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4638,17 +5278,40 @@ paths:
                 -   TierPrice
 tags:
     -   description:
-            Operations on Discount Rules
-        name: DiscountRule
-    -   description:
-            Operations on Discounts
+            Discount programs scoped to a company. Each discount carries a target (subtotal, total, products,
+            categories, skus, product-groups, or shipping), a limitation policy (unlimited, limited,
+            limited-for-accounts, limited-for-accounts-and-total), and a percentage or fixed-amount payout, and may be
+            gated by an optional couponCode.
         name: Discount
     -   description:
-            Operations on Price Entries
+            Account-group bindings that restrict a discount's eligibility to a specific set of AccountGroups. Backed by
+            discount account group link.
+        name: DiscountAccountGroup
+    -   description:
+            Category bindings that restrict a discount to products tagged with specific asset categories. Backed by
+            discount link with the AssetCategory class name.
+        name: DiscountCategory
+    -   description:
+            Product bindings that restrict a discount to specific products. Backed by discount link with the product
+            class name.
+        name: DiscountProduct
+    -   description:
+            Pre-qualification, post-qualification, or target validators attached to a discount. Each rule carries a type
+            string and a JSON typeSettings payload interpreted by the matching discount rule type.
+        name: DiscountRule
+    -   description:
+            Per-SKU price entries inside a price list. Each entry binds a SKU to a regular price and an optional promo
+            price; entries with quantity-break overrides expose `hasTierPrice`.
         name: PriceEntry
     -   description:
-            Operations on Price Lists
+            Versioned price catalogs that price SKUs in a specific currency for a catalog. Each price list has a
+            priority, a display/expiration window, and may be account-group-scoped.
         name: PriceList
     -   description:
-            Operations on Tier Prices
+            Account-group bindings that restrict a price list's eligibility to a specific set of AccountGroups, with an
+            `order` integer that controls the resolution priority.
+        name: PriceListAccountGroup
+    -   description:
+            Quantity-break overrides on a price entry. Each tier price binds a minimumQuantity threshold to an override
+            price (and an optional promo price) that supersedes the parent price entry above that quantity.
         name: TierPrice

@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscountProductGroup")
+@GraphQLName(
+	description = "product group binding that restricts a discount to products inside a product group. Backed by discount link with the pricing class class name.",
+	value = "DiscountProductGroup"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "product group binding that restricts a discount to products inside a product group. Backed by discount link with the pricing class class name.",
 	requiredProperties = {"productGroupId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -54,7 +58,9 @@ public class DiscountProductGroup implements Serializable {
 			DiscountProductGroup.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -90,14 +96,19 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound discount; alternative to `discountId` for lookup.",
+		example = "DAB-34098-789-N"
+	)
 	public String getDiscountExternalReferenceCode() {
 		if (_discountExternalReferenceCodeSupplier != null) {
 			discountExternalReferenceCode =
@@ -135,7 +146,9 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound discount; alternative to `discountId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountExternalReferenceCode;
 
@@ -143,7 +156,10 @@ public class DiscountProductGroup implements Serializable {
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the discount entity (FK identifier).",
+		example = "30324"
+	)
 	public Long getDiscountId() {
 		if (_discountIdSupplier != null) {
 			discountId = _discountIdSupplier.get();
@@ -177,7 +193,9 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the discount entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
@@ -185,7 +203,10 @@ public class DiscountProductGroup implements Serializable {
 	private Supplier<Long> _discountIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the discountProductGroup entity (FK identifier).",
+		example = "30643"
+	)
 	public Long getDiscountProductGroupId() {
 		if (_discountProductGroupIdSupplier != null) {
 			discountProductGroupId = _discountProductGroupIdSupplier.get();
@@ -219,7 +240,9 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the discountProductGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountProductGroupId;
 
@@ -268,7 +291,10 @@ public class DiscountProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductGroup> _productGroupSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound productGroup; alternative to `productGroupId` for lookup.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductGroupExternalReferenceCode() {
 		if (_productGroupExternalReferenceCodeSupplier != null) {
 			productGroupExternalReferenceCode =
@@ -307,7 +333,9 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound productGroup; alternative to `productGroupId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productGroupExternalReferenceCode;
 
@@ -315,7 +343,10 @@ public class DiscountProductGroup implements Serializable {
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the productGroup entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getProductGroupId() {
 		if (_productGroupIdSupplier != null) {
 			productGroupId = _productGroupIdSupplier.get();
@@ -349,7 +380,9 @@ public class DiscountProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the productGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productGroupId;
@@ -580,4 +613,4 @@ public class DiscountProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2019532818
+// LIFERAY-REST-BUILDER-HASH:921359176

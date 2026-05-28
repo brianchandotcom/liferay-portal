@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceListChannel")
+@GraphQLName(
+	description = "Channel binding that restricts a price list's eligibility to a specific channel. Backed by price list channel link.",
+	value = "PriceListChannel"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Channel binding that restricts a price list's eligibility to a specific channel. Backed by price list channel link.",
 	requiredProperties = {"channelId", "priceListId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -53,7 +57,9 @@ public class PriceListChannel implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceListChannel.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -89,7 +95,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -138,7 +146,10 @@ public class PriceListChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound channel; alternative to `channelId` for lookup.",
+		example = "DAB-34098-789-N"
+	)
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -176,7 +187,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound channel; alternative to `channelId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
@@ -184,7 +197,10 @@ public class PriceListChannel implements Serializable {
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the channel entity (FK identifier).",
+		example = "30324"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -218,7 +234,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the channel entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long channelId;
@@ -227,7 +245,10 @@ public class PriceListChannel implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Ordering integer that orders this pricelistchannel relative to its peers. Lower numbers resolve first.",
+		example = "1"
+	)
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -261,7 +282,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Ordering integer that orders this pricelistchannel relative to its peers. Lower numbers resolve first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
@@ -269,7 +292,10 @@ public class PriceListChannel implements Serializable {
 	private Supplier<Integer> _orderSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceListChannel entity (FK identifier).",
+		example = "30643"
+	)
 	public Long getPriceListChannelId() {
 		if (_priceListChannelIdSupplier != null) {
 			priceListChannelId = _priceListChannelIdSupplier.get();
@@ -303,14 +329,19 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceListChannel entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListChannelId;
 
 	@JsonIgnore
 	private Supplier<Long> _priceListChannelIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup.",
+		example = "PAB-34098-789-N"
+	)
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -348,7 +379,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
@@ -356,7 +389,10 @@ public class PriceListChannel implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceList entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -390,7 +426,9 @@ public class PriceListChannel implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceList entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long priceListId;
@@ -631,4 +669,4 @@ public class PriceListChannel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1342372347
+// LIFERAY-REST-BUILDER-HASH:-1008515146

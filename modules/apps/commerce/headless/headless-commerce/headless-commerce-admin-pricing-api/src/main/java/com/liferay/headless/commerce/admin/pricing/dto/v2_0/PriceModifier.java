@@ -44,8 +44,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceModifier")
+@GraphQLName(
+	description = "Add-on price calculation layered on a price list. Carries a target (categories, products, or product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a limitationType, and a priority. Backed by price modifier.",
+	value = "PriceModifier"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Add-on price calculation layered on a price list. Carries a target (categories, products, or product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a limitationType, and a priority. Backed by price modifier.",
 	requiredProperties = {"modifierAmount", "modifierType", "target", "title"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -60,7 +64,9 @@ public class PriceModifier implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceModifier.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,14 +102,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the pricemodifier is currently enabled. When false the runtime skips this record during evaluation.",
+		example = "true"
+	)
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -137,14 +148,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the pricemodifier is currently enabled. When false the runtime skips this record during evaluation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record becomes effective. ISO 8601.",
+		example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -178,14 +194,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record becomes effective. ISO 8601."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -219,14 +240,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -260,7 +286,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -268,7 +296,10 @@ public class PriceModifier implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the pricemodifier. Server-assigned and stable.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -300,14 +331,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the pricemodifier. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "25")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Absolute add-on amount the modifier contributes. Mutually exclusive with modifierPercentage; meaningful when modifierType is absolute.",
+		example = "25"
+	)
 	@Valid
 	public BigDecimal getModifierAmount() {
 		if (_modifierAmountSupplier != null) {
@@ -342,7 +378,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Absolute add-on amount the modifier contributes. Mutually exclusive with modifierPercentage; meaningful when modifierType is absolute."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected BigDecimal modifierAmount;
@@ -350,7 +388,10 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _modifierAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "percentage")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Calculation kind for the modifier. One of `absolute` (modifierAmount used) or `percentage` (modifierPercentage used).",
+		example = "percentage"
+	)
 	public String getModifierType() {
 		if (_modifierTypeSupplier != null) {
 			modifierType = _modifierTypeSupplier.get();
@@ -384,7 +425,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Calculation kind for the modifier. One of `absolute` (modifierAmount used) or `percentage` (modifierPercentage used)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String modifierType;
@@ -392,7 +435,10 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _modifierTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the record has no expiration date and expirationDate is ignored.",
+		example = "true"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -426,14 +472,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the record has no expiration date and expirationDate is ignored."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PLAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup.",
+		example = "PLAB-34098-789-N"
+	)
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -471,7 +522,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
@@ -479,7 +532,10 @@ public class PriceModifier implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20078")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceList entity (FK identifier).",
+		example = "20078"
+	)
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -513,14 +569,18 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceList entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long priceListId;
 
 	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceModifierCategories entries cascaded on upsert."
+	)
 	@Valid
 	public PriceModifierCategory[] getPriceModifierCategories() {
 		if (_priceModifierCategoriesSupplier != null) {
@@ -558,14 +618,18 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceModifierCategories entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierCategory[] priceModifierCategories;
 
 	@JsonIgnore
 	private Supplier<PriceModifierCategory[]> _priceModifierCategoriesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceModifierProductGroups entries cascaded on upsert."
+	)
 	@Valid
 	public PriceModifierProductGroup[] getPriceModifierProductGroups() {
 		if (_priceModifierProductGroupsSupplier != null) {
@@ -604,7 +668,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceModifierProductGroups entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierProductGroup[] priceModifierProductGroups;
 
@@ -612,7 +678,9 @@ public class PriceModifier implements Serializable {
 	private Supplier<PriceModifierProductGroup[]>
 		_priceModifierProductGroupsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceModifierProducts entries cascaded on upsert."
+	)
 	@Valid
 	public PriceModifierProduct[] getPriceModifierProducts() {
 		if (_priceModifierProductsSupplier != null) {
@@ -650,14 +718,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceModifierProducts entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierProduct[] priceModifierProducts;
 
 	@JsonIgnore
 	private Supplier<PriceModifierProduct[]> _priceModifierProductsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Priority value that orders this pricemodifier relative to its peers. Lower numbers resolve first.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -691,14 +764,19 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Priority value that orders this pricemodifier relative to its peers. Lower numbers resolve first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "product")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Which slice of the parent the record applies to. Refer to the parent schema's documentation for the allowed values.",
+		example = "product"
+	)
 	public String getTarget() {
 		if (_targetSupplier != null) {
 			target = _targetSupplier.get();
@@ -732,7 +810,9 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Which slice of the parent the record applies to. Refer to the parent schema's documentation for the allowed values."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String target;
@@ -740,7 +820,9 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _targetSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20% Off")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display title of the pricemodifier.", example = "20% Off"
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -774,7 +856,7 @@ public class PriceModifier implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display title of the pricemodifier.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String title;
@@ -1179,4 +1261,4 @@ public class PriceModifier implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:342135663
+// LIFERAY-REST-BUILDER-HASH:1997137769

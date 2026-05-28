@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductGroup")
+@GraphQLName(
+	description = "Read-only projection of a product group referenced by a discount or price-modifier product-group binding. Carries the product-group id and title.",
+	value = "ProductGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroup")
 public class ProductGroup implements Serializable {
@@ -50,7 +53,10 @@ public class ProductGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the productgroup. Server-assigned and stable.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,7 +88,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the productgroup. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -90,7 +98,10 @@ public class ProductGroup implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of products that belong to the product group at read time. Read-only.",
+		example = "20"
+	)
 	public Integer getProductsCount() {
 		if (_productsCountSupplier != null) {
 			productsCount = _productsCountSupplier.get();
@@ -124,7 +135,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Number of products that belong to the product group at read time. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer productsCount;
 
@@ -132,6 +145,7 @@ public class ProductGroup implements Serializable {
 	private Supplier<Integer> _productsCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display title of the productgroup.",
 		example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}"
 	)
 	@Valid
@@ -168,7 +182,7 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display title of the productgroup.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
@@ -339,4 +353,4 @@ public class ProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1142832318
+// LIFERAY-REST-BUILDER-HASH:284991899

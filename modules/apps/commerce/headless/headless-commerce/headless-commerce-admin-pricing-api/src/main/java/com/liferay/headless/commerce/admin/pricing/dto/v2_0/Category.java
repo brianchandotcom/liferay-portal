@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Category")
+@GraphQLName(
+	description = "Read-only projection of an AssetCategory referenced by a discount, price-modifier, or product category binding. Carries the category id, name, path, and the vocabulary the category belongs to.",
+	value = "Category"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
@@ -49,7 +52,10 @@ public class Category implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the category. Server-assigned and stable.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -81,14 +87,18 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the category. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the category.", example = "simple"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -120,14 +130,17 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display name of the category.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Hierarchical path of the record relative to its parent vocabulary or container.",
+		example = "simple"
+	)
 	public String getPath() {
 		if (_pathSupplier != null) {
 			path = _pathSupplier.get();
@@ -159,14 +172,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Hierarchical path of the record relative to its parent vocabulary or container."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String path;
 
 	@JsonIgnore
 	private Supplier<String> _pathSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Default Vocabulary")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Vocabulary the record belongs to.",
+		example = "Default Vocabulary"
+	)
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
 			vocabulary = _vocabularySupplier.get();
@@ -200,7 +218,7 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Vocabulary the record belongs to.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vocabulary;
 
@@ -395,4 +413,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1898602809
+// LIFERAY-REST-BUILDER-HASH:958425045

@@ -46,6 +46,9 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-categories/{discountCategoryId}/category'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the Category nested in a DiscountCategory (via discount link) addressed by internal rel id."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -76,6 +79,9 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}/category'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the Category nested in a PriceModifierCategory (via price modifier link) addressed by internal rel id."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -548,4 +554,4 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		LogFactoryUtil.getLog(BaseCategoryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:864840751
+// LIFERAY-REST-BUILDER-HASH:1500729250

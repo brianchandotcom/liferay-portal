@@ -36,8 +36,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscountRule")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"type"})
+@GraphQLName(
+	description = "Validator rule attached to a discount. Backed by discount rule; the `type` string selects the discount rule type implementation (registered via OSGi), and `typeSettings` carries the JSON configuration the validator consumes at price-calculation time.",
+	value = "DiscountRule"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Validator rule attached to a discount. Backed by discount rule; the `type` string selects the discount rule type implementation (registered via OSGi), and `typeSettings` carries the JSON configuration the validator consumes at price-calculation time.",
+	requiredProperties = {"type"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DiscountRule")
 public class DiscountRule implements Serializable {
@@ -51,7 +57,10 @@ public class DiscountRule implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the parent discount. Read-only; populated by the server from the URL path on create.",
+		example = "30130"
+	)
 	public Long getDiscountId() {
 		if (_discountIdSupplier != null) {
 			discountId = _discountIdSupplier.get();
@@ -85,7 +94,9 @@ public class DiscountRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the parent discount. Read-only; populated by the server from the URL path on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
@@ -93,7 +104,10 @@ public class DiscountRule implements Serializable {
 	private Supplier<Long> _discountIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the discount rule; read-only and assigned by the service on create.",
+		example = "30646"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -125,14 +139,19 @@ public class DiscountRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the discount rule; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "cart-total")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Validator type that selects the discount rule type implementation. Common values include `cart-total`, `categories`, `products`, and `coupon`. Required on create; unknown types raise DiscountRuleTypeException -> 400.",
+		example = "cart-total"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -164,7 +183,9 @@ public class DiscountRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Validator type that selects the discount rule type implementation. Common values include `cart-total`, `categories`, `products`, and `coupon`. Required on create; unknown types raise DiscountRuleTypeException -> 400."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String type;
@@ -172,7 +193,10 @@ public class DiscountRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "22.50")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "JSON-encoded configuration consumed by the matching discount rule type. The shape depends on `type` -- for `cart-total` it carries a numeric threshold, for `categories` it carries the eligible category list, and so on.",
+		example = "22.50"
+	)
 	public String getTypeSettings() {
 		if (_typeSettingsSupplier != null) {
 			typeSettings = _typeSettingsSupplier.get();
@@ -206,7 +230,9 @@ public class DiscountRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "JSON-encoded configuration consumed by the matching discount rule type. The shape depends on `type` -- for `cart-total` it carries a numeric threshold, for `categories` it carries the eligible category list, and so on."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
@@ -397,4 +423,4 @@ public class DiscountRule implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2005031059
+// LIFERAY-REST-BUILDER-HASH:1551202110

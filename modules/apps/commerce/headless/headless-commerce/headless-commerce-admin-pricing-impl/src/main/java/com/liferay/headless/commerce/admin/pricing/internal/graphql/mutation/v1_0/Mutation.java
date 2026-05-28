@@ -124,7 +124,9 @@ public class Mutation {
 			tierPriceResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a discount by internal ID. Delegates to the service. Side effects -- cascades the deletion of discount account group link, discount link (account, category, product, channel, order-type), and discount rule rows."
+	)
 	public Response deleteDiscount(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -147,7 +149,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a discount addressed by externalReferenceCode. Same cascade semantics as deleteDiscount; 404 when the ERC is unknown."
+	)
 	public Response deleteDiscountByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -160,7 +164,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields , then cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when the ID is unknown."
+	)
 	public Response patchDiscount(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discount") Discount discount)
@@ -172,7 +178,9 @@ public class Mutation {
 			discountResource -> discountResource.patchDiscount(id, discount));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a discount addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when the ERC is unknown."
+	)
 	public Response patchDiscountByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("discount") Discount discount)
@@ -186,7 +194,9 @@ public class Mutation {
 					externalReferenceCode, discount));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a discount via upsert-by-ERC. Delegates to the service with the supplied DTO and cascades the nested discountAccountGroups, discountCategories, discountProducts, and discountRules collections through the matching `add` helpers. Validation -- a title validation error, a target validation error, a coupon-code validation error, DiscountLimitationTypeException, DiscountMaxPriceValueException, DiscountMinPriceValueException, DiscountDisplayDateException, and DiscountExpirationDateException all map to 400 Bad Request via module-local exception mappers."
+	)
 	public Discount createDiscount(@GraphQLName("discount") Discount discount)
 		throws Exception {
 
@@ -223,7 +233,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces a discount addressed by externalReferenceCode. Same upsert pipeline as postDiscount -- delegates to the service and cascades the nested rel collections."
+	)
 	public Discount updateDiscountByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("discount") Discount discount)
@@ -237,7 +249,9 @@ public class Mutation {
 					externalReferenceCode, discount));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a single discount account group link by internal ID. Delegates to the service."
+	)
 	public Response deleteDiscountAccountGroup(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -262,7 +276,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AccountGroup to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountAccountGroup with ERC-based discount resolution."
+	)
 	public DiscountAccountGroup
 			createDiscountByExternalReferenceCodeDiscountAccountGroup(
 				@GraphQLName("externalReferenceCode") String
@@ -280,7 +296,9 @@ public class Mutation {
 						externalReferenceCode, discountAccountGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AccountGroup to a discount addressed by internal ID. Delegates to the service. Validation -- a duplicate-key error -> 409 Conflict when the (discount, accountGroup) pair already exists."
+	)
 	public DiscountAccountGroup createDiscountIdDiscountAccountGroup(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discountAccountGroup") DiscountAccountGroup
@@ -310,7 +328,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a single discount link (AssetCategory binding) by internal ID. Delegates to the service."
+	)
 	public Response deleteDiscountCategory(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -335,7 +355,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AssetCategory to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountCategory with ERC-based discount resolution."
+	)
 	public DiscountCategory
 			createDiscountByExternalReferenceCodeDiscountCategory(
 				@GraphQLName("externalReferenceCode") String
@@ -353,7 +375,9 @@ public class Mutation {
 						externalReferenceCode, discountCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AssetCategory to a discount addressed by internal ID. Delegates to the service with the AssetCategory class name. The category is resolved by ID or externalReferenceCode from the supplied DTO."
+	)
 	public DiscountCategory createDiscountIdDiscountCategory(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discountCategory") DiscountCategory discountCategory)
@@ -381,7 +405,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a single discount link (product binding) by internal ID. Delegates to the service."
+	)
 	public Response deleteDiscountProduct(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -406,7 +432,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches a product product to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountProduct with ERC-based discount resolution."
+	)
 	public DiscountProduct createDiscountByExternalReferenceCodeDiscountProduct(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("discountProduct") DiscountProduct discountProduct)
@@ -421,7 +449,9 @@ public class Mutation {
 						externalReferenceCode, discountProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches a product product to a discount addressed by internal ID. Delegates to the service with the product class name. The product is resolved by ID or externalReferenceCode from the supplied DTO."
+	)
 	public DiscountProduct createDiscountIdDiscountProduct(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discountProduct") DiscountProduct discountProduct)
@@ -449,7 +479,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a single discount rule by internal ID. Delegates to the service."
+	)
 	public Response deleteDiscountRule(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -474,7 +506,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a discount rule by internal ID. JSON Merge Patch over type and typeSettings."
+	)
 	public Response patchDiscountRule(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discountRule") DiscountRule discountRule)
@@ -487,7 +521,9 @@ public class Mutation {
 				id, discountRule));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a discount rule under a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountRule with ERC-based discount resolution."
+	)
 	public DiscountRule createDiscountByExternalReferenceCodeDiscountRule(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("discountRule") DiscountRule discountRule)
@@ -502,7 +538,9 @@ public class Mutation {
 						externalReferenceCode, discountRule));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a discount rule under a discount addressed by internal ID. Delegates to the service with the supplied type (validator type, for example `cart-total`) and typeSettings JSON. Validation -- DiscountRuleTypeException -> 400 Bad Request when the type is unknown."
+	)
 	public DiscountRule createDiscountIdDiscountRule(
 			@GraphQLName("id") Long id,
 			@GraphQLName("discountRule") DiscountRule discountRule)
@@ -530,7 +568,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a price entry by internal ID. Delegates to the service. Side effects -- cascades the deletion of all tier price rows pointing at the entry."
+	)
 	public Response deletePriceEntry(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -553,7 +593,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a price entry addressed by externalReferenceCode. Same cascade semantics; 404 when ERC unknown."
+	)
 	public Response deletePriceEntryByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -566,7 +608,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a price entry by internal ID. JSON Merge Patch over price, promoPrice, and the nested tierPrices collection."
+	)
 	public Response patchPriceEntry(
 			@GraphQLName("id") Long id,
 			@GraphQLName("priceEntry") PriceEntry priceEntry)
@@ -579,7 +623,9 @@ public class Mutation {
 				id, priceEntry));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a price entry addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown."
+	)
 	public Response patchPriceEntryByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("priceEntry") PriceEntry priceEntry)
@@ -593,7 +639,9 @@ public class Mutation {
 					externalReferenceCode, priceEntry));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upserts a price entry under the parent price list by externalReferenceCode. Same pipeline as postPriceListIdPriceEntry with ERC-based price-list resolution."
+	)
 	public PriceEntry createPriceListByExternalReferenceCodePriceEntry(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("priceEntry") PriceEntry priceEntry)
@@ -608,7 +656,9 @@ public class Mutation {
 						externalReferenceCode, priceEntry));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upserts a price entry under the parent price list by internal ID. Delegates to the service. The SKU is resolved by skuId or skuExternalReferenceCode; nested tierPrices are cascaded through TierPriceUtil. Validation -- a duplicate-key error -> 409 Conflict when the (priceList, sku) pair already exists; PriceListMinPriceValueException, PriceListMaxPriceValueException, and PriceEntryUnitOfMeasureException -> 400 Bad Request."
+	)
 	public PriceEntry createPriceListIdPriceEntry(
 			@GraphQLName("id") Long id,
 			@GraphQLName("priceEntry") PriceEntry priceEntry)
@@ -635,7 +685,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a price list by internal ID. Delegates to the service. Side effects -- cascades the deletion of all price entry, tier price, and account/account-group/channel/order-type rel rows pointing at the list."
+	)
 	public Response deletePriceList(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -658,7 +710,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a price list addressed by externalReferenceCode. Same cascade semantics; 404 when ERC unknown."
+	)
 	public Response deletePriceListByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -671,7 +725,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a price list by internal ID. JSON Merge Patch over the supplied fields, then cascades any supplied nested collections."
+	)
 	public Response patchPriceList(
 			@GraphQLName("id") Long id,
 			@GraphQLName("priceList") PriceList priceList)
@@ -684,7 +740,9 @@ public class Mutation {
 				id, priceList));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a price list addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown."
+	)
 	public Response patchPriceListByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("priceList") PriceList priceList)
@@ -698,7 +756,9 @@ public class Mutation {
 					externalReferenceCode, priceList));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a price list via upsert-by-ERC. Delegates to the service with the supplied DTO and cascades the nested priceEntries and priceListAccountGroups collections. Validation -- PriceListDisplayDateException, PriceListExpirationDateException, PriceListMinPriceValueException, PriceListMaxPriceValueException, and RequiredBasePriceListException -> 400 Bad Request."
+	)
 	public PriceList createPriceList(
 			@GraphQLName("priceList") PriceList priceList)
 		throws Exception {
@@ -741,7 +801,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces a price list addressed by externalReferenceCode. Same upsert pipeline as postPriceList -- delegates to the service."
+	)
 	public PriceList updatePriceListByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("priceList") PriceList priceList)
@@ -755,7 +817,9 @@ public class Mutation {
 					externalReferenceCode, priceList));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a single price list account group link by internal ID. Delegates to the service."
+	)
 	public Response deletePriceListAccountGroup(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -780,7 +844,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AccountGroup to a price list addressed by externalReferenceCode. Same create pipeline as postPriceListIdPriceListAccountGroup with ERC-based price-list resolution."
+	)
 	public PriceListAccountGroup
 			createPriceListByExternalReferenceCodePriceListAccountGroup(
 				@GraphQLName("externalReferenceCode") String
@@ -798,7 +864,9 @@ public class Mutation {
 						externalReferenceCode, priceListAccountGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an AccountGroup to a price list addressed by internal ID. Delegates to the service; the `order` integer in the request body sets the resolution priority. Validation -- DuplicatePriceListAccountGroupRelException -> 409 Conflict when the (priceList, accountGroup) pair already exists."
+	)
 	public PriceListAccountGroup createPriceListIdPriceListAccountGroup(
 			@GraphQLName("id") Long id,
 			@GraphQLName("priceListAccountGroup") PriceListAccountGroup
@@ -829,7 +897,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a tier price by internal ID. Delegates to the service."
+	)
 	public Response deleteTierPrice(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -852,7 +922,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a tier price addressed by externalReferenceCode. Same delete pipeline; 404 when ERC unknown."
+	)
 	public Response deleteTierPriceByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -865,7 +937,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a tier price by internal ID. JSON Merge Patch over price, promoPrice, and minimumQuantity."
+	)
 	public Response patchTierPrice(
 			@GraphQLName("id") Long id,
 			@GraphQLName("tierPrice") TierPrice tierPrice)
@@ -878,7 +952,9 @@ public class Mutation {
 				id, tierPrice));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates a tier price addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown."
+	)
 	public Response patchTierPriceByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("tierPrice") TierPrice tierPrice)
@@ -892,7 +968,9 @@ public class Mutation {
 					externalReferenceCode, tierPrice));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a tier price under the parent price entry by externalReferenceCode. Same create pipeline as postPriceEntryIdTierPrice with ERC-based parent resolution."
+	)
 	public TierPrice createPriceEntryByExternalReferenceCodeTierPrice(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("tierPrice") TierPrice tierPrice)
@@ -907,7 +985,9 @@ public class Mutation {
 						externalReferenceCode, tierPrice));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a tier price under the parent price entry by internal ID. Calls TierPriceUtil.addOrUpdateCommerceTierPriceEntry -> the service; the request body's minimumQuantity maps to the backend minQuantity BigDecimal. Validation -- a duplicate-key error -> 409 Conflict when the (priceEntry, minimumQuantity) pair already exists; TierPriceMinimumQuantityException -> 400 Bad Request."
+	)
 	public TierPrice createPriceEntryIdTierPrice(
 			@GraphQLName("id") Long id,
 			@GraphQLName("tierPrice") TierPrice tierPrice)
@@ -1195,4 +1275,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:775990229
+// LIFERAY-REST-BUILDER-HASH:-1295491604

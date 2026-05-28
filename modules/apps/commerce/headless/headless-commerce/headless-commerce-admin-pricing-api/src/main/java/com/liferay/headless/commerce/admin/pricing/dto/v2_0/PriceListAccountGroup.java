@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceListAccountGroup")
+@GraphQLName(
+	description = "Account-group binding that restricts a price list's eligibility to a specific AccountGroup, with an `order` integer that controls the resolution priority. Backed by price list account group link.",
+	value = "PriceListAccountGroup"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Account-group binding that restricts a price list's eligibility to a specific AccountGroup, with an `order` integer that controls the resolution priority. Backed by price list account group link.",
 	requiredProperties = {"accountGroupId", "priceListId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -97,7 +101,10 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<PricingAccountGroup> _accountGroupSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound accountGroup; alternative to `accountGroupId` for lookup.",
+		example = "DAB-34098-789-N"
+	)
 	public String getAccountGroupExternalReferenceCode() {
 		if (_accountGroupExternalReferenceCodeSupplier != null) {
 			accountGroupExternalReferenceCode =
@@ -136,7 +143,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound accountGroup; alternative to `accountGroupId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountGroupExternalReferenceCode;
 
@@ -144,7 +153,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the accountGroup entity (FK identifier).",
+		example = "30324"
+	)
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -178,7 +190,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the accountGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long accountGroupId;
@@ -186,7 +200,9 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -222,7 +238,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -230,7 +248,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Ordering integer that orders this pricelistaccountgroup relative to its peers. Lower numbers resolve first.",
+		example = "1"
+	)
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -264,7 +285,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Ordering integer that orders this pricelistaccountgroup relative to its peers. Lower numbers resolve first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
@@ -272,7 +295,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<Integer> _orderSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceListAccountGroup entity (FK identifier).",
+		example = "30643"
+	)
 	public Long getPriceListAccountGroupId() {
 		if (_priceListAccountGroupIdSupplier != null) {
 			priceListAccountGroupId = _priceListAccountGroupIdSupplier.get();
@@ -306,14 +332,19 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceListAccountGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListAccountGroupId;
 
 	@JsonIgnore
 	private Supplier<Long> _priceListAccountGroupIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup.",
+		example = "PAB-34098-789-N"
+	)
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -351,7 +382,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound priceList; alternative to `priceListId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
@@ -359,7 +392,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceList entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -393,7 +429,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceList entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long priceListId;
@@ -636,4 +674,4 @@ public class PriceListAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:471149743
+// LIFERAY-REST-BUILDER-HASH:-387424404

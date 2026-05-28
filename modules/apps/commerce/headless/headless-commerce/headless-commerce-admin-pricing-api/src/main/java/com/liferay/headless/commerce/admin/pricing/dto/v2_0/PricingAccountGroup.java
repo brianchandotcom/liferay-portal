@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PricingAccountGroup")
+@GraphQLName(
+	description = "Read-only projection of a account group referenced by a discount or price-list account-group binding. Carries the account-group id and display name.",
+	value = "PricingAccountGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PricingAccountGroup")
 public class PricingAccountGroup implements Serializable {
@@ -50,7 +53,10 @@ public class PricingAccountGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the pricingaccountgroup. Server-assigned and stable.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,7 +88,9 @@ public class PricingAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the pricingaccountgroup. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -90,6 +98,7 @@ public class PricingAccountGroup implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the pricingaccountgroup.",
 		example = "PricingAccountGroup Name"
 	)
 	public String getName() {
@@ -123,7 +132,7 @@ public class PricingAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display name of the pricingaccountgroup.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -286,4 +295,4 @@ public class PricingAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1708471922
+// LIFERAY-REST-BUILDER-HASH:-71217904

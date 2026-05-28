@@ -45,8 +45,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceList")
+@GraphQLName(
+	description = "Versioned price catalog that prices SKUs in a specific currency for a catalog. Carries a priority, a display/expiration window, the parent catalog, and the cascading rel collections (account-group, account, channel, discount, order-type, modifier, entry). Workflow-aware -- the runtime only honours price lists whose status is approved.",
+	value = "PriceList"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Versioned price catalog that prices SKUs in a specific currency for a catalog. Carries a priority, a display/expiration window, the parent catalog, and the cascading rel collections (account-group, account, channel, discount, order-type, modifier, entry). Workflow-aware -- the runtime only honours price lists whose status is approved.",
 	requiredProperties = {"catalogId", "currencyCode", "name", "type"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -61,7 +65,9 @@ public class PriceList implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceList.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,14 +103,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the pricelist is currently enabled. When false the runtime skips this record during evaluation.",
+		example = "true"
+	)
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -138,14 +149,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the pricelist is currently enabled. When false the runtime skips this record during evaluation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "admin")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Login of the user who last persisted the record. Read-only.",
+		example = "admin"
+	)
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -179,14 +195,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Login of the user who last persisted the record. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
 	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the price list is the catalog's base list and serves as the fallback when no other price list resolves.",
+		example = "true"
+	)
 	public Boolean getCatalogBasePriceList() {
 		if (_catalogBasePriceListSupplier != null) {
 			catalogBasePriceList = _catalogBasePriceListSupplier.get();
@@ -220,14 +241,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the price list is the catalog's base list and serves as the fallback when no other price list resolves."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean catalogBasePriceList;
 
 	@JsonIgnore
 	private Supplier<Boolean> _catalogBasePriceListSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound catalog; alternative to `catalogId` for lookup.",
+		example = "AAB-34098-789-N"
+	)
 	public String getCatalogExternalReferenceCode() {
 		if (_catalogExternalReferenceCodeSupplier != null) {
 			catalogExternalReferenceCode =
@@ -265,7 +291,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound catalog; alternative to `catalogId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String catalogExternalReferenceCode;
 
@@ -273,7 +301,10 @@ public class PriceList implements Serializable {
 	private Supplier<String> _catalogExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the catalog entity (FK identifier).",
+		example = "23130"
+	)
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -307,7 +338,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the catalog entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long catalogId;
@@ -315,7 +348,10 @@ public class PriceList implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "catalog")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the parent catalog, mirrored from catalog.name. Read-only.",
+		example = "catalog"
+	)
 	public String getCatalogName() {
 		if (_catalogNameSupplier != null) {
 			catalogName = _catalogNameSupplier.get();
@@ -349,14 +385,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the parent catalog, mirrored from catalog.name. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String catalogName;
 
 	@JsonIgnore
 	private Supplier<String> _catalogNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date value. ISO 8601.", example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -390,14 +430,17 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Date value. ISO 8601.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "EUR")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 4217 currency code in which monetary values on this record are expressed.",
+		example = "EUR"
+	)
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -431,7 +474,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 4217 currency code in which monetary values on this record are expressed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String currencyCode;
@@ -439,7 +484,10 @@ public class PriceList implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound currency; alternative to `currencyId` for lookup.",
+		example = "AAB-34098-789-N"
+	)
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -477,7 +525,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound currency; alternative to `currencyId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyExternalReferenceCode;
 
@@ -485,7 +535,10 @@ public class PriceList implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the currency that the price list expresses monetary values in.",
+		example = "30130"
+	)
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -519,14 +572,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the currency that the price list expresses monetary values in."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long currencyId;
 
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type.",
+		example = "{priority=high, segment=B2B}"
+	)
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -561,14 +619,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record becomes effective. ISO 8601.",
+		example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -602,14 +665,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record becomes effective. ISO 8601."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -643,14 +711,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -684,7 +757,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -692,7 +767,10 @@ public class PriceList implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the pricelist. Server-assigned and stable.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -724,14 +802,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the pricelist. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Laptops, Beverages")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the pricelist.",
+		example = "Laptops, Beverages"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -763,7 +846,7 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Display name of the pricelist.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -771,7 +854,10 @@ public class PriceList implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, prices in this price list are expressed net of tax; when false, prices are gross (tax-inclusive).",
+		example = "true"
+	)
 	public Boolean getNetPrice() {
 		if (_netPriceSupplier != null) {
 			netPrice = _netPriceSupplier.get();
@@ -805,14 +891,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, prices in this price list are expressed net of tax; when false, prices are gross (tax-inclusive)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean netPrice;
 
 	@JsonIgnore
 	private Supplier<Boolean> _netPriceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the record has no expiration date and expirationDate is ignored.",
+		example = "true"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -846,7 +937,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the record has no expiration date and expirationDate is ignored."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
@@ -854,7 +947,10 @@ public class PriceList implements Serializable {
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent price list; non-null when this list is a child of another price list.",
+		example = "30130"
+	)
 	public Long getParentPriceListId() {
 		if (_parentPriceListIdSupplier != null) {
 			parentPriceListId = _parentPriceListIdSupplier.get();
@@ -888,14 +984,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the parent price list; non-null when this list is a child of another price list."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentPriceListId;
 
 	@JsonIgnore
 	private Supplier<Long> _parentPriceListIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceEntries entries cascaded on upsert."
+	)
 	@Valid
 	public PriceEntry[] getPriceEntries() {
 		if (_priceEntriesSupplier != null) {
@@ -930,14 +1030,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceEntries entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceEntry[] priceEntries;
 
 	@JsonIgnore
 	private Supplier<PriceEntry[]> _priceEntriesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceListAccountGroups entries cascaded on upsert."
+	)
 	@Valid
 	public PriceListAccountGroup[] getPriceListAccountGroups() {
 		if (_priceListAccountGroupsSupplier != null) {
@@ -975,14 +1079,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceListAccountGroups entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListAccountGroup[] priceListAccountGroups;
 
 	@JsonIgnore
 	private Supplier<PriceListAccountGroup[]> _priceListAccountGroupsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceListAccounts entries cascaded on upsert."
+	)
 	@Valid
 	public PriceListAccount[] getPriceListAccounts() {
 		if (_priceListAccountsSupplier != null) {
@@ -1018,14 +1126,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceListAccounts entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListAccount[] priceListAccounts;
 
 	@JsonIgnore
 	private Supplier<PriceListAccount[]> _priceListAccountsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceListChannels entries cascaded on upsert."
+	)
 	@Valid
 	public PriceListChannel[] getPriceListChannels() {
 		if (_priceListChannelsSupplier != null) {
@@ -1061,14 +1173,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceListChannels entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListChannel[] priceListChannels;
 
 	@JsonIgnore
 	private Supplier<PriceListChannel[]> _priceListChannelsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceListDiscounts entries cascaded on upsert."
+	)
 	@Valid
 	public PriceListDiscount[] getPriceListDiscounts() {
 		if (_priceListDiscountsSupplier != null) {
@@ -1104,14 +1220,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceListDiscounts entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListDiscount[] priceListDiscounts;
 
 	@JsonIgnore
 	private Supplier<PriceListDiscount[]> _priceListDiscountsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceListOrderTypes entries cascaded on upsert."
+	)
 	@Valid
 	public PriceListOrderType[] getPriceListOrderTypes() {
 		if (_priceListOrderTypesSupplier != null) {
@@ -1149,14 +1269,18 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceListOrderTypes entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListOrderType[] priceListOrderTypes;
 
 	@JsonIgnore
 	private Supplier<PriceListOrderType[]> _priceListOrderTypesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of priceModifiers entries cascaded on upsert."
+	)
 	@Valid
 	public PriceModifier[] getPriceModifiers() {
 		if (_priceModifiersSupplier != null) {
@@ -1192,14 +1316,19 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of priceModifiers entries cascaded on upsert."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifier[] priceModifiers;
 
 	@JsonIgnore
 	private Supplier<PriceModifier[]> _priceModifiersSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Priority value that orders this pricelist relative to its peers. Lower numbers resolve first.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -1233,7 +1362,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Priority value that orders this pricelist relative to its peers. Lower numbers resolve first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
@@ -1241,6 +1372,7 @@ public class PriceList implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Type discriminator for the record. Refer to the parent schema's documentation for the allowed values.",
 		example = "price-list, promotion, contract"
 	)
 	@JsonGetter("type")
@@ -1287,7 +1419,9 @@ public class PriceList implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Type discriminator for the record. Refer to the parent schema's documentation for the allowed values."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Type type;
@@ -1980,4 +2114,4 @@ public class PriceList implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:912424004
+// LIFERAY-REST-BUILDER-HASH:699131076

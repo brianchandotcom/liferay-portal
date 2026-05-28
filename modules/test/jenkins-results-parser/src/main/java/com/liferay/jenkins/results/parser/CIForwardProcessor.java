@@ -776,47 +776,41 @@ public class CIForwardProcessor {
 		}
 
 		String expectedMergeBaseSHA = mergeBaseCommit.getSHA();
-		String receiverSHA = receiverRemoteGitBranch.getSHA();
-		String senderSHA = _pullRequest.getSenderSHA();
 
-		Date mergeBaseCommitDate = mergeBaseCommit.getCommitDate();
-
-		gitWorkingDirectory.fetch(receiverRemoteGitBranch, mergeBaseCommitDate);
-		gitWorkingDirectory.fetch(senderRemoteGitBranch, mergeBaseCommitDate);
-
-		if (!_localMergeBaseMatches(
-				gitWorkingDirectory, senderSHA, receiverSHA,
-				expectedMergeBaseSHA)) {
-
-			Date deepenedSinceDate = new Date(
-				mergeBaseCommitDate.getTime() -
-					_BRANCH_DEEPENING_STEP_SIZE_MILLIS);
-
-			gitWorkingDirectory.fetch(
-				receiverRemoteGitBranch, deepenedSinceDate);
-			gitWorkingDirectory.fetch(senderRemoteGitBranch, deepenedSinceDate);
-
-			if (!_localMergeBaseMatches(
-					gitWorkingDirectory, senderSHA, receiverSHA,
-					expectedMergeBaseSHA)) {
-
-				System.out.println(
-					"WARNING: Unable to identify merge base SHA");
-
-				return false;
-			}
-		}
+		gitWorkingDirectory.fetch(receiverRemoteGitBranch);
+		gitWorkingDirectory.fetch(senderRemoteGitBranch);
 
 		LocalGitBranch receiverLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
 				JenkinsResultsParserUtil.combine(
 					_recipientUsername, "-", upstreamBranchName, "-precheck"),
-				true, receiverSHA);
+				true, receiverRemoteGitBranch.getSHA(),
+				receiverRemoteGitBranch);
 
 		LocalGitBranch senderLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
 				_pullRequest.getLocalSenderBranchName() + "-precheck", true,
-				senderSHA);
+				_pullRequest.getSenderSHA(), senderRemoteGitBranch);
+
+		String localMergeBaseSHA = null;
+
+		try {
+			localMergeBaseSHA = gitWorkingDirectory.getMergeBaseCommitSHA(
+				receiverLocalGitBranch, senderLocalGitBranch);
+		}
+		catch (GitWorkingDirectory.GitWorkingDirectoryRuntimeException
+					gitWorkingDirectoryRuntimeException) {
+
+			gitWorkingDirectoryRuntimeException.printStackTrace();
+		}
+
+		if ((localMergeBaseSHA == null) ||
+			!expectedMergeBaseSHA.equals(localMergeBaseSHA.trim())) {
+
+			System.out.println("WARNING: Unable to identify merge base SHA");
+
+			return false;
+		}
 
 		try {
 			gitWorkingDirectory.rebase(
@@ -864,31 +858,6 @@ public class CIForwardProcessor {
 
 		return failedRequiredPassingTestSuiteNames.isEmpty();
 	}
-
-	private boolean _localMergeBaseMatches(
-		GitWorkingDirectory gitWorkingDirectory, String senderSHA,
-		String receiverSHA, String expectedMergeBaseSHA) {
-
-		try {
-			String localMergeBaseSHA =
-				gitWorkingDirectory.getMergeBaseCommitSHA(
-					senderSHA, receiverSHA);
-
-			if (localMergeBaseSHA != null) {
-				localMergeBaseSHA = localMergeBaseSHA.trim();
-			}
-
-			return expectedMergeBaseSHA.equals(localMergeBaseSHA);
-		}
-		catch (GitWorkingDirectory.GitWorkingDirectoryRuntimeException
-					gitWorkingDirectoryRuntimeException) {
-
-			return false;
-		}
-	}
-
-	private static final long _BRANCH_DEEPENING_STEP_SIZE_MILLIS =
-		1000L * 60L * 60L * 24L;
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;
 

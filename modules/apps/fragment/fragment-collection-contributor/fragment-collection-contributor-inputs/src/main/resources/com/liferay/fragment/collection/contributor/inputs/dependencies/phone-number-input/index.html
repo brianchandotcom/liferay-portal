@@ -76,6 +76,7 @@
 	[#list countries as country]
 		[#if country.a2 == countryA2]
 			[#assign selectedCountry = country /]
+
 			[#break]
 		[/#if]
 	[/#list]
@@ -83,6 +84,7 @@
 	[#list countries as country]
 		[#if input.value?starts_with("+" + country.prefix)]
 			[#assign selectedCountry = country /]
+
 			[#break]
 		[/#if]
 	[/#list]
@@ -94,6 +96,7 @@
 	[#list countries as country]
 		[#if country.a2 == defaultCountryA2]
 			[#assign selectedCountry = country /]
+
 			[#break]
 		[/#if]
 	[/#list]

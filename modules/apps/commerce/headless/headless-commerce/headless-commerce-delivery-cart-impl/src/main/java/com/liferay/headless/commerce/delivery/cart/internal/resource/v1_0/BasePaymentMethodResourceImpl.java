@@ -74,7 +74,7 @@ public abstract class BasePaymentMethodResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/payment-methods'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the payment method entries qualified for the cart addressed by external reference code -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -111,7 +111,7 @@ public abstract class BasePaymentMethodResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/payment-methods'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the payment method entries qualified for the cart addressed by ID -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -885,4 +885,4 @@ public abstract class BasePaymentMethodResourceImpl
 		LogFactoryUtil.getLog(BasePaymentMethodResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:597925050
+// LIFERAY-REST-BUILDER-HASH:-446574215

@@ -74,7 +74,7 @@ public abstract class BaseShippingMethodResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/shipping-methods'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the shipping method entries qualified for the cart addressed by external reference code, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -112,7 +112,7 @@ public abstract class BaseShippingMethodResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-methods'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the shipping method entries qualified for the cart addressed by ID, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -886,4 +886,4 @@ public abstract class BaseShippingMethodResourceImpl
 		LogFactoryUtil.getLog(BaseShippingMethodResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:438629456
+// LIFERAY-REST-BUILDER-HASH:-1552363057

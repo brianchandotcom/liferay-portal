@@ -38,7 +38,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SkuUnitOfMeasure")
+@GraphQLName(
+	description = "Unit-of-measure tier bound to the SKU on a cart item. The key and name identify the tier (for example a Pallet tier on a base unit); the rate is the conversion factor against the base unit; the incremental order quantity is the minimum order increment in this tier.",
+	value = "SkuUnitOfMeasure"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuUnitOfMeasure")
 public class SkuUnitOfMeasure implements Serializable {
@@ -52,7 +55,10 @@ public class SkuUnitOfMeasure implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.5")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Minimum order increment expressed in this unit-of-measure tier.",
+		example = "1.5"
+	)
 	@Valid
 	public BigDecimal getIncrementalOrderQuantity() {
 		if (_incrementalOrderQuantitySupplier != null) {
@@ -90,14 +96,19 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Minimum order increment expressed in this unit-of-measure tier."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal incrementalOrderQuantity;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _incrementalOrderQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "pl")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable identifier of the unit-of-measure tier.",
+		example = "pl"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -129,14 +140,18 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable identifier of the unit-of-measure tier."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Pallet")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized display name of the tier.", example = "Pallet"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -168,14 +183,17 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Localized display name of the tier.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "3")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of decimal places allowed in the ordered quantity for this tier.",
+		example = "3"
+	)
 	public Integer getPrecision() {
 		if (_precisionSupplier != null) {
 			precision = _precisionSupplier.get();
@@ -209,14 +227,19 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Number of decimal places allowed in the ordered quantity for this tier."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer precision;
 
 	@JsonIgnore
 	private Supplier<Integer> _precisionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, this is the default unit-of-measure tier for the SKU.",
+		example = "true"
+	)
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -250,7 +273,9 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, this is the default unit-of-measure tier for the SKU."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
@@ -258,7 +283,10 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Boolean> _primarySupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display priority among the SKU's unit-of-measure tiers. Lower values appear first.",
+		example = "1.1"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -292,7 +320,9 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display priority among the SKU's unit-of-measure tiers. Lower values appear first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
@@ -300,7 +330,10 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "202.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Conversion factor from this tier to the base unit -- for example, the number of base units per pallet.",
+		example = "202.1"
+	)
 	@Valid
 	public BigDecimal getRate() {
 		if (_rateSupplier != null) {
@@ -335,7 +368,9 @@ public class SkuUnitOfMeasure implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Conversion factor from this tier to the base unit -- for example, the number of base units per pallet."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal rate;
 
@@ -562,4 +597,4 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-230533396
+// LIFERAY-REST-BUILDER-HASH:-1689500995

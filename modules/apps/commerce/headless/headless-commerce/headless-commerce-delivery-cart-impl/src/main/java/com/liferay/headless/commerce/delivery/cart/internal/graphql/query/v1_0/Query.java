@@ -132,7 +132,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartBillingAddres(cartId: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, subtype, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart billing address.")
+	@GraphQLField(
+		description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
+	)
 	public Address cartBillingAddres(@GraphQLName("cartId") Long cartId)
 		throws Exception {
 
@@ -147,7 +149,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeBillingAddress(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, subtype, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart billing address.")
+	@GraphQLField(
+		description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
+	)
 	public Address cartByExternalReferenceCodeBillingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -165,7 +169,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeShippingAddress(externalReferenceCode: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, subtype, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart billing address.")
+	@GraphQLField(
+		description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
+	)
 	public Address cartByExternalReferenceCodeShippingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -183,7 +189,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartShippingAddres(cartId: ___){city, country, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, region, regionISOCode, street1, street2, street3, subtype, type, typeId, vatNumber, zip}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart billing address.")
+	@GraphQLField(
+		description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
+	)
 	public Address cartShippingAddres(@GraphQLName("cartId") Long cartId)
 		throws Exception {
 
@@ -198,7 +206,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartAttachments(cartId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists attachment files linked to the cart addressed by ID. Filterable by restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via AttachmentEntityModel; pageable; searchable."
+	)
 	public AttachmentPage cartAttachments(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("search") String search,
@@ -224,7 +234,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeAttachments(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists attachment files linked to the cart addressed by external reference code. Filterable by restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via AttachmentEntityModel; pageable; searchable through the corresponding index."
+	)
 	public AttachmentPage cartByExternalReferenceCodeAttachments(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("search") String search,
@@ -253,7 +265,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cart(cartId: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermId, deliveryTermLabel, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, paymentTermId, paymentTermLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve information of the given Cart.")
+	@GraphQLField(
+		description = "Retrieves the cart addressed by ID with its items, addresses, summary, and status."
+	)
 	public Cart cart(@GraphQLName("cartId") Long cartId) throws Exception {
 		return _applyComponentServiceObjects(
 			_cartResourceComponentServiceObjects,
@@ -267,7 +281,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCode(externalReferenceCode: ___){account, accountId, attachments, author, billingAddress, billingAddressExternalReferenceCode, billingAddressId, cartItems, channelId, couponCode, createDate, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermId, deliveryTermLabel, errorMessages, externalReferenceCode, friendlyURLSeparator, id, lastPriceUpdateDate, modifiedDate, name, notes, orderStatusInfo, orderType, orderTypeExternalReferenceCode, orderTypeId, orderUUID, paymentMethod, paymentMethodLabel, paymentMethodType, paymentStatus, paymentStatusInfo, paymentStatusLabel, paymentTermId, paymentTermLabel, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingMethod, shippingOption, status, steps, summary, useAsBilling, valid, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve information of the given Cart by external reference code."
+		description = "Retrieves the cart addressed by external reference code with its items, addresses, summary, and status."
 	)
 	public Cart cartByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -285,7 +299,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodePaymentUrl(callbackURL: ___, externalReferenceCode: ___){}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by external reference code. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+	)
 	public String cartByExternalReferenceCodePaymentUrl(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("callbackURL") String callbackURL)
@@ -304,7 +320,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentURL(callbackURL: ___, cartId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by ID. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+	)
 	public String cartPaymentURL(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("callbackURL") String callbackURL)
@@ -323,7 +341,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelAccountCarts(accountId: ___, channelId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieves carts for specific account in the given channel."
+		description = "Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by ID. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable."
 	)
 	public CartPage channelAccountCarts(
 			@GraphQLName("accountId") Long accountId,
@@ -352,7 +370,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCarts(accountExternalReferenceCode: ___, channelExternalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieves carts for specific account in the given channel."
+		description = "Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by external reference code. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable."
 	)
 	public CartPage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCarts(
@@ -385,7 +403,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelCarts(channelId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves carts in the given channel.")
+	@GraphQLField(
+		description = "Lists open carts (the Open state carts) scoped to the channel addressed by ID. Filterable, searchable, and pageable through CartEntityModel."
+	)
 	public CartPage channelCarts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("search") String search,
@@ -411,7 +431,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeComments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists comment entries attached to the cart addressed by external reference code. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart."
+	)
 	public CartCommentPage cartByExternalReferenceCodeComments(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("pageSize") int pageSize,
@@ -431,7 +453,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartComment(cartCommentId: ___){author, authorId, authorPortraitURL, content, externalReferenceCode, id, modifiedDate, orderId, restricted}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Retrieves a single comment by ID. Restricted notes are returned only to users with the manage-comments permission on the parent cart."
+	)
 	public CartComment cartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId)
 		throws Exception {
@@ -449,7 +473,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartCommentByExternalReferenceCode(externalReferenceCode: ___){author, authorId, authorPortraitURL, content, externalReferenceCode, id, modifiedDate, orderId, restricted}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve information of the given Cart Comment by external reference code."
+		description = "Retrieves a single comment by external reference code. Restricted notes are returned only to users with the manage-comments permission on the parent cart."
 	)
 	public CartComment cartCommentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -468,7 +492,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartComments(cartId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists comment entries attached to the cart addressed by ID. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart."
+	)
 	public CartCommentPage cartComments(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("pageSize") int pageSize,
@@ -488,7 +514,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeItems(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart items of a Cart.")
+	@GraphQLField(
+		description = "Lists the top-level cart item rows on the cart addressed by external reference code (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable through the cart item index; restrictable to a specific SKU via skuId."
+	)
 	public CartItemPage cartByExternalReferenceCodeItems(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("search") String search,
@@ -511,7 +539,7 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItem(cartItemId: ___){adaptiveMediaImageHTMLTag, cartItems, customFields, deliveryGroup, deliveryGroupName, errorMessages, externalReferenceCode, id, name, options, parentCartItemId, price, productId, productURLs, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, settings, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuId, skuUnitOfMeasure, subscription, thumbnail, unitOfMeasure, valid}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve information of the given Cart")
+	@GraphQLField(description = "Retrieves a single cart item by ID.")
 	public CartItem cartItem(@GraphQLName("cartItemId") Long cartItemId)
 		throws Exception {
 
@@ -527,7 +555,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItemByExternalReferenceCode(externalReferenceCode: ___){adaptiveMediaImageHTMLTag, cartItems, customFields, deliveryGroup, deliveryGroupName, errorMessages, externalReferenceCode, id, name, options, parentCartItemId, price, productId, productURLs, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, settings, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuId, skuUnitOfMeasure, subscription, thumbnail, unitOfMeasure, valid}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve information of the given Cart Item by external reference code."
+		description = "Retrieves a single cart item by external reference code."
 	)
 	public CartItem cartItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -546,7 +574,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItems(cartId: ___, page: ___, pageSize: ___, search: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart items of a Cart.")
+	@GraphQLField(
+		description = "Lists the top-level cart item rows on the cart addressed by ID (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable; restrictable to a specific SKU via skuId."
+	)
 	public CartItemPage cartItems(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("search") String search,
@@ -568,7 +598,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartCartTransitions(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieve cart transitions of the given Cart.")
+	@GraphQLField(
+		description = "Lists the available CartTransition entries on the cart addressed by ID. Combines workflow task transitions (when the cart has an active workflow instance) and order-status transitions (request-quote, submit, quick-checkout, checkout) derived from the order-status registry."
+	)
 	public CartTransitionPage cartCartTransitions(
 			@GraphQLName("cartId") Long cartId)
 		throws Exception {
@@ -586,7 +618,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodePaymentMethods(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the payment method entries qualified for the cart addressed by external reference code -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 	)
 	public PaymentMethodPage cartByExternalReferenceCodePaymentMethods(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -607,7 +639,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentMethods(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the payment method entries qualified for the cart addressed by ID -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 	)
 	public PaymentMethodPage cartPaymentMethods(
 			@GraphQLName("cartId") Long cartId)
@@ -626,7 +658,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeShippingMethods(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the shipping method entries qualified for the cart addressed by external reference code, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 	)
 	public ShippingMethodPage cartByExternalReferenceCodeShippingMethods(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -647,7 +679,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartShippingMethods(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment methods available for the Cart."
+		description = "Lists the shipping method entries qualified for the cart addressed by ID, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 	)
 	public ShippingMethodPage cartShippingMethods(
 			@GraphQLName("cartId") Long cartId)
@@ -666,7 +698,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeDeliveryTerms(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve delivery terms available for the Cart."
+		description = "Lists the term rows qualified as delivery terms for the cart addressed by external reference code, filtered by order type and the currently selected shipping method."
 	)
 	public TermPage cartByExternalReferenceCodeDeliveryTerms(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -686,7 +718,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodePaymentTerms(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment terms available for the Cart."
+		description = "Lists the term rows qualified as payment terms for the cart addressed by external reference code, filtered by order type and the currently selected payment method."
 	)
 	public TermPage cartByExternalReferenceCodePaymentTerms(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -706,7 +738,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartDeliveryTerms(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve delivery terms available for the Cart."
+		description = "Lists the term rows qualified as delivery terms for the cart addressed by ID, filtered by order type and the currently selected shipping method."
 	)
 	public TermPage cartDeliveryTerms(@GraphQLName("cartId") Long cartId)
 		throws Exception {
@@ -724,7 +756,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartPaymentTerms(cartId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieve payment terms available for the Cart."
+		description = "Lists the term rows qualified as payment terms for the cart addressed by ID, filtered by order type and the currently selected payment method."
 	)
 	public TermPage cartPaymentTerms(@GraphQLName("cartId") Long cartId)
 		throws Exception {
@@ -743,7 +775,9 @@ public class Query {
 			_cartTransition = cartTransition;
 		}
 
-		@GraphQLField(description = "Retrieve information of the given Cart.")
+		@GraphQLField(
+			description = "Retrieves the cart addressed by ID with its items, addresses, summary, and status."
+		)
 		public Cart cart() throws Exception {
 			return _applyComponentServiceObjects(
 				_cartResourceComponentServiceObjects,
@@ -763,7 +797,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart billing address.")
+		@GraphQLField(
+			description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
+		)
 		public Address billingAddres() throws Exception {
 			return _applyComponentServiceObjects(
 				_addressResourceComponentServiceObjects,
@@ -783,7 +819,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart billing address.")
+		@GraphQLField(
+			description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
+		)
 		public Address shippingAddres() throws Exception {
 			return _applyComponentServiceObjects(
 				_addressResourceComponentServiceObjects,
@@ -806,7 +844,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve information of the given Cart by external reference code."
+			description = "Retrieves the cart addressed by external reference code with its items, addresses, summary, and status."
 		)
 		public Cart cartByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
@@ -827,7 +865,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField
+		@GraphQLField(
+			description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by ID. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+		)
 		public String paymentURL(@GraphQLName("callbackURL") String callbackURL)
 			throws Exception {
 
@@ -850,7 +890,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve information of the given Cart Comment by external reference code."
+			description = "Retrieves a single comment by external reference code. Restricted notes are returned only to users with the manage-comments permission on the parent cart."
 		)
 		public CartComment commentByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
@@ -872,7 +912,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField
+		@GraphQLField(
+			description = "Lists comment entries attached to the cart addressed by ID. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart."
+		)
 		public CartCommentPage comments(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -898,7 +940,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve information of the given Cart Item by external reference code."
+			description = "Retrieves a single cart item by external reference code."
 		)
 		public CartItem itemByExternalReferenceCode() throws Exception {
 			return _applyComponentServiceObjects(
@@ -920,7 +962,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart items of a Cart.")
+		@GraphQLField(
+			description = "Lists the top-level cart item rows on the cart addressed by ID (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable; restrictable to a specific SKU via skuId."
+		)
 		public CartItemPage items(
 				@GraphQLName("search") String search,
 				@GraphQLName("skuId") Long skuId,
@@ -949,7 +993,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve cart transitions of the given Cart."
+			description = "Lists the available CartTransition entries on the cart addressed by ID. Combines workflow task transitions (when the cart has an active workflow instance) and order-status transitions (request-quote, submit, quick-checkout, checkout) derived from the order-status registry."
 		)
 		public CartTransitionPage cartTransitions() throws Exception {
 			return _applyComponentServiceObjects(
@@ -972,7 +1016,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment methods available for the Cart."
+			description = "Lists the payment method entries qualified for the cart addressed by ID -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 		)
 		public PaymentMethodPage paymentMethods() throws Exception {
 			return _applyComponentServiceObjects(
@@ -995,7 +1039,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment methods available for the Cart."
+			description = "Lists the shipping method entries qualified for the cart addressed by ID, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 		)
 		public ShippingMethodPage shippingMethods() throws Exception {
 			return _applyComponentServiceObjects(
@@ -1018,7 +1062,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve delivery terms available for the Cart."
+			description = "Lists the term rows qualified as delivery terms for the cart addressed by ID, filtered by order type and the currently selected shipping method."
 		)
 		public TermPage deliveryTerms() throws Exception {
 			return _applyComponentServiceObjects(
@@ -1040,7 +1084,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment terms available for the Cart."
+			description = "Lists the term rows qualified as payment terms for the cart addressed by ID, filtered by order type and the currently selected payment method."
 		)
 		public TermPage paymentTerms() throws Exception {
 			return _applyComponentServiceObjects(
@@ -1063,7 +1107,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart billing address.")
+		@GraphQLField(
+			description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
+		)
 		public Address byExternalReferenceCodeBillingAddress()
 			throws Exception {
 
@@ -1089,7 +1135,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart billing address.")
+		@GraphQLField(
+			description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
+		)
 		public Address byExternalReferenceCodeShippingAddress()
 			throws Exception {
 
@@ -1115,7 +1163,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField
+		@GraphQLField(
+			description = "Lists attachment files linked to the cart addressed by external reference code. Filterable by restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via AttachmentEntityModel; pageable; searchable through the corresponding index."
+		)
 		public AttachmentPage byExternalReferenceCodeAttachments(
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
@@ -1151,7 +1201,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField
+		@GraphQLField(
+			description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by external reference code. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+		)
 		public String byExternalReferenceCodePaymentUrl(
 				@GraphQLName("callbackURL") String callbackURL)
 			throws Exception {
@@ -1177,7 +1229,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField
+		@GraphQLField(
+			description = "Lists comment entries attached to the cart addressed by external reference code. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart."
+		)
 		public CartCommentPage byExternalReferenceCodeComments(
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -1204,7 +1258,9 @@ public class Query {
 			_cart = cart;
 		}
 
-		@GraphQLField(description = "Retrieve cart items of a Cart.")
+		@GraphQLField(
+			description = "Lists the top-level cart item rows on the cart addressed by external reference code (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable through the cart item index; restrictable to a specific SKU via skuId."
+		)
 		public CartItemPage byExternalReferenceCodeItems(
 				@GraphQLName("search") String search,
 				@GraphQLName("skuId") Long skuId,
@@ -1235,7 +1291,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment methods available for the Cart."
+			description = "Lists the payment method entries qualified for the cart addressed by external reference code -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order."
 		)
 		public PaymentMethodPage byExternalReferenceCodePaymentMethods()
 			throws Exception {
@@ -1264,7 +1320,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment methods available for the Cart."
+			description = "Lists the shipping method entries qualified for the cart addressed by external reference code, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address."
 		)
 		public ShippingMethodPage byExternalReferenceCodeShippingMethods()
 			throws Exception {
@@ -1292,7 +1348,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve delivery terms available for the Cart."
+			description = "Lists the term rows qualified as delivery terms for the cart addressed by external reference code, filtered by order type and the currently selected shipping method."
 		)
 		public TermPage byExternalReferenceCodeDeliveryTerms()
 			throws Exception {
@@ -1320,7 +1376,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieve payment terms available for the Cart."
+			description = "Lists the term rows qualified as payment terms for the cart addressed by external reference code, filtered by order type and the currently selected payment method."
 		)
 		public TermPage byExternalReferenceCodePaymentTerms() throws Exception {
 			return _applyComponentServiceObjects(
@@ -1639,7 +1695,7 @@ public class Query {
 			_cartItem = cartItem;
 		}
 
-		@GraphQLField(description = "Retrieve information of the given Cart")
+		@GraphQLField(description = "Retrieves a single cart item by ID.")
 		public CartItem parentCartItem() throws Exception {
 			if (_cartItem.getParentCartItemId() == null) {
 				return null;
@@ -1871,4 +1927,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2039693924
+// LIFERAY-REST-BUILDER-HASH:25909168

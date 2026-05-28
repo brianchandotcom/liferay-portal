@@ -47,7 +47,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/billing-address'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve cart billing address."
+		description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -80,7 +80,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/billing-address'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve cart billing address."
+		description = "Returns the Address bound as the cart's billing address via cart.billingAddressId; read-only."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -115,7 +115,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/shipping-address'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve cart billing address."
+		description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -150,7 +150,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-address'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve cart billing address."
+		description = "Returns the Address bound as the cart's shipping address via cart.shippingAddressId; read-only."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -622,4 +622,4 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 		LogFactoryUtil.getLog(BaseAddressResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:306517760
+// LIFERAY-REST-BUILDER-HASH:-190442758

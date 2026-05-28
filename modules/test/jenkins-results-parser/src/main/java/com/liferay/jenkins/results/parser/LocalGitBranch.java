@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -26,6 +28,24 @@ public class LocalGitBranch extends BaseGitRef {
 
 	public LocalGitRepository getLocalGitRepository() {
 		return _localGitRepository;
+	}
+
+	public RemoteGitBranch getSourceRemoteGitBranch() {
+		if (_sourceRemoteGitBranch == null) {
+			return null;
+		}
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		List<String> branchNamesContainingSHA =
+			gitWorkingDirectory.getBranchNamesContainingSHA(
+				_sourceRemoteGitBranch.getSHA());
+
+		if (!branchNamesContainingSHA.contains(getName())) {
+			return null;
+		}
+
+		return _sourceRemoteGitBranch;
 	}
 
 	public String getUpstreamBranchName() {
@@ -53,6 +73,13 @@ public class LocalGitBranch extends BaseGitRef {
 	protected LocalGitBranch(
 		LocalGitRepository localGitRepository, String name, String sha) {
 
+		this(localGitRepository, name, sha, null);
+	}
+
+	protected LocalGitBranch(
+		LocalGitRepository localGitRepository, String name, String sha,
+		RemoteGitBranch sourceRemoteGitBranch) {
+
 		super(name, sha);
 
 		if (localGitRepository == null) {
@@ -60,8 +87,11 @@ public class LocalGitBranch extends BaseGitRef {
 		}
 
 		_localGitRepository = localGitRepository;
+
+		_sourceRemoteGitBranch = sourceRemoteGitBranch;
 	}
 
 	private final LocalGitRepository _localGitRepository;
+	private final RemoteGitBranch _sourceRemoteGitBranch;
 
 }

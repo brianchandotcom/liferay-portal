@@ -355,7 +355,7 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 								'[data-field-name="friendlyURL"]'
 							);
 
-							if (friendlyURLInputs) {
+							if (friendlyURLInputs.length > 0) {
 								const friendlyURLValues = {};
 
 								friendlyURLInputs.forEach((input) => {

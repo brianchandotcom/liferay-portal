@@ -73,6 +73,10 @@ const _defaultCollaboratorBadgeText = ({
 }: CollaboratorBadgeProps): string | null =>
 	toBeShared ? Liferay.Language.get('to-be-shared') : null;
 
+const _defaultCollaboratorNameSuffix = (
+	_props: CollaboratorIconProps
+): string | null => null;
+
 const _defaultAutocompleteItem = ({type, user}: CollaboratorIconProps) => (
 	<div className="autofit-row autofit-row-center">
 		<div className="autofit-col c-mr-1">
@@ -110,6 +114,7 @@ function CollaboratorListItem({
 	alwaysShowPermissionSelector = false,
 	canManageCollaborators = true,
 	collaboratorBadgeText,
+	collaboratorNameSuffix,
 	collaboratorStickerIcon,
 	dateExpired,
 	error,
@@ -127,6 +132,7 @@ function CollaboratorListItem({
 	alwaysShowPermissionSelector?: boolean;
 	canManageCollaborators?: boolean;
 	collaboratorBadgeText: (props: CollaboratorBadgeProps) => string | null;
+	collaboratorNameSuffix: (props: CollaboratorIconProps) => string | null;
 	collaboratorStickerIcon: (props: CollaboratorIconProps) => React.ReactNode;
 	dateExpired?: string;
 	error?: string;
@@ -148,6 +154,7 @@ function CollaboratorListItem({
 	};
 
 	const badgeText = collaboratorBadgeText({toBeShared, type, user});
+	const nameSuffix = collaboratorNameSuffix({type, user});
 
 	return (
 		<li
@@ -166,6 +173,12 @@ function CollaboratorListItem({
 						<span className="text-3 text-truncate text-weight-semi-bold">
 							{user.name}
 						</span>
+
+						{nameSuffix ? (
+							<span className="c-ml-1 text-3 text-secondary">
+								{nameSuffix}
+							</span>
+						) : null}
 
 						{badgeText ? (
 							<ClayBadge
@@ -310,6 +323,7 @@ export default function ShareModalContent({
 	canManageCollaborators = true,
 	closeModal,
 	collaboratorBadgeText = _defaultCollaboratorBadgeText,
+	collaboratorNameSuffix = _defaultCollaboratorNameSuffix,
 	collaboratorStickerIcon = _defaultCollaboratorStickerIcon,
 	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
 	creator,
@@ -550,6 +564,9 @@ export default function ShareModalContent({
 										}
 										collaboratorBadgeText={
 											collaboratorBadgeText
+										}
+										collaboratorNameSuffix={
+											collaboratorNameSuffix
 										}
 										collaboratorStickerIcon={
 											collaboratorStickerIcon

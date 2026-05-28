@@ -282,6 +282,11 @@ export default function CMSShareModalContent({
 		return toBeShared ? Liferay.Language.get('to-be-shared') : null;
 	};
 
+	const collaboratorNameSuffix = ({type}: {type: CollaboratorType}) =>
+		externalUserSharingEnabled && type === COLLABORATOR_TYPE.EXTERNAL_USER
+			? `(${Liferay.Language.get('guest').toLocaleLowerCase()})`
+			: null;
+
 	const collaboratorStickerIcon = ({
 		type,
 		user,
@@ -333,6 +338,7 @@ export default function CMSShareModalContent({
 			canManageCollaborators={canManageCollaborators}
 			closeModal={closeModal}
 			collaboratorBadgeText={collaboratorBadgeText}
+			collaboratorNameSuffix={collaboratorNameSuffix}
 			collaboratorStickerIcon={collaboratorStickerIcon}
 			creator={creator}
 			initialCollaborators={

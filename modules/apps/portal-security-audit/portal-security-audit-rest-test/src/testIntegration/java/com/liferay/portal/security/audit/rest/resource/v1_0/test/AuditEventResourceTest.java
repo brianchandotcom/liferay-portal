@@ -210,12 +210,12 @@ public class AuditEventResourceTest extends BaseAuditEventResourceTestCase {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user.getUserId());
 
-		AccountRole memberAccountRole =
+		AccountRole accountRole =
 			_accountRoleLocalService.getAccountRoleByRoleId(role.getRoleId());
 
 		_accountRoleLocalService.associateUser(
-			accountEntry.getAccountEntryId(),
-			memberAccountRole.getAccountRoleId(), user.getUserId());
+			accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			user.getUserId());
 	}
 
 	private AuditEvent _randomAuditEvent(

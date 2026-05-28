@@ -186,12 +186,12 @@ public class AuditEventServiceTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId(), user.getUserId());
 
-		AccountRole memberAccountRole =
+		AccountRole accountRole =
 			_accountRoleLocalService.getAccountRoleByRoleId(role.getRoleId());
 
 		_accountRoleLocalService.associateUser(
-			_accountEntry.getAccountEntryId(),
-			memberAccountRole.getAccountRoleId(), user.getUserId());
+			_accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			user.getUserId());
 	}
 
 	private static final List<AuditEvent> _auditEvents = new ArrayList<>();

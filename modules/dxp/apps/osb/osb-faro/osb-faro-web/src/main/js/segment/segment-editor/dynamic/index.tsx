@@ -241,7 +241,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 												criteriaString
 											),
 											referencedProperties as any
-										) as CriterionGroup)
+									  ) as CriterionGroup)
 									: wrapInCriteriaGroup([]),
 							externalReferenceCode:
 								externalReferenceCode ||

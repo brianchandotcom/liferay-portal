@@ -437,7 +437,6 @@ gcp:
     projectId: ""
 grafana:
     datasources: {}
-    enabled: true
     grafana.ini:
         analytics:
             check_for_plugin_updates: true

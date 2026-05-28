@@ -949,6 +949,26 @@ public class MirrorsGetTask extends Task {
 		return fileName.endsWith(".7z");
 	}
 
+	private boolean _isCINode() {
+		if (_isNullOrEmpty(System.getenv("JENKINS_URL")) &&
+			_isNullOrEmpty(System.getenv("MASTER_NETWORK_NAME"))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isNullOrEmpty(String string) {
+		if (string == null) {
+			return true;
+		}
+
+		String trimmedString = string.trim();
+
+		return trimmedString.isEmpty();
+	}
+
 	private boolean _isTarGzFile(File file) throws IOException {
 		if (!file.exists()) {
 			return false;
@@ -1278,9 +1298,7 @@ public class MirrorsGetTask extends Task {
 	private boolean _skipChecksum;
 	private String _src;
 	private boolean _ssl;
-	private boolean _tryLocalNetwork =
-		(System.getenv("JENKINS_URL") != null) ||
-		(System.getenv("MASTER_NETWORK_NAME") != null);
+	private boolean _tryLocalNetwork = _isCINode();
 	private String _userAgent;
 	private String _username;
 	private boolean _verbose;

@@ -107,18 +107,9 @@ public class FileUtil {
 	public static File get(Project project, String url, File destinationFile)
 		throws IOException {
 
-		boolean tryLocalNetwork = false;
-
-		if ((System.getenv("JENKINS_URL") != null) ||
-			(System.getenv("MASTER_NETWORK_NAME") != null)) {
-
-			tryLocalNetwork = true;
-		}
-		else if (_getProperty(project, "mirrors.hostname") != null) {
-			tryLocalNetwork = true;
-		}
-
-		return get(project, url, destinationFile, false, tryLocalNetwork);
+		return get(
+			project, url, destinationFile, false,
+			_isCINode() || (_getProperty(project, "mirrors.hostname") != null));
 	}
 
 	public static File get(
@@ -737,6 +728,26 @@ public class FileUtil {
 
 		antBuilder.invokeMethod(
 			"manifestclasspath", new Object[] {args, closure});
+	}
+
+	private static boolean _isCINode() {
+		if (_isNullOrEmpty(System.getenv("JENKINS_URL")) &&
+			_isNullOrEmpty(System.getenv("MASTER_NETWORK_NAME"))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private static boolean _isNullOrEmpty(String string) {
+		if (string == null) {
+			return true;
+		}
+
+		String trimmedString = string.trim();
+
+		return trimmedString.isEmpty();
 	}
 
 	private static final File _TMP_DIR = new File(

@@ -8,9 +8,10 @@ package com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants;
 /**
  * @author Miguel Arroyo
  */
-public class CKEditorSampleWebKeys {
+public class CKEditor5SamplePortletKeys {
 
-	public static final String CKEDITOR5_SAMPLE_DISPLAY_CONTEXT =
-		"CKEDITOR5_SAMPLE_DISPLAY_CONTEXT";
+	public static final String CKEDITOR5_SAMPLE =
+		"com_liferay_editor_ckeditor5_sample_web_internal_portlet_" +
+			"CKEditor5SamplePortlet";
 
 }

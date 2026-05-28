@@ -2,11 +2,11 @@
 
 ## Trigger
 
-Always, except when the entire diff is documentation or language properties (`*.md`, `Language*.properties`) — the smoke baseline does not exercise documentation.
+Always, except when every diff path matches `*.md`, `.claude/**`, `.editorconfig`, `.gitattributes`, `.github/**`, `.gitignore`, `.project`, `Language*.properties`, `cloud/**`, or `workspaces/**` — no smoke assertion reads these paths, so a failure would only signal baseline drift in the checkout.
 
 ## Match
 
-`!\.md$|/Language(_[a-zA-Z_]+)?\.properties$`
+`!\.md$|^\.(claude/|editorconfig$|gitattributes$|github/|gitignore$|project$)|/Language(_[a-zA-Z_]+)?\.properties$|^(cloud|workspaces)/`
 
 ## Command
 

@@ -36,6 +36,7 @@ const DataSourcesPanel: React.FC<IProps> = ({contentRetrievers, readOnly}) => {
 					disabled={readOnly}
 					inputName="assignedSources"
 					items={contentRetrievers.selected}
+					loadingState={4}
 					locator={{
 						label: 'title',
 						value: 'externalReferenceCode',

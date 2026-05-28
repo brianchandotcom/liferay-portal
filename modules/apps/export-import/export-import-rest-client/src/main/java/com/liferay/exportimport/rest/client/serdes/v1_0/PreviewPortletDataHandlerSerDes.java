@@ -71,6 +71,20 @@ public class PreviewPortletDataHandlerSerDes {
 			sb.append(previewPortletDataHandler.getDeletionCount());
 		}
 
+		if (previewPortletDataHandler.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(previewPortletDataHandler.getDescription()));
+
+			sb.append("\"");
+		}
+
 		if (previewPortletDataHandler.getLabel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -130,6 +144,20 @@ public class PreviewPortletDataHandlerSerDes {
 			sb.append("]");
 		}
 
+		if (previewPortletDataHandler.getTag() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tag\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(previewPortletDataHandler.getTag()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -170,6 +198,15 @@ public class PreviewPortletDataHandlerSerDes {
 				String.valueOf(previewPortletDataHandler.getDeletionCount()));
 		}
 
+		if (previewPortletDataHandler.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(previewPortletDataHandler.getDescription()));
+		}
+
 		if (previewPortletDataHandler.getLabel() == null) {
 			map.put("label", null);
 		}
@@ -199,6 +236,13 @@ public class PreviewPortletDataHandlerSerDes {
 						getPreviewPortletDataHandlerControls()));
 		}
 
+		if (previewPortletDataHandler.getTag() == null) {
+			map.put("tag", null);
+		}
+		else {
+			map.put("tag", String.valueOf(previewPortletDataHandler.getTag()));
+		}
+
 		return map;
 	}
 
@@ -223,6 +267,9 @@ public class PreviewPortletDataHandlerSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deletionCount")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				return false;
 			}
@@ -233,6 +280,9 @@ public class PreviewPortletDataHandlerSerDes {
 						jsonParserFieldName,
 						"previewPortletDataHandlerControls")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "tag")) {
 				return false;
 			}
 
@@ -254,6 +304,12 @@ public class PreviewPortletDataHandlerSerDes {
 				if (jsonParserFieldValue != null) {
 					previewPortletDataHandler.setDeletionCount(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					previewPortletDataHandler.setDescription(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "label")) {
@@ -293,6 +349,12 @@ public class PreviewPortletDataHandlerSerDes {
 					previewPortletDataHandler.
 						setPreviewPortletDataHandlerControls(
 							previewPortletDataHandlerControlsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "tag")) {
+				if (jsonParserFieldValue != null) {
+					previewPortletDataHandler.setTag(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -376,4 +438,4 @@ public class PreviewPortletDataHandlerSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1432937105
+// LIFERAY-REST-BUILDER-HASH:1554165985

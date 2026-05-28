@@ -133,6 +133,47 @@ public class PreviewPortletDataHandler implements Serializable {
 	private Supplier<Long> _deletionCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+
+		_descriptionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String description;
+
+	@JsonIgnore
+	private Supplier<String> _descriptionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -265,6 +306,45 @@ public class PreviewPortletDataHandler implements Serializable {
 	private Supplier<PreviewPortletDataHandlerControl[]>
 		_previewPortletDataHandlerControlsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getTag() {
+		if (_tagSupplier != null) {
+			tag = _tagSupplier.get();
+
+			_tagSupplier = null;
+		}
+
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+
+		_tagSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTag(UnsafeSupplier<String, Exception> tagUnsafeSupplier) {
+		_tagSupplier = () -> {
+			try {
+				return tagUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String tag;
+
+	@JsonIgnore
+	private Supplier<String> _tagSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -315,6 +395,22 @@ public class PreviewPortletDataHandler implements Serializable {
 			sb.append("\"deletionCount\": ");
 
 			sb.append(deletionCount);
+		}
+
+		String description = getDescription();
+
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(description));
+
+			sb.append("\"");
 		}
 
 		String label = getLabel();
@@ -370,6 +466,22 @@ public class PreviewPortletDataHandler implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String tag = getTag();
+
+		if (tag != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tag\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(tag));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -473,4 +585,4 @@ public class PreviewPortletDataHandler implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1763922148
+// LIFERAY-REST-BUILDER-HASH:1297538970

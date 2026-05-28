@@ -67,6 +67,27 @@ public class PreviewPortletDataHandler implements Cloneable, Serializable {
 
 	protected Long deletionCount;
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String description;
+
 	public String getLabel() {
 		return label;
 	}
@@ -136,6 +157,25 @@ public class PreviewPortletDataHandler implements Cloneable, Serializable {
 	protected PreviewPortletDataHandlerControl[]
 		previewPortletDataHandlerControls;
 
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public void setTag(UnsafeSupplier<String, Exception> tagUnsafeSupplier) {
+		try {
+			tag = tagUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String tag;
+
 	@Override
 	public PreviewPortletDataHandler clone() throws CloneNotSupportedException {
 		return (PreviewPortletDataHandler)super.clone();
@@ -169,4 +209,4 @@ public class PreviewPortletDataHandler implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1385570060
+// LIFERAY-REST-BUILDER-HASH:-248876666

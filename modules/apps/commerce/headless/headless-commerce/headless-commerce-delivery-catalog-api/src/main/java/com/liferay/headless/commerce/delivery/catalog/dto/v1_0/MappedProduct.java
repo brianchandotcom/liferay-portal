@@ -928,6 +928,53 @@ public class MappedProduct implements Serializable {
 	private Supplier<SkuOption[]> _skuOptionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Inline units of measure available for the mapped product."
+	)
+	@Valid
+	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
+		if (_skuUnitOfMeasuresSupplier != null) {
+			skuUnitOfMeasures = _skuUnitOfMeasuresSupplier.get();
+
+			_skuUnitOfMeasuresSupplier = null;
+		}
+
+		return skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(SkuUnitOfMeasure[] skuUnitOfMeasures) {
+		this.skuUnitOfMeasures = skuUnitOfMeasures;
+
+		_skuUnitOfMeasuresSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSkuUnitOfMeasures(
+		UnsafeSupplier<SkuUnitOfMeasure[], Exception>
+			skuUnitOfMeasuresUnsafeSupplier) {
+
+		_skuUnitOfMeasuresSupplier = () -> {
+			try {
+				return skuUnitOfMeasuresUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Inline units of measure available for the mapped product."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
+
+	@JsonIgnore
+	private Supplier<SkuUnitOfMeasure[]> _skuUnitOfMeasuresSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Resolved URL of the referenced product's thumbnail image. Read-only.",
 		example = "https://example.com/thumbnail.png"
 	)
@@ -1373,6 +1420,28 @@ public class MappedProduct implements Serializable {
 			sb.append("]");
 		}
 
+		SkuUnitOfMeasure[] skuUnitOfMeasures = getSkuUnitOfMeasures();
+
+		if (skuUnitOfMeasures != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasures\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuUnitOfMeasures.length; i++) {
+				sb.append(String.valueOf(skuUnitOfMeasures[i]));
+
+				if ((i + 1) < skuUnitOfMeasures.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		String thumbnail = getThumbnail();
 
 		if (thumbnail != null) {
@@ -1554,4 +1623,4 @@ public class MappedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2102294618
+// LIFERAY-REST-BUILDER-HASH:1036522593

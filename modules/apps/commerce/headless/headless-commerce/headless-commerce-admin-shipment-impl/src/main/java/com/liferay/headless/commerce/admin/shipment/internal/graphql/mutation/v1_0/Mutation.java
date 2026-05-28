@@ -64,7 +64,9 @@ public class Mutation {
 			shippingAddressResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the shipment identified by shipmentId. Calls the service with restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the order items."
+	)
 	public boolean deleteShipment(@GraphQLName("shipmentId") Long shipmentId)
 		throws Exception {
 
@@ -89,7 +91,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the shipment identified by external reference code. Resolves the row against the current company scope and calls deleteCommerceShipment with restoreStockQuantity=false; raises a not-found error (404) when the ERC is unknown."
+	)
 	public boolean deleteShipmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -104,7 +108,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the shipment identified by shipmentId using JSON Merge Patch (only the supplied fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate, and shippingMethodId via updateCommerceShipment, replays the nested shippingAddress and shipmentItems collections when supplied, and optionally rewrites externalReferenceCode. Domain validation (inactive warehouse, malformed address) maps to 422."
+	)
 	public Shipment patchShipment(
 			@GraphQLName("shipmentId") Long shipmentId,
 			@GraphQLName("shipment") Shipment shipment)
@@ -117,7 +123,9 @@ public class Mutation {
 				shipmentId, shipment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the shipment identified by external reference code using JSON Merge Patch (only the supplied fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate, and shippingMethodId, and replays the nested shippingAddress and shipmentItems collections when supplied. Raises a not-found error (404) when the ERC is unknown; domain validation (inactive warehouse, malformed address) maps to 422."
+	)
 	public Shipment patchShipmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipment") Shipment shipment)
@@ -131,7 +139,9 @@ public class Mutation {
 					externalReferenceCode, shipment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a shipment for an existing order identified by orderId (preferred) or orderExternalReferenceCode. Resolves the order, then calls the service cloning the order's groupId, accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Applies the optional carrier, trackingNumber, trackingURL, expectedDate, and shippingDate via updateCommerceShipment; when shippingAddress is supplied the linked address is updated in place, and when shipmentItems is supplied every existing item is replaced. Raises a not-found error (404) when orderExternalReferenceCode is unknown; domain validation (inactive warehouse, invalid shipping address) maps to 422."
+	)
 	public Shipment createShipment(@GraphQLName("shipment") Shipment shipment)
 		throws Exception {
 
@@ -154,7 +164,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by external reference code to the DELIVERED workflow state (code 3). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_DELIVERED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentByExternalReferenceCodeStatusDelivered(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -168,7 +180,9 @@ public class Mutation {
 						externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by external reference code to the READY_TO_BE_SHIPPED workflow state (code 1). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentByExternalReferenceCodeStatusFinishProcessing(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -182,7 +196,9 @@ public class Mutation {
 						externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by external reference code to the SHIPPED workflow state (code 2). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentByExternalReferenceCodeStatusShipped(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -196,7 +212,9 @@ public class Mutation {
 						externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by shipmentId to the DELIVERED workflow state (code 3). Calls the service with SHIPMENT_STATUS_DELIVERED; raises a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentStatusDelivered(
 			@GraphQLName("shipmentId") Long shipmentId)
 		throws Exception {
@@ -208,7 +226,9 @@ public class Mutation {
 				shipmentId));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by shipmentId to the READY_TO_BE_SHIPPED workflow state (code 1). Calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentStatusFinishProcessing(
 			@GraphQLName("shipmentId") Long shipmentId)
 		throws Exception {
@@ -221,7 +241,9 @@ public class Mutation {
 					shipmentId));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Transitions the shipment identified by shipmentId to the SHIPPED workflow state (code 2). Calls the service with SHIPMENT_STATUS_SHIPPED; raises a status conflict (400) when the transition is not allowed from the current state."
+	)
 	public Shipment createShipmentStatusShipped(
 			@GraphQLName("shipmentId") Long shipmentId)
 		throws Exception {
@@ -252,7 +274,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upserts the shipment identified by external reference code. When the ERC resolves, the row is updated and the nested shippingAddress and shipmentItems collections are replayed; when the ERC is unknown, the request body's orderId is used to resolve the source order and addCommerceShipment is invoked to seed a new shipment from the order's groupId, accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Domain validation maps to 422."
+	)
 	public Shipment updateShipmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipment") Shipment shipment)
@@ -266,7 +290,9 @@ public class Mutation {
 					externalReferenceCode, shipment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the shipment item identified by shipmentItemId. Calls the service with restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the order item."
+	)
 	public boolean deleteShipmentItem(
 			@GraphQLName("shipmentItemId") Long shipmentItemId)
 		throws Exception {
@@ -294,7 +320,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the shipment item identified by external reference code. Resolves the row and calls deleteCommerceShipmentItem with restoreStockQuantity=false; raises a not-found error (404) when the ERC is unknown."
+	)
 	public boolean deleteShipmentItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -309,7 +337,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the shipment item identified by shipmentItemId using JSON Merge Patch (only the supplied fields are modified). Resolves the row, then calls updateCommerceShipmentItem with the resolved warehouse, the new quantity, and the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock) maps to 422."
+	)
 	public ShipmentItem patchShipmentItem(
 			@GraphQLName("shipmentItemId") Long shipmentItemId,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -322,7 +352,9 @@ public class Mutation {
 				shipmentItemId, shipmentItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the shipment item identified by external reference code using JSON Merge Patch (only the supplied fields are modified). Resolves the row, then calls the service with the resolved warehouse, the new quantity, and the validateInventory flag (default true). Raises a not-found error (404) when the ERC is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422."
+	)
 	public ShipmentItem patchShipmentItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -336,7 +368,9 @@ public class Mutation {
 					externalReferenceCode, shipmentItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a shipment item on the shipment identified by shipmentId. Resolves the order item and warehouse via the supplied IDs or external reference codes, then calls the service with the requested quantity and the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock, missing order item) maps to 422."
+	)
 	public ShipmentItem createShipmentItem(
 			@GraphQLName("shipmentId") Long shipmentId,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -349,7 +383,9 @@ public class Mutation {
 				shipmentId, shipmentItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a shipment item on the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and then delegates to the postShipmentItem flow, which resolves the warehouse and order item, then calls the service with the supplied quantity and validateInventory flag (default true). Raises a not-found error (404) when the parent ERC is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422."
+	)
 	public ShipmentItem createShipmentItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -363,7 +399,9 @@ public class Mutation {
 					externalReferenceCode, shipmentItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upserts a shipment item on the shipment addressed by external reference code. The parent shipment is resolved by ERC and, when missing, by the body's shipmentId; the item is then created or updated through the service keyed by the body's externalReferenceCode. Domain validation (inactive warehouse, insufficient stock) maps to 422."
+	)
 	public ShipmentItem updateShipmentByExternalReferenceCodeItem(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -377,7 +415,9 @@ public class Mutation {
 					externalReferenceCode, shipmentItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the ShippingAddress bound to the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Raises a not-found error (404) when the ERC is unknown; domain validation (malformed city, country, name, street, or zip) maps to 422."
+	)
 	public ShippingAddress patchShipmentByExternalReferenceCodeShippingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shippingAddress") ShippingAddress shippingAddress)
@@ -392,7 +432,9 @@ public class Mutation {
 						externalReferenceCode, shippingAddress));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the ShippingAddress bound to the shipment identified by shipmentId. Resolves the parent shipment and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Domain validation (malformed city, country, name, street, or zip) maps to 422."
+	)
 	public ShippingAddress patchShipmentShippingAddress(
 			@GraphQLName("shipmentId") Long shipmentId,
 			@GraphQLName("shippingAddress") ShippingAddress shippingAddress)
@@ -526,4 +568,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1285845182
+// LIFERAY-REST-BUILDER-HASH:343654984

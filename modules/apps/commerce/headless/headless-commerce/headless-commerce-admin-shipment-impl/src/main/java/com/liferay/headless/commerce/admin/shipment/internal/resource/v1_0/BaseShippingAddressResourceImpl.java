@@ -47,6 +47,9 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/shipping-address'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the ShippingAddress bound to the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and reads the address; raises a not-found error (404) when the ERC is unknown. Returns an empty ShippingAddress when no address is bound yet."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -81,6 +84,9 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/shipping-address'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the ShippingAddress bound to the shipment identified by shipmentId. Reads the underlying address; returns an empty ShippingAddress when no address is bound yet. Exposed as a nested field on the Shipment schema so a single GET on the parent can expand the shippingAddress object."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -113,6 +119,9 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/shipping-address' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "externalReferenceCode": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the ShippingAddress bound to the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Raises a not-found error (404) when the ERC is unknown; domain validation (malformed city, country, name, street, or zip) maps to 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -149,6 +158,9 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/shipping-address' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "externalReferenceCode": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the ShippingAddress bound to the shipment identified by shipmentId. Resolves the parent shipment and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Domain validation (malformed city, country, name, street, or zip) maps to 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -623,4 +635,4 @@ public abstract class BaseShippingAddressResourceImpl
 		LogFactoryUtil.getLog(BaseShippingAddressResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2113080266
+// LIFERAY-REST-BUILDER-HASH:537652597

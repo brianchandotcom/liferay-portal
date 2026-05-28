@@ -268,7 +268,21 @@ public class ToolSetUtil {
 			).build();
 		}
 
-		return new HashMap<>();
+		Map<String, String> headers = new HashMap<>();
+
+		String cookie = httpServletRequest.getHeader("Cookie");
+
+		if (cookie != null) {
+			headers.put("Cookie", cookie);
+		}
+
+		String csrfToken = httpServletRequest.getHeader("X-CSRF-Token");
+
+		if (csrfToken != null) {
+			headers.put("X-CSRF-Token", csrfToken);
+		}
+
+		return headers;
 	}
 
 	private static OpenAPIBrief _getOpenAPIBrief(String toolSetName) {

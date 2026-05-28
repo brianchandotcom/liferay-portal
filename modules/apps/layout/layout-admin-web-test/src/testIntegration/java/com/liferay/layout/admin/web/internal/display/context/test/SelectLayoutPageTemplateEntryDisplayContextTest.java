@@ -8,11 +8,15 @@ package com.liferay.layout.admin.web.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -38,11 +42,14 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-76864")
+	)
 	@Test
 	@TestInfo("LPD-89086")
 	public void testGetTypes() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest();
+			_getMockLiferayPortletRenderRequest();
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
@@ -65,7 +72,7 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest();
+			_getMockLiferayPortletRenderRequest();
 
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
@@ -80,6 +87,24 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 		Assert.assertEquals(
 			types.toString(), _TYPES_WITH_FF.length, types.size());
 		Assert.assertTrue(types.containsAll(Arrays.asList(_TYPES_WITH_FF)));
+	}
+
+	private MockLiferayPortletRenderRequest
+			_getMockLiferayPortletRenderRequest()
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.getCompany(TestPropsValues.getCompanyId()));
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockLiferayPortletRenderRequest;
 	}
 
 	private static final String[] _TYPES = {

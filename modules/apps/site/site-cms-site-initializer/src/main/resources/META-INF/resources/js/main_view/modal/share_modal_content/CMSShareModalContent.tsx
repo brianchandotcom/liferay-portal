@@ -272,11 +272,10 @@ export default function CMSShareModalContent({
 	}): string | null => {
 		if (
 			externalUserSharingEnabled &&
-			type === COLLABORATOR_TYPE.EXTERNAL_USER
+			type === COLLABORATOR_TYPE.EXTERNAL_USER &&
+			!toBeShared
 		) {
-			return toBeShared
-				? Liferay.Language.get('pending')
-				: Liferay.Language.get('invited');
+			return Liferay.Language.get('invited');
 		}
 
 		return toBeShared ? Liferay.Language.get('to-be-shared') : null;

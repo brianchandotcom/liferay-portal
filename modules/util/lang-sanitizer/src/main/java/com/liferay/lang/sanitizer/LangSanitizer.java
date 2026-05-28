@@ -53,12 +53,18 @@ public class LangSanitizer {
 		langSanitizer.sanitize(
 			ArgumentsUtil.getValue(args, "source.base.dir", "./"));
 
+		System.out.println();
+
 		long endTime = System.currentTimeMillis();
 
 		Collections.sort(_sanitizedMessage, new SanitizedMessageComparator());
 
 		for (int i = 0; i < _sanitizedMessage.size(); i++) {
 			System.out.println((i + 1) + ": " + _sanitizedMessage.get(i));
+		}
+
+		if (_sanitizedMessage.isEmpty()) {
+			System.out.println("No violations were found.");
 		}
 
 		System.out.println(
@@ -79,6 +85,19 @@ public class LangSanitizer {
 			new CopyOnWriteArrayList<>();
 
 		for (File file : _getPropertiesFiles(baseDirName)) {
+			String fileName = file.getName();
+
+			if (fileName.equals("Language.properties") ||
+				fileName.equals("bundle.properties")) {
+
+				Path filePath = file.toPath();
+
+				Path fileDirPath = filePath.getParent();
+
+				System.out.println(
+					"Scanning translations of " + _getModuleName(fileDirPath));
+			}
+
 			Future<List<SanitizedMessage>> future = executorService.submit(
 				new Callable<List<SanitizedMessage>>() {
 
@@ -141,6 +160,26 @@ public class LangSanitizer {
 		}
 
 		return String.join(", ", differentWords);
+	}
+
+	private String _getModuleName(Path fileDirPath) {
+		Path dirPath = fileDirPath;
+
+		while (dirPath != null) {
+			String dirName = String.valueOf(dirPath.getFileName());
+
+			if (dirName.equals("src")) {
+				Path moduleRootPath = dirPath.getParent();
+
+				return String.valueOf(moduleRootPath.getFileName());
+			}
+
+			dirPath = dirPath.getParent();
+		}
+
+		Path moduleRootPath = fileDirPath.getParent();
+
+		return String.valueOf(moduleRootPath.getFileName());
 	}
 
 	private List<File> _getPropertiesFiles(String baseDirName)

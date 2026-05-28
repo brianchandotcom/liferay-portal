@@ -5,15 +5,22 @@
 
 package com.liferay.seo.studio.web.internal.display.context;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.seo.studio.web.internal.constants.SEOStudioFDSNames;
@@ -23,6 +30,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.text.Format;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +48,19 @@ public class ViewOnPageDisplayContext {
 		_viewsJSONArray = viewsJSONArray;
 	}
 
-	public Map<String, Object> getReactData() {
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws PortalException {
+
+		return FDSActionDropdownItemList.of(
+			new FDSActionDropdownItem(
+				getViewInsightDetailsURL() +
+					"?objectEntryExternalReferenceCode={externalReferenceCode}",
+				"view", "view-details",
+				_language.get(_httpServletRequest, "view-details"), "get", null,
+				null));
+	}
+
+	public Map<String, Object> getReactData() throws PortalException {
 		String lastScanDateString = null;
 
 		if (_objectEntry != null) {
@@ -68,12 +88,31 @@ public class ViewOnPageDisplayContext {
 		).put(
 			"emptyState", _getEmptyState()
 		).put(
+			"fdsActionDropdownItems", getFDSActionDropdownItems()
+		).put(
 			"fdsId", SEOStudioFDSNames.INSIGHT_TYPE_SECTION
+		).put(
+			"insightDetailsURL", getViewInsightDetailsURL()
 		).put(
 			"lastScanDate", lastScanDateString
 		).put(
 			"views", _viewsJSONArray
 		).build();
+	}
+
+	public String getViewInsightDetailsURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			themeDisplay.getScopeGroupId(), false, "/on-page-insight-details");
+
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getLayoutFullURL(layout, themeDisplay);
 	}
 
 	private String _getAPIURL() {

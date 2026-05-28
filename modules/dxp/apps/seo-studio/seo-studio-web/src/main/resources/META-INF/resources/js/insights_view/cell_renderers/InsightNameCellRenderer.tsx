@@ -7,7 +7,13 @@ import React, {useContext} from 'react';
 
 import {InsightsViewContext} from '../InsightsViewContext';
 
-export default function InsightNameCellRenderer({value}: {value: string}) {
+export default function InsightNameCellRenderer({
+	itemData,
+	value,
+}: {
+	itemData: {externalReferenceCode: string};
+	value: string;
+}) {
 	const {selectInsight} = useContext(InsightsViewContext);
 
 	return (
@@ -15,7 +21,7 @@ export default function InsightNameCellRenderer({value}: {value: string}) {
 			onClick={(event) => {
 				event.stopPropagation();
 
-				selectInsight(value);
+				selectInsight(itemData.externalReferenceCode);
 			}}
 			style={{cursor: 'pointer', textDecoration: 'underline'}}
 		>

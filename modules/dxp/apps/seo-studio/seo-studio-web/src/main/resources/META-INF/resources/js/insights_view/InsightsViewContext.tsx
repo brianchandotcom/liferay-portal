@@ -6,7 +6,7 @@
 import {createContext} from 'react';
 
 export interface InsightsViewContextValue {
-	selectInsight: (insightName: string) => void;
+	selectInsight: (externalReferenceCode: string) => void;
 }
 
 export const InsightsViewContext = createContext<InsightsViewContextValue>({

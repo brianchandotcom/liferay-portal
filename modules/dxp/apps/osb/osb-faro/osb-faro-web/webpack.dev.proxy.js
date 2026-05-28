@@ -11,6 +11,19 @@ const inflate = promisify(zlib.inflate);
 // Set-Cookie Domain, and the body) so the browser stays on the dev server
 // instead of leaving for the upstream host.
 
+// Injects an authenticated session Cookie (copied from a browser already logged
+// in via Okta against an SSO-protected upstream such as analytics-internal) into
+// every proxied request, so the dev server can reach the upstream without
+// proxying the Okta redirect flow. A falsy cookie leaves the request untouched.
+
+function createOnProxyReq(cookie) {
+	return function onProxyReq(proxyReq) {
+		if (cookie) {
+			proxyReq.setHeader('cookie', cookie);
+		}
+	};
+}
+
 function createOnProxyRes(target) {
 	return async function onProxyRes(proxyRes, req, res) {
 		const proxyOrigin = `http://${req.headers.host}`;
@@ -95,4 +108,4 @@ function createOnProxyRes(target) {
 	};
 }
 
-module.exports = {createOnProxyRes};
+module.exports = {createOnProxyReq, createOnProxyRes};

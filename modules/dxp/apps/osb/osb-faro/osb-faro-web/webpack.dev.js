@@ -1,5 +1,5 @@
 const common = require('./webpack.common');
-const {createOnProxyRes} = require('./webpack.dev.proxy');
+const {createOnProxyReq, createOnProxyRes} = require('./webpack.dev.proxy');
 const {merge} = require('webpack-merge');
 const webpack = require('webpack');
 
@@ -9,6 +9,8 @@ const TARGET = (process.env.FARO_URL || 'http://0.0.0.0:8080').replace(
 	/\/$/,
 	''
 );
+
+const COOKIE = process.env.FARO_COOKIE || '';
 
 module.exports = merge(common.config, {
 	devServer: {
@@ -20,6 +22,7 @@ module.exports = merge(common.config, {
 		proxy: {
 			'**': {
 				changeOrigin: true,
+				onProxyReq: createOnProxyReq(COOKIE),
 				onProxyRes: createOnProxyRes(TARGET),
 				selfHandleResponse: true,
 				target: TARGET

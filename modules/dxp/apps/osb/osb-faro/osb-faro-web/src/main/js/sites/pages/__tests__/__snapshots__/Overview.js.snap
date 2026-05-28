@@ -360,36 +360,10 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="flex-grow-1 mx-4 table-root"
           >
-            <div
-              class="table-responsive"
-            >
-              <table
-                class="table table-autofit table-list table-nowrap table-head-bordered table-hover table-striped"
-              >
-                <thead>
-                  <tr>
-                    <th
-                      class="table-head-title table-cell-expand"
-                    >
-                      Search Query | Searches
-                    </th>
-                    <th
-                      class="table-head-title table-column-text-end"
-                    >
-                      % of Searches
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-              <div
-                class="loading-root overlay"
-              >
-                <span
-                  aria-hidden="true"
-                  class="loading-root center loading-animation"
-                />
-              </div>
-            </div>
+            <span
+              aria-hidden="true"
+              class="loading-root spacer loading-animation"
+            />
           </div>
           <div
             class="card-footer"
@@ -443,36 +417,10 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="flex-grow-1 mx-4 table-root"
           >
-            <div
-              class="table-responsive"
-            >
-              <table
-                class="table table-autofit table-list table-nowrap table-head-bordered table-hover table-striped"
-              >
-                <thead>
-                  <tr>
-                    <th
-                      class="table-head-title table-cell-expand"
-                    >
-                      Interest Topics | Sessions
-                    </th>
-                    <th
-                      class="table-head-title table-column-text-end"
-                    >
-                      % of Sessions
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-              <div
-                class="loading-root overlay"
-              >
-                <span
-                  aria-hidden="true"
-                  class="loading-root center loading-animation"
-                />
-              </div>
-            </div>
+            <span
+              aria-hidden="true"
+              class="loading-root spacer loading-animation"
+            />
           </div>
           <div
             class="card-footer"

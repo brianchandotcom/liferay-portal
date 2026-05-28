@@ -116,9 +116,9 @@ test('Bulk delete tasks', {tag: ['@LPD-75299']}, async ({page, tasksPage}) => {
 		await expect(async () => {
 			await tasksPage.goto();
 
-			await expect(page.getByLabel(taskNames[0])).toBeHidden();
-			await expect(page.getByLabel(taskNames[1])).toBeHidden();
-			await expect(page.getByLabel(taskNames[2])).toBeVisible();
+			await expect(tasksPage.getItem(taskNames[0])).toBeHidden();
+			await expect(tasksPage.getItem(taskNames[1])).toBeHidden();
+			await expect(tasksPage.getItem(taskNames[2])).toBeVisible();
 		}).toPass({timeout: 10000});
 	});
 });

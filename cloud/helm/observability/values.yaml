@@ -463,6 +463,8 @@ grafana:
             mode: console
         log.console:
             format: json
+        panels:
+            disable_sanitize_html: true
         plugins:
             disable_plugins: grafana-lokiexplore-app
         server:

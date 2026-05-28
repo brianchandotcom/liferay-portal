@@ -17,8 +17,8 @@
 {{- $_ := set (index $items "backups") "file" "dashboards/backups-aws.json" -}}
 {{- end -}}
 {{- end -}}
-{{- $activeTileStyle :="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; text-decoration: none; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;" -}}
-{{- $mutedTileStyle := "background-color: #f9fafb; border: 1px dashed #d1d5db; border-radius: 10px; padding: 16px; text-decoration: none; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; opacity: 0.65;" -}}
+{{- $activeTileStyle := "ch-tile" -}}
+{{- $mutedTileStyle := "ch-tile-muted" -}}
 {{- $argocdHref := "#" -}}
 {{- $argocdDescription := "Set centralHub.argocdUrl in your values.yaml to enable this link." -}}
 {{- $argocdTileStyle := $mutedTileStyle -}}

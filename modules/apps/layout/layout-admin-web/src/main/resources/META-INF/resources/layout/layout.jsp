@@ -69,51 +69,54 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:script sandbox="<%= true %>">
 	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />layoutPrototypeLinkEnabled',
+		'<portlet:namespace />portletLayoutPageTemplateEntryLinkEnabled',
 		'<portlet:namespace />layoutPrototypeMergeAlert'
 	);
 	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />layoutPrototypeLinkEnabled',
+		'<portlet:namespace />portletLayoutPageTemplateEntryLinkEnabled',
 		'<portlet:namespace />typeOptions',
 		true
 	);
 
-	var layoutPrototypeLinkEnabled = document.getElementById(
-		'<portlet:namespace />layoutPrototypeLinkEnabled'
+	var portletLayoutPageTemplateEntryLinkEnabled = document.getElementById(
+		'<portlet:namespace />portletLayoutPageTemplateEntryLinkEnabled'
 	);
 
-	if (layoutPrototypeLinkEnabled) {
-		layoutPrototypeLinkEnabled.addEventListener('change', (event) => {
-			var layoutPrototypeLinkChecked = event.currentTarget.checked;
+	if (portletLayoutPageTemplateEntryLinkEnabled) {
+		portletLayoutPageTemplateEntryLinkEnabled.addEventListener(
+			'change',
+			(event) => {
+				var layoutPrototypeLinkChecked = event.currentTarget.checked;
 
-			var layoutPrototypeInfoMessage = document.querySelector(
-				'.layout-prototype-info-message'
-			);
+				var layoutPrototypeInfoMessage = document.querySelector(
+					'.layout-prototype-info-message'
+				);
 
-			var applyLayoutPrototype = document.getElementById(
-				'<portlet:namespace />applyLayoutPrototype'
-			);
+				var applyLayoutPrototype = document.getElementById(
+					'<portlet:namespace />applyLayoutPrototype'
+				);
 
-			if (layoutPrototypeInfoMessage) {
-				if (layoutPrototypeLinkChecked) {
-					layoutPrototypeInfoMessage.classList.remove('hide');
+				if (layoutPrototypeInfoMessage) {
+					if (layoutPrototypeLinkChecked) {
+						layoutPrototypeInfoMessage.classList.remove('hide');
 
-					applyLayoutPrototype.value = '<%= true %>';
+						applyLayoutPrototype.value = '<%= true %>';
+					}
+					else {
+						layoutPrototypeInfoMessage.classList.add('hide');
+
+						applyLayoutPrototype.value = '<%= false %>';
+					}
 				}
-				else {
-					layoutPrototypeInfoMessage.classList.add('hide');
 
-					applyLayoutPrototype.value = '<%= false %>';
-				}
+				var propagatableFields = document.querySelectorAll(
+					'#<portlet:namespace />editLayoutFm .propagatable-field'
+				);
+
+				Array.prototype.forEach.call(propagatableFields, (field, index) => {
+					Liferay.Util.toggleDisabled(field, layoutPrototypeLinkChecked);
+				});
 			}
-
-			var propagatableFields = document.querySelectorAll(
-				'#<portlet:namespace />editLayoutFm .propagatable-field'
-			);
-
-			Array.prototype.forEach.call(propagatableFields, (field, index) => {
-				Liferay.Util.toggleDisabled(field, layoutPrototypeLinkChecked);
-			});
-		});
+		);
 	}
 </aui:script>

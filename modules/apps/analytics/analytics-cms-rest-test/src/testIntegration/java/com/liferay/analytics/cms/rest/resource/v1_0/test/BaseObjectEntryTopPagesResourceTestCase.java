@@ -825,4 +825,4 @@ public abstract class BaseObjectEntryTopPagesResourceTestCase {
 			_objectEntryTopPagesResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1172474881
+// LIFERAY-REST-BUILDER-HASH:-1110561792

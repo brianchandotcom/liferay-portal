@@ -2,6 +2,10 @@ components:
     parameters:
         externalReferenceCodePathParam:
             in: path
+            description:
+                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The
+                code is the integration-supplied idempotency key, unique within the resource scope; PUT against this
+                path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -12,8 +16,55 @@ components:
                 minLength: 1
                 type: string
             style: simple
+        filterQueryParam:
+            in: query
+            description:
+                OData v4 filter expression that narrows the result set. The supported fields are those exposed by the
+                matching Liferay entity model for shipment (typically createDate, modifiedDate, status, and the shipment
+                identifiers). Example -- filter=status eq 2.
+            explode: true
+            name: filter
+            required: false
+            schema:
+                type: string
+            style: form
+        pageQueryParam:
+            in: query
+            description:
+                One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.
+            explode: true
+            name: page
+            required: false
+            schema:
+                type: integer
+            style: form
+        pageSizeQueryParam:
+            in: query
+            description:
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
+                portal configuration to prevent unbounded reads.
+            explode: true
+            name: pageSize
+            required: false
+            schema:
+                type: integer
+            style: form
+        searchQueryParam:
+            in: query
+            description:
+                Full-text search expression matched against the resource's indexed fields. Returns the items whose
+                searchable content matches the expression.
+            explode: true
+            name: search
+            required: false
+            schema:
+                type: string
+            style: form
         shipmentIdPathParam:
             in: path
+            description:
+                Internal numeric identifier of the target shipment. Counterpart to the `by-externalReferenceCode` path
+                variant; identifiers are server-assigned and stable across the shipment's lifetime.
             explode: false
             name: shipmentId
             required: true
@@ -27,37 +78,61 @@ components:
             style: simple
         shipmentItemIdPathParam:
             in: path
+            description:
+                Internal numeric identifier of the target shipment item. Identifiers are server-assigned and stable
+                across the shipment item's lifetime; the parent shipment is resolved from the row.
             explode: false
             name: shipmentItemId
             required: true
             schema:
                 description:
-                    The shipment resource Id
+                    The shipment item resource Id
                 example: 30130
                 format: int64
                 minimum: 0
                 type: integer
             style: simple
+        sortQueryParam:
+            in: query
+            description:
+                Sort expression of the form `field:asc` or `field:desc`, comma-separated for multi-field sorting.
+                Supported sort fields depend on the endpoint and are sourced from the matching entity model (typically
+                createDate, modifiedDate, and the status field).
+            explode: true
+            name: sort
+            required: false
+            schema:
+                type: string
+            style: form
     schemas:
         Error:
+            description:
+                Standard error envelope returned on every non-success response. Carries the HTTP status, an internal
+                error code, a short human-readable message, and a developer-oriented diagnostic description.
             properties:
                 errorCode:
                     description:
-                        Internal error code mapping
+                        Numeric tooling-facing identifier that groups related failures across the API. Read-only.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
+                    description:
+                        Diagnostic message describing the failure. Intended for logs and debugging surfaces; not meant
+                        for end-user display. Read-only.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
+                    description:
+                        Short human-readable summary of the failure, suitable for end-user display when the calling
+                        client does not provide a domain-specific message. Read-only.
                     example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
                     readOnly: true
                     type: string
                 status:
                     description:
-                        HTTP Status code
+                        HTTP status code returned with the response; mirrors the response status line. Read-only.
                     example: 404
                     readOnly: true
                     type: integer
@@ -68,8 +143,15 @@ components:
                 -   status
             type: object
         Shipment:
+            description:
+                Fulfillment record that ships a single parcel for a source order. Carries the carrier, tracking
+                identifiers, expected and shipping dates, the ship-to address, the picked items, and the workflow status
+                that advances from processing through ready-to-be-shipped and shipped to delivered.
             properties:
                 accountId:
+                    description:
+                        Reference to the customer account that owns the source order (FK identifier). Copied from the
+                        order at creation time and read-only thereafter.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -80,137 +162,258 @@ components:
                         additionalProperties:
                             type: string
                         type: object
+                    description:
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
+                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 carrier:
+                    description:
+                        Name of the shipping carrier handling the parcel. Free-form string supplied by the fulfillment
+                        operator; updatable while the shipment is still in flight.
                     example: FedEx
                     type: string
                 createDate:
+                    description:
+                        Creation timestamp in ISO 8601. Read-only; set when the shipment is first persisted.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     readOnly: true
                     type: string
                 customFields:
+                    description:
+                        Custom field values attached to the shipment by the platform's expando mechanism. Each entry is
+                        a name/value pair declared on the shipment's custom-fields configuration; the field set is
+                        installation-specific.
                     items:
                         type: customField
                     type: array
                 expectedDate:
+                    description:
+                        Estimated delivery date in ISO 8601. Supplied by the fulfillment operator; updatable until the
+                        shipment is delivered.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for create and update; must be unique per shipment within the company. When set,
+                        the resource is also addressable through the by-external-reference-code paths.
+                    example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Server-assigned identifier of the shipment. Stable across the shipment's lifetime. Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 modifiedDate:
+                    description:
+                        Timestamp of the most recent update in ISO 8601. Read-only; refreshed on every persisted change.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     readOnly: true
                     type: string
                 orderExternalReferenceCode:
+                    description:
+                        External reference code of the source order. Accepted on create as an alternative to orderId;
+                        the order is resolved against the current company scope. Write-only -- the response carries the
+                        resolved orderId and accountId instead.
                     example: AB-34098-789-N
                     type: string
                 orderId:
+                    description:
+                        Reference to the source order this shipment fulfills (FK identifier). Required on create when
+                        orderExternalReferenceCode is omitted; seeds the shipment's group, customer account, ship-to
+                        address, shipping method, and shipping-option label.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 shipmentItems:
+                    description:
+                        Nested picked-line rows to write together with the shipment. When supplied on update, every
+                        existing line on the parent is removed first and the array is replayed; supply an empty array to
+                        clear all lines, or omit the field to leave the lines untouched.
                     items:
                         $ref: "#/components/schemas/ShipmentItem"
                     type: array
                 shippingAddress:
                     $ref: "#/components/schemas/ShippingAddress"
+                    description:
+                        Nested ship-to address applied to this shipment. When supplied, the existing address row is
+                        updated in place (or a new one is created when none is linked yet) and the shipment is rebound
+                        to it. Omit to leave the address inherited from the source order.
                 shippingAddressId:
+                    description:
+                        Reference to the postal address the parcel ships to (FK identifier). Copied from the source
+                        order at creation time; can be retargeted by supplying a nested shippingAddress or by calling
+                        the shipping-address endpoint.
                     example: 31130
                     format: int64
                     minimum: 0
                     type: integer
                 shippingDate:
+                    description:
+                        Date the parcel was handed over to the carrier, in ISO 8601. Typically set when the shipment
+                        transitions to shipped.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     type: string
                 shippingMethodId:
+                    description:
+                        Reference to the shipping method used by the carrier (FK identifier). Copied from the source
+                        order at creation time; updatable while the shipment is still processing or ready to be shipped.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 shippingOptionName:
+                    description:
+                        Label of the shipping option selected on the source order. Copied from the order at creation
+                        time. Read-only.
                     example: Standard Delivery
                     readOnly: true
                     type: string
                 status:
                     $ref: "#/components/schemas/Status"
+                    description:
+                        Workflow envelope with the integer code and the localized label of the shipment. Transitions are
+                        driven by the dedicated status-* endpoints and cannot run backwards; reaching shipped or
+                        delivered emits an asynchronous shipment-status message. Read-only on this schema.
                     readOnly: true
                 trackingNumber:
+                    description:
+                        Carrier-assigned tracking number for the parcel. Free-form string supplied by the fulfillment
+                        operator.
                     example: 123AD-asd
                     type: string
                 trackingURL:
-                    example: Standard Delivery
+                    description:
+                        Carrier tracking page for the parcel. Free-form string; not validated as a URL. Defaults to the
+                        tracking URL configured on the selected shipping method when the field is omitted.
+                    example: https://example.com/track?number=123AD-asd
                     type: string
                 userName:
-                    example: John
+                    description:
+                        Full name of the user who created the shipment. Read-only.
+                    example: John Doe
                     readOnly: true
                     type: string
             type: object
         ShipmentItem:
+            description:
+                Single picked line on a shipment. Binds an order item to a shipment with a quantity drawn from a
+                specific inventory warehouse, optionally validating against stock on hand at write time.
             properties:
                 actions:
                     additionalProperties:
                         additionalProperties:
                             type: string
                         type: object
+                    description:
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
+                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 createDate:
+                    description:
+                        Creation timestamp in ISO 8601. Read-only; set when the picked-line row is first persisted.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     readOnly: true
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for create and update; must be unique per picked line within the company. When
+                        set, the resource is also addressable through the by-external-reference-code paths.
+                    example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Server-assigned identifier of the picked-line row. Stable across the row's lifetime. Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 modifiedDate:
+                    description:
+                        Timestamp of the most recent update in ISO 8601. Read-only; refreshed on every persisted change.
+                    example: 2017-07-21T19:30:00Z
                     format: date
                     readOnly: true
                     type: string
                 orderItemExternalReferenceCode:
+                    description:
+                        External reference code of the source order item this line draws from. Accepted on create as an
+                        alternative to orderItemId; the order item is resolved against the current company scope.
+                    example: AB-34098-789-N
                     type: string
                 orderItemId:
+                    description:
+                        Reference to the source order item this line draws from (FK identifier). Required on create when
+                        orderItemExternalReferenceCode is omitted; identifies the SKU and the remaining quantity
+                        available to ship.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 quantity:
+                    description:
+                        Quantity shipped on this line, expressed in the unit of measure of the referenced order item.
+                        Formatted on read against the SKU's unit-of-measure configuration. Required on create; must be
+                        positive.
                     example: 10.1
                     format: bigdecimal
                     minimum: 0
                     type: number
                 shipmentExternalReferenceCode:
+                    description:
+                        External reference code of the parent shipment this line belongs to. Read-only; derived from the
+                        linked shipment.
+                    example: AB-34098-789-N
                     type: string
                 shipmentId:
+                    description:
+                        Reference to the parent shipment this line belongs to (FK identifier). Set by the server when
+                        the line is created through a shipment-scoped path. Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 unitOfMeasureKey:
-                    example: s
+                    description:
+                        Unit-of-measure key applied to the quantity. Inherited from the referenced order item; common
+                        values are each, kg, and m.
+                    example: each
                     type: string
                 userName:
-                    example: John
+                    description:
+                        Full name of the user who created the picked line. Read-only.
+                    example: John Doe
                     readOnly: true
                     type: string
                 validateInventory:
+                    description:
+                        When true, the server validates the requested quantity against the warehouse's current stock on
+                        hand and rejects the write when stock is insufficient. Defaults to true when omitted.
                     example: true
                     type: boolean
                 warehouseExternalReferenceCode:
+                    description:
+                        External reference code of the inventory warehouse the line is picked from. Accepted on create
+                        as an alternative to warehouseId; the warehouse is resolved against the current company scope.
+                    example: AB-34098-789-N
                     type: string
                 warehouseId:
+                    description:
+                        Reference to the inventory warehouse the line is picked from (FK identifier). Required on create
+                        when warehouseExternalReferenceCode is omitted. Defaults on update to the warehouse already
+                        bound to the row.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -219,51 +422,84 @@ components:
                 -   quantity
             type: object
         ShippingAddress:
+            description:
+                Postal address used as the ship-to location for a shipment. Country and region are resolved by ISO code
+                against the portal's country and region catalogs; the same row is shared with the parent shipment's
+                address slot.
             properties:
                 city:
+                    description:
+                        City portion of the address. Required.
                     example: Diamond Bar
                     type: string
                 countryISOCode:
+                    description:
+                        ISO 3166-1 alpha-2 country code. Resolved against the portal's country catalog to bind the
+                        address to a country record. Required.
                     example: US
                     type: string
                 description:
+                    description:
+                        Free-form delivery notes attached to the address, such as building or floor hints. Optional.
                     example: right stairs, first room on the left
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the address row; must be unique per address within the company.
                     example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Server-assigned identifier of the address row. Stable across the address's lifetime.
                     example: 31130
                     format: int64
                     minimum: 0
                     type: integer
                 latitude:
+                    description:
+                        Geographic latitude of the address in decimal degrees. Optional.
                     example: 33.9976884
                     format: double
                     type: number
                 longitude:
+                    description:
+                        Geographic longitude of the address in decimal degrees. Optional.
                     example: -117.8144595
                     format: double
                     type: number
                 name:
+                    description:
+                        Full name of the recipient on the parcel label. Required.
                     example: Alessio Antonio Rendina
                     type: string
                 phoneNumber:
+                    description:
+                        Recipient phone number as a free-form string. Optional; not validated for shape.
                     example: (123) 456 7890
                     type: string
                 regionISOCode:
+                    description:
+                        Region or state code within the resolved country, in the portal's region-code shape. Optional.
                     example: CA
                     type: string
                 street1:
+                    description:
+                        First line of the street address (number and street name). Required.
                     example: 1400 Montefino Ave
                     type: string
                 street2:
+                    description:
+                        Second line of the street address, such as apartment or floor. Optional.
                     example: 1st floor
                     type: string
                 street3:
+                    description:
+                        Third line of the street address, such as suite or building. Optional.
                     example: suite 200
                     type: string
                 zip:
+                    description:
+                        Postal or ZIP code of the address.
                     example: "91765"
                     type: string
             required:
@@ -273,43 +509,70 @@ components:
                 -   street1
             type: object
         Status:
+            description:
+                Workflow envelope describing the integer code and human-readable label of a shipment's current state.
+                Used by the Shipment.status property; the value follows the shipment lifecycle and is not editable
+                directly on the parent resource.
             properties:
                 code:
+                    description:
+                        Integer status of the shipment -- 0=Processing, 1=Ready to be shipped, 2=Shipped, 3=Delivered.
+                        Transitions are driven by the dedicated status-* endpoints and cannot run backwards. Read-only.
+                    example: 2
                     format: int32
                     readOnly: true
                     type: integer
                 label:
-                    example: black
+                    description:
+                        Non-localized label corresponding to the integer code.
+                    example: shipped
                     type: string
                 label_i18n:
-                    example: black
+                    description:
+                        Localized label corresponding to the integer code, resolved against the current request's
+                        preferred locale.
+                    example: Spedito
                     type: string
             type: object
 info:
     description:
-        "Liferay Commerce Admin Admin Shipment API. A Java client JAR is available for use with the group ID
+        "Liferay Commerce Admin Shipment REST API. Manages the fulfillment of orders -- shipment headers, the shipment
+        item rows that pick stock from a warehouse, the address that the parcel ships to, and the workflow that advances
+        a shipment from PROCESSING (0) to READY_TO_BE_SHIPPED (1) to SHIPPED (2) to DELIVERED (3). The API targets
+        back-office fulfillment operators and integration tooling; storefront-side ordering belongs to the
+        headless-commerce-delivery-order module. Most resources are addressable both by internal ID and by external
+        reference code; PUT against the external-reference-code path is upsert (create when the ERC is unknown, update
+        otherwise). PATCH applies JSON Merge Patch (only the supplied fields are modified). For the order, account, and
+        inventory data that this module refers to see the matching headless-commerce-admin-order,
+        headless-commerce-admin-account, and headless-commerce-admin-inventory modules. -- Common workflows: Ship an
+        order in one parcel -- (1) POST /shipments with orderId (or orderExternalReferenceCode) and an inline
+        shipmentItems array to create the shipment in PROCESSING status and deduct stock from the chosen warehouse; (2)
+        POST /shipments/<shipmentId>/status-finish-processing to advance the shipment to READY_TO_BE_SHIPPED once
+        picking is complete; (3) POST /shipments/<shipmentId>/status-shipped after the carrier accepts the parcel; (4)
+        POST /shipments/<shipmentId>/status-delivered after the customer receives it. -- Partial fulfillment -- (1) POST
+        /shipments referencing the order to open an empty shipment; (2) POST /shipments/<shipmentId>/items per order
+        item to add a subset of the ordered quantity, choosing the picking warehouse per row; (3) repeat the
+        open-then-add cycle for each subsequent parcel until the remaining order quantity is zero. -- Correct a shipment
+        in flight -- (1) PATCH /shipments/<shipmentId> to adjust carrier, trackingNumber, trackingURL, expectedDate,
+        shippingDate, or shippingMethodId without changing the line items; (2) PATCH
+        /shipments/<shipmentId>/shipping-address to retarget the parcel before it leaves the warehouse; (3) DELETE
+        /shipments/<shipmentId> to roll the shipment back. A Java client JAR is available for use with the group ID
         'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.shipment.client', and version '1.0.41'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
-    title: Liferay Commerce Admin Admin Shipment API
+    title: Liferay Commerce Admin Shipment API
     version: v1.0
 openapi: 3.0.0
 paths:
     /shipment-items/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes the shipment item identified by external reference code. Resolves the row and calls
+                deleteCommerceShipmentItem with restoreStockQuantity=false; raises a not-found error (404) when the ERC
+                is unknown.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     content:
@@ -325,23 +588,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
             summary: Deletes a Shipment Item by external reference code.
             tags:
                 -   ShipmentItem
         get:
+            description:
+                Returns the shipment item identified by external reference code. Resolves the row against the current
+                company scope; raises a not-found error (404) when the ERC is unknown.
             operationId: getShipmentByExternalReferenceCodeItem
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -366,6 +632,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
                 404:
                     content:
                         application/json:
@@ -390,18 +666,13 @@ paths:
             tags:
                 -   ShipmentItem
         patch:
+            description:
+                Updates the shipment item identified by external reference code using JSON Merge Patch (only the
+                supplied fields are modified). Resolves the row, then calls the service with the resolved warehouse, the
+                new quantity, and the validateInventory flag (default true). Raises a not-found error (404) when the ERC
+                is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -435,6 +706,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
                 404:
                     content:
                         application/json:
@@ -445,6 +726,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment item from being created or updated (for
+                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
+                        a required cross-reference cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -460,20 +753,13 @@ paths:
                 -   ShipmentItem
     /shipment-items/{shipmentItemId}:
         delete:
+            description:
+                Deletes the shipment item identified by shipmentItemId. Calls the service with
+                restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the
+                order item.
             operationId: deleteShipmentItem
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentItemId
-                    required: true
-                    schema:
-                        description:
-                            "The shipment resource Id"
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentItemIdPathParam"
             responses:
                 204:
                     content:
@@ -489,24 +775,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
             summary: Deletes a Shipment Item by ID.
             tags:
                 -   ShipmentItem
         get:
+            description:
+                Returns the shipment item identified by shipmentItemId. Read-only fetch; the response includes the
+                actions HATEOAS map for the current user.
             operationId: getShipmentItem
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentItemId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentItemIdPathParam"
             responses:
                 200:
                     content:
@@ -531,6 +819,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
                 404:
                     content:
                         application/json:
@@ -555,20 +853,14 @@ paths:
             tags:
                 -   ShipmentItem
         patch:
+            description:
+                Updates the shipment item identified by shipmentItemId using JSON Merge Patch (only the supplied fields
+                are modified). Resolves the row, then calls updateCommerceShipmentItem with the resolved warehouse, the
+                new quantity, and the validateInventory flag (default true). Domain validation (inactive warehouse,
+                insufficient stock) maps to 422.
             operationId: patchShipmentItem
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentItemId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentItemIdPathParam"
             requestBody:
                 content:
                     application/json:
@@ -602,6 +894,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment item.
                 404:
                     content:
                         application/json:
@@ -612,6 +914,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment item from being created or updated (for
+                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
+                        a required cross-reference cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -627,35 +941,18 @@ paths:
                 -   ShipmentItem
     /shipments:
         get:
+            description:
+                Lists shipment rows for the current company through Liferay's SearchUtil with status set to STATUS_ANY
+                (all workflow states returned). Supports OData v4 filter, full-text search across the shipment's indexed
+                fields, sort, and one-based page/pageSize pagination; the filter and sort fields are sourced from
+                shipment's entity model.
             operationId: getShipmentsPage
             parameters:
-                -   in: query
-                    name: filter
-                    required: false
-                    schema:
-                        type: string
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    explode: true
-                    name: search
-                    required: false
-                    schema:
-                        type: string
-                    style: form
-                -   in: query
-                    name: sort
-                    required: false
-                    schema:
-                        type: string
+                -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
+                -   $ref: "#/components/parameters/searchQueryParam"
+                -   $ref: "#/components/parameters/sortQueryParam"
             responses:
                 200:
                     content:
@@ -708,6 +1005,14 @@ paths:
             tags:
                 -   Shipment
         post:
+            description:
+                Creates a shipment for an existing order identified by orderId (preferred) or
+                orderExternalReferenceCode. Resolves the order, then calls the service cloning the order's groupId,
+                accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Applies the optional carrier,
+                trackingNumber, trackingURL, expectedDate, and shippingDate via updateCommerceShipment; when
+                shippingAddress is supplied the linked address is updated in place, and when shipmentItems is supplied
+                every existing item is replaced. Raises a not-found error (404) when orderExternalReferenceCode is
+                unknown; domain validation (inactive warehouse, invalid shipping address) maps to 422.
             operationId: postShipment
             requestBody:
                 content:
@@ -758,6 +1063,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment from being created or updated (for example, an
+                        inactive warehouse on a nested shipment item, a malformed nested shipping address, or a required
+                        cross-reference that cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -773,18 +1090,12 @@ paths:
                 -   Shipment
     /shipments/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            description:
+                Deletes the shipment identified by external reference code. Resolves the row against the current company
+                scope and calls deleteCommerceShipment with restoreStockQuantity=false; raises a not-found error (404)
+                when the ERC is unknown.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 204:
                     content:
@@ -800,24 +1111,25 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
             summary: Deletes a Shipment by external reference code.
             tags:
                 -   Shipment
         get:
             description:
-                Retrive information of the given Shipment.
+                Returns the shipment identified by external reference code. Resolves the row against the current company
+                scope; raises a not-found error (404) when the ERC is unknown.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -827,6 +1139,11 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
                 401:
                     content:
                         application/json:
@@ -837,6 +1154,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -857,21 +1184,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
+            summary: Gets a Shipment by external reference code.
             tags:
                 -   Shipment
         patch:
+            description:
+                Updates the shipment identified by external reference code using JSON Merge Patch (only the supplied
+                fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate,
+                shippingDate, and shippingMethodId, and replays the nested shippingAddress and shipmentItems collections
+                when supplied. Raises a not-found error (404) when the ERC is unknown; domain validation (inactive
+                warehouse, malformed address) maps to 422.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -912,6 +1236,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -922,6 +1256,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment from being created or updated (for example, an
+                        inactive warehouse on a nested shipment item or a malformed nested shipping address).
                 500:
                     content:
                         application/json:
@@ -936,18 +1281,14 @@ paths:
             tags:
                 -   Shipment
         put:
+            description:
+                Upserts the shipment identified by external reference code. When the ERC resolves, the row is updated
+                and the nested shippingAddress and shipmentItems collections are replayed; when the ERC is unknown, the
+                request body's orderId is used to resolve the source order and addCommerceShipment is invoked to seed a
+                new shipment from the order's groupId, accountId, shippingAddressId, shippingMethodId, and
+                shippingOptionName. Domain validation maps to 422.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -988,6 +1329,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -998,6 +1349,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment from being created or updated (for example, an
+                        inactive warehouse, a malformed nested shipping address, or a missing required cross-reference).
                 500:
                     content:
                         application/json:
@@ -1008,33 +1370,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Updates a Shipment.
+            summary: Upserts a Shipment by external reference code.
             tags:
                 -   Shipment
     /shipments/by-externalReferenceCode/{externalReferenceCode}/items:
         get:
+            description:
+                Returns the shipment item rows owned by the shipment identified by external reference code, paged.
+                Raises a not-found error (404) when the parent ERC is unknown.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1063,6 +1410,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1087,19 +1444,15 @@ paths:
             tags:
                 -   ShipmentItem
         post:
+            description:
+                Creates a shipment item on the shipment identified by external reference code. Resolves the parent
+                shipment via fetchCommerceShipmentByExternalReferenceCode and then delegates to the postShipmentItem
+                flow, which resolves the warehouse and order item, then calls the service with the supplied quantity and
+                validateInventory flag (default true). Raises a not-found error (404) when the parent ERC is unknown;
+                domain validation (inactive warehouse, insufficient stock) maps to 422.
             operationId: postShipmentItemByExternalReferenceCode
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            Shipment item external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1139,6 +1492,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1149,6 +1512,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment item from being created or updated (for
+                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
+                        the referenced order item is missing).
                 500:
                     content:
                         application/json:
@@ -1159,22 +1534,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates a Shipment Item.
+            summary: Creates a Shipment Item on the Shipment identified by external reference code.
             tags:
                 -   ShipmentItem
         put:
+            description:
+                Upserts a shipment item on the shipment addressed by external reference code. The parent shipment is
+                resolved by ERC and, when missing, by the body's shipmentId; the item is then created or updated through
+                the service keyed by the body's externalReferenceCode. Domain validation (inactive warehouse,
+                insufficient stock) maps to 422.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1214,6 +1584,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1224,6 +1604,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment item from being created or updated (for
+                        example, the referenced warehouse is inactive or the requested quantity exceeds stock on hand).
                 500:
                     content:
                         application/json:
@@ -1234,23 +1625,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates a Shipment Item.
+            summary: Upserts a Shipment Item on the Shipment identified by external reference code.
             tags:
                 -   ShipmentItem
     /shipments/by-externalReferenceCode/{externalReferenceCode}/shipping-address:
         get:
+            description:
+                Returns the ShippingAddress bound to the shipment identified by external reference code. Resolves the
+                parent shipment via fetchCommerceShipmentByExternalReferenceCode and reads the address; raises a
+                not-found error (404) when the ERC is unknown. Returns an empty ShippingAddress when no address is bound
+                yet.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -1275,6 +1661,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1295,22 +1691,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Gets a shipping Address related to an Order.
+            summary: Gets the Shipping Address related to a Shipment.
             tags:
                 -   ShippingAddress
         patch:
+            description:
+                Updates the ShippingAddress bound to the shipment identified by external reference code. Resolves the
+                parent shipment via fetchCommerceShipmentByExternalReferenceCode and delegates to
+                ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds
+                the shipment to it; country and region are resolved by ISO code. Raises a not-found error (404) when the
+                ERC is unknown; domain validation (malformed city, country, name, street, or zip) maps to 422.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
                 content:
                     application/json:
@@ -1344,6 +1736,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1354,6 +1756,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipping address from being created or updated (for
+                        example, missing city, country, name, street, or an unresolved country/region ISO code).
                 500:
                     content:
                         application/json:
@@ -1369,18 +1782,13 @@ paths:
                 -   ShippingAddress
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-delivered:
         post:
+            description:
+                Transitions the shipment identified by external reference code to the DELIVERED workflow state (code 3).
+                Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with
+                SHIPMENT_STATUS_DELIVERED; raises a not-found error (404) when the ERC is unknown and a status conflict
+                (400) when the transition is not allowed from the current state.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -1390,22 +1798,60 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Marks a Shipment delivered by external reference code.
             tags:
                 -   Shipment
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-finish-processing:
         post:
+            description:
+                Transitions the shipment identified by external reference code to the READY_TO_BE_SHIPPED workflow state
+                (code 1). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the
+                service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a not-found error (404) when the ERC is unknown
+                and a status conflict (400) when the transition is not allowed from the current state.
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -1415,23 +1861,61 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Marks a Shipment ready to be shipped by external reference code.
             tags:
                 -   Shipment
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped:
         post:
+            description:
+                Transitions the shipment identified by external reference code to the SHIPPED workflow state (code 2).
+                Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with
+                SHIPMENT_STATUS_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict
+                (400) when the transition is not allowed from the current state.
             operationId: postShipmentByExternalReferenceCodeStatusShipped
             parameters:
-                -   in: path
-                    explode: false
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        description:
-                            The resource external reference code
-                        example: AB-34098-789-N
-                        minLength: 1
-                        type: string
-                    style: simple
+                -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
                 200:
                     content:
@@ -1441,24 +1925,59 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Marks a Shipment shipped by external reference code.
             tags:
                 -   Shipment
     /shipments/{shipmentId}:
         delete:
+            description:
+                Deletes the shipment identified by shipmentId. Calls the service with restoreStockQuantity=false; the
+                row is removed without re-crediting the shipped quantity back to the order items.
             operationId: deleteShipment
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             responses:
                 204:
                     content:
@@ -1474,24 +1993,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
             summary: Deletes a Shipment by ID.
             tags:
                 -   Shipment
         get:
+            description:
+                Returns the shipment identified by shipmentId. Read-only fetch; the response includes the actions
+                HATEOAS map for the current user.
             operationId: getShipment
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             responses:
                 200:
                     content:
@@ -1516,6 +2037,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1540,20 +2071,15 @@ paths:
             tags:
                 -   Shipment
         patch:
+            description:
+                Updates the shipment identified by shipmentId using JSON Merge Patch (only the supplied fields are
+                modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate,
+                and shippingMethodId via updateCommerceShipment, replays the nested shippingAddress and shipmentItems
+                collections when supplied, and optionally rewrites externalReferenceCode. Domain validation (inactive
+                warehouse, malformed address) maps to 422.
             operationId: patchShipment
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             requestBody:
                 content:
                     application/json:
@@ -1587,6 +2113,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1597,6 +2133,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment from being created or updated (for example, an
+                        inactive warehouse on a nested shipment item or a malformed nested shipping address).
                 500:
                     content:
                         application/json:
@@ -1612,30 +2159,15 @@ paths:
                 -   Shipment
     /shipments/{shipmentId}/items:
         get:
+            description:
+                Returns the shipment item rows owned by the shipment identified by shipmentId, paged. Exposed as a
+                nested field on the Shipment schema so a single GET on the parent can expand the shipmentItems
+                collection.
             operationId: getShipmentItemsPage
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 200:
                     content:
@@ -1664,6 +2196,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1688,20 +2230,14 @@ paths:
             tags:
                 -   ShipmentItem
         post:
+            description:
+                Creates a shipment item on the shipment identified by shipmentId. Resolves the order item and warehouse
+                via the supplied IDs or external reference codes, then calls the service with the requested quantity and
+                the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock,
+                missing order item) maps to 422.
             operationId: postShipmentItem
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             requestBody:
                 content:
                     application/json:
@@ -1741,6 +2277,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1751,6 +2297,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipment item from being created or updated (for
+                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
+                        the referenced order item is missing).
                 500:
                     content:
                         application/json:
@@ -1766,18 +2324,13 @@ paths:
                 -   ShipmentItem
     /shipments/{shipmentId}/shipping-address:
         get:
+            description:
+                Returns the ShippingAddress bound to the shipment identified by shipmentId. Reads the underlying
+                address; returns an empty ShippingAddress when no address is bound yet. Exposed as a nested field on the
+                Shipment schema so a single GET on the parent can expand the shippingAddress object.
             operationId: getShipmentShippingAddress
             parameters:
-                -   in: path
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             responses:
                 200:
                     content:
@@ -1802,6 +2355,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1822,24 +2385,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Gets a shipping Address related to an Order.
+            summary: Gets the Shipping Address related to a Shipment.
             tags:
                 -   ShippingAddress
         patch:
+            description:
+                Updates the ShippingAddress bound to the shipment identified by shipmentId. Resolves the parent shipment
+                and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying
+                address and rebinds the shipment to it; country and region are resolved by ISO code. Domain validation
+                (malformed city, country, name, street, or zip) maps to 422.
             operationId: patchShipmentShippingAddress
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             requestBody:
                 content:
                     application/json:
@@ -1873,6 +2430,90 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the shipping address from being created or updated (for
+                        example, missing city, country, name, street, or an unresolved country/region ISO code).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Updates a Shipping Address by ID.
+            tags:
+                -   ShippingAddress
+    /shipments/{shipmentId}/status-delivered:
+        post:
+            description:
+                Transitions the shipment identified by shipmentId to the DELIVERED workflow state (code 3). Calls the
+                service with SHIPMENT_STATUS_DELIVERED; raises a status conflict (400) when the transition is not
+                allowed from the current state.
+            operationId: postShipmentStatusDelivered
+            parameters:
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
                 404:
                     content:
                         application/json:
@@ -1893,52 +2534,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Updates a Shipping Address by ID.
-            tags:
-                -   ShippingAddress
-    /shipments/{shipmentId}/status-delivered:
-        post:
-            operationId: postShipmentStatusDelivered
-            parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
+            summary: Marks a Shipment delivered by ID.
             tags:
                 -   Shipment
     /shipments/{shipmentId}/status-finish-processing:
         post:
+            description:
+                Transitions the shipment identified by shipmentId to the READY_TO_BE_SHIPPED workflow state (code 1).
+                Calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a status conflict (400) when the
+                transition is not allowed from the current state.
             operationId: postShipmentStatusFinishProcessing
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             responses:
                 200:
                     content:
@@ -1948,24 +2555,60 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Marks a Shipment ready to be shipped by ID.
             tags:
                 -   Shipment
     /shipments/{shipmentId}/status-shipped:
         post:
+            description:
+                Transitions the shipment identified by shipmentId to the SHIPPED workflow state (code 2). Calls the
+                service with SHIPMENT_STATUS_SHIPPED; raises a status conflict (400) when the transition is not allowed
+                from the current state.
             operationId: postShipmentStatusShipped
             parameters:
-                -   in: path
-                    explode: false
-                    name: shipmentId
-                    required: true
-                    schema:
-                        description:
-                            The shipment resource Id
-                        example: 30130
-                        format: int64
-                        minimum: 0
-                        type: integer
-                    style: simple
+                -   $ref: "#/components/parameters/shipmentIdPathParam"
             responses:
                 200:
                     content:
@@ -1975,5 +2618,60 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this shipment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Marks a Shipment shipped by ID.
             tags:
                 -   Shipment
+tags:
+    -   description:
+            Fulfillment record for a order. Owns the carrier, tracking data, ship dates, and the workflow transitions
+            that advance a shipment from PROCESSING to DELIVERED.
+        name: Shipment
+    -   description:
+            Picked line on a shipment. Binds a order item to a shipment with a quantity drawn from a specific warehouse.
+        name: ShipmentItem
+    -   description:
+            Postal ship-to address attached to a shipment. Mirrors the underlying address and is resolvable by country
+            and region ISO codes.
+        name: ShippingAddress

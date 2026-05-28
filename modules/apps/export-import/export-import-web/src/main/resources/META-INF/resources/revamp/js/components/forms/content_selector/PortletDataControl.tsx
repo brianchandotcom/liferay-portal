@@ -79,9 +79,16 @@ export default function PortletDataControl({
 		control.type === 'Boolean' && showDeletions
 			? control.deletionCount
 			: undefined;
+	const description =
+		topLevel && control.type === 'Boolean'
+			? control.description
+			: undefined;
+	const tag =
+		topLevel && control.type === 'Boolean' ? control.tag : undefined;
 
 	const rowProps = {
 		checkboxId,
+		description,
 		indeterminate: !!value && !selected,
 		label: control.label,
 		labelClassName: topLevel ? 'font-weight-semi-bold' : '',
@@ -92,6 +99,7 @@ export default function PortletDataControl({
 			<SectionTags
 				additionCount={additionCount}
 				deletionCount={deletionCount}
+				tag={tag}
 			/>
 		),
 	};

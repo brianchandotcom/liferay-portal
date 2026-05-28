@@ -10,6 +10,7 @@ import React, {ReactNode} from 'react';
 
 export default function ControlRow({
 	checkboxId,
+	description,
 	disclosure,
 	indeterminate,
 	label,
@@ -19,6 +20,7 @@ export default function ControlRow({
 	tags,
 }: {
 	checkboxId: string;
+	description?: string;
 	disclosure?: ReactNode;
 	indeterminate: boolean;
 	label: string;
@@ -52,6 +54,12 @@ export default function ControlRow({
 
 					{tags}
 				</span>
+
+				{description && (
+					<span className="d-block small text-secondary">
+						{description}
+					</span>
+				)}
 			</ClayLayout.ContentCol>
 
 			{disclosure && (

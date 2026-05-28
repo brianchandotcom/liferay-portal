@@ -10,19 +10,24 @@ import React from 'react';
 export default function SectionTags({
 	additionCount,
 	deletionCount,
+	tag,
 }: {
 	additionCount?: number;
 	deletionCount?: number;
+	tag?: string;
 }) {
 	const hasItems = !!additionCount;
 	const hasDeletions = !!deletionCount;
+	const hasTag = !!tag;
 
-	if (!hasItems && !hasDeletions) {
+	if (!hasItems && !hasDeletions && !hasTag) {
 		return null;
 	}
 
 	return (
 		<div className="align-items-center c-gap-2 d-inline-flex ml-2">
+			{hasTag && <ClayLabel displayType="info">{tag}</ClayLabel>}
+
 			{hasItems && (
 				<ClayLabel displayType="secondary">
 					{sub(Liferay.Language.get('x-items'), additionCount)}

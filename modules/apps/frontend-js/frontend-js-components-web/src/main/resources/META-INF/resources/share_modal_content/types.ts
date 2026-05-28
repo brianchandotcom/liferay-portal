@@ -67,6 +67,7 @@ export interface ShareModalContentProps {
 	canManageCollaborators?: boolean;
 	closeModal: () => void;
 	collaboratorBadgeText?: (props: CollaboratorBadgeProps) => string | null;
+	collaboratorNameSuffix?: (props: CollaboratorIconProps) => string | null;
 	collaboratorStickerIcon?: (props: CollaboratorIconProps) => ReactNode;
 	collaboratorsListTitle?: string;
 	creator: ShareModalCreator;

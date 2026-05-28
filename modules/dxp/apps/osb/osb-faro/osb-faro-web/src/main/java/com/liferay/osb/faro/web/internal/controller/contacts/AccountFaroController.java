@@ -200,8 +200,9 @@ public class AccountFaroController extends BaseFaroController {
 			@QueryParam("accountLifecycleId") String accountLifecycleId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
-			@QueryParam("query") String query, @QueryParam("page") int page,
-			@QueryParam("pageSize") int pageSize)
+			@QueryParam("query") String query,
+			@DefaultValue("1") @QueryParam("page") int page,
+			@DefaultValue("20") @QueryParam("pageSize") int pageSize)
 		throws Exception {
 
 		if (Objects.equals(fieldMappingFieldName, "lifecycleStatus")) {

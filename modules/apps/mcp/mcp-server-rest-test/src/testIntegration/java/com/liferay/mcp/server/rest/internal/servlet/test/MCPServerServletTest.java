@@ -158,6 +158,42 @@ public class MCPServerServletTest {
 	}
 
 	@Test
+	public void testServiceWithNoContentResponse() throws Exception {
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
+
+		mcpSyncClient.initialize();
+
+		McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(
+			new McpSchema.CallToolRequest(
+				"invokeTool",
+				HashMapBuilder.<String, Object>put(
+					"body",
+					HashMapBuilder.<String, Object>put(
+						"mCPServerProfileId",
+						String.valueOf(
+							_addObjectEntry(
+								RandomTestUtil.randomString(),
+								"mcp-server-profiles getMCPServerProfilesPage"
+							).getObjectEntryId())
+					).build()
+				).put(
+					"toolName", "deleteMCPServerProfile"
+				).put(
+					"toolSetName", "mcp-server-profiles"
+				).build()));
+
+		List<McpSchema.Content> contents = callToolResult.content();
+
+		McpSchema.TextContent textContent = (McpSchema.TextContent)contents.get(
+			0);
+
+		Assert.assertFalse(textContent.text(), callToolResult.isError());
+		Assert.assertEquals("Status code: 204", textContent.text());
+
+		mcpSyncClient.closeGracefully();
+	}
+
+	@Test
 	public void testServiceWithoutProfile() throws Exception {
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
 

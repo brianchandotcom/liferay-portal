@@ -332,6 +332,33 @@ function _set_port_offset {
 		return
 	fi
 
+	local lock_file
+	lock_file="$(git -C "${WORKTREE_DIR}" rev-parse --path-format=absolute --git-common-dir)/.worktree-port-offset.lock"
+
+	local lock_dir="${lock_file}.d"
+	local lock_fd
+	local use_flock=0
+
+	command -v flock >/dev/null 2>&1 && use_flock=1
+
+	if [[ ${use_flock} -eq 1 ]]
+	then
+		exec {lock_fd}>"${lock_file}"
+
+		flock "${lock_fd}"
+	else
+		local waited=0
+
+		until mkdir "${lock_dir}" 2>/dev/null
+		do
+			sleep 1
+
+			waited=$((waited + 1))
+
+			[[ ${waited} -lt 120 ]] || _die "Unable to acquire the port offset lock at ${lock_dir}."
+		done
+	fi
+
 	local claimed_offsets
 
 	claimed_offsets=" $(_collect_claimed_offsets | tr "\n" " ") "
@@ -347,11 +374,18 @@ function _set_port_offset {
 			OFFSET="${offset}"
 			echo "${OFFSET}" > "${offset_file}"
 
-			return
+			break
 		fi
 	done
 
-	_die "Unable to find a free port offset between 1 and 99."
+	if [[ ${use_flock} -eq 1 ]]
+	then
+		exec {lock_fd}>&-
+	else
+		rmdir "${lock_dir}" 2>/dev/null || true
+	fi
+
+	[[ -f ${offset_file} ]] || _die "Unable to find a free port offset between 1 and 99."
 }
 
 function _set_portal_home {

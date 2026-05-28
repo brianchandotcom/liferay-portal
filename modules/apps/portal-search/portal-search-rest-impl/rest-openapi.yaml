@@ -31,7 +31,13 @@ components:
             description:
                 Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the
                 search results. The processed facet term buckets appear in the response's `searchFacets` map, where each
-                entry's key is the `aggregationName` you chose for that facet configuration. Examples TBA.
+                entry's key is the `aggregationName` you chose for that facet configuration.
+            example:
+                aggregationName: priority
+                attributes:
+                    field: priority
+                maxTerms: 10
+                name: custom
             properties:
                 aggregationName:
                     description:
@@ -329,7 +335,8 @@ paths:
                         Use this parameter to specify and return only the fields specified in each of the items in the
                         response. When requesting multiple types of items (when parameter entryClassNames is empty or
                         specifies multiple class names), only common fields can be specified, otherwise the API returns
-                        an empty object for each result item. Examples TBA.
+                        an empty object for each result item.
+                    example: title,description,score
                     name: fields
                     required: false
                     schema:
@@ -506,7 +513,8 @@ paths:
                         Use this parameter to specify and return only the fields specified in each of the items in the
                         response. When requesting multiple types of items (when parameter entryClassNames is empty or
                         specifies multiple class names), only common fields can be specified, otherwise the API returns
-                        an empty object for each result item. Examples TBA.
+                        an empty object for each result item.
+                    example: title,description,score
                     name: fields
                     required: false
                     schema:

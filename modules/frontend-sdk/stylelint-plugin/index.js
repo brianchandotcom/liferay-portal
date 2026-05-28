@@ -49,7 +49,12 @@ const defaultConfig = {
 		'liferay/no-import-extension': true,
 		'liferay/sort-imports': true,
 		'liferay/trim-comments': true,
-		'media-feature-name-no-unknown': true,
+		'media-feature-name-no-unknown': [
+			true,
+			{
+				ignoreMediaFeatureNames: ['prefers-contrast'],
+			},
+		],
 		'no-duplicate-at-import-rules': true,
 		'no-extra-semicolons': true,
 		'number-leading-zero': 'always',

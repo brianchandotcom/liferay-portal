@@ -85,7 +85,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
 
-				long groupId = 0L;
+				long groupId = 0;
 
 				if (relatedItem instanceof GroupedModel) {
 					GroupedModel groupedModel = (GroupedModel)relatedItem;

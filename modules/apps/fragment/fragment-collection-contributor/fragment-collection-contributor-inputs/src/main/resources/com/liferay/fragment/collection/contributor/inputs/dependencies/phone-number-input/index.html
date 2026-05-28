@@ -66,10 +66,11 @@
 [#assign countrySource = (input.attributes.countrySource)!"definedByUser" /]
 [#assign defaultLanguageId = (input.attributes.defaultLanguageId)!"" /]
 [#assign disabled = (input.attributes.disabled)?? && input.attributes.disabled /]
-[#assign fixed = countrySource == "fixed" /]
 [#assign selectedCountry = {} /]
 [#assign showFlag = configuration.showCountryFlag /]
 [#assign showPrefixPicker = configuration.showPrefix /]
+
+[#assign fixed = countrySource == "fixed" /]
 
 [#if fixed && countryA2?has_content]
 	[#list countries as country]

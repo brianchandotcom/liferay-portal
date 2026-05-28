@@ -60,7 +60,7 @@ public interface OAuth2AuthorizationLocalService
 		long companyId, long userId, String userName, long oAuth2ApplicationId,
 		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
 		Date accessTokenCreateDate, Date accessTokenExpirationDate,
-		List<String> audiences, String remoteHostInfo, String remoteIPInfo,
+		List<String> audiencesList, String remoteHostInfo, String remoteIPInfo,
 		String refreshTokenContent, Date refreshTokenCreateDate,
 		Date refreshTokenExpirationDate);
 
@@ -391,4 +391,4 @@ public interface OAuth2AuthorizationLocalService
 		String refreshTokenContent, String rememberDeviceContent);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1375974007
+// LIFERAY-SERVICE-BUILDER-HASH:-1819882809

@@ -36,7 +36,7 @@ public class OAuth2AuthorizationLocalServiceWrapper
 			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
 			String accessTokenContent, java.util.Date accessTokenCreateDate,
 			java.util.Date accessTokenExpirationDate,
-			java.util.List<String> audiences, String remoteHostInfo,
+			java.util.List<String> audiencesList, String remoteHostInfo,
 			String remoteIPInfo, String refreshTokenContent,
 			java.util.Date refreshTokenCreateDate,
 			java.util.Date refreshTokenExpirationDate) {
@@ -44,7 +44,7 @@ public class OAuth2AuthorizationLocalServiceWrapper
 		return _oAuth2AuthorizationLocalService.addOAuth2Authorization(
 			companyId, userId, userName, oAuth2ApplicationId,
 			oAuth2ApplicationScopeAliasesId, accessTokenContent,
-			accessTokenCreateDate, accessTokenExpirationDate, audiences,
+			accessTokenCreateDate, accessTokenExpirationDate, audiencesList,
 			remoteHostInfo, remoteIPInfo, refreshTokenContent,
 			refreshTokenCreateDate, refreshTokenExpirationDate);
 	}
@@ -657,4 +657,4 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1435454984
+// LIFERAY-SERVICE-BUILDER-HASH:558783372

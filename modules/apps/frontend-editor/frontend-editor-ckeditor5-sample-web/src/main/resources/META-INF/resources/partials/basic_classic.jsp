@@ -18,6 +18,6 @@
 <liferay-editor:editor
 	contents="<%= contents %>"
 	editorName="ckeditor5_classic"
-	name="basicClassicCKEditor5Editor"
+	name="sampleBasicClassicEditor"
 	placeholder="content"
 />

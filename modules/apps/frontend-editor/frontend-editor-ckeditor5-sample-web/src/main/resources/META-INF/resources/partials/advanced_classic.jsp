@@ -24,6 +24,6 @@
 	editorName="ckeditor5_classic"
 	formInputEnabled="<%= true %>"
 	formInputName="advancedClassicEditor"
-	name="advancedClassicCKEditor5Editor"
+	name="sampleAdvancedClassicEditor"
 	placeholder="content"
 />

@@ -11,6 +11,7 @@ import React from 'react';
 
 import './AgentDefinitionForm.scss';
 import Toolbar from '../components/ToolBar';
+import AIProviderPanel from './AIProviderPanel';
 import DataSourcesPanel from './DataSourcesPanel';
 import DetailsPanel from './DetailsPanel';
 import GuardrailsPanel from './GuardrailsPanel';
@@ -133,6 +134,8 @@ export default function AgentDefinitionForm({
 								modelArmorTemplates={modelArmorTemplates}
 								readOnly={readOnly}
 							/>
+
+							<AIProviderPanel model={values.model} />
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayForm>

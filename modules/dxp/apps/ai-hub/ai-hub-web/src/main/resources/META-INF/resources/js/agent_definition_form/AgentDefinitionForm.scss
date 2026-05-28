@@ -1,6 +1,7 @@
 .agent-definition-form {
 	padding: 24px 0;
 
+	&-ai-provider,
 	&-data-sources,
 	&-details,
 	&-guardrails,
@@ -22,5 +23,10 @@
 	&-picker {
 		background-color: #e7e7ed;
 		border-color: #e7e7ed;
+	}
+
+	.ai-provider-section__details {
+		display: grid;
+		gap: 1rem;
 	}
 }

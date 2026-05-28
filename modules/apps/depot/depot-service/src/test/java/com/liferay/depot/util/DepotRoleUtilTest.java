@@ -58,6 +58,33 @@ public class DepotRoleUtilTest {
 				Arrays.asList(role1, role2, role3, role4)));
 	}
 
+	@Test
+	public void testFilterBySubtype() {
+		Role role1 = _mockRole(DepotRolesConstants.SUBTYPE_PROJECT);
+		Role role2 = _mockRole(DepotRolesConstants.SUBTYPE_SPACE);
+		Role role3 = _mockRole(null);
+		Role role4 = _mockRole("");
+
+		Assert.assertEquals(
+			Arrays.asList(role1, role2, role3, role4),
+			DepotRoleUtil.filter(
+				Arrays.asList(role1, role2, role3, role4), null));
+		Assert.assertEquals(
+			Arrays.asList(role1, role2, role3, role4),
+			DepotRoleUtil.filter(
+				Arrays.asList(role1, role2, role3, role4), ""));
+		Assert.assertEquals(
+			Arrays.asList(role1, role3, role4),
+			DepotRoleUtil.filter(
+				Arrays.asList(role1, role2, role3, role4),
+				DepotRolesConstants.SUBTYPE_PROJECT));
+		Assert.assertEquals(
+			Arrays.asList(role2, role3, role4),
+			DepotRoleUtil.filter(
+				Arrays.asList(role1, role2, role3, role4),
+				DepotRolesConstants.SUBTYPE_SPACE));
+	}
+
 	private DepotEntry _mockDepotEntry(int depotType) {
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 

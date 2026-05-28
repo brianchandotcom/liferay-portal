@@ -11,9 +11,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
-
-// @ts-ignore
-
 import {PagesTree} from 'staging-taglib';
 
 const NAMESPACE = '_exportPageTreeModal_';

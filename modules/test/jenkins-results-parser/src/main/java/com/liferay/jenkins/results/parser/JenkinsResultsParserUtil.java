@@ -7387,7 +7387,7 @@ public class JenkinsResultsParserUtil {
 		"(?<ecrDockerImageName>((?<repository>[^/\\s]+)/)?" +
 			"(?<name>[^/:\\s]+)(:(?<version>[^@:\\s]+))?)" +
 				"(@sha256:[^\\s]+)?");
-	private static Environment _environment = new DefaultEnvironment();
+	private static volatile Environment _environment = new DefaultEnvironment();
 	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
 		"admin", "liferay", "test");
 	private static JSONArray _gitDirectoriesJSONArray;

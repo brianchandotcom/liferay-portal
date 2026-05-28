@@ -15,6 +15,12 @@ export type HandlerSelection =
 export const LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY =
 	'PORTLET_DATA_com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet';
 
+export function isAllLayoutsSelected(
+	value: HandlerSelection | undefined
+): boolean {
+	return typeof value === 'object' && !value.layoutIds;
+}
+
 export function isSelected(
 	value: HandlerSelection | undefined,
 	entry: PreviewPortletDataHandlerControl
@@ -24,7 +30,7 @@ export function isSelected(
 	}
 
 	if (entry.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY) {
-		return typeof value === 'object' && !('layoutIds' in value);
+		return isAllLayoutsSelected(value);
 	}
 
 	if (entry.type === 'Choice') {

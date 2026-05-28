@@ -43,7 +43,6 @@ function SelectPagesButton({
 								: Liferay.Language.get('public-pages')
 						)
 			}
-			className="border-0 ml-2 p-0"
 			displayType="link"
 			onClick={onClick}
 			size="sm"
@@ -65,11 +64,11 @@ function LayoutVisibilitySelector({
 	privateLayout: boolean;
 }) {
 	return (
-		<div aria-label={label} className="mt-2 pl-4" role="radiogroup">
-			<div className="align-items-center d-flex mb-1">
+		<div aria-label={label} className="pl-4" role="radiogroup">
+			<div className="align-items-center d-flex">
 				<ClayRadio
 					checked={!privateLayout}
-					containerProps={{className: 'mb-0'}}
+					containerProps={{className: 'my-1'}}
 					label={Liferay.Language.get('public-pages')}
 					name="layoutSetPrivateLayout"
 					onChange={() => onSetMode(false)}
@@ -87,7 +86,7 @@ function LayoutVisibilitySelector({
 			<div className="align-items-center d-flex mb-1">
 				<ClayRadio
 					checked={privateLayout}
-					containerProps={{className: 'mb-0'}}
+					containerProps={{className: 'my-1'}}
 					label={Liferay.Language.get('private-pages')}
 					name="layoutSetPrivateLayout"
 					onChange={() => onSetMode(true)}
@@ -123,7 +122,7 @@ export default function LayoutSetControl({
 
 	return (
 		<div className="p-3">
-			<ClayLayout.ContentRow className="mb-2">
+			<ClayLayout.ContentRow className="align-items-center mb-2">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					<ClayCheckbox
 						aria-label={label}

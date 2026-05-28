@@ -16,6 +16,14 @@ public class GitBranchFactory {
 		return new LocalGitBranch(localGitRepository, name, sha);
 	}
 
+	public static LocalGitBranch newLocalGitBranch(
+		LocalGitRepository localGitRepository, String name, String sha,
+		RemoteGitBranch sourceRemoteGitBranch) {
+
+		return new LocalGitBranch(
+			localGitRepository, name, sha, sourceRemoteGitBranch);
+	}
+
 	public static RemoteGitRef newRemoteGitRef(
 		RemoteGitRepository remoteGitRepository, String name, String sha,
 		String type) {

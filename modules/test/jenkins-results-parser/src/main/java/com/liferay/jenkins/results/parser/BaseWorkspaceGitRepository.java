@@ -10,12 +10,8 @@ import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -900,51 +896,6 @@ public abstract class BaseWorkspaceGitRepository
 		String senderBranchSHA = getSenderBranchSHA();
 
 		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-			if (JenkinsResultsParserUtil.isCloudCINode()) {
-				try {
-					GitHubRemoteGitCommit gitHubRemoteGitCommit =
-						GitCommitFactory.newGitHubRemoteGitCommit(
-							getSenderBranchUsername(),
-							gitWorkingDirectory.getGitRepositoryName(),
-							senderBranchSHA);
-
-					Date commitDate = gitHubRemoteGitCommit.getCommitDate();
-
-					Instant commitInstant = commitDate.toInstant();
-
-					Instant oneMonthAgo = Instant.now(
-					).minus(
-						Duration.ofDays(30)
-					);
-
-					if (commitInstant.isBefore(oneMonthAgo) &&
-						_isPullRequest()) {
-
-						PullRequest pullRequest =
-							PullRequestFactory.newPullRequest(getGitHubURL());
-
-						if (pullRequest != null) {
-							String message =
-								"User's commit " + senderBranchSHA +
-									" is more than 1 month old. Rebase and " +
-										"retest your changes.";
-
-							pullRequest.addComment(message);
-
-							throw new RuntimeException(
-								"Sender's commit is more than 1 month old");
-						}
-					}
-				}
-				catch (Exception exception) {
-					exception.printStackTrace();
-
-					throw new RuntimeException(
-						"Sender's commit is more than 1 month old or there " +
-							"was an error retrieving commit information");
-				}
-			}
-
 			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 

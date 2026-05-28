@@ -44,7 +44,7 @@ public class EnvironmentBuildPropertiesUtil {
 			EnvironmentBuildProperties environmentBuildProperties =
 				new EnvironmentBuildProperties(environment, urlString);
 
-			String masterHostname = System.getenv("MASTER_HOSTNAME");
+			String masterHostname = Env.get("MASTER_HOSTNAME");
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(masterHostname) &&
 				masterHostname.equals("test-5-1")) {

@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
@@ -22,7 +23,7 @@ public class CloudObjectTestrayAttachmentUploader
 
 	@Override
 	public File getPreparedFilesBaseDir() {
-		String workspace = System.getenv("WORKSPACE");
+		String workspace = Env.get("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");

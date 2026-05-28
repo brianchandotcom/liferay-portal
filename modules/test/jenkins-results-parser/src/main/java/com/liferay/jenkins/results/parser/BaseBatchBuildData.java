@@ -109,7 +109,7 @@ public abstract class BaseBatchBuildData
 	}
 
 	private void _setTopLevelRunID() {
-		String topLevelRunID = System.getenv("TOP_LEVEL_RUN_ID");
+		String topLevelRunID = Env.get("TOP_LEVEL_RUN_ID");
 
 		if (topLevelRunID == null) {
 			throw new RuntimeException("Please set TOP_LEVEL_RUN_ID");

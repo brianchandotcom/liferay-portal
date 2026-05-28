@@ -60,7 +60,7 @@ public class PluginsWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			new File(
 				getDirectory(),
 				JenkinsResultsParserUtil.combine(
-					"build.", System.getenv("HOSTNAME"), ".properties")),
+					"build.", Env.get("HOSTNAME"), ".properties")),
 			getProperties("plugins.build.properties"), true);
 	}
 

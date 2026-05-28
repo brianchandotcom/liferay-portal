@@ -37,14 +37,13 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 			workspaceGitRepository.addPropertyOption(
 				workspaceGitRepository.getUpstreamBranchName());
 
-			String dockerEnabled = System.getenv("LIFERAY_DOCKER_ENABLED");
+			String dockerEnabled = Env.get("LIFERAY_DOCKER_ENABLED");
 
 			if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
 				workspaceGitRepository.addPropertyOption("docker");
 			}
 
-			String osbAsahStagingEnabled = System.getenv(
-				"OSB_ASAH_STAGING_ENABLED");
+			String osbAsahStagingEnabled = Env.get("OSB_ASAH_STAGING_ENABLED");
 
 			if ((osbAsahStagingEnabled != null) &&
 				osbAsahStagingEnabled.equals("true")) {

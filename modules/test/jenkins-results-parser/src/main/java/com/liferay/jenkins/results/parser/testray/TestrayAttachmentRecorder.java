@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuild;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.GitRepositoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
@@ -115,7 +116,7 @@ public class TestrayAttachmentRecorder {
 	}
 
 	protected File getRecordedFilesBaseDir() {
-		String workspace = System.getenv("WORKSPACE");
+		String workspace = Env.get("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");
@@ -407,7 +408,7 @@ public class TestrayAttachmentRecorder {
 
 	private void _recordDockerLogs() {
 		File sourceDockerLogsDir = new File(
-			System.getenv("BUILD_DIR"), "docker-logs");
+			Env.get("BUILD_DIR"), "docker-logs");
 
 		if (!sourceDockerLogsDir.exists()) {
 			return;
@@ -452,7 +453,7 @@ public class TestrayAttachmentRecorder {
 		}
 
 		File testResultsFile = new File(
-			System.getenv("WORKSPACE"), "test-results/TESTS-TestSuites.xml");
+			Env.get("WORKSPACE"), "test-results/TESTS-TestSuites.xml");
 
 		if (!testResultsFile.exists()) {
 			return;
@@ -546,7 +547,7 @@ public class TestrayAttachmentRecorder {
 	}
 
 	private void _recordGCLogs() {
-		File sourceGCLogsDir = new File(System.getenv("BUILD_DIR"), "gc");
+		File sourceGCLogsDir = new File(Env.get("BUILD_DIR"), "gc");
 
 		if (!sourceGCLogsDir.exists()) {
 			return;
@@ -639,7 +640,7 @@ public class TestrayAttachmentRecorder {
 	}
 
 	private void _recordJStacks() {
-		File sourceJStacksDir = new File(System.getenv("BUILD_DIR"), "jstacks");
+		File sourceJStacksDir = new File(Env.get("BUILD_DIR"), "jstacks");
 
 		if (!sourceJStacksDir.exists()) {
 			return;
@@ -832,7 +833,7 @@ public class TestrayAttachmentRecorder {
 			File workspaceTestResultsDir = new File(
 				portalWorkspaceGitRepository.getDirectory(),
 				JenkinsResultsParserUtil.combine(
-					"workspaces/", System.getenv("TEST_WORKSPACE_NAME"),
+					"workspaces/", Env.get("TEST_WORKSPACE_NAME"),
 					"/poshi/test-results"));
 
 			if (workspaceTestResultsDir.exists()) {

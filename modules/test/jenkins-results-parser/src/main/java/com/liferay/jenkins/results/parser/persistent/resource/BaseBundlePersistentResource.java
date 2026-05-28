@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.persistent.resource;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildFactory;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsAPIUtil;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -413,7 +414,7 @@ public abstract class BaseBundlePersistentResource
 
 		buildDatabase.rsyncBuildDatabaseFileToJenkinsMaster(
 			JenkinsResultsParserUtil.combine(
-				System.getenv("JENKINS_HOME"), "/userContent/jobs/",
+				Env.get("JENKINS_HOME"), "/userContent/jobs/",
 				getStartProperty("TOP_LEVEL_JOB_NAME"), "/builds/",
 				getStartProperty("TOP_LEVEL_BUILD_NUMBER")),
 			JenkinsMaster.getInstance(

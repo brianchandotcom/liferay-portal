@@ -43,7 +43,7 @@ public class Test {
 
 	@After
 	public void tearDown() {
-		JenkinsResultsParserUtil.setEnvironment(new DefaultEnvironment());
+		Env.setInstance(new Env());
 	}
 
 	@Rule
@@ -296,12 +296,16 @@ public class Test {
 		return _simpleClassNames;
 	}
 
-	protected Environment mockEnvironment() {
-		Environment environment = Mockito.mock(Environment.class);
+	protected Env mockEnvironment() {
 
-		JenkinsResultsParserUtil.setEnvironment(environment);
+		// Mockito 4.5.1 predates per-mock strictness; unstubbed calls
+		// return null, which getEnvironmentVariable treats as missing.
 
-		return environment;
+		Env env = Mockito.mock(Env.class);
+
+		Env.setInstance(env);
+
+		return env;
 	}
 
 	protected String read(File file) throws IOException {

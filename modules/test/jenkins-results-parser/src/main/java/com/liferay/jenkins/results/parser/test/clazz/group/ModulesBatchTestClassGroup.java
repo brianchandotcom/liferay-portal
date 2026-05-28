@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -234,8 +235,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			return getPathMatchers(getIncludesJobProperties());
 		}
 
-		String portalBatchTestSelector = System.getenv(
-			"PORTAL_BATCH_TEST_SELECTOR");
+		String portalBatchTestSelector = Env.get("PORTAL_BATCH_TEST_SELECTOR");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
 			portalBatchTestSelector = getBuildStartProperty(

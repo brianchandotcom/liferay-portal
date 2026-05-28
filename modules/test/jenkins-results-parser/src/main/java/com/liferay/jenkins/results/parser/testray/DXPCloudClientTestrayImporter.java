@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
@@ -131,7 +132,7 @@ public class DXPCloudClientTestrayImporter {
 	}
 
 	private static String _getEnvVarValue(String varName) {
-		String varValue = System.getenv(varName);
+		String varValue = Env.get(varName);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(varValue)) {
 			varValue = System.getProperty(varName);

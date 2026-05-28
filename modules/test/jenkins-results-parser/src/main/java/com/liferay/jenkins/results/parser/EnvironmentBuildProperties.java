@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class EnvironmentBuildProperties extends Properties {
 
 	public static Environment getCurrentEnvironment() {
-		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
+		String masterNetworkName = Env.get("MASTER_NETWORK_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(masterNetworkName) &&
 			(masterNetworkName.equals("aws-network") ||

@@ -97,6 +97,9 @@ components:
                         blueprint ID; Search Blueprints require DXP Enterprise-tier with the Liferay Enterprise Search
                         (LES) add-on subscription), search.experiences.blueprint.id (ID of a Search Blueprint - prefer
                         search.experiences.blueprint.external.reference.code when available),
+                        search.experiences.ip.address (overrides the auto-detected client IP for geolocation-aware
+                        blueprint elements such as IP-based boosting or region targeting; defaults to the actual HTTP
+                        request's client IP when omitted; LES-only since the consumers ship with Search Experiences),
                         search.experiences.scope.group.id (set when the blueprint contains elements that require a group
                         context, such as 'Limit Search to the Current Site', 'Boost Contents in a Category for a User
                         Segment', or 'Staging Aware'), and any other key prefixed with search.experiences. (dynamic

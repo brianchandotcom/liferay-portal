@@ -45,13 +45,13 @@ export default function PublishModal({
 
 	useEffect(() => {
 		const handler = Liferay.on('ddmFormError', (event) => {
-			if (event.error?.statusCode) {
+			if (event.error?.statusCode && isSubmitting) {
 				onClose();
 			}
 		});
 
 		return () => handler.detach();
-	}, [onClose]);
+	}, [isSubmitting, onClose]);
 
 	const handleButtonClick = () => {
 		if (isSubmitting) {

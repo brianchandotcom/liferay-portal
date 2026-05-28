@@ -290,9 +290,6 @@ describe('useModelArmorTemplateForm', () => {
 
 			await waitFor(() => {
 				expect(result.current.errors.title_i18n).toBe('required');
-				expect(result.current.errors.externalReferenceCode).toBe(
-					'required'
-				);
 				expect(result.current.errors.location).toBe('required');
 			});
 

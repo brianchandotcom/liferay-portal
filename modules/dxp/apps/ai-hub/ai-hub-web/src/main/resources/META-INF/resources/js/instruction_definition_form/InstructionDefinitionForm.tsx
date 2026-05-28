@@ -6,7 +6,7 @@
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import './InstructionDefinitionForm.scss';
 
@@ -18,6 +18,10 @@ import {openToast} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 
 import Toolbar from '../components/ToolBar';
+import {
+	generateExternalReferenceCode,
+	maskExternalReferenceCode,
+} from '../utils/externalReferenceCode';
 import {
 	getInstructionDefinition,
 	putInstructionDefinition,
@@ -43,6 +47,11 @@ export default function InstructionDefinitionForm({
 		{} as InstructionDefinition
 	);
 	const [scopeOptions, setScopeOptions] = useState<ListTypeEntry[]>([]);
+
+	const generatedExternalReferenceCode = useMemo(
+		() => generateExternalReferenceCode(),
+		[]
+	);
 
 	const handleActive = () => {
 		setFormData((prev) => ({
@@ -98,7 +107,7 @@ export default function InstructionDefinitionForm({
 				setFormData({
 					active: false,
 					description: '',
-					externalReferenceCode: '',
+					externalReferenceCode: generatedExternalReferenceCode,
 					instruction: '',
 					occasion: '',
 					r_accountToAIHubInstructionDefinitions_accountEntryERC:
@@ -139,7 +148,11 @@ export default function InstructionDefinitionForm({
 		}
 
 		fetchFormData();
-	}, [accountEntryExternalReferenceCode, externalReferenceCode]);
+	}, [
+		accountEntryExternalReferenceCode,
+		externalReferenceCode,
+		generatedExternalReferenceCode,
+	]);
 
 	useEffect(() => {
 		async function fetchScopeOptions() {
@@ -274,7 +287,15 @@ export default function InstructionDefinitionForm({
 											disabled={readOnly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
-											onChange={handleInputChange}
+											onChange={(event) =>
+												setFormData((prev) => ({
+													...prev,
+													externalReferenceCode:
+														maskExternalReferenceCode(
+															event.target.value
+														),
+												}))
+											}
 											placeholder={Liferay.Language.get(
 												'external-reference-code'
 											)}

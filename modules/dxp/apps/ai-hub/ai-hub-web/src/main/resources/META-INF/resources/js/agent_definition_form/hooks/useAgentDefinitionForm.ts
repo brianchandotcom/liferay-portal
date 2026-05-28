@@ -5,8 +5,9 @@
 
 import {openToast} from '@liferay/object-js-components-web';
 import {useFormik} from 'formik';
-import {useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 
+import {generateExternalReferenceCode} from '../../utils/externalReferenceCode';
 import {required, requiredLocalized, validate} from '../../utils/validations';
 import {DEFAULT_AGENT_DEFINITION} from '../constants';
 import {
@@ -34,6 +35,11 @@ export function useAgentDefinitionForm({
 	accountEntryExternalReferenceCode,
 	externalReferenceCode,
 }: UseAgentDefinitionFormProps) {
+	const generatedExternalReferenceCode = useMemo(
+		() => generateExternalReferenceCode(),
+		[]
+	);
+
 	const contentRetrievers = useRelationshipPicker<ContentRetriever>({
 		deleteRelationship: deleteAgentDefinitionToContentRetrievers,
 		fetchSourceList: getContentRetrievers,
@@ -58,6 +64,7 @@ export function useAgentDefinitionForm({
 	} = useFormik<AgentDefinition>({
 		initialValues: {
 			...DEFAULT_AGENT_DEFINITION,
+			externalReferenceCode: generatedExternalReferenceCode,
 			r_accountToAIHubAgentDefinitions_accountEntryERC:
 				accountEntryExternalReferenceCode,
 		},

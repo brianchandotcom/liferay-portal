@@ -73,6 +73,8 @@ jest.mock('@liferay/object-js-components-web', () => ({
 	openToast: (...args: any[]) => mockOpenToast(...args),
 }));
 
+jest.mock('uuid', () => ({v4: () => 'GENERATED_UUID'}));
+
 jest.mock('@clayui/core', () => {
 	const React = require('react');
 

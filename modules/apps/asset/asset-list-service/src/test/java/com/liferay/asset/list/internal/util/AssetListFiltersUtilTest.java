@@ -70,7 +70,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testBooleanEqBuildsTermQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"visible", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 			ObjectFieldConstants.DB_TYPE_BOOLEAN);
 
@@ -83,7 +83,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateBetweenNormalizesBothBounds() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -100,7 +100,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateEqBuildsOneDayRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -115,7 +115,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateGeNormalizesValueToStartOfDay() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -130,7 +130,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateGtNormalizesValueToEndOfDay() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -145,7 +145,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateLeNormalizesValueToEndOfDay() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -160,7 +160,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateLtNormalizesValueToStartOfDay() {
-		_stubObjectField(
+		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
@@ -175,7 +175,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDateTimeEqBuildsOneMinuteRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"reminderAt", ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 			ObjectFieldConstants.DB_TYPE_DATE_TIME);
 
@@ -190,7 +190,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDecimalBetweenBuildsRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE);
 
@@ -207,7 +207,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDecimalEqBuildsTermQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE);
 
@@ -220,7 +220,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testDecimalGtBuildsRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE);
 
@@ -235,7 +235,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerBetweenBuildsRangeQueryWithBothBounds() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -252,7 +252,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerEqBuildsTermQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -265,7 +265,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerGeBuildsRangeQueryWithInclusiveLowerBound() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -280,7 +280,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerGtBuildsRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -295,7 +295,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerLeBuildsRangeQueryWithInclusiveUpperBound() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -310,7 +310,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerLtBuildsRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -325,7 +325,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testIntegerNotEqWrapsTermQueryInMustNot() {
-		_stubObjectField(
+		_setUpObjectField(
 			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER);
 
@@ -338,7 +338,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testLocalizedTextEqUsesLocalizedSubfield() {
-		ObjectField objectField = _stubObjectField(
+		ObjectField objectField = _setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -357,7 +357,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testLongIntegerBetweenBuildsRangeQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG);
 
@@ -374,7 +374,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testLongIntegerEqBuildsTermQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG);
 
@@ -387,7 +387,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistContainsAllBuildsMustOfTermQueries() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"contains", "status",
@@ -407,7 +407,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistContainsAnyBuildsShouldOfTermQueries() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"contains", "status",
@@ -427,7 +427,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistContainsDefaultsToAnyWhenQuantifierMissing() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"contains", "status",
@@ -442,7 +442,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistEmptyValueArraySkipsRow() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"contains", "status", JSONFactoryUtil.createJSONArray()
@@ -460,7 +460,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistNotContainsAnyWrapsInMustNot() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"not-contains", "status",
@@ -480,7 +480,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testPicklistValuesAreLowercased() {
-		_stubPicklistObjectField("status");
+		_setUpPicklistObjectField("status");
 
 		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
 			"contains", "status",
@@ -518,7 +518,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testTextContainsBuildsMatchQueryInsideNestedEnvelope() {
-		_stubObjectField(
+		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -532,7 +532,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testTextContainsIgnoresQuantifierOnTextField() {
-		_stubObjectField(
+		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -551,7 +551,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testTextEqBuildsTermQuery() {
-		_stubObjectField(
+		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -564,7 +564,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testTextNotContainsWrapsMatchQueryInMustNot() {
-		_stubObjectField(
+		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -578,7 +578,7 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testTextNotEqWrapsTermQueryInMustNot() {
-		_stubObjectField(
+		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
@@ -796,7 +796,7 @@ public class AssetListFiltersUtilTest {
 		localizationUtil.setLocalization(localization);
 	}
 
-	private ObjectField _stubObjectField(
+	private ObjectField _setUpObjectField(
 		String name, String businessType, String dbType) {
 
 		ObjectField objectField = Mockito.mock(ObjectField.class);
@@ -851,8 +851,8 @@ public class AssetListFiltersUtilTest {
 		return objectField;
 	}
 
-	private ObjectField _stubPicklistObjectField(String name) {
-		ObjectField objectField = _stubObjectField(
+	private ObjectField _setUpPicklistObjectField(String name) {
+		ObjectField objectField = _setUpObjectField(
 			name, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING);
 

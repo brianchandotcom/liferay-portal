@@ -9,6 +9,7 @@ import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildReport;
 import com.liferay.jenkins.results.parser.ControllerBuildReport;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
@@ -160,7 +161,7 @@ public class TestrayImporter {
 			i++;
 		}
 
-		String currentJobName = System.getenv("JOB_NAME");
+		String currentJobName = Env.get("JOB_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(currentJobName)) {
 			Dom4JUtil.addToElement(
@@ -168,8 +169,8 @@ public class TestrayImporter {
 				_getJenkinsBuildDescriptionElement(
 					"Testray Importer",
 					JenkinsResultsParserUtil.combine(
-						currentJobName, "#", System.getenv("BUILD_NUMBER")),
-					System.getenv("BUILD_URL")));
+						currentJobName, "#", Env.get("BUILD_NUMBER")),
+					Env.get("BUILD_URL")));
 		}
 
 		try {
@@ -256,7 +257,7 @@ public class TestrayImporter {
 		String testrayBuildSHA = getTestrayBuildSHA();
 
 		try {
-			String testrayBuildID = System.getenv("TESTRAY_BUILD_ID");
+			String testrayBuildID = Env.get("TESTRAY_BUILD_ID");
 
 			TestrayRoutine testrayRoutine = getTestrayRoutine(testBaseDir);
 			TestrayProductVersion testrayProductVersion =
@@ -267,7 +268,7 @@ public class TestrayImporter {
 					Long.parseLong(testrayBuildID));
 			}
 
-			String testrayBuildName = System.getenv("TESTRAY_BUILD_NAME");
+			String testrayBuildName = Env.get("TESTRAY_BUILD_NAME");
 
 			if ((testrayBuild == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
@@ -472,7 +473,7 @@ public class TestrayImporter {
 		try {
 			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
-			String testrayProductVersionID = System.getenv(
+			String testrayProductVersionID = Env.get(
 				"TESTRAY_PRODUCT_VERSION_ID");
 
 			if ((testrayProductVersionID != null) &&
@@ -483,7 +484,7 @@ public class TestrayImporter {
 						Long.parseLong(testrayProductVersionID));
 			}
 
-			String testrayProductVersionName = System.getenv(
+			String testrayProductVersionName = Env.get(
 				"TESTRAY_PRODUCT_VERSION_NAME");
 
 			if ((testrayProductVersion == null) &&
@@ -598,7 +599,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayProjectID = System.getenv("TESTRAY_PROJECT_ID");
+			String testrayProjectID = Env.get("TESTRAY_PROJECT_ID");
 
 			TestrayServer testrayServer = getTestrayServer(testBaseDir);
 
@@ -609,7 +610,7 @@ public class TestrayImporter {
 					Long.parseLong(testrayProjectID));
 			}
 
-			String testrayProjectName = System.getenv("TESTRAY_PROJECT_NAME");
+			String testrayProjectName = Env.get("TESTRAY_PROJECT_NAME");
 
 			if ((testrayProject == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
@@ -743,7 +744,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayRoutineID = System.getenv("TESTRAY_ROUTINE_ID");
+			String testrayRoutineID = Env.get("TESTRAY_ROUTINE_ID");
 
 			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
@@ -754,7 +755,7 @@ public class TestrayImporter {
 					Long.parseLong(testrayRoutineID));
 			}
 
-			String testrayRoutineName = System.getenv("TESTRAY_ROUTINE_NAME");
+			String testrayRoutineName = Env.get("TESTRAY_ROUTINE_NAME");
 
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
@@ -865,7 +866,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayServerURL = System.getenv("TESTRAY_SERVER_URL");
+			String testrayServerURL = Env.get("TESTRAY_SERVER_URL");
 
 			if ((testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {
@@ -1291,7 +1292,7 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackChannels(File testBaseDir) {
-		String slackChannels = System.getenv("TESTRAY_SLACK_CHANNELS");
+		String slackChannels = Env.get("TESTRAY_SLACK_CHANNELS");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
 			JobProperty jobProperty = _getJobProperty(
@@ -1308,7 +1309,7 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackIconEmoji(File testBaseDir) {
-		String slackIconEmoji = System.getenv("TESTRAY_SLACK_ICON_EMOJI");
+		String slackIconEmoji = Env.get("TESTRAY_SLACK_ICON_EMOJI");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
 			JobProperty jobProperty = _getJobProperty(
@@ -1340,7 +1341,7 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackUsername(File testBaseDir) {
-		String slackUsername = System.getenv("TESTRAY_SLACK_USERNAME");
+		String slackUsername = Env.get("TESTRAY_SLACK_USERNAME");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
 			JobProperty jobProperty = _getJobProperty(
@@ -2011,20 +2012,20 @@ public class TestrayImporter {
 	}
 
 	private String _replaceSlackEnvVarsTestrayImporter(String string) {
-		String buildNumber = System.getenv("BUILD_NUMBER");
+		String buildNumber = Env.get("BUILD_NUMBER");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildNumber)) {
 			string = string.replace(
 				"$(testray.importer.build.number)", buildNumber);
 		}
 
-		String buildURL = System.getenv("BUILD_URL");
+		String buildURL = Env.get("BUILD_URL");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildURL)) {
 			string = string.replace("$(testray.importer.build.url)", buildURL);
 		}
 
-		String jobName = System.getenv("JOB_NAME");
+		String jobName = Env.get("JOB_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
 			string = string.replace("$(testray.importer.job.name)", jobName);

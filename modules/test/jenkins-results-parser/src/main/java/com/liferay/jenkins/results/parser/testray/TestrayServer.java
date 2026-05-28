@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
@@ -394,7 +395,7 @@ public class TestrayServer {
 	}
 
 	protected File getResultsDir() {
-		String workspace = System.getenv("WORKSPACE");
+		String workspace = Env.get("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");
@@ -649,7 +650,7 @@ public class TestrayServer {
 
 		sb.append(message);
 		sb.append("\n");
-		sb.append(System.getenv("TOP_LEVEL_BUILD_URL"));
+		sb.append(Env.get("TOP_LEVEL_BUILD_URL"));
 
 		NotificationUtil.sendSlackNotification(
 			sb.toString(), "#ci-notifications", ":testray:",

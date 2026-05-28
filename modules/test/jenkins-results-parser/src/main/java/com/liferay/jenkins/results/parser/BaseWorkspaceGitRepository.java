@@ -115,7 +115,7 @@ public abstract class BaseWorkspaceGitRepository
 			return _branchName;
 		}
 
-		String branchName = System.getenv("TOP_LEVEL_BRANCH_NAME");
+		String branchName = Env.get("TOP_LEVEL_BRANCH_NAME");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
@@ -584,14 +584,14 @@ public abstract class BaseWorkspaceGitRepository
 	protected Properties getProperties(String propertyType) {
 		Properties buildProperties = new Properties();
 
-		Map<String, String> envMap = System.getenv();
+		Map<String, String> envMap = Env.getAll();
 
 		for (Map.Entry<String, String> envEntry : envMap.entrySet()) {
 			buildProperties.setProperty(
 				"env." + envEntry.getKey(), envEntry.getValue());
 		}
 
-		buildProperties.putAll(System.getenv());
+		buildProperties.putAll(Env.getAll());
 
 		try {
 			buildProperties.putAll(
@@ -1165,7 +1165,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private String _getJobName() {
-		String jobName = System.getenv("JOB_NAME");
+		String jobName = Env.get("JOB_NAME");
 
 		if (jobName != null) {
 			return jobName;
@@ -1284,7 +1284,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private boolean _isDotGitDirArchiveRequired() {
-		String jobName = System.getenv("JOB_NAME");
+		String jobName = Env.get("JOB_NAME");
 
 		if (JenkinsResultsParserUtil.isTopLevelJobName(jobName)) {
 			return true;
@@ -1294,8 +1294,8 @@ public abstract class BaseWorkspaceGitRepository
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
 					"git.archive.dot.git.dir.required", getDirectoryName(),
-					System.getenv("CI_TEST_SUITE"), System.getenv("DIST_TYPE"),
-					jobName, System.getenv("JOB_VARIANT")));
+					Env.get("CI_TEST_SUITE"), Env.get("DIST_TYPE"), jobName,
+					Env.get("JOB_VARIANT")));
 		}
 		catch (IOException ioException) {
 			return false;
@@ -1320,8 +1320,8 @@ public abstract class BaseWorkspaceGitRepository
 		try {
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
-					"git.archive.enabled", System.getenv("CI_TEST_SUITE"),
-					System.getenv("JOB_NAME")));
+					"git.archive.enabled", Env.get("CI_TEST_SUITE"),
+					Env.get("JOB_NAME")));
 		}
 		catch (IOException ioException) {
 			return true;

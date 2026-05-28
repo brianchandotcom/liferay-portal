@@ -607,8 +607,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 					_buildDatabaseFile, tempBuildDatabaseFile);
 
 				String srcPath = JenkinsResultsParserUtil.combine(
-					JenkinsResultsParserUtil.getHostName(
-						System.getenv("HOSTNAME")),
+					JenkinsResultsParserUtil.getHostName(Env.get("HOSTNAME")),
 					":", tempBuildDatabaseFile.getParent());
 
 				FilePropagator filePropagator = new FilePropagator(
@@ -672,7 +671,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	@Override
 	public void uploadBuildDatabaseFileToCloudBucket() {
 		uploadBuildDatabaseFileToCloudBucket(
-			System.getenv("S3_BUCKET_DIST_PATH") + "/" +
+			Env.get("S3_BUCKET_DIST_PATH") + "/" +
 				FILE_NAME_BUILD_DATABASE_JSON);
 	}
 

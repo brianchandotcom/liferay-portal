@@ -405,7 +405,7 @@ public abstract class BaseBuild implements Build {
 		String buildProfile = getParameterValue("TEST_PORTAL_BUILD_PROFILE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {
-			buildProfile = System.getenv("TEST_PORTAL_BUILD_PROFILE");
+			buildProfile = Env.get("TEST_PORTAL_BUILD_PROFILE");
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {

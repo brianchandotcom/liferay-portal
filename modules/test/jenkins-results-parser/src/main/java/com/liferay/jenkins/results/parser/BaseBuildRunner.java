@@ -162,8 +162,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 	protected void retirePreviousBuilds() {
 		long allowedBuildAge = 7 * _MILLISECONDS_PER_DAY;
 
-		String allowedBuildAgeInDays = System.getenv(
-			"ALLOWED_BUILD_AGE_IN_DAYS");
+		String allowedBuildAgeInDays = Env.get("ALLOWED_BUILD_AGE_IN_DAYS");
 
 		if ((allowedBuildAgeInDays != null) &&
 			!allowedBuildAgeInDays.isEmpty()) {

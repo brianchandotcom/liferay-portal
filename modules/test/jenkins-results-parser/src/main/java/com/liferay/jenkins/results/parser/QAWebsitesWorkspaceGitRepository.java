@@ -41,7 +41,7 @@ public class QAWebsitesWorkspaceGitRepository
 			new File(
 				getDirectory(),
 				JenkinsResultsParserUtil.combine(
-					"test.", System.getenv("HOSTNAME"), ".properties")),
+					"test.", Env.get("HOSTNAME"), ".properties")),
 			getProperties("qa.websites.test.properties"), true);
 	}
 

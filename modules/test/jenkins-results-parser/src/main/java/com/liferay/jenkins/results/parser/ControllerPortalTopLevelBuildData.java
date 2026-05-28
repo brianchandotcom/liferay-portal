@@ -30,7 +30,7 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 	}
 
 	public String getTestrayProjectName() {
-		String testrayProjectName = System.getenv("TESTRAY_PROJECT_NAME");
+		String testrayProjectName = Env.get("TESTRAY_PROJECT_NAME");
 
 		if ((testrayProjectName != null) && !testrayProjectName.isEmpty()) {
 			return testrayProjectName;
@@ -93,7 +93,7 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 	}
 
 	private String _getPortalGitHubURL() {
-		String portalGitHubURL = System.getenv("PORTAL_GITHUB_URL");
+		String portalGitHubURL = Env.get("PORTAL_GITHUB_URL");
 
 		if ((portalGitHubURL != null) && !portalGitHubURL.isEmpty()) {
 			return portalGitHubURL;

@@ -42,7 +42,7 @@ public abstract class BasePortalTestBatch<T extends PortalBatchBuildData>
 	}
 
 	protected File getAntLibDir() {
-		File antLibDir = new File(System.getenv("WORKSPACE"), "lib");
+		File antLibDir = new File(Env.get("WORKSPACE"), "lib");
 
 		if (antLibDir.exists()) {
 			return antLibDir;

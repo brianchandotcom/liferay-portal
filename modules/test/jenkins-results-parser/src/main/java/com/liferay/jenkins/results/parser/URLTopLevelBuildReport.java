@@ -91,7 +91,7 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 
 		File file = new File(
-			System.getenv("WORKSPACE"),
+			Env.get("WORKSPACE"),
 			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
 
 		try {

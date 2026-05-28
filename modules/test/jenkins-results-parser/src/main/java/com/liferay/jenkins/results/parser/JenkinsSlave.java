@@ -24,9 +24,8 @@ import org.json.JSONObject;
 public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 
 	public JenkinsSlave() {
-		_jenkinsMaster = JenkinsMaster.getInstance(
-			System.getenv("MASTER_HOSTNAME"));
-		_name = System.getenv("NODE_NAME");
+		_jenkinsMaster = JenkinsMaster.getInstance(Env.get("MASTER_HOSTNAME"));
+		_name = Env.get("NODE_NAME");
 
 		update(
 			JenkinsAPIUtil.getAPIJSONObject(

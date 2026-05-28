@@ -1213,7 +1213,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 			return;
 		}
 
-		String workspace = System.getenv("WORKSPACE");
+		String workspace = Env.get("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");

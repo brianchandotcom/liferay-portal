@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
+import com.liferay.jenkins.results.parser.Env;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
@@ -52,7 +53,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	public void addDefaultProjectJobProperty(String batchName) {
 		if (isRootCauseAnalysis()) {
-			String portalBatchTestSelector = System.getenv(
+			String portalBatchTestSelector = Env.get(
 				"PORTAL_BATCH_TEST_SELECTOR");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(
@@ -506,7 +507,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getDefaultProjectNames() {
-		String playwrightProjectName = System.getenv("PLAYWRIGHT_PROJECT_NAME");
+		String playwrightProjectName = Env.get("PLAYWRIGHT_PROJECT_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(playwrightProjectName)) {
 			return playwrightProjectName;
@@ -594,7 +595,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		Map<String, Map<File, TestClass>> testClassesByProjectMap) {
 
 		if (isRootCauseAnalysis()) {
-			String portalBatchTestSelector = System.getenv(
+			String portalBatchTestSelector = Env.get(
 				"PORTAL_BATCH_TEST_SELECTOR");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(
@@ -918,7 +919,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _sendNotification(String message) {
-		String topLevelBuildURL = System.getenv("TOP_LEVEL_BUILD_URL");
+		String topLevelBuildURL = Env.get("TOP_LEVEL_BUILD_URL");
 
 		if (!topLevelBuildURL.contains("(release)") &&
 			!topLevelBuildURL.contains(

@@ -8,9 +8,10 @@ function main {
 
 	local protocol="http"
 
-	case "${SEARCH_URL}" in
-		https://*) protocol="https" ;;
-	esac
+	if [ "${SEARCH_URL#https://}" != "${SEARCH_URL}" ]
+	then
+		protocol="https"
+	fi
 
 	local auth_header_value
 

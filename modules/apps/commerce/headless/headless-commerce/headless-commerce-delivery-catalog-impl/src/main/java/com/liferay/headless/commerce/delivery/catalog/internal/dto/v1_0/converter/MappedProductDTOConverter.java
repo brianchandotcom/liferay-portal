@@ -9,8 +9,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.currency.model.CommerceMoneyFactory;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -19,7 +17,6 @@ import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.product.helper.CPInstanceHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -35,7 +32,6 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
-import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
@@ -46,7 +42,6 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
-import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuUnitOfMeasureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.Language;
@@ -160,9 +155,10 @@ public class MappedProductDTOConverter
 						String unitOfMeasureKey = StringPool.BLANK;
 
 						if (!cpInstanceUnitOfMeasures.isEmpty()) {
-							unitOfMeasureKey = cpInstanceUnitOfMeasures.get(
-								0
-							).getKey();
+							CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+								cpInstanceUnitOfMeasures.get(0);
+
+							unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
 						}
 
 						return _getAvailability(
@@ -402,18 +398,9 @@ public class MappedProductDTOConverter
 							mappedProductDTOConverterContext.getLocale());
 					});
 				setSkuUnitOfMeasures(
-					() -> TransformUtil.transformToArray(
-						cpInstanceUnitOfMeasures,
-						curCPInstanceUnitOfMeasure ->
-							SkuUnitOfMeasureUtil.toSkuUnitOfMeasure(
-								commerceContext, _commerceCurrencyLocalService,
-								_commerceMoneyFactory, _commercePriceFormatter,
-								_commerceProductPriceCalculation,
-								_commerceQuantityFormatter,
-								_commerceTierPriceEntryLocalService,
-								curCPInstanceUnitOfMeasure,
-								mappedProductDTOConverterContext.getLocale()),
-						SkuUnitOfMeasure.class));
+					() -> _toSkuUnitOfMeasures(
+						commerceContext, cpInstanceUnitOfMeasures,
+						mappedProductDTOConverterContext.getLocale()));
 				setThumbnail(
 					() -> {
 						if (cpDefinition == null) {
@@ -587,14 +574,26 @@ public class MappedProductDTOConverter
 		return price;
 	}
 
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private SkuUnitOfMeasure[] _toSkuUnitOfMeasures(
+			CommerceContext commerceContext,
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures,
+			Locale locale)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, locale);
+
+		dtoConverterContext.setAttribute("commerceContext", commerceContext);
+
+		return TransformUtil.transformToArray(
+			cpInstanceUnitOfMeasures,
+			cpInstanceUnitOfMeasure -> _skuUnitOfMeasureDTOConverter.toDTO(
+				dtoConverterContext, cpInstanceUnitOfMeasure),
+			SkuUnitOfMeasure.class);
+	}
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
-
-	@Reference
-	private CommerceMoneyFactory _commerceMoneyFactory;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
@@ -604,13 +603,6 @@ public class MappedProductDTOConverter
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
-
-	@Reference
-	private CommerceQuantityFormatter _commerceQuantityFormatter;
-
-	@Reference
-	private CommerceTierPriceEntryLocalService
-		_commerceTierPriceEntryLocalService;
 
 	@Reference
 	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
@@ -650,5 +642,9 @@ public class MappedProductDTOConverter
 	@Reference(target = DTOConverterConstants.PRODUCT_OPTION_DTO_CONVERTER)
 	private DTOConverter<CPDefinitionOptionRel, ProductOption>
 		_productOptionDTOConverter;
+
+	@Reference(target = DTOConverterConstants.SKU_UNIT_OF_MEASURE_DTO_CONVERTER)
+	private DTOConverter<CPInstanceUnitOfMeasure, SkuUnitOfMeasure>
+		_skuUnitOfMeasureDTOConverter;
 
 }

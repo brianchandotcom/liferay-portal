@@ -128,6 +128,29 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	}
 
 	@Override
+	public void reportMissingReference(
+		String className, String externalReferenceCode, long groupId) {
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return;
+		}
+
+		_exportImportReportEntryLocalService.
+			getOrAddMissingReferenceExportImportReportEntry(
+				groupId, group.getCompanyId(), externalReferenceCode,
+				_classNameLocalService.getClassNameId(className),
+				GetterUtil.getLong(
+					ExportImportThreadLocal.getExportImportConfigurationId()),
+				className);
+	}
+
+	@Override
 	public int solveEmptyModel(
 		String classExternalReferenceCode, String className, long companyId,
 		long groupId, int status,

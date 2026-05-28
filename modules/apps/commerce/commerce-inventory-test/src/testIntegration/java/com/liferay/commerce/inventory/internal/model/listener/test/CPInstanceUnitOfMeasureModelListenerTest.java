@@ -107,6 +107,77 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 	}
 
 	@Test
+	public void testAddAndDeleteCPInstanceUnitOfMeasurePreservesWarehouseItemQuantity()
+		throws PortalException {
+
+		frutillaRule.scenario(
+			"Preserve the warehouse item quantity across the Unit Of Measure " +
+				"lifecycle"
+		).given(
+			"A CPInstance with a warehouse item with a decimal quantity"
+		).when(
+			"A Unit Of Measure is added and then deleted"
+		).then(
+			"The warehouse item quantity is unchanged"
+		);
+
+		BigDecimal quantity = new BigDecimal("20.000");
+
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemLocalService.
+				addCommerceInventoryWarehouseItem(
+					RandomTestUtil.randomString(), _user.getUserId(),
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId(),
+					quantity, BigDecimal.ZERO, _cpInstance.getSku(),
+					StringPool.BLANK);
+
+		Assert.assertEquals(
+			0,
+			quantity.compareTo(commerceInventoryWarehouseItem.getQuantity()));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
+
+		String key = RandomTestUtil.randomString();
+
+		_cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
+				_user.getUserId(), _cpInstance.getCPInstanceId(), true,
+				BigDecimal.ONE, key, RandomTestUtil.randomLocaleStringMap(), 3,
+				BigDecimal.ZERO, true, 0.0, BigDecimal.ONE,
+				_cpInstance.getSku());
+
+		commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemLocalService.
+				getCommerceInventoryWarehouseItem(
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseItemId());
+
+		Assert.assertEquals(
+			key, commerceInventoryWarehouseItem.getUnitOfMeasureKey());
+		Assert.assertEquals(
+			0,
+			quantity.compareTo(commerceInventoryWarehouseItem.getQuantity()));
+
+		_cpInstanceUnitOfMeasureLocalService.deleteCPInstanceUnitOfMeasure(
+			_cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId());
+
+		commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemLocalService.
+				getCommerceInventoryWarehouseItem(
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseItemId());
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
+		Assert.assertEquals(
+			0,
+			quantity.compareTo(commerceInventoryWarehouseItem.getQuantity()));
+	}
+
+	@Test
 	public void testAddFirstCPInstanceUnitOfMeasure() throws PortalException {
 		frutillaRule.scenario(
 			"Create the first CP Instance Unit Of Measure for a CPInstance"

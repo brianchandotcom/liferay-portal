@@ -5,5 +5,5 @@
 
 export type ModelArmorTemplate = {
 	externalReferenceCode: string;
-	name?: string;
+	title?: string;
 };

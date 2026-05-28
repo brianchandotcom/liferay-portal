@@ -9,7 +9,7 @@ const MODEL_ARMOR_TEMPLATE_BASE_URI = '/o/ai-hub/model-armor-templates';
 
 async function getModelArmorTemplates() {
 	const response = await fetch(
-		`${MODEL_ARMOR_TEMPLATE_BASE_URI}?fields=externalReferenceCode,name`,
+		`${MODEL_ARMOR_TEMPLATE_BASE_URI}?fields=externalReferenceCode,title`,
 		{
 			method: 'GET',
 		}

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.internal.model;
 
-import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
+import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 

@@ -164,37 +164,31 @@ public class ExportImportReportEntryLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		try {
-			String classExternalReferenceCode = RandomTestUtil.randomString();
-			long classNameId = RandomTestUtil.randomLong();
-			long exportImportConfigurationId = RandomTestUtil.randomLong();
-			String modelNameLanguageKey = RandomTestUtil.randomString();
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+		String modelNameLanguageKey = RandomTestUtil.randomString();
 
-			ExportImportReportEntry exportImportReportEntry =
-				_exportImportReportEntryLocalService.
-					addMissingReferenceExportImportReportEntry(
-						group.getGroupId(), TestPropsValues.getCompanyId(),
-						classExternalReferenceCode, classNameId,
-						exportImportConfigurationId, modelNameLanguageKey);
+		ExportImportReportEntry exportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				addMissingReferenceExportImportReportEntry(
+					group.getGroupId(), TestPropsValues.getCompanyId(),
+					classExternalReferenceCode, classNameId,
+					exportImportConfigurationId, modelNameLanguageKey);
 
-			Assert.assertEquals(
-				group.getGroupId(), exportImportReportEntry.getGroupId());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Missing Reference: Entity ", modelNameLanguageKey,
-					" with external reference code ",
-					classExternalReferenceCode, " in scope ",
-					group.getGroupId(),
-					" was not found. Please ensure the referenced entity is ",
-					"imported."),
-				exportImportReportEntry.getErrorMessage());
-			Assert.assertEquals(
-				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE,
-				exportImportReportEntry.getType());
-		}
-		finally {
-			GroupTestUtil.deleteGroup(group);
-		}
+		Assert.assertEquals(
+			group.getGroupId(), exportImportReportEntry.getGroupId());
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Missing Reference: Entity ", modelNameLanguageKey,
+				" with external reference code ", classExternalReferenceCode,
+				" in scope ", group.getGroupId(),
+				" was not found. Please ensure the referenced entity is ",
+				"imported."),
+			exportImportReportEntry.getErrorMessage());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE,
+			exportImportReportEntry.getType());
 	}
 
 	@Test

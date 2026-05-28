@@ -49,11 +49,12 @@ public class MissingReferenceManagerImpl implements MissingReferenceManager {
 				exportImportConfigurationId, className);
 	}
 
-	private long _getClassNameId(String className) {
-		ClassName className_ = _classNameLocalService.fetchClassName(className);
+	private long _getClassNameId(String classNameValue) {
+		ClassName className = _classNameLocalService.fetchClassName(
+			classNameValue);
 
-		if (className_ != null) {
-			return className_.getClassNameId();
+		if (className != null) {
+			return className.getClassNameId();
 		}
 
 		return 0;

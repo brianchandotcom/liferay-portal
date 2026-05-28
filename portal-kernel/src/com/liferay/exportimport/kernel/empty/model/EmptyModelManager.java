@@ -42,6 +42,9 @@ public interface EmptyModelManager {
 
 	public boolean isEmptyModel();
 
+	public void reportMissingReference(
+		String className, String externalReferenceCode, long groupId);
+
 	public int solveEmptyModel(
 		String classExternalReferenceCode, String className, long companyId,
 		long groupId, int status, Supplier<Integer> updatedModelStatusSupplier);

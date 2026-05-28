@@ -128,6 +128,7 @@ function getOdataString({
 
 		if (
 			entityFieldType === EEntityFieldType.STRING ||
+			entityFieldType === EEntityFieldType.COLLECTION ||
 			entityFieldType === EEntityFieldType.COLLECTION_STRING
 		) {
 			return `'${item.value}'`;

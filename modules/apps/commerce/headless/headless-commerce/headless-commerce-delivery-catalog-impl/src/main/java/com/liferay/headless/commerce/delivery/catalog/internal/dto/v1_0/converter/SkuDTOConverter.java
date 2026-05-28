@@ -11,8 +11,6 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.currency.model.CommerceMoneyFactory;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -24,6 +22,7 @@ import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.content.helper.CPContentHelper;
@@ -43,7 +42,6 @@ import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
@@ -55,8 +53,8 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.TierPrice;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
-import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuUnitOfMeasureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -70,6 +68,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.math.BigDecimal;
@@ -261,26 +260,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				setSku(cpInstance::getSku);
 				setSkuOptions(() -> skuOptionsArray);
 				setSkuUnitOfMeasures(
-					() -> TransformUtil.transformToArray(
-						cpInstanceUnitOfMeasures,
-						cpInstanceUnitOfMeasure ->
-							SkuUnitOfMeasureUtil.toSkuUnitOfMeasure(
-								commerceContext, _commerceCurrencyLocalService,
-								_commerceMoneyFactory, _commercePriceFormatter,
-								_commerceProductPriceCalculation,
-								_commerceQuantityFormatter,
-								_commerceTierPriceEntryLocalService,
-								cpInstanceUnitOfMeasure,
-								skuDTOConverterContext.getLocale()),
-						SkuUnitOfMeasure.class));
+					() -> _toSkuUnitOfMeasures(
+						commerceContext, cpInstanceUnitOfMeasures,
+						skuDTOConverterContext.getLocale()));
 				setTierPrices(
 					() -> {
 						if (!cpInstanceUnitOfMeasures.isEmpty()) {
 							return null;
 						}
-
-						CommerceCurrency commerceCurrency =
-							commerceContext.getCommerceCurrency();
 
 						CommercePriceEntry commercePriceEntry =
 							_commerceProductPriceCalculation.
@@ -293,22 +280,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							return null;
 						}
 
-						return TransformUtil.transformToArray(
+						return _toTierPrices(
+							commerceContext,
 							_commerceTierPriceEntryLocalService.
 								getCommerceTierPriceEntries(
 									commercePriceEntry.
 										getCommercePriceEntryId(),
 									WorkflowConstants.STATUS_APPROVED),
-							commerceTierPriceEntry ->
-								SkuUnitOfMeasureUtil.toTierPrice(
-									commerceCurrency,
-									_commerceCurrencyLocalService,
-									_commerceMoneyFactory,
-									_commercePriceFormatter,
-									_commerceQuantityFormatter,
-									commerceTierPriceEntry, null,
-									skuDTOConverterContext.getLocale()),
-							TierPrice.class);
+							skuDTOConverterContext.getLocale());
 					});
 				setWeight(cpInstance::getWeight);
 				setWidth(cpInstance::getWidth);
@@ -640,18 +619,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						_cpInstanceLocalService,
 						skuDTOConverterContext.getLocale()));
 				setSkuUnitOfMeasures(
-					() -> TransformUtil.transformToArray(
-						replacementUnitOfMeasures,
-						replacementUnitOfMeasure ->
-							SkuUnitOfMeasureUtil.toSkuUnitOfMeasure(
-								commerceContext, _commerceCurrencyLocalService,
-								_commerceMoneyFactory, _commercePriceFormatter,
-								_commerceProductPriceCalculation,
-								_commerceQuantityFormatter,
-								_commerceTierPriceEntryLocalService,
-								replacementUnitOfMeasure,
-								skuDTOConverterContext.getLocale()),
-						SkuUnitOfMeasure.class));
+					() -> _toSkuUnitOfMeasures(
+						commerceContext, replacementUnitOfMeasures,
+						skuDTOConverterContext.getLocale()));
 				setUrls(
 					() -> LanguageUtils.getLanguageIdMap(
 						_cpDefinitionLocalService.getUrlTitleMap(
@@ -660,17 +630,47 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		};
 	}
 
+	private SkuUnitOfMeasure[] _toSkuUnitOfMeasures(
+			CommerceContext commerceContext,
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures,
+			Locale locale)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, locale);
+
+		dtoConverterContext.setAttribute("commerceContext", commerceContext);
+
+		return TransformUtil.transformToArray(
+			cpInstanceUnitOfMeasures,
+			cpInstanceUnitOfMeasure -> _skuUnitOfMeasureDTOConverter.toDTO(
+				dtoConverterContext, cpInstanceUnitOfMeasure),
+			SkuUnitOfMeasure.class);
+	}
+
+	private TierPrice[] _toTierPrices(
+			CommerceContext commerceContext,
+			List<CommerceTierPriceEntry> commerceTierPriceEntries,
+			Locale locale)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, locale);
+
+		dtoConverterContext.setAttribute("commerceContext", commerceContext);
+
+		return TransformUtil.transformToArray(
+			commerceTierPriceEntries,
+			commerceTierPriceEntry -> _tierPriceDTOConverter.toDTO(
+				dtoConverterContext, commerceTierPriceEntry),
+			TierPrice.class);
+	}
+
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
-
-	@Reference
-	private CommerceMoneyFactory _commerceMoneyFactory;
 
 	@Reference
 	private CommerceOptionValueHelper _commerceOptionValueHelper;
@@ -680,9 +680,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
-
-	@Reference
-	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CommerceTierPriceEntryLocalService
@@ -733,5 +730,13 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	)
 	private DTOConverter<CPDefinitionInventory, ProductConfiguration>
 		_productConfigurationDTOConverter;
+
+	@Reference(target = DTOConverterConstants.SKU_UNIT_OF_MEASURE_DTO_CONVERTER)
+	private DTOConverter<CPInstanceUnitOfMeasure, SkuUnitOfMeasure>
+		_skuUnitOfMeasureDTOConverter;
+
+	@Reference(target = DTOConverterConstants.TIER_PRICE_DTO_CONVERTER)
+	private DTOConverter<CommerceTierPriceEntry, TierPrice>
+		_tierPriceDTOConverter;
 
 }

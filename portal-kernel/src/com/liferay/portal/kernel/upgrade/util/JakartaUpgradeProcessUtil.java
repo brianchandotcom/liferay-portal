@@ -74,18 +74,15 @@ public class JakartaUpgradeProcessUtil {
 
 		value = StringUtil.replace(value, sourcePackage, targetPackage);
 
-		String escapedSourcePackage = _escapedCache.computeIfAbsent(
-			sourcePackage, HtmlUtil::escapeJS);
-		String escapedTargetPackage = _escapedCache.computeIfAbsent(
-			targetPackage, HtmlUtil::escapeJS);
-
 		return StringUtil.replace(
-			value, escapedSourcePackage, escapedTargetPackage);
+			value, _escapedJSMap.computeIfAbsent(
+			sourcePackage, HtmlUtil::escapeJS), _escapedJSMap.computeIfAbsent(
+			targetPackage, HtmlUtil::escapeJS));
 	}
 
 	private static final char[] _SEPARATORS = {'-', '/'};
 
-	private static final Map<String, String> _escapedCache =
+	private static final Map<String, String> _escapedJSMap =
 		new ConcurrentHashMap<>();
 	private static final Set<String> _preservedSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));

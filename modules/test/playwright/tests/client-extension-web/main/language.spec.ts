@@ -16,6 +16,26 @@ testSample.describe('Samples', () => {
 		key: 'do-you-like-to-eat-pizza-with-anchovies',
 		translations: [
 			{
+				languageId: 'ar-SA',
+				value: 'هل تحب أكل البيتزا مع الأنشوفة؟',
+			},
+			{
+				languageId: 'ca-ES',
+				value: 'Us agrada menjar pizza amb anxoves?',
+			},
+			{
+				languageId: 'de-AT',
+				value: 'Essen Sie gerne Pizza mit Sardellen?',
+			},
+			{
+				languageId: 'de-CH',
+				value: 'Essen Sie gerne Pizza mit Sardellen?',
+			},
+			{
+				languageId: 'de-DE',
+				value: 'Essen Sie gerne Pizza mit Sardellen?',
+			},
+			{
 				languageId: 'en-US',
 				value: 'Do you like to eat pizza with anchovies?',
 			},
@@ -24,8 +44,44 @@ testSample.describe('Samples', () => {
 				value: '¿Te gusta comer pizza con anchoas?',
 			},
 			{
+				languageId: 'es-CO',
+				value: '¿Le gusta comer pizza con anchoas?',
+			},
+			{
+				languageId: 'es-MX',
+				value: '¿Le gusta comer pizza con anchoas?',
+			},
+			{
+				languageId: 'fi-FI',
+				value: 'Tykkäätkö pizzasta anjoviksilla?',
+			},
+			{
+				languageId: 'fr-BE',
+				value: 'Aimez-vous manger de la pizza aux anchois ?',
+			},
+			{
+				languageId: 'fr-CH',
+				value: 'Aimez-vous manger de la pizza aux anchois ?',
+			},
+			{
+				languageId: 'fr-FR',
+				value: 'Aimez-vous manger de la pizza aux anchois ?',
+			},
+			{
+				languageId: 'hu-HU',
+				value: 'Szereti a szardellás pizzát?',
+			},
+			{
 				languageId: 'ja-JP',
 				value: 'アンチョビ入りのピザは好きですか？',
+			},
+			{
+				languageId: 'nl-BE',
+				value: 'Houdt u van pizza met ansjovis?',
+			},
+			{
+				languageId: 'nl-NL',
+				value: 'Houdt u van pizza met ansjovis?',
 			},
 			{
 				languageId: 'pt-BR',
@@ -34,6 +90,14 @@ testSample.describe('Samples', () => {
 			{
 				languageId: 'pt-PT',
 				value: 'Você gosta de comer pizza com anchovas?',
+			},
+			{
+				languageId: 'sv-SE',
+				value: 'Gillar du att äta pizza med ansjovis?',
+			},
+			{
+				languageId: 'zh-CN',
+				value: '您喜欢吃加凤尾鱼的披萨吗？',
 			},
 		],
 	};

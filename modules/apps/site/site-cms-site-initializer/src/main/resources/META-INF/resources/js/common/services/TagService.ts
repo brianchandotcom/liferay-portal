@@ -39,7 +39,7 @@ async function createTag({
 		throw new Error(error);
 	}
 
-	const tag = data?.items[0];
+	const tag = data?.items.find((item) => item.name === name);
 
 	if (tag) {
 		if (assetLibraryId) {

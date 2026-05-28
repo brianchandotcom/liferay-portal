@@ -83,6 +83,13 @@ export function NewImport({
 				initialValues={SETTINGS_STEP_INITIAL_VALUES}
 				onSubmit={async (values) => {
 					if (!importPreview) {
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							type: 'danger',
+						});
+
 						return;
 					}
 

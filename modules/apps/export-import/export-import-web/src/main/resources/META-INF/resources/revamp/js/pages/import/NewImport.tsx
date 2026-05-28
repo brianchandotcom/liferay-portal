@@ -120,7 +120,7 @@ export function NewImport({
 						return;
 					}
 
-					window.location.href = backURL;
+					Liferay.Util.navigate(backURL);
 				}}
 				title={Liferay.Language.get('settings')}
 			>

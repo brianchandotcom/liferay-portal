@@ -996,7 +996,6 @@ public class ProjectFaroController extends BaseFaroController {
 					osbOfferingEntry.setProductEntryId(
 						ProductConstants.
 							DATA_PLATFORM_PRIVATE_BETA_PRODUCT_ENTRY_ID);
-
 					osbOfferingEntry.setQuantity(1);
 					osbOfferingEntry.setStartDate(
 						new Date(faroProject.getCreateTime()));

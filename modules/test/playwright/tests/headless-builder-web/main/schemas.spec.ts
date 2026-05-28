@@ -808,6 +808,8 @@ testFeatureFlagsEnabled(
 		);
 		await uiElementsPage.saveButton.click();
 
+		await uiElementsPage.anySuccessAlert.waitFor();
+
 		const response =
 			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 				'headless-builder/endpoints'

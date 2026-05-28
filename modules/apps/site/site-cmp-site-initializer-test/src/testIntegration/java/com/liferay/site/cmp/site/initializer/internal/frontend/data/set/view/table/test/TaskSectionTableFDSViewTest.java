@@ -51,7 +51,7 @@ public class TaskSectionTableFDSViewTest
 
 	@Override
 	protected String getFDSName() {
-		return "com.liferay.site.cmp.site.initializer-task";
+		return "com.liferay.site.cmp.site.initializer-project-tasks";
 	}
 
 }

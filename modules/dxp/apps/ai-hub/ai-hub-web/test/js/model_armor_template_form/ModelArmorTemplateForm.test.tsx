@@ -248,7 +248,7 @@ describe('ModelArmorTemplateForm', () => {
 			});
 			fireEvent.change(
 				screen.getByLabelText(/^external-reference-code/i),
-				{target: {value: 'TEMPLATE_X'}}
+				{target: {value: 'TEMPLATE-X'}}
 			);
 			fireEvent.change(screen.getByLabelText(/^location/i), {
 				target: {value: 'us-central1'},
@@ -259,7 +259,7 @@ describe('ModelArmorTemplateForm', () => {
 			await waitFor(() => {
 				expect(mockPutModelArmorTemplate).toHaveBeenCalledWith(
 					expect.objectContaining({
-						externalReferenceCode: 'TEMPLATE_X',
+						externalReferenceCode: 'TEMPLATE-X',
 						location: 'us-central1',
 						title_i18n: {en_US: 'My Template'},
 					})

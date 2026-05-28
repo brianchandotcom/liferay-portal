@@ -5,8 +5,9 @@
 
 import {openToast} from '@liferay/object-js-components-web';
 import {useFormik} from 'formik';
-import {useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 
+import {generateExternalReferenceCode} from '../../utils/externalReferenceCode';
 import {DEFAULT_MODEL_ARMOR_TEMPLATE} from '../constants';
 import {
 	getModelArmorTemplate,
@@ -21,6 +22,11 @@ interface UseModelArmorTemplateFormProps {
 export function useModelArmorTemplateForm({
 	externalReferenceCode,
 }: UseModelArmorTemplateFormProps) {
+	const generatedExternalReferenceCode = useMemo(
+		() => generateExternalReferenceCode(),
+		[]
+	);
+
 	const {
 		errors,
 		handleBlur,
@@ -32,7 +38,10 @@ export function useModelArmorTemplateForm({
 		touched,
 		values,
 	} = useFormik<ModelArmorTemplate>({
-		initialValues: DEFAULT_MODEL_ARMOR_TEMPLATE,
+		initialValues: {
+			...DEFAULT_MODEL_ARMOR_TEMPLATE,
+			externalReferenceCode: generatedExternalReferenceCode,
+		},
 		onSubmit: async (formValues) => {
 			try {
 				await putModelArmorTemplate(formValues);

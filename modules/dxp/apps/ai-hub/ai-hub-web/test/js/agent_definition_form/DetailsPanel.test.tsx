@@ -152,12 +152,26 @@ describe('DetailsPanel', () => {
 
 			fireEvent.change(
 				screen.getByLabelText(/^external-reference-code/i),
-				{target: {value: 'AGENT_X'}}
+				{target: {value: 'AGENT-X'}}
 			);
 
 			expect(setField).toHaveBeenCalledWith(
 				'externalReferenceCode',
-				'AGENT_X'
+				'AGENT-X'
+			);
+		});
+
+		it('masks out a leading hyphen, spaces, and special characters', () => {
+			const {setField} = renderPanel();
+
+			fireEvent.change(
+				screen.getByLabelText(/^external-reference-code/i),
+				{target: {value: '-a b_c!1-2'}}
+			);
+
+			expect(setField).toHaveBeenCalledWith(
+				'externalReferenceCode',
+				'ab_c1-2'
 			);
 		});
 

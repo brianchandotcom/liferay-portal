@@ -55,7 +55,7 @@ public class LLMSPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getCategoryKey() {
-			return "aeo-seo";
+			return "seo";
 		}
 
 		@Override

@@ -487,6 +487,7 @@ modules/test/playwright/tests/portal-impl/portlet    @liferay-frontend
 modules/test/playwright/tests/portal-tools-rest-builder-test-impl    @liferay-headless
 modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/third-party/
+modules/util/lang-sanitizer/    @liferay-release
 modules/util/pmd/    @liferay-core-infra
 modules/util/portal-tools-benchmarks/    @liferay-core-infra
 modules/util/portal-tools-db-migration-importer    @liferay-database-infra

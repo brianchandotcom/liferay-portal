@@ -514,7 +514,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			null, testGroup.getGroupId(), TestPropsValues.getUserId(),
 			LayoutUtilityPageEntry.class.getName(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString(), folderId,
-			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			clazz.getResourceAsStream("dependencies/thumbnail1.png"),
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 	}
 

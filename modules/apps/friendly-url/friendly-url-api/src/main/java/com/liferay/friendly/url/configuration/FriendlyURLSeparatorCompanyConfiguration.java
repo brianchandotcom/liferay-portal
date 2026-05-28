@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Mikel Lorza
  */
 @ExtendedObjectClassDefinition(
-	category = "aeo-seo", generateUI = false,
+	category = "seo", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

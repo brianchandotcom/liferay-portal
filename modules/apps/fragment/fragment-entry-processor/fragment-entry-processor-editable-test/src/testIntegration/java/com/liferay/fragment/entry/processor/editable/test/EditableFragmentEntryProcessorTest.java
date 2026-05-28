@@ -2357,6 +2357,9 @@ public class EditableFragmentEntryProcessorTest {
 			String expectedObjectType, String objectFolderExternalReferenceCode)
 		throws Exception {
 
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_editable_text.html");
+
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
 				objectFolderExternalReferenceCode,
@@ -2374,13 +2377,8 @@ public class EditableFragmentEntryProcessorTest {
 			objectFolderCreated = true;
 		}
 
-		ObjectDefinition objectDefinition = null;
-
-		try {
-			FragmentEntry fragmentEntry = _addFragmentEntry(
-				"fragment_entry_editable_text.html");
-
-			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
 				ObjectDefinitionTestUtil.getRandomName(),
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
@@ -2390,54 +2388,52 @@ public class EditableFragmentEntryProcessorTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				TestPropsValues.getUserId());
 
-			ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-				objectDefinition, "title", "titleValue");
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, "title", "titleValue");
 
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					null, fragmentEntry.getExternalReferenceCode(), null,
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-					TestPropsValues.getPlid(), fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					StringPool.BLANK,
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(), null,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				TestPropsValues.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put(
-						FragmentEntryProcessorConstants.
-							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						"editable_text",
 						JSONUtil.put(
-							"editable_text",
-							JSONUtil.put(
-								"classNameId",
-								_portal.getClassNameId(
-									objectDefinition.getClassName())
-							).put(
-								"classPK", objectEntry.getPrimaryKey()
-							).put(
-								"defaultValue", RandomTestUtil.randomString()
-							).put(
-								"fieldId", "title"
-							))
-					).toString(),
-					StringPool.BLANK, 0, null, fragmentEntry.getType(),
-					ServiceContextTestUtil.getServiceContext());
+							"classNameId",
+							_portal.getClassNameId(
+								objectDefinition.getClassName())
+						).put(
+							"classPK", objectEntry.getPrimaryKey()
+						).put(
+							"defaultValue", RandomTestUtil.randomString()
+						).put(
+							"fieldId", "title"
+						))
+				).toString(),
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext());
 
-			Element element = _getElement(
-				"data-lfr-editable-id", "editable_text", fragmentEntryLink,
-				LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_text", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
 
-			Assert.assertEquals(
-				expectedObjectType, element.attr("data-analytics-object-type"));
+		Assert.assertEquals(
+			expectedObjectType, element.attr("data-analytics-object-type"));
+
+		if (objectDefinition != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
 		}
-		finally {
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
-			}
 
-			if (objectFolderCreated) {
-				_objectFolderLocalService.deleteObjectFolder(objectFolder);
-			}
+		if (objectFolderCreated) {
+			_objectFolderLocalService.deleteObjectFolder(objectFolder);
 		}
 	}
 

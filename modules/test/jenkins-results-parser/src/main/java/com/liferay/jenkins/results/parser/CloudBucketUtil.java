@@ -660,7 +660,7 @@ public class CloudBucketUtil {
 		catch (Exception exception) {
 			NotificationUtil.sendSlackNotification(
 				JenkinsResultsParserUtil.combine(
-					"Build URL: ", Env.get("BUILD_URL"), "\n\n",
+					"Build URL: ", Environment.get("BUILD_URL"), "\n\n",
 					exception.getMessage()),
 				"ci-aws-notifications", ":aws:",
 				JenkinsResultsParserUtil.combine(

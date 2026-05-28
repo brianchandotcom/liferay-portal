@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -87,7 +87,7 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 	protected String getDefaultTestBatchRunPropertyQuery(
 		File testBaseDir, String testSuiteName) {
 
-		String query = Env.get("TEST_QA_WEBSITES_PROPERTY_QUERY");
+		String query = Environment.get("TEST_QA_WEBSITES_PROPERTY_QUERY");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(query)) {
 			query = getBuildStartProperty("TEST_QA_WEBSITES_PROPERTY_QUERY");

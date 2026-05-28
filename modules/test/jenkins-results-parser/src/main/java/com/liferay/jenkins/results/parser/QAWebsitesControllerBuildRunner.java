@@ -195,7 +195,8 @@ public class QAWebsitesControllerBuildRunner
 	}
 
 	private boolean _allowConcurrentBuilds() {
-		String allowConcurrentBuildsString = Env.get("ALLOW_CONCURRENT_BUILDS");
+		String allowConcurrentBuildsString = Environment.get(
+			"ALLOW_CONCURRENT_BUILDS");
 
 		if (allowConcurrentBuildsString == null) {
 			return false;

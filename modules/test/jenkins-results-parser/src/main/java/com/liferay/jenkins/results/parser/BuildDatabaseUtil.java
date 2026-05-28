@@ -120,16 +120,16 @@ public class BuildDatabaseUtil {
 		}
 
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			String s3BucketDistPath = Env.get("S3_BUCKET_DIST_PATH");
+			String s3BucketDistPath = Environment.get("S3_BUCKET_DIST_PATH");
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(s3BucketDistPath)) {
 				_downloadBuildDatabaseFileFromS3Bucket(
-					buildDatabaseFile, Env.get("S3_BUCKET_DIST_PATH"));
+					buildDatabaseFile, Environment.get("S3_BUCKET_DIST_PATH"));
 			}
 		}
 		else {
-			String distNodes = Env.get("DIST_NODES");
-			String distPath = Env.get("DIST_PATH");
+			String distNodes = Environment.get("DIST_NODES");
+			String distPath = Environment.get("DIST_PATH");
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(distNodes) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
@@ -499,7 +499,7 @@ public class BuildDatabaseUtil {
 			return new File(build.getBuildDirPath());
 		}
 
-		String buildDir = Env.get("BUILD_DIR");
+		String buildDir = Environment.get("BUILD_DIR");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildDir)) {
 			return new File(buildDir);
@@ -509,7 +509,7 @@ public class BuildDatabaseUtil {
 	}
 
 	private static String _getCurrentNetworkName() {
-		String masterHostname = Env.get("MASTER_HOSTNAME");
+		String masterHostname = Environment.get("MASTER_HOSTNAME");
 
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(masterHostname);
 
@@ -571,7 +571,7 @@ public class BuildDatabaseUtil {
 			return false;
 		}
 
-		String jobVariant = Env.get("JOB_VARIANT");
+		String jobVariant = Environment.get("JOB_VARIANT");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
 			return true;

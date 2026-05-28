@@ -6,7 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.BuildReport;
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
@@ -65,7 +65,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 
 		_topLevelBuildReport = topLevelBuildReport;
 
-		String workspace = Env.get("WORKSPACE");
+		String workspace = Environment.get("WORKSPACE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
 			throw new RuntimeException("Please set WORKSPACE");

@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PluginsGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
@@ -61,7 +61,7 @@ public class PluginsFunctionalBatchTestClassGroup
 	protected String getDefaultTestBatchRunPropertyQuery(
 		File testBaseDir, String testSuiteName) {
 
-		String query = Env.get("TEST_BATCH_RUN_PROPERTY_QUERY");
+		String query = Environment.get("TEST_BATCH_RUN_PROPERTY_QUERY");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(query)) {
 			query = getBuildStartProperty("TEST_BATCH_RUN_PROPERTY_QUERY");

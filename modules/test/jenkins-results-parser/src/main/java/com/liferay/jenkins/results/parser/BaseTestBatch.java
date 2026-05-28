@@ -57,7 +57,7 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 	}
 
 	protected String getPath(String batchName) {
-		String path = Env.get("PATH");
+		String path = Environment.get("PATH");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(path)) {
 			return null;

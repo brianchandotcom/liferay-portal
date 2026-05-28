@@ -24,6 +24,7 @@ import {
 } from '../utils/externalReferenceCode';
 import {
 	getInstructionDefinition,
+	postInstructionDefinition,
 	putInstructionDefinition,
 } from './services/InstructionDefinitionService';
 import {
@@ -74,7 +75,9 @@ export default function InstructionDefinitionForm({
 
 	const handleSubmit = async () => {
 		try {
-			const response = await putInstructionDefinition(formData);
+			const response = externalReferenceCode
+				? await putInstructionDefinition(formData)
+				: await postInstructionDefinition(formData);
 
 			if (response?.externalReferenceCode) {
 				openToast({
@@ -95,7 +98,10 @@ export default function InstructionDefinitionForm({
 			console.error(error);
 
 			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				message:
+					error instanceof Error && error.message
+						? error.message
+						: Liferay.Language.get('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
 		}

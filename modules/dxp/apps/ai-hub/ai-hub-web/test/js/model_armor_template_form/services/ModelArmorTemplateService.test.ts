@@ -5,6 +5,7 @@
 
 import {
 	getModelArmorTemplate,
+	postModelArmorTemplate,
 	putModelArmorTemplate,
 } from '../../../../src/main/resources/META-INF/resources/js/model_armor_template_form/services/ModelArmorTemplateService';
 
@@ -14,7 +15,8 @@ jest.mock('frontend-js-web', () => ({
 	fetch: (...args: any[]) => mockFetch(...args),
 }));
 
-const BASE_URI = '/o/ai-hub/model-armor-templates';
+const GET_BASE_URI = '/o/ai-hub/model-armor-templates';
+const POST_PUT_BASE_URI = '/o/ai-hub/v1.0/model-armor-templates';
 
 describe('ModelArmorTemplateService', () => {
 	beforeEach(() => {
@@ -43,7 +45,7 @@ describe('ModelArmorTemplateService', () => {
 			await getModelArmorTemplate('TEMPLATE_X');
 
 			expect(mockFetch).toHaveBeenCalledWith(
-				`${BASE_URI}/by-external-reference-code/TEMPLATE_X`,
+				`${GET_BASE_URI}/by-external-reference-code/TEMPLATE_X`,
 				expect.objectContaining({method: 'GET'})
 			);
 		});
@@ -88,6 +90,66 @@ describe('ModelArmorTemplateService', () => {
 		});
 	});
 
+	describe('postModelArmorTemplate', () => {
+		it('returns the parsed response body', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						externalReferenceCode: 'TEMPLATE_X',
+						title_i18n: {en_US: 'Saved'},
+					}),
+				ok: true,
+			});
+
+			const result = await postModelArmorTemplate({
+				externalReferenceCode: 'TEMPLATE_X',
+			} as any);
+
+			expect(result.title_i18n.en_US).toBe('Saved');
+		});
+
+		it('sends a POST with the template serialized as JSON', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({externalReferenceCode: 'TEMPLATE_X'}),
+				ok: true,
+			});
+
+			const template = {
+				active: true,
+				externalReferenceCode: 'TEMPLATE_X',
+				title_i18n: {en_US: 'My Template'},
+			} as any;
+
+			await postModelArmorTemplate(template);
+
+			expect(mockFetch).toHaveBeenCalledWith(
+				POST_PUT_BASE_URI,
+				expect.objectContaining({
+					body: JSON.stringify(template),
+					headers: {'Content-Type': 'application/json'},
+					method: 'POST',
+				})
+			);
+		});
+
+		it("throws with the server's detail when the response is not ok", async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						detail: 'External reference code already in use',
+					}),
+				ok: false,
+			});
+
+			await expect(
+				postModelArmorTemplate({
+					externalReferenceCode: 'TEMPLATE_X',
+				} as any)
+			).rejects.toThrow('External reference code already in use');
+		});
+	});
+
 	describe('putModelArmorTemplate', () => {
 		it('returns the parsed response body', async () => {
 			mockFetch.mockResolvedValueOnce({
@@ -122,7 +184,7 @@ describe('ModelArmorTemplateService', () => {
 			await putModelArmorTemplate(template);
 
 			expect(mockFetch).toHaveBeenCalledWith(
-				'/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/TEMPLATE_X',
+				`${POST_PUT_BASE_URI}/by-external-reference-code/TEMPLATE_X`,
 				expect.objectContaining({
 					body: JSON.stringify(template),
 					headers: {'Content-Type': 'application/json'},

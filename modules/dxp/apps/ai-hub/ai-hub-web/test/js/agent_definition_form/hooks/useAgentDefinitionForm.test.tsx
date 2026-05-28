@@ -13,6 +13,7 @@ const mockGetAgentDefinition = jest.fn();
 const mockGetContentRetrievers = jest.fn();
 const mockGetModelArmorTemplates = jest.fn();
 const mockOpenToast = jest.fn();
+const mockPostAgentDefinition = jest.fn();
 const mockPutAgentDefinition = jest.fn();
 const mockPutAgentDefinitionToContentRetrievers = jest.fn();
 const mockPutAgentDefinitionToModelArmorTemplates = jest.fn();
@@ -25,6 +26,8 @@ jest.mock(
 		deleteAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
 			mockDeleteAgentDefinitionToModelArmorTemplates(...args),
 		getAgentDefinition: (...args: any[]) => mockGetAgentDefinition(...args),
+		postAgentDefinition: (...args: any[]) =>
+			mockPostAgentDefinition(...args),
 		putAgentDefinition: (...args: any[]) => mockPutAgentDefinition(...args),
 		putAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockPutAgentDefinitionToContentRetrievers(...args),
@@ -98,6 +101,7 @@ describe('useAgentDefinitionForm', () => {
 		mockGetContentRetrievers.mockReset();
 		mockGetModelArmorTemplates.mockReset();
 		mockOpenToast.mockReset();
+		mockPostAgentDefinition.mockReset();
 		mockPutAgentDefinition.mockReset();
 		mockPutAgentDefinitionToContentRetrievers.mockReset();
 		mockPutAgentDefinitionToModelArmorTemplates.mockReset();
@@ -398,7 +402,7 @@ describe('useAgentDefinitionForm', () => {
 		});
 
 		it('shows a danger toast when the response status is not approved', async () => {
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			mockPostAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'rejected'},
 			});
@@ -422,7 +426,7 @@ describe('useAgentDefinitionForm', () => {
 		});
 
 		it('shows the success toast when the API echoes back an approved status', async () => {
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			mockPostAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'approved'},
 			});
@@ -445,8 +449,29 @@ describe('useAgentDefinitionForm', () => {
 			});
 		});
 
-		it('shows the unexpected-error toast when the API call rejects', async () => {
-			mockPutAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
+		it('shows the error message in a danger toast when the API call rejects', async () => {
+			mockPostAgentDefinition.mockRejectedValueOnce(new Error('Boom'));
+
+			const {result} = renderAgentHook();
+
+			await fillRequiredFields(result);
+
+			await act(async () => {
+				result.current.handleSubmit();
+			});
+
+			await waitFor(() => {
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'Boom',
+						type: 'danger',
+					})
+				);
+			});
+		});
+
+		it('shows the unexpected-error toast when the API call rejects without a message', async () => {
+			mockPostAgentDefinition.mockRejectedValueOnce({});
 
 			const {result} = renderAgentHook();
 
@@ -467,7 +492,7 @@ describe('useAgentDefinitionForm', () => {
 		});
 
 		it('skips relationship PUTs and DELETEs when neither picker has changed', async () => {
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			mockPostAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'approved'},
 			});
@@ -481,7 +506,7 @@ describe('useAgentDefinitionForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(mockPutAgentDefinition).toHaveBeenCalled();
+				expect(mockPostAgentDefinition).toHaveBeenCalled();
 			});
 
 			expect(
@@ -501,7 +526,7 @@ describe('useAgentDefinitionForm', () => {
 
 	describe('validate', () => {
 		it('clears errors once required fields are filled', async () => {
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			mockPostAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'approved'},
 			});
@@ -552,7 +577,7 @@ describe('useAgentDefinitionForm', () => {
 			expect(result.current.errors.workflowDefinitionName).toBe(
 				'required'
 			);
-			expect(mockPutAgentDefinition).not.toHaveBeenCalled();
+			expect(mockPostAgentDefinition).not.toHaveBeenCalled();
 		});
 	});
 });

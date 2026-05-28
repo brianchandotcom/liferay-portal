@@ -53,6 +53,24 @@ async function getAgentDefinitions() {
 	return response.json();
 }
 
+async function postAgentDefinition(agentDefinition: AgentDefinition) {
+	const response = await fetch(AGENT_DEFINITION_BASE_URI, {
+		body: JSON.stringify(agentDefinition),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+	if (!response.ok) {
+		const errorBody = await response.json().catch(() => ({}));
+
+		throw new Error(errorBody?.detail || errorBody?.title || '');
+	}
+
+	return response.json();
+}
+
 async function putAgentDefinition(agentDefinition: AgentDefinition) {
 	const response = await fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinition.externalReferenceCode}`,
@@ -95,6 +113,7 @@ export {
 	deleteAgentDefinitionToModelArmorTemplates,
 	getAgentDefinition,
 	getAgentDefinitions,
+	postAgentDefinition,
 	putAgentDefinition,
 	putAgentDefinitionToContentRetrievers,
 	putAgentDefinitionToModelArmorTemplates,

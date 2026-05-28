@@ -207,7 +207,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskExecutor
 
 	private void _mergeLayoutPrototypeLayouts(
 			LayoutSetPrototype layoutSetPrototype)
-		throws PortalException {
+		throws Exception {
 
 		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
@@ -228,17 +228,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskExecutor
 					continue;
 				}
 
-				try {
-					_sites.mergeLayoutPrototypeLayout(layout);
-				}
-				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to merge layout prototype into layout ",
-							layout.getPlid(), " of layout set prototype ",
-							layoutSetPrototype.getLayoutSetPrototypeId()),
-						exception);
-				}
+				_sites.mergeLayoutPrototypeLayout(layout);
 			}
 		}
 		finally {

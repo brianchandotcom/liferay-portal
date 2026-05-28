@@ -458,6 +458,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ContentRetriever"
             tags: ["ContentRetriever"]
+    "/model-armor-templates":
+        post:
+            operationId: postModelArmorTemplate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ModelArmorTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ModelArmorTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ModelArmorTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ModelArmorTemplate"
+            tags: ["ModelArmorTemplate"]
     "/model-armor-templates/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteModelArmorTemplateByExternalReferenceCode

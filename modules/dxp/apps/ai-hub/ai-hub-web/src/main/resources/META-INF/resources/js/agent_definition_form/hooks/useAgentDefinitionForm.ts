@@ -14,6 +14,7 @@ import {
 	deleteAgentDefinitionToContentRetrievers,
 	deleteAgentDefinitionToModelArmorTemplates,
 	getAgentDefinition,
+	postAgentDefinition,
 	putAgentDefinition,
 	putAgentDefinitionToContentRetrievers,
 	putAgentDefinitionToModelArmorTemplates,
@@ -70,7 +71,9 @@ export function useAgentDefinitionForm({
 		},
 		onSubmit: async (formValues) => {
 			try {
-				const response = await putAgentDefinition(formValues);
+				const response = externalReferenceCode
+					? await putAgentDefinition(formValues)
+					: await postAgentDefinition(formValues);
 
 				if (formValues.externalReferenceCode) {
 					await Promise.all([
@@ -102,9 +105,12 @@ export function useAgentDefinitionForm({
 				console.error(error);
 
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+					message:
+						error instanceof Error && error.message
+							? error.message
+							: Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
 					type: 'danger',
 				});
 			}
@@ -165,7 +171,8 @@ export function useAgentDefinitionForm({
 					agentDefinition.agentDefinitionsToContentRetrievers || []
 				);
 				resetModelArmorTemplates(
-					agentDefinition.aiHubAgentDefinitionsToAIHubMATemplates || []
+					agentDefinition.aiHubAgentDefinitionsToAIHubMATemplates ||
+						[]
 				);
 			}
 			catch (error) {

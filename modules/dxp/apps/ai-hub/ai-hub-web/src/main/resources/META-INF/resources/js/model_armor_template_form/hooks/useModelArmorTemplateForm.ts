@@ -11,6 +11,7 @@ import {generateExternalReferenceCode} from '../../utils/externalReferenceCode';
 import {DEFAULT_MODEL_ARMOR_TEMPLATE} from '../constants';
 import {
 	getModelArmorTemplate,
+	postModelArmorTemplate,
 	putModelArmorTemplate,
 } from '../services/ModelArmorTemplateService';
 import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
@@ -44,7 +45,12 @@ export function useModelArmorTemplateForm({
 		},
 		onSubmit: async (formValues) => {
 			try {
-				await putModelArmorTemplate(formValues);
+				if (externalReferenceCode) {
+					await putModelArmorTemplate(formValues);
+				}
+				else {
+					await postModelArmorTemplate(formValues);
+				}
 
 				openToast({
 					message: Liferay.Language.get(

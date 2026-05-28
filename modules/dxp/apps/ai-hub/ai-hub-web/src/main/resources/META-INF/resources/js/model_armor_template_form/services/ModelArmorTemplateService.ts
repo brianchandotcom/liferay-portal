@@ -38,6 +38,26 @@ async function getModelArmorTemplate(
 	};
 }
 
+async function postModelArmorTemplate(
+	modelArmorTemplate: ModelArmorTemplate
+): Promise<ModelArmorTemplate> {
+	const response = await fetch('/o/ai-hub/v1.0/model-armor-templates', {
+		body: JSON.stringify(modelArmorTemplate),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+	if (!response.ok) {
+		const errorBody = await response.json().catch(() => ({}));
+
+		throw new Error(errorBody?.detail || errorBody?.title || '');
+	}
+
+	return response.json();
+}
+
 async function putModelArmorTemplate(
 	modelArmorTemplate: ModelArmorTemplate
 ): Promise<ModelArmorTemplate> {
@@ -61,4 +81,4 @@ async function putModelArmorTemplate(
 	return response.json();
 }
 
-export {getModelArmorTemplate, putModelArmorTemplate};
+export {getModelArmorTemplate, postModelArmorTemplate, putModelArmorTemplate};

@@ -266,14 +266,14 @@ public class BatchEngineImportTaskServiceTest
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
 				10, null, BlogPosting.class.getName(), new byte[0], "JSON",
-				BatchEngineTaskExecuteStatus.COMPLETED.name(), null,
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 		BatchEngineImportTask batchEngineImportTask2 =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
 				10, null, BlogPosting.class.getName(), new byte[0], "JSON",
-				BatchEngineTaskExecuteStatus.COMPLETED.name(), null,
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 

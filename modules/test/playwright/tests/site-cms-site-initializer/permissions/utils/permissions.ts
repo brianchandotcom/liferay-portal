@@ -73,6 +73,7 @@ export async function handleClickMenuItem(menuitem: string, page) {
 					exact: true,
 					name: 'Permissions',
 				})
+				.and(page.locator('[aria-haspopup="true"]'))
 				.click({timeout: 1000});
 
 			await page
@@ -80,6 +81,7 @@ export async function handleClickMenuItem(menuitem: string, page) {
 					exact: true,
 					name: menuitem,
 				})
+				.and(page.locator(':not([aria-haspopup="true"])'))
 				.click({timeout: 1000});
 		}
 		else {

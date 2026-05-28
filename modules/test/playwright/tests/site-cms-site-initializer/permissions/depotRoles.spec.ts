@@ -76,9 +76,13 @@ test(
 				});
 			}).toPass({timeout: 20000});
 
-			await expect(permissionsPage.roleCell(role1.name)).toBeVisible();
+			await expect(
+				permissionsPage.roleCell(role1.name).first()
+			).toBeVisible();
 			await expect(permissionsPage.roleCell(role2.name)).toHaveCount(0);
-			await expect(permissionsPage.roleCell(role3.name)).toBeVisible();
+			await expect(
+				permissionsPage.roleCell(role3.name).first()
+			).toBeVisible();
 
 			await permissionsPage.permissionsModalCloseButton.click();
 		}
@@ -87,6 +91,63 @@ test(
 
 			await deleteSpace(page, spaceName);
 		}
+	}
+);
+
+test(
+	'All Members modal role dropdown filters by the space subtype',
+	{tag: '@LPD-88817'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const role1 = await apiHelpers.headlessAdminUser.postRole({
+			name: 'RoleNoSubtype' + getRandomInt(),
+			roleType: 'depot',
+		});
+		const role2 = await apiHelpers.headlessAdminUser.postRole({
+			name: 'RoleProject' + getRandomInt(),
+			roleType: 'depot',
+			subtype: 'project',
+		});
+		const role3 = await apiHelpers.headlessAdminUser.postRole({
+			name: 'RoleSpace' + getRandomInt(),
+			roleType: 'depot',
+			subtype: 'space',
+		});
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const userFullName = `${user.givenName} ${user.familyName}`;
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.addUserOrUserGroup(userFullName, 'users');
+
+		await spaceSummaryPage.viewAllMembersLink.click();
+
+		const userRow = page
+			.getByRole('dialog')
+			.getByRole('listitem')
+			.filter({hasText: userFullName});
+
+		await userRow
+			.locator('button:has(.permission-select-trigger-text)')
+			.click();
+
+		await expect(
+			page.getByRole('checkbox', {exact: true, name: role1.name})
+		).toBeVisible();
+		await expect(
+			page.getByRole('checkbox', {exact: true, name: role2.name})
+		).toHaveCount(0);
+		await expect(
+			page.getByRole('checkbox', {exact: true, name: role3.name})
+		).toBeVisible();
 	}
 );
 

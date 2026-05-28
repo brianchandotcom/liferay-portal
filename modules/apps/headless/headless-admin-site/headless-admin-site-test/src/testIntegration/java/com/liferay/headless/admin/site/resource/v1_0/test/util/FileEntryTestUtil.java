@@ -46,7 +46,7 @@ public class FileEntryTestUtil {
 		File file = FileUtil.createTempFile(
 			StreamUtil.toByteArray(
 				resourceClass.getResourceAsStream(
-					"dependencies/thumbnail.png")));
+					"dependencies/thumbnail1.png")));
 
 		try {
 			String fileName = RandomTestUtil.randomString() + "_preview.png";

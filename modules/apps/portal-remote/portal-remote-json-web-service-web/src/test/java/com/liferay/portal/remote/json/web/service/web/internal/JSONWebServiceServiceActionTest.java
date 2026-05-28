@@ -150,18 +150,10 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	@Test
-	public void testNoSuchModelExceptionReturnsNotFound() throws Exception {
-		_assertNotFoundResponse("/foo/no-such-model");
-	}
-
-	@Test
-	public void testPrincipalExceptionReturnsNotFound() throws Exception {
-		_assertNotFoundResponse("/foo/principal-denied");
-	}
-
-	@Test
-	public void testSecurityExceptionReturnsNotFound() throws Exception {
-		_assertNotFoundResponse("/foo/security-denied");
+	public void testNotFoundResponse() throws Exception {
+		_testNotFoundResponse("/foo/no-such-model");
+		_testNotFoundResponse("/foo/principal-denied");
+		_testNotFoundResponse("/foo/security-denied");
 	}
 
 	@Test
@@ -286,30 +278,6 @@ public class JSONWebServiceServiceActionTest
 				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
-	private void _assertNotFoundResponse(String path) throws Exception {
-		registerActionClass(FooService.class);
-
-		String json = toJSON(
-			LinkedHashMapBuilder.<String, Object>put(
-				path, new LinkedHashMap<>()
-			).build());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			createInvokerHttpServletRequest(json);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		String result = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			mockHttpServletResponse.getStatus());
-
-		Assert.assertEquals(JSONFactoryUtil.getNullJSON(), result);
-	}
-
 	private FileItem _createFileItem(String content) throws Exception {
 		Path tempFilePath = Files.createTempFile(null, null);
 
@@ -353,6 +321,30 @@ public class JSONWebServiceServiceActionTest
 
 				return method.invoke(httpServletRequest, args);
 			});
+	}
+
+	private void _testNotFoundResponse(String path) throws Exception {
+		registerActionClass(FooService.class);
+
+		String json = toJSON(
+			LinkedHashMapBuilder.<String, Object>put(
+				path, new LinkedHashMap<>()
+			).build());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			createInvokerHttpServletRequest(json);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String result = _jsonWebServiceServiceAction.getJSON(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+
+		Assert.assertEquals(JSONFactoryUtil.getNullJSON(), result);
 	}
 
 	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;

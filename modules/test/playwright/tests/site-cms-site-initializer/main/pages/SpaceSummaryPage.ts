@@ -74,9 +74,10 @@ export class SpaceSummaryPage {
 	}
 
 	async addRoleToSpaceMember(roleName: string, userName: string) {
-		await this.viewAllMembersLink.click();
-
-		await this.page.getByRole('dialog').waitFor();
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('dialog'),
+			trigger: this.viewAllMembersLink,
+		});
 
 		const userRow = this.page
 			.getByRole('listitem')
@@ -105,9 +106,10 @@ export class SpaceSummaryPage {
 	}
 
 	async addUserOrUserGroup(name: string, type: UserOrUserGroupType) {
-		await this.viewAllMembersLink.click();
-
-		await this.page.getByRole('dialog').waitFor({state: 'visible'});
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('dialog'),
+			trigger: this.viewAllMembersLink,
+		});
 
 		const dialog = this.page.getByRole('dialog');
 
@@ -243,6 +245,8 @@ export class SpaceSummaryPage {
 			.waitFor();
 
 		await this.closeButton.click();
+
+		await this.page.getByRole('dialog').waitFor({state: 'detached'});
 	}
 
 	async disconnectSiteFromModal(name: string) {

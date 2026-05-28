@@ -6,9 +6,13 @@
 package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.view.table.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -35,7 +39,31 @@ public class TaskSectionTableFDSViewTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetFDSTableSchema() throws Exception {
+	public void testGetFDSTableSchemaForAllTasks() throws Exception {
+		_assertSchema("com.liferay.site.cmp.site.initializer-all-tasks");
+	}
+
+	@Test
+	public void testGetFDSTableSchemaForProjectTasks() throws Exception {
+		_assertSchema("com.liferay.site.cmp.site.initializer-project-tasks");
+	}
+
+	@Override
+	protected String getFDSName() {
+		return "com.liferay.site.cmp.site.initializer-project-tasks";
+	}
+
+	private void _assertSchema(String fdsName) {
+		FDSView fdsView = _fdsViewRegistry.getFDSViews(
+			fdsName
+		).get(
+			0
+		);
+
+		fdsTableSchemaFieldsMap = fdsView.getFDSTableSchema(
+			LocaleUtil.US
+		).getFDSTableSchemaFieldsMap();
+
 		assertFDSTableSchemaField(
 			null, "assigneeTableCellRenderer", "assign-to", "assignee");
 		assertFDSTableSchemaField(
@@ -49,9 +77,7 @@ public class TaskSectionTableFDSViewTest
 			"title");
 	}
 
-	@Override
-	protected String getFDSName() {
-		return "com.liferay.site.cmp.site.initializer-project-tasks";
-	}
+	@Inject
+	private FDSViewRegistry _fdsViewRegistry;
 
 }

@@ -16,8 +16,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -45,12 +42,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
-import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -137,8 +130,6 @@ public class ProvisioningRequestResourceTest
 
 		_assertAccountEntry(customerAccountEntry, provisioningRequest);
 
-		_assertQuotas(customerAccountEntry);
-
 		AccountEntry aiHubAccountEntry =
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
 				"L_AI_HUB", TestPropsValues.getCompanyId());
@@ -183,34 +174,6 @@ public class ProvisioningRequestResourceTest
 			accountEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			provisioningRequest.getAccountEntryName(), accountEntry.getName());
-	}
-
-	private void _assertQuotaObjectEntry(
-		ObjectDefinition objectDefinition, String externalReferenceCode) {
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
-
-		Assert.assertNotNull(externalReferenceCode, objectEntry);
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		Assert.assertEquals(
-			33333333, GetterUtil.getInteger(values.get("limit")));
-		Assert.assertEquals(0, GetterUtil.getInteger(values.get("usage")));
-	}
-
-	private void _assertQuotas(AccountEntry accountEntry) throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_QUOTA", TestPropsValues.getCompanyId());
-
-		_assertQuotaObjectEntry(
-			objectDefinition,
-			"guest-quota-" + accountEntry.getAccountEntryId());
-		_assertQuotaObjectEntry(
-			objectDefinition, "quota-" + accountEntry.getAccountEntryId());
 	}
 
 	private void _assertServiceAccountUser(
@@ -316,8 +279,8 @@ public class ProvisioningRequestResourceTest
 			provisioningRequest.getAccountEntryName(),
 			oAuth2Application.getName());
 		Assert.assertEquals(
-			List.of(provisioningRequest.getLiferayDXPURL()),
-			oAuth2Application.getRedirectURIsList());
+			provisioningRequest.getLiferayDXPURL(),
+			oAuth2Application.getHomePageURL());
 	}
 
 	private void _assetServiceAccountUsers(

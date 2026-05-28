@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class ExportPage {
@@ -19,6 +20,9 @@ export class ExportPage {
 
 	async exportPages() {
 		await this.page.getByRole('link', {name: 'Custom Export'}).click();
+
+		await this.page.getByLabel('Title').fill(getRandomString());
+
 		await this.page.getByRole('button', {name: 'Export'}).click();
 
 		await this.page

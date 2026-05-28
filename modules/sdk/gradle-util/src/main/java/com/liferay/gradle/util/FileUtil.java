@@ -160,17 +160,27 @@ public class FileUtil {
 			mirrorsCacheArtifactDir.mkdirs();
 
 			if (tryLocalNetwork) {
-				try {
-					_get(
-						project, _getMirrorsURL(project, url),
-						_getProperty(project, "mirrors.username"),
-						_getProperty(project, "mirrors.password"),
-						mirrorsCacheArtifactFile, ignoreErrors);
+				File mirrorsMountFile = _getMirrorsMountFile(url, fileName);
+
+				if (mirrorsMountFile.isFile()) {
+					Files.copy(
+						mirrorsMountFile.toPath(),
+						mirrorsCacheArtifactFile.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
 				}
-				catch (Exception exception) {
-					_get(
-						project, url, username, password,
-						mirrorsCacheArtifactFile, ignoreErrors);
+				else {
+					try {
+						_get(
+							project, _getMirrorsURL(project, url),
+							_getProperty(project, "mirrors.username"),
+							_getProperty(project, "mirrors.password"),
+							mirrorsCacheArtifactFile, ignoreErrors);
+					}
+					catch (Exception exception) {
+						_get(
+							project, url, username, password,
+							mirrorsCacheArtifactFile, ignoreErrors);
+					}
 				}
 			}
 			else {
@@ -578,6 +588,12 @@ public class FileUtil {
 		String userHome = System.getProperty("user.home");
 
 		return new File(userHome, ".liferay/mirrors");
+	}
+
+	private static File _getMirrorsMountFile(String url, String fileName) {
+		String subdir = url.replaceFirst("https?:\\/\\/(.+\\/).+", "$1");
+
+		return new File(new File("/mnt/shared/mirrors", subdir), fileName);
 	}
 
 	private static String _getMirrorsURL(Project project, String url) {

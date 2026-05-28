@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.dto.v1_0.UserAccount;
 import com.liferay.ai.hub.rest.manager.v1_0.ProvisioningRequestManager;
@@ -20,10 +21,6 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -35,13 +32,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +44,7 @@ import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Davyson Melo
@@ -77,7 +71,9 @@ public class ProvisioningRequestManagerImpl
 			provisioningRequest.getAccountEntryExternalReferenceCode(),
 			provisioningRequest.getAccountEntryName(), serviceContext);
 
-		_addQuotas(customerAccountEntry, serviceContext);
+		_quotaManager.addQuotas(
+			customerAccountEntry.getAccountEntryId(), company.getCompanyId(),
+			dtoConverterContext.getUserId());
 
 		AccountEntry aiHubAccountEntry =
 			_accountEntryService.getAccountEntryByExternalReferenceCode(
@@ -157,52 +153,6 @@ public class ProvisioningRequestManagerImpl
 			provisioningRequest.getAccountEntryName(), null, null, false,
 			Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
 			serviceContext);
-	}
-
-	private void _addQuotaObjectEntry(
-			AccountEntry accountEntry, String externalReferenceCode,
-			ObjectDefinition objectDefinition, ServiceContext serviceContext)
-		throws Exception {
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
-
-		if (objectEntry != null) {
-			return;
-		}
-
-		_objectEntryLocalService.addObjectEntry(
-			0, serviceContext.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", externalReferenceCode
-			).put(
-				"limit", _QUOTA_TOKEN_LIMIT
-			).put(
-				"r_accountToAIHubQuotas_accountEntryId",
-				accountEntry.getAccountEntryId()
-			).put(
-				"usage", 0
-			).build(),
-			serviceContext);
-	}
-
-	private void _addQuotas(
-			AccountEntry accountEntry, ServiceContext serviceContext)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_QUOTA", serviceContext.getCompanyId());
-
-		_addQuotaObjectEntry(
-			accountEntry, "guest-quota-" + accountEntry.getAccountEntryId(),
-			objectDefinition, serviceContext);
-		_addQuotaObjectEntry(
-			accountEntry, "quota-" + accountEntry.getAccountEntryId(),
-			objectDefinition, serviceContext);
 	}
 
 	private List<User> _addRegularUsers(
@@ -356,8 +306,6 @@ public class ProvisioningRequestManagerImpl
 		};
 	}
 
-	private static final int _QUOTA_TOKEN_LIMIT = 33333333;
-
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -373,11 +321,8 @@ public class ProvisioningRequestManagerImpl
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

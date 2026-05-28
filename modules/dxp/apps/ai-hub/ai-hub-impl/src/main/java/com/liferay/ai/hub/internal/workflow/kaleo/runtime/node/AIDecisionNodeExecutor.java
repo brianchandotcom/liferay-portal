@@ -17,6 +17,7 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -61,6 +62,7 @@ import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author João Victor Alves
@@ -171,9 +173,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		if (QuotaUtil.hasExceededQuota(
 				serviceContext.getCompanyId(), currentKaleoNode.getName(),
-				prompt + "\n" + userMessage, workflowContext,
-				kaleoInstanceToken.getKaleoInstanceId(),
-				serviceContext.getUserId())) {
+				_quotaManager, prompt + "\n" + userMessage,
+				serviceContext.getUserId(), workflowContext,
+				kaleoInstanceToken.getKaleoInstanceId())) {
 
 			return;
 		}
@@ -214,7 +216,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						prompt, executionContext.getServiceContext(),
 						userMessage);
 
-					QuotaUtil.updateUsage(response, serviceContext);
+					QuotaUtil.updateUsage(
+						response, _quotaManager, serviceContext);
 				}
 			).onErrorConsumer(
 				throwable -> {
@@ -302,6 +305,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,14 +27,13 @@ import java.util.Map;
 public class QuotaUtil {
 
 	public static boolean hasExceededQuota(
-			long companyId, String nodeName, String text,
-			Map<String, Serializable> workflowContext, long workflowInstanceId,
-			long userId)
+			long companyId, String nodeName, QuotaManager quotaManager,
+			String text, long userId, Map<String, Serializable> workflowContext,
+			long workflowInstanceId)
 		throws PortalException {
 
 		try {
-			com.liferay.ai.hub.internal.quota.QuotaUtil.checkUsage(
-				companyId, text, userId);
+			quotaManager.checkUsage(companyId, text, userId);
 
 			return false;
 		}
@@ -57,12 +57,13 @@ public class QuotaUtil {
 	}
 
 	public static void updateUsage(
-		ChatResponse chatResponse, ServiceContext serviceContext) {
+		ChatResponse chatResponse, QuotaManager quotaManager,
+		ServiceContext serviceContext) {
 
 		try {
 			TokenUsage tokenUsage = chatResponse.tokenUsage();
 
-			com.liferay.ai.hub.internal.quota.QuotaUtil.updateUsage(
+			quotaManager.updateUsage(
 				serviceContext.getCompanyId(), tokenUsage.outputTokenCount(),
 				serviceContext.getUserId());
 		}

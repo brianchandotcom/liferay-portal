@@ -504,30 +504,30 @@ public class UpgradeLogProgressTracker {
 				throw invocationTargetException.getTargetException();
 			}
 
-			if (Objects.equals(methodName, "next") &&
-				Objects.equals(result, Boolean.TRUE)) {
-
-				_rowCount++;
-
-				long now = System.currentTimeMillis();
-
-				if ((now - _lastLogTime) >
-						PropsValues.UPGRADE_LOG_PROGRESS_INTERVAL) {
-
-					_captureProgress();
-					_logProgress();
-
-					_lastLogTime = now;
-				}
-			}
-			else if (Objects.equals(methodName, "next")) {
-				_lastKnownProgresses.remove(_progressId);
-				_lastKnownTotalCounts.remove(_progressId);
-			}
-			else if (Objects.equals(methodName, "close")) {
+			if (Objects.equals(methodName, "close")) {
 				_finishProgress();
 
 				_resultSetInvocationHandlers.remove(this);
+			}
+			else if (Objects.equals(methodName, "next")) {
+				if (Objects.equals(result, Boolean.TRUE)) {
+					_rowCount++;
+
+					long now = System.currentTimeMillis();
+
+					if ((now - _lastLogTime) >
+							PropsValues.UPGRADE_LOG_PROGRESS_INTERVAL) {
+
+						_captureProgress();
+						_logProgress();
+
+						_lastLogTime = now;
+					}
+				}
+				else {
+					_lastKnownProgresses.remove(_progressId);
+					_lastKnownTotalCounts.remove(_progressId);
+				}
 			}
 
 			return result;

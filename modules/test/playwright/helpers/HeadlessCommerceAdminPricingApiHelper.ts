@@ -69,6 +69,7 @@ class TPriceEntry {
 	priceListId: number;
 	priceOnApplication?: boolean;
 	skuId: number;
+	unitOfMeasureKey?: string;
 }
 
 class TPriceList {

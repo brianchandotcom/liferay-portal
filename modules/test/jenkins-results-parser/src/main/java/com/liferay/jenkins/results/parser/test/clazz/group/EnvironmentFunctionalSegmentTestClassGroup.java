@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalFixpackEnvironmentJob;
@@ -172,7 +172,7 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 			return null;
 		}
 
-		String fixPackZipURL = Env.get("TEST_BUILD_FIX_PACK_ZIP_URL");
+		String fixPackZipURL = Environment.get("TEST_BUILD_FIX_PACK_ZIP_URL");
 
 		if ((fixPackZipURL == null) || !fixPackZipURL.matches("https?://.*")) {
 			fixPackZipURL = getBuildStartProperty(
@@ -219,7 +219,7 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 			return null;
 		}
 
-		String testrayBuildName = Env.get("TESTRAY_BUILD_NAME");
+		String testrayBuildName = Environment.get("TESTRAY_BUILD_NAME");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 			testrayBuildName = getBuildStartProperty("TESTRAY_BUILD_NAME");

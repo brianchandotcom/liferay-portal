@@ -43,7 +43,7 @@ public class Test {
 
 	@After
 	public void tearDown() {
-		Env.setInstance(new Env());
+		Environment.setInstance(new Environment());
 	}
 
 	@Rule
@@ -296,16 +296,16 @@ public class Test {
 		return _simpleClassNames;
 	}
 
-	protected Env mockEnvironment() {
+	protected Environment mockEnvironment() {
 
 		// Mockito 4.5.1 predates per-mock strictness; unstubbed calls
 		// return null, which getEnvironmentVariable treats as missing.
 
-		Env env = Mockito.mock(Env.class);
+		Environment environment = Mockito.mock(Environment.class);
 
-		Env.setInstance(env);
+		Environment.setInstance(environment);
 
-		return env;
+		return environment;
 	}
 
 	protected String read(File file) throws IOException {

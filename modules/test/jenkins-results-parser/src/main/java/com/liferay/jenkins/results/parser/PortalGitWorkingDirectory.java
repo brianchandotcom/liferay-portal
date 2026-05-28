@@ -394,7 +394,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		try {
 			Map<String, String> filteredEnv = new HashMap<>();
 
-			Map<String, String> env = Env.getAll();
+			Map<String, String> env = Environment.getAll();
 
 			for (Map.Entry<String, String> entry : env.entrySet()) {
 				String key = entry.getKey();
@@ -446,7 +446,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				new File(
 					getWorkingDirectory(),
 					JenkinsResultsParserUtil.combine(
-						"build.", Env.get("HOSTNAME"), ".properties")),
+						"build.", Environment.get("HOSTNAME"), ".properties")),
 				properties, true);
 
 			AntUtil.callTarget(

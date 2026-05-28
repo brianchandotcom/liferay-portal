@@ -54,7 +54,7 @@ public class TestResultsConsistencyReportControllerBuildRunner
 	}
 
 	protected String getInvocationCohortName() {
-		String invocationCohortName = Env.get("INVOCATION_COHORT_NAME");
+		String invocationCohortName = Environment.get("INVOCATION_COHORT_NAME");
 
 		if ((invocationCohortName != null) && !invocationCohortName.isEmpty()) {
 			return invocationCohortName;

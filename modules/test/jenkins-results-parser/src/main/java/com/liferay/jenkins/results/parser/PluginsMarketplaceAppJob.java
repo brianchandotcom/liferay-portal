@@ -54,7 +54,7 @@ public class PluginsMarketplaceAppJob
 
 		super(buildProfile, jobName);
 
-		String appType = Env.get("TEST_APP_TYPE");
+		String appType = Environment.get("TEST_APP_TYPE");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(appType)) {
 			appType = "community";

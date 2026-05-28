@@ -10,18 +10,18 @@ import java.util.Map;
 /**
  * @author Calum Ragan
  */
-public class Env {
+public class Environment {
 
 	public static String get(String name) {
-		return _env.doGet(name);
+		return _environment.doGet(name);
 	}
 
 	public static Map<String, String> getAll() {
-		return _env.doGetAll();
+		return _environment.doGetAll();
 	}
 
-	public static void setInstance(Env env) {
-		_env = env;
+	public static void setInstance(Environment environment) {
+		_environment = environment;
 	}
 
 	protected String doGet(String name) {
@@ -32,6 +32,6 @@ public class Env {
 		return System.getenv();
 	}
 
-	private static volatile Env _env = new Env();
+	private static volatile Environment _environment = new Environment();
 
 }

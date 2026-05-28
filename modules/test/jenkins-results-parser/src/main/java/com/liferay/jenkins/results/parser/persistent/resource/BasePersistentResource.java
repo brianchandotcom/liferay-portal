@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser.persistent.resource;
 
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.CloudBucketUtil;
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsAPIUtil;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -266,7 +266,7 @@ public abstract class BasePersistentResource implements PersistentResource {
 				_buildDatabase.getProperties("start.properties"));
 		}
 
-		String jobVariant = Env.get("JOB_VARIANT");
+		String jobVariant = Environment.get("JOB_VARIANT");
 
 		if (_buildDatabase.hasProperties(jobVariant + "/start.properties")) {
 			_startProperties.putAll(

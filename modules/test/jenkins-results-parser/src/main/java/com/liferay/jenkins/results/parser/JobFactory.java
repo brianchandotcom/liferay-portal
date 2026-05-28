@@ -463,7 +463,7 @@ public class JobFactory {
 				}
 				else {
 					if (upstreamBranchName.contains("release")) {
-						String githubUpstreamBranchName = Env.get(
+						String githubUpstreamBranchName = Environment.get(
 							"GITHUB_UPSTREAM_BRANCH_NAME");
 
 						if (!JenkinsResultsParserUtil.isNullOrEmpty(

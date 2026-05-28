@@ -61,7 +61,7 @@ public class LiferayReleaseToolWorkspaceGitRepository
 			new File(
 				getDirectory(),
 				JenkinsResultsParserUtil.combine(
-					"build.", Env.get("HOSTNAME"), ".properties")),
+					"build.", Environment.get("HOSTNAME"), ".properties")),
 			getProperties("release.tool.build.properties"), true);
 	}
 

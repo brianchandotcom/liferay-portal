@@ -83,7 +83,8 @@ public abstract class BasePortalControllerBuildRunner
 	}
 
 	protected boolean allowConcurrentBuilds() {
-		String allowConcurrentBuildsString = Env.get("ALLOW_CONCURRENT_BUILDS");
+		String allowConcurrentBuildsString = Environment.get(
+			"ALLOW_CONCURRENT_BUILDS");
 
 		if (allowConcurrentBuildsString == null) {
 			return false;
@@ -173,7 +174,7 @@ public abstract class BasePortalControllerBuildRunner
 	}
 
 	protected String getInvocationCohortName() {
-		String invocationCohortName = Env.get("INVOCATION_COHORT_NAME");
+		String invocationCohortName = Environment.get("INVOCATION_COHORT_NAME");
 
 		if ((invocationCohortName != null) && !invocationCohortName.isEmpty()) {
 			return invocationCohortName;

@@ -6,7 +6,7 @@
 package com.liferay.jenkins.results.parser.history;
 
 import com.liferay.jenkins.results.parser.CloudBucketUtil;
-import com.liferay.jenkins.results.parser.Env;
+import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
@@ -103,7 +103,7 @@ public class CachedJobHistory extends BaseJobHistory {
 		}
 
 		File tempGzipFile = new File(
-			Env.get("WORKSPACE"),
+			Environment.get("WORKSPACE"),
 			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
 
 		try {

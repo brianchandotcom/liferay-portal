@@ -313,7 +313,7 @@ public class UpstreamFailureUtil {
 		}
 
 		File testResultsJSONFile = new File(
-			Env.get("WORKSPACE"), "test.results.json");
+			Environment.get("WORKSPACE"), "test.results.json");
 
 		try {
 			JenkinsResultsParserUtil.toFile(

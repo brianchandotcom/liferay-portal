@@ -90,10 +90,10 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testGetCohortName() {
-		Env env = mockEnvironment();
+		Environment environment = mockEnvironment();
 
 		Mockito.when(
-			env.doGet("JENKINS_URL")
+			environment.doGet("JENKINS_URL")
 		).thenReturn(
 			"https://test-1-1.liferay.com"
 		);
@@ -103,10 +103,10 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testGetEnvironmentVariable() {
-		Env env = mockEnvironment();
+		Environment environment = mockEnvironment();
 
 		Mockito.when(
-			env.doGet("JENKINS_URL")
+			environment.doGet("JENKINS_URL")
 		).thenReturn(
 			"https://test-1-1"
 		);

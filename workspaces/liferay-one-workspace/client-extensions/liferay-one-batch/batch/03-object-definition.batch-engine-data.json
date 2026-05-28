@@ -666,128 +666,6 @@
 		},
 		{
 			"active": true,
-			"enableCategorization": false,
-			"enableComments": false,
-			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_SALES_REQUEST",
-			"label": {
-				"en_US": "Sales Request"
-			},
-			"name": "SalesRequest",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_SALES_REQUEST_ACCOUNT_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Account Name"
-					},
-					"name": "accountName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_SALES_REQUEST_ADDITIONAL_APPS_REQUESTED",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Additional Apps Requested"
-					},
-					"name": "additionalAppsRequested",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_SALES_REQUEST_COMMENTS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Comments"
-					},
-					"name": "comments",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_SALES_REQUEST_EMAIL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Email"
-					},
-					"name": "email",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_SALES_REQUEST_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				}
-			],
-			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
-			"panelCategoryKey": "applications_menu.applications.content",
-			"pluralLabel": {
-				"en_US": "Sales Requests"
-			},
-			"portlet": true,
-			"restContextPath": "/o/c/salesrequests",
-			"scope": "company",
-			"status": {
-				"code": 0,
-				"label": "approved",
-				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "email"
-		},
-		{
-			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#C_CONTRACT",
 			"enableCategorization": true,
 			"enableComments": false,
@@ -1517,22 +1395,26 @@
 			"name": "Entitlement",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ENTITLEMENT_NAME",
+					"DBType": "Date",
+					"businessType": "DateTime",
+					"externalReferenceCode": "C_ENTITLEMENT_END_DATE",
 					"indexed": true,
 					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
+					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Name"
+						"en_US": "End Date"
 					},
-					"name": "name",
+					"name": "endDate",
 					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
 					],
-					"required": true,
+					"required": false,
 					"state": false,
 					"system": false,
-					"type": "String"
+					"type": "Date"
 				},
 				{
 					"DBType": "String",
@@ -1548,6 +1430,42 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Double",
+					"businessType": "Decimal",
+					"externalReferenceCode": "C_ENTITLEMENT_MAX_QUANTITY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max Quantity"
+					},
+					"name": "maxQuantity",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Double"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ENTITLEMENT_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+					],
+					"required": true,
 					"state": false,
 					"system": false,
 					"type": "String"
@@ -1571,24 +1489,6 @@
 					"type": "Double"
 				},
 				{
-					"DBType": "Double",
-					"businessType": "Decimal",
-					"externalReferenceCode": "C_ENTITLEMENT_MAX_QUANTITY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max Quantity"
-					},
-					"name": "maxQuantity",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Double"
-				},
-				{
 					"DBType": "Date",
 					"businessType": "DateTime",
 					"externalReferenceCode": "C_ENTITLEMENT_START_DATE",
@@ -1599,28 +1499,6 @@
 						"en_US": "Start Date"
 					},
 					"name": "startDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "C_ENTITLEMENT_END_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "End Date"
-					},
-					"name": "endDate",
 					"objectFieldSettings": [
 						{
 							"name": "timeStorage",
@@ -1666,76 +1544,23 @@
 			"name": "EntitlementDefinition",
 			"objectFields": [
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_USAGE_DEFINITION_ID",
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": "true",
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Usage Definition ID"
+						"en_US": "Active"
 					},
-					"name": "usageDefinitionId",
+					"name": "entitlementDefinitionActive",
 					"objectFieldSettings": [
 					],
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "Long"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_NAME",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"objectFieldSettings": [
-					],
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_DISPLAY_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Display Name"
-					},
-					"name": "displayName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_UNIT",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Unit"
-					},
-					"name": "unit",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
+					"type": "Boolean"
 				},
 				{
 					"DBType": "Double",
@@ -1754,6 +1579,24 @@
 					"state": false,
 					"system": false,
 					"type": "Double"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_DISPLAY_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Display Name"
+					},
+					"name": "displayName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -1792,23 +1635,58 @@
 					"type": "String"
 				},
 				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": "true",
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_ACTIVE",
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_NAME",
 					"indexed": true,
-					"indexedAsKeyword": false,
+					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Active"
+						"en_US": "Name"
 					},
-					"name": "entitlementDefinitionActive",
+					"name": "name",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_UNIT",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Unit"
+					},
+					"name": "unit",
 					"objectFieldSettings": [
 					],
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "Boolean"
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_USAGE_DEFINITION_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Usage Definition ID"
+					},
+					"name": "usageDefinitionId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
 				}
 			],
 			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
@@ -3005,24 +2883,6 @@
 			"name": "Property",
 			"objectFields": [
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_PROPERTY_CLASS_NAME_ID",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Class Name ID"
-					},
-					"name": "classNameId",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long"
-				},
-				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "C_PROPERTY_CLASS_NAME",
@@ -3043,6 +2903,24 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "C_PROPERTY_CLASS_NAME_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Class Name ID"
+					},
+					"name": "classNameId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
 					"externalReferenceCode": "C_PROPERTY_CLASS_PK",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -3057,6 +2935,24 @@
 					"state": false,
 					"system": false,
 					"type": "Long"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_PROPERTY_METADATA_JSON",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Metadata JSON"
+					},
+					"name": "metadataJson",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
 				},
 				{
 					"DBType": "String",
@@ -3093,24 +2989,6 @@
 					"state": false,
 					"system": false,
 					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_PROPERTY_METADATA_JSON",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Metadata JSON"
-					},
-					"name": "metadataJson",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
 				}
 			],
 			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
@@ -3132,6 +3010,255 @@
 			},
 			"system": false,
 			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST",
+			"label": {
+				"en_US": "Publisher Account Request"
+			},
+			"name": "PublisherAccountRequest",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EMAIL_ADDRESS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Email Address"
+					},
+					"name": "emailAddress",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EXTENSION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Extension"
+					},
+					"name": "extension",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_FIRST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "First Name"
+					},
+					"name": "firstName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_INTL_CODE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Intl Code"
+					},
+					"name": "intlCode",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_LAST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Last Name"
+					},
+					"name": "lastName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PHONE_NUMBER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Phone Number"
+					},
+					"name": "phoneNumber",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PUBLISHER_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Publisher Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_PUBLISHER_TYPE",
+					"name": "publisherType",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Request Description"
+					},
+					"name": "requestDescription",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "open",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Request Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_REQUEST_STATUS",
+					"name": "requestStatus",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Publisher Account Requests"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/publisheraccountrequests",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "emailAddress"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToPublisherAssets_accountEntryId",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C_PUBLISHER_ASSETS",
+			"label": {
+				"en_US": "Publisher Assets"
+			},
+			"name": "PublisherAssets",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_ASSETS_VERSION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Version"
+					},
+					"name": "version",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Publisher Assets"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/publisherassets",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "version"
 		},
 		{
 			"active": true,
@@ -3216,12 +3343,12 @@
 							"value": "zip,war,jar"
 						},
 						{
-							"name": "maximumFileSize",
-							"value": 200
-						},
-						{
 							"name": "fileSource",
 							"value": "userComputerToDocumentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 200
 						},
 						{
 							"name": "showFilesInLibrary",
@@ -3253,58 +3380,6 @@
 			},
 			"system": false,
 			"titleObjectFieldName": "name"
-		},
-		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountEntryToPublisherAssets_accountEntryId",
-			"active": true,
-			"enableCategorization": false,
-			"enableComments": false,
-			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_PUBLISHER_ASSETS",
-			"label": {
-				"en_US": "Publisher Assets"
-			},
-			"name": "PublisherAssets",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ASSETS_VERSION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Version"
-					},
-					"name": "version",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				}
-			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
-			"panelCategoryKey": "applications_menu.applications.content",
-			"pluralLabel": {
-				"en_US": "Publisher Assets"
-			},
-			"portlet": true,
-			"restContextPath": "/o/c/publisherassets",
-			"scope": "company",
-			"status": {
-				"code": 0,
-				"label": "approved",
-				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "version"
 		},
 		{
 			"active": true,
@@ -3704,132 +3779,23 @@
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST",
+			"externalReferenceCode": "C_SALES_REQUEST",
 			"label": {
-				"en_US": "Publisher Account Request"
+				"en_US": "Sales Request"
 			},
-			"name": "PublisherAccountRequest",
+			"name": "SalesRequest",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EMAIL_ADDRESS",
+					"externalReferenceCode": "C_SALES_REQUEST_ACCOUNT_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Email Address"
+						"en_US": "Account Name"
 					},
-					"name": "emailAddress",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EXTENSION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Extension"
-					},
-					"name": "extension",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_FIRST_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "First Name"
-					},
-					"name": "firstName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_INTL_CODE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Intl Code"
-					},
-					"name": "intlCode",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_LAST_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Last Name"
-					},
-					"name": "lastName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PHONE_NUMBER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Phone Number"
-					},
-					"name": "phoneNumber",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "MultiselectPicklist",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PUBLISHER_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Publisher Type"
-					},
-					"listTypeDefinitionExternalReferenceCode": "LT_PUBLISHER_TYPE",
-					"name": "publisherType",
+					"name": "accountName",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -3840,14 +3806,32 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_DESCRIPTION",
+					"externalReferenceCode": "C_SALES_REQUEST_ADDITIONAL_APPS_REQUESTED",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Request Description"
+						"en_US": "Additional Apps Requested"
 					},
-					"name": "requestDescription",
+					"name": "additionalAppsRequested",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_SALES_REQUEST_COMMENTS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Comments"
+					},
+					"name": "comments",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -3857,17 +3841,33 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "open",
-					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_STATUS",
+					"businessType": "Text",
+					"externalReferenceCode": "C_SALES_REQUEST_EMAIL",
 					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Request Status"
+						"en_US": "Email"
 					},
-					"listTypeDefinitionExternalReferenceCode": "LT_REQUEST_STATUS",
-					"name": "requestStatus",
+					"name": "email",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_SALES_REQUEST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -3883,10 +3883,10 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Publisher Account Requests"
+				"en_US": "Sales Requests"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/publisheraccountrequests",
+			"restContextPath": "/o/c/salesrequests",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -3894,114 +3894,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "emailAddress"
-		},
-		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountToTrialExtensionRequest_accountEntryId",
-			"active": true,
-			"enableCategorization": false,
-			"enableComments": false,
-			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST",
-			"label": {
-				"en_US": "Trial Extension Request"
-			},
-			"name": "TrialExtensionRequest",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_DUE_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Due Status"
-					},
-					"listTypeDefinitionExternalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS",
-					"name": "dueStatus",
-					"objectFieldSettings": [
-					],
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_DURATION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Duration"
-					},
-					"name": "duration",
-					"objectFieldSettings": [
-					],
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_PROJECT_ID",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Project ID"
-					},
-					"name": "projectId",
-					"objectFieldSettings": [
-					],
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_REASON",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Reason"
-					},
-					"name": "reason",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				}
-			],
-			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
-			"panelCategoryKey": "applications_menu.applications.content",
-			"pluralLabel": {
-				"en_US": "Trial Extension Requests"
-			},
-			"portlet": true,
-			"restContextPath": "/o/c/trialextensionrequests",
-			"scope": "company",
-			"status": {
-				"code": 0,
-				"label": "approved",
-				"label_i18n": "Approved"
-			},
-			"system": false,
-			"titleObjectFieldName": "projectId"
+			"titleObjectFieldName": "email"
 		},
 		{
 			"active": true,
@@ -4306,6 +4199,113 @@
 			},
 			"system": false,
 			"titleObjectFieldName": "fileName"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountToTrialExtensionRequest_accountEntryId",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST",
+			"label": {
+				"en_US": "Trial Extension Request"
+			},
+			"name": "TrialExtensionRequest",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_DUE_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Due Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS",
+					"name": "dueStatus",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_DURATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Duration"
+					},
+					"name": "duration",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_PROJECT_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Project ID"
+					},
+					"name": "projectId",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST_REASON",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reason"
+					},
+					"name": "reason",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"pluralLabel": {
+				"en_US": "Trial Extension Requests"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/trialextensionrequests",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "projectId"
 		}
 	]
 }

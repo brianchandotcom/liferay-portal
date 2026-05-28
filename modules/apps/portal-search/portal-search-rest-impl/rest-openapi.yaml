@@ -172,7 +172,9 @@ components:
                     type: string
                 dateReview:
                     description:
-                        The time when the item should next be reviewed.
+                        The date when the content item is scheduled for editorial review. Part of the Liferay content
+                        lifecycle; populated by Web Content Article and other content types that support a review
+                        workflow. May be null when no review date is set for the item.
                     format: date-time
                     type: string
                 description:
@@ -202,7 +204,8 @@ components:
                     description:
                         Relevance score assigned by the search engine. Higher values indicate stronger relevance to the
                         query. Typical values fall in the range 0.0 to ~10.0 depending on query complexity and blueprint
-                        configuration.
+                        configuration. Useful for threshold filtering (e.g., dropping results below a chosen score) or
+                        custom result ranking logic (combining `score` with other signals).
                     format: float
                     type: number
                 title:

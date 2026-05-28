@@ -264,7 +264,7 @@ describe('SelectionFilter.getOdataString', () => {
 			expect(result).toBe("testField/any(x:(x eq '123'))");
 		});
 
-		it('generates an "any" filter with "eq" without quotes for a single item with a number value', () => {
+		it('generates an "any" filter with "eq" with quotes for a single item with a number value', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -275,7 +275,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x eq 123))');
+			expect(result).toBe("testField/any(x:(x eq '123'))");
 		});
 
 		it('generates an "any" filter with "or" for multiple items', () => {

@@ -96,7 +96,7 @@ public class Channel implements Serializable {
 	private Supplier<String> _currencyCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Idempotency key for create and update; must be unique per channel within the company. Read-only on this projection.",
+		description = "Idempotency key for create and update; must be unique per channel within the company. Read-only.",
 		example = "AB-34098-789-N"
 	)
 	public String getExternalReferenceCode() {
@@ -133,7 +133,7 @@ public class Channel implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Idempotency key for create and update; must be unique per channel within the company. Read-only on this projection."
+		description = "Idempotency key for create and update; must be unique per channel within the company. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
@@ -535,4 +535,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:120817936
+// LIFERAY-REST-BUILDER-HASH:-203600084

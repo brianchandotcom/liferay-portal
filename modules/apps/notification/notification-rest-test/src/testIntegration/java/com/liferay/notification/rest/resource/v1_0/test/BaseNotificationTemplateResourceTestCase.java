@@ -3252,4 +3252,4 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1112938660
+// LIFERAY-REST-BUILDER-HASH:636075695

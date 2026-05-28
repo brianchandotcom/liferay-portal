@@ -77,6 +77,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes an OrderRule by ID. Backed by the matching commerce service method on the target resource."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -149,6 +152,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes an order rule by externalReferenceCode using _corEntryService.fetchCOREntryByExternalReferenceCode() followed by deletion. Throws NoSuchCOREntryException (404) if not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -179,6 +185,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Gets an OrderRule by ID. Backed by the matching commerce service method on the target resource."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -209,6 +218,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves an order rule by externalReferenceCode _corEntryService.fetchCOREntryByExternalReferenceCode(). Identical response to getOrderRule. Throws NoSuchCOREntryException (404) if not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -241,6 +253,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "List endpoint for all order rules (COREntry) in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable field: name (from OrderRuleEntityModel)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -291,6 +306,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}' -d $'{"active": ___, "author": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderRuleAccount": ___, "orderRuleAccountGroup": ___, "orderRuleChannel": ___, "orderRuleOrderType": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates an OrderRule by ID. Backed by the matching commerce service method on the target resource."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -323,6 +341,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "author": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderRuleAccount": ___, "orderRuleAccountGroup": ___, "orderRuleChannel": ___, "orderRuleOrderType": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partial update of an order rule by externalReferenceCode. Identical semantics to patchOrderRule. Throws NoSuchCOREntryException (404) if not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -412,6 +433,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules' -d $'{"active": ___, "author": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderRuleAccount": ___, "orderRuleAccountGroup": ___, "orderRuleChannel": ___, "orderRuleOrderType": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Create a new order rule. Calls _addCOREntry() which uses _corEntryService.addCOREntry() with externalReferenceCode, active, description, dates, name, priority, type, typeSettings. Also calls _updateNestedResources() to add linked accounts/groups/channels/order-types if provided in request body. Returns created OrderRule DTO."
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderRule")}
 	)
@@ -552,6 +576,9 @@ public abstract class BaseOrderRuleResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "author": ___, "createDate": ___, "description": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "neverExpire": ___, "orderRuleAccount": ___, "orderRuleAccountGroup": ___, "orderRuleChannel": ___, "orderRuleOrderType": ___, "priority": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Full replace of an order rule by externalReferenceCode (upsert semantics). If rule exists, updates all fields via _updateOrderRule() and _updateNestedResources(); if not, creates a new rule _addCOREntry(). Returns OrderRule DTO."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1377,4 +1404,4 @@ public abstract class BaseOrderRuleResourceImpl
 		LogFactoryUtil.getLog(BaseOrderRuleResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1823183281
+// LIFERAY-REST-BUILDER-HASH:1368204732

@@ -184,7 +184,9 @@ public class Mutation {
 			termOrderTypeResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a file attachment from an order. Requires order existence verification. Returns 204 No Content."
+	)
 	public boolean deleteOrderAttachment(
 			@GraphQLName("orderId") Long orderId,
 			@GraphQLName("attachmentId") Long attachmentId)
@@ -199,7 +201,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an attachment from an order using external reference codes for both. Validates both order and attachment existence. Returns 204 No Content."
+	)
 	public boolean
 			deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
 				@GraphQLName("externalReferenceCode") String
@@ -220,7 +224,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order attachment the service. Updates priority, restricted flag, title, and type. Returns updated Attachment DTO. Throws NoSuchOrderAttachmentException (404) if not found."
+	)
 	public Attachment patchOrderAttachment(
 			@GraphQLName("orderId") Long orderId,
 			@GraphQLName("attachmentId") Long attachmentId,
@@ -234,7 +240,9 @@ public class Mutation {
 				orderId, attachmentId, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an attachment via external reference codes for both order and attachment. Throws NoSuchOrderException (404) or NoSuchOrderAttachmentException (404) if either not found."
+	)
 	public Attachment
 			patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
 				@GraphQLName("externalReferenceCode") String
@@ -254,7 +262,9 @@ public class Mutation {
 						attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create a file attachment for an order. Base64-decodes the attachment field and calls the service with title, type, restricted flag, and priority. Returns created Attachment DTO."
+	)
 	public Attachment createOrderAttachment(
 			@GraphQLName("orderId") Long orderId,
 			@GraphQLName("attachment") Attachment attachment)
@@ -267,7 +277,9 @@ public class Mutation {
 				orderId, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an attachment for an order accessed by externalReferenceCode. Resolves order first, then delegates to postOrderAttachment(). Throws NoSuchOrderException (404) if order not found."
+	)
 	public Attachment createOrderByExternalReferenceCodeAttachment(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)
@@ -281,7 +293,9 @@ public class Mutation {
 					externalReferenceCode, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of billing address for an order accessed by externalReferenceCode. Returns 204 No Content. Throws NoSuchOrderException (404) if order not found."
+	)
 	public Response patchOrderByExternalReferenceCodeBillingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("billingAddress") BillingAddress billingAddress)
@@ -296,7 +310,9 @@ public class Mutation {
 						externalReferenceCode, billingAddress));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of billing address via nested field endpoint. Returns 204 No Content."
+	)
 	public Response patchOrderIdBillingAddress(
 			@GraphQLName("id") Long id,
 			@GraphQLName("billingAddress") BillingAddress billingAddress)
@@ -310,7 +326,9 @@ public class Mutation {
 					id, billingAddress));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order by its ID. Returns 204 No Content on success; throws NoSuchOrderException (404) if the order does not exist."
+	)
 	public Response deleteOrder(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_orderResourceComponentServiceObjects,
@@ -331,7 +349,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order identified by externalReferenceCode. Performs a lookup by externalReferenceCode within the company scope first. Returns 204 No Content; throws NoSuchOrderException (404) if not found."
+	)
 	public Response deleteOrderByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -343,7 +363,9 @@ public class Mutation {
 				externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order (JSON Merge Patch semantics). Calls _updateOrder() which preserves existing fields not supplied in the patch. Updates via _commerceOrderEngine for fields, the service for pricing, _commercePaymentEngine.updateOrderPaymentStatus() if payment status changes, the service if terms change, and _updateNestedResources() for items/addresses. Returns full updated Order DTO. Throws NoSuchOrderException (404) if order not found."
+	)
 	public Order patchOrder(
 			@GraphQLName("id") Long id, @GraphQLName("order") Order order)
 		throws Exception {
@@ -354,7 +376,9 @@ public class Mutation {
 			orderResource -> orderResource.patchOrder(id, order));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order by externalReferenceCode. Identical semantics to patchOrder. Throws NoSuchOrderException (404) if order not found."
+	)
 	public Order patchOrderByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("order") Order order)
@@ -367,7 +391,9 @@ public class Mutation {
 				externalReferenceCode, order));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create or upsert an order. If externalReferenceCode is supplied, calls _addOrUpdateOrder() which first checks if an order with that code exists and updates it, otherwise creates a new order. Uses the service with full order details: account, channel, currency, shipping/billing addresses, dates, payment/delivery terms, and nested resources (items, addresses). Returns created/updated Order DTO. Throws exception if required fields (channel, account) cannot be resolved."
+	)
 	public Order createOrder(@GraphQLName("order") Order order)
 		throws Exception {
 
@@ -408,7 +434,9 @@ public class Mutation {
 				contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Full replace of an order by externalReferenceCode (upsert semantics). Calls _addOrUpdateOrder(externalReferenceCode, order). If order exists, all fields are replaced; if not, a new order is created. Identical to postOrder in implementation but with explicit ERC provided. Returns Order DTO."
+	)
 	public Order updateOrderByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("order") Order order)
@@ -421,7 +449,9 @@ public class Mutation {
 				externalReferenceCode, order));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order item by ID, passing the order context with account, group, and order ID. Returns 204 No Content; throws NoSuchOrderItemException (404) if not found."
+	)
 	public Response deleteOrderItem(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -444,7 +474,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order item by externalReferenceCode. Returns 200 OK on successful deletion; throws NoSuchOrderItemException (404) if not found."
+	)
 	public Response deleteOrderItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -457,7 +489,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order item via _updateOrderItem(). Updates externalReferenceCode, options, quantity, and pricing (if user has MANAGE_COMMERCE_ORDER_PRICES permission). Returns updated OrderItem DTO. Throws NoSuchOrderItemException (404) if not found."
+	)
 	public OrderItem patchOrderItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -470,7 +504,9 @@ public class Mutation {
 				id, orderItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order item by externalReferenceCode. Identical semantics to patchOrderItem. Throws NoSuchOrderItemException (404) if not found."
+	)
 	public OrderItem patchOrderItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -484,7 +520,9 @@ public class Mutation {
 					externalReferenceCode, orderItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order item in an order accessed by externalReferenceCode. Delegates to _addOrderItem() which calls OrderItemUtil. Throws NoSuchOrderException (404) if order not found."
+	)
 	public OrderItem createOrderByExternalReferenceCodeOrderItem(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -498,7 +536,9 @@ public class Mutation {
 					externalReferenceCode, orderItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order item in an order accessed by order ID. Delegates to _addOrderItem()."
+	)
 	public OrderItem createOrderIdOrderItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -545,7 +585,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Update an Order Item by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public OrderItem updateOrderItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -570,7 +612,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates an Order Item by external reference code. Backed by the matching commerce service method on the target resource."
+	)
 	public OrderItem updateOrderItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -584,7 +628,9 @@ public class Mutation {
 					externalReferenceCode, orderItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Placeholder that returns 204 No Content (note: actual implementation may be in Base class). Throws NoSuchOrderNoteException (404) if not found."
+	)
 	public Response deleteOrderNote(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -607,7 +653,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order note by externalReferenceCode. Returns 200 OK; throws NoSuchOrderNoteException (404) if not found."
+	)
 	public Response deleteOrderNoteByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -620,7 +668,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order note. Returns 200 OK (note: returns Response, not OrderNote). Throws NoSuchOrderNoteException (404) if not found."
+	)
 	public Response patchOrderNote(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderNote") OrderNote orderNote)
@@ -633,7 +683,9 @@ public class Mutation {
 				id, orderNote));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order note by externalReferenceCode. Returns 200 OK. Throws NoSuchOrderNoteException (404) if not found."
+	)
 	public Response patchOrderNoteByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderNote") OrderNote orderNote)
@@ -647,7 +699,9 @@ public class Mutation {
 					externalReferenceCode, orderNote));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order note for an order accessed by externalReferenceCode. Delegates to _addOrUpdateOrderNote(). Throws NoSuchOrderException (404) if order not found."
+	)
 	public OrderNote createOrderByExternalReferenceCodeOrderNote(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderNote") OrderNote orderNote)
@@ -661,7 +715,9 @@ public class Mutation {
 					externalReferenceCode, orderNote));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order note for an order accessed by order ID. Delegates to _addOrUpdateOrderNote()."
+	)
 	public OrderNote createOrderIdOrderNote(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderNote") OrderNote orderNote)
@@ -687,7 +743,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an OrderRule by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public boolean deleteOrderRule(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -712,7 +770,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order rule by externalReferenceCode using _corEntryService.fetchCOREntryByExternalReferenceCode() followed by deletion. Throws NoSuchCOREntryException (404) if not found."
+	)
 	public boolean deleteOrderRuleByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -727,7 +787,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates an OrderRule by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public OrderRule patchOrderRule(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderRule") OrderRule orderRule)
@@ -740,7 +802,9 @@ public class Mutation {
 				id, orderRule));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order rule by externalReferenceCode. Identical semantics to patchOrderRule. Throws NoSuchCOREntryException (404) if not found."
+	)
 	public OrderRule patchOrderRuleByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderRule") OrderRule orderRule)
@@ -754,7 +818,9 @@ public class Mutation {
 					externalReferenceCode, orderRule));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create a new order rule. Calls _addCOREntry() which uses _corEntryService.addCOREntry() with externalReferenceCode, active, description, dates, name, priority, type, typeSettings. Also calls _updateNestedResources() to add linked accounts/groups/channels/order-types if provided in request body. Returns created OrderRule DTO."
+	)
 	public OrderRule createOrderRule(
 			@GraphQLName("orderRule") OrderRule orderRule)
 		throws Exception {
@@ -799,7 +865,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Full replace of an order rule by externalReferenceCode (upsert semantics). If rule exists, updates all fields via _updateOrderRule() and _updateNestedResources(); if not, creates a new rule _addCOREntry(). Returns OrderRule DTO."
+	)
 	public OrderRule updateOrderRuleByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderRule") OrderRule orderRule)
@@ -813,7 +881,9 @@ public class Mutation {
 					externalReferenceCode, orderRule));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order rule account relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content."
+	)
 	public boolean deleteOrderRuleAccount(
 			@GraphQLName("orderRuleAccountId") Long orderRuleAccountId)
 		throws Exception {
@@ -842,7 +912,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an account to an order rule via externalReferenceCode. Resolves order rule, then calls _corEntryRelService.addCOREntryRel(). Returns created OrderRuleAccount DTO. Throws NoSuchCOREntryException (404) if order rule not found."
+	)
 	public OrderRuleAccount
 			createOrderRuleByExternalReferenceCodeOrderRuleAccount(
 				@GraphQLName("externalReferenceCode") String
@@ -860,7 +932,9 @@ public class Mutation {
 						externalReferenceCode, orderRuleAccount));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an account to an order rule via order rule ID. Delegates to _corEntryRelService.addCOREntryRel()."
+	)
 	public OrderRuleAccount createOrderRuleIdOrderRuleAccount(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderRuleAccount") OrderRuleAccount orderRuleAccount)
@@ -888,7 +962,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an Order Rule Account Group by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public boolean deleteOrderRuleAccountGroup(
 			@GraphQLName("orderRuleAccountGroupId") Long
 				orderRuleAccountGroupId)
@@ -918,7 +994,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an account group to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found."
+	)
 	public OrderRuleAccountGroup
 			createOrderRuleByExternalReferenceCodeOrderRuleAccountGroup(
 				@GraphQLName("externalReferenceCode") String
@@ -936,7 +1014,9 @@ public class Mutation {
 						externalReferenceCode, orderRuleAccountGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an account group to an order rule via order rule ID."
+	)
 	public OrderRuleAccountGroup createOrderRuleIdOrderRuleAccountGroup(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderRuleAccountGroup") OrderRuleAccountGroup
@@ -967,7 +1047,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order rule channel relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content."
+	)
 	public boolean deleteOrderRuleChannel(
 			@GraphQLName("orderRuleChannelId") Long orderRuleChannelId)
 		throws Exception {
@@ -996,7 +1078,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add a channel to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found."
+	)
 	public OrderRuleChannel
 			createOrderRuleByExternalReferenceCodeOrderRuleChannel(
 				@GraphQLName("externalReferenceCode") String
@@ -1014,7 +1098,9 @@ public class Mutation {
 						externalReferenceCode, orderRuleChannel));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add a channel to an order rule via order rule ID."
+	)
 	public OrderRuleChannel createOrderRuleIdOrderRuleChannel(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderRuleChannel") OrderRuleChannel orderRuleChannel)
@@ -1042,7 +1128,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order rule order-type relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content."
+	)
 	public boolean deleteOrderRuleOrderType(
 			@GraphQLName("orderRuleOrderTypeId") Long orderRuleOrderTypeId)
 		throws Exception {
@@ -1071,7 +1159,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an order type to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found."
+	)
 	public OrderRuleOrderType
 			createOrderRuleByExternalReferenceCodeOrderRuleOrderType(
 				@GraphQLName("externalReferenceCode") String
@@ -1089,7 +1179,9 @@ public class Mutation {
 						externalReferenceCode, orderRuleOrderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an order type to an order rule via order rule ID."
+	)
 	public OrderRuleOrderType createOrderRuleIdOrderRuleOrderType(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderRuleOrderType") OrderRuleOrderType
@@ -1119,7 +1211,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order type by ID. Returns 204 No Content."
+	)
 	public boolean deleteOrderType(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1144,7 +1238,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order type by externalReferenceCode. Returns 204 No Content; throws NoSuchOrderTypeException (404) if not found."
+	)
 	public boolean deleteOrderTypeByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1159,7 +1255,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order type via _updateOrderType(). Updates externalReferenceCode, name, description, active, displayDate, expirationDate, displayOrder, neverExpire, and custom fields. Returns updated OrderType DTO. Throws NoSuchOrderTypeException (404) if not found."
+	)
 	public OrderType patchOrderType(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderType") OrderType orderType)
@@ -1172,7 +1270,9 @@ public class Mutation {
 				id, orderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of an order type by externalReferenceCode. Identical semantics to patchOrderType. Throws NoSuchOrderTypeException (404) if not found."
+	)
 	public OrderType patchOrderTypeByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderType") OrderType orderType)
@@ -1186,7 +1286,9 @@ public class Mutation {
 					externalReferenceCode, orderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create a new order type. Calls _addCommerceOrderType() which uses the service with externalReferenceCode, localized name/description, active, dates, displayOrder, neverExpire. Returns created OrderType DTO."
+	)
 	public OrderType createOrderType(
 			@GraphQLName("orderType") OrderType orderType)
 		throws Exception {
@@ -1231,7 +1333,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Full replace of an order type by externalReferenceCode (upsert semantics). If order type exists, updates all fields() and custom fields; if not, creates a new order type. Returns OrderType DTO."
+	)
 	public OrderType updateOrderTypeByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderType") OrderType orderType)
@@ -1245,7 +1349,9 @@ public class Mutation {
 					externalReferenceCode, orderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes an order-type-channel relationship by ID. Returns 204 No Content."
+	)
 	public boolean deleteOrderTypeChannel(
 			@GraphQLName("orderTypeChannelId") Long orderTypeChannelId)
 		throws Exception {
@@ -1274,7 +1380,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order-type-channel link for an order type accessed by externalReferenceCode. Resolves channel by either ID or externalReferenceCode. Returns created OrderTypeChannel DTO. Throws NoSuchOrderTypeException (404) or NoSuchChannelException (404) if either not found."
+	)
 	public OrderTypeChannel
 			createOrderTypeByExternalReferenceCodeOrderTypeChannel(
 				@GraphQLName("externalReferenceCode") String
@@ -1292,7 +1400,9 @@ public class Mutation {
 						externalReferenceCode, orderTypeChannel));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create an order-type-channel link for an order type accessed by order type ID."
+	)
 	public OrderTypeChannel createOrderTypeIdOrderTypeChannel(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderTypeChannel") OrderTypeChannel orderTypeChannel)
@@ -1320,7 +1430,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of shipping address for an order accessed by externalReferenceCode. Returns 204 No Content. Throws NoSuchOrderException (404) if order not found."
+	)
 	public Response patchOrderByExternalReferenceCodeShippingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shippingAddress") ShippingAddress shippingAddress)
@@ -1335,7 +1447,9 @@ public class Mutation {
 						externalReferenceCode, shippingAddress));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of shipping address via nested field endpoint. Returns 204 No Content."
+	)
 	public Response patchOrderIdShippingAddress(
 			@GraphQLName("id") Long id,
 			@GraphQLName("shippingAddress") ShippingAddress shippingAddress)
@@ -1349,7 +1463,9 @@ public class Mutation {
 					id, shippingAddress));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a Term by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public boolean deleteTerm(@GraphQLName("id") Long id) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_termResourceComponentServiceObjects,
@@ -1371,7 +1487,9 @@ public class Mutation {
 			termResource -> termResource.deleteTermBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a commerce term by externalReferenceCode followed by deletion. Throws NoSuchTermEntryException (404) if not found."
+	)
 	public boolean deleteTermByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1385,7 +1503,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates a Term by ID. Backed by the matching commerce service method on the target resource."
+	)
 	public Term patchTerm(
 			@GraphQLName("id") Long id, @GraphQLName("term") Term term)
 		throws Exception {
@@ -1396,7 +1516,9 @@ public class Mutation {
 			termResource -> termResource.patchTerm(id, term));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partial update of a term by externalReferenceCode via _updateTerm(). Updates active, description, displayDate, expirationDate, label, name, neverExpire, priority, typeSettings, and calls _updateNestedResources() to sync linked order types. Returns updated Term DTO. Throws NoSuchTermEntryException (404) if not found."
+	)
 	public Term patchTermByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("term") Term term)
@@ -1409,7 +1531,9 @@ public class Mutation {
 				externalReferenceCode, term));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Create a new commerce term. Calls _addCommerceTermEntry() which uses the service with externalReferenceCode, localized description/label, active, dates, name, priority, type, typeSettings. Also calls _updateNestedResources() to add linked order types if provided. Returns created Term DTO."
+	)
 	public Term createTerm(@GraphQLName("term") Term term) throws Exception {
 		return _applyComponentServiceObjects(
 			_termResourceComponentServiceObjects,
@@ -1448,7 +1572,9 @@ public class Mutation {
 				contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Full replace of a term by externalReferenceCode (upsert semantics). If term exists, updates all fields and calls _updateNestedResources(); if not, calls postTerm(). Returns Term DTO."
+	)
 	public Term updateTermByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("term") Term term)
@@ -1461,7 +1587,9 @@ public class Mutation {
 				externalReferenceCode, term));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a term-order-type relationship by ID. Returns 204 No Content."
+	)
 	public boolean deleteTermOrderType(
 			@GraphQLName("termOrderTypeId") Long termOrderTypeId)
 		throws Exception {
@@ -1489,7 +1617,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Add an order type to a term via externalReferenceCode. Resolves term, then calls the service. Returns created TermOrderType DTO. Throws NoSuchTermEntryException (404) if term not found."
+	)
 	public TermOrderType createTermByExternalReferenceCodeTermOrderType(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("termOrderType") TermOrderType termOrderType)
@@ -1504,7 +1634,7 @@ public class Mutation {
 						externalReferenceCode, termOrderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Add an order type to a term via term ID.")
 	public TermOrderType createTermIdTermOrderType(
 			@GraphQLName("id") Long id,
 			@GraphQLName("termOrderType") TermOrderType termOrderType)
@@ -1916,4 +2046,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1501607245
+// LIFERAY-REST-BUILDER-HASH:701065497

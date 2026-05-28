@@ -74,6 +74,9 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes an order-type-channel relationship by ID. Returns 204 No Content."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -150,6 +153,9 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves order type first by externalReferenceCode, then returns its linked channels. Throws NoSuchOrderTypeException (404) if order type not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -194,6 +200,9 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Nested field (OrderType.orderTypeChannels): paginated list of channels linked to order type by ID."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -248,6 +257,9 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Create an order-type-channel link for an order type accessed by externalReferenceCode. Resolves channel by either ID or externalReferenceCode. Returns created OrderTypeChannel DTO. Throws NoSuchOrderTypeException (404) or NoSuchChannelException (404) if either not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -285,6 +297,9 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Create an order-type-channel link for an order type accessed by order type ID."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1076,4 +1091,4 @@ public abstract class BaseOrderTypeChannelResourceImpl
 		LogFactoryUtil.getLog(BaseOrderTypeChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-943457451
+// LIFERAY-REST-BUILDER-HASH:2049660792

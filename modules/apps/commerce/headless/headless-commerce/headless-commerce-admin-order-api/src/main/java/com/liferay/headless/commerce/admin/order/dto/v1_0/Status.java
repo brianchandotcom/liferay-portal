@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Status")
+@GraphQLName(
+	description = "Status pair returned for workflow- and payment-style integer codes. Carries the numeric code and its human-readable label.",
+	value = "Status"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -46,7 +49,9 @@ public class Status implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Status.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer status code value.", example = "0"
+	)
 	public Integer getCode() {
 		if (_codeSupplier != null) {
 			code = _codeSupplier.get();
@@ -78,14 +83,17 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Integer status code value.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer code;
 
 	@JsonIgnore
 	private Supplier<Integer> _codeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Human-readable label for the status code.",
+		example = "Approved"
+	)
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -119,14 +127,17 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Human-readable label for the status code.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized human-readable label for the status code, resolved against the request locale.",
+		example = "Approved"
+	)
 	public String getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
 			label_i18n = _label_i18nSupplier.get();
@@ -160,7 +171,9 @@ public class Status implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized human-readable label for the status code, resolved against the request locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label_i18n;
 
@@ -339,4 +352,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:904393349
+// LIFERAY-REST-BUILDER-HASH:1330275238

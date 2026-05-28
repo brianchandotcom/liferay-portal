@@ -41,8 +41,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("OrderRule")
+@GraphQLName(
+	description = "A business rule that conditions order behavior on the linked accounts, account groups, channels, and order types. Drives discounting, validation, and other administrator-defined order policy.",
+	value = "OrderRule"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "A business rule that conditions order behavior on the linked accounts, account groups, channels, and order types. Drives discounting, validation, and other administrator-defined order policy.",
 	requiredProperties = {"name", "type"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -57,7 +61,9 @@ public class OrderRule implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OrderRule.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -93,14 +99,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the rule is evaluated against orders. When false, the rule is disabled.",
+		example = "true"
+	)
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -134,14 +145,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the rule is evaluated against orders. When false, the rule is disabled."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "admin")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the user who created the rule. Read-only.",
+		example = "Test Test"
+	)
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -175,14 +191,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the user who created the rule. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
 	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Creation date for the rule. Read-only.",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -216,14 +237,17 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creation date for the rule. Read-only.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Laptops, Beverages")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-text description of the rule purpose and logic.",
+		example = "Applies a 10% discount on orders over $500."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -257,14 +281,18 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text description of the rule purpose and logic."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the rule becomes active.", example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -298,14 +326,17 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Date the rule becomes active.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the rule expires and stops applying.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -339,14 +370,17 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Date the rule expires and stops applying.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per rule within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -380,7 +414,9 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per rule within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -388,7 +424,10 @@ public class OrderRule implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order rule (FK identifier). Read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -420,14 +459,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the order rule (FK identifier). Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Laptops, Beverages")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the rule. Filterable via the OData query parameter.",
+		example = "Volume Discount"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -459,7 +503,9 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the rule. Filterable via the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -467,7 +513,10 @@ public class OrderRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the rule ignores expirationDate and never expires.",
+		example = "false"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -501,14 +550,18 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the rule ignores expirationDate and never expires."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "List of accounts the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@Valid
 	public OrderRuleAccount[] getOrderRuleAccount() {
 		if (_orderRuleAccountSupplier != null) {
@@ -544,14 +597,18 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "List of accounts the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleAccount[] orderRuleAccount;
 
 	@JsonIgnore
 	private Supplier<OrderRuleAccount[]> _orderRuleAccountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "List of account groups the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@Valid
 	public OrderRuleAccountGroup[] getOrderRuleAccountGroup() {
 		if (_orderRuleAccountGroupSupplier != null) {
@@ -589,14 +646,18 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "List of account groups the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleAccountGroup[] orderRuleAccountGroup;
 
 	@JsonIgnore
 	private Supplier<OrderRuleAccountGroup[]> _orderRuleAccountGroupSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "List of channels the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@Valid
 	public OrderRuleChannel[] getOrderRuleChannel() {
 		if (_orderRuleChannelSupplier != null) {
@@ -632,14 +693,18 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "List of channels the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleChannel[] orderRuleChannel;
 
 	@JsonIgnore
 	private Supplier<OrderRuleChannel[]> _orderRuleChannelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "List of order types the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@Valid
 	public OrderRuleOrderType[] getOrderRuleOrderType() {
 		if (_orderRuleOrderTypeSupplier != null) {
@@ -675,14 +740,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "List of order types the rule applies to. Upserts on PATCH: missing entries are deleted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleOrderType[] orderRuleOrderType;
 
 	@JsonIgnore
 	private Supplier<OrderRuleOrderType[]> _orderRuleOrderTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Numeric priority for rule evaluation order. Higher values are evaluated first.",
+		example = "1"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -716,14 +786,19 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Numeric priority for rule evaluation order. Higher values are evaluated first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "order-limit")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Rule type identifier (for example, minimum_order_value, shipping_restriction). Free-form string.",
+		example = "minimum_order_value"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -755,7 +830,9 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Rule type identifier (for example, minimum_order_value, shipping_restriction). Free-form string."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String type;
@@ -763,7 +840,10 @@ public class OrderRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "22.50")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form JSON or text configuration specific to the rule type.",
+		example = "minValue=500"
+	)
 	public String getTypeSettings() {
 		if (_typeSettingsSupplier != null) {
 			typeSettings = _typeSettingsSupplier.get();
@@ -797,7 +877,9 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form JSON or text configuration specific to the rule type."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
@@ -1282,4 +1364,4 @@ public class OrderRule implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-220968798
+// LIFERAY-REST-BUILDER-HASH:2076354067

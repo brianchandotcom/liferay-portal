@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TermOrderType")
+@GraphQLName(
+	description = "Binding between a term and an order type. Identifies an order type the term applies to.",
+	value = "TermOrderType"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Binding between a term and an order type. Identifies an order type the term applies to.",
 	requiredProperties = {"orderTypeId", "termId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -53,7 +57,9 @@ public class TermOrderType implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TermOrderType.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions (delete). Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -89,7 +95,7 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Map of HATEOAS actions (delete). Read-only.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -138,7 +144,10 @@ public class TermOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -176,7 +185,9 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
@@ -184,7 +195,10 @@ public class TermOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order type (FK identifier).",
+		example = "30130"
+	)
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -218,7 +232,7 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the order type (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long orderTypeId;
@@ -226,7 +240,10 @@ public class TermOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent term.",
+		example = "AB-34098-789-N"
+	)
 	public String getTermExternalReferenceCode() {
 		if (_termExternalReferenceCodeSupplier != null) {
 			termExternalReferenceCode =
@@ -262,7 +279,7 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "External reference code of the parent term.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
@@ -270,7 +287,10 @@ public class TermOrderType implements Serializable {
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent term (FK identifier).",
+		example = "30130"
+	)
 	public Long getTermId() {
 		if (_termIdSupplier != null) {
 			termId = _termIdSupplier.get();
@@ -304,7 +324,7 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the parent term (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long termId;
@@ -313,7 +333,10 @@ public class TermOrderType implements Serializable {
 	private Supplier<Long> _termIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the term-order-type link (FK identifier). Read-only.",
+		example = "30130"
+	)
 	public Long getTermOrderTypeId() {
 		if (_termOrderTypeIdSupplier != null) {
 			termOrderTypeId = _termOrderTypeIdSupplier.get();
@@ -347,7 +370,9 @@ public class TermOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the term-order-type link (FK identifier). Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long termOrderTypeId;
 
@@ -575,4 +600,4 @@ public class TermOrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1862713458
+// LIFERAY-REST-BUILDER-HASH:-810757628

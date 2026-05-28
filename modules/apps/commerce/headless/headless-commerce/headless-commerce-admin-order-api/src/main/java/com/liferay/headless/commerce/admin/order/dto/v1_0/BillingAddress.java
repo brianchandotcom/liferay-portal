@@ -36,8 +36,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("BillingAddress")
+@GraphQLName(
+	description = "Postal address used for billing the order. Stored as an address record on the order and accessed by order ID or external reference code.",
+	value = "BillingAddress"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Postal address used for billing the order. Stored as an address record on the order and accessed by order ID or external reference code.",
 	requiredProperties = {"city", "countryISOCode", "name", "street1"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -52,7 +56,10 @@ public class BillingAddress implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(BillingAddress.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Diamond Bar")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "City name of the address. Required on create.",
+		example = "Diamond Bar"
+	)
 	public String getCity() {
 		if (_citySupplier != null) {
 			city = _citySupplier.get();
@@ -84,7 +91,7 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "City name of the address. Required on create.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String city;
@@ -92,7 +99,10 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "US")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 3166-1 alpha-2 country code of the address. Required on create.",
+		example = "US"
+	)
 	public String getCountryISOCode() {
 		if (_countryISOCodeSupplier != null) {
 			countryISOCode = _countryISOCodeSupplier.get();
@@ -126,7 +136,9 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 3166-1 alpha-2 country code of the address. Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String countryISOCode;
@@ -135,7 +147,8 @@ public class BillingAddress implements Serializable {
 	private Supplier<String> _countryISOCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "right stairs, first room on the left"
+		description = "Free-text delivery notes or directions associated with the address.",
+		example = "Right stairs, first room on the left."
 	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
@@ -170,14 +183,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text delivery notes or directions associated with the address."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per address within the company. Read-only after create.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -211,7 +229,9 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per address within the company. Read-only after create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
@@ -219,7 +239,10 @@ public class BillingAddress implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the address (FK identifier).",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -251,14 +274,17 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the address (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.9976884")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Decimal latitude of the address for geocoding.",
+		example = "33.9976884"
+	)
 	public Double getLatitude() {
 		if (_latitudeSupplier != null) {
 			latitude = _latitudeSupplier.get();
@@ -292,14 +318,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Decimal latitude of the address for geocoding."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
 	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "-117.8144595")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Decimal longitude of the address for geocoding.",
+		example = "-117.8144595"
+	)
 	public Double getLongitude() {
 		if (_longitudeSupplier != null) {
 			longitude = _longitudeSupplier.get();
@@ -333,7 +364,9 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Decimal longitude of the address for geocoding."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 
@@ -341,6 +374,7 @@ public class BillingAddress implements Serializable {
 	private Supplier<Double> _longitudeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Address label or recipient name (for example, head office, warehouse). Required on create.",
 		example = "Alessio Antonio Rendina"
 	)
 	public String getName() {
@@ -374,7 +408,9 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Address label or recipient name (for example, head office, warehouse). Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -382,7 +418,10 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "(123) 456 7890")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Contact phone number associated with the address.",
+		example = "(123) 456 7890"
+	)
 	public String getPhoneNumber() {
 		if (_phoneNumberSupplier != null) {
 			phoneNumber = _phoneNumberSupplier.get();
@@ -416,14 +455,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Contact phone number associated with the address."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
 	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "CA")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 3166-2 sub-region (province or state) code within the country.",
+		example = "CA"
+	)
 	public String getRegionISOCode() {
 		if (_regionISOCodeSupplier != null) {
 			regionISOCode = _regionISOCodeSupplier.get();
@@ -457,14 +501,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 3166-2 sub-region (province or state) code within the country."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String regionISOCode;
 
 	@JsonIgnore
 	private Supplier<String> _regionISOCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1400 Montefino Ave")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary street line of the address. Required on create.",
+		example = "1400 Montefino Ave"
+	)
 	public String getStreet1() {
 		if (_street1Supplier != null) {
 			street1 = _street1Supplier.get();
@@ -498,7 +547,9 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary street line of the address. Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String street1;
@@ -506,7 +557,10 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1st floor")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Secondary street line (apartment, suite, floor).",
+		example = "1st floor"
+	)
 	public String getStreet2() {
 		if (_street2Supplier != null) {
 			street2 = _street2Supplier.get();
@@ -540,14 +594,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Secondary street line (apartment, suite, floor)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street2;
 
 	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "suite 200")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Tertiary street line for additional address detail.",
+		example = "Suite 200"
+	)
 	public String getStreet3() {
 		if (_street3Supplier != null) {
 			street3 = _street3Supplier.get();
@@ -581,14 +640,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Tertiary street line for additional address detail."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
 	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "box")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Address subtype classifier (for example, residential, business). Free-form string.",
+		example = "business"
+	)
 	public String getSubtype() {
 		if (_subtypeSupplier != null) {
 			subtype = _subtypeSupplier.get();
@@ -622,14 +686,19 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Address subtype classifier (for example, residential, business). Free-form string."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtype;
 
 	@JsonIgnore
 	private Supplier<String> _subtypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "353246836565")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "VAT or tax registration number associated with the address.",
+		example = "353246836565"
+	)
 	public String getVatNumber() {
 		if (_vatNumberSupplier != null) {
 			vatNumber = _vatNumberSupplier.get();
@@ -663,14 +732,18 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "VAT or tax registration number associated with the address."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String vatNumber;
 
 	@JsonIgnore
 	private Supplier<String> _vatNumberSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "91765")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ZIP or postal code of the address.", example = "91765"
+	)
 	public String getZip() {
 		if (_zipSupplier != null) {
 			zip = _zipSupplier.get();
@@ -702,7 +775,7 @@ public class BillingAddress implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "ZIP or postal code of the address.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String zip;
 
@@ -1081,4 +1154,4 @@ public class BillingAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-591780856
+// LIFERAY-REST-BUILDER-HASH:531353494

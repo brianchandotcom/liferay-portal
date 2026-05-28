@@ -57,14 +57,14 @@
 {{- end -}}
 {{- $rendered := $raw | replace "${DS_PROMETHEUS}" $datasourceUid | replace "${SEARCH_ENGINE}" $searchEngine | replace "${region}" $region -}}
 {{- if hasKey $dashboardHeaders $key -}}
-{{- $rendered = $rendered | replace "\"${HEADER_HTML}\"" (include "observability.dashboardHeaderHTML" (index $dashboardHeaders $key) | toJson) -}}
+{{- $rendered = $rendered | replace "\"${HEADER_HTML}\"" (tpl ($.Files.Get "dashboards/html/dashboard-header.html") (index $dashboardHeaders $key) | toJson) -}}
 {{- end -}}
 {{- if and (eq $key "backups") (eq $.Values.cloudProvider "aws") -}}
-{{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (include "observability.awsBackupHTML" (dict "region" $.Values.aws.region) | toJson) -}}
+{{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/aws-backup.html") (dict "region" $.Values.aws.region) | toJson) -}}
 {{- end -}}
 {{- if eq $key "central-hub" -}}
 {{- $centralHubCtx := dict "gitHref" $gitHref "gitDescription" $gitDescription "gitTileStyle" $gitTileStyle "argocdHref" $argocdHref "argocdDescription" $argocdDescription "argocdTileStyle" $argocdTileStyle "argoWfHref" $argoWfHref "argoWfDescription" $argoWfDescription "argoWfTileStyle" $argoWfTileStyle -}}
-{{- $rendered = $rendered | replace "\"${CENTRAL_HUB_HTML}\"" (include "observability.centralHubHTML" $centralHubCtx | toJson) -}}
+{{- $rendered = $rendered | replace "\"${CENTRAL_HUB_HTML}\"" (tpl ($.Files.Get "dashboards/html/central-hub.html") $centralHubCtx | toJson) -}}
 {{- end }}
 ---
 apiVersion: v1

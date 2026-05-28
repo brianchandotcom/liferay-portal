@@ -1,0 +1,36 @@
+<div style="padding: 32px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; font-family: 'Inter', system-ui, sans-serif; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); box-sizing: border-box; width: 100%;">
+	<div style="margin-bottom: 24px; border-left: 6px solid #ff9900; padding-left: 16px;">
+		<h1 style="margin: 0; color: #111827; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">AWS Backup</h1>
+
+		<p style="margin: 4px 0 0 0; color: #4b5563; font-size: 14px; line-height: 1.5;">On AWS, backups are managed by the native AWS Backup service. Recovery points, backup jobs, and restore history are tracked in the AWS Backup console rather than in Grafana.</p>
+	</div>
+
+	<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%;">
+		<a href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/dashboard" style="background-color: #ffffff; border: 2px solid #ff9900; border-radius: 10px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; box-sizing: border-box;" target="_blank">
+			<div style="margin-bottom: 8px; height: 28px; display: flex; align-items: center;">
+				<span style="font-size: 24px;">🗄️</span>
+			</div>
+
+			<div style="color: #111827; font-weight: 800; font-size: 16px; margin-bottom: 2px;">AWS Backup Dashboard</div>
+			<div style="color: #6b7280; font-size: 12px; line-height: 1.3;">Jobs, recovery points & status ({{ .region }}).</div>
+		</a>
+
+		<a href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/backupvaults" style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; box-sizing: border-box;" target="_blank">
+			<div style="margin-bottom: 8px; height: 28px; display: flex; align-items: center;">
+				<span style="font-size: 24px;">🔒</span>
+			</div>
+
+			<div style="color: #111827; font-weight: 800; font-size: 16px; margin-bottom: 2px;">Backup Vaults</div>
+			<div style="color: #6b7280; font-size: 12px; line-height: 1.3;">Stored recovery points by vault.</div>
+		</a>
+
+		<a href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/jobs" style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; box-sizing: border-box;" target="_blank">
+			<div style="margin-bottom: 8px; height: 28px; display: flex; align-items: center;">
+				<span style="font-size: 24px;">📋</span>
+			</div>
+
+			<div style="color: #111827; font-weight: 800; font-size: 16px; margin-bottom: 2px;">Backup &amp; Restore Jobs</div>
+			<div style="color: #6b7280; font-size: 12px; line-height: 1.3;">Recent job history & failures.</div>
+		</a>
+	</div>
+</div>

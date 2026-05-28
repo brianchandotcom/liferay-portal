@@ -69,7 +69,7 @@ public class FriendlyURLEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class FriendlyURLEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
+		sb.append(", parentClassPK=");
+		sb.append(parentClassPK);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append("}");
@@ -138,6 +140,7 @@ public class FriendlyURLEntryCacheModel
 		}
 
 		friendlyURLEntryImpl.setClassNameId(classNameId);
+		friendlyURLEntryImpl.setParentClassPK(parentClassPK);
 		friendlyURLEntryImpl.setClassPK(classPK);
 
 		friendlyURLEntryImpl.resetOriginalValues();
@@ -162,6 +165,8 @@ public class FriendlyURLEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
+
+		parentClassPK = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 	}
@@ -196,6 +201,8 @@ public class FriendlyURLEntryCacheModel
 
 		objectOutput.writeLong(classNameId);
 
+		objectOutput.writeLong(parentClassPK);
+
 		objectOutput.writeLong(classPK);
 	}
 
@@ -209,7 +216,8 @@ public class FriendlyURLEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;
+	public long parentClassPK;
 	public long classPK;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-398912548
+// LIFERAY-SERVICE-BUILDER-HASH:-305365985

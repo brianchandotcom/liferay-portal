@@ -9,6 +9,7 @@ create table FriendlyURLEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
+	parentClassPK LONG,
 	classPK LONG,
 	primary key (friendlyURLEntryId, ctCollectionId)
 );
@@ -22,6 +23,7 @@ create table FriendlyURLEntryLocalization (
 	languageId VARCHAR(75) null,
 	groupId LONG,
 	classNameId LONG,
+	parentClassPK LONG,
 	classPK LONG,
 	urlTitle VARCHAR(255) null,
 	primary key (friendlyURLEntryLocalizationId, ctCollectionId)

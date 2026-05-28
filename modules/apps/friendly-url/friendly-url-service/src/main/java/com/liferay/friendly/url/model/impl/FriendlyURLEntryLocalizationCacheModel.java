@@ -71,7 +71,7 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -89,6 +89,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 		sb.append(groupId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
+		sb.append(", parentClassPK=");
+		sb.append(parentClassPK);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", urlTitle=");
@@ -120,6 +122,7 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 		friendlyURLEntryLocalizationImpl.setGroupId(groupId);
 		friendlyURLEntryLocalizationImpl.setClassNameId(classNameId);
+		friendlyURLEntryLocalizationImpl.setParentClassPK(parentClassPK);
 		friendlyURLEntryLocalizationImpl.setClassPK(classPK);
 
 		if (urlTitle == null) {
@@ -151,6 +154,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 		classNameId = objectInput.readLong();
 
+		parentClassPK = objectInput.readLong();
+
 		classPK = objectInput.readLong();
 		urlTitle = objectInput.readUTF();
 	}
@@ -178,6 +183,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 		objectOutput.writeLong(classNameId);
 
+		objectOutput.writeLong(parentClassPK);
+
 		objectOutput.writeLong(classPK);
 
 		if (urlTitle == null) {
@@ -196,8 +203,9 @@ public class FriendlyURLEntryLocalizationCacheModel
 	public String languageId;
 	public long groupId;
 	public long classNameId;
+	public long parentClassPK;
 	public long classPK;
 	public String urlTitle;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-625439588
+// LIFERAY-SERVICE-BUILDER-HASH:-1394901114

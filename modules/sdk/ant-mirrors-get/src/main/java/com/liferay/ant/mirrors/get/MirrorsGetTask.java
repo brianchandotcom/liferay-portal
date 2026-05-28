@@ -471,53 +471,64 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (!mirrorsCacheFile.exists()) {
-			List<URL> urls = new ArrayList<>();
-
 			if (_tryLocalNetwork) {
-				String mirrorsHostname = _getMirrorsHostname();
-				URL nexusTomcatURL = _getNexusTomcatURL();
+				File mirrorsMountFile = _getMirrorsMountFile();
 
-				if (nexusTomcatURL != null) {
-					urls.add(nexusTomcatURL);
-				}
-				else if (!mirrorsHostname.isEmpty()) {
-					urls.add(_getMirrorsURL());
-				}
-			}
-
-			urls.add(_getLocalURL());
-
-			urls.removeAll(Collections.singleton(null));
-
-			for (URL url : urls) {
-				try {
-					_downloadFile(url, mirrorsCacheTempFile, _retries);
-				}
-				catch (IOException ioException) {
-					if (_verbose) {
-						System.out.println("Unable to connect to " + url + ".");
-					}
-				}
-
-				if (mirrorsCacheTempFile.exists()) {
-					break;
+				if (mirrorsMountFile.isFile()) {
+					_copyFile(mirrorsMountFile, mirrorsCacheTempFile);
 				}
 			}
 
 			if (!mirrorsCacheTempFile.exists()) {
-				_downloadGCPFile(mirrorsCacheTempFile);
+				List<URL> urls = new ArrayList<>();
 
-				if (!mirrorsCacheTempFile.exists()) {
-					URL remoteURL = _getRemoteURL();
+				if (_tryLocalNetwork) {
+					String mirrorsHostname = _getMirrorsHostname();
+					URL nexusTomcatURL = _getNexusTomcatURL();
 
+					if (nexusTomcatURL != null) {
+						urls.add(nexusTomcatURL);
+					}
+					else if (!mirrorsHostname.isEmpty()) {
+						urls.add(_getMirrorsURL());
+					}
+				}
+
+				urls.add(_getLocalURL());
+
+				urls.removeAll(Collections.singleton(null));
+
+				for (URL url : urls) {
 					try {
-						_downloadFile(
-							remoteURL, mirrorsCacheTempFile, _retries);
+						_downloadFile(url, mirrorsCacheTempFile, _retries);
 					}
 					catch (IOException ioException) {
-						_deleteFile(mirrorsCacheTempFile);
+						if (_verbose) {
+							System.out.println(
+								"Unable to connect to " + url + ".");
+						}
+					}
 
-						throw ioException;
+					if (mirrorsCacheTempFile.exists()) {
+						break;
+					}
+				}
+
+				if (!mirrorsCacheTempFile.exists()) {
+					_downloadGCPFile(mirrorsCacheTempFile);
+
+					if (!mirrorsCacheTempFile.exists()) {
+						URL remoteURL = _getRemoteURL();
+
+						try {
+							_downloadFile(
+								remoteURL, mirrorsCacheTempFile, _retries);
+						}
+						catch (IOException ioException) {
+							_deleteFile(mirrorsCacheTempFile);
+
+							throw ioException;
+						}
 					}
 				}
 			}
@@ -689,6 +700,18 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return _mirrorsHostname;
+	}
+
+	private File _getMirrorsMountFile() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("/mnt/shared/mirrors");
+		sb.append(File.separator);
+		sb.append(_hostName);
+		sb.append(File.separator);
+		sb.append(_getPlatformIndependentPath(_getPath()));
+
+		return new File(sb.toString(), _fileName);
 	}
 
 	private URL _getMirrorsURL() {

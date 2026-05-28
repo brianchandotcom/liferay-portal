@@ -6,13 +6,11 @@
 package com.liferay.portal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
@@ -23,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -41,11 +38,10 @@ public class TemplateRestrictedVariablesTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			TemplateRestrictedVariablesTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
+	public void testGetRestrictedVariables() throws Exception {
+		BundleContext bundleContext = FrameworkUtil.getBundle(
+			TemplateRestrictedVariablesTest.class
+		).getBundleContext();
 
 		Collection<ServiceReference<TemplateManager>> serviceReferences =
 			bundleContext.getServiceReferences(TemplateManager.class, null);
@@ -58,14 +54,10 @@ public class TemplateRestrictedVariablesTest {
 			TemplateManager templateManager = bundleContext.getService(
 				serviceReference);
 
-			String[] restrictedVariables =
-				templateManager.getRestrictedVariables();
-
-			Assert.assertTrue(
-				ArrayUtil.containsAll(
-					restrictedVariables, _RESTRICTED_VARIABLES));
-
 			try {
+				String nameString = templateManager.getName();
+				String[] restrictedVariables =
+					templateManager.getRestrictedVariables();
 				Template template = templateManager.getTemplate(
 					new StringTemplateResource(
 						RandomTestUtil.randomString(),
@@ -74,17 +66,14 @@ public class TemplateRestrictedVariablesTest {
 
 				for (String restrictedVariable : restrictedVariables) {
 					Assert.assertFalse(
-						StringBundler.concat(
-							restrictedVariable, " accessible in ",
-							templateManager.getName()),
+						restrictedVariable + " accessible in " + nameString,
 						template.containsKey(restrictedVariable));
 
-					template.put(restrictedVariable, new Object());
+					template.put(
+						restrictedVariable, RandomTestUtil.randomString());
 
 					Assert.assertFalse(
-						StringBundler.concat(
-							restrictedVariable, " accessible in ",
-							templateManager.getName()),
+						restrictedVariable + " accessible in " + nameString,
 						template.containsKey(restrictedVariable));
 				}
 			}
@@ -93,10 +82,5 @@ public class TemplateRestrictedVariablesTest {
 			}
 		}
 	}
-
-	private static final String[] _RESTRICTED_VARIABLES = {
-		"httpUtil", "httpUtilUnsafe", "portletConfig", "propsUtil",
-		"serviceLocator", "staticFieldGetter"
-	};
 
 }

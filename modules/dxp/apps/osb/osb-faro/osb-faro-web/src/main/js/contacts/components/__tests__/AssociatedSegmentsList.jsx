@@ -35,9 +35,21 @@ const WrappedComponent = () => (
 );
 
 describe('AssociatedSegmentsList', () => {
-	it('should render', () => {
+	it('should render card header with segment total', () => {
 		const {container} = render(<WrappedComponent {...defaultProps} />);
 
-		expect(container).toMatchSnapshot();
+		expect(container.querySelector('.card-title')).toHaveTextContent(
+			'Associated Segments'
+		);
+		expect(container.querySelector('.secondary-info b')).toHaveTextContent(
+			'2'
+		);
+	});
+
+	it('should render loading state without ghost table', () => {
+		const {container} = render(<WrappedComponent {...defaultProps} />);
+
+		expect(container.querySelector('.loading-root')).toBeTruthy();
+		expect(container.querySelector('table')).toBeFalsy();
 	});
 });

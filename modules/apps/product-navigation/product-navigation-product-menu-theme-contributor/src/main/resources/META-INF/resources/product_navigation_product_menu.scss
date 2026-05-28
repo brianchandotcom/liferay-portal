@@ -52,10 +52,10 @@ html#{$cadmin-selector} {
 
 		.product-menu {
 			background-color: $product-menu-body-bg;
-			border-right: 0.05rem solid $secondary-l0;
+			border-right: 0.05rem solid $cadmin-secondary-l0;
 
 			@media (max-resolution: 1dppx) {
-				border-right-color: $secondary-l2;
+				border-right-color: $cadmin-secondary-l2;
 			}
 
 			a {
@@ -79,11 +79,11 @@ html#{$cadmin-selector} {
 
 				a:hover,
 				&:hover {
-					background-color: $light;
+					background-color: $cadmin-light;
 					color: $product-menu-nav-link-hover-color;
 
 					&:after {
-						background-color: $secondary;
+						background-color: $cadmin-secondary;
 						width: 0.2rem;
 					}
 				}
@@ -105,7 +105,7 @@ html#{$cadmin-selector} {
 
 			.nav-item {
 				&.active .nav-link:after {
-					background-color: $primary;
+					background-color: $cadmin-primary;
 					width: 0.375rem;
 				}
 			}
@@ -157,7 +157,7 @@ html#{$cadmin-selector} {
 					&,
 					&:focus,
 					&:hover {
-						background-color: $light;
+						background-color: $cadmin-light;
 						color: $product-menu-nav-link-active-color;
 					}
 				}
@@ -247,7 +247,7 @@ html#{$cadmin-selector} {
 				@include overflow-wrap(normal);
 
 				&:after {
-					background-color: $secondary;
+					background-color: $cadmin-secondary;
 				}
 
 				&.collapsed {
@@ -314,7 +314,7 @@ html#{$cadmin-selector} {
 					padding: 0;
 
 					a:hover {
-						background-color: $light;
+						background-color: $cadmin-light;
 						color: $product-menu-list-group-color;
 					}
 				}

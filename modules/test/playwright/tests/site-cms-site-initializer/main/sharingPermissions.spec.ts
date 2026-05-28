@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -94,23 +93,31 @@ test(
 			await expect(assetRow).toBeVisible();
 
 			const actionsButton = assetRow.getByRole('button', {
-				name: `${objectEntryTitle} Actions`,
+				name: 'Actions',
 			});
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {
-					exact: true,
-					name: 'Share',
-				}),
-				trigger: actionsButton,
+			const shareMenuItem = page.getByRole('menuitem', {
+				exact: true,
+				name: 'Share',
 			});
-		});
 
-		await test.step('Verify the share modal is open', async () => {
-			await expect(
-				page.getByText(`Share "${objectEntryTitle}"`)
-			).toBeVisible();
+			const shareModalTitle = page.getByText(
+				`Share "${objectEntryTitle}"`
+			);
+
+			await expect(async () => {
+				if (!(await shareMenuItem.isVisible().catch(() => false))) {
+					await actionsButton.click({timeout: 1000});
+
+					await expect(shareMenuItem).toBeVisible({
+						timeout: 2000,
+					});
+				}
+
+				await shareMenuItem.click({timeout: 1000});
+
+				await expect(shareModalTitle).toBeVisible({timeout: 5000});
+			}).toPass();
 		});
 
 		await test.step('Verify Allow Resharing and Remove Access are not available', async () => {

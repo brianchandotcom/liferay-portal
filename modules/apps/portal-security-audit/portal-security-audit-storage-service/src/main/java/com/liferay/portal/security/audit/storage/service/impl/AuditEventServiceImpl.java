@@ -45,7 +45,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 	public List<AuditEvent> getAuditEvents(long companyId, int start, int end)
 		throws PortalException {
 
-		_checkPermission(companyId, null);
+		_checkPermission(null, companyId);
 
 		return auditEventLocalService.getAuditEvents(companyId, start, end);
 	}
@@ -56,7 +56,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException {
 
-		_checkPermission(companyId, null);
+		_checkPermission(null, companyId);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, start, end, orderByComparator);
@@ -72,7 +72,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			boolean andSearch, int start, int end)
 		throws PortalException {
 
-		_checkPermission(companyId, accountEntryIds);
+		_checkPermission(accountEntryIds, companyId);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
@@ -92,7 +92,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException {
 
-		_checkPermission(companyId, accountEntryIds);
+		_checkPermission(accountEntryIds, companyId);
 
 		return auditEventLocalService.getAuditEvents(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
@@ -103,7 +103,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 	@Override
 	public int getAuditEventsCount(long companyId) throws PortalException {
-		_checkPermission(companyId, null);
+		_checkPermission(null, companyId);
 
 		return auditEventLocalService.getAuditEventsCount(companyId);
 	}
@@ -118,7 +118,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			boolean andSearch)
 		throws PortalException {
 
-		_checkPermission(companyId, accountEntryIds);
+		_checkPermission(accountEntryIds, companyId);
 
 		return auditEventLocalService.getAuditEventsCount(
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
@@ -127,7 +127,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			andSearch);
 	}
 
-	private void _checkPermission(long companyId, long[] accountEntryIds)
+	private void _checkPermission(long[] accountEntryIds, long companyId)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();

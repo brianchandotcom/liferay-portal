@@ -72,10 +72,8 @@ public class AuditEventServiceTest {
 
 	@After
 	public void tearDown() {
-		if (!_auditEvents.isEmpty()) {
-			for (AuditEvent auditEvent : _auditEvents) {
-				_auditEventLocalService.deleteAuditEvent(auditEvent);
-			}
+		for (AuditEvent auditEvent : _auditEvents) {
+			_auditEventLocalService.deleteAuditEvent(auditEvent);
 		}
 	}
 
@@ -89,17 +87,13 @@ public class AuditEventServiceTest {
 					0L, RandomTestUtil.randomString(),
 					RandomTestUtil.randomLong(), contextName,
 					RandomTestUtil.randomString(), new ArrayList<>())));
-
-		User accountAdminUser = UserTestUtil.addUser();
-
-		_addUserToAccount(
-			_roleLocalService.getRole(
-				TestPropsValues.getCompanyId(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
-			accountAdminUser);
-
-		UserTestUtil.setUser(accountAdminUser);
-
+		_auditEvents.add(
+			_auditEventLocalService.addAuditEvent(
+				AuditMessageBuilder.buildAuditMessage(
+					_accountEntry.getAccountEntryId(),
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					contextName, RandomTestUtil.randomString(),
+					new ArrayList<>())));
 		_auditEvents.add(
 			_auditEventLocalService.addAuditEvent(
 				AuditMessageBuilder.buildAuditMessage(
@@ -118,21 +112,11 @@ public class AuditEventServiceTest {
 
 		UserTestUtil.setUser(accountMemberUser);
 
-		_auditEvents.add(
-			_auditEventLocalService.addAuditEvent(
-				AuditMessageBuilder.buildAuditMessage(
-					_accountEntry.getAccountEntryId(),
-					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-					contextName, RandomTestUtil.randomString(),
-					new ArrayList<>())));
-
-		long[] accountEntryIds = {_accountEntry.getAccountEntryId()};
-
 		try {
 			_auditEventService.getAuditEvents(
 				TestPropsValues.getCompanyId(), 0, 0, null, null, null,
-				accountEntryIds, null, null, null, null, contextName, null,
-				null, 0, null, true, 1, 10,
+				new long[] {_accountEntry.getAccountEntryId()}, null, null,
+				null, null, contextName, null, null, 0, null, true, 1, 10,
 				new AuditEventCreateDateComparator());
 
 			Assert.fail();
@@ -141,13 +125,21 @@ public class AuditEventServiceTest {
 			Assert.assertNotNull(principalException);
 		}
 
+		User accountAdminUser = UserTestUtil.addUser();
+
+		_addUserToAccount(
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(),
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
+			accountAdminUser);
+
 		UserTestUtil.setUser(accountAdminUser);
 
 		List<AuditEvent> auditEvents = _auditEventService.getAuditEvents(
 			TestPropsValues.getCompanyId(), 0, 0, null, null, null,
-			accountEntryIds, null, null, null, null, contextName, null, null, 0,
-			null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new AuditEventCreateDateComparator());
+			new long[] {_accountEntry.getAccountEntryId()}, null, null, null,
+			null, contextName, null, null, 0, null, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new AuditEventCreateDateComparator());
 
 		Assert.assertEquals(auditEvents.toString(), 2, auditEvents.size());
 
@@ -167,9 +159,9 @@ public class AuditEventServiceTest {
 
 		auditEvents = _auditEventService.getAuditEvents(
 			TestPropsValues.getCompanyId(), 0, 0, null, null, null,
-			accountEntryIds, null, null, null, null, contextName, null, null, 0,
-			null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new AuditEventCreateDateComparator());
+			new long[] {_accountEntry.getAccountEntryId()}, null, null, null,
+			null, contextName, null, null, 0, null, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new AuditEventCreateDateComparator());
 
 		Assert.assertEquals(auditEvents.toString(), 2, auditEvents.size());
 

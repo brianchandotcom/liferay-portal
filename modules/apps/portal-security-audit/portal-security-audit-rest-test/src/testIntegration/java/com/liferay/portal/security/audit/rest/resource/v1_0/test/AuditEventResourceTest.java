@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.rest.client.dto.v1_0.AuditEvent;
@@ -56,13 +55,10 @@ public class AuditEventResourceTest extends BaseAuditEventResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		if (!_serviceBuilderAuditEvents.isEmpty()) {
-			for (com.liferay.portal.security.audit.storage.model.AuditEvent
-					serviceBuilderAuditEvent : _serviceBuilderAuditEvents) {
+		for (com.liferay.portal.security.audit.storage.model.AuditEvent
+				serviceBuilderAuditEvent : _serviceBuilderAuditEvents) {
 
-				_auditEventLocalService.deleteAuditEvent(
-					serviceBuilderAuditEvent);
-			}
+			_auditEventLocalService.deleteAuditEvent(serviceBuilderAuditEvent);
 		}
 	}
 
@@ -175,15 +171,14 @@ public class AuditEventResourceTest extends BaseAuditEventResourceTestCase {
 		AuditEvent auditEvent = super.randomAuditEvent();
 
 		auditEvent.setAccountId(0L);
-		auditEvent.setContextName(() -> null);
+		auditEvent.setContextName((String)null);
 
 		return auditEvent;
 	}
 
 	@Override
 	protected AuditEvent testGetAuditEventsPage_addAuditEvent(
-			AuditEvent auditEvent)
-		throws Exception {
+		AuditEvent auditEvent) {
 
 		com.liferay.portal.security.audit.storage.model.AuditEvent
 			serviceBuilderAuditEvent = _auditEventLocalService.addAuditEvent(
@@ -224,17 +219,9 @@ public class AuditEventResourceTest extends BaseAuditEventResourceTestCase {
 
 		AuditEvent auditEvent = randomAuditEvent();
 
-		if (accountId > 0) {
-			auditEvent.setAccountId(accountId);
-		}
-
-		if (Validator.isNotNull(contextName)) {
-			auditEvent.setContextName(contextName);
-		}
-
-		if (Validator.isNotNull(eventType)) {
-			auditEvent.setEventType(eventType);
-		}
+		auditEvent.setAccountId(accountId);
+		auditEvent.setContextName(contextName);
+		auditEvent.setEventType(eventType);
 
 		return auditEvent;
 	}

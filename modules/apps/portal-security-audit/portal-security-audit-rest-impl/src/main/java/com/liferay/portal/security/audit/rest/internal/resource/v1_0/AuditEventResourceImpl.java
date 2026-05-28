@@ -52,29 +52,27 @@ public class AuditEventResourceImpl extends BaseAuditEventResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		long companyId = contextCompany.getCompanyId();
-
 		long[] accountEntryIds = ArrayUtil.toArray(accountIds);
 
 		return Page.of(
 			transform(
 				_auditEventService.getAuditEvents(
-					companyId, 0, 0, null, startDate, endDate, accountEntryIds,
-					null, null, null, null, contextName, eventType, null, 0,
-					null, true, pagination.getStartPosition(),
-					pagination.getEndPosition(), _toOrderByComparator(sorts)),
+					contextCompany.getCompanyId(), 0, 0, null, startDate,
+					endDate, accountEntryIds, null, null, null, null,
+					contextName, eventType, null, 0, null, true,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					_toOrderByComparator(sorts)),
 				this::_toAuditEvent),
 			pagination,
 			_auditEventService.getAuditEventsCount(
-				companyId, 0, 0, null, startDate, endDate, accountEntryIds,
-				null, null, null, null, contextName, eventType, null, 0, null,
-				true));
+				contextCompany.getCompanyId(), 0, 0, null, startDate, endDate,
+				accountEntryIds, null, null, null, null, contextName, eventType,
+				null, 0, null, true));
 	}
 
 	private AuditEvent _toAuditEvent(
-			com.liferay.portal.security.audit.storage.model.AuditEvent
-				serviceBuilderAuditEvent)
-		throws Exception {
+		com.liferay.portal.security.audit.storage.model.AuditEvent
+			serviceBuilderAuditEvent) {
 
 		return new AuditEvent() {
 			{

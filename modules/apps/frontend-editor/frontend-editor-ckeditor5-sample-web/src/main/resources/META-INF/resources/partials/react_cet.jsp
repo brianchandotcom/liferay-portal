@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CKEditor5SampleDisplayContext ckEditor5SampleDisplayContext = (CKEditor5SampleDisplayContext)request.getAttribute(CKEditor5SampleWebKeys.CKEDITOR5_SAMPLE_DISPLAY_CONTEXT);
+CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR5_SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <react:component
 	module="{CKEditor5ReactClassicEditor} from frontend-editor-ckeditor5-sample-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"editorConfig", ckEditor5SampleDisplayContext.getCKEditor5ClassicEditorConfig()
+			"editorConfig", ckEditorSampleDisplayContext.getCKEditor5ClassicEditorConfig()
 		).put(
-			"editorTransformerURLs", ckEditor5SampleDisplayContext.getEditorTransformerURLsJSONArray()
+			"editorTransformerURLs", ckEditorSampleDisplayContext.getEditorTransformerURLsJSONArray()
 		).build()
 	%>'
 />

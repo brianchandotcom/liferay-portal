@@ -61,7 +61,7 @@
 					"id": "condition1",
 					"options": {
 						"type": "${OPERATOR}",
-						"value": "${FIELD_VALUE}"
+						"value": ${FIELD_VALUE}
 					},
 					"type": "field"
 				}

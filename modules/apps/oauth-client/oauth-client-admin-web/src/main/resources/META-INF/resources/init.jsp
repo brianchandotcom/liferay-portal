@@ -22,6 +22,7 @@ page import="com.liferay.oauth.client.admin.web.internal.constants.OAuthClientWe
 page import="com.liferay.oauth.client.admin.web.internal.display.context.OAuthClientASLocalMetadataManagementToolbarDisplayContext" %><%@
 page import="com.liferay.oauth.client.admin.web.internal.display.context.OAuthClientEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.oauth.client.admin.web.internal.display.context.OAuthClientPRLocalMetadataManagementToolbarDisplayContext" %><%@
+page import="com.liferay.oauth.client.admin.web.internal.servlet.taglib.util.OAuthClientPRLocalMetadataActionDropdownItemsProvider" %><%@
 page import="com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants" %><%@
 page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientEntryException" %><%@

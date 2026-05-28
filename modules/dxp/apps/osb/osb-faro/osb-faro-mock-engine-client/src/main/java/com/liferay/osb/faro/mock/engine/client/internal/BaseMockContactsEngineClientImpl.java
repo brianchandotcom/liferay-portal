@@ -420,6 +420,17 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public Results<Account> getAccounts(
+		FaroProject faroProject, String channelId, String filterString,
+		String query, String rangeEnd, Integer rangeKey, String rangeStart,
+		int cur, int delta, String sortString) {
+
+		return contactsEngineClient.getAccounts(
+			faroProject, channelId, filterString, query, rangeEnd, rangeKey,
+			rangeStart, cur, delta, sortString);
+	}
+
+	@Override
 	public Results<Distribution> getAccountsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingFieldName,
 		String filterString, String individualSegmentId, int count,

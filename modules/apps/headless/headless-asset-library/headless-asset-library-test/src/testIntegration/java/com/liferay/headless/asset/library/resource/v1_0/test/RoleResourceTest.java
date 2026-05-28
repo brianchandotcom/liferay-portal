@@ -6,7 +6,9 @@
 package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.Role;
 import com.liferay.headless.asset.library.client.pagination.Page;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
@@ -34,9 +37,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -44,7 +49,9 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,12 +85,16 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			testDepotEntry.getGroupId(), _userGroup);
 	}
 
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
+	)
 	@Override
 	@Test
 	public void testGetAssetLibraryRolesPage() throws Exception {
 		_testGetAssetLibraryRolesPage(
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 		_testGetAssetLibraryRolesPage(DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+		_testGetAssetLibraryRolesPageWithSubtype();
 	}
 
 	@Override
@@ -284,6 +295,64 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			names.contains(DepotRolesConstants.ASSET_LIBRARY_OWNER));
 	}
 
+	private void _testGetAssetLibraryRolesPageWithSubtype() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			new ServiceContext() {
+				{
+					setCompanyId(testCompany.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		com.liferay.portal.kernel.model.Role serviceBuilderRole1 =
+			_roleLocalService.addRole(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				null, 0, RandomTestUtil.randomString(), null, null,
+				RoleConstants.TYPE_DEPOT, DepotRolesConstants.SUBTYPE_PROJECT,
+				null);
+
+		_roles.add(serviceBuilderRole1);
+
+		com.liferay.portal.kernel.model.Role serviceBuilderRole2 =
+			_roleLocalService.addRole(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				null, 0, RandomTestUtil.randomString(), null, null,
+				RoleConstants.TYPE_DEPOT, DepotRolesConstants.SUBTYPE_SPACE,
+				null);
+
+		_roles.add(serviceBuilderRole2);
+
+		Group group = _depotEntry.getGroup();
+
+		Page<Role> page = roleResource.getAssetLibraryRolesPage(
+			group.getExternalReferenceCode(), Pagination.of(1, 100));
+
+		List<Role> roles = ListUtil.fromCollection(page.getItems());
+
+		Assert.assertTrue(
+			roles.toString(),
+			ListUtil.exists(
+				roles,
+				role -> Objects.equals(
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					role.getName())));
+		Assert.assertFalse(
+			roles.toString(),
+			ListUtil.exists(
+				roles,
+				role -> Objects.equals(
+					serviceBuilderRole1.getName(), role.getName())));
+		Assert.assertTrue(
+			roles.toString(),
+			ListUtil.exists(
+				roles,
+				role -> Objects.equals(
+					serviceBuilderRole2.getName(), role.getName())));
+	}
+
 	private void _testPutRolesPage(
 			UnsafeSupplier<Page<Role>, Exception> unsafeSupplier,
 			UnsafeConsumer<Role[], Exception> unsafeBiConsumer)
@@ -320,6 +389,9 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		_assertRolesPage(new Role[] {randomRole1, randomRole2}, unsafeSupplier);
 	}
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

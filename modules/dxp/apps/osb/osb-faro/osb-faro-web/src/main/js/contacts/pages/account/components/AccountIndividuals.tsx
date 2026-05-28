@@ -44,7 +44,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 				</div>
 				<div className='mt-3'>
 					<FrontendDataSet
-						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals`}
+						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals?channelId=${channelId}`}
 						configInURLBehavior={EConfigInURLBehavior.OFF}
 						customDataRenderers={{
 							department: ({

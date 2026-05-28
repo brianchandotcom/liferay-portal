@@ -1,36 +1,36 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 $product-menu-focus-box-shadow:
-	inset 0 0 0 2px $white,
-	0 0 0 2px $primary-l1 !default;
+	inset 0 0 0 2px $cadmin-white,
+	0 0 0 2px $cadmin-primary-l1 !default;
 
-$product-menu-body-bg: $gray-100 !default;
+$product-menu-body-bg: $cadmin-gray-100 !default;
 
-$product-menu-header-bg: $white !default;
-$product-menu-header-border: $white !default;
-$product-menu-header-color: $gray-800 !default;
-$product-menu-header-link-color: $gray-800 !default;
-$product-menu-header-link-hover-color: $gray-900 !default;
+$product-menu-header-bg: $cadmin-white !default;
+$product-menu-header-border: $cadmin-white !default;
+$product-menu-header-color: $cadmin-gray-800 !default;
+$product-menu-header-link-color: $cadmin-gray-800 !default;
+$product-menu-header-link-hover-color: $cadmin-gray-900 !default;
 
-$product-menu-list-group-bg: $gray-100 !default;
-$product-menu-list-group-color: $gray-900 !default;
+$product-menu-list-group-bg: $cadmin-gray-100 !default;
+$product-menu-list-group-color: $cadmin-gray-900 !default;
 
 $product-menu-list-group-heading-border: transparent !default;
 $product-menu-list-group-heading-border-width: 0 !default;
 
-$product-menu-list-group-heading-active-bg: $gray-200 !default;
+$product-menu-list-group-heading-active-bg: $cadmin-gray-200 !default;
 
-$product-menu-list-group-heading-color: $gray-900 !default;
+$product-menu-list-group-heading-color: $cadmin-gray-900 !default;
 
 $product-menu-list-group-item-bg: transparent !default;
 
-$product-menu-nav-link-active-color: $gray-900 !default;
-$product-menu-nav-link-active-border-color: $primary-l0 !default;
-$product-menu-nav-link-active-bg: $light !default;
-$product-menu-nav-link-color: $gray-800 !default;
-$product-menu-nav-link-hover-color: $gray-900 !default;
+$product-menu-nav-link-active-color: $cadmin-gray-900 !default;
+$product-menu-nav-link-active-border-color: $cadmin-primary-l0 !default;
+$product-menu-nav-link-active-bg: $cadmin-light !default;
+$product-menu-nav-link-color: $cadmin-gray-800 !default;
+$product-menu-nav-link-hover-color: $cadmin-gray-900 !default;
 
-$product-menu-panel-title-color: $gray-900 !default;
+$product-menu-panel-title-color: $cadmin-gray-900 !default;
 
 $product-menu-header-desktop-height: 56px;
 $product-menu-header-height: 48px;

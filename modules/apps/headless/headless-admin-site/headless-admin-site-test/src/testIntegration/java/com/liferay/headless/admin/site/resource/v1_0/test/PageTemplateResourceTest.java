@@ -76,6 +76,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -762,10 +764,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _enableLocalStaging(Group group) throws Exception {
-		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), group, true, false,
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId()));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.OFF)) {
+
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), group, true, false,
+				ServiceContextTestUtil.getServiceContext(
+					group, TestPropsValues.getUserId()));
+		}
+
+		Assert.assertTrue(group.hasStagingGroup());
 	}
 
 	private ContentPageTemplate _getContentPageTemplate(Group group)

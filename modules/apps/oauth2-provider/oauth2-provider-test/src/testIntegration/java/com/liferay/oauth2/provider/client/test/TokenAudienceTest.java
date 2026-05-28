@@ -132,10 +132,10 @@ public class TokenAudienceTest extends BaseClientTestCase {
 	}
 
 	private static final String _CLIENT_ID =
-		"oauthTokenAudienceTestApplication";
+		RandomTestUtil.randomString();
 
 	private static final String _CLIENT_SECRET =
-		"oauthTokenAudienceTestApplicationSecret";
+		RandomTestUtil.randomString();
 
 	private static final String _RESOURCE_URI = "https://mcp.example.com/o/mcp";
 

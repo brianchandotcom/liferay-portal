@@ -42,6 +42,19 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "AUTHOR",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "author",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "PAGE_URL",
 			"indexed": true,
 			"indexedAsKeyword": true,
@@ -80,6 +93,32 @@
 			"required": true,
 			"system": true,
 			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "TITLE",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Title"
+			},
+			"name": "title",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "TYPE",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Type"
+			},
+			"name": "type",
+			"system": true,
+			"type": "String"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",

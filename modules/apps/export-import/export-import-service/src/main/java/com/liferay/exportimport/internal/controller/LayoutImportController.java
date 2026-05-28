@@ -85,7 +85,6 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
-import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -94,11 +93,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.BiPredicate;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -989,8 +986,6 @@ public class LayoutImportController implements ImportController {
 
 		// Layouts
 
-		Set<Layout> modifiedLayouts = new HashSet<>();
-
 		// Remove layouts that were deleted from the layout set prototype
 
 		Map<String, String[]> parameterMap =
@@ -1026,12 +1021,6 @@ public class LayoutImportController implements ImportController {
 
 			for (Layout layout : previousLayouts) {
 				if (Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
-					continue;
-				}
-
-				if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
-					modifiedLayouts.add(layout);
-
 					continue;
 				}
 
@@ -1100,10 +1089,6 @@ public class LayoutImportController implements ImportController {
 
 			if (layout != null) {
 				plid = layout.getPlid();
-
-				if (modifiedLayouts.contains(layout)) {
-					continue;
-				}
 			}
 
 			portletDataContext.setPlid(plid);
@@ -1395,9 +1380,6 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

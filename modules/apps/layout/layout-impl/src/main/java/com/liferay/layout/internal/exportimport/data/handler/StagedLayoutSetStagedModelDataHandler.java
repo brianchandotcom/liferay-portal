@@ -229,9 +229,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		// Remove layouts that were deleted from the layout set prototype
 
-		Set<Layout> modifiedLayouts = new HashSet<>();
-
-		_checkLayoutSetPrototypeLayouts(portletDataContext, modifiedLayouts);
+		_checkLayoutSetPrototypeLayouts(portletDataContext);
 
 		_updateLayoutSetSettingsProperties(
 			portletDataContext, importedStagedLayoutSet);
@@ -250,7 +248,7 @@ public class StagedLayoutSetStagedModelDataHandler
 	}
 
 	private void _checkLayoutSetPrototypeLayouts(
-			PortletDataContext portletDataContext, Set<Layout> modifiedLayouts)
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
@@ -276,12 +274,6 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext.isPrivateLayout())) {
 
 			if (Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
-				continue;
-			}
-
-			if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
-				modifiedLayouts.add(layout);
-
 				continue;
 			}
 
@@ -983,9 +975,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Sites _sites;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.set.model.adapter.StagedLayoutSet)"

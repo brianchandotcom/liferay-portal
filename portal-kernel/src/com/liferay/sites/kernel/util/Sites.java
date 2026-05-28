@@ -7,7 +7,6 @@ package com.liferay.sites.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -84,9 +83,6 @@ public interface Sites {
 
 	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
-
-	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
-		throws PortalException;
 
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
 

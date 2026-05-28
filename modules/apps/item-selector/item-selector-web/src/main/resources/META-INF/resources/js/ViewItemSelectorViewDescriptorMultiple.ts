@@ -30,11 +30,12 @@ export default function ({
 			data: {
 				returnType: itemSelectorReturnType,
 				value: searchContainerItems
-					.map((item: HTMLElement) => item.closest('li, tr, dd'))
-					.filter((domElement): domElement is HTMLElement =>
-						Boolean(domElement)
-					)
-					.map((domElement) => domElement.dataset.value),
+					.map((item: HTMLElement) => {
+						const row = item.closest<HTMLElement>('li, tr, dd');
+
+						return row?.dataset.value ?? item.dataset.value;
+					})
+					.filter((value): value is string => Boolean(value)),
 			},
 		});
 	});

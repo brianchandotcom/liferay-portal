@@ -433,7 +433,7 @@ describe('NewExport', () => {
 
 			await userEvent.click(screen.getAllByRole('radio')[1]);
 			await userEvent.click(
-				screen.getByRole('button', {name: 'select-layouts'})
+				screen.getByRole('button', {name: 'select-x'})
 			);
 
 			expect(await screen.findByLabelText('page-1')).toBeChecked();

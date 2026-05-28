@@ -84,29 +84,21 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given creating an API application") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
 				title = "App-test");
 		}
 
-		task ("And Given setting Panel Category Key to Control Panel > Object for API Endpoint") {
-			SearchAdministration.executeReindex();
-
-			APIBuilderUI.setPanelCategoryKeyToObject(objectDefinition = "API Endpoint");
+		task ("And Given I go to Endpoints tab in Edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "App-test");
 		}
 
-		task ("When I create an endpoint with id of API application and valid path") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "API Endpoints");
-
-			var applicationId = JSONPathUtil.getIdValue(response = ${response});
-
+		task ("When I create an endpoint with a valid path") {
 			APIBuilderUI.createAPIEndpoint(
-				applicationId = ${applicationId},
 				name = "testendpoint",
-				pathCP = "/testendpoint");
+				path = "/testendpoint");
 		}
 
 		task ("Then I can see endpoint is created with correct path") {
@@ -152,29 +144,21 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given creating an API application") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
 				title = "App-test");
 		}
 
-		task ("And Given setting Panel Category Key to Control Panel > Object for API Endpoint") {
-			SearchAdministration.executeReindex();
-
-			APIBuilderUI.setPanelCategoryKeyToObject(objectDefinition = "API Endpoint");
+		task ("And Given I go to Endpoints tab in Edit API application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "App-test");
 		}
 
-		task ("When I create an endpoint with id of API application and path not start with '/'") {
-			var applicationId = JSONPathUtil.getIdValue(response = ${response});
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "API Endpoints");
-
+		task ("When I create an endpoint with a path not starting with '/'") {
 			APIBuilderUI.createAPIEndpoint(
-				applicationId = ${applicationId},
 				name = "testendpoint",
-				pathCP = "testendpoint");
+				path = "testendpoint");
 		}
 
 		task ("Then I can see error message") {

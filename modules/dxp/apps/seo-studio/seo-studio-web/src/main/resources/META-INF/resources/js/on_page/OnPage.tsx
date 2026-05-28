@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 
 import SectionHeader from '../components/SectionHeader';
-import InsightDetailView from '../insights_view/InsightDetailView';
 import InsightsView from '../insights_view/InsightsView';
 
 import './OnPage.scss';
@@ -14,43 +13,41 @@ import './OnPage.scss';
 export default function OnPage({
 	apiURL,
 	emptyState,
+	fdsActionDropdownItems,
 	fdsId,
+	insightDetailsURL,
 	lastScanDate,
 	views,
 }: {
 	apiURL: string;
 	emptyState: Record<string, unknown>;
+	fdsActionDropdownItems: any[];
 	fdsId: string;
+	insightDetailsURL: string;
 	lastScanDate: string | null;
 	views: any[];
 }) {
-	const [selectedInsightName, setSelectedInsightName] = useState<
-		string | null
-	>(null);
+	const handleSelectInsight = (externalReferenceCode: string) => {
+		window.location.assign(
+			`${insightDetailsURL}?objectEntryExternalReferenceCode=${externalReferenceCode}`
+		);
+	};
 
 	return (
 		<div className="seo-studio-on-page">
-			{selectedInsightName ? (
-				<InsightDetailView
-					insightName={selectedInsightName}
-					onBack={() => setSelectedInsightName(null)}
-				/>
-			) : (
-				<>
-					<SectionHeader
-						lastScanDate={lastScanDate}
-						title={Liferay.Language.get('on-page')}
-					/>
+			<SectionHeader
+				lastScanDate={lastScanDate}
+				title={Liferay.Language.get('on-page')}
+			/>
 
-					<InsightsView
-						apiURL={apiURL}
-						emptyState={emptyState}
-						fdsId={fdsId}
-						onSelectInsight={setSelectedInsightName}
-						views={views}
-					/>
-				</>
-			)}
+			<InsightsView
+				apiURL={apiURL}
+				emptyState={emptyState}
+				fdsActionDropdownItems={fdsActionDropdownItems}
+				fdsId={fdsId}
+				onSelectInsight={handleSelectInsight}
+				views={views}
+			/>
 		</div>
 	);
 }

@@ -16,14 +16,16 @@ import './InsightsView.scss';
 export default function InsightsView({
 	apiURL,
 	emptyState,
+	fdsActionDropdownItems,
 	fdsId,
 	onSelectInsight,
 	views,
 }: {
 	apiURL: string;
 	emptyState: Record<string, unknown>;
+	fdsActionDropdownItems: any[];
 	fdsId: string;
-	onSelectInsight: (insightName: string) => void;
+	onSelectInsight: (externalReferenceCode: string) => void;
 	views: any[];
 }) {
 	const contextValue = useMemo(
@@ -32,13 +34,6 @@ export default function InsightsView({
 		}),
 		[onSelectInsight]
 	);
-
-	const itemsActions = [
-		{
-			data: {id: 'viewDetails'},
-			label: Liferay.Language.get('view-details'),
-		},
-	];
 
 	return (
 		<InsightsViewContext.Provider value={contextValue}>
@@ -69,22 +64,12 @@ export default function InsightsView({
 					}}
 					emptyState={emptyState}
 					id={fdsId}
-					itemsActions={itemsActions}
-					onActionDropdownItemClick={({
-						action,
-						itemData,
-					}: {
-						action: {data: {id: string}};
-						itemData: {name: string};
-					}) => {
-						if (action.data.id === 'viewDetails') {
-							onSelectInsight(itemData.name);
-						}
-					}}
+					itemsActions={fdsActionDropdownItems}
 					pagination={{initialDelta: 10}}
 					showManagementBar={false}
 					showPagination
 					showSearch={false}
+					uniformActionsDisplay
 					views={views}
 				/>
 			</div>

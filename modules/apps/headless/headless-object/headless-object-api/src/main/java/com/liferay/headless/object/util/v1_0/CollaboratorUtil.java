@@ -558,11 +558,12 @@ public class CollaboratorUtil {
 		TicketLocalService ticketLocalService) {
 
 		List<Ticket> tickets = ticketLocalService.getTickets(
-			companyId, className, classPK,
-			TicketConstants.TYPE_INVITE_COLLABORATOR);
+			companyId, TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress);
 
 		for (Ticket ticket : tickets) {
-			if (StringUtil.equals(emailAddress, ticket.getEmailAddress())) {
+			if (StringUtil.equals(className, ticket.getClassName()) &&
+				(ticket.getClassPK() == classPK)) {
+
 				return ticket;
 			}
 		}

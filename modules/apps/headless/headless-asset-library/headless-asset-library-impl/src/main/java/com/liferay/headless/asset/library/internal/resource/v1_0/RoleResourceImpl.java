@@ -5,6 +5,7 @@
 
 package com.liferay.headless.asset.library.internal.resource.v1_0;
 
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.headless.asset.library.dto.v1_0.Role;
 import com.liferay.headless.asset.library.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -35,6 +37,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -57,21 +61,28 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
 
+		List<com.liferay.portal.kernel.model.Role> roles =
+			_roleLocalService.getTypeRoles(RoleConstants.TYPE_DEPOT);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564") ||
+			FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-58677")) {
+
+			roles = DepotRoleUtil.filter(group.getGroupId(), roles);
+		}
+
 		if (pagination == null) {
-			return Page.of(
-				transform(
-					_roleLocalService.getTypeRoles(RoleConstants.TYPE_DEPOT),
-					this::_toRole));
+			return Page.of(transform(roles, this::_toRole));
 		}
 
 		return Page.of(
 			transform(
-				_roleLocalService.getTypeRoles(
-					RoleConstants.TYPE_DEPOT, pagination.getStartPosition(),
+				ListUtil.subList(
+					roles, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				this::_toRole),
-			pagination,
-			_roleLocalService.getTypeRolesCount(RoleConstants.TYPE_DEPOT));
+			pagination, roles.size());
 	}
 
 	@Override

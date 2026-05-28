@@ -7,6 +7,7 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -337,6 +338,14 @@ public class DepotAdminSelectRoleDisplayContext {
 
 			if (_group != null) {
 				roles = _filterGroupRoles(roles);
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						_themeDisplay.getCompanyId(), "LPD-17564") ||
+					FeatureFlagManagerUtil.isEnabled(
+						_themeDisplay.getCompanyId(), "LPD-58677")) {
+
+					roles = DepotRoleUtil.filter(_group.getGroupId(), roles);
+				}
 			}
 
 			roleSearch.setResultsAndTotal(roles);

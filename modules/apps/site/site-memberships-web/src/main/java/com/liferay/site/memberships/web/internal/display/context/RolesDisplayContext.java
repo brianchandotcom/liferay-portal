@@ -5,10 +5,12 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -209,6 +211,14 @@ public class RolesDisplayContext {
 		if (group.isDepot()) {
 			roles = DepotRolesUtil.filterGroupRoles(
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-17564") ||
+				FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-58677")) {
+
+				roles = DepotRoleUtil.filter(getGroupId(), roles);
+			}
 		}
 		else {
 			roles = UsersAdminUtil.filterGroupRoles(

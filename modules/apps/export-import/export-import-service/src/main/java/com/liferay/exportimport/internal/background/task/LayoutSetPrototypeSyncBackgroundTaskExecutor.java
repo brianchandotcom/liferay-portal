@@ -229,8 +229,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskExecutor
 				}
 
 				try {
-					_sites.mergeLayoutPrototypeLayout(
-						layout.getGroup(), layout);
+					_sites.mergeLayoutPrototypeLayout(layout);
 				}
 				catch (Exception exception) {
 					_log.error(

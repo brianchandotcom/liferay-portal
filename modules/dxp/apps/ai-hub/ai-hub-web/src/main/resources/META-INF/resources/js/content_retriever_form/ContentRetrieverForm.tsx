@@ -12,6 +12,7 @@ import {useFormik} from 'formik';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import Toolbar from '../components/ToolBar';
+import {generateExternalReferenceCode} from '../utils/externalReferenceCode';
 import InlineTextInput from './components/inline_text_input/InlineTextInput';
 import {
 	getContentRetriever,
@@ -76,7 +77,10 @@ export default function ContentRetrieverForm({
 		initialValues,
 		onSubmit: async (values, {setSubmitting}) => {
 			try {
-				await putContentRetriever(values, externalReferenceCode);
+				await putContentRetriever(
+					values,
+					externalReferenceCode || generateExternalReferenceCode()
+				);
 
 				openToast({
 					message: Liferay.Language.get(

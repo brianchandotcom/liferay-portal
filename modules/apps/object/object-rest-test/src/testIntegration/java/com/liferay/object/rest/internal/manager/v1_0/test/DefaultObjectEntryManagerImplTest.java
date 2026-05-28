@@ -9671,6 +9671,50 @@ public class DefaultObjectEntryManagerImplTest
 		PrincipalThreadLocal.setName(_originalName);
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-89977")
+	public void testUpdateObjectEntryWithDifferentUser() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			_objectDefinition7.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(depotEntry.getGroupId()));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition7,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(depotEntry.getGroupId()), 1);
+
+		_assertObjectEntryVersionUser(
+			adminUser, objectEntry.getId(), adminUser);
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		PrincipalThreadLocal.setName(user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_createDTOConverterContext(user), _objectDefinition7,
+			objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			});
+
+		_assertObjectEntryVersionUser(adminUser, objectEntry.getId(), user);
+	}
+
 	@Test
 	public void testUpdateObjectEntryWithObjectEntryFolder() throws Exception {
 		ObjectEntryFolder objectEntryFolder =

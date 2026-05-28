@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import PageTreeModal, {
@@ -20,9 +21,25 @@ interface Props {
 	value: HandlerSelection | undefined;
 }
 
-function SelectPagesButton({onClick}: {onClick: () => void}) {
+function SelectPagesButton({
+	onClick,
+	privateLayout,
+}: {
+	onClick: () => void;
+	privateLayout?: boolean;
+}) {
 	return (
 		<ClayButton
+			aria-label={
+				privateLayout === undefined
+					? undefined
+					: sub(
+							Liferay.Language.get('select-x'),
+							privateLayout
+								? Liferay.Language.get('private-pages')
+								: Liferay.Language.get('public-pages')
+						)
+			}
 			className="border-0 ml-2 p-0"
 			displayType="link"
 			onClick={onClick}
@@ -34,16 +51,18 @@ function SelectPagesButton({onClick}: {onClick: () => void}) {
 }
 
 function LayoutVisibilitySelector({
+	label,
 	onSelectPages,
 	onSetMode,
 	privateLayout,
 }: {
+	label: string;
 	onSelectPages: () => void;
 	onSetMode: (mode: boolean) => void;
 	privateLayout: boolean;
 }) {
 	return (
-		<div className="mt-2 pl-4">
+		<div aria-label={label} className="mt-2 pl-4" role="radiogroup">
 			<div className="align-items-center d-flex mb-1">
 				<ClayRadio
 					checked={!privateLayout}
@@ -55,7 +74,10 @@ function LayoutVisibilitySelector({
 				/>
 
 				{!privateLayout && (
-					<SelectPagesButton onClick={onSelectPages} />
+					<SelectPagesButton
+						onClick={onSelectPages}
+						privateLayout={false}
+					/>
 				)}
 			</div>
 
@@ -69,7 +91,9 @@ function LayoutVisibilitySelector({
 					value="true"
 				/>
 
-				{privateLayout && <SelectPagesButton onClick={onSelectPages} />}
+				{privateLayout && (
+					<SelectPagesButton onClick={onSelectPages} privateLayout />
+				)}
 			</div>
 		</div>
 	);
@@ -99,6 +123,7 @@ export default function LayoutSetControl({
 			<ClayLayout.ContentRow className="mb-2">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					<ClayCheckbox
+						aria-label={label}
 						checked={isAll}
 						indeterminate={!isAll && !!layoutIds.length}
 						onChange={() =>
@@ -122,6 +147,7 @@ export default function LayoutSetControl({
 
 			{privateLayoutsEnabled && (
 				<LayoutVisibilitySelector
+					label={label}
 					onSelectPages={openModal}
 					onSetMode={(next) => onChange({privateLayout: next})}
 					privateLayout={privateLayout}

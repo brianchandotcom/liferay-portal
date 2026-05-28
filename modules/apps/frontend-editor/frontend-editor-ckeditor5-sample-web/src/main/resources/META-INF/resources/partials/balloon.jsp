@@ -18,6 +18,6 @@
 <liferay-editor:editor
 	contents="<%= contents %>"
 	editorName="ckeditor5_balloon"
-	name="sampleCKEditor5BalloonEditor"
+	name="sampleBalloonEditor"
 	placeholder="content"
 />

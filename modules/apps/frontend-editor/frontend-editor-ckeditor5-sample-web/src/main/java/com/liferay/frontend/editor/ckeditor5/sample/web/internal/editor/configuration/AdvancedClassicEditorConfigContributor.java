@@ -21,12 +21,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=advancedClassicCKEditor5Editor",
+		"editor.config.key=sampleAdvancedClassicEditor",
 		"jakarta.portlet.name=" + CKEditorSamplePortletKeys.CKEDITOR5_SAMPLE
 	},
 	service = EditorConfigContributor.class
 )
-public class AdvancedClassicCKEditor5SampleEditorConfigContributor
+public class AdvancedClassicEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

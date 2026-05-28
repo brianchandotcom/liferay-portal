@@ -803,6 +803,16 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"skuUnitOfMeasures", additionalAssertFieldName)) {
+
+				if (mappedProduct.getSkuUnitOfMeasures() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("thumbnail", additionalAssertFieldName)) {
 				if (mappedProduct.getThumbnail() == null) {
 					valid = false;
@@ -1162,6 +1172,19 @@ public abstract class BaseMappedProductResourceTestCase {
 				if (!Objects.deepEquals(
 						mappedProduct1.getSkuOptions(),
 						mappedProduct2.getSkuOptions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"skuUnitOfMeasures", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						mappedProduct1.getSkuUnitOfMeasures(),
+						mappedProduct2.getSkuUnitOfMeasures())) {
 
 					return false;
 				}
@@ -1609,6 +1632,11 @@ public abstract class BaseMappedProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("skuUnitOfMeasures")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("thumbnail")) {
 			Object object = mappedProduct.getThumbnail();
 
@@ -1952,4 +1980,4 @@ public abstract class BaseMappedProductResourceTestCase {
 		MappedProductResource _mappedProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-773016541
+// LIFERAY-REST-BUILDER-HASH:11245515

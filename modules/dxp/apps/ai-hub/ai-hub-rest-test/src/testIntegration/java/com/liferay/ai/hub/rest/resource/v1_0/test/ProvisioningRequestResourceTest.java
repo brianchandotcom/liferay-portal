@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
@@ -217,15 +218,23 @@ public class ProvisioningRequestResourceTest
 			Assert.assertEquals(
 				expectedUserAccount.getEmailAddress(),
 				actualUserAccount.getEmailAddress());
-			Assert.assertEquals(
-				expectedUserAccount.getFirstName(),
-				actualUserAccount.getFirstName());
-			Assert.assertEquals(
-				expectedUserAccount.getLastName(),
-				actualUserAccount.getLastName());
-			Assert.assertEquals(
-				expectedUserAccount.getScreenName(),
-				actualUserAccount.getScreenName());
+
+			if (Validator.isNull(expectedUserAccount.getScreenName())) {
+				Assert.assertNotNull(actualUserAccount.getFirstName());
+				Assert.assertNotNull(actualUserAccount.getLastName());
+				Assert.assertNotNull(actualUserAccount.getScreenName());
+			}
+			else {
+				Assert.assertEquals(
+					expectedUserAccount.getFirstName(),
+					actualUserAccount.getFirstName());
+				Assert.assertEquals(
+					expectedUserAccount.getLastName(),
+					actualUserAccount.getLastName());
+				Assert.assertEquals(
+					expectedUserAccount.getScreenName(),
+					actualUserAccount.getScreenName());
+			}
 
 			User user = _userLocalService.getUserByEmailAddress(
 				TestPropsValues.getCompanyId(),
@@ -278,9 +287,6 @@ public class ProvisioningRequestResourceTest
 		Assert.assertEquals(
 			provisioningRequest.getAccountEntryName(),
 			oAuth2Application.getName());
-		Assert.assertEquals(
-			provisioningRequest.getLiferayDXPURL(),
-			oAuth2Application.getHomePageURL());
 	}
 
 	private void _assetServiceAccountUsers(

@@ -309,9 +309,11 @@ paths:
                         Sharing Entry - com.liferay.sharing.model.SharingEntry, User -
                         com.liferay.portal.kernel.model.User, Web Content Article -
                         com.liferay.journal.model.JournalArticle, and Web Content Folder -
-                        com.liferay.journal.model.JournalFolder. Custom Objects and custom CMS Content Structures follow
-                        the class name format com.liferay.object.model.ObjectDefinition#<OBJECT-DEFINITION-CLASS-NAME>,
-                        where OBJECT-DEFINITION-CLASS-NAME is the Class Name of the Object Definition (for example,
+                        com.liferay.journal.model.JournalFolder. Entries marked `(CMS)` are seeded by the Liferay CMS
+                        site initializer and may be absent on instances that have not run it. Custom Objects and custom
+                        CMS Content Structures follow the class name format
+                        com.liferay.object.model.ObjectDefinition#<OBJECT-DEFINITION-CLASS-NAME>, where
+                        OBJECT-DEFINITION-CLASS-NAME is the Class Name of the Object Definition (for example,
                         com.liferay.object.model.ObjectDefinition#H4T4 for Basic Web Content (CMS)). To discover
                         available class names at runtime, call GET
                         /o/search-experiences-rest/v1.0/searchable-asset-names (admin permission required).
@@ -474,9 +476,11 @@ paths:
                         Sharing Entry - com.liferay.sharing.model.SharingEntry, User -
                         com.liferay.portal.kernel.model.User, Web Content Article -
                         com.liferay.journal.model.JournalArticle, and Web Content Folder -
-                        com.liferay.journal.model.JournalFolder. Custom Objects and custom CMS Content Structures follow
-                        the class name format com.liferay.object.model.ObjectDefinition#<OBJECT-DEFINITION-CLASS-NAME>,
-                        where OBJECT-DEFINITION-CLASS-NAME is the Class Name of the Object Definition (for example,
+                        com.liferay.journal.model.JournalFolder. Entries marked `(CMS)` are seeded by the Liferay CMS
+                        site initializer and may be absent on instances that have not run it. Custom Objects and custom
+                        CMS Content Structures follow the class name format
+                        com.liferay.object.model.ObjectDefinition#<OBJECT-DEFINITION-CLASS-NAME>, where
+                        OBJECT-DEFINITION-CLASS-NAME is the Class Name of the Object Definition (for example,
                         com.liferay.object.model.ObjectDefinition#H4T4 for Basic Web Content (CMS)). To discover
                         available class names at runtime, call GET
                         /o/search-experiences-rest/v1.0/searchable-asset-names (admin permission required).

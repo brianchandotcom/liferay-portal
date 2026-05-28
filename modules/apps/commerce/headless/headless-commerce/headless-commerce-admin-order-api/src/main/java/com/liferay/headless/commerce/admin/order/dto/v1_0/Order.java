@@ -44,8 +44,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Order")
+@GraphQLName(
+	description = "A purchase order placed by an account in a channel. Carries the buyer account, addresses, currency, payment and delivery terms, line items, notes, attachments, and tax-aware totals; created on POST, updated on PATCH, replaced on PUT against the external reference code.",
+	value = "Order"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "A purchase order placed by an account in a channel. Carries the buyer account, addresses, currency, payment and delivery terms, line items, notes, attachments, and tax-aware totals; created on POST, updated on PATCH, replaced on PUT against the external reference code.",
 	requiredProperties = {"channelId", "currencyCode"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -102,7 +106,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the buyer account. Used as a lookup key when the numeric account ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -140,7 +147,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the buyer account. Used as a lookup key when the numeric account ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
@@ -148,7 +157,10 @@ public class Order implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the buyer account (FK identifier). One of accountId or accountExternalReferenceCode is required on create.",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -182,14 +194,18 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the buyer account (FK identifier). One of accountId or accountExternalReferenceCode is required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -225,14 +241,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "trasmitted")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-text status string for custom workflows on top of the standard order status (for example, on-hold, escalated).",
+		example = "transmitted"
+	)
 	public String getAdvanceStatus() {
 		if (_advanceStatusSupplier != null) {
 			advanceStatus = _advanceStatusSupplier.get();
@@ -266,14 +287,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text status string for custom workflows on top of the standard order status (for example, on-hold, escalated)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String advanceStatus;
 
 	@JsonIgnore
 	private Supplier<String> _advanceStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the user who created the order. Read-only.",
+		example = "Test Test"
+	)
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -307,7 +333,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the user who created the order. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
@@ -357,7 +385,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BillingAddress> _billingAddressSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the billing address. Used as a lookup key when the numeric address ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getBillingAddressExternalReferenceCode() {
 		if (_billingAddressExternalReferenceCodeSupplier != null) {
 			billingAddressExternalReferenceCode =
@@ -396,7 +427,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the billing address. Used as a lookup key when the numeric address ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String billingAddressExternalReferenceCode;
 
@@ -404,7 +437,10 @@ public class Order implements Serializable {
 	private Supplier<String> _billingAddressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the billing address (FK identifier).",
+		example = "31130"
+	)
 	public Long getBillingAddressId() {
 		if (_billingAddressIdSupplier != null) {
 			billingAddressId = _billingAddressIdSupplier.get();
@@ -438,7 +474,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the billing address (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long billingAddressId;
 
@@ -487,7 +525,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the channel. Used as a lookup key when the numeric channel ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -525,7 +566,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the channel. Used as a lookup key when the numeric channel ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
@@ -533,7 +576,10 @@ public class Order implements Serializable {
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the channel where the order was placed (FK identifier). One of channelId or channelExternalReferenceCode is required on create.",
+		example = "30130"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -567,7 +613,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the channel where the order was placed (FK identifier). One of channelId or channelExternalReferenceCode is required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long channelId;
@@ -575,7 +623,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "save20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Coupon code applied to the order. When present, matching commerce discount rules are evaluated.",
+		example = "SAVE20"
+	)
 	public String getCouponCode() {
 		if (_couponCodeSupplier != null) {
 			couponCode = _couponCodeSupplier.get();
@@ -609,14 +660,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Coupon code applied to the order. When present, matching commerce discount rules are evaluated."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String couponCode;
 
 	@JsonIgnore
 	private Supplier<String> _couponCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Creation date for the order. Read-only; set by the service when the record is first persisted.",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -650,14 +706,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creation date for the order. Read-only; set by the service when the record is first persisted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Email address of the user who created the order. Indexed for search.",
+		example = "tester@liferay.com"
+	)
 	public String getCreatorEmailAddress() {
 		if (_creatorEmailAddressSupplier != null) {
 			creatorEmailAddress = _creatorEmailAddressSupplier.get();
@@ -691,14 +752,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Email address of the user who created the order. Indexed for search."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String creatorEmailAddress;
 
 	@JsonIgnore
 	private Supplier<String> _creatorEmailAddressSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 4217 currency code applied to every monetary value on the order. Defaults to the channel currency.",
+		example = "USD"
+	)
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -732,7 +798,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 4217 currency code applied to every monetary value on the order. Defaults to the channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String currencyCode;
@@ -740,7 +808,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the currency entry. Used as a lookup key when the numeric currency ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -778,7 +849,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the currency entry. Used as a lookup key when the numeric currency ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyExternalReferenceCode;
 
@@ -786,7 +859,10 @@ public class Order implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the currency entry (FK identifier).",
+		example = "30130"
+	)
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -820,14 +896,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the currency entry (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long currencyId;
 
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of custom-field values keyed by field name. Values depend on the custom-field type and are configured per company.",
+		example = "{customField=customValue}"
+	)
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -862,7 +943,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of custom-field values keyed by field name. Values depend on the custom-field type and are configured per company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
@@ -870,7 +953,8 @@ public class Order implements Serializable {
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "Orders delivery terms description"
+		description = "Localized description of the bound delivery term, resolved against the request locale. Read-only.",
+		example = "Standard delivery within 5 business days."
 	)
 	public String getDeliveryTermDescription() {
 		if (_deliveryTermDescriptionSupplier != null) {
@@ -906,14 +990,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized description of the bound delivery term, resolved against the request locale. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String deliveryTermDescription;
 
 	@JsonIgnore
 	private Supplier<String> _deliveryTermDescriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the delivery term. Used as a lookup key when the numeric term ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getDeliveryTermExternalReferenceCode() {
 		if (_deliveryTermExternalReferenceCodeSupplier != null) {
 			deliveryTermExternalReferenceCode =
@@ -952,7 +1041,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the delivery term. Used as a lookup key when the numeric term ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String deliveryTermExternalReferenceCode;
 
@@ -960,7 +1051,10 @@ public class Order implements Serializable {
 	private Supplier<String> _deliveryTermExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the delivery term (FK identifier).",
+		example = "30130"
+	)
 	public Long getDeliveryTermId() {
 		if (_deliveryTermIdSupplier != null) {
 			deliveryTermId = _deliveryTermIdSupplier.get();
@@ -994,7 +1088,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the delivery term (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long deliveryTermId;
 
@@ -1002,7 +1098,8 @@ public class Order implements Serializable {
 	private Supplier<Long> _deliveryTermIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "Orders delivery terms name"
+		description = "Localized display name of the bound delivery term, resolved against the request locale. Read-only.",
+		example = "Standard Delivery"
 	)
 	public String getDeliveryTermName() {
 		if (_deliveryTermNameSupplier != null) {
@@ -1037,14 +1134,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized display name of the bound delivery term, resolved against the request locale. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String deliveryTermName;
 
 	@JsonIgnore
 	private Supplier<String> _deliveryTermNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per order within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -1078,7 +1180,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per order within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -1086,7 +1190,10 @@ public class Order implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order (FK identifier). Read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -1118,14 +1225,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the order (FK identifier). Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date of the most recent price recalculation on the order. Read-only.",
+		example = "2017-07-21"
+	)
 	public Date getLastPriceUpdateDate() {
 		if (_lastPriceUpdateDateSupplier != null) {
 			lastPriceUpdateDate = _lastPriceUpdateDateSupplier.get();
@@ -1159,14 +1271,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date of the most recent price recalculation on the order. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastPriceUpdateDate;
 
 	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Last-modification date for the order. Read-only.",
+		example = "2017-08-21"
+	)
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -1200,14 +1317,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Last-modification date for the order. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Order Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-text label or name for the order, intended for administrator-facing displays.",
+		example = "Acme PO-12345"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -1239,14 +1361,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text label or name for the order, intended for administrator-facing displays."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the order was placed. May differ from the creation date when the order is imported from another system.",
+		example = "2017-07-21"
+	)
 	public Date getOrderDate() {
 		if (_orderDateSupplier != null) {
 			orderDate = _orderDateSupplier.get();
@@ -1280,14 +1407,18 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date the order was placed. May differ from the creation date when the order is imported from another system."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
 
 	@JsonIgnore
 	private Supplier<Date> _orderDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Nested array of OrderItem objects. Write-only on POST/PATCH; items not in the array are deleted (upsert-by-ID semantics)."
+	)
 	@Valid
 	public OrderItem[] getOrderItems() {
 		if (_orderItemsSupplier != null) {
@@ -1322,7 +1453,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Nested array of OrderItem objects. Write-only on POST/PATCH; items not in the array are deleted (upsert-by-ID semantics)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderItem[] orderItems;
 
@@ -1330,7 +1463,10 @@ public class Order implements Serializable {
 	private Supplier<OrderItem[]> _orderItemsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer order status: 0=Approved, 1=Pending, 2=Open, 9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined, 17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested, 22=QuoteProcessed.",
+		example = "0"
+	)
 	public Integer getOrderStatus() {
 		if (_orderStatusSupplier != null) {
 			orderStatus = _orderStatusSupplier.get();
@@ -1364,7 +1500,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Integer order status: 0=Approved, 1=Pending, 2=Open, 9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined, 17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested, 22=QuoteProcessed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer orderStatus;
 
@@ -1413,7 +1551,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _orderStatusInfoSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied. Filterable via the OData query parameter.",
+		example = "AB-34098-789-N"
+	)
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -1451,7 +1592,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied. Filterable via the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
@@ -1459,7 +1602,10 @@ public class Order implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order type (FK identifier). Filterable via the OData query parameter.",
+		example = "30130"
+	)
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -1493,14 +1639,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the order type (FK identifier). Filterable via the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderTypeId;
 
 	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "paypal")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the payment method used by the order (for example, credit_card, purchase_order). Free-form string.",
+		example = "credit_card"
+	)
 	public String getPaymentMethod() {
 		if (_paymentMethodSupplier != null) {
 			paymentMethod = _paymentMethodSupplier.get();
@@ -1534,7 +1685,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the payment method used by the order (for example, credit_card, purchase_order). Free-form string."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentMethod;
 
@@ -1542,7 +1695,10 @@ public class Order implements Serializable {
 	private Supplier<String> _paymentMethodSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer payment status: 0=Approved, 1=Pending, 2=Authorized, 4=Failed, 17=Refunded, 23=NotRequired.",
+		example = "0"
+	)
 	public Integer getPaymentStatus() {
 		if (_paymentStatusSupplier != null) {
 			paymentStatus = _paymentStatusSupplier.get();
@@ -1576,7 +1732,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Integer payment status: 0=Approved, 1=Pending, 2=Authorized, 4=Failed, 17=Refunded, 23=NotRequired."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentStatus;
 
@@ -1626,7 +1784,8 @@ public class Order implements Serializable {
 	private Supplier<Status> _paymentStatusInfoSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "Orders payment terms description"
+		description = "Localized description of the bound payment term, resolved against the request locale. Read-only.",
+		example = "Net 30 days from invoice date."
 	)
 	public String getPaymentTermDescription() {
 		if (_paymentTermDescriptionSupplier != null) {
@@ -1662,14 +1821,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized description of the bound payment term, resolved against the request locale. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentTermDescription;
 
 	@JsonIgnore
 	private Supplier<String> _paymentTermDescriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the payment term. Used as a lookup key when the numeric term ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getPaymentTermExternalReferenceCode() {
 		if (_paymentTermExternalReferenceCodeSupplier != null) {
 			paymentTermExternalReferenceCode =
@@ -1708,7 +1872,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the payment term. Used as a lookup key when the numeric term ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentTermExternalReferenceCode;
 
@@ -1716,7 +1882,10 @@ public class Order implements Serializable {
 	private Supplier<String> _paymentTermExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the payment term (FK identifier).",
+		example = "30130"
+	)
 	public Long getPaymentTermId() {
 		if (_paymentTermIdSupplier != null) {
 			paymentTermId = _paymentTermIdSupplier.get();
@@ -1750,7 +1919,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the payment term (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long paymentTermId;
 
@@ -1758,7 +1929,8 @@ public class Order implements Serializable {
 	private Supplier<Long> _paymentTermIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "Orders payment terms name"
+		description = "Localized display name of the bound payment term, resolved against the request locale. Read-only.",
+		example = "Net 30"
 	)
 	public String getPaymentTermName() {
 		if (_paymentTermNameSupplier != null) {
@@ -1793,14 +1965,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized display name of the bound payment term, resolved against the request locale. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentTermName;
 
 	@JsonIgnore
 	private Supplier<String> _paymentTermNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Order printed note")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-text note printed on invoices and shipping slips.",
+		example = "Handle with care."
+	)
 	public String getPrintedNote() {
 		if (_printedNoteSupplier != null) {
 			printedNote = _printedNoteSupplier.get();
@@ -1834,14 +2011,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text note printed on invoices and shipping slips."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String printedNote;
 
 	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Abcd1234")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Buyer-supplied purchase order number or external order identifier.",
+		example = "PO-12345"
+	)
 	public String getPurchaseOrderNumber() {
 		if (_purchaseOrderNumberSupplier != null) {
 			purchaseOrderNumber = _purchaseOrderNumberSupplier.get();
@@ -1875,14 +2057,18 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Buyer-supplied purchase order number or external order identifier."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String purchaseOrderNumber;
 
 	@JsonIgnore
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Buyer-requested delivery date.", example = "2017-07-21"
+	)
 	public Date getRequestedDeliveryDate() {
 		if (_requestedDeliveryDateSupplier != null) {
 			requestedDeliveryDate = _requestedDeliveryDateSupplier.get();
@@ -1916,14 +2102,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Buyer-requested delivery date.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
 	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the order (or its product) ships physically; when false, it is virtual or non-shippable. Read-only.",
+		example = "true"
+	)
 	public Boolean getShippable() {
 		if (_shippableSupplier != null) {
 			shippable = _shippableSupplier.get();
@@ -1957,7 +2146,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the order (or its product) ships physically; when false, it is virtual or non-shippable. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean shippable;
 
@@ -2007,7 +2198,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the shipping address. Used as a lookup key when the numeric address ID is not supplied.",
+		example = "AB-34098-789-N"
+	)
 	public String getShippingAddressExternalReferenceCode() {
 		if (_shippingAddressExternalReferenceCodeSupplier != null) {
 			shippingAddressExternalReferenceCode =
@@ -2046,7 +2240,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the shipping address. Used as a lookup key when the numeric address ID is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingAddressExternalReferenceCode;
 
@@ -2054,7 +2250,10 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingAddressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the shipping address (FK identifier).",
+		example = "31130"
+	)
 	public Long getShippingAddressId() {
 		if (_shippingAddressIdSupplier != null) {
 			shippingAddressId = _shippingAddressIdSupplier.get();
@@ -2088,7 +2287,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the shipping address (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingAddressId;
 
@@ -2096,7 +2297,10 @@ public class Order implements Serializable {
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Shipping charge in the order currency. Tax-exclusive.",
+		example = "9.99"
+	)
 	@Valid
 	public BigDecimal getShippingAmount() {
 		if (_shippingAmountSupplier != null) {
@@ -2131,14 +2335,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Shipping charge in the order currency. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted shipping charge with the currency symbol. Read-only.",
+		example = "$9.99"
+	)
 	public String getShippingAmountFormatted() {
 		if (_shippingAmountFormattedSupplier != null) {
 			shippingAmountFormatted = _shippingAmountFormattedSupplier.get();
@@ -2173,7 +2382,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted shipping charge with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingAmountFormatted;
 
@@ -2181,7 +2392,10 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the shipping charge without currency formatting. Read-only.",
+		example = "9.99"
+	)
 	public Double getShippingAmountValue() {
 		if (_shippingAmountValueSupplier != null) {
 			shippingAmountValue = _shippingAmountValueSupplier.get();
@@ -2215,14 +2429,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the shipping charge without currency formatting. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingAmountValue;
 
 	@JsonIgnore
 	private Supplier<Double> _shippingAmountValueSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total shipping discount across every discount tier, in the order currency. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountAmount() {
 		if (_shippingDiscountAmountSupplier != null) {
@@ -2258,14 +2477,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Total shipping discount across every discount tier, in the order currency. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingDiscountAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted shipping-discount amount with the currency symbol. Read-only.",
+		example = "$0.00"
+	)
 	public String getShippingDiscountAmountFormatted() {
 		if (_shippingDiscountAmountFormattedSupplier != null) {
 			shippingDiscountAmountFormatted =
@@ -2303,14 +2527,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted shipping-discount amount with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountAmountFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _shippingDiscountAmountFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the shipping-discount amount without currency formatting. Read-only.",
+		example = "0.0"
+	)
 	public Double getShippingDiscountAmountValue() {
 		if (_shippingDiscountAmountValueSupplier != null) {
 			shippingDiscountAmountValue =
@@ -2348,7 +2577,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the shipping-discount amount without currency formatting. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountAmountValue;
 
@@ -2356,7 +2587,10 @@ public class Order implements Serializable {
 	private Supplier<Double> _shippingDiscountAmountValueSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-1 tiered shipping discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel1() {
 		if (_shippingDiscountPercentageLevel1Supplier != null) {
@@ -2396,7 +2630,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-1 tiered shipping discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel1;
 
@@ -2404,7 +2640,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-1 tiered shipping discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel1WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -2445,7 +2684,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-1 tiered shipping discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel1WithTaxAmount;
 
@@ -2454,7 +2695,10 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-2 tiered shipping discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel2() {
 		if (_shippingDiscountPercentageLevel2Supplier != null) {
@@ -2494,7 +2738,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-2 tiered shipping discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel2;
 
@@ -2502,7 +2748,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-2 tiered shipping discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel2WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -2543,7 +2792,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-2 tiered shipping discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel2WithTaxAmount;
 
@@ -2552,7 +2803,10 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-3 tiered shipping discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel3() {
 		if (_shippingDiscountPercentageLevel3Supplier != null) {
@@ -2592,7 +2846,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-3 tiered shipping discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel3;
 
@@ -2600,7 +2856,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-3 tiered shipping discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel3WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -2641,7 +2900,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-3 tiered shipping discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel3WithTaxAmount;
 
@@ -2650,7 +2911,10 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-4 tiered shipping discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel4() {
 		if (_shippingDiscountPercentageLevel4Supplier != null) {
@@ -2690,7 +2954,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-4 tiered shipping discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel4;
 
@@ -2698,7 +2964,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-4 tiered shipping discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel4WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -2739,7 +3008,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-4 tiered shipping discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountPercentageLevel4WithTaxAmount;
 
@@ -2747,7 +3018,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal>
 		_shippingDiscountPercentageLevel4WithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total shipping discount with tax included.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getShippingDiscountWithTaxAmount() {
 		if (_shippingDiscountWithTaxAmountSupplier != null) {
@@ -2786,14 +3060,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Total shipping discount with tax included.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingDiscountWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingDiscountWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted shipping-discount amount with tax included. Read-only.",
+		example = "$0.00"
+	)
 	public String getShippingDiscountWithTaxAmountFormatted() {
 		if (_shippingDiscountWithTaxAmountFormattedSupplier != null) {
 			shippingDiscountWithTaxAmountFormatted =
@@ -2833,14 +3110,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted shipping-discount amount with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountWithTaxAmountFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _shippingDiscountWithTaxAmountFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "fixed")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the shipping method (for example, Standard Ground, Express 2-Day).",
+		example = "Standard Ground"
+	)
 	public String getShippingMethod() {
 		if (_shippingMethodSupplier != null) {
 			shippingMethod = _shippingMethodSupplier.get();
@@ -2874,14 +3156,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the shipping method (for example, Standard Ground, Express 2-Day)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethod;
 
 	@JsonIgnore
 	private Supplier<String> _shippingMethodSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "by Air")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Buyer-visible label for the shipping option chosen at checkout.",
+		example = "Standard Ground"
+	)
 	public String getShippingOption() {
 		if (_shippingOptionSupplier != null) {
 			shippingOption = _shippingOptionSupplier.get();
@@ -2915,7 +3202,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Buyer-visible label for the shipping option chosen at checkout."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOption;
 
@@ -2923,7 +3212,10 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingOptionSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Shipping charge with tax included, in the order currency.",
+		example = "10.79"
+	)
 	@Valid
 	public BigDecimal getShippingWithTaxAmount() {
 		if (_shippingWithTaxAmountSupplier != null) {
@@ -2959,14 +3251,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Shipping charge with tax included, in the order currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted shipping charge with tax included. Read-only.",
+		example = "$10.79"
+	)
 	public String getShippingWithTaxAmountFormatted() {
 		if (_shippingWithTaxAmountFormattedSupplier != null) {
 			shippingWithTaxAmountFormatted =
@@ -3004,7 +3301,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted shipping charge with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingWithTaxAmountFormatted;
 
@@ -3012,7 +3311,10 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the shipping charge with tax included. Read-only.",
+		example = "10.79"
+	)
 	public Double getShippingWithTaxAmountValue() {
 		if (_shippingWithTaxAmountValueSupplier != null) {
 			shippingWithTaxAmountValue =
@@ -3050,14 +3352,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the shipping charge with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingWithTaxAmountValue;
 
 	@JsonIgnore
 	private Supplier<Double> _shippingWithTaxAmountValueSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sum of every line item price before discounts and tax. Tax-exclusive.",
+		example = "100.0"
+	)
 	@Valid
 	public BigDecimal getSubtotal() {
 		if (_subtotalSupplier != null) {
@@ -3092,14 +3399,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sum of every line item price before discounts and tax. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotal;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sum of every line item price before discounts and tax. Tax-exclusive.",
+		example = "100.0"
+	)
 	public Double getSubtotalAmount() {
 		if (_subtotalAmountSupplier != null) {
 			subtotalAmount = _subtotalAmountSupplier.get();
@@ -3133,14 +3445,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sum of every line item price before discounts and tax. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalAmount;
 
 	@JsonIgnore
 	private Supplier<Double> _subtotalAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total discount applied to the subtotal across every discount tier. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountAmount() {
 		if (_subtotalDiscountAmountSupplier != null) {
@@ -3176,14 +3493,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Total discount applied to the subtotal across every discount tier. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalDiscountAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted subtotal-discount amount with the currency symbol. Read-only.",
+		example = "$0.00"
+	)
 	public String getSubtotalDiscountAmountFormatted() {
 		if (_subtotalDiscountAmountFormattedSupplier != null) {
 			subtotalDiscountAmountFormatted =
@@ -3221,7 +3543,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted subtotal-discount amount with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountAmountFormatted;
 
@@ -3229,7 +3553,10 @@ public class Order implements Serializable {
 	private Supplier<String> _subtotalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-1 tiered subtotal discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel1() {
 		if (_subtotalDiscountPercentageLevel1Supplier != null) {
@@ -3269,7 +3596,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-1 tiered subtotal discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel1;
 
@@ -3277,7 +3606,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-1 tiered subtotal discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel1WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -3318,7 +3650,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-1 tiered subtotal discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount;
 
@@ -3327,7 +3661,10 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-2 tiered subtotal discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel2() {
 		if (_subtotalDiscountPercentageLevel2Supplier != null) {
@@ -3367,7 +3704,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-2 tiered subtotal discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel2;
 
@@ -3375,7 +3714,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-2 tiered subtotal discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel2WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -3416,7 +3758,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-2 tiered subtotal discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount;
 
@@ -3425,7 +3769,10 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-3 tiered subtotal discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel3() {
 		if (_subtotalDiscountPercentageLevel3Supplier != null) {
@@ -3465,7 +3812,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-3 tiered subtotal discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel3;
 
@@ -3473,7 +3822,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-3 tiered subtotal discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel3WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -3514,7 +3866,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-3 tiered subtotal discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount;
 
@@ -3523,7 +3877,10 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-4 tiered subtotal discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel4() {
 		if (_subtotalDiscountPercentageLevel4Supplier != null) {
@@ -3563,7 +3920,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-4 tiered subtotal discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel4;
 
@@ -3571,7 +3930,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-4 tiered subtotal discount percentage after tax application.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel4WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -3612,7 +3974,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-4 tiered subtotal discount percentage after tax application."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount;
 
@@ -3620,7 +3984,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal>
 		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total subtotal discount with tax included.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getSubtotalDiscountWithTaxAmount() {
 		if (_subtotalDiscountWithTaxAmountSupplier != null) {
@@ -3659,14 +4026,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Total subtotal discount with tax included.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalDiscountWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalDiscountWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted subtotal-discount amount with tax included. Read-only.",
+		example = "$0.00"
+	)
 	public String getSubtotalDiscountWithTaxAmountFormatted() {
 		if (_subtotalDiscountWithTaxAmountFormattedSupplier != null) {
 			subtotalDiscountWithTaxAmountFormatted =
@@ -3706,14 +4076,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted subtotal-discount amount with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountWithTaxAmountFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _subtotalDiscountWithTaxAmountFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted subtotal with the currency symbol. Read-only.",
+		example = "$100.00"
+	)
 	public String getSubtotalFormatted() {
 		if (_subtotalFormattedSupplier != null) {
 			subtotalFormatted = _subtotalFormattedSupplier.get();
@@ -3747,14 +4122,18 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted subtotal with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _subtotalFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Subtotal with tax included.", example = "108.0"
+	)
 	@Valid
 	public BigDecimal getSubtotalWithTaxAmount() {
 		if (_subtotalWithTaxAmountSupplier != null) {
@@ -3790,14 +4169,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Subtotal with tax included.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted subtotal with tax included. Read-only.",
+		example = "$108.00"
+	)
 	public String getSubtotalWithTaxAmountFormatted() {
 		if (_subtotalWithTaxAmountFormattedSupplier != null) {
 			subtotalWithTaxAmountFormatted =
@@ -3835,14 +4217,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted subtotal with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalWithTaxAmountFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _subtotalWithTaxAmountFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the subtotal with tax included. Read-only.",
+		example = "108.0"
+	)
 	public Double getSubtotalWithTaxAmountValue() {
 		if (_subtotalWithTaxAmountValueSupplier != null) {
 			subtotalWithTaxAmountValue =
@@ -3880,7 +4267,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the subtotal with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalWithTaxAmountValue;
 
@@ -3888,7 +4277,10 @@ public class Order implements Serializable {
 	private Supplier<Double> _subtotalWithTaxAmountValueSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total sales tax or VAT on the order, summed across every line item and shipping.",
+		example = "8.0"
+	)
 	@Valid
 	public BigDecimal getTaxAmount() {
 		if (_taxAmountSupplier != null) {
@@ -3923,14 +4315,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Total sales tax or VAT on the order, summed across every line item and shipping."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal taxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _taxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted tax amount with the currency symbol. Read-only.",
+		example = "$8.00"
+	)
 	public String getTaxAmountFormatted() {
 		if (_taxAmountFormattedSupplier != null) {
 			taxAmountFormatted = _taxAmountFormattedSupplier.get();
@@ -3964,7 +4361,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted tax amount with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxAmountFormatted;
 
@@ -3972,7 +4371,10 @@ public class Order implements Serializable {
 	private Supplier<String> _taxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the tax amount without currency formatting. Read-only.",
+		example = "8.0"
+	)
 	public Double getTaxAmountValue() {
 		if (_taxAmountValueSupplier != null) {
 			taxAmountValue = _taxAmountValueSupplier.get();
@@ -4006,7 +4408,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the tax amount without currency formatting. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double taxAmountValue;
 
@@ -4014,7 +4418,10 @@ public class Order implements Serializable {
 	private Supplier<Double> _taxAmountValueSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Final order total before discounts. Tax-exclusive.",
+		example = "117.99"
+	)
 	@Valid
 	public BigDecimal getTotal() {
 		if (_totalSupplier != null) {
@@ -4049,7 +4456,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Final order total before discounts. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal total;
 
@@ -4057,7 +4466,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "BigDecimal total value (tax-exclusive). Currency follows the order or channel currency.",
+		example = "113"
+	)
 	public Double getTotalAmount() {
 		if (_totalAmountSupplier != null) {
 			totalAmount = _totalAmountSupplier.get();
@@ -4091,7 +4503,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "BigDecimal total value (tax-exclusive). Currency follows the order or channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalAmount;
 
@@ -4099,7 +4513,10 @@ public class Order implements Serializable {
 	private Supplier<Double> _totalAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total discount across every line item and shipping, in the order currency. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountAmount() {
 		if (_totalDiscountAmountSupplier != null) {
@@ -4135,14 +4552,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Total discount across every line item and shipping, in the order currency. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalDiscountAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted total-discount amount with the currency symbol. Read-only.",
+		example = "$0.00"
+	)
 	public String getTotalDiscountAmountFormatted() {
 		if (_totalDiscountAmountFormattedSupplier != null) {
 			totalDiscountAmountFormatted =
@@ -4180,7 +4602,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted total-discount amount with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountAmountFormatted;
 
@@ -4188,7 +4612,10 @@ public class Order implements Serializable {
 	private Supplier<String> _totalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the total-discount amount without currency formatting. Read-only.",
+		example = "0.0"
+	)
 	public Double getTotalDiscountAmountValue() {
 		if (_totalDiscountAmountValueSupplier != null) {
 			totalDiscountAmountValue = _totalDiscountAmountValueSupplier.get();
@@ -4223,7 +4650,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the total-discount amount without currency formatting. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountAmountValue;
 
@@ -4231,7 +4660,10 @@ public class Order implements Serializable {
 	private Supplier<Double> _totalDiscountAmountValueSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-1 tiered total discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel1() {
 		if (_totalDiscountPercentageLevel1Supplier != null) {
@@ -4270,7 +4702,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-1 tiered total discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel1;
 
@@ -4278,7 +4712,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "BigDecimal totalDiscountPercentageLevel1 value with tax included. Currency follows the order or channel currency.",
+		example = "20"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel1WithTaxAmount() {
 		if (_totalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -4319,7 +4756,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "BigDecimal totalDiscountPercentageLevel1 value with tax included. Currency follows the order or channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel1WithTaxAmount;
 
@@ -4328,7 +4767,10 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-2 tiered total discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel2() {
 		if (_totalDiscountPercentageLevel2Supplier != null) {
@@ -4367,7 +4809,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-2 tiered total discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel2;
 
@@ -4375,7 +4819,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "BigDecimal totalDiscountPercentageLevel2 value with tax included. Currency follows the order or channel currency.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel2WithTaxAmount() {
 		if (_totalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -4416,7 +4863,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "BigDecimal totalDiscountPercentageLevel2 value with tax included. Currency follows the order or channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel2WithTaxAmount;
 
@@ -4425,7 +4874,10 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-3 tiered total discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel3() {
 		if (_totalDiscountPercentageLevel3Supplier != null) {
@@ -4464,7 +4916,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-3 tiered total discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel3;
 
@@ -4472,7 +4926,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "BigDecimal totalDiscountPercentageLevel3 value with tax included. Currency follows the order or channel currency.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel3WithTaxAmount() {
 		if (_totalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -4513,7 +4970,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "BigDecimal totalDiscountPercentageLevel3 value with tax included. Currency follows the order or channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel3WithTaxAmount;
 
@@ -4522,7 +4981,10 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Level-4 tiered total discount percentage. Tax-exclusive.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel4() {
 		if (_totalDiscountPercentageLevel4Supplier != null) {
@@ -4561,7 +5023,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Level-4 tiered total discount percentage. Tax-exclusive."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel4;
 
@@ -4569,7 +5033,10 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "BigDecimal totalDiscountPercentageLevel4 value with tax included. Currency follows the order or channel currency.",
+		example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel4WithTaxAmount() {
 		if (_totalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -4610,7 +5077,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "BigDecimal totalDiscountPercentageLevel4 value with tax included. Currency follows the order or channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountPercentageLevel4WithTaxAmount;
 
@@ -4619,7 +5088,9 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel4WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Total discount with tax included.", example = "0"
+	)
 	@Valid
 	public BigDecimal getTotalDiscountWithTaxAmount() {
 		if (_totalDiscountWithTaxAmountSupplier != null) {
@@ -4658,14 +5129,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Total discount with tax included.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalDiscountWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalDiscountWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted total-discount amount with tax included. Read-only.",
+		example = "$0.00"
+	)
 	public String getTotalDiscountWithTaxAmountFormatted() {
 		if (_totalDiscountWithTaxAmountFormattedSupplier != null) {
 			totalDiscountWithTaxAmountFormatted =
@@ -4704,7 +5178,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted total-discount amount with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountWithTaxAmountFormatted;
 
@@ -4712,7 +5188,10 @@ public class Order implements Serializable {
 	private Supplier<String> _totalDiscountWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the total-discount amount with tax included. Read-only.",
+		example = "0.0"
+	)
 	public Double getTotalDiscountWithTaxAmountValue() {
 		if (_totalDiscountWithTaxAmountValueSupplier != null) {
 			totalDiscountWithTaxAmountValue =
@@ -4750,14 +5229,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the total-discount amount with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountWithTaxAmountValue;
 
 	@JsonIgnore
 	private Supplier<Double> _totalDiscountWithTaxAmountValueSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted total with the currency symbol. Read-only.",
+		example = "$117.99"
+	)
 	public String getTotalFormatted() {
 		if (_totalFormattedSupplier != null) {
 			totalFormatted = _totalFormattedSupplier.get();
@@ -4791,7 +5275,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted total with the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalFormatted;
 
@@ -4799,7 +5285,10 @@ public class Order implements Serializable {
 	private Supplier<String> _totalFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Final order total with tax included, after discounts.",
+		example = "126.79"
+	)
 	@Valid
 	public BigDecimal getTotalWithTaxAmount() {
 		if (_totalWithTaxAmountSupplier != null) {
@@ -4835,14 +5324,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Final order total with tax included, after discounts."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalWithTaxAmount;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalWithTaxAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-aware formatted total with tax included. Read-only.",
+		example = "$126.79"
+	)
 	public String getTotalWithTaxAmountFormatted() {
 		if (_totalWithTaxAmountFormattedSupplier != null) {
 			totalWithTaxAmountFormatted =
@@ -4880,7 +5374,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-aware formatted total with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalWithTaxAmountFormatted;
 
@@ -4888,7 +5384,10 @@ public class Order implements Serializable {
 	private Supplier<String> _totalWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Raw decimal value of the total with tax included. Read-only.",
+		example = "126.79"
+	)
 	public Double getTotalWithTaxAmountValue() {
 		if (_totalWithTaxAmountValueSupplier != null) {
 			totalWithTaxAmountValue = _totalWithTaxAmountValueSupplier.get();
@@ -4923,14 +5422,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Raw decimal value of the total with tax included. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalWithTaxAmountValue;
 
 	@JsonIgnore
 	private Supplier<Double> _totalWithTaxAmountValueSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the transaction entity (FK).",
+		example = "tx-12345-abcdef"
+	)
 	public String getTransactionId() {
 		if (_transactionIdSupplier != null) {
 			transactionId = _transactionIdSupplier.get();
@@ -4964,7 +5468,7 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the transaction entity (FK).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String transactionId;
 
@@ -6710,4 +7214,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1096459711
+// LIFERAY-REST-BUILDER-HASH:536855160

@@ -5,10 +5,12 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -31,6 +33,7 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -197,27 +200,35 @@ public class SelectRolesDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		roleSearch.setResultsAndTotal(
-			TransformUtil.transform(
-				RoleLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					new Integer[] {getRoleType()}, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, roleSearch.getOrderByComparator()),
-				role -> {
-					if (Objects.equals(
-							role.getName(), RoleConstants.ORGANIZATION_USER) ||
-						Objects.equals(
-							role.getName(), RoleConstants.SITE_MEMBER) ||
-						!RolePermissionUtil.contains(
-							themeDisplay.getPermissionChecker(),
-							themeDisplay.getScopeGroupId(), role.getRoleId(),
-							ActionKeys.VIEW)) {
+		List<Role> roles = TransformUtil.transform(
+			RoleLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				new Integer[] {getRoleType()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, roleSearch.getOrderByComparator()),
+			role -> {
+				if (Objects.equals(
+						role.getName(), RoleConstants.ORGANIZATION_USER) ||
+					Objects.equals(role.getName(), RoleConstants.SITE_MEMBER) ||
+					!RolePermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(), role.getRoleId(),
+						ActionKeys.VIEW)) {
 
-						return null;
-					}
+					return null;
+				}
 
-					return role;
-				}));
+				return role;
+			});
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-17564") ||
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-58677")) {
+
+			roles = DepotRoleUtil.filter(getGroupId(), roles);
+		}
+
+		roleSearch.setResultsAndTotal(roles);
 
 		_roleSearch = roleSearch;
 

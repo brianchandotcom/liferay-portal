@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -64,8 +65,10 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		return ListUtil.concat(
 			TransformUtil.transform(
-				_roleService.getRoles(
-					_companyId, new int[] {RoleConstants.TYPE_DEPOT}),
+				DepotRoleUtil.filter(
+					_roleService.getRoles(
+						_companyId, new int[] {RoleConstants.TYPE_DEPOT}),
+					DepotRolesConstants.SUBTYPE_PROJECT),
 				role -> {
 					if (StringUtil.equals(
 							DepotRolesConstants.

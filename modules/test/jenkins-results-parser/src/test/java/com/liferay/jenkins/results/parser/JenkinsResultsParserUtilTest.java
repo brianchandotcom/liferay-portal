@@ -113,9 +113,14 @@ public class JenkinsResultsParserUtilTest
 
 			errorCollector.addError(
 				new Throwable(
-					"A missing environment variable should throw an exception"));
+					"A missing environment variable should throw an " +
+						"exception"));
 		}
 		catch (RuntimeException runtimeException) {
+			testEquals(
+				"Unable to find required environment variable " +
+					"'MISSING_ENVIRONMENT_VARIABLE'",
+				runtimeException.getMessage());
 		}
 	}
 

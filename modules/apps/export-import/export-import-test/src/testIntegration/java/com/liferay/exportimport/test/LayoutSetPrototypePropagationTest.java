@@ -780,7 +780,8 @@ public class LayoutSetPrototypePropagationTest
 			portlet.setPreferencesUniquePerLayout(false);
 
 			_layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
-				_layoutSetPrototypeGroup, true, layoutPrototype, true);
+				_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
+				true);
 
 			Map<String, String[]> preferenceMap = HashMapBuilder.put(
 				"bulletStyle", new String[] {"Dots"}

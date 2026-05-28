@@ -18,6 +18,11 @@ public interface ModelArmorTemplateManager {
 			String externalReferenceCode)
 		throws Exception;
 
+	public ModelArmorTemplate postModelArmorTemplate(
+			long companyId, DTOConverterContext dtoConverterContext,
+			ModelArmorTemplate modelArmorTemplate)
+		throws Exception;
+
 	public ModelArmorTemplate putModelArmorTemplate(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)

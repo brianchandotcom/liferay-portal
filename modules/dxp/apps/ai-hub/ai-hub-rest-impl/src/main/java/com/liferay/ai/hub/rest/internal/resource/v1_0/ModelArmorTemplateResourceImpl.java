@@ -48,6 +48,27 @@ public class ModelArmorTemplateResourceImpl
 	}
 
 	@Override
+	public ModelArmorTemplate postModelArmorTemplate(
+			ModelArmorTemplate modelArmorTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return _modelArmorTemplateManager.postModelArmorTemplate(
+			contextCompany.getCompanyId(),
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest, null,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			modelArmorTemplate);
+	}
+
+	@Override
 	public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
 			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
 		throws Exception {

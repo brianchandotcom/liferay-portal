@@ -28,6 +28,7 @@ interface IAccountsDataSetProps {
 	groupId: string;
 	industryFilter?: string;
 	lifecycleStageFilter?: LifecycleStages;
+	queryParams?: Record<string, string>;
 	rangeSelectors?: RangeSelectors;
 }
 
@@ -46,6 +47,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	groupId,
 	industryFilter,
 	lifecycleStageFilter,
+	queryParams,
 	rangeSelectors = {
 		rangeEnd: null,
 		rangeKey: RangeKeyTimeRanges.Last30Days,
@@ -64,7 +66,11 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 		rangeSelectorParams += `&rangeStart=${rangeSelectors.rangeStart}`;
 	}
 
-	const rangeApiURL = `${apiURL}?${rangeSelectorParams}`;
+	const queryParamsString = queryParams
+		? `&${new URLSearchParams(queryParams)}`
+		: '';
+
+	const rangeApiURL = `${apiURL}?${rangeSelectorParams}${queryParamsString}`;
 
 	return (
 		<Card>

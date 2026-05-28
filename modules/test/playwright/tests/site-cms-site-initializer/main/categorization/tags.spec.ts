@@ -527,7 +527,7 @@ test('Validate tag inputs', {tag: ['@LPD-69687']}, async ({page, tagsPage}) => {
 
 test(
 	'Tags with the same name can be created',
-	{tag: '@LPD-69204'},
+	{tag: ['@LPD-69204', '@LPD-92491']},
 	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const contentTitle = `title ${getRandomString()}`;

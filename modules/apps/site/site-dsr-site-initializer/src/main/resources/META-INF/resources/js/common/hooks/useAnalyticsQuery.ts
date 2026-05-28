@@ -15,6 +15,7 @@ import {
 } from '../../main_view/analytics/types';
 import {toFilters} from '../../main_view/analytics/utils';
 import AnalyticsService from '../services/AnalyticsService';
+import hash from '../utils/hash';
 import useIsInViewport from './useIsInViewport';
 
 function toRequestParams(
@@ -27,9 +28,12 @@ function toRequestParams(
 		.value as TDateRangeAnalyticsFilterValue;
 	const userFilter = filters[AnalyticsFilters.USER] as IAnalyticsUserFilter;
 
+	const emailAddress = userFilter?.value?.[0];
+
 	return {
 		...variables,
-		emailAddresses: userFilter.value,
+		emailAddresses: userFilter?.value ?? [],
+		entityId: emailAddress ? hash(emailAddress.toLowerCase().trim()) : '',
 		groupIds: roomFilterValue.room?.siteId
 			? [roomFilterValue.room?.siteId]
 			: [],

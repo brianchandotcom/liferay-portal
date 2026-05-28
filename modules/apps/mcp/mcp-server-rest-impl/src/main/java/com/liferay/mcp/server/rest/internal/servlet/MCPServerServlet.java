@@ -249,6 +249,10 @@ public class MCPServerServlet extends HttpServlet {
 			String content = (String)response.getEntity();
 
 			if (responseCode < 300) {
+				if (content == null) {
+					content = "Status code: " + responseCode;
+				}
+
 				return McpSchema.CallToolResult.builder(
 				).addTextContent(
 					content

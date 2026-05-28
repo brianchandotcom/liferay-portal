@@ -6,12 +6,22 @@
 import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
+export type PageData = {
+	author?: string;
+	pageURL: string;
+	title?: string;
+	type?: string;
+};
+
 export type InsightType = {
 	category: string;
+	description?: string;
+	fixHint?: string;
 	id?: number;
 	name: string;
-	pageURLs: string[];
+	pageURLs: Array<PageData | string>;
 	severity: string;
+	whyItMatters?: string;
 };
 
 export type Scan = {
@@ -46,8 +56,13 @@ export class SEOStudioApiHelper {
 				id: insightType.id,
 			});
 
-			for (const pageURL of insightTypeInput.pageURLs) {
-				const seoStudioPage = await this._postPage(scan, pageURL);
+			for (const pageInput of insightTypeInput.pageURLs) {
+				const pageData: PageData =
+					typeof pageInput === 'string'
+						? {pageURL: pageInput}
+						: pageInput;
+
+				const seoStudioPage = await this._postPage(scan, pageData);
 
 				await this._postScanInsight(
 					scan,
@@ -106,11 +121,14 @@ export class SEOStudioApiHelper {
 		return this.apiHelpers.post(this._url('insight-types'), {
 			data: {
 				category: input.category,
+				description: input.description,
+				fixHint: input.fixHint,
 				name: input.name,
 				r_accountToSEOStudioInsightTypes_accountEntryId: scan.accountId,
 				r_seoStudioScanToSEOStudioInsightTypes_seoStudioScanId:
 					scan.scanId,
 				severity: input.severity,
+				whyItMatters: input.whyItMatters,
 			},
 			failOnStatusCode: true,
 		});
@@ -132,15 +150,15 @@ export class SEOStudioApiHelper {
 		});
 	}
 
-	private async _postPage(
-		scan: Scan,
-		pageURL: string
-	): Promise<{id: number}> {
+	private async _postPage(scan: Scan, page: PageData): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('pages'), {
 			data: {
-				pageURL,
+				author: page.author,
+				pageURL: page.pageURL,
 				r_accountToSEOStudioPages_accountEntryId: scan.accountId,
 				r_seoStudioScanToSEOStudioPages_seoStudioScanId: scan.scanId,
+				title: page.title,
+				type: page.type,
 			},
 			failOnStatusCode: true,
 		});

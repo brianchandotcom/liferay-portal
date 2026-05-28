@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {seoStudioPagesTest} from './fixtures/seoStudioPagesTest';
 import {seoStudioSiteTest} from './fixtures/seoStudioSiteTest';
@@ -14,7 +13,6 @@ import {seoStudioSiteTest} from './fixtures/seoStudioSiteTest';
 const test = mergeTests(
 	loginTest(),
 	dataApiHelpersTest,
-	featureFlagsTest({'LPD-44511': {enabled: true}}),
 	seoStudioPagesTest,
 	seoStudioSiteTest
 );
@@ -91,10 +89,7 @@ test(
 		const scan = await apiHelpers.seoStudio.createScan();
 
 		try {
-			await apiHelpers.seoStudio.createInsights(
-				scan.scanId,
-				insightTypeInputs
-			);
+			await apiHelpers.seoStudio.createInsights(scan, insightTypeInputs);
 
 			await onPagePage.goto(seoStudioSite.friendlyUrlPath);
 

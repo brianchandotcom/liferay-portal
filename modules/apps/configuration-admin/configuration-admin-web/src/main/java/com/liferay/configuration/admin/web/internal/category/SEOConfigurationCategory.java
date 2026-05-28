@@ -13,7 +13,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Lourdes Fernández Besada
  */
 @Component(service = ConfigurationCategory.class)
-public class AEOSEOConfigurationCategory implements ConfigurationCategory {
+public class SEOConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
@@ -22,7 +22,7 @@ public class AEOSEOConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return "aeo-seo";
+		return "seo";
 	}
 
 	@Override

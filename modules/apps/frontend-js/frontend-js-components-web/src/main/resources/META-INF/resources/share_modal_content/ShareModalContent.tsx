@@ -643,7 +643,7 @@ export default function ShareModalContent({
 								</span>
 							)}
 
-							{Liferay.Language.get('save')}
+							{Liferay.Language.get('share')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

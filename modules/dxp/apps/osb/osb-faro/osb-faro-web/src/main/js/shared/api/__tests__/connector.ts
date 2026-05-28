@@ -111,8 +111,18 @@ describe('Connector API', () => {
 
 			expect(sendRequest).toHaveBeenCalledWith({
 				method: 'POST',
-				path: 'main/23/oauth2/tokens/new?type=demandbase&expiresIn='
+				path: 'main/23/oauth2/tokens/new?type=demandbase'
 			});
+		});
+
+		it('omits the expiresIn query param so the backend default applies', () => {
+			generateConnectorToken({groupId: '23', type: 'webhook'});
+
+			expect(sendRequest).toHaveBeenCalledWith(
+				expect.objectContaining({
+					path: expect.not.stringContaining('expiresIn')
+				})
+			);
 		});
 	});
 });

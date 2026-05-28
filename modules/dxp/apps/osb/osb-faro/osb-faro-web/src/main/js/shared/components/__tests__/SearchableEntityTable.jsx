@@ -59,9 +59,9 @@ describe('SearchableEntityTable', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelectorAll('tbody tr').length).toBe(TOTAL);
-		expect(
-			container.querySelector('tbody tr td').textContent
-		).toBe('Foo Bar');
+		expect(container.querySelector('tbody tr td').textContent).toBe(
+			'Foo Bar'
+		);
 	});
 
 	it('should render w/ Checkboxes', async () => {

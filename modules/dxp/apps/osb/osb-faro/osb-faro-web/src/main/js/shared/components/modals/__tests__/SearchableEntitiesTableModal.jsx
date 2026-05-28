@@ -44,9 +44,7 @@ describe('SearchableEntitiesTableModal', () => {
 
 	it('should render loading state without ghost table', () => {
 		const {container, getByText} = render(
-			<DefaultComponent
-				dataSourceFn={() => new Promise(() => {})}
-			/>
+			<DefaultComponent dataSourceFn={() => new Promise(() => {})} />
 		);
 
 		expect(getByText('entities')).toBeTruthy();

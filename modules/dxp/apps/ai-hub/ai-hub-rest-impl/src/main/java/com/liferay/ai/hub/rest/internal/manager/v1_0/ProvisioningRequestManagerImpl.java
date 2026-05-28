@@ -151,8 +151,29 @@ public class ProvisioningRequestManagerImpl
 			OAuth2SecureRandomGenerator.generateClientSecret(), null, List.of(),
 			provisioningRequest.getLiferayDXPURL(), 0, null,
 			provisioningRequest.getAccountEntryName(), null, null, false,
-			Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
-			serviceContext);
+			Arrays.asList(
+				"aihubagentdefinition.everything",
+				"aihubagentdefinition.everything.read",
+				"aihubagentdefinition.everything.write",
+				"aihubchatbot.everything", "aihubchatbot.everything.read",
+				"aihubchatbot.everything.write", "aihubcrawltarget.everything",
+				"aihubcrawltarget.everything.read",
+				"aihubcrawltarget.everything.write",
+				"aihubcontentretriever.everything",
+				"aihubcontentretriever.everything.read",
+				"aihubcontentretriever.everything.write",
+				"aihubinstructiondefinition.everything",
+				"aihubinstructiondefinition.everything.read",
+				"aihubinstructiondefinition.everything.write",
+				"aihubquota.everything.read", "aihubmcpserver.everything.read",
+				"Liferay.AI.Hub.REST.everything",
+				"Liferay.AI.Hub.REST.everything.read",
+				"Liferay.AI.Hub.REST.everything.write",
+				"Liferay.Headless.Admin.List.Type.everything.read",
+				"Liferay.Portal.Search.REST.everything",
+				"Liferay.Portal.Search.REST.everything.read",
+				"Liferay.Portal.Search.REST.everything.write"),
+			false, serviceContext);
 	}
 
 	private List<User> _addRegularUsers(

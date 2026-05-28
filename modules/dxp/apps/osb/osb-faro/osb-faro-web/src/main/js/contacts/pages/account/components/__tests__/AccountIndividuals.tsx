@@ -57,7 +57,7 @@ describe('AccountIndividuals', () => {
 		render(<AccountIndividuals />);
 
 		expect(lastFDSProps.apiURL).toBe(
-			'/o/faro/contacts/23/account/acc-1/individuals'
+			'/o/faro/contacts/23/account/acc-1/individuals?channelId=456'
 		);
 	});
 

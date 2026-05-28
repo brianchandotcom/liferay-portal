@@ -1,0 +1,13 @@
+{
+	"deletionType": "cascade",
+	"externalReferenceCode": "L_ACCOUNT_TO_L_SEO_STUDIO_SCANS",
+	"label": {
+		"en_US": "Account to SEO Studio Scans"
+	},
+	"name": "accountToSEOStudioScans",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SEOStudioScan$]",
+	"objectDefinitionName2": "SEOStudioScan",
+	"system": true,
+	"type": "oneToMany"
+}

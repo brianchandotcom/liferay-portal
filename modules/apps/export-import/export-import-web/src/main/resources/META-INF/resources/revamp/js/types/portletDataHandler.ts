@@ -6,9 +6,11 @@
 export interface PreviewPortletDataHandlerBoolean {
 	additionCount?: number;
 	deletionCount?: number;
+	description?: string;
 	label: string;
 	name: string;
 	previewPortletDataHandlerControls?: PreviewPortletDataHandlerControl[];
+	tag?: string;
 	type: 'Boolean';
 }
 

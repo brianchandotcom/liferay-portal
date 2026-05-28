@@ -188,6 +188,7 @@ public class PreviewPortletDataHandlerUtil {
 			{
 				setAdditionCount(() -> modelAdditionCount);
 				setDeletionCount(() -> modelDeletionCount);
+				setDescription(() -> portletDataHandler.getDescription(locale));
 				setLabel(
 					() -> {
 						String portletTitle = portletDataHandler.getTitle(
@@ -207,6 +208,7 @@ public class PreviewPortletDataHandlerUtil {
 					() -> _toNestedControls(
 						locale, manifestSummary,
 						sourcePortletDataHandlerControls));
+				setTag(() -> portletDataHandler.getTag(locale));
 			}
 		};
 	}

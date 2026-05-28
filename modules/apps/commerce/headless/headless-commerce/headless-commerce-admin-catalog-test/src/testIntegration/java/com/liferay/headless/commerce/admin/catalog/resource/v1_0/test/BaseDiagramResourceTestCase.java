@@ -1466,4 +1466,4 @@ public abstract class BaseDiagramResourceTestCase {
 			DiagramResource _diagramResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:391262150
+// LIFERAY-REST-BUILDER-HASH:2036413823

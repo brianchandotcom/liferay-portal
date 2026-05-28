@@ -1973,4 +1973,4 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		WarehouseChannelResource _warehouseChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2130028847
+// LIFERAY-REST-BUILDER-HASH:1151332414

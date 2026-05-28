@@ -1586,4 +1586,4 @@ public abstract class BasePageMetricResourceTestCase {
 		_pageMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1431787590
+// LIFERAY-REST-BUILDER-HASH:-1310776585

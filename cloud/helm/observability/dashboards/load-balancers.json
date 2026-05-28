@@ -18,12 +18,15 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 1,
-	"links": [],
+	"links": [
+	],
 	"panels": [
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 5,
@@ -57,7 +60,8 @@
 						"fixedColor": "purple",
 						"mode": "fixed"
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -69,7 +73,8 @@
 					},
 					"unit": "reqps"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 4,
@@ -116,7 +121,8 @@
 						"fixedColor": "orange",
 						"mode": "fixed"
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -132,7 +138,8 @@
 					},
 					"unit": "s"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 4,
@@ -179,7 +186,8 @@
 						"fixedColor": "green",
 						"mode": "fixed"
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -195,7 +203,8 @@
 					},
 					"unit": "Bps"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 4,
@@ -242,7 +251,8 @@
 						"fixedColor": "blue",
 						"mode": "fixed"
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -258,7 +268,8 @@
 					},
 					"unit": "Bps"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 4,
@@ -338,7 +349,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -511,7 +523,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -643,7 +656,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -756,7 +770,8 @@
 				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
 				"label": "Environment",
 				"name": "environment",
-				"options": [],
+				"options": [
+				],
 				"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
 				"refresh": 1,
 				"regex": "/(?<value>.*-(?<text>.*))/",
@@ -770,7 +785,8 @@
 		"from": "now-1h",
 		"to": "now"
 	},
-	"timepicker": {},
+	"timepicker": {
+	},
 	"timezone": "browser",
 	"title": "Load Balancers",
 	"uid": "load-balancers",

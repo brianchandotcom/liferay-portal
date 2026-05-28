@@ -4,13 +4,6 @@
 {{- fail (printf "alerting.defaultChannel %q is not present in alerting.notificationChannels" $defaultChannel) -}}
 {{- end -}}
 apiVersion: v1
-kind: ConfigMap
-metadata:
-    labels:
-        {{- include "observability.labels" . | nindent 8 }}
-        grafana_alert: "true"
-    name: {{ printf "%s-notification-policies" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
-    namespace: {{ include "observability.namespace" . | quote }}
 data:
     notification-policies.yaml: |
         apiVersion: 1
@@ -39,4 +32,11 @@ data:
                     {{- end }}
                     {{- end }}
                     {{- end }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-notification-policies" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
 {{- end -}}

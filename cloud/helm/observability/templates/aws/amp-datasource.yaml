@@ -2,13 +2,6 @@
 {{- $awsRegion := required "aws.region must be set when cloudProvider=aws" .Values.aws.region -}}
 {{- $ampUrl := required "aws.ampWorkspaceUrl must be set when cloudProvider=aws" .Values.aws.ampWorkspaceUrl -}}
 apiVersion: v1
-kind: ConfigMap
-metadata:
-    labels:
-        {{- include "observability.labels" . | nindent 8 }}
-        grafana_datasource: "true"
-    name: {{ printf "%s-amp-datasource" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
-    namespace: {{ include "observability.namespace" . | quote }}
 data:
     amp-datasource.yaml: |
         apiVersion: 1
@@ -25,4 +18,11 @@ data:
                 type: {{ .Values.datasource.type | quote }}
                 uid: {{ include "observability.datasourceUid" . | quote }}
                 url: {{ $ampUrl | quote }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_datasource: "true"
+    name: {{ printf "%s-amp-datasource" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
 {{- end -}}

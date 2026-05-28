@@ -10,13 +10,6 @@
 {{- end }}
 ---
 apiVersion: v1
-kind: ConfigMap
-metadata:
-    labels:
-        {{- include "observability.labels" $ | nindent 8 }}
-        grafana_alert: "true"
-    name: {{ printf "%s-alert-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
-    namespace: {{ $namespace | quote }}
 data:
     {{ printf "%s.yaml" $key | quote }}: |
         apiVersion: 1
@@ -81,5 +74,12 @@ data:
                             {{- toYaml . | nindent 28 }}
                         {{- end }}
                         isPaused: {{ $rule.isPaused | default false }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" $ | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-alert-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ $namespace | quote }}
 {{- end }}
 {{- end }}

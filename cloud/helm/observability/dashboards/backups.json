@@ -18,12 +18,15 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 0,
-	"links": [],
+	"links": [
+	],
 	"panels": [
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 5,
@@ -63,11 +66,13 @@
 						},
 						"filterable": true,
 						"footer": {
-							"reducers": []
+							"reducers": [
+							]
 						},
 						"inspect": false
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -109,13 +114,13 @@
 												"index": 1,
 												"text": "🔴 Not Ready"
 											},
-											"1": {
-												"index": 0,
-												"text": "🟢 Ready"
-											},
 											"0.5": {
 												"index": 2,
 												"text": "🟡 In Progress"
+											},
+											"1": {
+												"index": 0,
+												"text": "🟢 Ready"
 											}
 										},
 										"type": "value"
@@ -206,7 +211,8 @@
 								"targetField": "Value #finished"
 							}
 						],
-						"fields": {}
+						"fields": {
+						}
 					}
 				},
 				{
@@ -217,7 +223,8 @@
 							"Time 2": true,
 							"Time 3": true
 						},
-						"includeByName": {},
+						"includeByName": {
+						},
 						"indexByName": {
 							"Time 1": 5,
 							"Time 2": 6,
@@ -274,7 +281,8 @@
 					},
 					"unit": "none"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 6,
@@ -290,7 +298,9 @@
 				"orientation": "horizontal",
 				"percentChangeColorMode": "standard",
 				"reduceOptions": {
-					"calcs": ["lastNotNull"],
+					"calcs": [
+						"lastNotNull"
+					],
 					"fields": "",
 					"values": false
 				},
@@ -355,7 +365,8 @@
 					},
 					"unit": "none"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 6,
@@ -371,7 +382,9 @@
 				"orientation": "horizontal",
 				"percentChangeColorMode": "standard",
 				"reduceOptions": {
-					"calcs": ["lastNotNull"],
+					"calcs": [
+						"lastNotNull"
+					],
 					"fields": "",
 					"values": false
 				},
@@ -436,7 +449,8 @@
 					},
 					"unit": "none"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 6,
@@ -452,7 +466,9 @@
 				"orientation": "horizontal",
 				"percentChangeColorMode": "standard",
 				"reduceOptions": {
-					"calcs": ["lastNotNull"],
+					"calcs": [
+						"lastNotNull"
+					],
 					"fields": "",
 					"values": false
 				},
@@ -525,7 +541,8 @@
 					},
 					"unit": "percent"
 				},
-				"overrides": []
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 10,
@@ -539,7 +556,9 @@
 				"minVizWidth": 75,
 				"orientation": "auto",
 				"reduceOptions": {
-					"calcs": ["lastNotNull"],
+					"calcs": [
+						"lastNotNull"
+					],
 					"fields": "",
 					"values": false
 				},
@@ -570,7 +589,10 @@
 	],
 	"preload": false,
 	"schemaVersion": 42,
-	"tags": ["Liferay", "Backups"],
+	"tags": [
+		"Liferay",
+		"Backups"
+	],
 	"templating": {
 		"list": [
 			{
@@ -586,7 +608,8 @@
 				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
 				"label": "Environment",
 				"name": "environment",
-				"options": [],
+				"options": [
+				],
 				"query": {
 					"qryType": 1,
 					"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
@@ -604,7 +627,8 @@
 		"from": "now-7d",
 		"to": "now"
 	},
-	"timepicker": {},
+	"timepicker": {
+	},
 	"timezone": "browser",
 	"title": "Backups",
 	"uid": "backups",

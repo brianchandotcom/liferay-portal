@@ -338,44 +338,44 @@ alloy:
             discoveryInterval: 5m
             enabled: false
             metrics:
-                - name: CPUUtilization
-                  statistics:
-                    - Average
-                    - Maximum
-                - name: FreeableMemory
-                  statistics:
-                    - Average
-                    - Minimum
-                - name: FreeStorageSpace
-                  statistics:
-                    - Average
-                    - Minimum
-                - name: ReadIOPS
-                  statistics:
-                    - Average
-                - name: WriteIOPS
-                  statistics:
-                    - Average
-                - name: ReadLatency
-                  statistics:
-                    - Average
-                    - Maximum
-                - name: WriteLatency
-                  statistics:
-                    - Average
-                    - Maximum
-                - name: SwapUsage
-                  statistics:
-                    - Average
-                    - Maximum
-                - name: DiskQueueDepth
-                  statistics:
-                    - Average
-                    - Maximum
-                - name: ReplicaLag
-                  statistics:
-                    - Average
-                    - Maximum
+                -   name: CPUUtilization
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: FreeableMemory
+                    statistics:
+                        -   Average
+                        -   Minimum
+                -   name: FreeStorageSpace
+                    statistics:
+                        -   Average
+                        -   Minimum
+                -   name: ReadIOPS
+                    statistics:
+                        -   Average
+                -   name: WriteIOPS
+                    statistics:
+                        -   Average
+                -   name: ReadLatency
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: WriteLatency
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: SwapUsage
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: DiskQueueDepth
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: ReplicaLag
+                    statistics:
+                        -   Average
+                        -   Maximum
             nameTagRegex: .*-database-(blue|green)$
             region: ""
             scrapeInterval: 1m
@@ -542,7 +542,7 @@ grafana-alloy:
             allowPrivilegeEscalation: false
             capabilities:
                 drop:
-                    - ALL
+                    -   ALL
             privileged: false
             readOnlyRootFilesystem: false
     configReloader:
@@ -550,7 +550,7 @@ grafana-alloy:
             allowPrivilegeEscalation: false
             capabilities:
                 drop:
-                    - ALL
+                    -   ALL
             privileged: false
             readOnlyRootFilesystem: false
     controller:
@@ -569,17 +569,17 @@ grafana-alloy:
 kube-state-metrics:
     enabled: true
     extraArgs:
-        - --v=1
-        - --metric-allowlist=kube_deployment_status_replicas_ready,kube_statefulset_status_replicas_ready,kube_pod_container_status_restarts_total,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_info,kube_namespace_labels,kube_node_info,kube_node_status_condition
+        -   --v=1
+        -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_statefulset_status_replicas_ready,kube_pod_container_status_restarts_total,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_info,kube_namespace_labels,kube_node_info,kube_node_status_condition
     metricLabelsAllowlist:
-        - namespaces=[liferay.com/observable]
+        -   namespaces=[liferay.com/observable]
     networkPolicy:
         egress:
-            - {}
+            -   {}
         enabled: true
         ingress:
-            - from:
-                - podSelector: {}
+            -   from:
+                    -   podSelector: {}
     podDisruptionBudget:
         maxUnavailable: 1
     prometheus:
@@ -599,13 +599,13 @@ nameOverride: ""
 prometheus-node-exporter:
     enabled: true
     extraArgs:
-        - --log.level=error
-        - --log.format=json
+        -   --log.level=error
+        -   --log.format=json
     networkPolicy:
         enabled: true
         ingress:
-            - from:
-                - podSelector: {}
+            -   from:
+                    -   podSelector: {}
     prometheus:
         monitor:
             enabled: false
@@ -633,35 +633,35 @@ prometheus-pushgateway:
         allowPrivilegeEscalation: false
         capabilities:
             drop:
-                - ALL
+                -   ALL
         privileged: false
         readOnlyRootFilesystem: false
     enabled: true
     extraArgs:
-        - --persistence.file=/data/pushgateway.data
-        - --persistence.interval=1m
-        - --log.format=json
-        - --log.level=error
+        -   --persistence.file=/data/pushgateway.data
+        -   --persistence.interval=1m
+        -   --log.format=json
+        -   --log.level=error
     extraContainers:
-        - args:
-            - --sync-period=1m
-            - --ttl=1m
-          image: ghcr.io/abatilo/pushgateway-cleaner:v0.1.3
-          name: pushgateway-cleaner
-          resources:
-            limits:
-                cpu: 40m
-                memory: 16Mi
-            requests:
-                cpu: 20m
-                memory: 4Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-                drop:
-                    - ALL
-            privileged: false
-            readOnlyRootFilesystem: false
+        -   args:
+                -   --sync-period=1m
+                -   --ttl=1m
+            image: ghcr.io/abatilo/pushgateway-cleaner:v0.1.3
+            name: pushgateway-cleaner
+            resources:
+                limits:
+                    cpu: 40m
+                    memory: 16Mi
+                requests:
+                    cpu: 20m
+                    memory: 4Mi
+            securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                    drop:
+                        -   ALL
+                privileged: false
+                readOnlyRootFilesystem: false
     networkPolicy:
         allowAll: true
     resources:

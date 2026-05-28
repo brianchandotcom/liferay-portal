@@ -15,12 +15,12 @@ metadata:
     name: {{ printf "%s-recording-rules" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
 spec:
     groups:
-        -   name: liferay-recording-rules
-            interval: {{ $interval | quote }}
+        -   interval: {{ $interval | quote }}
+            name: liferay-recording-rules
             rules:
                 {{- range $matchedRules }}
-                -   record: {{ .record | quote }}
-                    expr: |
+                -   expr: |
                         {{- .expr | nindent 24 }}
+                    record: {{ .record | quote }}
                 {{- end }}
 {{- end -}}

@@ -18,12 +18,15 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 0,
-	"links": [],
+	"links": [
+	],
 	"panels": [
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 22,
@@ -49,7 +52,10 @@
 	],
 	"preload": false,
 	"schemaVersion": 42,
-	"tags": ["Liferay", "Central Hub"],
+	"tags": [
+		"Liferay",
+		"Central Hub"
+	],
 	"templating": {
 		"list": [
 			{
@@ -65,7 +71,8 @@
 				"definition": "label_values(kube_statefulset_labels{statefulset=~\"liferay-.*\"},label_helm_sh_chart)",
 				"hide": 2,
 				"name": "liferay_chart_version",
-				"options": [],
+				"options": [
+				],
 				"query": {
 					"qryType": 1,
 					"query": "label_values(kube_statefulset_labels{statefulset=~\"liferay-.*\"},label_helm_sh_chart)",

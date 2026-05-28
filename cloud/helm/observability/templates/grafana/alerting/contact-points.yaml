@@ -1,12 +1,5 @@
 {{- if .Values.alerting.notificationChannels -}}
 apiVersion: v1
-kind: ConfigMap
-metadata:
-    labels:
-        {{- include "observability.labels" . | nindent 8 }}
-        grafana_alert: "true"
-    name: {{ printf "%s-contact-points" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
-    namespace: {{ include "observability.namespace" . | quote }}
 data:
     contact-points.yaml: |
         apiVersion: 1
@@ -24,4 +17,11 @@ data:
                         {{- end }}
             {{- end }}
             {{- end }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-contact-points" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
 {{- end -}}

@@ -15,12 +15,6 @@
 {{- fail "gcp.projectId is required when cloudProvider=gcp (Alloy remote-writes to its GMP write endpoint)" -}}
 {{- end -}}
 apiVersion: v1
-kind: ConfigMap
-metadata:
-    labels:
-        {{- include "observability.labels" . | nindent 8 }}
-    name: liferay-alloy-config
-    namespace: {{ include "observability.namespace" . | quote }}
 data:
     config.alloy: |
         logging {
@@ -395,4 +389,10 @@ data:
             }
         }
         {{- end }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: liferay-alloy-config
+    namespace: {{ include "observability.namespace" . | quote }}
 {{- end -}}

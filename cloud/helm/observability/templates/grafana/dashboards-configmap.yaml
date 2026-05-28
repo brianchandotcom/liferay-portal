@@ -68,6 +68,9 @@
 {{- end }}
 ---
 apiVersion: v1
+data:
+    {{ $key }}.json: |
+        {{- $rendered | nindent 8 }}
 kind: ConfigMap
 metadata:
     annotations:
@@ -77,8 +80,5 @@ metadata:
         grafana_dashboard: "true"
     name: {{ printf "%s-dashboard-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
     namespace: {{ $namespace | quote }}
-data:
-    {{ $key }}.json: |
-        {{- $rendered | nindent 8 }}
 {{- end }}
 {{- end }}

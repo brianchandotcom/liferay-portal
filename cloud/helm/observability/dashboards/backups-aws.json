@@ -18,12 +18,15 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 0,
-	"links": [],
+	"links": [
+	],
 	"panels": [
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 5,
@@ -48,8 +51,10 @@
 		},
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 14,
@@ -76,7 +81,8 @@
 	"preload": false,
 	"refresh": "",
 	"schemaVersion": 42,
-	"tags": [],
+	"tags": [
+	],
 	"templating": {
 		"list": [
 			{
@@ -92,7 +98,8 @@
 				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
 				"label": "Environment",
 				"name": "environment",
-				"options": [],
+				"options": [
+				],
 				"query": {
 					"qryType": 1,
 					"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
@@ -110,7 +117,8 @@
 		"from": "now-6h",
 		"to": "now"
 	},
-	"timepicker": {},
+	"timepicker": {
+	},
 	"timezone": "browser",
 	"title": "Backups",
 	"uid": "backups",

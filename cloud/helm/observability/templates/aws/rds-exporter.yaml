@@ -3,6 +3,7 @@
 {{- $namespace := include "observability.namespace" . -}}
 {{- $name := printf "%s-rds-exporter" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" -}}
 apiVersion: v1
+automountServiceAccountToken: false
 kind: ServiceAccount
 metadata:
     labels:
@@ -14,7 +15,6 @@ metadata:
     annotations:
         eks.amazonaws.com/role-arn: {{ . | quote }}
     {{- end }}
-automountServiceAccountToken: false
 ---
 apiVersion: apps/v1
 kind: Deployment

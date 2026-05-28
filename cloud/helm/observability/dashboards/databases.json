@@ -18,12 +18,15 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 0,
-	"links": [],
+	"links": [
+	],
 	"panels": [
 		{
 			"fieldConfig": {
-				"defaults": {},
-				"overrides": []
+				"defaults": {
+				},
+				"overrides": [
+				]
 			},
 			"gridPos": {
 				"h": 5,
@@ -69,7 +72,8 @@
 						"lineWidth": 0,
 						"spanNulls": false
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -284,7 +288,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -429,7 +434,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -574,7 +580,8 @@
 							"mode": "off"
 						}
 					},
-					"mappings": [],
+					"mappings": [
+					],
 					"thresholds": {
 						"mode": "absolute",
 						"steps": [
@@ -697,7 +704,8 @@
 				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
 				"label": "Environment",
 				"name": "environment",
-				"options": [],
+				"options": [
+				],
 				"query": {
 					"qryType": 1,
 					"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",

@@ -1,9 +1,0 @@
-{
-	"config": {
-		"imports": {
-			"frontend-editor-ckeditor-web": {
-				"/": ">=4.0.0"
-			}
-		}
-	}
-}

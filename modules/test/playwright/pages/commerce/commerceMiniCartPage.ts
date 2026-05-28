@@ -14,6 +14,7 @@ export class CommerceMiniCartPage {
 	readonly miniCartButton: Locator;
 	readonly miniCartButtonClose: Locator;
 	readonly miniCartInvalidQuantityMessage: Locator;
+	readonly miniCartPriceOnApplicationInfoMessage: Locator;
 	readonly miniCartItem: (productName: string) => Locator;
 	readonly miniCartItemsContainer: Locator;
 	readonly miniCartItemPrice: (text: RegExp) => Locator;
@@ -63,6 +64,9 @@ export class CommerceMiniCartPage {
 		this.miniCartInvalidQuantityMessage = page.getByText(
 			'The product quantity is not valid.',
 			{exact: true}
+		);
+		this.miniCartPriceOnApplicationInfoMessage = page.getByText(
+			'Your cart has products that require a quote to complete the checkout.'
 		);
 		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
 		this.miniCartItem = (productName: string) =>

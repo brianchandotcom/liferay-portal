@@ -195,7 +195,7 @@ describe('AccountsDataSet', () => {
 			/>
 		);
 
-		expect(lastApiURL).toBe('fake-url&rangeKey=30');
+		expect(lastApiURL).toBe('fake-url?rangeKey=30');
 	});
 
 	it('should append rangeStart and rangeEnd as query params when a custom range is provided', () => {
@@ -213,7 +213,7 @@ describe('AccountsDataSet', () => {
 		);
 
 		expect(lastApiURL).toBe(
-			'fake-url&rangeKey=CUSTOM&rangeEnd=2024-01-31&rangeStart=2024-01-01'
+			'fake-url?rangeKey=CUSTOM&rangeEnd=2024-01-31&rangeStart=2024-01-01'
 		);
 	});
 });

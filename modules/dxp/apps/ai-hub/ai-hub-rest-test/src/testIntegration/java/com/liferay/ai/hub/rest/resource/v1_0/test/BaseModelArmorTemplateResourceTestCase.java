@@ -18,6 +18,9 @@ import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.resource.v1_0.ModelArmorTemplateResource;
 import com.liferay.ai.hub.rest.client.serdes.v1_0.ModelArmorTemplateSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -100,6 +103,17 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			testCompany.getCompanyId());
 
 		modelArmorTemplateResource = ModelArmorTemplateResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -210,6 +224,28 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testPostModelArmorTemplate() throws Exception {
+		ModelArmorTemplate randomModelArmorTemplate =
+			randomModelArmorTemplate();
+
+		ModelArmorTemplate postModelArmorTemplate =
+			testPostModelArmorTemplate_addModelArmorTemplate(
+				randomModelArmorTemplate);
+
+		assertEquals(randomModelArmorTemplate, postModelArmorTemplate);
+		assertValid(postModelArmorTemplate);
+	}
+
+	protected ModelArmorTemplate
+			testPostModelArmorTemplate_addModelArmorTemplate(
+				ModelArmorTemplate modelArmorTemplate)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutModelArmorTemplateByExternalReferenceCode()
 		throws Exception {
 
@@ -279,6 +315,56 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		throws Exception {
 
 		return randomModelArmorTemplate();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ModelArmorTemplate modelArmorTemplate1 =
+			testBatchEngineDeleteImportTask_addModelArmorTemplate();
+
+		testBatchEngineDeleteImportTask_deleteModelArmorTemplate(
+			200, modelArmorTemplate1.getExternalReferenceCode());
+	}
+
+	protected ModelArmorTemplate
+			testBatchEngineDeleteImportTask_addModelArmorTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteModelArmorTemplate(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(
@@ -1274,7 +1360,30 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		return randomModelArmorTemplate();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ModelArmorTemplateResource modelArmorTemplateResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1484,4 +1593,4 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		_modelArmorTemplateResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1191882568
+// LIFERAY-REST-BUILDER-HASH:1091802144

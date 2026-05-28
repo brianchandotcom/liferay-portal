@@ -456,6 +456,9 @@
 						"type": "integer",
 						"x-parent-map": "properties"
 					},
+					"modifiedBy": {
+						"$ref": "#/components/schemas/Creator"
+					},
 					"objectEntryFolderExternalReferenceCode": {
 						"type": "string"
 					},

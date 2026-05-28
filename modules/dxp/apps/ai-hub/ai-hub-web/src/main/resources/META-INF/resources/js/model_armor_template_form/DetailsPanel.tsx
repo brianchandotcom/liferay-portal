@@ -11,6 +11,7 @@ import {FormikErrors, FormikTouched} from 'formik';
 import {FieldBase, InputLocalized} from 'frontend-js-components-web';
 import React, {FocusEventHandler} from 'react';
 
+import {maskExternalReferenceCode} from '../utils/externalReferenceCode';
 import {GUARDRAIL_TYPE_OPTIONS} from './constants';
 import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 
@@ -89,7 +90,7 @@ const DetailsPanel: React.FC<IProps> = ({
 						onChange={(event) =>
 							setField(
 								'externalReferenceCode',
-								event.target.value
+								maskExternalReferenceCode(event.target.value)
 							)
 						}
 						required

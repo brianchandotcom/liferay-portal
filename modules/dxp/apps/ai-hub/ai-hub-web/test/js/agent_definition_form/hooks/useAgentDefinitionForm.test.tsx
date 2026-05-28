@@ -53,6 +53,8 @@ jest.mock('@liferay/object-js-components-web', () => ({
 	openToast: (...args: any[]) => mockOpenToast(...args),
 }));
 
+jest.mock('uuid', () => ({v4: () => 'GENERATED_UUID'}));
+
 (global as any).Liferay = {
 	Language: {
 		get: (key: string) => key,
@@ -110,7 +112,9 @@ describe('useAgentDefinitionForm', () => {
 
 			expect(result.current.values.active).toBe(false);
 			expect(result.current.values.description).toBe('');
-			expect(result.current.values.externalReferenceCode).toBe('');
+			expect(result.current.values.externalReferenceCode).toBe(
+				'GENERATED_UUID'
+			);
 			expect(result.current.values.inputVariables).toBe('');
 			expect(result.current.values.outputVariable).toBe('');
 			expect(result.current.values.title_i18n).toEqual({});
@@ -542,9 +546,6 @@ describe('useAgentDefinitionForm', () => {
 				expect(result.current.errors.title_i18n).toBe('required');
 			});
 
-			expect(result.current.errors.externalReferenceCode).toBe(
-				'required'
-			);
 			expect(result.current.errors.description).toBe('required');
 			expect(result.current.errors.inputVariables).toBe('required');
 			expect(result.current.errors.outputVariable).toBe('required');

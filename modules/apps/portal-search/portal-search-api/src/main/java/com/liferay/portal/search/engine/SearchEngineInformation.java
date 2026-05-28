@@ -25,4 +25,6 @@ public interface SearchEngineInformation {
 
 	public String getVendorString();
 
+	public boolean isInferenceAPISupported();
+
 }

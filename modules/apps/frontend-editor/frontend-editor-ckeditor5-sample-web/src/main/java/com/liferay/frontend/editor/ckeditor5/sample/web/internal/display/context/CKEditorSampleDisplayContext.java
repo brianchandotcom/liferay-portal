@@ -28,9 +28,9 @@ import java.util.Map;
 /**
  * @author Miguel Arroyo
  */
-public class CKEditor5SampleDisplayContext {
+public class CKEditorSampleDisplayContext {
 
-	public CKEditor5SampleDisplayContext(
+	public CKEditorSampleDisplayContext(
 		CETManager cetManager, RenderRequest renderRequest) {
 
 		_cetManager = cetManager;

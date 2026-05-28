@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceModifierProductGroup")
+@GraphQLName(
+	description = "product group binding that restricts a price modifier to products inside a product group. Backed by price modifier link with the pricing class class name.",
+	value = "PriceModifierProductGroup"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "product group binding that restricts a price modifier to products inside a product group. Backed by price modifier link with the pricing class class name.",
 	requiredProperties = {"priceModifierId", "productGroupId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,9 @@ public class PriceModifierProductGroup implements Serializable {
 			PriceModifierProductGroup.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,14 +97,19 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound priceModifier; alternative to `priceModifierId` for lookup.",
+		example = "DAB-34098-789-N"
+	)
 	public String getPriceModifierExternalReferenceCode() {
 		if (_priceModifierExternalReferenceCodeSupplier != null) {
 			priceModifierExternalReferenceCode =
@@ -137,7 +148,9 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound priceModifier; alternative to `priceModifierId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceModifierExternalReferenceCode;
 
@@ -145,7 +158,10 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<String> _priceModifierExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceModifier entity (FK identifier).",
+		example = "30324"
+	)
 	public Long getPriceModifierId() {
 		if (_priceModifierIdSupplier != null) {
 			priceModifierId = _priceModifierIdSupplier.get();
@@ -179,7 +195,9 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceModifier entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long priceModifierId;
@@ -188,7 +206,10 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<Long> _priceModifierIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceModifierProductGroup entity (FK identifier).",
+		example = "30643"
+	)
 	public Long getPriceModifierProductGroupId() {
 		if (_priceModifierProductGroupIdSupplier != null) {
 			priceModifierProductGroupId =
@@ -226,7 +247,9 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceModifierProductGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceModifierProductGroupId;
 
@@ -275,7 +298,10 @@ public class PriceModifierProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductGroup> _productGroupSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound productGroup; alternative to `productGroupId` for lookup.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductGroupExternalReferenceCode() {
 		if (_productGroupExternalReferenceCodeSupplier != null) {
 			productGroupExternalReferenceCode =
@@ -314,7 +340,9 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound productGroup; alternative to `productGroupId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productGroupExternalReferenceCode;
 
@@ -322,7 +350,10 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the productGroup entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getProductGroupId() {
 		if (_productGroupIdSupplier != null) {
 			productGroupId = _productGroupIdSupplier.get();
@@ -356,7 +387,9 @@ public class PriceModifierProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the productGroup entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long productGroupId;
@@ -587,4 +620,4 @@ public class PriceModifierProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1253159072
+// LIFERAY-REST-BUILDER-HASH:1243674206

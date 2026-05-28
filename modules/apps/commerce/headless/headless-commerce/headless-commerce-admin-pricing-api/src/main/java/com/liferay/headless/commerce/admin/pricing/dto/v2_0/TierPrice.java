@@ -43,8 +43,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TierPrice")
+@GraphQLName(
+	description = "Quantity-break override on a price entry. Binds a minimumQuantity threshold to an override price; the runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line quantity. Backed by tier price.",
+	value = "TierPrice"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Quantity-break override on a price entry. Binds a minimumQuantity threshold to an override price; the runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line quantity. Backed by tier price.",
 	requiredProperties = {"minimumQuantity", "price", "priceEntryId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -59,7 +63,9 @@ public class TierPrice implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TierPrice.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -95,14 +101,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the tierprice is currently enabled. When false the runtime skips this record during evaluation.",
+		example = "true"
+	)
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -136,14 +147,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the tierprice is currently enabled. When false the runtime skips this record during evaluation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type.",
+		example = "{priority=high, segment=B2B}"
+	)
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -178,14 +194,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, runtime discount discovery walks this tierprice when resolving the cart-line price.",
+		example = "true"
+	)
 	public Boolean getDiscountDiscovery() {
 		if (_discountDiscoverySupplier != null) {
 			discountDiscovery = _discountDiscoverySupplier.get();
@@ -219,7 +240,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, runtime discount discovery walks this tierprice when resolving the cart-line price."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean discountDiscovery;
 
@@ -227,7 +250,10 @@ public class TierPrice implements Serializable {
 	private Supplier<Boolean> _discountDiscoverySupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-1 band; sourced from price entry.discountLevel1.",
+		example = "30130"
+	)
 	@Valid
 	public BigDecimal getDiscountLevel1() {
 		if (_discountLevel1Supplier != null) {
@@ -262,7 +288,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-1 band; sourced from price entry.discountLevel1."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel1;
 
@@ -270,7 +298,10 @@ public class TierPrice implements Serializable {
 	private Supplier<BigDecimal> _discountLevel1Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-2 band; sourced from price entry.discountLevel2.",
+		example = "30130"
+	)
 	@Valid
 	public BigDecimal getDiscountLevel2() {
 		if (_discountLevel2Supplier != null) {
@@ -305,7 +336,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-2 band; sourced from price entry.discountLevel2."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel2;
 
@@ -313,7 +346,10 @@ public class TierPrice implements Serializable {
 	private Supplier<BigDecimal> _discountLevel2Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-3 band; sourced from price entry.discountLevel3.",
+		example = "30130"
+	)
 	@Valid
 	public BigDecimal getDiscountLevel3() {
 		if (_discountLevel3Supplier != null) {
@@ -348,7 +384,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-3 band; sourced from price entry.discountLevel3."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel3;
 
@@ -356,7 +394,10 @@ public class TierPrice implements Serializable {
 	private Supplier<BigDecimal> _discountLevel3Supplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-4 band; sourced from price entry.discountLevel4.",
+		example = "30130"
+	)
 	@Valid
 	public BigDecimal getDiscountLevel4() {
 		if (_discountLevel4Supplier != null) {
@@ -391,14 +432,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-4 band; sourced from price entry.discountLevel4."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel4;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel4Supplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record becomes effective. ISO 8601.",
+		example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -432,14 +478,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record becomes effective. ISO 8601."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -473,14 +524,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -514,7 +570,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -522,7 +580,10 @@ public class TierPrice implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the tierprice. Server-assigned and stable.",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -554,7 +615,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the tierprice. Server-assigned and stable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -562,7 +625,10 @@ public class TierPrice implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Quantity threshold at which the tier price applies; the runtime resolves the highest-threshold tier whose minimumQuantity is at most the cart line quantity.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getMinimumQuantity() {
 		if (_minimumQuantitySupplier != null) {
@@ -597,7 +663,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Quantity threshold at which the tier price applies; the runtime resolves the highest-threshold tier whose minimumQuantity is at most the cart line quantity."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected BigDecimal minimumQuantity;
@@ -605,7 +673,10 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _minimumQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the record has no expiration date and expirationDate is ignored.",
+		example = "true"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -639,14 +710,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the record has no expiration date and expirationDate is ignored."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Unit price in the parent price list's currency.",
+		example = "10.1"
+	)
 	public Double getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -680,7 +756,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Unit price in the parent price list's currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Double price;
@@ -688,7 +766,10 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "CAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound priceEntry; alternative to `priceEntryId` for lookup.",
+		example = "CAB-34098-789-N"
+	)
 	public String getPriceEntryExternalReferenceCode() {
 		if (_priceEntryExternalReferenceCodeSupplier != null) {
 			priceEntryExternalReferenceCode =
@@ -726,7 +807,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound priceEntry; alternative to `priceEntryId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceEntryExternalReferenceCode;
 
@@ -734,7 +817,10 @@ public class TierPrice implements Serializable {
 	private Supplier<String> _priceEntryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the priceEntry entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getPriceEntryId() {
 		if (_priceEntryIdSupplier != null) {
 			priceEntryId = _priceEntryIdSupplier.get();
@@ -768,7 +854,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the priceEntry entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long priceEntryId;
@@ -776,7 +864,10 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceEntryIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Pre-formatted display string of the unit price, in the parent price list's currency. Read-only.",
+		example = "$10.00"
+	)
 	public String getPriceFormatted() {
 		if (_priceFormattedSupplier != null) {
 			priceFormatted = _priceFormattedSupplier.get();
@@ -810,14 +901,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Pre-formatted display string of the unit price, in the parent price list's currency. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "m")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure when omitted.",
+		example = "m"
+	)
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -851,7 +947,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
@@ -1242,4 +1340,4 @@ public class TierPrice implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1227342764
+// LIFERAY-REST-BUILDER-HASH:-992872354

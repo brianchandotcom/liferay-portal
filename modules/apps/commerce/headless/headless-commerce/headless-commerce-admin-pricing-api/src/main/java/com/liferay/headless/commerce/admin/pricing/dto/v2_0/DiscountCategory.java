@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("DiscountCategory")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"categoryId"})
+@GraphQLName(
+	description = "AssetCategory binding that restricts a discount to products tagged with a specific category. Backed by discount link with the AssetCategory class name.",
+	value = "DiscountCategory"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "AssetCategory binding that restricts a discount to products tagged with a specific category. Backed by discount link with the AssetCategory class name.",
+	requiredProperties = {"categoryId"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DiscountCategory")
 public class DiscountCategory implements Serializable {
@@ -51,7 +57,9 @@ public class DiscountCategory implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DiscountCategory.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -87,7 +95,9 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -136,7 +146,10 @@ public class DiscountCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Category> _categorySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound category; alternative to `categoryId` for lookup.",
+		example = "PAB-34098-789-N"
+	)
 	public String getCategoryExternalReferenceCode() {
 		if (_categoryExternalReferenceCodeSupplier != null) {
 			categoryExternalReferenceCode =
@@ -174,7 +187,9 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound category; alternative to `categoryId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String categoryExternalReferenceCode;
 
@@ -182,7 +197,10 @@ public class DiscountCategory implements Serializable {
 	private Supplier<String> _categoryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the category entity (FK identifier).",
+		example = "30130"
+	)
 	public Long getCategoryId() {
 		if (_categoryIdSupplier != null) {
 			categoryId = _categoryIdSupplier.get();
@@ -216,7 +234,9 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the category entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long categoryId;
@@ -225,7 +245,10 @@ public class DiscountCategory implements Serializable {
 	private Supplier<Long> _categoryIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the discountCategory entity (FK identifier).",
+		example = "30643"
+	)
 	public Long getDiscountCategoryId() {
 		if (_discountCategoryIdSupplier != null) {
 			discountCategoryId = _discountCategoryIdSupplier.get();
@@ -259,14 +282,19 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the discountCategory entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountCategoryId;
 
 	@JsonIgnore
 	private Supplier<Long> _discountCategoryIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the bound discount; alternative to `discountId` for lookup.",
+		example = "DAB-34098-789-N"
+	)
 	public String getDiscountExternalReferenceCode() {
 		if (_discountExternalReferenceCodeSupplier != null) {
 			discountExternalReferenceCode =
@@ -304,7 +332,9 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the bound discount; alternative to `discountId` for lookup."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountExternalReferenceCode;
 
@@ -312,7 +342,10 @@ public class DiscountCategory implements Serializable {
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the discount entity (FK identifier).",
+		example = "30324"
+	)
 	public Long getDiscountId() {
 		if (_discountIdSupplier != null) {
 			discountId = _discountIdSupplier.get();
@@ -346,7 +379,9 @@ public class DiscountCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the discount entity (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
@@ -575,4 +610,4 @@ public class DiscountCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:870095024
+// LIFERAY-REST-BUILDER-HASH:14259748

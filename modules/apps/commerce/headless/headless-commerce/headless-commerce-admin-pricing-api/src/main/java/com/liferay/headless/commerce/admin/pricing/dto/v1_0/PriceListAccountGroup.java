@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PriceListAccountGroup")
+@GraphQLName(
+	description = "Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list account group link; the `order` integer controls the resolution priority when multiple account-group bindings match the buyer.",
+	value = "PriceListAccountGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PriceListAccountGroup")
 public class PriceListAccountGroup implements Serializable {
@@ -49,7 +52,10 @@ public class PriceListAccountGroup implements Serializable {
 			PriceListAccountGroup.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the target AccountGroup. Either this or `accountGroupId` must be supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.",
+		example = "ACG-PARTNERS"
+	)
 	public String getAccountGroupExternalReferenceCode() {
 		if (_accountGroupExternalReferenceCodeSupplier != null) {
 			accountGroupExternalReferenceCode =
@@ -88,7 +94,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the target AccountGroup. Either this or `accountGroupId` must be supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountGroupExternalReferenceCode;
 
@@ -96,7 +104,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the target AccountGroup. Either this or `accountGroupExternalReferenceCode` must be supplied on create.",
+		example = "41001"
+	)
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -130,7 +141,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the target AccountGroup. Either this or `accountGroupExternalReferenceCode` must be supplied on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountGroupId;
 
@@ -138,7 +151,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<Long> _accountGroupIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the price list account group link; read-only and assigned by the service on create.",
+		example = "30647"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -170,7 +186,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the price list account group link; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -178,7 +196,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Resolution priority within the (price list, account group) bindings. Used as a tie-breaker when multiple account-group bindings match the buyer; lower values evaluated first.",
+		example = "1"
+	)
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -212,14 +233,19 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Resolution priority within the (price list, account group) bindings. Used as a tie-breaker when multiple account-group bindings match the buyer; lower values evaluated first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
 	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.",
+		example = "PL-DEFAULT-USD"
+	)
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -257,7 +283,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
@@ -265,7 +293,10 @@ public class PriceListAccountGroup implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.",
+		example = "30130"
+	)
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -299,7 +330,9 @@ public class PriceListAccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long priceListId;
 
@@ -517,4 +550,4 @@ public class PriceListAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1499136490
+// LIFERAY-REST-BUILDER-HASH:603612710

@@ -660,6 +660,48 @@ public class ObjectEntry implements Serializable {
 	private Supplier<String[]> _keywordsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getModifiedBy() {
+		if (_modifiedBySupplier != null) {
+			modifiedBy = _modifiedBySupplier.get();
+
+			_modifiedBySupplier = null;
+		}
+
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(Creator modifiedBy) {
+		this.modifiedBy = modifiedBy;
+
+		_modifiedBySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setModifiedBy(
+		UnsafeSupplier<Creator, Exception> modifiedByUnsafeSupplier) {
+
+		_modifiedBySupplier = () -> {
+			try {
+				return modifiedByUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator modifiedBy;
+
+	@JsonIgnore
+	private Supplier<Creator> _modifiedBySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectEntryFolderExternalReferenceCode() {
 		if (_objectEntryFolderExternalReferenceCodeSupplier != null) {
 			objectEntryFolderExternalReferenceCode =
@@ -1314,6 +1356,9 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "keywords")) {
 			return getKeywords();
 		}
+		else if (Objects.equals(propertyName, "modifiedBy")) {
+			return getModifiedBy();
+		}
 		else if (Objects.equals(
 					propertyName, "objectEntryFolderExternalReferenceCode")) {
 
@@ -1417,6 +1462,9 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "keywords")) {
 			setKeywords((String[])propertyValue);
+		}
+		else if (Objects.equals(propertyName, "modifiedBy")) {
+			setModifiedBy((Creator)propertyValue);
 		}
 		else if (Objects.equals(
 					propertyName, "objectEntryFolderExternalReferenceCode")) {
@@ -1735,6 +1783,18 @@ public class ObjectEntry implements Serializable {
 			sb.append("]");
 		}
 
+		Creator modifiedBy = getModifiedBy();
+
+		if (modifiedBy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedBy\": ");
+
+			sb.append(modifiedBy);
+		}
+
 		String objectEntryFolderExternalReferenceCode =
 			getObjectEntryFolderExternalReferenceCode();
 
@@ -2041,4 +2101,4 @@ public class ObjectEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1306455185
+// LIFERAY-REST-BUILDER-HASH:1395753834

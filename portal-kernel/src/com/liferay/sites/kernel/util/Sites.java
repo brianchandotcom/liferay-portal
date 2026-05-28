@@ -88,8 +88,7 @@ public interface Sites {
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException;
 
-	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
-		throws Exception;
+	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,

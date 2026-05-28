@@ -29,7 +29,6 @@ keywords:
     -   kube-state-metrics
     -   managed-prometheus
     -   observability
-kubeVersion: >=1.24.0-0
 name: observability
 type: application
 version: 0.1.0

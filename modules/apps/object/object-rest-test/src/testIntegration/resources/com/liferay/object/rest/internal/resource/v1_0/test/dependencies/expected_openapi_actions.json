@@ -644,6 +644,9 @@
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
 					},
+					"modifiedBy": {
+						"$ref": "#/components/schemas/Creator"
+					},
 					"objectEntryFolderExternalReferenceCode": {
 						"type": "string"
 					},

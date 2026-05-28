@@ -1710,7 +1710,7 @@ export default function ({
 
 	return (
 		<div className="semantic-search-settings-root">
-			{Liferay.FeatureFlags['LPD-11319'] &&
+			{Liferay.FeatureFlags?.['LPD-11319'] &&
 				!externalEmbeddingCapabilityAvailable && (
 					<ClayAlert
 						data-qa-id="bringYourOwnLLMCapabilityAlert"

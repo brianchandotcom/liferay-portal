@@ -15,6 +15,7 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -59,6 +60,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Feliphe Marinho
@@ -111,9 +113,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		if (QuotaUtil.hasExceededQuota(
 				serviceContext.getCompanyId(), currentKaleoNode.getName(),
-				prompt + "\n" + userMessage, workflowContext,
-				kaleoInstanceToken.getKaleoInstanceId(),
-				serviceContext.getUserId())) {
+				_quotaManager, prompt + "\n" + userMessage,
+				serviceContext.getUserId(), workflowContext,
+				kaleoInstanceToken.getKaleoInstanceId())) {
 
 			return;
 		}
@@ -254,7 +256,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			executionContext.getServiceContext(), userMessage);
 
 		QuotaUtil.updateUsage(
-			chatResponse, executionContext.getServiceContext());
+			chatResponse, _quotaManager, executionContext.getServiceContext());
 
 		List<KaleoTransition> kaleoTransitions =
 			kaleoNode.getKaleoTransitions();
@@ -295,6 +297,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -9,7 +9,7 @@ import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
-import com.liferay.ai.hub.internal.quota.QuotaUtil;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Feliphe Marinho
@@ -224,7 +225,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 		String message = MapUtil.getString(agentContext.getInput(), "message");
 
-		QuotaUtil.checkUsage(
+		_quotaManager.checkUsage(
 			agentContext.getCompanyId(), message, agentContext.getUserId());
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
@@ -265,6 +266,9 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;

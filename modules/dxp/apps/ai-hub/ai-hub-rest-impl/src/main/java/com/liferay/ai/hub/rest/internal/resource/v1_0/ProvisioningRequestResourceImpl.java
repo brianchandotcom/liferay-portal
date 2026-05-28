@@ -9,29 +9,23 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.resource.v1_0.ProvisioningRequestResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
 
 import java.util.Calendar;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -78,53 +72,9 @@ public class ProvisioningRequestResourceImpl
 			},
 			new long[0], serviceAccountUser.getUserId());
 
-		_addQuotas(customerAccountEntry, serviceContext);
-	}
-
-	private void _addQuotaObjectEntry(
-			AccountEntry accountEntry, String externalReferenceCode,
-			ObjectDefinition objectDefinition, ServiceContext serviceContext)
-		throws Exception {
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
-
-		if (objectEntry != null) {
-			return;
-		}
-
-		_objectEntryLocalService.addObjectEntry(
-			0, contextUser.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0,
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", externalReferenceCode
-			).put(
-				"limit", _QUOTA_TOKEN_LIMIT
-			).put(
-				"r_accountToAIHubQuotas_accountEntryId",
-				accountEntry.getAccountEntryId()
-			).put(
-				"usage", 0
-			).build(),
-			serviceContext);
-	}
-
-	private void _addQuotas(
-			AccountEntry accountEntry, ServiceContext serviceContext)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_QUOTA", contextCompany.getCompanyId());
-
-		_addQuotaObjectEntry(
-			accountEntry, "guest-quota-" + accountEntry.getAccountEntryId(),
-			objectDefinition, serviceContext);
-		_addQuotaObjectEntry(
-			accountEntry, "quota-" + accountEntry.getAccountEntryId(),
-			objectDefinition, serviceContext);
+		_quotaManager.addQuotas(
+			customerAccountEntry.getAccountEntryId(),
+			contextCompany.getCompanyId(), contextUser.getUserId());
 	}
 
 	private AccountEntry _getOrAddAccountEntry(
@@ -171,19 +121,14 @@ public class ProvisioningRequestResourceImpl
 		return _userLocalService.updateUser(user);
 	}
 
-	private static final int _QUOTA_TOKEN_LIMIT = 33333333;
-
 	@Reference
 	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

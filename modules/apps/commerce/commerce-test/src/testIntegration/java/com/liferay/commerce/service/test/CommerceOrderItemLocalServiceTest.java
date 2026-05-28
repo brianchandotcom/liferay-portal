@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceProductPrice;
@@ -31,6 +32,7 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.exception.CPDefinitionOptionRelException;
 import com.liferay.commerce.product.helper.CPInstanceHelper;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -41,6 +43,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.option.CommerceOptionValue;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -51,6 +54,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.test.util.CommerceProductTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.util.CPJSONUtil;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
@@ -231,6 +235,212 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertEquals(
 			commerceOrderItem.getCommerceOrderItemId(),
 			actualCommerceOrderItem.getCommerceOrderItemId());
+	}
+
+	@Test
+	public void testAddCommerceOrderItemAcceptsStockShortageWithBackOrder()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Accept add to cart when the stock is zero but back order is " +
+				"enabled"
+		).given(
+			"A published SKU with no warehouse stock and back order enabled " +
+				"on its CPDefinitionInventory"
+		).when(
+			"I try to add the SKU to an order"
+		).then(
+			"The add succeeds"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
+
+		Assert.assertNotNull(cpDefinitionInventory);
+
+		cpDefinitionInventory.setBackOrders(true);
+
+		_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
+			cpDefinitionInventory);
+
+		CommerceOrderItem commerceOrderItem = _addCommerceOrderItemWithStock(
+			cpInstance, BigDecimal.ZERO, BigDecimal.ONE);
+
+		_commerceOrderItems.add(commerceOrderItem);
+
+		Assert.assertNotNull(commerceOrderItem);
+	}
+
+	@Test
+	public void testAddCommerceOrderItemRejectsQuantityAboveMaxOrderQuantity()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Reject add to cart when the quantity exceeds the maximum order " +
+				"quantity"
+		).given(
+			"A published SKU with maxOrderQuantity set to four"
+		).when(
+			"I try to add the SKU to an order with quantity six"
+		).then(
+			"The add fails with a CommerceOrderValidatorException"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPConfigurationEntry masterCPConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		masterCPConfigurationEntry.setMaxOrderQuantity(BigDecimal.valueOf(4));
+
+		_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+			masterCPConfigurationEntry);
+
+		Assert.assertThrows(
+			CommerceOrderValidatorException.class,
+			() -> _addCommerceOrderItemWithStock(
+				cpInstance, BigDecimal.TEN, BigDecimal.valueOf(6)));
+	}
+
+	@Test
+	public void testAddCommerceOrderItemRejectsQuantityBelowMinOrderQuantity()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Reject add to cart when the quantity is below the minimum order " +
+				"quantity"
+		).given(
+			"A published SKU with minOrderQuantity set to five"
+		).when(
+			"I try to add the SKU to an order with quantity two"
+		).then(
+			"The add fails with a CommerceOrderValidatorException"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPConfigurationEntry masterCPConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		masterCPConfigurationEntry.setMinOrderQuantity(BigDecimal.valueOf(5));
+
+		_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+			masterCPConfigurationEntry);
+
+		Assert.assertThrows(
+			CommerceOrderValidatorException.class,
+			() -> _addCommerceOrderItemWithStock(
+				cpInstance, BigDecimal.TEN, BigDecimal.valueOf(2)));
+	}
+
+	@Test
+	public void testAddCommerceOrderItemRejectsQuantityNotInAllowedOrderQuantities()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Reject add to cart when the quantity is not in the allowed " +
+				"order quantities list"
+		).given(
+			"A published SKU with allowedOrderQuantities set to 2, 4, 6"
+		).when(
+			"I try to add the SKU to an order with quantity three"
+		).then(
+			"The add fails with a CommerceOrderValidatorException"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPConfigurationEntry masterCPConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		masterCPConfigurationEntry.setAllowedOrderQuantities("2, 4, 6");
+
+		_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+			masterCPConfigurationEntry);
+
+		Assert.assertThrows(
+			CommerceOrderValidatorException.class,
+			() -> _addCommerceOrderItemWithStock(
+				cpInstance, BigDecimal.TEN, BigDecimal.valueOf(3)));
+	}
+
+	@Test
+	public void testAddCommerceOrderItemRejectsQuantityNotMultipleOfMultipleOrderQuantity()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Reject add to cart when the quantity is not a multiple of the " +
+				"multiple order quantity"
+		).given(
+			"A published SKU with multipleOrderQuantity set to three"
+		).when(
+			"I try to add the SKU to an order with quantity five"
+		).then(
+			"The add fails with a CommerceOrderValidatorException"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPConfigurationEntry masterCPConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		masterCPConfigurationEntry.setMultipleOrderQuantity(
+			BigDecimal.valueOf(3));
+
+		_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+			masterCPConfigurationEntry);
+
+		Assert.assertThrows(
+			CommerceOrderValidatorException.class,
+			() -> _addCommerceOrderItemWithStock(
+				cpInstance, BigDecimal.TEN, BigDecimal.valueOf(5)));
+	}
+
+	@Test
+	public void testAddCommerceOrderItemRejectsStockShortageWithoutBackOrder()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Reject add to cart when the stock is zero and back order is " +
+				"disabled"
+		).given(
+			"A published SKU with no warehouse stock and back order disabled"
+		).when(
+			"I try to add the SKU to an order"
+		).then(
+			"The add fails with a CommerceOrderValidatorException"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_cpInstances.add(cpInstance);
+
+		Assert.assertThrows(
+			CommerceOrderValidatorException.class,
+			() -> _addCommerceOrderItemWithStock(
+				cpInstance, BigDecimal.ZERO, BigDecimal.ONE));
 	}
 
 	@Test
@@ -1482,6 +1692,38 @@ public class CommerceOrderItemLocalServiceTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	private CommerceOrderItem _addCommerceOrderItemWithStock(
+			CPInstance cpInstance, BigDecimal stockQuantity,
+			BigDecimal quantity)
+		throws Exception {
+
+		_commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
+			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			_commerceChannel.getCommerceChannelId());
+
+		_commerceInventoryWarehouseItems.add(
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+				_user.getUserId(), _commerceInventoryWarehouse, stockQuantity,
+				cpInstance.getSku(), StringPool.BLANK));
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
+
+		_commerceOrders.add(commerceOrder);
+
+		return _commerceOrderItemLocalService.addCommerceOrderItem(
+			_user.getUserId(), commerceOrder.getCommerceOrderId(),
+			cpInstance.getCPInstanceId(), null, quantity, 0, BigDecimal.ZERO,
+			StringPool.BLANK, _commerceContext, _serviceContext);
+	}
+
 	private void _addOptions(
 			CPDefinition cpDefinition, boolean linkToProduct,
 			boolean skuContributor,
@@ -2291,6 +2533,13 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
+
+	@Inject
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Inject
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Inject
 	private CPDefinitionOptionRelLocalService

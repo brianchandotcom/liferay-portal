@@ -1,0 +1,11 @@
+# 103: Name a Variable After What It Holds
+
+Name a variable after the type or content it holds, not after an incidental role. A `JSONObject` is `jsonObject`; a `String` that holds JSON ends in `JSON`, as in `objectDefinitionJSON`; a `Page` ends in `Page`. When only one instance of a type is in scope, the plain type name is enough (`enumeration`, `file`); add a qualifier only to distinguish several instances of the same type.
+
+A collection takes the plural and needs no type suffix on its own: `String userName` pairs with `String[] userNames`. Add an `...Array` or `...List` suffix only to break a tie, when the same content is held in two collection types in the same scope, such as a `String[]` and a `List<String>` of the same thing. Then suffix to tell them apart, as `userNamesArray` with `userNamesList`, or leave one as the plain plural and suffix the other, and stay consistent across the class. A plain plural array such as `requestBlacklistItems` is correct on its own.
+
+**Rationale:** A name that states the type tells the reader what they are handling without tracing back to the declaration, and it keeps similar variables named the same way across the codebase. A name taken from an incidental role (`metadata`, `userValue`, `result`) hides the type and invites a mismatch between the name and what the value actually is. The collection suffix earns its place only when it resolves a real ambiguity, so adding `Array` to an array that has no `List` twin is the redundant noise this naming avoids.
+
+A violation is a variable named for an incidental role rather than its type or content, or a name whose stated type does not match what it holds — a `String` of JSON named `objectDefinitionString` rather than `objectDefinitionJSON`, or a collection named as if it held a single element. A plural array without an `...Array` suffix is not a violation unless another collection of the same content shares its name.
+
+**Example:** commit `a8af2ca` renamed `metadataJSONObject` to `jsonObject`; `ec36099` renamed `objectDefinitionString` to `objectDefinitionJSON` because it holds JSON; `84d9629` renamed `getAgentDefinitions` to `getAgentDefinitionsPage` because it returns a `Page`; `320d3dc` renamed the vague `result` to `json`, the JSON that `getJSON` returns.

@@ -1,0 +1,9 @@
+# 602: Randomize Test Values You Do Not Assert
+
+Examine every hardcoded string and number in a test. If no assertion checks its value, replace it with `RandomTestUtil` (`randomString`, `randomLong`, and so on). This covers URLs, file names, IDs, names, exception messages, and JSON field values passed into setup, construction, a mock, or a builder — anything the test only passes through and never asserts on. Keep a hardcoded literal only for a value the test actually checks or that the implementation requires — for example, the only enum value an endpoint accepts, or a field whose absence would cause the call to fail. When such a value appears more than once, give it a clearly named constant.
+
+**Rationale:** A hardcoded literal signals that the exact value matters. When it does not, the literal misleads the reader into looking for a significance that is not there. A random value proves the test does not depend on it and surfaces any accidental coupling to a specific input.
+
+A violation is any hardcoded string or number in a test that no assertion depends on and that the implementation does not require, where `RandomTestUtil` should be used. Before flagging a hardcoded non-asserted value, verify with `git grep --cached` against the implementation that the value is not required. Examples: a URL or file name passed to a mock or a builder, an exception message in `new SomeException("Some error")`, a folder name in `addFolder("Test Folder")`, a portal URL the test never checks, or a JSON `"message"` value when the test only asserts a flag such as `isQuotaExceeded()`. The related violation is repeating the same asserted value as a bare literal instead of naming a constant.
+
+**Example:** commit `5df4f1a` replaced `"Test Folder"` with `RandomTestUtil.randomString()`; `1b0e932` replaced fixed file names with `randomString()`; `8dcff7c` instead promoted a reused, asserted value to a named constant.

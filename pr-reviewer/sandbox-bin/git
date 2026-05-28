@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+function main {
+	local args=()
+
+	while [[ $# -gt 0 ]]
+	do
+		if [[ ${1} == -C ]] || [[ ${1} == -c ]]
+		then
+			args+=("${1}" "${2}")
+
+			shift 2
+		elif [[ ${1} == grep ]]
+		then
+			args+=(grep --cached)
+
+			shift
+
+			break
+		elif [[ ${1} == -* ]]
+		then
+			args+=("${1}")
+
+			shift
+		else
+			break
+		fi
+	done
+
+	exec /usr/bin/git "${args[@]}" "$@"
+}
+
+main "${@}"

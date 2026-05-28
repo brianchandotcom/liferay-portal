@@ -177,10 +177,18 @@ public class LangSanitizer {
 
 					String fileName = String.valueOf(file.getFileName());
 
-					if (fileName.endsWith(".properties") &&
-						(fileName.startsWith("bundle") ||
-						 fileName.startsWith("Language"))) {
+					if (!fileName.endsWith(".properties")) {
+						return FileVisitResult.CONTINUE;
+					}
 
+					String filePath = file.toString();
+
+					if (fileName.startsWith("Language")) {
+						if (filePath.contains("portal-language-lang")) {
+							files.add(file.toFile());
+						}
+					}
+					else if (fileName.startsWith("bundle")) {
 						files.add(file.toFile());
 					}
 

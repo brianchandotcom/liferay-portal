@@ -420,47 +420,6 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		doMergeLayoutPrototypeLayout(layout);
-	}
-
-	@Override
-	public void updateLayoutSetPrototypesLinks(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId,
-			boolean publicLayoutSetPrototypeLinkEnabled,
-			boolean privateLayoutSetPrototypeLinkEnabled)
-		throws Exception {
-
-		updateLayoutSetPrototypeLink(
-			group.getGroupId(), true, privateLayoutSetPrototypeId,
-			privateLayoutSetPrototypeLinkEnabled);
-		updateLayoutSetPrototypeLink(
-			group.getGroupId(), false, publicLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled);
-	}
-
-	protected void deleteUnreferencedPortlets(
-			List<String> targetLayoutPortletIds, Layout targetLayout,
-			Layout sourceLayout)
-		throws Exception {
-
-		LayoutTypePortlet sourceLayoutType =
-			(LayoutTypePortlet)sourceLayout.getLayoutType();
-
-		List<String> unreferencedPortletIds = new ArrayList<>(
-			targetLayoutPortletIds);
-
-		unreferencedPortletIds.removeAll(sourceLayoutType.getPortletIds());
-
-		_portletLocalService.deletePortlets(
-			targetLayout.getCompanyId(),
-			unreferencedPortletIds.toArray(new String[0]),
-			targetLayout.getPlid());
-	}
-
-	protected void doMergeLayoutPrototypeLayout(Layout layout)
-		throws Exception {
-
 		Group group = layout.getGroup();
 
 		if (group.isLayoutPrototype() || group.hasStagingGroup()) {
@@ -576,6 +535,41 @@ public class SitesImpl implements Sites {
 
 			_releaseLock(Layout.class.getName(), layout.getPlid(), owner);
 		}
+	}
+
+	@Override
+	public void updateLayoutSetPrototypesLinks(
+			Group group, long publicLayoutSetPrototypeId,
+			long privateLayoutSetPrototypeId,
+			boolean publicLayoutSetPrototypeLinkEnabled,
+			boolean privateLayoutSetPrototypeLinkEnabled)
+		throws Exception {
+
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), true, privateLayoutSetPrototypeId,
+			privateLayoutSetPrototypeLinkEnabled);
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), false, publicLayoutSetPrototypeId,
+			publicLayoutSetPrototypeLinkEnabled);
+	}
+
+	protected void deleteUnreferencedPortlets(
+			List<String> targetLayoutPortletIds, Layout targetLayout,
+			Layout sourceLayout)
+		throws Exception {
+
+		LayoutTypePortlet sourceLayoutType =
+			(LayoutTypePortlet)sourceLayout.getLayoutType();
+
+		List<String> unreferencedPortletIds = new ArrayList<>(
+			targetLayoutPortletIds);
+
+		unreferencedPortletIds.removeAll(sourceLayoutType.getPortletIds());
+
+		_portletLocalService.deletePortlets(
+			targetLayout.getCompanyId(),
+			unreferencedPortletIds.toArray(new String[0]),
+			targetLayout.getPlid());
 	}
 
 	protected File exportLayoutSetPrototype(

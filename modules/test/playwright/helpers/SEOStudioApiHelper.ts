@@ -19,6 +19,7 @@ export type CreatedInsightType = {
 };
 
 export type CreatedScan = {
+	accountId: number;
 	scanId: number;
 	teardown: () => Promise<void>;
 };
@@ -33,14 +34,14 @@ export class SEOStudioApiHelper {
 	}
 
 	async createInsights(
-		scanId: number,
+		scan: CreatedScan,
 		insightTypes: InsightTypeInput[]
 	): Promise<CreatedInsightType[]> {
 		const createdInsightTypes: CreatedInsightType[] = [];
 
 		for (const insightTypeInput of insightTypes) {
 			const insightType = await this._postInsightType(
-				scanId,
+				scan,
 				insightTypeInput
 			);
 
@@ -50,10 +51,10 @@ export class SEOStudioApiHelper {
 			});
 
 			for (const pageURL of insightTypeInput.pageURLs) {
-				const seoStudioPage = await this._postPage(scanId, pageURL);
+				const seoStudioPage = await this._postPage(scan, pageURL);
 
 				await this._postScanInsight(
-					scanId,
+					scan,
 					insightType.id,
 					seoStudioPage.id
 				);
@@ -70,11 +71,12 @@ export class SEOStudioApiHelper {
 
 		const instance = await this._postInstance(account.id);
 
-		const domain = await this._postDomain(instance.id);
+		const domain = await this._postDomain(account.id, instance.id);
 
-		const scan = await this._postScan(domain.id);
+		const scan = await this._postScan(account.id, domain.id);
 
 		return {
+			accountId: account.id,
 			scanId: scan.id,
 			teardown: async () => {
 				await this.apiHelpers.delete(
@@ -84,12 +86,16 @@ export class SEOStudioApiHelper {
 		};
 	}
 
-	private async _postDomain(instanceId: number): Promise<{id: number}> {
+	private async _postDomain(
+		accountId: number,
+		instanceId: number
+	): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('domains'), {
 			data: {
 				defaultScanScope: 'entireDomain',
 				hostname: `${getRandomString()}.example.com`,
 				name: getRandomString(),
+				r_accountToSEOStudioDomains_accountEntryId: accountId,
 				r_seoStudioInstanceToSEOStudioDomains_seoStudioInstanceId:
 					instanceId,
 			},
@@ -98,14 +104,16 @@ export class SEOStudioApiHelper {
 	}
 
 	private async _postInsightType(
-		scanId: number,
+		scan: CreatedScan,
 		input: InsightTypeInput
 	): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('insight-types'), {
 			data: {
 				category: input.category,
 				name: input.name,
-				r_seoStudioScanToSEOStudioInsightTypes_seoStudioScanId: scanId,
+				r_accountToSEOStudioInsightTypes_accountEntryId: scan.accountId,
+				r_seoStudioScanToSEOStudioInsightTypes_seoStudioScanId:
+					scan.scanId,
 				severity: input.severity,
 			},
 			failOnStatusCode: true,
@@ -129,21 +137,26 @@ export class SEOStudioApiHelper {
 	}
 
 	private async _postPage(
-		scanId: number,
+		scan: CreatedScan,
 		pageURL: string
 	): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('pages'), {
 			data: {
 				pageURL,
-				r_seoStudioScanToSEOStudioPages_seoStudioScanId: scanId,
+				r_accountToSEOStudioPages_accountEntryId: scan.accountId,
+				r_seoStudioScanToSEOStudioPages_seoStudioScanId: scan.scanId,
 			},
 			failOnStatusCode: true,
 		});
 	}
 
-	private async _postScan(domainId: number): Promise<{id: number}> {
+	private async _postScan(
+		accountId: number,
+		domainId: number
+	): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('scans'), {
 			data: {
+				r_accountToSEOStudioScans_accountEntryId: accountId,
 				r_seoStudioDomainToSEOStudioScans_seoStudioDomainId: domainId,
 				requestDate: new Date().toISOString(),
 				scanScope: 'entireDomain',
@@ -156,7 +169,7 @@ export class SEOStudioApiHelper {
 	}
 
 	private async _postScanInsight(
-		scanId: number,
+		scan: CreatedScan,
 		insightTypeId: number,
 		pageId: number
 	) {
@@ -164,10 +177,12 @@ export class SEOStudioApiHelper {
 			data: {
 				classification: 'problem',
 				detectedDate: new Date().toISOString(),
+				r_accountToSEOStudioScanInsights_accountEntryId: scan.accountId,
 				r_seoStudioInsightTypeToScanInsights_seoStudioInsightTypeId:
 					insightTypeId,
 				r_seoStudioPageToSEOStudioScanInsights_seoStudioPageId: pageId,
-				r_seoStudioScanToSEOStudioScanInsights_seoStudioScanId: scanId,
+				r_seoStudioScanToSEOStudioScanInsights_seoStudioScanId:
+					scan.scanId,
 			},
 			failOnStatusCode: true,
 		});

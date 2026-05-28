@@ -145,6 +145,14 @@ const Table: React.FC<ITableProps> = ({
 
 	const itemsSorted = internalSort ? sortItems(items) : items;
 
+	if (loading && !itemsSorted.length) {
+		return (
+			<div className={getCN('flex-grow-1 mx-4 table-root', className)}>
+				<Loading spacer />
+			</div>
+		);
+	}
+
 	return (
 		<div className={getCN('flex-grow-1 mx-4 table-root', className)}>
 			<div className='table-responsive'>

@@ -75,22 +75,12 @@ export default function UserAnalyticsFilter({filter, setValue}: IProps) {
 	}, [filter, room, setUsers, setValue, user]);
 
 	useEffect(() => {
-		if (user) {
-			setValue({
-				[AnalyticsFilters.USER]: {
-					...filter,
-					value: [user.emailAddress],
-				},
-			});
-		}
-		else {
-			setValue({
-				[AnalyticsFilters.USER]: {
-					...filter,
-					value: [],
-				},
-			});
-		}
+		setValue({
+			[AnalyticsFilters.USER]: {
+				...filter,
+				value: user ? [user.emailAddress] : [],
+			},
+		});
 	}, [filter, setValue, user]);
 
 	useEffect(() => {

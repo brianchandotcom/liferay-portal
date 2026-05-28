@@ -8,7 +8,7 @@ package com.liferay.account.configuration;
 /**
  * @author Tancredi Covioli
  */
-public interface BaseAccountEntryValidatorConfiguration {
+public interface AccountEntryValidatorConfiguration {
 
 	public int checkInterval();
 

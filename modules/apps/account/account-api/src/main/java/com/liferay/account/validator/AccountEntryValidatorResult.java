@@ -54,14 +54,13 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 	public static class Builder {
 
-		public Builder action(String actionURL) {
-			_actionURL = actionURL;
+		public Builder actionLabel(String actionLabel) {
+			_actionLabel = actionLabel;
 
 			return this;
 		}
 
-		public Builder action(String actionLabel, String actionURL) {
-			_actionLabel = actionLabel;
+		public Builder actionURL(String actionURL) {
 			_actionURL = actionURL;
 
 			return this;

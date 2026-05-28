@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -20,6 +20,33 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+async function openShareModal(
+	page: Page,
+	assetRow: Locator,
+	objectEntryTitle: string
+) {
+	const actionsButton = assetRow.getByRole('button', {name: 'Actions'});
+
+	const shareMenuItem = page.getByRole('menuitem', {
+		exact: true,
+		name: 'Share',
+	});
+
+	const shareModalTitle = page.getByText(`Share "${objectEntryTitle}"`);
+
+	await expect(async () => {
+		if (!(await shareMenuItem.isVisible().catch(() => false))) {
+			await actionsButton.click({timeout: 1000});
+
+			await expect(shareMenuItem).toBeVisible({timeout: 2000});
+		}
+
+		await shareMenuItem.click({timeout: 1000});
+
+		await expect(shareModalTitle).toBeVisible({timeout: 5000});
+	}).toPass();
+}
 
 test(
 	'User with Reshare permission should not see Allow Resharing or Remove Access actions',
@@ -92,32 +119,7 @@ test(
 
 			await expect(assetRow).toBeVisible();
 
-			const actionsButton = assetRow.getByRole('button', {
-				name: 'Actions',
-			});
-
-			const shareMenuItem = page.getByRole('menuitem', {
-				exact: true,
-				name: 'Share',
-			});
-
-			const shareModalTitle = page.getByText(
-				`Share "${objectEntryTitle}"`
-			);
-
-			await expect(async () => {
-				if (!(await shareMenuItem.isVisible().catch(() => false))) {
-					await actionsButton.click({timeout: 1000});
-
-					await expect(shareMenuItem).toBeVisible({
-						timeout: 2000,
-					});
-				}
-
-				await shareMenuItem.click({timeout: 1000});
-
-				await expect(shareModalTitle).toBeVisible({timeout: 5000});
-			}).toPass();
+			await openShareModal(page, assetRow, objectEntryTitle);
 		});
 
 		await test.step('Verify Allow Resharing and Remove Access are not available', async () => {
@@ -207,32 +209,7 @@ test(
 
 			await expect(assetRow).toBeVisible();
 
-			const actionsButton = assetRow.getByRole('button', {
-				name: 'Actions',
-			});
-
-			const shareMenuItem = page.getByRole('menuitem', {
-				exact: true,
-				name: 'Share',
-			});
-
-			const shareModalTitle = page.getByText(
-				`Share "${objectEntryTitle}"`
-			);
-
-			await expect(async () => {
-				if (!(await shareMenuItem.isVisible().catch(() => false))) {
-					await actionsButton.click({timeout: 1000});
-
-					await expect(shareMenuItem).toBeVisible({
-						timeout: 2000,
-					});
-				}
-
-				await shareMenuItem.click({timeout: 1000});
-
-				await expect(shareModalTitle).toBeVisible({timeout: 5000});
-			}).toPass();
+			await openShareModal(page, assetRow, objectEntryTitle);
 		});
 
 		await test.step('Verify Allow Resharing and Remove Access are available', async () => {

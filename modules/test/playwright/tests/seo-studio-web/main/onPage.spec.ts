@@ -91,10 +91,7 @@ test(
 		const scan = await apiHelpers.seoStudio.createScan();
 
 		try {
-			await apiHelpers.seoStudio.createInsights(
-				scan.scanId,
-				insightTypeInputs
-			);
+			await apiHelpers.seoStudio.createInsights(scan, insightTypeInputs);
 
 			await onPagePage.goto(seoStudioSite.friendlyUrlPath);
 

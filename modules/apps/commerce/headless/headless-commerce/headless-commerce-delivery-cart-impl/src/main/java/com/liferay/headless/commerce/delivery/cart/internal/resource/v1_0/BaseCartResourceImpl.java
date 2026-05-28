@@ -78,6 +78,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the cart addressed by its internal identifier. The cart must be in the Open state."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -154,6 +157,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the cart addressed by external reference code. The cart must be in the Open state; deleting a placed order raises a status conflict."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -189,7 +195,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve information of the given Cart."
+		description = "Retrieves the cart addressed by ID with its items, addresses, summary, and status."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -222,7 +228,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve information of the given Cart by external reference code."
+		description = "Retrieves the cart addressed by external reference code with its items, addresses, summary, and status."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -256,6 +262,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/payment-url'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by external reference code. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -275,7 +284,9 @@ public abstract class BaseCartResourceImpl
 	@jakarta.ws.rs.Path(
 		"/carts/by-externalReferenceCode/{externalReferenceCode}/payment-url"
 	)
-	@jakarta.ws.rs.Produces("text/plain")
+	@jakarta.ws.rs.Produces(
+		{"application/json", "application/xml", "text/plain"}
+	)
 	@Override
 	public String getCartByExternalReferenceCodePaymentUrl(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -295,6 +306,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/payment-url'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the encrypted payment-gateway redirect URL for the cart addressed by ID. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -312,7 +326,9 @@ public abstract class BaseCartResourceImpl
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path("/carts/{cartId}/payment-url")
-	@jakarta.ws.rs.Produces("text/plain")
+	@jakarta.ws.rs.Produces(
+		{"application/json", "application/xml", "text/plain"}
+	)
 	@Override
 	public String getCartPaymentURL(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -333,7 +349,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/account/{accountId}/carts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves carts for specific account in the given channel."
+		description = "Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by ID. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -402,7 +418,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/account/by-externalReferenceCode/{accountExternalReferenceCode}/carts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves carts for specific account in the given channel."
+		description = "Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by external reference code. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -474,7 +490,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/carts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves carts in the given channel."
+		description = "Lists open carts (the Open state carts) scoped to the channel addressed by ID. Filterable, searchable, and pageable through CartEntityModel."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -534,6 +550,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the cart addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses, delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -667,6 +686,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the cart addressed by external reference code with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses (by ID or ERC), delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -804,6 +826,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/checkout'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Runs the checkout validator chain against the cart addressed by external reference code (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -837,7 +862,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}/coupon-code' -d $'{"code": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Add a coupon code to a Cart, return the whole Cart updated."
+		description = "Applies a coupon code (CouponCode.code) to the cart addressed by external reference code and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -873,6 +898,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/checkout'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Runs the checkout validator chain against the cart addressed by ID (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -904,7 +932,7 @@ public abstract class BaseCartResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/coupon-code' -d $'{"code": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Add a coupon code to a Cart, return the whole Cart updated."
+		description = "Applies a coupon code (CouponCode.code) to the cart addressed by ID and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -938,6 +966,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/carts' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a new cart under the channel addressed by ID, then applies the provided Cart fields (account, currency, addresses, terms, items)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -970,7 +1001,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/carts' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(description = "Creates a Cart.")
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a new cart under the channel addressed by external reference code, then applies the provided Cart fields (account, currency, addresses, terms, items)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1005,6 +1038,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the cart addressed by ID; the cart must be in the Open state."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1081,6 +1117,9 @@ public abstract class BaseCartResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/by-externalReferenceCode/{externalReferenceCode}' -d $'{"accountId": ___, "attachments": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "cartItems": ___, "couponCode": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermId": ___, "errorMessages": ___, "name": ___, "notes": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingMethod": ___, "shippingOption": ___, "steps": ___, "summary": ___, "useAsBilling": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the cart addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown; the cart must be (or become) in the Open state."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1872,4 +1911,4 @@ public abstract class BaseCartResourceImpl
 		LogFactoryUtil.getLog(BaseCartResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1086247375
+// LIFERAY-REST-BUILDER-HASH:43038831

@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AttachmentBase64")
+@GraphQLName(
+	description = "Request payload for uploading a cart attachment as a base64-encoded file. Used by the /attachments/by-base64 endpoint to create a single attachment under a cart.",
+	value = "AttachmentBase64"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AttachmentBase64")
 public class AttachmentBase64 implements Serializable {
@@ -47,7 +50,8 @@ public class AttachmentBase64 implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded file"
+		description = "Base64-encoded file content. Required on create.",
+		example = "JVBERi0xLjQKJeLjz9MKMyAwIG9iag=="
 	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
@@ -82,14 +86,19 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded file")
+	@GraphQLField(
+		description = "Base64-encoded file content. Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
 	@JsonIgnore
 	private Supplier<String> _attachmentSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Optional idempotency key for the resulting attachment.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -123,14 +132,19 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Optional idempotency key for the resulting attachment."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display and sort priority. Lower values appear first.",
+		example = "1.0"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -164,14 +178,19 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display and sort priority. Lower values appear first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the resulting attachment is visible only to staff with the manage-comments permission.",
+		example = "false"
+	)
 	public Boolean getRestricted() {
 		if (_restrictedSupplier != null) {
 			restricted = _restrictedSupplier.get();
@@ -205,14 +224,19 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the resulting attachment is visible only to staff with the manage-comments permission."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean restricted;
 
 	@JsonIgnore
 	private Supplier<Boolean> _restrictedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "File title or display name to store on the attachment.",
+		example = "purchase-order.pdf"
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -246,14 +270,19 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "File title or display name to store on the attachment."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Attachment type code resolved against the configured attachment-type list.",
+		example = "invoice"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -285,7 +314,9 @@ public class AttachmentBase64 implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attachment type code resolved against the configured attachment-type list."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
@@ -508,4 +539,4 @@ public class AttachmentBase64 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2138241968
+// LIFERAY-REST-BUILDER-HASH:-1510179244

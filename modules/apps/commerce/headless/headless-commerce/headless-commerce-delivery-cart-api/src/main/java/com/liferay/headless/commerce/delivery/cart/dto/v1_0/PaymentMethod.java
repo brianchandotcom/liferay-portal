@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PaymentMethod")
+@GraphQLName(
+	description = "Payment method qualified for a cart. The entries returned for a given cart depend on the billing address country, the order type qualifiers, the buyer's view permission, and subscription eligibility.",
+	value = "PaymentMethod"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PaymentMethod")
 public class PaymentMethod implements Serializable {
@@ -46,7 +49,10 @@ public class PaymentMethod implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PaymentMethod.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized description of the payment method as configured on the channel binding.",
+		example = "Pay by money order on receipt."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -80,14 +86,19 @@ public class PaymentMethod implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized description of the payment method as configured on the channel binding."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable engine key identifying the payment integration. Used as the value of the cart's payment method field.",
+		example = "money-order"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -119,14 +130,19 @@ public class PaymentMethod implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable engine key identifying the payment integration. Used as the value of the cart's payment method field."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized display name of the payment method.",
+		example = "Money Order"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -158,7 +174,7 @@ public class PaymentMethod implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Localized display name of the payment method.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -341,4 +357,4 @@ public class PaymentMethod implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-540953512
+// LIFERAY-REST-BUILDER-HASH:1590936518

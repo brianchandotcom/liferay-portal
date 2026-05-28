@@ -75,7 +75,7 @@ public abstract class BaseCartTransitionResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/cart-transitions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve cart transitions of the given Cart."
+		description = "Lists the available CartTransition entries on the cart addressed by ID. Combines workflow task transitions (when the cart has an active workflow instance) and order-status transitions (request-quote, submit, quick-checkout, checkout) derived from the order-status registry."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -109,6 +109,9 @@ public abstract class BaseCartTransitionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/cart-transitions' -d $'{"comment": ___, "name": ___, "restricted": ___, "workflowTaskId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fires a CartTransition by name against the cart addressed by ID. Workflow task names are dispatched through the workflow helper; order-status names are dispatched through the checkout engine.transitionCommerceOrder. Requires the cart to be in the Open state and a valid combination of billing address, payment method, and items."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -973,4 +976,4 @@ public abstract class BaseCartTransitionResourceImpl
 		LogFactoryUtil.getLog(BaseCartTransitionResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1789220456
+// LIFERAY-REST-BUILDER-HASH:1815396706

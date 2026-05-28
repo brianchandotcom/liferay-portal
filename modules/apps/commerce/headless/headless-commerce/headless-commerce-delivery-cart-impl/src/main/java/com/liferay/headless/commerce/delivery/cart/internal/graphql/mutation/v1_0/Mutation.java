@@ -104,7 +104,9 @@ public class Mutation {
 			shippingMethodResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the attachment addressed by ID under the parent cart (also addressed by ID)."
+	)
 	public boolean deleteCartAttachment(
 			@GraphQLName("attachmentId") Long attachmentId,
 			@GraphQLName("cartId") Long cartId)
@@ -119,7 +121,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the attachment addressed by its external reference code under the parent cart (also addressed by ERC)."
+	)
 	public boolean
 			deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode(
 				@GraphQLName("attachmentExternalReferenceCode") String
@@ -140,7 +144,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart addressed by ID. The file is stored either as a dedicated attachment record or as a document-library file entry depending on the active attachment-storage configuration."
+	)
 	public Attachment createCartAttachmentByBase64(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -175,7 +181,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart addressed by external reference code. The file is stored either as a dedicated attachment record or as a document-library file entry depending on the active attachment-storage configuration."
+	)
 	public Attachment createCartByExternalReferenceCodeAttachmentByBase64(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -190,7 +198,9 @@ public class Mutation {
 						externalReferenceCode, attachmentBase64));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the cart addressed by its internal identifier. The cart must be in the Open state."
+	)
 	public Response deleteCart(@GraphQLName("cartId") Long cartId)
 		throws Exception {
 
@@ -212,7 +222,9 @@ public class Mutation {
 			cartResource -> cartResource.deleteCartBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the cart addressed by external reference code. The cart must be in the Open state; deleting a placed order raises a status conflict."
+	)
 	public Response deleteCartByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -224,7 +236,9 @@ public class Mutation {
 				externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the cart addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses, delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed."
+	)
 	public Cart patchCart(
 			@GraphQLName("cartId") Long cartId, @GraphQLName("cart") Cart cart)
 		throws Exception {
@@ -235,7 +249,9 @@ public class Mutation {
 			cartResource -> cartResource.patchCart(cartId, cart));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the cart addressed by external reference code with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses (by ID or ERC), delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed."
+	)
 	public Cart patchCartByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("cart") Cart cart)
@@ -248,7 +264,9 @@ public class Mutation {
 				externalReferenceCode, cart));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Runs the checkout validator chain against the cart addressed by external reference code (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success."
+	)
 	public Cart createCartByExternalReferenceCodeCheckout(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -262,7 +280,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Add a coupon code to a Cart, return the whole Cart updated."
+		description = "Applies a coupon code (CouponCode.code) to the cart addressed by external reference code and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state."
 	)
 	public Cart createCartByExternalReferenceCodeCouponCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -277,7 +295,9 @@ public class Mutation {
 					externalReferenceCode, couponCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Runs the checkout validator chain against the cart addressed by ID (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success."
+	)
 	public Cart createCartCheckout(@GraphQLName("cartId") Long cartId)
 		throws Exception {
 
@@ -288,7 +308,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Add a coupon code to a Cart, return the whole Cart updated."
+		description = "Applies a coupon code (CouponCode.code) to the cart addressed by ID and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state."
 	)
 	public Cart createCartCouponCode(
 			@GraphQLName("cartId") Long cartId,
@@ -302,7 +322,9 @@ public class Mutation {
 				cartId, couponCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new cart under the channel addressed by ID, then applies the provided Cart fields (account, currency, addresses, terms, items)."
+	)
 	public Cart createChannelCart(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("cart") Cart cart)
@@ -314,7 +336,9 @@ public class Mutation {
 			cartResource -> cartResource.postChannelCart(channelId, cart));
 	}
 
-	@GraphQLField(description = "Creates a Cart.")
+	@GraphQLField(
+		description = "Creates a new cart under the channel addressed by external reference code, then applies the provided Cart fields (account, currency, addresses, terms, items)."
+	)
 	public Cart createChannelCartByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("cart") Cart cart)
@@ -327,7 +351,9 @@ public class Mutation {
 				externalReferenceCode, cart));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the cart addressed by ID; the cart must be in the Open state."
+	)
 	public Cart updateCart(
 			@GraphQLName("cartId") Long cartId, @GraphQLName("cart") Cart cart)
 		throws Exception {
@@ -350,7 +376,9 @@ public class Mutation {
 			cartResource -> cartResource.putCartBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the cart addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown; the cart must be (or become) in the Open state."
+	)
 	public Cart updateCartByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("cart") Cart cart)
@@ -363,7 +391,9 @@ public class Mutation {
 				externalReferenceCode, cart));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the comment addressed by its internal identifier."
+	)
 	public boolean deleteCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId)
 		throws Exception {
@@ -391,7 +421,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes a Cart Comment by external reference code."
+		description = "Deletes the comment addressed by its external reference code."
 	)
 	public boolean deleteCartCommentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -407,7 +437,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the comment addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates content and restricted."
+	)
 	public CartComment patchCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -421,7 +453,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Update the provided Cart Comment by external reference code."
+		description = "Updates the comment addressed by external reference code with JSON Merge Patch semantics (only supplied fields are modified). Mutates content and restricted."
 	)
 	public CartComment patchCartCommentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -436,7 +468,9 @@ public class Mutation {
 					externalReferenceCode, cartComment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed by external reference code."
+	)
 	public CartComment createCartByExternalReferenceCodeComment(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -450,7 +484,9 @@ public class Mutation {
 					externalReferenceCode, cartComment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed by ID."
+	)
 	public CartComment createCartComment(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -463,7 +499,7 @@ public class Mutation {
 				cartId, cartComment));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Replaces the comment addressed by ID.")
 	public CartComment updateCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -490,7 +526,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Update the provided Cart Comment by external reference code."
+		description = "Replaces the comment addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown."
 	)
 	public CartComment updateCartCommentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -505,7 +541,9 @@ public class Mutation {
 					externalReferenceCode, cartComment));
 	}
 
-	@GraphQLField(description = "Deletes an Cart Item by ID.")
+	@GraphQLField(
+		description = "Deletes the cart item addressed by its internal identifier. Triggers cart pricing recalculation through the cart context."
+	)
 	public boolean deleteCartItem(@GraphQLName("cartItemId") Long cartItemId)
 		throws Exception {
 
@@ -531,7 +569,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes a Cart Item by external reference code."
+		description = "Deletes the cart item addressed by external reference code. The deletion runs through the cart context bound to the parent cart, so cascading inventory and pricing recalculations on the cart fire as a side effect."
 	)
 	public boolean deleteCartItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -547,7 +585,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(description = "Retrieve information of the given Cart.")
+	@GraphQLField(
+		description = "Updates the cart item addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; cart pricing is recalculated as a side effect."
+	)
 	public CartItem patchCartItem(
 			@GraphQLName("cartItemId") Long cartItemId,
 			@GraphQLName("cartItem") CartItem cartItem)
@@ -561,7 +601,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Update the provided Cart Item by external reference code."
+		description = "Updates the cart item addressed by external reference code with JSON Merge Patch semantics. Mutates quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; recalculates parent cart pricing as a side effect."
 	)
 	public CartItem patchCartItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -577,7 +617,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Add new Item to a Cart, return the whole Cart updated."
+		description = "Adds a new cart item to the cart addressed by external reference code. CartItem.skuId is required. Triggers cart pricing recalculation."
 	)
 	public CartItem createCartByExternalReferenceCodeItem(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -593,7 +633,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Add new Items to a Cart, return the whole Cart updated."
+		description = "Adds a new cart item to the cart addressed by ID. CartItem.skuId is required. Triggers cart pricing recalculation."
 	)
 	public CartItem createCartItem(
 			@GraphQLName("cartId") Long cartId,
@@ -607,7 +647,9 @@ public class Mutation {
 				cartId, cartItem));
 	}
 
-	@GraphQLField(description = "update the given Cart.")
+	@GraphQLField(
+		description = "Replaces the cart item addressed by ID; cart pricing is recalculated as a side effect."
+	)
 	public CartItem updateCartItem(
 			@GraphQLName("cartItemId") Long cartItemId,
 			@GraphQLName("cartItem") CartItem cartItem)
@@ -634,7 +676,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Update the provided Cart Item by external reference code."
+		description = "Replaces the cart item addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown; the cart pricing is recalculated as a side effect."
 	)
 	public CartItem updateCartItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -649,7 +691,9 @@ public class Mutation {
 					externalReferenceCode, cartItem));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Fires a CartTransition by name against the cart addressed by ID. Workflow task names are dispatched through the workflow helper; order-status names are dispatched through the checkout engine.transitionCommerceOrder. Requires the cart to be in the Open state and a valid combination of billing address, payment method, and items."
+	)
 	public CartTransition createCartCartTransition(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("cartTransition") CartTransition cartTransition)
@@ -940,4 +984,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:698776677
+// LIFERAY-REST-BUILDER-HASH:-1105537221

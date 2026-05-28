@@ -33,7 +33,7 @@ public class ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	protected InfoPage<ObjectEntry> getCollectionInfoPage(
-			long groupId, long primaryKey, Pagination pagination)
+			long groupId, Pagination pagination, long primaryKey)
 		throws PortalException {
 
 		return InfoPage.of(

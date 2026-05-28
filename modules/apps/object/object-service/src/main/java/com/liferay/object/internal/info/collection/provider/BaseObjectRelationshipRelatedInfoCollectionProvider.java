@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -62,31 +65,30 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 				long primaryKey = objectEntry.getObjectEntryId();
 
 				if (_objectDefinition1.isSystem()) {
+					Map<String, Serializable> values = objectEntry.getValues();
+
 					primaryKey = GetterUtil.getLong(
-						objectEntry.getValues(
-						).get(
-							_objectDefinition1.getPKObjectFieldName()
-						),
+						values.get(_objectDefinition1.getPKObjectFieldName()),
 						primaryKey);
 				}
 
 				return getCollectionInfoPage(
-					objectEntry.getGroupId(), primaryKey, pagination);
+					objectEntry.getGroupId(), pagination, primaryKey);
 			}
 			else if (relatedItem instanceof SystemObjectEntry) {
 				SystemObjectEntry systemObjectEntry =
 					(SystemObjectEntry)relatedItem;
 
 				return getCollectionInfoPage(
-					systemObjectEntry.getGroupId(),
-					systemObjectEntry.getClassPK(), pagination);
+					systemObjectEntry.getGroupId(), pagination,
+					systemObjectEntry.getClassPK());
 			}
 			else if (_objectDefinition1.isSystem() &&
 					 (relatedItem instanceof BaseModel)) {
 
 				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
 
-				long groupId = 0L;
+				long groupId = 0;
 
 				if (relatedItem instanceof GroupedModel) {
 					GroupedModel groupedModel = (GroupedModel)relatedItem;
@@ -95,8 +97,8 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 				}
 
 				return getCollectionInfoPage(
-					groupId, GetterUtil.getLong(baseModel.getPrimaryKeyObj()),
-					pagination);
+					groupId, pagination,
+					GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
 			}
 		}
 		catch (PortalException portalException) {
@@ -150,7 +152,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	}
 
 	protected InfoPage<ObjectEntry> getCollectionInfoPage(
-			long groupId, long primaryKey, Pagination pagination)
+			long groupId, Pagination pagination, long primaryKey)
 		throws PortalException {
 
 		return null;

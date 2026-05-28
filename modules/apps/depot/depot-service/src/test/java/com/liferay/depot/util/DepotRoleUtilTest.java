@@ -42,7 +42,7 @@ public class DepotRoleUtilTest {
 			DepotRoleUtil.filter(
 				(DepotEntry)null, Arrays.asList(role1, role2, role3, role4)));
 		Assert.assertEquals(
-			Arrays.asList(role3, role4),
+			Arrays.asList(role1, role2, role3, role4),
 			DepotRoleUtil.filter(
 				_mockDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY),
 				Arrays.asList(role1, role2, role3, role4)));

@@ -10,7 +10,9 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.rest.client.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.client.problem.Problem;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -128,13 +131,27 @@ public class ModelArmorTemplateResourceTest
 			defaultObjectEntryManager.fetchObjectEntry(
 				_dtoConverterContext,
 				_modelArmorTemplate.getExternalReferenceCode(),
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
-						TestPropsValues.getCompanyId()),
-				null));
+				_getObjectDefinition(), null));
 
 		_modelArmorTemplate = null;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostModelArmorTemplate() throws Exception {
+		super.testPostModelArmorTemplate();
+
+		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
+
+		modelArmorTemplate.setExternalReferenceCode(
+			_modelArmorTemplate.getExternalReferenceCode());
+
+		AssertUtils.assertFailure(
+			Problem.ProblemException.class,
+			"This external reference code is already in use.",
+			() -> testPostModelArmorTemplate_addModelArmorTemplate(
+				modelArmorTemplate));
 	}
 
 	@Ignore
@@ -155,11 +172,7 @@ public class ModelArmorTemplateResourceTest
 			_objectEntryManager.getObjectEntry(
 				TestPropsValues.getCompanyId(), _dtoConverterContext,
 				_modelArmorTemplate.getExternalReferenceCode(),
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
-						TestPropsValues.getCompanyId()),
-				null));
+				_getObjectDefinition(), null));
 	}
 
 	@Override
@@ -190,6 +203,25 @@ public class ModelArmorTemplateResourceTest
 					modelArmorTemplate);
 
 		return _modelArmorTemplate;
+	}
+
+	@Override
+	protected ModelArmorTemplate
+			testPostModelArmorTemplate_addModelArmorTemplate(
+				ModelArmorTemplate modelArmorTemplate)
+		throws Exception {
+
+		_modelArmorTemplate = modelArmorTemplateResource.postModelArmorTemplate(
+			modelArmorTemplate);
+
+		return _modelArmorTemplate;
+	}
+
+	private ObjectDefinition _getObjectDefinition() throws Exception {
+		return _objectDefinitionLocalService.
+			getObjectDefinitionByExternalReferenceCode(
+				"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
+				TestPropsValues.getCompanyId());
 	}
 
 	@Inject

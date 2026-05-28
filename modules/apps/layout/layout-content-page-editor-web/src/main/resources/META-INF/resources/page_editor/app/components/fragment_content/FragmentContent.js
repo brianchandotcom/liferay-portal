@@ -163,7 +163,7 @@ const FragmentContent = ({
 			Promise.all(
 				getAllEditables(fragmentElement).map((editable) => {
 					const editableValue =
-						editableValues[editable.editableValueNamespace][
+						editableValues[editable.editableValueNamespace]?.[
 							editable.editableId
 						];
 

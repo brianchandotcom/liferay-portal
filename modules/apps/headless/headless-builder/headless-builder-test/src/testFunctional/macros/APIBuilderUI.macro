@@ -502,23 +502,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setPanelCategoryKeyToObject(objectDefinition = null) {
-		Variables.assertDefined(parameterList = ${objectDefinition});
-
-		ObjectAdmin.openObjectAdmin();
-
-		WaitForPageLoad();
-
-		ObjectPortlet.selectCustomObject(label = ${objectDefinition});
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Panel Link",
-			optionName = "Object");
-
-		CreateObject.saveObject();
-	}
-
-	@summary = "Default summary"
 	macro switchToRelatedEntryInEditApplication(title = null, entity = null) {
 		Variables.assertDefined(parameterList = "${entity},${title}");
 

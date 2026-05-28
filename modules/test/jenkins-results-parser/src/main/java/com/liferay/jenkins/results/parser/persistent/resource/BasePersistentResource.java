@@ -346,6 +346,9 @@ public abstract class BasePersistentResource implements PersistentResource {
 			apiJSONObject.optString("result"));
 	}
 
+	protected void populateDataJSONObject(JSONObject dataJSONObject) {
+	}
+
 	protected void print(String message) {
 		System.out.println("[" + getType() + "] " + message);
 	}
@@ -379,6 +382,8 @@ public abstract class BasePersistentResource implements PersistentResource {
 		).put(
 			"status", String.valueOf(getStatus())
 		);
+
+		populateDataJSONObject(dataJSONObject);
 
 		if (!isBuildCachingEnabled()) {
 			_dataJSONObject = dataJSONObject;

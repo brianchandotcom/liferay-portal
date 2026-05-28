@@ -79,6 +79,11 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 		registry.register(
 			"1.5.1", "1.5.2",
 			new OAuthClientASLocalMetadataIssuerUpgradeProcess());
+
+		registry.register(
+			"1.5.2", "1.5.3",
+			new com.liferay.oauth.client.persistence.internal.upgrade.v1_5_3.
+				OAuthClientASLocalMetadataUpgradeProcess());
 	}
 
 	@Reference

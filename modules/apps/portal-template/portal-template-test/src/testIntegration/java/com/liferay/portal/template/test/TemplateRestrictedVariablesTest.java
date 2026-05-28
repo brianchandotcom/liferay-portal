@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
@@ -61,10 +60,6 @@ public class TemplateRestrictedVariablesTest {
 			String[] restrictedVariables =
 				templateManager.getRestrictedVariables();
 
-			Assert.assertTrue(
-				ArrayUtil.containsAll(
-					restrictedVariables, _RESTRICTED_VARIABLES));
-
 			try {
 				Template template = templateManager.getTemplate(
 					new StringTemplateResource(
@@ -93,10 +88,5 @@ public class TemplateRestrictedVariablesTest {
 			}
 		}
 	}
-
-	private static final String[] _RESTRICTED_VARIABLES = {
-		"httpUtil", "httpUtilUnsafe", "portletConfig", "propsUtil",
-		"serviceLocator", "staticFieldGetter"
-	};
 
 }

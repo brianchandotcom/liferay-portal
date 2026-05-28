@@ -1,0 +1,13 @@
+{
+	"deletionType": "cascade",
+	"externalReferenceCode": "L_ACCOUNT_TO_L_SEO_STUDIO_INSIGHT_TYPES",
+	"label": {
+		"en_US": "Account to SEO Studio Insight Types"
+	},
+	"name": "accountToSEOStudioInsightTypes",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SEOStudioInsightType$]",
+	"objectDefinitionName2": "SEOStudioInsightType",
+	"system": true,
+	"type": "oneToMany"
+}

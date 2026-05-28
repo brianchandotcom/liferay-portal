@@ -274,13 +274,13 @@ public class BatchEngineExportTaskServiceTest
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
 				null, BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.COMPLETED.name(),
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(), null, null);
 		BatchEngineExportTask batchEngineExportTask2 =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				null, omniadminUser.getCompanyId(), omniadminUser.getUserId(),
 				null, BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.COMPLETED.name(),
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(), null, null);
 
 		CountDownLatch countDownLatch1 = new CountDownLatch(1);

@@ -57,7 +57,8 @@ public interface ObjectEntryVersionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object entry version local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectEntryVersionLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public ObjectEntryVersion addObjectEntryVersion(ObjectEntry objectEntry)
+	public ObjectEntryVersion addObjectEntryVersion(
+			long userId, ObjectEntry objectEntry)
 		throws PortalException;
 
 	/**
@@ -229,6 +230,9 @@ public interface ObjectEntryVersionLocalService
 		OrderByComparator<ObjectEntryVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryVersion fetchLatestObjectEntryVersion(long objectEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId);
 
@@ -343,7 +347,7 @@ public interface ObjectEntryVersionLocalService
 		throws PortalException;
 
 	public ObjectEntryVersion updateLatestObjectEntryVersion(
-			ObjectEntry objectEntry)
+			long userId, ObjectEntry objectEntry)
 		throws PortalException;
 
 	public ObjectEntryVersion updateLatestObjectEntryVersionModifiedDate(
@@ -365,4 +369,4 @@ public interface ObjectEntryVersionLocalService
 		ObjectEntryVersion objectEntryVersion);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1964991365
+// LIFERAY-SERVICE-BUILDER-HASH:-1048908681

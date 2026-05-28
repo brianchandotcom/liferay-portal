@@ -826,22 +826,18 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectDefinition parentObjectDefinition =
 			_addAndPublishCustomObjectDefinition();
 
-		String customObjectRelationshipName = StringUtil.randomId();
+		String name = StringUtil.randomId();
 
-		ObjectRelationship customObjectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				parentObjectDefinition.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				customObjectRelationshipName, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, parentObjectDefinition,
+				childObjectDefinition,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, name);
 
 		try {
-			String customRelationshipFieldName =
+			String relationshipFieldName =
 				ObjectRelationshipUtil.getObjectRelationshipFieldName(
-					parentObjectDefinition, customObjectRelationshipName);
+					parentObjectDefinition, name);
 
 			ObjectEntry parentObjectEntry =
 				_objectEntryLocalService.addObjectEntry(
@@ -852,60 +848,18 @@ public class ObjectRelationshipLocalServiceTest {
 					null, Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext());
 
-			ObjectEntry childObjectEntry1 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						customRelationshipFieldName,
-						parentObjectEntry.getObjectEntryId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			ObjectEntry childObjectEntry2 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						customRelationshipFieldName,
-						parentObjectEntry.getObjectEntryId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			RelatedInfoItemCollectionProvider
-				customRelatedInfoItemCollectionProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						RelatedInfoItemCollectionProvider.class,
-						parentObjectDefinition.getClassName());
-
-			CollectionQuery customCollectionQuery = new CollectionQuery();
-
-			customCollectionQuery.setPagination(Pagination.of(10, 0));
-			customCollectionQuery.setRelatedItemObject(parentObjectEntry);
-
-			InfoPage collectionInfoPage =
-				customRelatedInfoItemCollectionProvider.getCollectionInfoPage(
-					customCollectionQuery);
-
-			List<ObjectEntry> objectEntries =
-				(List<ObjectEntry>)collectionInfoPage.getPageItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 2, objectEntries.size());
-			Assert.assertTrue(objectEntries.contains(childObjectEntry1));
-			Assert.assertTrue(objectEntries.contains(childObjectEntry2));
-
-			Assert.assertEquals(2, collectionInfoPage.getTotalCount());
+			_assertCollectionInfoPage(
+				parentObjectDefinition, parentObjectEntry,
+				_addChildObjectEntry(
+					childObjectDefinition, parentObjectEntry.getObjectEntryId(),
+					relationshipFieldName),
+				_addChildObjectEntry(
+					childObjectDefinition, parentObjectEntry.getObjectEntryId(),
+					relationshipFieldName));
 		}
 		finally {
 			_objectRelationshipLocalService.deleteObjectRelationship(
-				customObjectRelationship);
+				objectRelationship);
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				childObjectDefinition);
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -920,173 +874,13 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectDefinition childObjectDefinition =
 			_addAndPublishCustomObjectDefinition();
 
-		String systemObjectRelationshipName = StringUtil.randomId();
+		String name = StringUtil.randomId();
 
-		ObjectRelationship systemObjectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_systemObjectDefinition2.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				systemObjectRelationshipName, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		try {
-			String systemRelationshipFieldName =
-				ObjectRelationshipUtil.getObjectRelationshipFieldName(
-					_systemObjectDefinition2, systemObjectRelationshipName);
-
-			long systemParentPK = RandomTestUtil.randomLong();
-
-			ObjectEntry childObjectEntry1 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName, systemParentPK
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			ObjectEntry childObjectEntry2 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName, systemParentPK
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			RelatedInfoItemCollectionProvider
-				relatedInfoItemCollectionProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						RelatedInfoItemCollectionProvider.class,
-						_systemObjectDefinition2.getClassName());
-
-			CollectionQuery collectionQuery = new CollectionQuery();
-
-			collectionQuery.setPagination(Pagination.of(10, 0));
-			collectionQuery.setRelatedItemObject(
-				new SystemObjectEntry(
-					systemParentPK, null, Collections.emptyMap()));
-
-			InfoPage collectionInfoPage =
-				relatedInfoItemCollectionProvider.getCollectionInfoPage(
-					collectionQuery);
-
-			List<ObjectEntry> objectEntries =
-				(List<ObjectEntry>)collectionInfoPage.getPageItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 2, objectEntries.size());
-			Assert.assertTrue(objectEntries.contains(childObjectEntry1));
-			Assert.assertTrue(objectEntries.contains(childObjectEntry2));
-
-			Assert.assertEquals(2, collectionInfoPage.getTotalCount());
-		}
-		finally {
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				systemObjectRelationship);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				childObjectDefinition);
-		}
-
-		childObjectDefinition = _addAndPublishCustomObjectDefinition();
-
-		systemObjectRelationshipName = StringUtil.randomId();
-
-		systemObjectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_systemObjectDefinition2.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				systemObjectRelationshipName, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		try {
-			String systemRelationshipFieldName =
-				ObjectRelationshipUtil.getObjectRelationshipFieldName(
-					_systemObjectDefinition2, systemObjectRelationshipName);
-
-			User user = TestPropsValues.getUser();
-
-			ObjectEntry childObjectEntry1 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName, user.getUserId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			ObjectEntry childObjectEntry2 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName, user.getUserId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			RelatedInfoItemCollectionProvider
-				relatedInfoItemCollectionProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						RelatedInfoItemCollectionProvider.class,
-						_systemObjectDefinition2.getClassName());
-
-			CollectionQuery collectionQuery = new CollectionQuery();
-
-			collectionQuery.setPagination(Pagination.of(10, 0));
-			collectionQuery.setRelatedItemObject(user);
-
-			InfoPage collectionInfoPage =
-				relatedInfoItemCollectionProvider.getCollectionInfoPage(
-					collectionQuery);
-
-			List<ObjectEntry> objectEntries =
-				(List<ObjectEntry>)collectionInfoPage.getPageItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 2, objectEntries.size());
-			Assert.assertTrue(objectEntries.contains(childObjectEntry1));
-			Assert.assertTrue(objectEntries.contains(childObjectEntry2));
-
-			Assert.assertEquals(2, collectionInfoPage.getTotalCount());
-		}
-		finally {
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				systemObjectRelationship);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				childObjectDefinition);
-		}
-
-		childObjectDefinition = _addAndPublishCustomObjectDefinition();
-
-		systemObjectRelationshipName = StringUtil.randomId();
-
-		systemObjectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_systemObjectDefinition2.getObjectDefinitionId(),
-				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				systemObjectRelationshipName, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _systemObjectDefinition2,
+				childObjectDefinition,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, name);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -1099,64 +893,46 @@ public class ObjectRelationshipLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		try {
-			String systemRelationshipFieldName =
+			String relationshipFieldName =
 				ObjectRelationshipUtil.getObjectRelationshipFieldName(
-					_systemObjectDefinition2, systemObjectRelationshipName);
+					_systemObjectDefinition2, name);
 
-			ObjectEntry childObjectEntry1 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName,
-						depotEntry.getDepotEntryId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
+			_assertCollectionInfoPage(
+				_systemObjectDefinition2, depotEntry,
+				_addChildObjectEntry(
+					childObjectDefinition, depotEntry.getDepotEntryId(),
+					relationshipFieldName),
+				_addChildObjectEntry(
+					childObjectDefinition, depotEntry.getDepotEntryId(),
+					relationshipFieldName));
 
-			ObjectEntry childObjectEntry2 =
-				_objectEntryLocalService.addObjectEntry(
-					0, TestPropsValues.getUserId(),
-					childObjectDefinition.getObjectDefinitionId(),
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
-					HashMapBuilder.<String, Serializable>put(
-						systemRelationshipFieldName,
-						depotEntry.getDepotEntryId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
+			long systemParentPrimaryKey = RandomTestUtil.randomLong();
 
-			RelatedInfoItemCollectionProvider
-				relatedInfoItemCollectionProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						RelatedInfoItemCollectionProvider.class,
-						_systemObjectDefinition2.getClassName());
+			_assertCollectionInfoPage(
+				_systemObjectDefinition2,
+				new SystemObjectEntry(
+					systemParentPrimaryKey, null, Collections.emptyMap()),
+				_addChildObjectEntry(
+					childObjectDefinition, systemParentPrimaryKey,
+					relationshipFieldName),
+				_addChildObjectEntry(
+					childObjectDefinition, systemParentPrimaryKey,
+					relationshipFieldName));
 
-			CollectionQuery collectionQuery = new CollectionQuery();
+			User user = TestPropsValues.getUser();
 
-			collectionQuery.setPagination(Pagination.of(10, 0));
-			collectionQuery.setRelatedItemObject(depotEntry);
-
-			InfoPage collectionInfoPage =
-				relatedInfoItemCollectionProvider.getCollectionInfoPage(
-					collectionQuery);
-
-			List<ObjectEntry> objectEntries =
-				(List<ObjectEntry>)collectionInfoPage.getPageItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 2, objectEntries.size());
-			Assert.assertTrue(objectEntries.contains(childObjectEntry1));
-			Assert.assertTrue(objectEntries.contains(childObjectEntry2));
-
-			Assert.assertEquals(2, collectionInfoPage.getTotalCount());
+			_assertCollectionInfoPage(
+				_systemObjectDefinition2, user,
+				_addChildObjectEntry(
+					childObjectDefinition, user.getUserId(),
+					relationshipFieldName),
+				_addChildObjectEntry(
+					childObjectDefinition, user.getUserId(),
+					relationshipFieldName));
 		}
 		finally {
 			_objectRelationshipLocalService.deleteObjectRelationship(
-				systemObjectRelationship);
+				objectRelationship);
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				childObjectDefinition);
 			_depotEntryLocalService.deleteDepotEntry(
@@ -1831,6 +1607,22 @@ public class ObjectRelationshipLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectEntry _addChildObjectEntry(
+			ObjectDefinition childObjectDefinition, long parentPrimaryKey,
+			String relationshipFieldName)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				relationshipFieldName, parentPrimaryKey
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private ObjectLayoutBox _addObjectLayoutBox() throws Exception {
 		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(0);
 
@@ -1926,6 +1718,40 @@ public class ObjectRelationshipLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _assertCollectionInfoPage(
+			ObjectDefinition parentObjectDefinition, Object relatedItem,
+			ObjectEntry... expectedObjectEntries)
+		throws Exception {
+
+		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				parentObjectDefinition.getClassName());
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setPagination(Pagination.of(10, 0));
+		collectionQuery.setRelatedItemObject(relatedItem);
+
+		InfoPage collectionInfoPage =
+			relatedInfoItemCollectionProvider.getCollectionInfoPage(
+				collectionQuery);
+
+		List<ObjectEntry> objectEntries =
+			(List<ObjectEntry>)collectionInfoPage.getPageItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), expectedObjectEntries.length,
+			objectEntries.size());
+
+		for (ObjectEntry expectedObjectEntry : expectedObjectEntries) {
+			Assert.assertTrue(objectEntries.contains(expectedObjectEntry));
+		}
+
+		Assert.assertEquals(
+			expectedObjectEntries.length, collectionInfoPage.getTotalCount());
 	}
 
 	private void _assertObjectLayoutTab(

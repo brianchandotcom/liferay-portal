@@ -42,7 +42,7 @@ const DefaultComponent = withStaticRouter(SearchableEntityTable);
 describe('SearchableEntityTable', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render table rows with data after loading', async () => {
 		const {container} = render(
 			<DefaultComponent
 				columns={COLUMNS}
@@ -54,7 +54,14 @@ describe('SearchableEntityTable', () => {
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(container.querySelectorAll('tbody tr').length).toBe(TOTAL);
+		expect(
+			container.querySelector('tbody tr td').textContent
+		).toBe('Foo Bar');
 	});
 
 	it('should render w/ Checkboxes', async () => {
@@ -80,6 +87,20 @@ describe('SearchableEntityTable', () => {
 			container.querySelectorAll('tr.clickable input[type=checkbox]')
 				.length
 		).toBe(5);
+	});
+
+	it('should render loading state without ghost table', () => {
+		const {container} = render(
+			<DefaultComponent
+				columns={COLUMNS}
+				dataSourceFn={() => new Promise(() => {})}
+				groupId='23'
+				rowIdentifier='id'
+			/>
+		);
+
+		expect(container.querySelector('.loading-root')).toBeTruthy();
+		expect(container.querySelector('table')).toBeFalsy();
 	});
 
 	it('should render as loading if overrideLoading is true, even if loading is false', () => {

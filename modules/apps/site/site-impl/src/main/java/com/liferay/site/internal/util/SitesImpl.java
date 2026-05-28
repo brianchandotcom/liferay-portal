@@ -405,32 +405,19 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception {
-		String layoutSetPrototypeLayoutERC =
-			layout.getLayoutSetPrototypeLayoutERC();
-
-		if (Validator.isNull(layoutSetPrototypeLayoutERC)) {
-			doMergeLayoutPrototypeLayout(layout);
-
+		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
 			return;
 		}
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		long layoutSetPrototypeId = layoutSet.getLayoutSetPrototypeId();
-
-		if (layoutSetPrototypeId > 0) {
-			Group layoutSetPrototypeGroup =
-				_groupLocalService.getLayoutSetPrototypeGroup(
-					layout.getCompanyId(), layoutSetPrototypeId);
-
-			Layout sourcePrototypeLayout =
-				_layoutLocalService.fetchLayoutByExternalReferenceCode(
-					layoutSetPrototypeLayoutERC,
-					layoutSetPrototypeGroup.getGroupId());
-
-			if (sourcePrototypeLayout != null) {
-				doMergeLayoutPrototypeLayout(sourcePrototypeLayout);
+		if (Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Merge not performed because the layout is linked to a " +
+						"layout set prototype with external reference code " +
+							layout.getLayoutSetPrototypeLayoutERC());
 			}
+
+			return;
 		}
 
 		doMergeLayoutPrototypeLayout(layout);
@@ -473,10 +460,6 @@ public class SitesImpl implements Sites {
 
 	protected void doMergeLayoutPrototypeLayout(Layout layout)
 		throws Exception {
-
-		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
-			return;
-		}
 
 		Group group = layout.getGroup();
 

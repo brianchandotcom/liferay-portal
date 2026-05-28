@@ -50,6 +50,7 @@ import com.liferay.exportimport.report.exception.NoSuchExportImportReportEntryEx
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.ExportImportConfigurationTemporarySwapper;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -7631,6 +7632,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	@TestInfo("LPD-89977")
 	public void testMoveObjectEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -7681,6 +7683,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testMoveObjectEntryGroup(
 			depotEntry.getGroupId(), objectDefinitionSetting);
+		_testMoveObjectEntryWithDifferentUser(depotEntry.getGroupId());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -10837,6 +10840,25 @@ public class DefaultObjectEntryManagerImplTest
 				expectedStatus, objectEntryVersion.getStatus()));
 	}
 
+	private void _assertObjectEntryVersionUser(
+			User creatorUser, long objectEntryId, User user)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		Assert.assertEquals(
+			creatorUser.getUserId(), serviceBuilderObjectEntry.getUserId());
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntryId, serviceBuilderObjectEntry.getVersion());
+
+		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
+		Assert.assertEquals(
+			user.getFullName(), objectEntryVersion.getUserName());
+	}
+
 	private void _assertObjectEntryWithPicklistObjectField(
 		String expectedPicklistObjectFieldValue, ObjectEntry objectEntry) {
 
@@ -12851,6 +12873,69 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(
 				destinationObjectEntryFolder.getObjectEntryFolderId()),
 			String.valueOf(objectEntry2.getObjectEntryFolderId()));
+	}
+
+	private void _testMoveObjectEntryWithDifferentUser(long groupId)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				groupId, adminUser.getUserId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition7,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(groupId), 1);
+
+		_assertObjectEntryVersionUser(
+			adminUser, objectEntry.getId(), adminUser);
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		PrincipalThreadLocal.setName(user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		objectEntry = _defaultObjectEntryManager.moveObjectEntry(
+			_createDTOConverterContext(user), objectEntry.getId(),
+			objectEntryFolder.getObjectEntryFolderId(), false);
+
+		_assertObjectEntryVersionUser(adminUser, objectEntry.getId(), user);
+
+		NestedFieldsContext originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		try {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				new NestedFieldsContext(
+					1, null, Arrays.asList("modifiedBy"), null, null, null));
+
+			objectEntry = _defaultObjectEntryManager.getObjectEntry(
+				_createDTOConverterContext(adminUser), _objectDefinition7,
+				objectEntry.getId());
+
+			Creator modifiedBy = objectEntry.getModifiedBy();
+
+			Assert.assertEquals(user.getFullName(), modifiedBy.getName());
+
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(null);
+
+			objectEntry = _defaultObjectEntryManager.getObjectEntry(
+				_createDTOConverterContext(adminUser), _objectDefinition7,
+				objectEntry.getId());
+
+			Assert.assertNull(objectEntry.getModifiedBy());
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				originalNestedFieldsContext);
+		}
 	}
 
 	private void _testUpdateObjectEntryWithAccountEntryRestricted2(

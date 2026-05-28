@@ -12,6 +12,16 @@ import React from 'react';
 
 import AssetRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/AssetRenderer';
 
+jest.mock('frontend-js-web', () => ({
+	...(jest.requireActual('frontend-js-web') as Record<string, unknown>),
+	sub: (str: string, ...params: string[]) =>
+		params.reduce(
+			(result, param, index) =>
+				result.replace(new RegExp(`\\{${index}\\}`, 'g'), param),
+			str
+		),
+}));
+
 const testActionBase = {
 	data: {id: 'update'},
 	href: 'http://localhost:8080/o/cms/blogs/12345',
@@ -155,5 +165,44 @@ describe('AssetRenderer. Show metadata and icons.', () => {
 		expect(screen.getByRole('presentation', {name: ''})).toHaveClass(
 			'lexicon-icon-blogs'
 		);
+	});
+});
+
+describe('AssetRenderer. Modified by user name.', () => {
+	beforeAll(() => {
+		jest.spyOn(Liferay.Language, 'get').mockImplementation((key) => {
+			if (key === 'modified-at-x-by-x') {
+				return 'Modified at {0} by {1}';
+			}
+
+			return key;
+		});
+	});
+
+	afterAll(() => {
+		jest.restoreAllMocks();
+	});
+
+	it('falls back to the creator name when modifiedBy is missing', () => {
+		render(<AssetRenderer {...testBaseProps} />);
+
+		expect(screen.getByText(/by Test Test$/)).toBeInTheDocument();
+	});
+
+	it('shows modifiedBy name when it is provided', () => {
+		render(
+			<AssetRenderer
+				{...testBaseProps}
+				itemData={{
+					...testBaseProps.itemData,
+					embedded: {
+						...testBaseProps.itemData.embedded,
+						modifiedBy: {name: 'Admin Moved'},
+					},
+				}}
+			/>
+		);
+
+		expect(screen.getByText(/by Admin Moved$/)).toBeInTheDocument();
 	});
 });

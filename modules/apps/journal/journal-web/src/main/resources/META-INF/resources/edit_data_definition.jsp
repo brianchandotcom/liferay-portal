@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
 JournalEditDDMStructuresDisplayContext journalEditDDMStructuresDisplayContext = (JournalEditDDMStructuresDisplayContext)request.getAttribute(JournalEditDDMStructuresDisplayContext.class.getName());
 

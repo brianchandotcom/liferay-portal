@@ -254,7 +254,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 						onSubmit={this.handleSubmit}
 						validate={(values: FormValues) => {
 							const error = validateSegmentEditor(
-								values.criteria
+								values.criteria,
+								values.sequential
 							);
 
 							return error ? {criteria: error} : {};

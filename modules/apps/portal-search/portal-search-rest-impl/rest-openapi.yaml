@@ -274,6 +274,7 @@ paths:
                         subscription.
                     example: PRODUCT_SEARCH
                     name: blueprintExternalReferenceCode
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -283,6 +284,7 @@ paths:
                         body attribute instead.
                     example: true
                     name: emptySearch
+                    required: false
                     schema:
                         type: boolean
                 -   in: query
@@ -319,6 +321,7 @@ paths:
                         /o/search-experiences-rest/v1.0/searchable-asset-names (admin permission required).
                     example: com.liferay.journal.model.JournalArticle,com.liferay.blogs.model.BlogsEntry
                     name: entryClassNames
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -328,6 +331,7 @@ paths:
                         specifies multiple class names), only common fields can be specified, otherwise the API returns
                         an empty object for each result item. Examples TBA.
                     name: fields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -355,6 +359,7 @@ paths:
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints.
                     example: groupIds/any(g:g eq 20121)
                     name: filter
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -363,6 +368,7 @@ paths:
                         own headless API schema. The MCP Server may default to this value.
                     example: embedded
                     name: nestedFields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -372,6 +378,7 @@ paths:
                         for more information.
                     example: 1
                     name: page
+                    required: false
                     schema:
                         type: integer
                 -   in: query
@@ -381,6 +388,7 @@ paths:
                         for more information.
                     example: 20
                     name: pageSize
+                    required: false
                     schema:
                         type: integer
                 -   in: query
@@ -389,6 +397,7 @@ paths:
                         either fields (allow-list) or restrictFields (block-list), not both.
                     example: actions,embedded
                     name: restrictFields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -397,6 +406,7 @@ paths:
                         search. You can mix IDs and ERCs in the same request.
                     example: "20121"
                     name: scope
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -404,6 +414,7 @@ paths:
                         Search by keyword(s).
                     example: liferay
                     name: search
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -427,6 +438,7 @@ paths:
                         (LES) add-on subscription.
                     example: dateModified:desc
                     name: sort
+                    required: false
                     schema:
                         type: string
             responses:
@@ -486,6 +498,7 @@ paths:
                         /o/search-experiences-rest/v1.0/searchable-asset-names (admin permission required).
                     example: com.liferay.journal.model.JournalArticle,com.liferay.blogs.model.BlogsEntry
                     name: entryClassNames
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -495,6 +508,7 @@ paths:
                         specifies multiple class names), only common fields can be specified, otherwise the API returns
                         an empty object for each result item. Examples TBA.
                     name: fields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -522,6 +536,7 @@ paths:
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints.
                     example: groupIds/any(g:g eq 20121)
                     name: filter
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -530,6 +545,7 @@ paths:
                         own headless API schema. The MCP Server may default to this value.
                     example: embedded
                     name: nestedFields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -539,6 +555,7 @@ paths:
                         for more information.
                     example: 1
                     name: page
+                    required: false
                     schema:
                         type: integer
                 -   in: query
@@ -548,6 +565,7 @@ paths:
                         for more information.
                     example: 20
                     name: pageSize
+                    required: false
                     schema:
                         type: integer
                 -   in: query
@@ -556,6 +574,7 @@ paths:
                         either fields (allow-list) or restrictFields (block-list), not both.
                     example: actions,embedded
                     name: restrictFields
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -564,6 +583,7 @@ paths:
                         search. You can mix IDs and ERCs in the same request.
                     example: "20121"
                     name: scope
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -571,6 +591,7 @@ paths:
                         Search by keyword(s).
                     example: liferay
                     name: search
+                    required: false
                     schema:
                         type: string
                 -   in: query
@@ -594,6 +615,7 @@ paths:
                         (LES) add-on subscription.
                     example: dateModified:desc
                     name: sort
+                    required: false
                     schema:
                         type: string
             requestBody:

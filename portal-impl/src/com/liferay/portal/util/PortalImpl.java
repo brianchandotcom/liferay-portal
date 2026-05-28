@@ -211,6 +211,7 @@ import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.admin.util.OmniadminUtil;
+import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.util.JS;
@@ -1023,6 +1024,31 @@ public class PortalImpl implements Portal {
 		}
 
 		return className.getValue();
+	}
+
+	@Override
+	public Group fetchFriendlyURLGroup(
+		long companyId, String groupFriendlyURL) {
+
+		if (groupFriendlyURL == null) {
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			companyId, groupFriendlyURL);
+
+		if (group != null) {
+			return group;
+		}
+
+		User user = UserLocalServiceUtil.fetchUserByScreenName(
+			companyId, groupFriendlyURL.substring(1));
+
+		if (user != null) {
+			return user.getGroup();
+		}
+
+		return null;
 	}
 
 	@Override
@@ -5886,6 +5912,42 @@ public class PortalImpl implements Portal {
 		}
 
 		return true;
+	}
+
+	@Override
+	public String parseGroupFriendlyURL(String path) {
+		if ((path == null) || path.equals(StringPool.SLASH)) {
+			return null;
+		}
+
+		String groupFriendlyURL = path;
+
+		int index = path.indexOf(CharPool.SLASH, 1);
+
+		if (index != -1) {
+			String pathSuffix = path.substring(index);
+
+			if (pathSuffix.startsWith(
+					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT)) {
+
+				String documentFriendlyURL = pathSuffix.substring(
+					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT.length() - 1);
+
+				index = documentFriendlyURL.indexOf(CharPool.SLASH, 1);
+
+				if (index == -1) {
+					groupFriendlyURL = documentFriendlyURL;
+				}
+				else {
+					groupFriendlyURL = documentFriendlyURL.substring(0, index);
+				}
+			}
+			else {
+				groupFriendlyURL = path.substring(0, index);
+			}
+		}
+
+		return groupFriendlyURL;
 	}
 
 	@Override

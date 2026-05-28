@@ -230,6 +230,8 @@ public interface Portal {
 
 	public String fetchClassName(long classNameId);
 
+	public Group fetchFriendlyURLGroup(long companyId, String groupFriendlyURL);
+
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *
@@ -1052,6 +1054,8 @@ public interface Portal {
 	public boolean isValidPortalDomain(long companyId, String domain);
 
 	public boolean isValidResourceId(String resourceId);
+
+	public String parseGroupFriendlyURL(String path);
 
 	public void resetCDNHosts();
 

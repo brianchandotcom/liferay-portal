@@ -107,7 +107,9 @@ const StageMetrics = ({
 				<div className='mt-3 text-secondary'>
 					{averageDaysInStage != 0 ? (
 						<>
-							<span className='mr-4'>{`${averageDaysInStage}`}</span>
+							<span className='mr-4'>{`${averageDaysInStage.toFixed(
+								2
+							)}`}</span>
 							<span>
 								{Liferay.Language.get('avg.-day').toLowerCase()}
 							</span>

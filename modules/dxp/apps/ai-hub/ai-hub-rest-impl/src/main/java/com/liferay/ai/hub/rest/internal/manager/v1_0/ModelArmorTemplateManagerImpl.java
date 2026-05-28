@@ -52,6 +52,28 @@ public class ModelArmorTemplateManagerImpl
 	}
 
 	@Override
+	public ModelArmorTemplate postModelArmorTemplate(
+			long companyId, DTOConverterContext dtoConverterContext,
+			ModelArmorTemplate modelArmorTemplate)
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			dtoConverterContext.getUserId());
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			dtoConverterContext, _getObjectDefinition(companyId),
+			_toObjectEntry(
+				accountEntry.getAccountEntryId(), modelArmorTemplate),
+			null);
+
+		_modelArmorHandler.createModelArmorTemplate(
+			companyId, objectEntry.getExternalReferenceCode(),
+			objectEntry.getProperties());
+
+		return _toModelArmorTemplate(objectEntry);
+	}
+
+	@Override
 	public ModelArmorTemplate putModelArmorTemplate(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
@@ -69,9 +91,12 @@ public class ModelArmorTemplateManagerImpl
 				dtoConverterContext, externalReferenceCode, objectDefinition,
 				null);
 
-		ObjectEntry objectEntry = _updateObjectEntry(
-			accountEntry.getAccountEntryId(), companyId, dtoConverterContext,
-			externalReferenceCode, modelArmorTemplate, objectDefinition);
+		ObjectEntry objectEntry = _objectEntryManager.updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition,
+			_toObjectEntry(
+				accountEntry.getAccountEntryId(), modelArmorTemplate),
+			null);
 
 		if (existingObjectEntry == null) {
 			_modelArmorHandler.createModelArmorTemplate(
@@ -82,6 +107,18 @@ public class ModelArmorTemplateManagerImpl
 				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 
+		return _toModelArmorTemplate(objectEntry);
+	}
+
+	private ObjectDefinition _getObjectDefinition(long companyId)
+		throws Exception {
+
+		return _objectDefinitionLocalService.
+			getObjectDefinitionByExternalReferenceCode(
+				"L_AI_HUB_MODEL_ARMOR_TEMPLATE", companyId);
+	}
+
+	private ModelArmorTemplate _toModelArmorTemplate(ObjectEntry objectEntry) {
 		return new ModelArmorTemplate() {
 			{
 				setActive(
@@ -149,100 +186,76 @@ public class ModelArmorTemplateManagerImpl
 		};
 	}
 
-	private ObjectDefinition _getObjectDefinition(long companyId)
-		throws Exception {
+	private ObjectEntry _toObjectEntry(
+		long accountEntryId, ModelArmorTemplate modelArmorTemplate) {
 
-		return _objectDefinitionLocalService.
-			getObjectDefinitionByExternalReferenceCode(
-				"L_AI_HUB_MODEL_ARMOR_TEMPLATE", companyId);
-	}
-
-	private ObjectEntry _updateObjectEntry(
-			long accountEntryId, long companyId,
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate,
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		return _objectEntryManager.updateObjectEntry(
-			companyId, dtoConverterContext, externalReferenceCode,
-			objectDefinition,
-			new ObjectEntry() {
-				{
-					setExternalReferenceCode(
-						modelArmorTemplate::getExternalReferenceCode);
-					setProperties(
-						() -> HashMapBuilder.<String, Object>put(
-							"active",
-							GetterUtil.getBoolean(
-								modelArmorTemplate.getActive(), true)
-						).put(
-							"description",
-							GetterUtil.getString(
-								modelArmorTemplate.getDescription())
-						).put(
-							"guardrailType",
-							String.valueOf(
-								modelArmorTemplate.getGuardrailType())
-						).put(
-							"location",
-							GetterUtil.getString(
-								modelArmorTemplate.getLocation())
-						).put(
-							"maliciousUriFilterEnabled",
-							GetterUtil.getBoolean(
-								modelArmorTemplate.
-									getMaliciousUriFilterEnabled())
-						).put(
-							"multilanguageDetectionEnabled",
-							GetterUtil.getBoolean(
-								modelArmorTemplate.
-									getMultilanguageDetectionEnabled())
-						).put(
-							"piAndJailbreakConfidenceLevel",
-							Objects.toString(
-								modelArmorTemplate.
-									getPiAndJailbreakConfidenceLevel(),
-								null)
-						).put(
-							"piAndJailbreakFilterEnabled",
-							GetterUtil.getBoolean(
-								modelArmorTemplate.
-									getPiAndJailbreakFilterEnabled())
-						).put(
-							"r_accountToAIHubModelArmorTemplates_" +
-								"accountEntryId",
-							String.valueOf(accountEntryId)
-						).put(
-							"raiDangerousLevel",
-							Objects.toString(
-								modelArmorTemplate.getRaiDangerousLevel(), null)
-						).put(
-							"raiHarassmentLevel",
-							Objects.toString(
-								modelArmorTemplate.getRaiHarassmentLevel(),
-								null)
-						).put(
-							"raiHateSpeechLevel",
-							Objects.toString(
-								modelArmorTemplate.getRaiHateSpeechLevel(),
-								null)
-						).put(
-							"raiSexuallyExplicitLevel",
-							Objects.toString(
-								modelArmorTemplate.
-									getRaiSexuallyExplicitLevel(),
-								null)
-						).put(
-							"sdpFilterEnabled",
-							GetterUtil.getBoolean(
-								modelArmorTemplate.getSdpFilterEnabled())
-						).put(
-							"title_i18n", modelArmorTemplate.getTitle_i18n()
-						).build());
-				}
-			},
-			null);
+		return new ObjectEntry() {
+			{
+				setExternalReferenceCode(
+					modelArmorTemplate::getExternalReferenceCode);
+				setProperties(
+					() -> HashMapBuilder.<String, Object>put(
+						"active",
+						GetterUtil.getBoolean(
+							modelArmorTemplate.getActive(), true)
+					).put(
+						"description",
+						GetterUtil.getString(
+							modelArmorTemplate.getDescription())
+					).put(
+						"guardrailType",
+						String.valueOf(modelArmorTemplate.getGuardrailType())
+					).put(
+						"location",
+						GetterUtil.getString(modelArmorTemplate.getLocation())
+					).put(
+						"maliciousUriFilterEnabled",
+						GetterUtil.getBoolean(
+							modelArmorTemplate.getMaliciousUriFilterEnabled())
+					).put(
+						"multilanguageDetectionEnabled",
+						GetterUtil.getBoolean(
+							modelArmorTemplate.
+								getMultilanguageDetectionEnabled())
+					).put(
+						"piAndJailbreakConfidenceLevel",
+						Objects.toString(
+							modelArmorTemplate.
+								getPiAndJailbreakConfidenceLevel(),
+							null)
+					).put(
+						"piAndJailbreakFilterEnabled",
+						GetterUtil.getBoolean(
+							modelArmorTemplate.getPiAndJailbreakFilterEnabled())
+					).put(
+						"r_accountToAIHubModelArmorTemplates_accountEntryId",
+						String.valueOf(accountEntryId)
+					).put(
+						"raiDangerousLevel",
+						Objects.toString(
+							modelArmorTemplate.getRaiDangerousLevel(), null)
+					).put(
+						"raiHarassmentLevel",
+						Objects.toString(
+							modelArmorTemplate.getRaiHarassmentLevel(), null)
+					).put(
+						"raiHateSpeechLevel",
+						Objects.toString(
+							modelArmorTemplate.getRaiHateSpeechLevel(), null)
+					).put(
+						"raiSexuallyExplicitLevel",
+						Objects.toString(
+							modelArmorTemplate.getRaiSexuallyExplicitLevel(),
+							null)
+					).put(
+						"sdpFilterEnabled",
+						GetterUtil.getBoolean(
+							modelArmorTemplate.getSdpFilterEnabled())
+					).put(
+						"title_i18n", modelArmorTemplate.getTitle_i18n()
+					).build());
+			}
+		};
 	}
 
 	@Reference

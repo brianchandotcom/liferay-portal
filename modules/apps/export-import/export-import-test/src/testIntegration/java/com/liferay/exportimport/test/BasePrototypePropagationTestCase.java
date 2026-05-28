@@ -249,7 +249,7 @@ public abstract class BasePrototypePropagationTestCase {
 	}
 
 	protected Layout propagateChanges(Layout layout) throws Exception {
-		_sites.mergeLayoutPrototypeLayout(group, layout);
+		_sites.mergeLayoutPrototypeLayout(layout);
 
 		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
 	}

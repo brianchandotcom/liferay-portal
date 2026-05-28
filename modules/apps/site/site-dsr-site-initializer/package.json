@@ -43,6 +43,7 @@
 		"frontend-editor-ckeditor-web": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
+		"hash.js": "^1.1.7",
 		"moment": "2.29.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

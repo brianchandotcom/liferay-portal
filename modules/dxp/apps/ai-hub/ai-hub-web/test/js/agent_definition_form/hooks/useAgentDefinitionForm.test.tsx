@@ -137,7 +137,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_2', title: 'Second'},
 				],
 				agentDefinitionsToModelArmorTemplates: [
-					{externalReferenceCode: 'MAT_1', name: 'Guard'},
+					{externalReferenceCode: 'MAT_1', title: 'Guard'},
 				],
 				externalReferenceCode: 'AGENT_X',
 				title_i18n: {en_US: 'Loaded Title'},
@@ -206,7 +206,7 @@ describe('useAgentDefinitionForm', () => {
 				],
 			});
 			mockGetModelArmorTemplates.mockResolvedValueOnce({
-				items: [{externalReferenceCode: 'MAT_1', name: 'Guard'}],
+				items: [{externalReferenceCode: 'MAT_1', title: 'Guard'}],
 			});
 
 			const {result} = renderAgentHook();

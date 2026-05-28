@@ -1,5 +1,6 @@
 {
-	"accountEntryRestricted": false,
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountToSEOStudioInsightTypes_accountEntryId",
 	"className": "com.liferay.object.model.ObjectDefinition#SI05",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
@@ -39,6 +40,33 @@
 			"required": true,
 			"system": true,
 			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "ACCOUNT_TO_SEO_STUDIO_INSIGHT_TYPES",
+			"indexed": true,
+			"label": {
+				"en_US": "Account to SEO Studio Insight Types"
+			},
+			"name": "r_accountToSEOStudioInsightTypes_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToSEOStudioInsightTypes_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_SEO_STUDIO_INSIGHT_TYPES",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
 		},
 		{
 			"DBType": "Long",

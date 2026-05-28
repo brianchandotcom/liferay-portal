@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>FROM_DATE</td>
-	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td>//input[contains(@id,'from-dateModified') and @placeholder='mm/dd/yyyy']</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>TO_DATE</td>
-	<td>//input[contains(@id,'to-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td>//input[contains(@id,'to-dateModified') and @placeholder='mm/dd/yyyy']</td>
 	<td></td>
 </tr>
 <tr>

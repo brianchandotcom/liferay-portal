@@ -48,6 +48,21 @@ public class DepotRoleUtil {
 			});
 	}
 
+	public static List<Role> filter(List<Role> roles, String subtype) {
+		if (Validator.isNull(subtype)) {
+			return roles;
+		}
+
+		return ListUtil.filter(
+			roles,
+			role -> {
+				String roleSubtype = role.getSubtype();
+
+				return Validator.isNull(roleSubtype) ||
+					   Objects.equals(roleSubtype, subtype);
+			});
+	}
+
 	public static List<Role> filter(long groupId, List<Role> roles) {
 		return filter(
 			DepotEntryLocalServiceUtil.fetchGroupDepotEntry(groupId), roles);

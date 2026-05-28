@@ -5,8 +5,14 @@ import {createOrderIOMap, EMAIL_ADDRESS} from 'shared/util/pagination';
 import {noop} from 'lodash';
 import {OrderByDirections} from 'shared/util/constants';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
+
+const ITEMS = [
+	{emailAddress: 'foo@liferay.com', name: 'Foo'},
+	{emailAddress: 'bar@liferay.com', name: 'Bar'}
+];
 
 const DefaultComponent = props => (
 	<StaticRouter>
@@ -22,9 +28,12 @@ const DefaultComponent = props => (
 					label: 'email'
 				}
 			]}
-			dataSourceFn={() => Promise.resolve()}
+			dataSourceFn={() =>
+				Promise.resolve({items: ITEMS, total: ITEMS.length})
+			}
 			groupId='23'
 			onClose={noop}
+			rowIdentifier='emailAddress'
 			{...props}
 		/>
 	</StaticRouter>
@@ -33,13 +42,19 @@ const DefaultComponent = props => (
 describe('SearchableEntitiesTableModal', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
-		const {container} = render(<DefaultComponent />);
+	it('should render loading state without ghost table', () => {
+		const {container, getByText} = render(
+			<DefaultComponent
+				dataSourceFn={() => new Promise(() => {})}
+			/>
+		);
 
-		expect(container).toMatchSnapshot();
+		expect(getByText('entities')).toBeTruthy();
+		expect(container.querySelector('.loading-root')).toBeTruthy();
+		expect(container.querySelector('table')).toBeFalsy();
 	});
 
-	it('should render w/ defaultParams', () => {
+	it('should render w/ defaultParams', async () => {
 		const {container} = render(
 			<DefaultComponent
 				initialOrderIOMap={createOrderIOMap(
@@ -48,6 +63,10 @@ describe('SearchableEntitiesTableModal', () => {
 				)}
 			/>
 		);
+
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		const emailHeaderButton = container.querySelectorAll(
 			'.table-head-title > button'

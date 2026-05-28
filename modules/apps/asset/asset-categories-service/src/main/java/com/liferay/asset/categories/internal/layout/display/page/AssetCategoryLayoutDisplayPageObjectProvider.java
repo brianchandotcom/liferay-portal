@@ -107,11 +107,11 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 	}
 
 	private String _getUrlTitle(Locale locale) throws PortalException {
-		List<AssetCategory> assetCategoryAncestors =
+		List<AssetCategory> ancestorAssetCategories =
 			_assetCategory.getAncestors();
 
 		StringBundler sb = new StringBundler(
-			(assetCategoryAncestors.size() * 2) + 3);
+			(ancestorAssetCategories.size() * 2) + 3);
 
 		AssetVocabulary vocabulary =
 			_assetVocabularyLocalService.fetchAssetVocabulary(
@@ -119,15 +119,15 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 
 		sb.append(vocabulary.getName());
 
-		Collections.reverse(assetCategoryAncestors);
+		Collections.reverse(ancestorAssetCategories);
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
-		for (AssetCategory assetCategoryAncestor : assetCategoryAncestors) {
+		for (AssetCategory ancestorAssetCategory : ancestorAssetCategories) {
 			sb.append(StringPool.SLASH);
 			sb.append(
 				_getUrlTitle(
-					classNameId, assetCategoryAncestor.getCategoryId(),
+					classNameId, ancestorAssetCategory.getCategoryId(),
 					locale));
 		}
 

@@ -17,10 +17,8 @@ import Timestamp from './Timestamp';
 
 const CKEditor5ReactClassicEditor = ({
 	editorConfig,
-	editorTransformerURLs,
 }: {
 	editorConfig: LiferayEditorConfig;
-	editorTransformerURLs?: Array<string>;
 }) => {
 	const [disabled, setDisabled] = useState(false);
 
@@ -49,10 +47,6 @@ const CKEditor5ReactClassicEditor = ({
 			],
 		},
 	};
-
-	if (editorTransformerURLs?.length) {
-		config.editorTransformerURLs = editorTransformerURLs;
-	}
 
 	return (
 		<div className="container-fluid">

@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.editor.ckeditor5.sample.web.internal.portlet;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants.CKEditor5SamplePortletKeys;
 import com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants.CKEditor5SampleWebKeys;
 import com.liferay.frontend.editor.ckeditor5.sample.web.internal.display.context.CKEditor5SampleDisplayContext;
@@ -19,7 +18,6 @@ import jakarta.portlet.RenderResponse;
 import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Arroyo
@@ -58,8 +56,5 @@ public class CKEditor5SamplePortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private CETManager _cetManager;
 
 }

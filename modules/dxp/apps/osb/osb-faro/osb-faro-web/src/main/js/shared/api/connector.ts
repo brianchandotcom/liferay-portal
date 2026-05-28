@@ -85,6 +85,6 @@ export function generateConnectorToken({
 }: RESTParams & {type: string}) {
 	return sendRequest({
 		method: 'POST',
-		path: `main/${groupId}/oauth2/tokens/new?type=${type}&expiresIn=`
+		path: `main/${groupId}/oauth2/tokens/new?type=${type}`
 	});
 }

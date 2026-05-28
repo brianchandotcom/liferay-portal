@@ -7,4 +7,5 @@
 
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.seo.studio.web.internal.display.context.ViewOnPageDisplayContext" %>
+<%@ page import="com.liferay.seo.studio.web.internal.display.context.ViewOnPageDisplayContext" %><%@
+page import="com.liferay.seo.studio.web.internal.display.context.ViewOnPageInsightDetailsDisplayContext" %>

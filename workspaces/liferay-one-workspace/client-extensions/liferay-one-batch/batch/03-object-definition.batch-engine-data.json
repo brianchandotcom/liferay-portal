@@ -1729,7 +1729,7 @@
 					"businessType": "LongInteger",
 					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_USAGE_DEFINITION_ID",
 					"indexed": true,
-					"indexedAsKeyword": false,
+					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Usage Definition ID"

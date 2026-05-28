@@ -36,6 +36,7 @@ const GuardrailsPanel: React.FC<IProps> = ({modelArmorTemplates, readOnly}) => {
 					disabled={readOnly}
 					inputName="assignedGuardrails"
 					items={modelArmorTemplates.selected}
+					loadingState={4}
 					locator={{
 						label: 'title',
 						value: 'externalReferenceCode',

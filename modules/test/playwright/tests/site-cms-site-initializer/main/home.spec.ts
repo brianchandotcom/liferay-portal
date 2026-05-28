@@ -17,6 +17,7 @@ import performLogin, {
 	performLoginViaApi,
 	performLogout,
 	performUserSwitch,
+	performUserSwitchViaApi,
 	userData,
 } from '../../../utils/performLogin';
 import {SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE} from '../../setup/site-cms-site/constants/space';
@@ -1057,5 +1058,120 @@ test(
 		await expect(
 			page.getByRole('heading', {name: `Welcome, ${user.givenName}!`})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Recent Assets shows the editor as "Modified by" after another user moves the content',
+	{tag: '@LPD-89977'},
+	async ({apiHelpers, assetsPage, homePage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentTitle = `Content ${getRandomString()}`;
+		const destinationFolderName = `Folder ${getRandomString()}`;
+		const destinationSpaceName = `Destination ${getRandomString()}`;
+
+		const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+		const editorFullName = `${spaceAdminUser.givenName} ${spaceAdminUser.familyName}`;
+
+		const destinationSpace =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			destinationSpace.externalReferenceCode,
+			spaceAdminUser.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			destinationSpace.externalReferenceCode,
+			spaceAdminUser.externalReferenceCode,
+			['Asset Library Administrator']
+		);
+
+		await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+			scopeKey: destinationSpaceName,
+			title: destinationFolderName,
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentTitle,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await test.step('Sign in as the Space Administrator and move the content to the destination Space', async () => {
+			await performUserSwitchViaApi(page, spaceAdminUser.alternateName);
+
+			await assetsPage.gotoAll();
+
+			await assetsPage.moveTo({
+				destinationFolder: destinationFolderName,
+				destinationSpace: destinationSpaceName,
+				itemTitle: contentTitle,
+			});
+		});
+
+		await test.step('Recent Assets attributes the modification to the Space Administrator', async () => {
+			await homePage.goto();
+
+			const row = dataSetFragmentPage.getRow(contentTitle);
+
+			await expect(
+				row.getByText(new RegExp(`by ${editorFullName}$`))
+			).toBeVisible();
+		});
+
+		await performUserSwitchViaApi(page, 'test');
+	}
+);
+
+test(
+	'Recent Assets shows the editor as "Modified by" after another user edits the content',
+	{tag: '@LPD-89977'},
+	async ({apiHelpers, homePage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentTitle = `Content ${getRandomString()}`;
+		const updatedTitle = `Updated ${getRandomString()}`;
+
+		const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+		const editorFullName = `${spaceAdminUser.givenName} ${spaceAdminUser.familyName}`;
+
+		const contentEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentTitle,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await performUserSwitchViaApi(page, spaceAdminUser.alternateName);
+
+		await apiHelpers.objectEntry.patchObjectEntry(
+			{
+				title_i18n: {
+					en_US: updatedTitle,
+				},
+			},
+			applicationName,
+			contentEntry.id
+		);
+
+		await homePage.goto();
+
+		const row = dataSetFragmentPage.getRow(updatedTitle);
+
+		await expect(
+			row.getByText(new RegExp(`by ${editorFullName}$`))
+		).toBeVisible();
+
+		await performUserSwitchViaApi(page, 'test');
 	}
 );

@@ -12,7 +12,10 @@ import React, {useState} from 'react';
 import PageTreeModal, {
 	PageTreeModalConfiguration,
 } from '../../../pages/export/components/PageTreeModal';
-import {HandlerSelection} from '../../../utils/contentSelection';
+import {
+	HandlerSelection,
+	isAllLayoutsSelected,
+} from '../../../utils/contentSelection';
 
 interface Props {
 	label: string;
@@ -114,7 +117,7 @@ export default function LayoutSetControl({
 		typeof value === 'object' ? value : {}
 	) as {layoutIds?: number[]; privateLayout?: boolean};
 
-	const isAll = !!value && !layoutIds.length;
+	const isAll = isAllLayoutsSelected(value);
 
 	const openModal = () => setShowModal(true);
 

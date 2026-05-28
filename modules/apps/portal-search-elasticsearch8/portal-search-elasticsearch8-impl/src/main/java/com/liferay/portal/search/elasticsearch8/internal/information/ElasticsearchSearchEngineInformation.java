@@ -232,6 +232,12 @@ public class ElasticsearchSearchEngineInformation
 						exception.getMessage());
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to query the Elasticsearch \"_license\" API",
+					exception);
+			}
+
 			return false;
 		}
 	}

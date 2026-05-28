@@ -100,9 +100,9 @@ public class PortalImplTest {
 
 	@Test
 	public void testFetchFriendlyURLGroupWithUserScreenName() throws Exception {
-		_user = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
-		Group userGroup = _user.getGroup();
+		Group userGroup = user.getGroup();
 
 		_groupLocalService.updateFriendlyURL(
 			userGroup.getGroupId(),
@@ -110,7 +110,7 @@ public class PortalImplTest {
 
 		Group group = _portal.fetchFriendlyURLGroup(
 			TestPropsValues.getCompanyId(),
-			StringPool.SLASH + _user.getScreenName());
+			StringPool.SLASH + user.getScreenName());
 
 		Assert.assertEquals(userGroup.getGroupId(), group.getGroupId());
 	}
@@ -272,14 +272,15 @@ public class PortalImplTest {
 		throws Exception {
 
 		_group = GroupTestUtil.addGroup();
-		_otherGroup = GroupTestUtil.addGroup();
+
+		Group otherGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
-			_otherGroup.getFriendlyURL(),
+			otherGroup.getFriendlyURL(),
 			_portal.parseGroupFriendlyURL(
 				StringBundler.concat(
 					_group.getFriendlyURL(), "/documents/d",
-					_otherGroup.getFriendlyURL(), StringPool.SLASH,
+					otherGroup.getFriendlyURL(), StringPool.SLASH,
 					RandomTestUtil.randomString())));
 	}
 
@@ -409,14 +410,8 @@ public class PortalImplTest {
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@DeleteAfterTestRun
-	private Group _otherGroup;
-
 	@Inject
 	private Portal _portal;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;

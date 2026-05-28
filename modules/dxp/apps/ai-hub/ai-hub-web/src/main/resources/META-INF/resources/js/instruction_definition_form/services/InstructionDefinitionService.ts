@@ -7,12 +7,13 @@ import {fetch} from 'frontend-js-web';
 
 import {InstructionDefinition} from '../types/InstructionDefinition';
 
-const INSTRUCTION_DEFINITION_BASE_URI =
-	'/o/ai-hub/instruction-definitions/by-external-reference-code/';
+const INSTRUCTION_DEFINITION_BASE_URI = '/o/ai-hub/instruction-definitions';
+
+const INSTRUCTION_DEFINITION_BY_ERC_URI = `${INSTRUCTION_DEFINITION_BASE_URI}/by-external-reference-code/`;
 
 async function getInstructionDefinition(externalReferenceCode: string) {
 	const response = await fetch(
-		`${INSTRUCTION_DEFINITION_BASE_URI}${externalReferenceCode}`,
+		`${INSTRUCTION_DEFINITION_BY_ERC_URI}${externalReferenceCode}`,
 		{
 			method: 'GET',
 		}
@@ -25,11 +26,31 @@ async function getInstructionDefinition(externalReferenceCode: string) {
 	return response.json();
 }
 
+async function postInstructionDefinition(
+	instructionDefinition: InstructionDefinition
+) {
+	const response = await fetch(INSTRUCTION_DEFINITION_BASE_URI, {
+		body: JSON.stringify(instructionDefinition),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+	if (!response.ok) {
+		const errorBody = await response.json().catch(() => ({}));
+
+		throw new Error(errorBody?.detail || errorBody?.title || '');
+	}
+
+	return response.json();
+}
+
 async function putInstructionDefinition(
 	instructionDefinition: InstructionDefinition
 ) {
 	const response = await fetch(
-		`${INSTRUCTION_DEFINITION_BASE_URI}${instructionDefinition.externalReferenceCode}`,
+		`${INSTRUCTION_DEFINITION_BY_ERC_URI}${instructionDefinition.externalReferenceCode}`,
 		{
 			body: JSON.stringify(instructionDefinition),
 			headers: {
@@ -42,4 +63,8 @@ async function putInstructionDefinition(
 	return response.json();
 }
 
-export {getInstructionDefinition, putInstructionDefinition};
+export {
+	getInstructionDefinition,
+	postInstructionDefinition,
+	putInstructionDefinition,
+};

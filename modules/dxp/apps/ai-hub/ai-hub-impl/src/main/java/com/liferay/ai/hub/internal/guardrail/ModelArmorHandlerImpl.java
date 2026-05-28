@@ -20,8 +20,8 @@ import com.google.cloud.modelarmor.v1.Template;
 import com.google.cloud.modelarmor.v1.TemplateName;
 import com.google.protobuf.FieldMask;
 
+import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
-import com.liferay.ai.hub.internal.configuration.VertexAIConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;

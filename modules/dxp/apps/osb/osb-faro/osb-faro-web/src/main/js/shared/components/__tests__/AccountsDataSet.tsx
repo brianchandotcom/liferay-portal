@@ -216,4 +216,18 @@ describe('AccountsDataSet', () => {
 			'fake-url?rangeKey=CUSTOM&rangeEnd=2024-01-31&rangeStart=2024-01-01'
 		);
 	});
+
+	it('should append queryParams entries to the apiURL query string', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				queryParams={{channelId: '123'}}
+				rangeSelectors={defaultRangeSelectors}
+			/>
+		);
+
+		expect(lastApiURL).toBe('fake-url?rangeKey=30&channelId=123');
+	});
 });

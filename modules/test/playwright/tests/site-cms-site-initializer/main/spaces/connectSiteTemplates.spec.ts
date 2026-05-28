@@ -161,7 +161,7 @@ test(
 
 test(
 	'Read-only space member cannot connect or disconnect site templates',
-	{tag: '@LPD-88037'},
+	{tag: ['@LPD-88037', '@LPD-92500']},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
 		const spaceName = `Space ${getRandomString()}`;
 		const siteTemplateName = `Site Template ${getRandomString()}`;

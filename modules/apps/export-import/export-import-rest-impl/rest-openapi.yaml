@@ -175,6 +175,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                description:
+                    readOnly: true
+                    type: string
                 label:
                     readOnly: true
                     type: string
@@ -188,6 +191,9 @@ components:
                         $ref: "#/components/schemas/PreviewPortletDataHandlerControl"
                     readOnly: true
                     type: array
+                tag:
+                    readOnly: true
+                    type: string
             type: object
         PreviewPortletDataHandlerBoolean:
             allOf:

@@ -14,12 +14,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -43,6 +46,14 @@ public interface ModelArmorTemplateResource {
 
 	public void deleteModelArmorTemplateByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public ModelArmorTemplate postModelArmorTemplate(
+			ModelArmorTemplate modelArmorTemplate)
+		throws Exception;
+
+	public Response postModelArmorTemplateBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
@@ -88,6 +99,14 @@ public interface ModelArmorTemplateResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource);
 
 	public default com.liferay.portal.kernel.search.filter.Filter toFilter(
 		String filterString) {
@@ -137,4 +156,4 @@ public interface ModelArmorTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1769429809
+// LIFERAY-REST-BUILDER-HASH:456182443

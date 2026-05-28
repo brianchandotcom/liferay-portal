@@ -19,12 +19,6 @@
 				"friendlyURL": "/chatbots",
 				"privateLayout": false,
 				"type": "layout"
-			},
-			{
-				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION4",
-				"friendlyURL": "/activity",
-				"privateLayout": false,
-				"type": "layout"
 			}
 		],
 		"name": "AI Hub Navigation Menu"

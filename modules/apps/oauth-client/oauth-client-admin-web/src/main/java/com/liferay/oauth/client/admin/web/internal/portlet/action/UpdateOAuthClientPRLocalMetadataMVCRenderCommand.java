@@ -43,23 +43,7 @@ public class UpdateOAuthClientPRLocalMetadataMVCRenderCommand
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
-			long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
-				renderRequest, "oAuthClientPRLocalMetadataId");
-
-			if (oAuthClientPRLocalMetadataId > 0) {
-				OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
-					_oAuthClientPRLocalMetadataService.
-						fetchOAuthClientPRLocalMetadata(
-							oAuthClientPRLocalMetadataId);
-
-				renderRequest.setAttribute(
-					OAuthClientPRLocalMetadata.class.getName(),
-					oAuthClientPRLocalMetadata);
-
-				if (oAuthClientPRLocalMetadata != null) {
-					_unpack(renderRequest, oAuthClientPRLocalMetadata);
-				}
-			}
+			_render(renderRequest);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -70,9 +54,25 @@ public class UpdateOAuthClientPRLocalMetadataMVCRenderCommand
 		return "/admin/update_oauth_client_pr_local_metadata.jsp";
 	}
 
-	private void _unpack(
-		RenderRequest renderRequest,
-		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata) {
+	private void _render(RenderRequest renderRequest) throws PortalException {
+		long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
+			renderRequest, "oAuthClientPRLocalMetadataId");
+
+		if (!(oAuthClientPRLocalMetadataId > 0)) {
+			return;
+		}
+
+		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
+			_oAuthClientPRLocalMetadataService.fetchOAuthClientPRLocalMetadata(
+				oAuthClientPRLocalMetadataId);
+
+		renderRequest.setAttribute(
+			OAuthClientPRLocalMetadata.class.getName(),
+			oAuthClientPRLocalMetadata);
+
+		if (oAuthClientPRLocalMetadata == null) {
+			return;
+		}
 
 		String metadataJSON = oAuthClientPRLocalMetadata.getMetadataJSON();
 
@@ -80,35 +80,27 @@ public class UpdateOAuthClientPRLocalMetadataMVCRenderCommand
 			return;
 		}
 
-		try {
-			JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
-				metadataJSON);
+		JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
+			metadataJSON);
 
-			renderRequest.setAttribute(
-				"authorizationServers",
-				StringUtil.merge(
-					JSONUtil.toStringArray(
-						metadataJSONObject.getJSONArray(
-							"authorization_servers"))));
-			renderRequest.setAttribute(
-				"bearerMethodsSupported",
-				StringUtil.merge(
-					JSONUtil.toStringArray(
-						metadataJSONObject.getJSONArray(
-							"bearer_methods_supported"))));
-			renderRequest.setAttribute(
-				"resourceName", metadataJSONObject.getString("resource_name"));
-			renderRequest.setAttribute(
-				"scopesSupported",
-				StringUtil.merge(
-					JSONUtil.toStringArray(
-						metadataJSONObject.getJSONArray("scopes_supported"))));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+		renderRequest.setAttribute(
+			"authorizationServers",
+			StringUtil.merge(
+				JSONUtil.toStringArray(
+					metadataJSONObject.getJSONArray("authorization_servers"))));
+		renderRequest.setAttribute(
+			"bearerMethodsSupported",
+			StringUtil.merge(
+				JSONUtil.toStringArray(
+					metadataJSONObject.getJSONArray(
+						"bearer_methods_supported"))));
+		renderRequest.setAttribute(
+			"resourceName", metadataJSONObject.getString("resource_name"));
+		renderRequest.setAttribute(
+			"scopesSupported",
+			StringUtil.merge(
+				JSONUtil.toStringArray(
+					metadataJSONObject.getJSONArray("scopes_supported"))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

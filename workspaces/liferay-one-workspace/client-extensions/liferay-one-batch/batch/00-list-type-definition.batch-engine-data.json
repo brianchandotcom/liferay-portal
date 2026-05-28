@@ -20,17 +20,17 @@
 				},
 				{
 					"externalReferenceCode": "LT_ACCOUNT_REGION_EMEA",
-					"key": "eMEA",
+					"key": "emea",
 					"name": "EMEA"
 				},
 				{
 					"externalReferenceCode": "LT_ACCOUNT_REGION_APAC",
-					"key": "aPAC",
+					"key": "apac",
 					"name": "APAC"
 				},
 				{
 					"externalReferenceCode": "LT_ACCOUNT_REGION_LATAM",
-					"key": "lATAM",
+					"key": "latam",
 					"name": "LATAM"
 				}
 			],
@@ -216,7 +216,7 @@
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "LT_PRODUCT_FAMILY_DXP",
-					"key": "dXP",
+					"key": "dxp",
 					"name": "DXP"
 				},
 				{
@@ -236,12 +236,12 @@
 				},
 				{
 					"externalReferenceCode": "LT_PRODUCT_FAMILY_AI_HUB",
-					"key": "aIHub",
+					"key": "aiHub",
 					"name": "AIHub"
 				},
 				{
 					"externalReferenceCode": "LT_PRODUCT_FAMILY_CMP",
-					"key": "cMP",
+					"key": "cmp",
 					"name": "CMP"
 				},
 				{

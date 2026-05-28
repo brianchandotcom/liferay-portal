@@ -8,10 +8,10 @@ package com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants;
 /**
  * @author Julien Castelain
  */
-public class CKEditorSamplePortletKeys {
+public class CKEditor4SamplePortletKeys {
 
-	public static final String CKEDITOR_SAMPLE =
+	public static final String CKEDITOR4_SAMPLE =
 		"com_liferay_editor_ckeditor4_sample_web_internal_portlet_" +
-			"CKEditorSamplePortlet";
+			"CKEditor4SamplePortlet";
 
 }

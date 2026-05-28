@@ -21,9 +21,9 @@ import jakarta.portlet.RenderRequest;
 /**
  * @author Marko Cikos
  */
-public class CKEditorSampleDisplayContext {
+public class CKEditor4SampleDisplayContext {
 
-	public CKEditorSampleDisplayContext(
+	public CKEditor4SampleDisplayContext(
 		CETManager cetManager, RenderRequest renderRequest) {
 
 		_cetManager = cetManager;

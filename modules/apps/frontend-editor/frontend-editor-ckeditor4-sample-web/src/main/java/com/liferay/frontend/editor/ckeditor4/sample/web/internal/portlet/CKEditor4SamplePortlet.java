@@ -6,9 +6,9 @@
 package com.liferay.frontend.editor.ckeditor4.sample.web.internal.portlet;
 
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditorSamplePortletKeys;
-import com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditorSampleWebKeys;
-import com.liferay.frontend.editor.ckeditor4.sample.web.internal.display.context.CKEditorSampleDisplayContext;
+import com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditor4SamplePortletKeys;
+import com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditor4SampleWebKeys;
+import com.liferay.frontend.editor.ckeditor4.sample.web.internal.display.context.CKEditor4SampleDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import jakarta.portlet.Portlet;
@@ -38,14 +38,14 @@ import org.osgi.service.component.annotations.Reference;
 		"jakarta.portlet.expiration-cache=0",
 		"jakarta.portlet.init-param.template-path=/META-INF/resources/",
 		"jakarta.portlet.init-param.view-template=/view.jsp",
-		"jakarta.portlet.name=" + CKEditorSamplePortletKeys.CKEDITOR_SAMPLE,
+		"jakarta.portlet.name=" + CKEditor4SamplePortletKeys.CKEDITOR4_SAMPLE,
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=power-user,user",
 		"jakarta.portlet.version=4.0"
 	},
 	service = Portlet.class
 )
-public class CKEditorSamplePortlet extends MVCPortlet {
+public class CKEditor4SamplePortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(
@@ -53,8 +53,8 @@ public class CKEditorSamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT,
-			new CKEditorSampleDisplayContext(_cetManager, renderRequest));
+			CKEditor4SampleWebKeys.CKEDITOR4_SAMPLE_DISPLAY_CONTEXT,
+			new CKEditor4SampleDisplayContext(_cetManager, renderRequest));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

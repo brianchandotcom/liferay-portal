@@ -8,14 +8,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT);
+CKEditor4SampleDisplayContext ckEditor4SampleDisplayContext = (CKEditor4SampleDisplayContext)request.getAttribute(CKEditor4SampleWebKeys.CKEDITOR4_SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <react:component
 	module="{CKEditor4ReactClassicEditor} from frontend-editor-ckeditor4-sample-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"editorTransformerURLs", ckEditorSampleDisplayContext.getEditorTransformerURLsJSONArray()
+			"editorTransformerURLs", ckEditor4SampleDisplayContext.getEditorTransformerURLsJSONArray()
 		).put(
 			"name", "sampleReactClassicEditor"
 		).put(

@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.editor.ckeditor5.sample.web.internal.editor.configuration;
 
-import com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants.CKEditorSamplePortletKeys;
+import com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants.CKEditor5SamplePortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"editor.config.key=sampleAdvancedClassicEditor",
-		"jakarta.portlet.name=" + CKEditorSamplePortletKeys.CKEDITOR5_SAMPLE
+		"jakarta.portlet.name=" + CKEditor5SamplePortletKeys.CKEDITOR5_SAMPLE
 	},
 	service = EditorConfigContributor.class
 )

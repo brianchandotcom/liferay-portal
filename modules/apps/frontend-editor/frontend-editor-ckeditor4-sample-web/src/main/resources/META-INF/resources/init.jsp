@@ -15,8 +15,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditorSampleWebKeys" %><%@
-page import="com.liferay.frontend.editor.ckeditor4.sample.web.internal.display.context.CKEditorSampleDisplayContext" %><%@
+<%@ page import="com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants.CKEditor4SampleWebKeys" %><%@
+page import="com.liferay.frontend.editor.ckeditor4.sample.web.internal.display.context.CKEditor4SampleDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@

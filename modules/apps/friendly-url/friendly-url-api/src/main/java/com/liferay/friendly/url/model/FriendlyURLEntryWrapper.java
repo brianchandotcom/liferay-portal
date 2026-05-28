@@ -46,6 +46,7 @@ public class FriendlyURLEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("parentClassPK", getParentClassPK());
 		attributes.put("classPK", getClassPK());
 
 		return attributes;
@@ -111,6 +112,12 @@ public class FriendlyURLEntryWrapper
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
+		}
+
+		Long parentClassPK = (Long)attributes.get("parentClassPK");
+
+		if (parentClassPK != null) {
+			setParentClassPK(parentClassPK);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -248,6 +255,16 @@ public class FriendlyURLEntryWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the parent class pk of this friendly url entry.
+	 *
+	 * @return the parent class pk of this friendly url entry
+	 */
+	@Override
+	public long getParentClassPK() {
+		return model.getParentClassPK();
 	}
 
 	/**
@@ -408,6 +425,16 @@ public class FriendlyURLEntryWrapper
 	}
 
 	/**
+	 * Sets the parent class pk of this friendly url entry.
+	 *
+	 * @param parentClassPK the parent class pk of this friendly url entry
+	 */
+	@Override
+	public void setParentClassPK(long parentClassPK) {
+		model.setParentClassPK(parentClassPK);
+	}
+
+	/**
 	 * Sets the primary key of this friendly url entry.
 	 *
 	 * @param primaryKey the primary key of this friendly url entry
@@ -457,4 +484,4 @@ public class FriendlyURLEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1584074178
+// LIFERAY-SERVICE-BUILDER-HASH:1796712762

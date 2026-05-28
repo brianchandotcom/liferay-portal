@@ -50,6 +50,9 @@ public class FriendlyURLEntryTable extends BaseTable<FriendlyURLEntryTable> {
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<FriendlyURLEntryTable, Long> classNameId = createColumn(
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FriendlyURLEntryTable, Long> parentClassPK =
+		createColumn(
+			"parentClassPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FriendlyURLEntryTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
@@ -58,4 +61,4 @@ public class FriendlyURLEntryTable extends BaseTable<FriendlyURLEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1918607024
+// LIFERAY-SERVICE-BUILDER-HASH:-23292376

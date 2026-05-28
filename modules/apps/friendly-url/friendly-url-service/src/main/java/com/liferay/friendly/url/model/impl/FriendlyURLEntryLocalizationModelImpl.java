@@ -64,8 +64,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 		{"friendlyURLEntryLocalizationId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"friendlyURLEntryId", Types.BIGINT},
 		{"languageId", Types.VARCHAR}, {"groupId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"urlTitle", Types.VARCHAR}
+		{"classNameId", Types.BIGINT}, {"parentClassPK", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"urlTitle", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,12 +80,13 @@ public class FriendlyURLEntryLocalizationModelImpl
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("parentClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntryLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,friendlyURLEntryLocalizationId LONG not null,companyId LONG,friendlyURLEntryId LONG,languageId VARCHAR(75) null,groupId LONG,classNameId LONG,classPK LONG,urlTitle VARCHAR(255) null,primary key (friendlyURLEntryLocalizationId, ctCollectionId))";
+		"create table FriendlyURLEntryLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,friendlyURLEntryLocalizationId LONG not null,companyId LONG,friendlyURLEntryId LONG,languageId VARCHAR(75) null,groupId LONG,classNameId LONG,parentClassPK LONG,classPK LONG,urlTitle VARCHAR(255) null,primary key (friendlyURLEntryLocalizationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryLocalization";
@@ -150,7 +151,13 @@ public class FriendlyURLEntryLocalizationModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 128L;
+	public static final long PARENTCLASSPK_COLUMN_BITMASK = 128L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long URLTITLE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -158,7 +165,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 	 */
 	@Deprecated
 	public static final long FRIENDLYURLENTRYLOCALIZATIONID_COLUMN_BITMASK =
-		256L;
+		512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -295,6 +302,9 @@ public class FriendlyURLEntryLocalizationModelImpl
 			attributeGetterFunctions.put(
 				"classNameId", FriendlyURLEntryLocalization::getClassNameId);
 			attributeGetterFunctions.put(
+				"parentClassPK",
+				FriendlyURLEntryLocalization::getParentClassPK);
+			attributeGetterFunctions.put(
 				"classPK", FriendlyURLEntryLocalization::getClassPK);
 			attributeGetterFunctions.put(
 				"urlTitle", FriendlyURLEntryLocalization::getUrlTitle);
@@ -350,6 +360,10 @@ public class FriendlyURLEntryLocalizationModelImpl
 				"classNameId",
 				(BiConsumer<FriendlyURLEntryLocalization, Long>)
 					FriendlyURLEntryLocalization::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"parentClassPK",
+				(BiConsumer<FriendlyURLEntryLocalization, Long>)
+					FriendlyURLEntryLocalization::setParentClassPK);
 			attributeSetterBiConsumers.put(
 				"classPK",
 				(BiConsumer<FriendlyURLEntryLocalization, Long>)
@@ -563,6 +577,30 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	@Override
+	public long getParentClassPK() {
+		return _parentClassPK;
+	}
+
+	@Override
+	public void setParentClassPK(long parentClassPK) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_parentClassPK = parentClassPK;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalParentClassPK() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentClassPK"));
+	}
+
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -681,6 +719,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 		friendlyURLEntryLocalizationImpl.setLanguageId(getLanguageId());
 		friendlyURLEntryLocalizationImpl.setGroupId(getGroupId());
 		friendlyURLEntryLocalizationImpl.setClassNameId(getClassNameId());
+		friendlyURLEntryLocalizationImpl.setParentClassPK(getParentClassPK());
 		friendlyURLEntryLocalizationImpl.setClassPK(getClassPK());
 		friendlyURLEntryLocalizationImpl.setUrlTitle(getUrlTitle());
 
@@ -711,6 +750,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 			this.<Long>getColumnOriginalValue("groupId"));
 		friendlyURLEntryLocalizationImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
+		friendlyURLEntryLocalizationImpl.setParentClassPK(
+			this.<Long>getColumnOriginalValue("parentClassPK"));
 		friendlyURLEntryLocalizationImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
 		friendlyURLEntryLocalizationImpl.setUrlTitle(
@@ -820,6 +861,9 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 		friendlyURLEntryLocalizationCacheModel.classNameId = getClassNameId();
 
+		friendlyURLEntryLocalizationCacheModel.parentClassPK =
+			getParentClassPK();
+
 		friendlyURLEntryLocalizationCacheModel.classPK = getClassPK();
 
 		friendlyURLEntryLocalizationCacheModel.urlTitle = getUrlTitle();
@@ -901,6 +945,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 	private String _languageId;
 	private long _groupId;
 	private long _classNameId;
+	private long _parentClassPK;
 	private long _classPK;
 	private String _urlTitle;
 
@@ -941,6 +986,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 		_columnOriginalValues.put("languageId", _languageId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("parentClassPK", _parentClassPK);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("urlTitle", _urlTitle);
 	}
@@ -972,9 +1018,11 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("parentClassPK", 256L);
 
-		columnBitmasks.put("urlTitle", 512L);
+		columnBitmasks.put("classPK", 512L);
+
+		columnBitmasks.put("urlTitle", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -983,4 +1031,4 @@ public class FriendlyURLEntryLocalizationModelImpl
 	private FriendlyURLEntryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-713531047
+// LIFERAY-SERVICE-BUILDER-HASH:-125698535

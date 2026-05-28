@@ -133,6 +133,8 @@ public class FriendlyURLEntryPersistenceTest {
 
 		newFriendlyURLEntry.setClassNameId(RandomTestUtil.nextLong());
 
+		newFriendlyURLEntry.setParentClassPK(RandomTestUtil.nextLong());
+
 		newFriendlyURLEntry.setClassPK(RandomTestUtil.nextLong());
 
 		_friendlyURLEntries.add(_persistence.update(newFriendlyURLEntry));
@@ -169,6 +171,9 @@ public class FriendlyURLEntryPersistenceTest {
 		Assert.assertEquals(
 			existingFriendlyURLEntry.getClassNameId(),
 			newFriendlyURLEntry.getClassNameId());
+		Assert.assertEquals(
+			existingFriendlyURLEntry.getParentClassPK(),
+			newFriendlyURLEntry.getParentClassPK());
 		Assert.assertEquals(
 			existingFriendlyURLEntry.getClassPK(),
 			newFriendlyURLEntry.getClassPK());
@@ -254,7 +259,8 @@ public class FriendlyURLEntryPersistenceTest {
 			"FriendlyURLEntry", "mvccVersion", true, "ctCollectionId", true,
 			"uuid", true, "defaultLanguageId", true, "friendlyURLEntryId", true,
 			"groupId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true);
+			"modifiedDate", true, "classNameId", true, "parentClassPK", true,
+			"classPK", true);
 	}
 
 	@Test
@@ -561,6 +567,8 @@ public class FriendlyURLEntryPersistenceTest {
 
 		friendlyURLEntry.setClassNameId(RandomTestUtil.nextLong());
 
+		friendlyURLEntry.setParentClassPK(RandomTestUtil.nextLong());
+
 		friendlyURLEntry.setClassPK(RandomTestUtil.nextLong());
 
 		_friendlyURLEntries.add(_persistence.update(friendlyURLEntry));
@@ -574,4 +582,4 @@ public class FriendlyURLEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1947972105
+// LIFERAY-SERVICE-BUILDER-HASH:-630152651

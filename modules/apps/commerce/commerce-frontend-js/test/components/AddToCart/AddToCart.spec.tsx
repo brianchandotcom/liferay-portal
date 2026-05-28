@@ -6,14 +6,19 @@
 import '../../tests_utilities/polyfills';
 
 import '@testing-library/jest-dom';
-import {RenderResult, cleanup, fireEvent, render} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {
+	RenderResult,
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from '@testing-library/react';
 
 // @ts-ignore
 
 import fetchMock from 'fetch-mock';
 import React from 'react';
-import {act} from 'react-dom/test-utils';
 
 // @ts-ignore
 
@@ -192,18 +197,14 @@ describe('Add to Cart', () => {
 
 		const {button, input} = getLocators(addToCart);
 
-		act(() => {
-			fireEvent.change(input, {target: {value: 6}});
-		});
+		fireEvent.change(input, {target: {value: 6}});
 
 		const focusHandler = jest.fn();
 
 		input.addEventListener('focus', focusHandler);
 
-		act(() => {
-			fireEvent.focus(input);
-			fireEvent.click(button);
-		});
+		fireEvent.focus(input);
+		fireEvent.click(button);
 
 		expect(addProductToCartFn).not.toHaveBeenCalled();
 		expect(focusHandler).toHaveBeenCalled();
@@ -215,18 +216,14 @@ describe('Add to Cart', () => {
 
 			const {button} = getLocators(addToCart);
 
-			act(() => {
-				(Liferay as any).fire(CURRENT_ACCOUNT_UPDATED, {
-					id: 0,
-				});
+			(Liferay as any).fire(CURRENT_ACCOUNT_UPDATED, {
+				id: 0,
 			});
 
 			expect(button).toBeDisabled();
 
-			act(() => {
-				(Liferay as any).fire(CURRENT_ACCOUNT_UPDATED, {
-					id: 1,
-				});
+			(Liferay as any).fire(CURRENT_ACCOUNT_UPDATED, {
+				id: 1,
 			});
 
 			expect(button).toBeEnabled();
@@ -239,20 +236,16 @@ describe('Add to Cart', () => {
 
 			expect(Array.from(button.classList)).not.toContain('is-added');
 
-			act(() => {
-				(Liferay as any).fire(CART_PRODUCT_QUANTITY_CHANGED, {
-					quantity: 5,
-					skuId: props.cpInstance.skuId,
-				});
+			(Liferay as any).fire(CART_PRODUCT_QUANTITY_CHANGED, {
+				quantity: 5,
+				skuId: props.cpInstance.skuId,
 			});
 
 			expect(Array.from(button.classList)).toContain('is-added');
 
-			act(() => {
-				(Liferay as any).fire(CART_PRODUCT_QUANTITY_CHANGED, {
-					quantity: 0,
-					skuId: props.cpInstance.skuId,
-				});
+			(Liferay as any).fire(CART_PRODUCT_QUANTITY_CHANGED, {
+				quantity: 0,
+				skuId: props.cpInstance.skuId,
 			});
 
 			expect(Array.from(button.classList)).not.toContain('is-added');
@@ -264,20 +257,113 @@ describe('Add to Cart', () => {
 
 		const {button, input} = getLocators(addToCart);
 
-		await act(async () => {
-			await userEvent.type(input, String(10));
-			input.value = String(10);
+		fireEvent.change(input, {target: {value: 10}});
 
-			fireEvent.change(input);
+		fireEvent.click(button);
+
+		await waitFor(() =>
+			expect(addProductToCartFn).toHaveBeenCalledWith({
+				options: '[]',
+				quantity: 10,
+				replacedSkuId: 0,
+				skuId: 42633,
+			})
+		);
+	});
+
+	describe('Product configuration constraints', () => {
+		const renderWithConfiguration = (configuration: {
+			allowedOrderQuantities?: number[];
+			maxOrderQuantity?: number;
+			minOrderQuantity?: number;
+			multipleOrderQuantity?: number;
+		}) =>
+			render(
+				<AddToCart
+					{...props}
+					settings={{
+						...props.settings,
+						productConfiguration: {
+							allowedOrderQuantities: [],
+							maxOrderQuantity: 0,
+							minOrderQuantity: 1,
+							multipleOrderQuantity: 1,
+							...configuration,
+						},
+					}}
+				/>
+			);
+
+		it('Must reject add-to-cart when the typed quantity is below minOrderQuantity', () => {
+			const addToCart = renderWithConfiguration({minOrderQuantity: 4});
+
+			const {button, input} = getLocators(addToCart);
+
+			fireEvent.change(input, {target: {value: 2}});
 
 			fireEvent.click(button);
+
+			expect(addProductToCartFn).not.toHaveBeenCalled();
 		});
 
-		expect(addProductToCartFn).toHaveBeenCalledWith({
-			options: '[]',
-			quantity: 10,
-			replacedSkuId: 0,
-			skuId: 42633,
+		it('Must reject add-to-cart when the typed quantity exceeds maxOrderQuantity', () => {
+			const addToCart = renderWithConfiguration({maxOrderQuantity: 4});
+
+			const {button, input} = getLocators(addToCart);
+
+			fireEvent.change(input, {target: {value: 6}});
+
+			fireEvent.click(button);
+
+			expect(addProductToCartFn).not.toHaveBeenCalled();
+		});
+
+		it('Must reject add-to-cart when the typed quantity is not a multiple of multipleOrderQuantity', () => {
+			const addToCart = renderWithConfiguration({
+				multipleOrderQuantity: 3,
+			});
+
+			const {button, input} = getLocators(addToCart);
+
+			fireEvent.change(input, {target: {value: 5}});
+
+			fireEvent.click(button);
+
+			expect(addProductToCartFn).not.toHaveBeenCalled();
+		});
+
+		it('Must add to cart when the typed quantity satisfies all constraints', () => {
+			const addToCart = renderWithConfiguration({
+				maxOrderQuantity: 10,
+				minOrderQuantity: 2,
+				multipleOrderQuantity: 2,
+			});
+
+			const {button, input} = getLocators(addToCart);
+
+			fireEvent.change(input, {target: {value: 4}});
+
+			fireEvent.click(button);
+
+			expect(addProductToCartFn).toHaveBeenCalledWith({
+				options: '[]',
+				quantity: 4,
+				replacedSkuId: 0,
+				skuId: 42633,
+			});
+		});
+
+		it('Must render an allowedOrderQuantities dropdown with only the listed quantities', () => {
+			renderWithConfiguration({
+				allowedOrderQuantities: [2, 3, 6],
+			});
+
+			const select = screen.getByRole('combobox') as HTMLSelectElement;
+
+			expect(select).toBeInTheDocument();
+			expect(
+				Array.from(select.options).map((option) => option.value)
+			).toEqual(['2', '3', '6']);
 		});
 	});
 });

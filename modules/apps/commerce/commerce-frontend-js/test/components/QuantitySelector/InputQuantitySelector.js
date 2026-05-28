@@ -8,7 +8,6 @@ import '../../tests_utilities/polyfills';
 import '@testing-library/jest-dom';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
-import {act} from 'react-dom/test-utils';
 
 import InputQuantitySelector from '../../../src/main/resources/META-INF/resources/components/quantity_selector/InputQuantitySelector';
 
@@ -67,18 +66,14 @@ describe('Quantity Selector', () => {
 	});
 
 	it('must pass the updated value via callback', () => {
-		act(() => {
-			fireEvent.change(input, {target: {value: '10'}});
-		});
+		fireEvent.change(input, {target: {value: '10'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: [],
 			value: 10,
 		});
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '300'}});
-		});
+		fireEvent.change(input, {target: {value: '300'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: [],
@@ -95,18 +90,14 @@ describe('Quantity Selector', () => {
 
 		expect(input.min).toBe('4');
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '0'}});
-		});
+		fireEvent.change(input, {target: {value: '0'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: ['min'],
 			value: 0,
 		});
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '6'}});
-		});
+		fireEvent.change(input, {target: {value: '6'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: [],
@@ -132,18 +123,14 @@ describe('Quantity Selector', () => {
 
 		input = inputQuantitySelector.container.querySelector('input');
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '6'}});
-		});
+		fireEvent.change(input, {target: {value: '6'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: ['max'],
 			value: 6,
 		});
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '4'}});
-		});
+		fireEvent.change(input, {target: {value: '4'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: [],
@@ -178,9 +165,7 @@ describe('Quantity Selector', () => {
 		expect(input.min).toBe('10');
 		expect(input.max).toBe('50');
 
-		act(() => {
-			fireEvent.change(input, {target: {value: '7'}});
-		});
+		fireEvent.change(input, {target: {value: '7'}});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
 			errors: ['min', 'multiple'],
@@ -197,5 +182,104 @@ describe('Quantity Selector', () => {
 			inputQuantitySelector.container.querySelector('.form-group');
 
 		expect(formGroup.classList).toContain('has-error');
+	});
+
+	it('must round up a decimal min to the next integer when no unit of measure is provided so the quantity selector behaves as an integer-only control', () => {
+		inputQuantitySelector = render(
+			<InputQuantitySelector min={0.5} onUpdate={onUpdate} />
+		);
+
+		input = inputQuantitySelector.container.querySelector('input');
+
+		expect(input.min).toBe('1');
+		expect(input.step).toBe('1');
+	});
+
+	it('must derive a decimal step and min from a unit of measure with decimal increment so the native arrow controls move by the UOM step', () => {
+		const unitOfMeasure = {
+			incrementalOrderQuantity: 0.5,
+			precision: 1,
+		};
+
+		inputQuantitySelector = render(
+			<InputQuantitySelector
+				min={0.01}
+				onUpdate={onUpdate}
+				quantity={0.5}
+				step={0.01}
+				unitOfMeasure={unitOfMeasure}
+			/>
+		);
+
+		input = inputQuantitySelector.container.querySelector('input');
+
+		expect(input.step).toBe('0.5');
+		expect(input.min).toBe('0.5');
+		expect(input.value).toBe('0.5');
+
+		fireEvent.change(input, {target: {value: '1'}});
+
+		expect(onUpdate).toHaveBeenLastCalledWith(
+			expect.objectContaining({
+				errors: [],
+				value: 1,
+			})
+		);
+	});
+
+	it('must accept a value that is a multiple of the unit of measure decimal step', () => {
+		const unitOfMeasure = {
+			incrementalOrderQuantity: 0.5,
+			precision: 1,
+		};
+
+		inputQuantitySelector = render(
+			<InputQuantitySelector
+				min={0.01}
+				onUpdate={onUpdate}
+				quantity={0.5}
+				step={0.01}
+				unitOfMeasure={unitOfMeasure}
+			/>
+		);
+
+		input = inputQuantitySelector.container.querySelector('input');
+
+		fireEvent.change(input, {target: {value: '1.5'}});
+
+		expect(onUpdate).toHaveBeenLastCalledWith(
+			expect.objectContaining({
+				errors: [],
+				value: 1.5,
+			})
+		);
+	});
+
+	it('must flag a value that is not a multiple of the unit of measure decimal step', () => {
+		const unitOfMeasure = {
+			incrementalOrderQuantity: 0.5,
+			precision: 1,
+		};
+
+		inputQuantitySelector = render(
+			<InputQuantitySelector
+				min={0.01}
+				onUpdate={onUpdate}
+				quantity={0.5}
+				step={0.01}
+				unitOfMeasure={unitOfMeasure}
+			/>
+		);
+
+		input = inputQuantitySelector.container.querySelector('input');
+
+		fireEvent.change(input, {target: {value: '0.7'}});
+
+		expect(onUpdate).toHaveBeenLastCalledWith(
+			expect.objectContaining({
+				errors: expect.arrayContaining(['multiple']),
+				value: 0.7,
+			})
+		);
 	});
 });

@@ -37,38 +37,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Automation ID: LRAC-8890 | Test Summary: Able to change retention period"
-	@priority = 4
-	test CanChangeRetentionPeriod {
-		property test.run.type = "single";
-
-		task ("Launch AC and go to Settings") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-		}
-
-		task ("Go to Data Control And Privacy") {
-			ACSettings.goToDataControlAndPrivacy();
-		}
-
-		task ("Assert Retetion Period Presence") {
-			AssertElementPresent(
-				key_messageValue = "Retention Period",
-				locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
-		}
-
-		task ("Change Retention Period to 7 Months") {
-			ACSettings.changeRetentionPeriodTo7Months();
-		}
-
-		task ("Assert that Retention Period changed") {
-			AssertElementPresent(
-				locator1 = "ACSettings#RETENTION_PERIOD",
-				value1 = "7 Months");
-		}
-	}
-
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = 5
 	test CanCreateAccessRequest {

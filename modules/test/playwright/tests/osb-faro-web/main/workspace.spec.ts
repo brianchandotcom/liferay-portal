@@ -61,6 +61,41 @@ test(
 );
 
 test(
+	'Data Control & Privacy retention period dropdown can be changed and saved',
+	{
+		tag: '@LRAC-8890',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/data-privacy`
+		);
+
+		const retentionDropdown = page
+			.getByText('Retention Period')
+			.locator(
+				'xpath=ancestor::*[self::div][.//button[contains(@class, "form-control")]]'
+			)
+			.locator('button.form-control');
+
+		const initialValue = await retentionDropdown.textContent();
+
+		await retentionDropdown.click();
+
+		await page.keyboard.press('ArrowUp');
+
+		await page.keyboard.press('Enter');
+
+		await page.getByRole('button', {name: 'Change Period'}).click();
+
+		await expect(retentionDropdown).not.toHaveText(initialValue ?? '');
+	}
+);
+
+test(
 	'Subscription and Usage settings page shows current plan, limits, and add-ons',
 	{
 		tag: ['@LRAC-9180', '@LRAC-9183'],

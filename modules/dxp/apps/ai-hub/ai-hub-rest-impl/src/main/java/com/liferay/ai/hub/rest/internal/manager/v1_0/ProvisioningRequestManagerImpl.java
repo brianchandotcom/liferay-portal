@@ -152,6 +152,13 @@ public class ProvisioningRequestManagerImpl
 			provisioningRequest.getLiferayDXPURL(), 0, null,
 			provisioningRequest.getAccountEntryName(), null, null, false,
 			Arrays.asList(
+				"Liferay.AI.Hub.REST.everything",
+				"Liferay.AI.Hub.REST.everything.read",
+				"Liferay.AI.Hub.REST.everything.write",
+				"Liferay.Headless.Admin.List.Type.everything.read",
+				"Liferay.Portal.Search.REST.everything",
+				"Liferay.Portal.Search.REST.everything.read",
+				"Liferay.Portal.Search.REST.everything.write",
 				"aihubagentdefinition.everything",
 				"aihubagentdefinition.everything.read",
 				"aihubagentdefinition.everything.write",
@@ -165,14 +172,7 @@ public class ProvisioningRequestManagerImpl
 				"aihubinstructiondefinition.everything",
 				"aihubinstructiondefinition.everything.read",
 				"aihubinstructiondefinition.everything.write",
-				"aihubquota.everything.read", "aihubmcpserver.everything.read",
-				"Liferay.AI.Hub.REST.everything",
-				"Liferay.AI.Hub.REST.everything.read",
-				"Liferay.AI.Hub.REST.everything.write",
-				"Liferay.Headless.Admin.List.Type.everything.read",
-				"Liferay.Portal.Search.REST.everything",
-				"Liferay.Portal.Search.REST.everything.read",
-				"Liferay.Portal.Search.REST.everything.write"),
+				"aihubquota.everything.read", "aihubmcpserver.everything.read"),
 			false, serviceContext);
 	}
 

@@ -14,6 +14,9 @@ import ContentSelector, {
 
 interface FormikFieldContentSelectorProps {
 	'aria-labelledby'?: string;
+	'commentsAndRatingsEnabled'?: boolean;
+	'commentsAndRatingsSubtitle'?: string;
+	'lookAndFeelEnabled'?: boolean;
 	'name': string;
 	'pageTreeModalConfiguration'?: PageTreeModalConfiguration;
 	'sections': PreviewPortletDataHandlerSection[];
@@ -21,6 +24,9 @@ interface FormikFieldContentSelectorProps {
 
 export function FormikFieldContentSelector({
 	'aria-labelledby': ariaLabelledby,
+	commentsAndRatingsEnabled = false,
+	commentsAndRatingsSubtitle,
+	lookAndFeelEnabled = false,
 	name,
 	pageTreeModalConfiguration,
 	sections,
@@ -32,7 +38,10 @@ export function FormikFieldContentSelector({
 	return (
 		<ContentSelector
 			aria-labelledby={ariaLabelledby}
+			commentsAndRatingsEnabled={commentsAndRatingsEnabled}
+			commentsAndRatingsSubtitle={commentsAndRatingsSubtitle}
 			errorMessage={meta.touched && meta.error ? meta.error : undefined}
+			lookAndFeelEnabled={lookAndFeelEnabled}
 			name={name}
 			onChange={(newValue) => {
 				helpers.setValue(newValue);

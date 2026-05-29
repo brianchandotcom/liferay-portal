@@ -34,9 +34,13 @@ portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
 			HashMapBuilder.<String, Object>put(
 				"backURL", exportImportPreviewDisplayContext.getBackURL()
 			).put(
+				"commentsAndRatingsEnabled", exportImportPreviewDisplayContext.isCommentsAndRatingsEnabled()
+			).put(
 				"exportPreviewAPIURL", exportImportPreviewDisplayContext.getExportPreviewAPIURL()
 			).put(
 				"exportProcessAPIURL", exportImportPreviewDisplayContext.getExportProcessAPIURL()
+			).put(
+				"lookAndFeelEnabled", exportImportPreviewDisplayContext.isLookAndFeelEnabled()
 			).put(
 				"pageTreeModalConfiguration",
 				HashMapBuilder.<String, Object>put(

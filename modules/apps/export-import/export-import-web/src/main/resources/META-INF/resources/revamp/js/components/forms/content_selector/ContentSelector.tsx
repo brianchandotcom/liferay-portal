@@ -8,14 +8,20 @@ import React from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
-import {updateSelection} from '../../../utils/contentSelection';
+import {
+	updateSelection,
+	withSiteBuilderSection,
+} from '../../../utils/contentSelection';
 import ContentSection, {SectionSelection} from './ContentSection';
 
 export type ContentSelection = Record<string, SectionSelection>;
 
 interface ContentSelectorProps {
 	'aria-labelledby'?: string;
+	'commentsAndRatingsEnabled'?: boolean;
+	'commentsAndRatingsSubtitle'?: string;
 	'errorMessage'?: string;
+	'lookAndFeelEnabled'?: boolean;
 	'name': string;
 	'onChange': (value: ContentSelection | undefined) => void;
 	'pageTreeModalConfiguration'?: PageTreeModalConfiguration;
@@ -26,7 +32,10 @@ interface ContentSelectorProps {
 
 export default function ContentSelector({
 	'aria-labelledby': ariaLabelledby,
+	commentsAndRatingsEnabled = false,
+	commentsAndRatingsSubtitle,
 	errorMessage,
+	lookAndFeelEnabled = false,
 	name,
 	onChange,
 	pageTreeModalConfiguration,
@@ -42,6 +51,13 @@ export default function ContentSelector({
 			showDeletions || !!section.additionCount || !section.deletionCount
 	);
 
+	const renderedSections = lookAndFeelEnabled
+		? withSiteBuilderSection(
+				visibleSections,
+				Liferay.Language.get('category.site_administration.build')
+			)
+		: visibleSections;
+
 	return (
 		<div
 			aria-describedby={errorId}
@@ -50,10 +66,13 @@ export default function ContentSelector({
 			className="c-gap-4 d-flex flex-column mt-4"
 			role="group"
 		>
-			{visibleSections.map(
+			{renderedSections.map(
 				(section: PreviewPortletDataHandlerSection) => (
 					<ContentSection
+						commentsAndRatingsEnabled={commentsAndRatingsEnabled}
+						commentsAndRatingsSubtitle={commentsAndRatingsSubtitle}
 						key={section.name}
+						lookAndFeelEnabled={lookAndFeelEnabled}
 						onChange={(sectionValue) =>
 							onChange(
 								updateSelection(

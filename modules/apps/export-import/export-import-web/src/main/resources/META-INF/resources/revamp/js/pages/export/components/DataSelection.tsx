@@ -20,16 +20,20 @@ import {PageTreeModalConfiguration} from './PageTreeModal';
 const LABEL_ID = 'dataSelection-label';
 
 export default function DataSelection({
+	commentsAndRatingsEnabled = false,
 	deletionCount = 0,
 	itemsCount,
 	loading = false,
+	lookAndFeelEnabled = false,
 	onApplyFilter,
 	pageTreeModalConfiguration,
 	sections,
 }: {
+	commentsAndRatingsEnabled?: boolean;
 	deletionCount?: number;
 	itemsCount?: number;
 	loading?: boolean;
+	lookAndFeelEnabled?: boolean;
 	onApplyFilter: (filterValues: DateFilterValues) => void;
 	pageTreeModalConfiguration: PageTreeModalConfiguration;
 	sections: PreviewPortletDataHandlerSection[];
@@ -83,6 +87,8 @@ export default function DataSelection({
 				) : (
 					<FormikFieldContentSelector
 						aria-labelledby={LABEL_ID}
+						commentsAndRatingsEnabled={commentsAndRatingsEnabled}
+						lookAndFeelEnabled={lookAndFeelEnabled}
 						name="contentSelection"
 						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						sections={sections}

@@ -74,7 +74,7 @@ public abstract class BasePageExperienceResourceImpl
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted."
+		description = "Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted. Priorities of the remaining experiences are compacted after the change, so their priorities may differ from the values previously returned. See PageExperience.priority."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -243,7 +243,7 @@ public abstract class BasePageExperienceResourceImpl
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
+		description = "Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched. Priorities of the remaining experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -337,7 +337,7 @@ public abstract class BasePageExperienceResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a new experience to a page specification of a site page."
+		description = "Adds a new experience to a page specification of a site page. Priorities of the experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -396,7 +396,7 @@ public abstract class BasePageExperienceResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates an experience of a specific page specification of a site page within a site."
+		description = "Updates an experience of a specific page specification of a site page within a site. Priorities of the remaining experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1185,4 +1185,4 @@ public abstract class BasePageExperienceResourceImpl
 		LogFactoryUtil.getLog(BasePageExperienceResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:85636177
+// LIFERAY-REST-BUILDER-HASH:-1138931728

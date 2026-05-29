@@ -795,13 +795,15 @@ public class GitWorkingDirectory {
 				fetch(null, noTags, gitHubDevRemoteGitBranch);
 
 				if (localSHAExists(remoteGitRefSHA)) {
-					if (localGitBranch != null) {
+					if (localGitBranch == null) {
 						return createLocalGitBranch(
-							localGitBranch.getName(), true, remoteGitRefSHA,
+							remoteGitRef.getName(), true, remoteGitRefSHA,
 							sourceRemoteGitBranch);
 					}
 
-					return null;
+					return createLocalGitBranch(
+						localGitBranch.getName(), true, remoteGitRefSHA,
+						sourceRemoteGitBranch);
 				}
 			}
 		}
@@ -929,7 +931,13 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		if (localSHAExists(remoteGitRefSHA) && (localGitBranch != null)) {
+		if (localSHAExists(remoteGitRefSHA)) {
+			if (localGitBranch == null) {
+				return createLocalGitBranch(
+					remoteGitRef.getName(), true, remoteGitRefSHA,
+					sourceRemoteGitBranch);
+			}
+
 			return createLocalGitBranch(
 				localGitBranch.getName(), true, remoteGitRefSHA,
 				sourceRemoteGitBranch);

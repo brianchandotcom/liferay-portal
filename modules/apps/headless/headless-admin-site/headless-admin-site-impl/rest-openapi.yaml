@@ -2877,7 +2877,7 @@ components:
                 priority:
                     # @review
                     description:
-                        The experience's priority. It must be a unique value within the page specification. The default experience will always be assigned priority 0. A priority higher than 0 will result in an experience being active and a priority lower than 0 will result in an experience being inactive.
+                        The experience's priority. It must be a unique value within the page specification. The default experience is always assigned priority 0; a positive priority results in an active experience and a negative priority results in an inactive one. After every create, update, or delete operation, the server compacts the priorities of the remaining experiences into sequential values (1, 2, 3, ... for active experiences and -1, -2, -3, ... for inactive experiences), so the priority returned or persisted may differ from the one supplied in the request.
                     type: integer
                 segmentItemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
@@ -6373,7 +6373,7 @@ paths:
         delete:
             # @review
             description:
-                Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted.
+                Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted. Priorities of the remaining experiences are compacted after the change, so their priorities may differ from the values previously returned. See PageExperience.priority.
             operationId: deleteSitePageExperience
             parameters:
                 -   in: path
@@ -6445,7 +6445,7 @@ paths:
         patch:
             # @review
             description:
-                Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched.
+                Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched. Priorities of the remaining experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority.
             operationId: patchSitePageExperience
             parameters:
                 -   in: path
@@ -6491,7 +6491,7 @@ paths:
         put:
             # @review
             description:
-                Updates an experience of a specific page specification of a site page within a site.
+                Updates an experience of a specific page specification of a site page within a site. Priorities of the remaining experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority.
             operationId: putSitePageExperience
             parameters:
                 -   in: path
@@ -6746,7 +6746,7 @@ paths:
         post:
             # @review
             description:
-                Adds a new experience to a page specification of a site page.
+                Adds a new experience to a page specification of a site page. Priorities of the experiences are compacted after the change, so the priority returned may differ from the one supplied. See PageExperience.priority.
             operationId: postSitePageSpecificationPageExperience
             parameters:
                 -   in: path

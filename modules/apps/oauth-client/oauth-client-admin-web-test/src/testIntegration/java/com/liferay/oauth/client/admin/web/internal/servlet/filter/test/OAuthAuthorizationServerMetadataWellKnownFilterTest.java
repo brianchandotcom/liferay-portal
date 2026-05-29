@@ -17,16 +17,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -67,19 +68,15 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		String hostRootURL = StringBundler.concat(
+		String urlString = StringBundler.concat(
 			Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
 			PortalUtil.getPortalServerPort(false),
 			"/.well-known/oauth-authorization-server");
 
-		HttpURLConnection httpURLConnection = _openConnection(
-			hostRootURL, "GET");
+		HttpResponse<String> httpResponse = _send(urlString, "GET");
 
 		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			httpURLConnection.getResponseCode());
-
-		httpURLConnection.disconnect();
+			HttpServletResponse.SC_NOT_FOUND, httpResponse.statusCode());
 
 		String issuer =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
@@ -95,13 +92,10 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 					new String[] {"openid"}, new String[] {"public"},
 					tokenEndpoint, issuer);
 
-		httpURLConnection = _openConnection(hostRootURL, "GET");
+		httpResponse = _send(urlString, "GET");
 
 		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			httpURLConnection.getResponseCode());
-
-		httpURLConnection.disconnect();
+			HttpServletResponse.SC_NOT_FOUND, httpResponse.statusCode());
 
 		_oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
@@ -111,66 +105,98 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 				new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
 				issuer);
 
-		httpURLConnection = _openConnection(hostRootURL, "GET");
+		httpResponse = _send(urlString, "GET");
+
+		HttpHeaders headers = httpResponse.headers();
 
 		Assert.assertEquals(
 			StringPool.STAR,
-			httpURLConnection.getHeaderField("Access-Control-Allow-Origin"));
+			headers.firstValue(
+				"Access-Control-Allow-Origin"
+			).orElse(
+				null
+			));
 		Assert.assertEquals(
 			"public, max-age=300",
-			httpURLConnection.getHeaderField("Cache-Control"));
+			headers.firstValue(
+				"Cache-Control"
+			).orElse(
+				null
+			));
+
 		Assert.assertEquals(
-			HttpServletResponse.SC_OK, httpURLConnection.getResponseCode());
+			HttpServletResponse.SC_OK, httpResponse.statusCode());
 		Assert.assertEquals(
 			oAuthClientASLocalMetadata.getOAuthASMetadataJSON(),
-			StringUtil.read(httpURLConnection.getInputStream()));
+			httpResponse.body());
 
-		httpURLConnection.disconnect();
+		httpResponse = _send(urlString, "OPTIONS");
 
-		httpURLConnection = _openConnection(hostRootURL, "OPTIONS");
+		headers = httpResponse.headers();
 
 		Assert.assertEquals(
 			"Authorization, Content-Type",
-			httpURLConnection.getHeaderField("Access-Control-Allow-Headers"));
+			headers.firstValue(
+				"Access-Control-Allow-Headers"
+			).orElse(
+				null
+			));
 		Assert.assertEquals(
 			"GET, OPTIONS",
-			httpURLConnection.getHeaderField("Access-Control-Allow-Methods"));
+			headers.firstValue(
+				"Access-Control-Allow-Methods"
+			).orElse(
+				null
+			));
 		Assert.assertEquals(
 			StringPool.STAR,
-			httpURLConnection.getHeaderField("Access-Control-Allow-Origin"));
+			headers.firstValue(
+				"Access-Control-Allow-Origin"
+			).orElse(
+				null
+			));
 		Assert.assertEquals(
-			"300", httpURLConnection.getHeaderField("Access-Control-Max-Age"));
-		Assert.assertEquals(
-			HttpServletResponse.SC_NO_CONTENT,
-			httpURLConnection.getResponseCode());
-
-		httpURLConnection.disconnect();
-
-		httpURLConnection = _openConnection(hostRootURL, "POST");
+			"300",
+			headers.firstValue(
+				"Access-Control-Max-Age"
+			).orElse(
+				null
+			));
 
 		Assert.assertEquals(
-			"GET, OPTIONS", httpURLConnection.getHeaderField("Allow"));
+			HttpServletResponse.SC_NO_CONTENT, httpResponse.statusCode());
+
+		httpResponse = _send(urlString, "POST");
+
+		Assert.assertEquals(
+			"GET, OPTIONS",
+			httpResponse.headers(
+			).firstValue(
+				"Allow"
+			).orElse(
+				null
+			));
 		Assert.assertEquals(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-			httpURLConnection.getResponseCode());
-
-		httpURLConnection.disconnect();
+			httpResponse.statusCode());
 	}
 
-	private HttpURLConnection _openConnection(String urlString, String method)
+	private HttpResponse<String> _send(String urlString, String method)
 		throws Exception {
 
-		URI uri = URI.create(urlString);
-
-		URL url = uri.toURL();
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setInstanceFollowRedirects(false);
-		httpURLConnection.setRequestMethod(method);
-
-		return httpURLConnection;
+		return HttpClient.newBuilder(
+		).followRedirects(
+			HttpClient.Redirect.NEVER
+		).build(
+		).send(
+			HttpRequest.newBuilder(
+			).uri(
+				URI.create(urlString)
+			).method(
+				method, HttpRequest.BodyPublishers.noBody()
+			).build(),
+			HttpResponse.BodyHandlers.ofString()
+		);
 	}
 
 	@Inject

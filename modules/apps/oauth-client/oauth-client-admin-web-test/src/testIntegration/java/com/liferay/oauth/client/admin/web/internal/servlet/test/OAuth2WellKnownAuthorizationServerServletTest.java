@@ -218,7 +218,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 	}
 
 	@Test
-	public void testDoGetIncludesRFC8414Fields() throws Exception {
+	public void testDoGetReturnsCompleteOAuthASMetadata() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 

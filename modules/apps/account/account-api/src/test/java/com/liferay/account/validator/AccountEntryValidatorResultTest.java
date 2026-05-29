@@ -5,7 +5,7 @@
 
 package com.liferay.account.validator;
 
-import com.liferay.account.constants.AccountEntryValidatorResultConstants;
+import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,7 +46,7 @@ public class AccountEntryValidatorResultTest {
 			Collections.emptyMap(),
 			accountEntryValidatorResult.getAdditionalProps());
 		Assert.assertEquals(
-			AccountEntryValidatorResultConstants.SUCCESS,
+			AccountEntryValidatorConstants.RESULT_SUCCESS,
 			accountEntryValidatorResult.getResultStatus());
 		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
@@ -65,7 +65,7 @@ public class AccountEntryValidatorResultTest {
 		).resultMessage(
 			"resultMessage"
 		).resultStatus(
-			AccountEntryValidatorResultConstants.WARNING
+			AccountEntryValidatorConstants.RESULT_WARNING
 		).build();
 
 		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
@@ -78,7 +78,7 @@ public class AccountEntryValidatorResultTest {
 		Assert.assertEquals(
 			"resultMessage", accountEntryValidatorResult.getResultMessage());
 		Assert.assertEquals(
-			AccountEntryValidatorResultConstants.WARNING,
+			AccountEntryValidatorConstants.RESULT_WARNING,
 			accountEntryValidatorResult.getResultStatus());
 		Assert.assertTrue(accountEntryValidatorResult.isValid());
 	}
@@ -89,7 +89,7 @@ public class AccountEntryValidatorResultTest {
 			AccountEntryValidatorResult.builder(
 				"key"
 			).resultStatus(
-				AccountEntryValidatorResultConstants.FAILURE
+				AccountEntryValidatorConstants.RESULT_FAILURE
 			).build();
 
 		Assert.assertFalse(accountEntryValidatorResult.isValid());
@@ -97,31 +97,31 @@ public class AccountEntryValidatorResultTest {
 		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
 			"key"
 		).resultStatus(
-			AccountEntryValidatorResultConstants.MANUAL
+			AccountEntryValidatorConstants.RESULT_MANUAL
 		).build();
 
 		Assert.assertTrue(
-			AccountEntryValidatorResultConstants.MANUAL,
+			AccountEntryValidatorConstants.RESULT_MANUAL,
 			accountEntryValidatorResult.isValid());
 
 		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
 			"key"
 		).resultStatus(
-			AccountEntryValidatorResultConstants.SUCCESS
+			AccountEntryValidatorConstants.RESULT_SUCCESS
 		).build();
 
 		Assert.assertTrue(
-			AccountEntryValidatorResultConstants.SUCCESS,
+			AccountEntryValidatorConstants.RESULT_SUCCESS,
 			accountEntryValidatorResult.isValid());
 
 		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
 			"key"
 		).resultStatus(
-			AccountEntryValidatorResultConstants.WARNING
+			AccountEntryValidatorConstants.RESULT_WARNING
 		).build();
 
 		Assert.assertTrue(
-			AccountEntryValidatorResultConstants.WARNING,
+			AccountEntryValidatorConstants.RESULT_WARNING,
 			accountEntryValidatorResult.isValid());
 	}
 

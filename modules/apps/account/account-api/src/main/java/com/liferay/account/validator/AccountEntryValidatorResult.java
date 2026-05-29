@@ -5,7 +5,7 @@
 
 package com.liferay.account.validator;
 
-import com.liferay.account.constants.AccountEntryValidatorResultConstants;
+import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.petra.string.StringPool;
 
 import java.io.Serializable;
@@ -49,7 +49,7 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 	public boolean isValid() {
 		return !Objects.equals(
-			AccountEntryValidatorResultConstants.FAILURE, _resultStatus);
+			AccountEntryValidatorConstants.RESULT_FAILURE, _resultStatus);
 	}
 
 	public static class Builder {
@@ -100,7 +100,7 @@ public final class AccountEntryValidatorResult implements Serializable {
 		private final String _key;
 		private String _resultMessage = StringPool.BLANK;
 		private String _resultStatus =
-			AccountEntryValidatorResultConstants.SUCCESS;
+			AccountEntryValidatorConstants.RESULT_SUCCESS;
 
 	}
 

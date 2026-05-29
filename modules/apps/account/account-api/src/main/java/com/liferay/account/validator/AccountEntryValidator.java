@@ -17,8 +17,7 @@ import java.util.Map;
  */
 public interface AccountEntryValidator {
 
-	public AccountEntryValidatorConfiguration getConfiguration(
-			long companyId)
+	public AccountEntryValidatorConfiguration getConfiguration(long companyId)
 		throws ConfigurationException;
 
 	public String getKey(

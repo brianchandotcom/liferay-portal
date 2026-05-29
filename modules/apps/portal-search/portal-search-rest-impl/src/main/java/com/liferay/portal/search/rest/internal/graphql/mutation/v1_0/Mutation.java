@@ -87,7 +87,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Search the company index for matching content."
+		description = "Use this API to search for matching content, products and other indexed data. Choose POST over GET when you need request body features such as facets (aggregations) via `facetConfigurations`, Search Blueprint context attributes (`search.experiences.*`), or other request-body-only constructs. Refer to https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more information."
 	)
 	public java.util.Collection<SearchResult> createSearchPage(
 			@GraphQLName("entryClassNames") String entryClassNames,
@@ -265,4 +265,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2118851640
+// LIFERAY-REST-BUILDER-HASH:1564786562

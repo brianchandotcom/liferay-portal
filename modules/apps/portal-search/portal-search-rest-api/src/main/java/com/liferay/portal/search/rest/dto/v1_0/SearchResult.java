@@ -40,7 +40,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SearchResult")
+@GraphQLName(
+	description = "A single search hit returned by GET /search and POST /search. The properties below appear on every result; the embedded property carries asset-specific payload and so its shape varies by entryClassName.",
+	value = "SearchResult"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SearchResult")
 public class SearchResult implements Serializable {
@@ -53,7 +56,9 @@ public class SearchResult implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SearchResult.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS-style action descriptors keyed by action name (such as view, update, delete). Each action contains metadata like the HTTP method, URL, and required permission. Only actions the requesting user is permitted to perform are returned. Read-only - populated by the API, ignored on requests."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -89,7 +94,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS-style action descriptors keyed by action name (such as view, update, delete). Each action contains metadata like the HTTP method, URL, and required permission. Only actions the requesting user is permitted to perform are returned. Read-only - populated by the API, ignored on requests."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -183,7 +190,7 @@ public class SearchResult implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The time when the item should next be reviewed."
+		description = "The date when the content item is scheduled for editorial review. Part of the Liferay content lifecycle; populated by Web Content Article and other content types that support a review workflow. May be null when no review date is set for the item."
 	)
 	public Date getDateReview() {
 		if (_dateReviewSupplier != null) {
@@ -219,7 +226,7 @@ public class SearchResult implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The time when the item should next be reviewed."
+		description = "The date when the content item is scheduled for editorial review. Part of the Liferay content lifecycle; populated by Web Content Article and other content types that support a review workflow. May be null when no review date is set for the item."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateReview;
@@ -228,7 +235,7 @@ public class SearchResult implements Serializable {
 	private Supplier<Date> _dateReviewSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The item's description."
+		description = "Free-text description of the item. Locale-dependent on the 'Accept-Language' request header where applicable."
 	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
@@ -263,14 +270,18 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The item's description.")
+	@GraphQLField(
+		description = "Free-text description of the item. Locale-dependent on the 'Accept-Language' request header where applicable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Asset-specific nested data. The shape depends on entryClassName - blog entries include authorName and assetTagNames, documents include extension and size, custom Objects include their declared fields, and so on. Populated only when nestedFields=embedded is requested."
+	)
 	@Valid
 	public Object getEmbedded() {
 		if (_embeddedSupplier != null) {
@@ -305,7 +316,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Asset-specific nested data. The shape depends on entryClassName - blog entries include authorName and assetTagNames, documents include extension and size, custom Objects include their declared fields, and so on. Populated only when nestedFields=embedded is requested."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object embedded;
 
@@ -313,7 +326,7 @@ public class SearchResult implements Serializable {
 	private Supplier<Object> _embeddedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The object entry class name."
+		description = "Fully-qualified class name of the indexed entity (for example, com.liferay.blogs.model.BlogsEntry for a blog entry, com.liferay.journal.model.JournalArticle for a Web Content Article). This value can be used directly as input to the entryClassNames query parameter in subsequent /search requests to narrow searches to that type."
 	)
 	public String getEntryClassName() {
 		if (_entryClassNameSupplier != null) {
@@ -348,7 +361,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The object entry class name.")
+	@GraphQLField(
+		description = "Fully-qualified class name of the indexed entity (for example, com.liferay.blogs.model.BlogsEntry for a blog entry, com.liferay.journal.model.JournalArticle for a Web Content Article). This value can be used directly as input to the entryClassNames query parameter in subsequent /search requests to narrow searches to that type."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entryClassName;
 
@@ -356,7 +371,7 @@ public class SearchResult implements Serializable {
 	private Supplier<String> _entryClassNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The link to the embedded item."
+		description = "The headless REST API URL to fetch the full entity. Can be called directly, or the response is included automatically when nestedFields=embedded is set."
 	)
 	public String getItemURL() {
 		if (_itemURLSupplier != null) {
@@ -391,7 +406,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The link to the embedded item.")
+	@GraphQLField(
+		description = "The headless REST API URL to fetch the full entity. Can be called directly, or the response is included automatically when nestedFields=embedded is set."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String itemURL;
 
@@ -399,7 +416,7 @@ public class SearchResult implements Serializable {
 	private Supplier<String> _itemURLSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The item's score."
+		description = "Relevance score assigned by the search engine. Higher values indicate stronger relevance to the query. Typical values fall in the range 0.0 to ~10.0 depending on query complexity and blueprint configuration. Useful for threshold filtering (e.g., dropping results below a chosen score) or custom result ranking logic (combining `score` with other signals)."
 	)
 	@Valid
 	public Float getScore() {
@@ -433,7 +450,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The item's score.")
+	@GraphQLField(
+		description = "Relevance score assigned by the search engine. Higher values indicate stronger relevance to the query. Typical values fall in the range 0.0 to ~10.0 depending on query complexity and blueprint configuration. Useful for threshold filtering (e.g., dropping results below a chosen score) or custom result ranking logic (combining `score` with other signals)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
@@ -441,7 +460,7 @@ public class SearchResult implements Serializable {
 	private Supplier<Float> _scoreSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The item's title."
+		description = "Title of the item. Locale-dependent on the 'Accept-Language' request header where applicable."
 	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
@@ -476,7 +495,9 @@ public class SearchResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The item's title.")
+	@GraphQLField(
+		description = "Title of the item. Locale-dependent on the 'Accept-Language' request header where applicable."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
@@ -773,4 +794,4 @@ public class SearchResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-733302728
+// LIFERAY-REST-BUILDER-HASH:-1629867030

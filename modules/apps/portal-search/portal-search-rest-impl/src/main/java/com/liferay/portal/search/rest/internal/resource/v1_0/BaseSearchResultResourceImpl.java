@@ -73,55 +73,67 @@ public abstract class BaseSearchResultResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/search/v1.0/search'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Search the company index for matching content."
+		description = "Use this API to search for matching content, products and other indexed data. Choose GET when query-string parameters are sufficient; choose POST /search when you need request body features such as `facetConfigurations` (faceted aggregations), Search Blueprint context attributes (`search.experiences.*`), or other request-body-only constructs. Refer to https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more information."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "PRODUCT_SEARCH",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "blueprintExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "true",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "emptySearch"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "com.liferay.journal.model.JournalArticle,com.liferay.blogs.model.BlogsEntry",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "entryClassNames"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "title,description,score",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "groupIds/any(g:g eq 20121)",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "embedded",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "1",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "20",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "actions,embedded",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "20121,L_GUEST",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "scope"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "liferay",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "dateModified:desc",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "sort"
 			)
@@ -166,47 +178,57 @@ public abstract class BaseSearchResultResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/search/v1.0/search' -d $'{"attributes": ___, "facetConfigurations": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Search the company index for matching content."
+		description = "Use this API to search for matching content, products and other indexed data. Choose POST over GET when you need request body features such as facets (aggregations) via `facetConfigurations`, Search Blueprint context attributes (`search.experiences.*`), or other request-body-only constructs. Refer to https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more information."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "com.liferay.journal.model.JournalArticle,com.liferay.blogs.model.BlogsEntry",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "entryClassNames"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "title,description,score",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "groupIds/any(g:g eq 20121)",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "embedded",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "1",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "20",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "actions,embedded",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "20121,L_GUEST",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "scope"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "liferay",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "dateModified:desc",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "sort"
 			)
@@ -900,4 +922,4 @@ public abstract class BaseSearchResultResourceImpl
 		LogFactoryUtil.getLog(BaseSearchResultResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1314395548
+// LIFERAY-REST-BUILDER-HASH:-2040772935

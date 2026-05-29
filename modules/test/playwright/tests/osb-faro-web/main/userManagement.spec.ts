@@ -9,7 +9,9 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -147,6 +149,33 @@ test(
 		await adminCheckbox.check();
 
 		await expect(adminCheckbox).toBeChecked();
+	}
+);
+
+test(
+	'Member user cannot invite or delete users in User Management',
+	{
+		tag: ['@LRAC-9066', '@LRAC-9073'],
+	},
+	async ({page, project}) => {
+		try {
+			await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.userManagementPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Invite Users'})
+			).toHaveCount(0);
+
+			await expect(page.getByLabel('Delete')).toHaveCount(0);
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
 	}
 );
 

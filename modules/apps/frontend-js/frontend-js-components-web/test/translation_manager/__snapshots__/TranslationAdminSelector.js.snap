@@ -21,6 +21,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
         id="en_US"
         role="option"
         tabindex="-1"
+        type="button"
       >
         <span
           class="dropdown-item-indicator-start"
@@ -93,6 +94,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
         id="ar_SA"
         role="option"
         tabindex="-1"
+        type="button"
       >
         <span
           class="autofit-row"
@@ -153,6 +155,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
         id="nl_NL"
         role="option"
         tabindex="-1"
+        type="button"
       >
         <span
           class="autofit-row"
@@ -277,6 +280,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
         id="en_US"
         role="option"
         tabindex="-1"
+        type="button"
       >
         <span
           class="dropdown-item-indicator-start"
@@ -349,6 +353,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
         id="ca_ES"
         role="option"
         tabindex="-1"
+        type="button"
       >
         <span
           class="autofit-row"

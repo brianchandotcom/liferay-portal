@@ -162,11 +162,11 @@ public class PageSpecificationUtil {
 						LayoutConstants.ERC_SUFFIX_DRAFT;
 			}
 
-			draftContentPageSpecification = _toDraftContentPageSpecification(
-				contentPageSpecification,
-				draftContentPageSpecificationExternalReferenceCode);
-
 			publishedContentPageSpecification = contentPageSpecification;
+
+			draftContentPageSpecification = _toDraftContentPageSpecification(
+				publishedContentPageSpecification,
+				draftContentPageSpecificationExternalReferenceCode);
 
 			_setDraftReferences(
 				draftContentPageSpecificationExternalReferenceCode,
@@ -174,9 +174,11 @@ public class PageSpecificationUtil {
 		}
 		else {
 			draftContentPageSpecification = contentPageSpecification;
+
 			publishedContentPageSpecification =
 				_toPublishedContentPageSpecification(
-					contentPageSpecification, sitePageExternalReferenceCode);
+					draftContentPageSpecification,
+					sitePageExternalReferenceCode);
 
 			draftContentPageSpecification.setStatus(
 				() -> PageSpecification.Status.APPROVED);

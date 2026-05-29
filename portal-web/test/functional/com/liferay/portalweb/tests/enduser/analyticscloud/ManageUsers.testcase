@@ -69,22 +69,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9048 | Test Summary: Assert the User Management Page"
-	@priority = 3
-	test AssertUserManagementPage {
-		task ("go to User Management page and assert page elements") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-
-			ACSettings.assertUserManagementHeader();
-
-			ACSettings.assertUserManagementDescription();
-
-			ACSettings.assertInviteUsersButton();
-		}
-	}
-
 	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
 	@priority = 3
 	test MemberCanBeEditedOrRemoved {

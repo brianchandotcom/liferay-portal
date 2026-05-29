@@ -380,8 +380,6 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
-		_validateURL(resource);
-
 		if (authorizationServers != null) {
 			for (String authorizationServer : authorizationServers) {
 				_validateURL(authorizationServer);

@@ -174,7 +174,7 @@ public class FooService {
 		return "m-1";
 	}
 
-	public static String noSuchModel() throws NoSuchModelException {
+	public static String noSuchModelException() throws NoSuchModelException {
 		throw new NoSuchModelException();
 	}
 
@@ -190,7 +190,7 @@ public class FooService {
 		return null;
 	}
 
-	public static String principalDenied() throws PrincipalException {
+	public static String principalException() throws PrincipalException {
 		throw new PrincipalException();
 	}
 
@@ -199,7 +199,7 @@ public class FooService {
 			"search ", name, ">", StringUtil.merge(params));
 	}
 
-	public static String securityDenied() {
+	public static String securityException() {
 		throw new SecurityException();
 	}
 

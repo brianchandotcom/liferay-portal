@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.internal.guardrail.listener;
 
-import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 import dev.langchain4j.data.message.AiMessage;

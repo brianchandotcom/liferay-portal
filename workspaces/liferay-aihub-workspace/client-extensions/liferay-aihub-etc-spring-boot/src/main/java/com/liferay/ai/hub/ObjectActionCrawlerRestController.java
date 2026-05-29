@@ -55,6 +55,8 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 			"values");
 
 		Job job = _kubernetesJobService.createJob(
+			valuesJSONObject.getLong(
+				"r_accountToAIHubContentRetrievers_accountEntryId"),
 			valuesJSONObject.getString("indexName"),
 			valuesJSONObject.getString("url"));
 

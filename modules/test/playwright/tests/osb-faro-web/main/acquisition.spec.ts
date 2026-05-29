@@ -564,7 +564,6 @@ test(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
@@ -637,7 +636,6 @@ test(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 

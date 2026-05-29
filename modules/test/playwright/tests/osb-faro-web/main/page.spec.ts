@@ -62,7 +62,6 @@ test(
 	{
 		tag: '@LRAC-8112 Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 
@@ -171,7 +170,6 @@ test(
 	{
 		tag: '@LRAC-14813',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle = 'My Page ' + randomString;
 
@@ -259,7 +257,6 @@ test(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
@@ -612,7 +609,6 @@ test.skip(
 	{
 		tag: '@LRAC-8988',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle = 'Snúið Vinsælar þú';
 
@@ -692,7 +688,6 @@ test(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const firstIndividual = 'user1';
 		const secondIndividual = 'user2';
@@ -815,7 +810,6 @@ test(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [
@@ -911,7 +905,6 @@ test.skip(
 	{
 		tag: '@LRAC-14827',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [
@@ -1008,7 +1001,6 @@ test.skip(
 	{
 		tag: '@LRAC-14827',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
@@ -1122,7 +1114,6 @@ test.skip(
 	{
 		tag: '@LRAC-14836',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'user1';
 		const individuals = [
@@ -1255,7 +1246,6 @@ test(
 	{
 		tag: '@LRAC-14794',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [

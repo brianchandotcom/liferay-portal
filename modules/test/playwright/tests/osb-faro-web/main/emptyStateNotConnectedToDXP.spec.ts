@@ -45,7 +45,6 @@ test(
 	{
 		tag: '@LRAC-9248',
 	},
-
 	async ({page}) => {
 		await test.step('Go to Data Sources, check the empty page status message', async () => {
 			await navigateToACSettingsViaURL({

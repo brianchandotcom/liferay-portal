@@ -26,7 +26,6 @@ test(
 	{
 		tag: '@LPD-44478',
 	},
-
 	async ({analyticsChannel: channel, page, project}) => {
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACPageViaURL({

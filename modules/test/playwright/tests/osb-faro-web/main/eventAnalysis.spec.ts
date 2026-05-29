@@ -53,7 +53,6 @@ test(
 	{
 		tag: '@LRAC-6280',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -326,7 +325,6 @@ test(
 	{
 		tag: '@LRAC-9481',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -467,7 +465,6 @@ test(
 	{
 		tag: '@LRAC-9481',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -609,7 +606,6 @@ test(
 	{
 		tag: '@LRAC-9481',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -748,7 +744,6 @@ test(
 	{
 		tag: '@LRAC-9481',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -889,7 +884,6 @@ test(
 	{
 		tag: '@LRAC-7868',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
@@ -1090,7 +1084,6 @@ test(
 	{
 		tag: '@LRAC-11746',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();

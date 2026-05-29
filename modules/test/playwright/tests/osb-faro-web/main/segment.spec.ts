@@ -423,7 +423,6 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
@@ -622,7 +621,6 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const firstIndividualsName = 'ac';
 		const secondIndividualsName = 'dxp';
@@ -744,7 +742,6 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const knownIndividualName = 'ac';
 		const knownIndividual = [

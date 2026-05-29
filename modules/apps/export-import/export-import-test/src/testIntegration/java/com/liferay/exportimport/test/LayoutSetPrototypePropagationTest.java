@@ -427,8 +427,9 @@ public class LayoutSetPrototypePropagationTest
 
 		Theme masterLayoutTheme = masterLayout.getTheme();
 
-		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false, masterLayout.getFriendlyURL());
+		Layout siteMasterLayout =
+			LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+				masterLayout.getExternalReferenceCode(), group.getGroupId());
 
 		Theme siteMasterLayoutTheme = siteMasterLayout.getTheme();
 
@@ -437,9 +438,9 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertEquals(siteMasterLayoutTheme.getThemeId(), _THEME_ID);
 
 		Layout siteLayoutFromMasterLayout =
-			LayoutLocalServiceUtil.getFriendlyURLLayout(
-				group.getGroupId(), false,
-				siteTemplateLayoutFromMasterLayout.getFriendlyURL());
+			LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+				siteTemplateLayoutFromMasterLayout.getExternalReferenceCode(),
+				group.getGroupId());
 
 		Theme siteLayoutFromMasterLayoutTheme =
 			siteLayoutFromMasterLayout.getTheme();

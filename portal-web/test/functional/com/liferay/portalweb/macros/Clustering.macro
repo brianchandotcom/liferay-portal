@@ -275,24 +275,4 @@ definition {
 		}
 	}
 
-	@summary = "Wait for node ${nodePort} deactivation"
-	macro waitForNodeDeactivation(nodePort = null) {
-		var nodeLog = Clustering.getLogFileSpecificServer(nodePort = ${nodePort});
-
-		var minutestoExpire = RegexUtil.replace(${nodeLog}, "temporarily permitted during the grace period which expires in (.*[0-9]) minutes", 1);
-
-		var minutestoExpire = ${minutestoExpire} + 1;
-
-		// Convert minutes to milliseconds for Pause function
-
-		var mstoExpire = ${minutestoExpire} * 60000;
-
-		Pause(value1 = "${mstoExpire} ");
-	}
-
-	@summary = "Wait 5 minutes for node at port ${nodePort} to shutdown"
-	macro waitForNodeShutdown(nodePort = null) {
-		AntCommands.runCommand("build-test.xml", "wait-for-server-shutdown -Dapp.server.port.number=${nodePort}");
-	}
-
 }

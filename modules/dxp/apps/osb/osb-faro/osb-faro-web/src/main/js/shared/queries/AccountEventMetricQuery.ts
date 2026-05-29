@@ -44,6 +44,7 @@ export default gql`
 			channelId: $channelId
 			entityId: $entityId
 			entityType: $entityType
+			includeWebhookEvents: true
 			interval: $interval
 			keywords: $keywords
 			rangeEnd: $rangeEnd

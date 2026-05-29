@@ -70,7 +70,7 @@ public class DataSetSnapshotSharingEntryInterpreterTest {
 	}
 
 	@Test
-	public void testInterpretSharedDataSetSnapshot() throws Exception {
+	public void testGetSharingEntryInterpreter() throws Exception {
 		String label = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =

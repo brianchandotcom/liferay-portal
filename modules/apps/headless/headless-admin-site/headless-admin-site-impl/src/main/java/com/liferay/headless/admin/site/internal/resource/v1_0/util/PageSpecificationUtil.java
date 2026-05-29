@@ -349,24 +349,27 @@ public class PageSpecificationUtil {
 		}
 
 		for (PageExperience pageExperience : pageExperiences) {
-			String draftPageExperienceERC;
-
-			if (Objects.equals(
-					pageExperience.getKey(),
-					SegmentsExperienceConstants.KEY_DEFAULT)) {
-
-				draftPageExperienceERC =
-					draftContentPageSpecificationExternalReferenceCode +
-						LayoutConstants.ERC_SUFFIX_DEFAULT;
-			}
-			else {
-				draftPageExperienceERC =
-					pageExperience.getExternalReferenceCode() +
-						LayoutConstants.ERC_SUFFIX_DRAFT;
-			}
+			String pageExperienceExternalReferenceCode =
+				pageExperience.getExternalReferenceCode();
 
 			pageExperience.setExternalReferenceCode(
-				() -> draftPageExperienceERC);
+				() -> {
+					String externalReferenceCode =
+						draftContentPageSpecificationExternalReferenceCode +
+							LayoutConstants.ERC_SUFFIX_DEFAULT;
+
+					if (!Objects.equals(
+							pageExperience.getKey(),
+							SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+						externalReferenceCode =
+							pageExperienceExternalReferenceCode +
+								LayoutConstants.ERC_SUFFIX_DRAFT;
+					}
+
+					return externalReferenceCode;
+				});
+
 			pageExperience.setPageSpecificationExternalReferenceCode(
 				() -> draftContentPageSpecificationExternalReferenceCode);
 			pageExperience.setUuid(() -> null);

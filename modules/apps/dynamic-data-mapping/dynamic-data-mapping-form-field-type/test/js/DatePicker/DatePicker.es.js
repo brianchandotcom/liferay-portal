@@ -152,6 +152,20 @@ describe('DatePicker', () => {
 		);
 	});
 
+	it('localizes the time separator from the value the picker emits for a date_time field in Finnish', () => {
+		const onChange = jest.fn();
+
+		render(
+			<DatePicker locale="fi_FI" onChange={onChange} type="date_time" />
+		);
+
+		const input = screen.getByRole('textbox');
+		fireEvent.change(input, {target: {value: '27.05.2026 14:30'}});
+
+		expect(input).toHaveValue('27.05.2026 14.30');
+		expect(onChange).toHaveBeenCalledWith({}, '2026-05-27 14:30');
+	});
+
 	it('fills the input with the date selected on Date Picker', () => {
 		const {getByLabelText} = render(<DatePicker onChange={() => {}} />);
 

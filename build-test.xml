@@ -13525,13 +13525,6 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
 
-		<if>
-			<isset property="test.set.default.portal.properties" />
-			<then>
-				<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}</echo>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="test.smtp.server.enabled" />
 
 		<if>

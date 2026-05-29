@@ -26,11 +26,6 @@ import java.util.regex.Pattern;
 public class EnvironmentBuildProperties extends Properties {
 
 	public static Environment getCurrentEnvironment() {
-
-		// The simple name "Environment" inside this file resolves to the
-		// nested enum below, so the parser.Environment seam is bypassed and
-		// System.getenv is called directly here.
-
 		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(masterNetworkName) &&

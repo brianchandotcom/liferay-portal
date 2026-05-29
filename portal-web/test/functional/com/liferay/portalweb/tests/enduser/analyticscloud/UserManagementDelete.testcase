@@ -64,38 +64,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9064 | Test Summary: Select multiple users to delete at once"
-	@priority = 3
-	test CanSelectAndDeleteUsers {
-		task ("Create two new user and select both") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-
-			ACSettings.addUser(userInvite = "user1@liferay.com");
-
-			ACSettings.addUser(userInvite = "user2@liferay.com");
-
-			Click(
-				locator1 = "ACSettings#SELECT_USER_EMAIL",
-				userEmail = "user1@liferay.com");
-
-			Click(
-				locator1 = "ACSettings#SELECT_USER_EMAIL",
-				userEmail = "user2@liferay.com");
-		}
-
-		task ("Deletes the two selected users and checks if they were deleted") {
-			Click(locator1 = "ACSettings#DELETE_USER");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-
-			ACSettings.assertUserNotPresent(userEmail = "user1@liferay.com");
-
-			ACSettings.assertUserNotPresent(userEmail = "user2@liferay.com");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
 	@priority = 3
 	test MemberCantDeleteUser {

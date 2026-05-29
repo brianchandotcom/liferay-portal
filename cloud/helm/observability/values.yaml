@@ -1,3 +1,95 @@
+alloy:
+    enabled: false
+    iam:
+        awsRoleArn: ""
+        gcpServiceAccount: ""
+    remoteWrite:
+        basicAuth:
+            password: ""
+            username: ""
+        bearerToken: ""
+        externalLabels: {}
+        headers: {}
+        url: ""
+    scrape:
+        cadvisor:
+            enabled: true
+            path: /metrics/cadvisor
+        cloudwatchRds:
+            discoveryInterval: 5m
+            enabled: false
+            metrics:
+                -   name: CPUUtilization
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: FreeableMemory
+                    statistics:
+                        -   Average
+                        -   Minimum
+                -   name: FreeStorageSpace
+                    statistics:
+                        -   Average
+                        -   Minimum
+                -   name: ReadIOPS
+                    statistics:
+                        -   Average
+                -   name: WriteIOPS
+                    statistics:
+                        -   Average
+                -   name: ReadLatency
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: WriteLatency
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: SwapUsage
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: DiskQueueDepth
+                    statistics:
+                        -   Average
+                        -   Maximum
+                -   name: ReplicaLag
+                    statistics:
+                        -   Average
+                        -   Maximum
+            nameTagRegex: .*-database-(blue|green)$
+            region: ""
+            scrapeInterval: 1m
+        envoy:
+            enabled: true
+            path: /stats/prometheus
+            port: 19001
+        kubeStateMetrics:
+            enabled: true
+            path: /metrics
+            port: http
+        liferay:
+            enabled: true
+            matchLabels:
+                component: liferay
+            path: /metrics
+            port: 12345
+        nodeExporter:
+            enabled: true
+            path: /metrics
+            port: metrics
+        pushgateway:
+            enabled: true
+            path: /metrics
+            port: http
+        rdsExporter:
+            enabled: false
+            path: /metrics
+            port: http
+    scrapeInterval: 1m
+aws:
+    ampWorkspaceUrl: ""
+    region: ""
 cloudProvider: ""
 customLabels: {}
 datasource:
@@ -5,6 +97,44 @@ datasource:
     type: prometheus
     uid: managed-prometheus
 fullnameOverride: ""
+gcp:
+    projectId: ""
+grafana-alloy:
+    alloy:
+        clustering:
+            enabled: true
+        configMap:
+            create: false
+            key: config.alloy
+            name: liferay-alloy-config
+        securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                    -   ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+    configReloader:
+        securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                    -   ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+    controller:
+        type: daemonset
+    global:
+        podSecurityContext:
+            fsGroup: 473
+            runAsGroup: 473
+            runAsNonRoot: true
+            runAsUser: 473
+            seccompProfile:
+                type: RuntimeDefault
+    serviceAccount:
+        create: false
+        name: liferay-alloy
 kube-state-metrics:
     enabled: true
     extraArgs:

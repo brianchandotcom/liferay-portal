@@ -610,17 +610,11 @@ public class SitePageResourceImpl
 			return new CustomMetaTag[0];
 		}
 
-		if (pageSettings instanceof ContentPageSettings) {
-			ContentPageSettings contentPageSettings =
-				(ContentPageSettings)pageSettings;
-
+		if (pageSettings instanceof ContentPageSettings contentPageSettings) {
 			return contentPageSettings.getCustomMetaTags();
 		}
 
-		if (pageSettings instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
+		if (pageSettings instanceof WidgetPageSettings widgetPageSettings) {
 			return widgetPageSettings.getCustomMetaTags();
 		}
 
@@ -630,17 +624,11 @@ public class SitePageResourceImpl
 	private String _getDefaultAssetPublisherPortletId(
 		PageSettings pageSettings) {
 
-		if (pageSettings instanceof ContentPageSettings) {
-			ContentPageSettings contentPageSettings =
-				(ContentPageSettings)pageSettings;
-
+		if (pageSettings instanceof ContentPageSettings contentPageSettings) {
 			return contentPageSettings.getDefaultAssetPublisherPortletId();
 		}
 
-		if (pageSettings instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
+		if (pageSettings instanceof WidgetPageSettings widgetPageSettings) {
 			return widgetPageSettings.getDefaultAssetPublisherPortletId();
 		}
 
@@ -652,17 +640,11 @@ public class SitePageResourceImpl
 			return null;
 		}
 
-		if (pageSettings instanceof ContentPageSettings) {
-			ContentPageSettings contentPageSettings =
-				(ContentPageSettings)pageSettings;
-
+		if (pageSettings instanceof ContentPageSettings contentPageSettings) {
 			return contentPageSettings.getOpenGraphSettings();
 		}
 
-		if (pageSettings instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
+		if (pageSettings instanceof WidgetPageSettings widgetPageSettings) {
 			return widgetPageSettings.getOpenGraphSettings();
 		}
 
@@ -696,17 +678,11 @@ public class SitePageResourceImpl
 			return null;
 		}
 
-		if (pageSettings instanceof ContentPageSettings) {
-			ContentPageSettings contentPageSettings =
-				(ContentPageSettings)pageSettings;
-
+		if (pageSettings instanceof ContentPageSettings contentPageSettings) {
 			return contentPageSettings.getSeoSettings();
 		}
 
-		if (pageSettings instanceof WidgetPageSettings) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
+		if (pageSettings instanceof WidgetPageSettings widgetPageSettings) {
 			return widgetPageSettings.getSeoSettings();
 		}
 
@@ -754,12 +730,11 @@ public class SitePageResourceImpl
 					getSiteTemplatePageSpecificationExternalReferenceCode());
 		}
 
-		if (!(sitePage.getPageSettings() instanceof WidgetPageSettings)) {
+		if (!(sitePage.getPageSettings() instanceof
+				WidgetPageSettings widgetPageSettings)) {
+
 			return serviceContext;
 		}
-
-		WidgetPageSettings widgetPageSettings =
-			(WidgetPageSettings)sitePage.getPageSettings();
 
 		ItemExternalReference itemExternalReference =
 			widgetPageSettings.getWidgetPageTemplateReference();

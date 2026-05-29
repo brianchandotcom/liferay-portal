@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.Servlet;
@@ -141,13 +142,24 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 			jsonSerializer.serializeDeep(ddmFormPagesTemplateContext));
 	}
 
+	protected Locale getLocale(HttpServletRequest httpServletRequest) {
+		String formLanguageId = ParamUtil.getString(
+			httpServletRequest, "languageId");
+
+		if (Validator.isNotNull(formLanguageId)) {
+			return LocaleUtil.fromLanguageId(formLanguageId);
+		}
+
+		return LocaleUtil.fromLanguageId(
+			_language.getLanguageId(httpServletRequest));
+	}
+
 	private List<Object> _createDDMFormPagesTemplateContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String portletNamespace) {
 
 		try {
-			Locale locale = LocaleUtil.fromLanguageId(
-				_language.getLanguageId(httpServletRequest));
+			Locale locale = getLocale(httpServletRequest);
 
 			DDMFormRenderingContext ddmFormRenderingContext =
 				_createDDMFormRenderingContext(

@@ -58,10 +58,10 @@ public class LayoutSEOMetaRobotsHelper {
 				continue;
 			}
 
-			LayoutSEOMetaRobotsProvider layoutMetaRobotsProvider =
+			LayoutSEOMetaRobotsProvider layoutSEOMetaRobotsProvider =
 				_serviceTrackerMap.getService(portlet.getRootPortletId());
 
-			if (layoutMetaRobotsProvider == null) {
+			if (layoutSEOMetaRobotsProvider == null) {
 				continue;
 			}
 
@@ -74,7 +74,7 @@ public class LayoutSEOMetaRobotsHelper {
 					portletPreferences.getPortletId());
 
 			if ((jakartaPortletPreferences == null) ||
-				!layoutMetaRobotsProvider.providesContent(
+				!layoutSEOMetaRobotsProvider.isProvidesContent(
 					jakartaPortletPreferences)) {
 
 				continue;

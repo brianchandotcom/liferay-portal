@@ -15,6 +15,6 @@ public interface LayoutSEOMetaRobotsProvider {
 
 	public String getContent(RenderRequest renderRequest);
 
-	public boolean providesContent(PortletPreferences portletPreferences);
+	public boolean isProvidesContent(PortletPreferences portletPreferences);
 
 }

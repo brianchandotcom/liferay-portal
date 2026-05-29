@@ -50,7 +50,7 @@ public abstract class BasePortletLayoutSEOMetaRobotsProvider
 	}
 
 	@Override
-	public boolean providesContent(PortletPreferences portletPreferences) {
+	public boolean isProvidesContent(PortletPreferences portletPreferences) {
 		SEOPortletPreferences seoPortletPreferences = getSEOPortletPreferences(
 			portletPreferences);
 

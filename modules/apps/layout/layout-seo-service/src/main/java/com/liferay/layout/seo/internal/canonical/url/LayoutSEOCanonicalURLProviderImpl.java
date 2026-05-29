@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -158,20 +159,20 @@ public class LayoutSEOCanonicalURLProviderImpl
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
-			LayoutSEOCanonicalURLContributor layoutCanonicalURLContributor =
+			LayoutSEOCanonicalURLContributor layoutSEOCanonicalURLContributor =
 				_serviceTrackerMap.getService(portlet.getRootPortletId());
 
-			if (layoutCanonicalURLContributor == null) {
+			if (layoutSEOCanonicalURLContributor == null) {
 				continue;
 			}
 
 			parameters.putAll(
-				layoutCanonicalURLContributor.contributeURLParameters(
+				layoutSEOCanonicalURLContributor.contributeURLParameters(
 					httpServletRequest, layout.getPlid(),
 					portlet.getPortletId()));
 		}
 
-		if (parameters.isEmpty()) {
+		if (MapUtil.isEmpty(parameters)) {
 			return canonicalURL;
 		}
 

@@ -5,17 +5,24 @@
 
 package com.liferay.osb.spring.boot.client.pubsub.configuration;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 
 /**
  * @author Kyle Bischof
  */
-@ComponentScan(
-	basePackages = "com.liferay.osb.spring.boot.client.pubsub",
-	excludeFilters = @ComponentScan.Filter(classes = PubsubAutoConfiguration.class, type = FilterType.ASSIGNABLE_TYPE)
-)
 @Configuration
 public class PubsubAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	public ServiceAccountCredentialsProvider
+		serviceAccountCredentialsProvider() {
+
+		return new ServiceAccountCredentialsProvider();
+	}
+
 }

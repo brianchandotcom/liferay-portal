@@ -5,6 +5,7 @@
 
 package com.liferay.osb.spring.boot.client.pubsub.subscriber;
 
+import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -18,8 +19,8 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
+import com.liferay.osb.spring.boot.client.pubsub.BasePubsubClient;
 import com.liferay.osb.spring.boot.client.pubsub.Message;
-import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,21 +28,19 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * @author Amos Fong
  * @author Kyle Bischof
  */
-public abstract class BasePubsubSubscriber {
+public abstract class BasePubsubSubscriber extends BasePubsubClient {
 
 	@PostConstruct
 	public void initialize() throws Exception {
-		Class<?> clazz = getClass();
-
 		String subscriptionName = getSubscriptionName();
 
 		if ((subscriptionName == null) || subscriptionName.isEmpty()) {
+			Class<?> clazz = getClass();
+
 			subscriptionName = clazz.getName();
 		}
 
@@ -50,9 +49,10 @@ public abstract class BasePubsubSubscriber {
 		ProjectSubscriptionName projectSubscriptionName =
 			ProjectSubscriptionName.of(getProjectId(), subscriptionName);
 
-		if (subscriptionName.contains(clazz.getName())) {
-			_ensureSubscriptionExists(
-				projectSubscriptionName, getNamespace() + getTopic());
+		if (isAutoCreateTopic()) {
+			ensureTopicExists(getTopic());
+
+			_ensureSubscriptionExists(projectSubscriptionName, getTopic());
 		}
 
 		_subscriber = Subscriber.newBuilder(
@@ -75,7 +75,7 @@ public abstract class BasePubsubSubscriber {
 						ackReplyConsumer.ack();
 					}
 					catch (Exception exception) {
-						_log.error("Error processing message", exception);
+						_log.error("Unable to process message", exception);
 
 						ackReplyConsumer.nack();
 					}
@@ -83,7 +83,7 @@ public abstract class BasePubsubSubscriber {
 
 			}
 		).setCredentialsProvider(
-			_serviceAccountCredentialsProvider.getCredentialsProvider()
+			getCredentialsProvider()
 		).build();
 
 		_subscriber.startAsync(
@@ -110,9 +110,13 @@ public abstract class BasePubsubSubscriber {
 				}
 			}
 			catch (Exception exception) {
-				_log.error("Subscriber stop failed", exception);
+				_log.error("Unable to stop the subscriber", exception);
 			}
 		}
+	}
+
+	protected int getAckDeadlineSeconds() {
+		return 30;
 	}
 
 	protected int getMaxDeliveryAttempts() {
@@ -123,12 +127,6 @@ public abstract class BasePubsubSubscriber {
 		return "";
 	}
 
-	protected String getNamespace() {
-		return "";
-	}
-
-	protected abstract String getProjectId();
-
 	protected String getSubscriptionName() {
 		return "";
 	}
@@ -137,11 +135,7 @@ public abstract class BasePubsubSubscriber {
 		return "";
 	}
 
-	protected boolean isDeadLetterEnabled() {
-		return true;
-	}
-
-	protected abstract void receive(Message message);
+	protected abstract void receive(Message message) throws Exception;
 
 	private void _ensureSubscriptionExists(
 			ProjectSubscriptionName projectSubscriptionName, String topic)
@@ -150,7 +144,7 @@ public abstract class BasePubsubSubscriber {
 		SubscriptionAdminSettings subscriptionAdminSettings =
 			SubscriptionAdminSettings.newBuilder(
 			).setCredentialsProvider(
-				_serviceAccountCredentialsProvider.getCredentialsProvider()
+				getCredentialsProvider()
 			).build();
 
 		try (SubscriptionAdminClient subscriptionAdminClient =
@@ -176,11 +170,11 @@ public abstract class BasePubsubSubscriber {
 			}
 
 			TopicName topicName = TopicName.ofProjectTopicName(
-				getProjectId(), topic);
+				getProjectId(), getNamespace() + topic);
 
 			Subscription.Builder builder = Subscription.newBuilder(
 			).setAckDeadlineSeconds(
-				30
+				getAckDeadlineSeconds()
 			).setFilter(
 				getMessageFilter()
 			).setName(
@@ -191,7 +185,7 @@ public abstract class BasePubsubSubscriber {
 
 			if (isDeadLetterEnabled()) {
 				TopicName dlqTopicName = TopicName.ofProjectTopicName(
-					getProjectId(), topic + "-dlq");
+					getProjectId(), getNamespace() + getDeadLetterTopic(topic));
 
 				builder.setDeadLetterPolicy(
 					DeadLetterPolicy.newBuilder(
@@ -202,16 +196,22 @@ public abstract class BasePubsubSubscriber {
 					).build());
 			}
 
-			subscriptionAdminClient.createSubscription(builder.build());
+			try {
+				subscriptionAdminClient.createSubscription(builder.build());
+			}
+			catch (AlreadyExistsException alreadyExistsException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Subscription already exists " +
+							projectSubscriptionName,
+						alreadyExistsException);
+				}
+			}
 		}
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		BasePubsubSubscriber.class);
-
-	@Autowired
-	private ServiceAccountCredentialsProvider
-		_serviceAccountCredentialsProvider;
 
 	private Subscriber _subscriber;
 

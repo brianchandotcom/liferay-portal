@@ -16,13 +16,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Amos Fong
  * @author Kyle Bischof
  */
-@Component
 public class ServiceAccountCredentialsProvider {
 
 	public static final String SCOPE =

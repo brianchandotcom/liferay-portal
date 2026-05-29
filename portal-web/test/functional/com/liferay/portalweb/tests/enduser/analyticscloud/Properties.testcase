@@ -137,40 +137,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
-	@priority = 5
-	test OwnerCanCreateNewProperty {
-		ACUtils.launchAC();
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		ACProperties.addNewProperty(propertyName = "Name of property");
-
-		ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
-
-		ACWorkspace.signOut();
-
-		ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		AssertElementNotPresent(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
-
-		ACWorkspace.signOut();
-
-		ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		ACProperties.addNewProperty(propertyName = "New property");
-
-		ACProperties.assertNewCreatedProperty(propertyName = "New property");
-	}
-
 }

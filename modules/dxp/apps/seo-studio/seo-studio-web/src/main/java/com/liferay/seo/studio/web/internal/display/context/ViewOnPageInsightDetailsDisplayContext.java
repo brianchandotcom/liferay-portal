@@ -5,13 +5,17 @@
 
 package com.liferay.seo.studio.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.seo.studio.web.internal.constants.SEOStudioFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,12 +28,12 @@ public class ViewOnPageInsightDetailsDisplayContext {
 
 	public ViewOnPageInsightDetailsDisplayContext(
 		HttpServletRequest httpServletRequest, Language language,
-		String objectEntryExternalReferenceCode, ThemeDisplay themeDisplay) {
+		ThemeDisplay themeDisplay, JSONArray viewsJSONArray) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_objectEntryExternalReferenceCode = objectEntryExternalReferenceCode;
 		_themeDisplay = themeDisplay;
+		_viewsJSONArray = viewsJSONArray;
 	}
 
 	public String getBackURL() throws Exception {
@@ -47,17 +51,37 @@ public class ViewOnPageInsightDetailsDisplayContext {
 
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"apiURL", _getAPIURL()
+		).put(
 			"backURL", getBackURL()
 		).put(
-			"externalReferenceCode", _objectEntryExternalReferenceCode
+			"externalReferenceCode", _getObjectEntryExternalReferenceCode()
+		).put(
+			"fdsId", SEOStudioFDSNames.AFFECTED_PAGES_SECTION
 		).put(
 			"screenName", _language.get(_httpServletRequest, "on-page")
+		).put(
+			"views", _viewsJSONArray
 		).build();
+	}
+
+	private String _getAPIURL() {
+		return StringBundler.concat(
+			"/o/seo-studio/insight-types/by-external-reference-code/",
+			URLCodec.encodeURL(_getObjectEntryExternalReferenceCode(), true),
+			"/seoStudioInsightTypeToScanInsights?nestedFields=",
+			URLCodec.encodeURL(
+				"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage", true));
+	}
+
+	private String _getObjectEntryExternalReferenceCode() {
+		return ParamUtil.getString(
+			_httpServletRequest, "objectEntryExternalReferenceCode");
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private final String _objectEntryExternalReferenceCode;
 	private final ThemeDisplay _themeDisplay;
+	private final JSONArray _viewsJSONArray;
 
 }

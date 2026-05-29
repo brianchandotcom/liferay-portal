@@ -10,6 +10,9 @@ package com.liferay.seo.studio.web.internal.constants;
  */
 public class SEOStudioFDSNames {
 
+	public static final String AFFECTED_PAGES_SECTION =
+		SEOStudioWebConstants.BUNDLE_SYMBOLIC_NAME + "-affectedPagesSection";
+
 	public static final String INSIGHT_TYPE_SECTION =
 		SEOStudioWebConstants.BUNDLE_SYMBOLIC_NAME + "-insightTypeSection";
 

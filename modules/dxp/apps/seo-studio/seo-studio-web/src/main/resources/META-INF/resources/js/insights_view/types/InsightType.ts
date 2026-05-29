@@ -8,5 +8,4 @@ export type InsightType = {
 	description?: string;
 	fixHint?: string;
 	name?: string;
-	whyItMatters?: string;
 };

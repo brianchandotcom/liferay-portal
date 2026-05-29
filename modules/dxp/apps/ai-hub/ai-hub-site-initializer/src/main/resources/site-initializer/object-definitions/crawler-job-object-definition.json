@@ -142,6 +142,18 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"externalReferenceCode": "INDEXED_DOCUMENT_BYTES",
+			"indexed": true,
+			"label": {
+				"en_US": "Indexed Document Bytes"
+			},
+			"name": "indexedDocumentBytes",
+			"system": true,
+			"type": "Long"
+		},
+		{
 			"DBType": "DateTime",
 			"businessType": "DateTime",
 			"externalReferenceCode": "START_DATE",

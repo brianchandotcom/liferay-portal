@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductContentRecommendation")
+@GraphQLName(
+	description = "Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends similar products based on product metadata such as name, description, and categorisation.",
+	value = "ProductContentRecommendation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductContentRecommendation")
 public class ProductContentRecommendation implements Serializable {
@@ -54,7 +57,10 @@ public class ProductContentRecommendation implements Serializable {
 			ProductContentRecommendation.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -88,14 +94,19 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the analytics training job that produced this recommendation. Used to group recommendations by training run.",
+		example = "ml-job-2025-04-01"
+	)
 	public String getJobId() {
 		if (_jobIdSupplier != null) {
 			jobId = _jobIdSupplier.get();
@@ -129,7 +140,9 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the analytics training job that produced this recommendation. Used to group recommendations by training run."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
@@ -137,7 +150,8 @@ public class ProductContentRecommendation implements Serializable {
 	private Supplier<String> _jobIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The product identifier."
+		description = "Reference to the source product the recommendation is anchored on (FK identifier).",
+		example = "30130"
 	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
@@ -172,7 +186,9 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The product identifier.")
+	@GraphQLField(
+		description = "Reference to the source product the recommendation is anchored on (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
@@ -180,7 +196,8 @@ public class ProductContentRecommendation implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommendation rank."
+		description = "One-based ordering of the recommendation within the source product's set. Lower is better.",
+		example = "1"
 	)
 	public Integer getRank() {
 		if (_rankSupplier != null) {
@@ -213,7 +230,9 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommendation rank.")
+	@GraphQLField(
+		description = "One-based ordering of the recommendation within the source product's set. Lower is better."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
@@ -221,7 +240,8 @@ public class ProductContentRecommendation implements Serializable {
 	private Supplier<Integer> _rankSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommended product identifier."
+		description = "Reference to the product the model recommends for the source product (FK identifier).",
+		example = "30131"
 	)
 	public Long getRecommendedProductId() {
 		if (_recommendedProductIdSupplier != null) {
@@ -256,7 +276,9 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommended product identifier.")
+	@GraphQLField(
+		description = "Reference to the product the model recommends for the source product (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
@@ -264,7 +286,8 @@ public class ProductContentRecommendation implements Serializable {
 	private Supplier<Long> _recommendedProductIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommendation score."
+		description = "Similarity score in [0, 1]. Higher means stronger content similarity to the source product.",
+		example = "0.82"
 	)
 	@Valid
 	public Float getScore() {
@@ -298,7 +321,9 @@ public class ProductContentRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommendation score.")
+	@GraphQLField(
+		description = "Similarity score in [0, 1]. Higher means stronger content similarity to the source product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
@@ -518,4 +543,4 @@ public class ProductContentRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:857546388
+// LIFERAY-REST-BUILDER-HASH:-1955417048

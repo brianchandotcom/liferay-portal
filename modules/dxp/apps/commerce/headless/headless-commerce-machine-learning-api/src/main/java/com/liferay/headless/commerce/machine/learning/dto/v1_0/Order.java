@@ -44,8 +44,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Order")
+@GraphQLName(
+	description = "Wire shape for a commerce order uploaded to the analytics pipeline. Carries the fields the training models need to learn revenue and demand patterns -- account, channel, currency, status, total, and order line items.",
+	value = "Order"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a commerce order uploaded to the analytics pipeline. Carries the fields the training models need to learn revenue and demand patterns -- account, channel, currency, status, total, and order line items.",
 	requiredProperties = {"channelId", "currencyCode"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -60,7 +64,10 @@ public class Order implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Order.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key of the account the order belongs to. Used by the analytics pipeline to join orders to accounts without depending on internal identifiers.",
+		example = "AB-34098-789-N"
+	)
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -98,7 +105,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key of the account the order belongs to. Used by the analytics pipeline to join orders to accounts without depending on internal identifiers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
@@ -106,7 +115,10 @@ public class Order implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the account the order belongs to (FK identifier).",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -140,7 +152,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the account the order belongs to (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
@@ -148,7 +162,10 @@ public class Order implements Serializable {
 	private Supplier<Long> _accountIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the channel the order was placed on (FK identifier). Resolved on the server from the order's site identifier.",
+		example = "30130"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -182,7 +199,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the channel the order was placed on (FK identifier). Resolved on the server from the order's site identifier."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long channelId;
@@ -190,7 +209,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -224,14 +246,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 4217 three-letter currency code of the order total.",
+		example = "USD"
+	)
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -265,7 +292,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 4217 three-letter currency code of the order total."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String currencyCode;
@@ -273,7 +302,10 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form custom attributes attached to the order. Map keys are the attribute names; values are their typed values serialised as JSON.",
+		example = "{priorityHandling=true}"
+	)
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -308,14 +340,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form custom attributes attached to the order. Map keys are the attribute names; values are their typed values serialised as JSON."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for the order; must be unique per order within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -349,7 +386,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for the order; must be unique per order within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -357,7 +396,10 @@ public class Order implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order (FK identifier).",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -389,14 +431,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the order (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		example = "2017-08-21"
+	)
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -430,14 +475,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported.",
+		example = "2017-07-21"
+	)
 	public Date getOrderDate() {
 		if (_orderDateSupplier != null) {
 			orderDate = _orderDateSupplier.get();
@@ -471,14 +521,18 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
 
 	@JsonIgnore
 	private Supplier<Date> _orderDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Order line items attached to the order."
+	)
 	@Valid
 	public OrderItem[] getOrderItems() {
 		if (_orderItemsSupplier != null) {
@@ -513,7 +567,7 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Order line items attached to the order.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderItem[] orderItems;
 
@@ -521,7 +575,10 @@ public class Order implements Serializable {
 	private Supplier<OrderItem[]> _orderItemsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer order status -- 0=Completed, 2=Open, 4=Pending, 6=InProgress, 8=Cancelled, 9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined, 17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested, 22=QuoteProcessed.",
+		example = "0"
+	)
 	public Integer getOrderStatus() {
 		if (_orderStatusSupplier != null) {
 			orderStatus = _orderStatusSupplier.get();
@@ -555,14 +612,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Integer order status -- 0=Completed, 2=Open, 4=Pending, 6=InProgress, 8=Cancelled, 9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined, 17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested, 22=QuoteProcessed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer orderStatus;
 
 	@JsonIgnore
 	private Supplier<Integer> _orderStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key of the order type the order belongs to.",
+		example = "AB-34098-789-N"
+	)
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -600,7 +662,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key of the order type the order belongs to."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
@@ -608,7 +672,10 @@ public class Order implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order type (FK identifier).",
+		example = "30130"
+	)
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -642,14 +709,17 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the order type (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderTypeId;
 
 	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "paypal")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Key of the payment method selected for the order.",
+		example = "paypal"
+	)
 	public String getPaymentMethod() {
 		if (_paymentMethodSupplier != null) {
 			paymentMethod = _paymentMethodSupplier.get();
@@ -683,7 +753,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Key of the payment method selected for the order."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentMethod;
 
@@ -691,7 +763,10 @@ public class Order implements Serializable {
 	private Supplier<String> _paymentMethodSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Integer payment status set by the payment engine -- 0=Pending, 1=Authorized, 2=Paid, 3=PartiallyRefunded, 4=Refunded, 5=Cancelled, 6=Failed.",
+		example = "0"
+	)
 	public Integer getPaymentStatus() {
 		if (_paymentStatusSupplier != null) {
 			paymentStatus = _paymentStatusSupplier.get();
@@ -725,14 +800,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Integer payment status set by the payment engine -- 0=Pending, 1=Authorized, 2=Paid, 3=PartiallyRefunded, 4=Refunded, 5=Cancelled, 6=Failed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentStatus;
 
 	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled, 6=Incomplete, 7=Denied, 8=InTrash. Distinct from `orderStatus`.",
+		example = "0"
+	)
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -766,7 +846,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled, 6=Incomplete, 7=Denied, 8=InTrash. Distinct from `orderStatus`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
@@ -774,7 +856,10 @@ public class Order implements Serializable {
 	private Supplier<Integer> _statusSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Order total in the order's currency. Tax inclusion follows the channel's tax-inclusive setting. Read-only on this wire shape; computed by the order engine.",
+		example = "113"
+	)
 	@Valid
 	public BigDecimal getTotal() {
 		if (_totalSupplier != null) {
@@ -809,14 +894,19 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Order total in the order's currency. Tax inclusion follows the channel's tax-inclusive setting. Read-only on this wire shape; computed by the order engine."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal total;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the user who placed the order (FK identifier).",
+		example = "20078"
+	)
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -850,7 +940,9 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the user who placed the order (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
@@ -1259,4 +1351,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1216504480
+// LIFERAY-REST-BUILDER-HASH:-1647682283

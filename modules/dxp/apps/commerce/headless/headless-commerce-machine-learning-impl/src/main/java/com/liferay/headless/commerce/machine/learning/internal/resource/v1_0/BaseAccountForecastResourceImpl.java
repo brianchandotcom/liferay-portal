@@ -73,7 +73,7 @@ public abstract class BaseAccountForecastResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-machine-learning/v1.0/accountForecasts/by-monthlyRevenue'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Get the forecast points"
+		description = "Returns a page of monthly revenue forecast points broken down by AccountEntry. Calls CommerceAccountCommerceMLForecastManager.getMonthlyRevenueCommerceAccountCommerceMLForecasts in AccountForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only)."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -792,4 +792,4 @@ public abstract class BaseAccountForecastResourceImpl
 		LogFactoryUtil.getLog(BaseAccountForecastResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1900521535
+// LIFERAY-REST-BUILDER-HASH:-296137392

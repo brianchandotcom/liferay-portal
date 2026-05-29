@@ -8,6 +8,7 @@ package com.liferay.layout.utility.page.internal.upgrade.v1_4_2;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -54,7 +55,8 @@ public class LayoutUtilityPageEntryLayoutExternalReferenceCodeUpgradeProcess
 					long plid = (Long)values[1];
 
 					String draftLayoutExternalReferenceCode =
-						layoutExternalReferenceCode + "-draft";
+						layoutExternalReferenceCode +
+							LayoutConstants.ERC_SUFFIX_DRAFT;
 
 					preparedStatement.setString(
 						1, draftLayoutExternalReferenceCode);
@@ -77,7 +79,8 @@ public class LayoutUtilityPageEntryLayoutExternalReferenceCodeUpgradeProcess
 				"update SegmentsExperience set externalReferenceCode = ? " +
 					"where plid = ? and segmentsExperienceKey = 'DEFAULT'")) {
 
-			preparedStatement.setString(1, externalReferenceCode + "-default");
+			preparedStatement.setString(
+				1, externalReferenceCode + LayoutConstants.ERC_SUFFIX_DEFAULT);
 			preparedStatement.setLong(2, plid);
 
 			preparedStatement.executeUpdate();

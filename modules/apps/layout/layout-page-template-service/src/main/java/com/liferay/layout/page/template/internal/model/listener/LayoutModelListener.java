@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.io.Serializable;
 
 import java.util.Objects;
 
@@ -156,11 +159,15 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			GetterUtil.getString(
 				serviceContext.getAttribute("defaultSegmentsExperienceUuid")));
 
+		Serializable defaultSegmentsExperienceExternalReferenceCode =
+			serviceContext.getAttribute(
+				"defaultSegmentsExperienceExternalReferenceCode");
+
 		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
 			GetterUtil.getString(
-				serviceContext.getAttribute(
-					"defaultSegmentsExperienceExternalReferenceCode"),
-				layout.getExternalReferenceCode() + "-default"),
+				defaultSegmentsExperienceExternalReferenceCode,
+				layout.getExternalReferenceCode() +
+					LayoutConstants.ERC_SUFFIX_DEFAULT),
 			layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 

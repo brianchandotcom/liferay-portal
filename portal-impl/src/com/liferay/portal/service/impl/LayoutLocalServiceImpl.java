@@ -494,11 +494,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext.setModifiedDate(
 				serviceContext.getModifiedDate(date));
 
+			Serializable draftLayoutExternalReferenceCode =
+				serviceContext.getAttribute("draftLayoutExternalReferenceCode");
+
 			addLayout(
 				GetterUtil.getString(
-					serviceContext.getAttribute(
-						"draftLayoutExternalReferenceCode"),
-					layout.getExternalReferenceCode() + "-draft"),
+					draftLayoutExternalReferenceCode,
+					layout.getExternalReferenceCode() +
+						LayoutConstants.ERC_SUFFIX_DRAFT),
 				userId, groupId, privateLayout, parentLayoutId,
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
@@ -852,11 +855,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					"draftLayoutLayoutSetPrototypeLayoutERC"));
 			serviceContext.setModifiedDate(new Date());
 
+			Serializable draftLayoutExternalReferenceCode =
+				serviceContext.getAttribute("draftLayoutExternalReferenceCode");
+
 			layoutLocalService.addLayout(
 				GetterUtil.getString(
-					serviceContext.getAttribute(
-						"draftLayoutExternalReferenceCode"),
-					layout.getExternalReferenceCode() + "-draft"),
+					draftLayoutExternalReferenceCode,
+					layout.getExternalReferenceCode() +
+						LayoutConstants.ERC_SUFFIX_DRAFT),
 				userId, layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getParentLayoutId(),
 				_classNameLocalService.getClassNameId(Layout.class),

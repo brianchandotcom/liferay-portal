@@ -1438,10 +1438,10 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		gitWorkingDirectory.fetch(remoteGitRef);
+		LocalGitBranch localGitBranch = gitWorkingDirectory.fetch(remoteGitRef);
 
-		if (!gitWorkingDirectory.localSHAExists(sha) ||
-			!gitWorkingDirectory.refContainsSHA(remoteGitRef.getSHA(), sha)) {
+		if ((localGitBranch == null) ||
+			!gitWorkingDirectory.refContainsSHA(localGitBranch, sha)) {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(

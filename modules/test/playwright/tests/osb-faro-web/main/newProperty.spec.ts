@@ -10,8 +10,10 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {getHeader} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {searchByTerm, viewNameOnTableList} from './utils/utils';
 
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 
@@ -192,5 +194,57 @@ test(
 		// Assert that the save button is disabled
 
 		await expect(page.getByRole('button', {name: 'Save'})).toBeDisabled();
+	}
+);
+
+test(
+	'Properties settings page search filters the list to matching properties',
+	{
+		tag: '@LRAC-9121',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		const runId = getRandomString();
+
+		const propertyNames = Array.from(
+			{length: 4},
+			(_, index) => `Search Property ${runId} ${index + 1}`
+		);
+
+		const channelIds: string[] = [];
+
+		try {
+			for (const propertyName of propertyNames) {
+				const channel =
+					await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+						propertyName,
+						project.groupId
+					);
+
+				channelIds.push(channel.id);
+			}
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			for (const propertyName of propertyNames) {
+				await searchByTerm({page, searchTerm: propertyName});
+
+				await viewNameOnTableList({itemNames: propertyName, page});
+			}
+		}
+		finally {
+			for (const id of channelIds) {
+				await apiHelpers.jsonWebServicesOSBFaro
+					.deleteChannel(`[${id}]`, project.groupId)
+					.catch(() => {});
+			}
+		}
 	}
 );

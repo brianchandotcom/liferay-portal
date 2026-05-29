@@ -2020,16 +2020,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			boolean assertSuffixMirroredFragmentEntryLinks)
 		throws Exception {
 
-		PageExperience[] inputPageExperiences =
+		PageExperience[] pageExperiences =
 			contentPageSpecification.getPageExperiences();
 
 		PageExperience[] expectedDraftPageExperiences;
 		PageExperience[] expectedPublishedPageExperiences;
 
 		if (inputIsDraft) {
-			expectedDraftPageExperiences = inputPageExperiences;
+			expectedDraftPageExperiences = pageExperiences;
 			expectedPublishedPageExperiences = TransformUtil.transform(
-				inputPageExperiences,
+				pageExperiences,
 				draftPageExperience ->
 					PageExperiencesTestUtil.toPublishedPageExperience(
 						draftPageExperience, pageExternalReferenceCode),
@@ -2037,13 +2037,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 		else {
 			expectedDraftPageExperiences = TransformUtil.transform(
-				inputPageExperiences,
+				pageExperiences,
 				publishedPageExperience ->
 					PageExperiencesTestUtil.toDraftPageExperience(
 						draftContentPageSpecificationExternalReferenceCode,
 						publishedPageExperience),
 				PageExperience.class);
-			expectedPublishedPageExperiences = inputPageExperiences;
+			expectedPublishedPageExperiences = pageExperiences;
 		}
 
 		ContentPageSpecification expectedDraftContentPageSpecification =
@@ -3145,9 +3145,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()
 		throws Exception {
 
-		String pageSpecificationExternalReferenceCode =
-			RandomTestUtil.randomString();
 		String draftContentPageSpecificationExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String pageSpecificationExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		PageElement[] pageElements = PageElementsTestUtil.getPageElements(

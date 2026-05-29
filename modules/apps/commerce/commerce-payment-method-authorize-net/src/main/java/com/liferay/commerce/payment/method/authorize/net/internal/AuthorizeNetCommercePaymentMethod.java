@@ -8,6 +8,7 @@ package com.liferay.commerce.payment.method.authorize.net.internal;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.authorize.net.internal.configuration.AuthorizeNetGroupServiceConfiguration;
@@ -24,11 +25,16 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.security.auth.FullNameGenerator;
+import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -42,10 +48,12 @@ import java.util.ResourceBundle;
 
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfSetting;
+import net.authorize.api.contract.v1.CustomerAddressType;
 import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
 import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessagesType;
+import net.authorize.api.contract.v1.NameAndAddressType;
 import net.authorize.api.contract.v1.SettingType;
 import net.authorize.api.contract.v1.TransactionRequestType;
 import net.authorize.api.contract.v1.TransactionTypeEnum;
@@ -413,7 +421,73 @@ public class AuthorizeNetCommercePaymentMethod
 				commerceCurrency.getMaxFractionDigits(),
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode())));
 
+		CommerceAddress billingCommerceAddress =
+			commerceOrder.getBillingAddress();
+
+		if (billingCommerceAddress != null) {
+			CustomerAddressType customerAddressType = new CustomerAddressType();
+
+			_setNameAndAddressType(customerAddressType, billingCommerceAddress);
+
+			String phoneNumber = billingCommerceAddress.getPhoneNumber();
+
+			if (Validator.isNotNull(phoneNumber)) {
+				customerAddressType.setPhoneNumber(phoneNumber);
+			}
+
+			transactionRequestType.setBillTo(customerAddressType);
+		}
+
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
+
+		if (shippingCommerceAddress != null) {
+			NameAndAddressType nameAndAddressType = new NameAndAddressType();
+
+			_setNameAndAddressType(nameAndAddressType, shippingCommerceAddress);
+
+			transactionRequestType.setShipTo(nameAndAddressType);
+		}
+
 		return transactionRequestType;
+	}
+
+	private void _setNameAndAddressType(
+			NameAndAddressType nameAndAddressType,
+			CommerceAddress commerceAddress)
+		throws Exception {
+
+		String name = commerceAddress.getName();
+
+		if (Validator.isNotNull(name)) {
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String[] names = fullNameGenerator.splitFullName(name);
+
+			nameAndAddressType.setFirstName(names[0]);
+
+			if (StringUtil.split(name, StringPool.SPACE).length > 1) {
+				nameAndAddressType.setLastName(names[2]);
+			}
+		}
+
+		nameAndAddressType.setAddress(commerceAddress.getStreet1());
+
+		nameAndAddressType.setCity(commerceAddress.getCity());
+		nameAndAddressType.setZip(commerceAddress.getZip());
+
+		Country country = commerceAddress.fetchCountry();
+
+		if (country != null) {
+			nameAndAddressType.setCountry(country.getA2());
+		}
+
+		Region region = commerceAddress.getRegion();
+
+		if (region != null) {
+			nameAndAddressType.setState(region.getRegionCode());
+		}
 	}
 
 	@Reference

@@ -531,7 +531,7 @@ const SnapshotsControls = () => {
 					}
 				>
 					<ClayDropDown.ItemList>
-						{activeSnapshotERC && (
+						{activeSnapshotERC && isActiveSnapshotOwned && (
 							<ClayDropDown.Item
 								onClick={() => {
 									saveSnapshot({
@@ -553,7 +553,7 @@ const SnapshotsControls = () => {
 							{Liferay.Language.get('save-view-as')}
 						</ClayDropDown.Item>
 
-						{activeSnapshotERC && (
+						{activeSnapshotERC && isActiveSnapshotOwned && (
 							<>
 								<ClayDropDown.Item
 									onClick={openRenameSnapshotModal}
@@ -562,7 +562,7 @@ const SnapshotsControls = () => {
 									{Liferay.Language.get('rename-view')}
 								</ClayDropDown.Item>
 
-								{isActiveSnapshotOwned && activeSnapshot.id ? (
+								{activeSnapshot.id ? (
 									<ClayDropDown.Item
 										onClick={() => {
 											shareSnapshotAction({

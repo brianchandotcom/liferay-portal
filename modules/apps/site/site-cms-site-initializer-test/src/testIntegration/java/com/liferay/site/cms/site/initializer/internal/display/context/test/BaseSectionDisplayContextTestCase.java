@@ -1105,7 +1105,8 @@ public abstract class BaseSectionDisplayContextTestCase
 					new int[] {
 						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
 					},
-					null, 0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					DepotRolesConstants.SUBTYPE_SPACE, 0, 0, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
 				role -> HashMapBuilder.put(
 					"key", role.getName()
 				).put(

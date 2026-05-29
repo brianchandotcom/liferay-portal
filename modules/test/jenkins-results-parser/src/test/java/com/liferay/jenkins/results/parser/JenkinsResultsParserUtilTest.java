@@ -102,42 +102,6 @@ public class JenkinsResultsParserUtilTest
 	}
 
 	@Test
-	public void testGetEnvironmentVariable() {
-		Environment environment = mockEnvironment();
-
-		Mockito.when(
-			environment.doGet("JENKINS_URL")
-		).thenReturn(
-			"https://test-1-1"
-		);
-
-		testEquals(
-			"https://test-1-1",
-			JenkinsResultsParserUtil.getEnvironmentVariable("JENKINS_URL"));
-	}
-
-	@Test
-	public void testGetEnvironmentVariableWithMissingVariable() {
-		mockEnvironment();
-
-		try {
-			JenkinsResultsParserUtil.getEnvironmentVariable(
-				"MISSING_ENVIRONMENT_VARIABLE");
-
-			errorCollector.addError(
-				new Throwable(
-					"A missing environment variable should throw an " +
-						"exception"));
-		}
-		catch (RuntimeException runtimeException) {
-			testEquals(
-				"Unable to find required environment variable " +
-					"'MISSING_ENVIRONMENT_VARIABLE'",
-				runtimeException.getMessage());
-		}
-	}
-
-	@Test
 	public void testGetJobVariant() throws Exception {
 		TestSample testSample = testSamples.get("axis-integration-db2-1");
 

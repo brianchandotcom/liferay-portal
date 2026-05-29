@@ -184,23 +184,23 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 	private HttpResponse<String> _send(String urlString, String method)
 		throws Exception {
 
-		return HttpClient.newBuilder(
-		).followRedirects(
-			HttpClient.Redirect.NEVER
-		).build(
-		).send(
+		return _httpClient.send(
 			HttpRequest.newBuilder(
 			).uri(
 				URI.create(urlString)
 			).method(
 				method, HttpRequest.BodyPublishers.noBody()
 			).build(),
-			HttpResponse.BodyHandlers.ofString()
-		);
+			HttpResponse.BodyHandlers.ofString());
 	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private final HttpClient _httpClient = HttpClient.newBuilder(
+	).followRedirects(
+		HttpClient.Redirect.NEVER
+	).build();
 
 	@Inject
 	private OAuthClientASLocalMetadataLocalService

@@ -1,7 +1,7 @@
 alloy:
     enabled: false
     iam:
-        awsRoleArn: ""
+        awsRoleARN: ""
         gcpServiceAccount: ""
     remoteWrite:
         basicAuth:
@@ -23,6 +23,10 @@ alloy:
                     statistics:
                         -   Average
                         -   Maximum
+                -   name: DiskQueueDepth
+                    statistics:
+                        -   Average
+                        -   Maximum
                 -   name: FreeableMemory
                     statistics:
                         -   Average
@@ -34,14 +38,11 @@ alloy:
                 -   name: ReadIOPS
                     statistics:
                         -   Average
-                -   name: WriteIOPS
-                    statistics:
-                        -   Average
                 -   name: ReadLatency
                     statistics:
                         -   Average
                         -   Maximum
-                -   name: WriteLatency
+                -   name: ReplicaLag
                     statistics:
                         -   Average
                         -   Maximum
@@ -49,11 +50,10 @@ alloy:
                     statistics:
                         -   Average
                         -   Maximum
-                -   name: DiskQueueDepth
+                -   name: WriteIOPS
                     statistics:
                         -   Average
-                        -   Maximum
-                -   name: ReplicaLag
+                -   name: WriteLatency
                     statistics:
                         -   Average
                         -   Maximum
@@ -88,7 +88,7 @@ alloy:
             port: http
     scrapeInterval: 1m
 aws:
-    ampWorkspaceUrl: ""
+    ampWorkspaceURL: ""
     region: ""
 cloudProvider: ""
 customLabels: {}
@@ -138,8 +138,8 @@ grafana-alloy:
 kube-state-metrics:
     enabled: true
     extraArgs:
-        -   --v=1
         -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_statefulset_status_replicas_ready,kube_pod_container_status_restarts_total,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_info,kube_namespace_labels,kube_node_info,kube_node_status_condition
+        -   --v=1
     metricLabelsAllowlist:
         -   namespaces=[liferay.com/observable]
     networkPolicy:
@@ -168,8 +168,8 @@ nameOverride: ""
 prometheus-node-exporter:
     enabled: true
     extraArgs:
-        -   --log.level=error
         -   --log.format=json
+        -   --log.level=error
     networkPolicy:
         enabled: true
         ingress:
@@ -207,10 +207,10 @@ prometheus-pushgateway:
         readOnlyRootFilesystem: false
     enabled: true
     extraArgs:
-        -   --persistence.file=/data/pushgateway.data
-        -   --persistence.interval=1m
         -   --log.format=json
         -   --log.level=error
+        -   --persistence.file=/data/pushgateway.data
+        -   --persistence.interval=1m
     extraContainers:
         -   args:
                 -   --sync-period=1m

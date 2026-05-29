@@ -28,7 +28,7 @@ async function deleteAgentDefinitionToModelArmorTemplates(
 ) {
 	return fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
+			`/aiHubAgentDefinitionsToAIHubMATemplates/${modelArmorTemplateERC}`,
 		{method: 'DELETE'}
 	);
 }
@@ -36,7 +36,7 @@ async function deleteAgentDefinitionToModelArmorTemplates(
 async function getAgentDefinition(externalReferenceCode: string) {
 	const response = await fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${externalReferenceCode}` +
-			'?nestedFields=agentDefinitionsToContentRetrievers,agentDefinitionsToModelArmorTemplates',
+			'?nestedFields=agentDefinitionsToContentRetrievers,aiHubAgentDefinitionsToAIHubMATemplates',
 		{
 			method: 'GET',
 		}
@@ -85,7 +85,7 @@ async function putAgentDefinitionToModelArmorTemplates(
 ) {
 	return fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
+			`/aiHubAgentDefinitionsToAIHubMATemplates/${modelArmorTemplateERC}`,
 		{method: 'PUT'}
 	);
 }

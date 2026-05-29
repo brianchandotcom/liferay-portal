@@ -22,12 +22,12 @@ public interface ModelArmorHandler {
 			long companyId, String externalReferenceCode, String location)
 		throws Exception;
 
-	public boolean hasModelResponseViolation(
+	public String sanitizeModelResponse(
 			long companyId, String externalReferenceCode, String location,
 			String text)
 		throws Exception;
 
-	public boolean hasUserPromptViolation(
+	public String sanitizeUserPrompt(
 			long companyId, String externalReferenceCode, String location,
 			String text)
 		throws Exception;

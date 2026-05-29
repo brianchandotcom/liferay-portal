@@ -66,13 +66,50 @@ public class OfflineOpenIdConnectSessionManagerTest {
 				authServerWellKnownURI, clientId, companyId,
 				openIdConnectSessionLocalService);
 
+		AccessToken accessToken = _createAccessToken();
+
 		OpenIdConnectSession openIdConnectSession = _createOpenIdConnectSession(
 			authServerWellKnownURI, clientId, companyId,
 			RandomTestUtil.randomString());
 
-		ReflectionTestUtil.invoke(
-			offlineOpenIdConnectSessionManager, "_extendOpenIdConnectSession",
-			new Class<?>[] {OpenIdConnectSession.class}, openIdConnectSession);
+		try (MockedStatic<OpenIdConnectTokenRequestUtil>
+				openIdConnectTokenRequestUtilMockedStatic = Mockito.mockStatic(
+					OpenIdConnectTokenRequestUtil.class)) {
+
+			PlainJWT plainJWT = new PlainJWT(
+				new JWTClaimsSet.Builder(
+				).issuer(
+					RandomTestUtil.randomString()
+				).build());
+
+			openIdConnectTokenRequestUtilMockedStatic.when(
+				() -> OpenIdConnectTokenRequestUtil.request(
+					Mockito.any(OIDCClientInformation.class),
+					Mockito.any(OIDCProviderMetadata.class),
+					Mockito.any(RefreshToken.class),
+					Mockito.eq(_tokenConnectionTimeout), Mockito.anyString())
+			).thenReturn(
+				new OIDCTokens(plainJWT.serialize(), accessToken, null)
+			);
+
+			ReflectionTestUtil.invoke(
+				offlineOpenIdConnectSessionManager,
+				"_extendOpenIdConnectSession",
+				new Class<?>[] {OpenIdConnectSession.class},
+				openIdConnectSession);
+		}
+
+		Mockito.verify(
+			openIdConnectSession
+		).setAccessToken(
+			accessToken.toJSONString()
+		);
+
+		Mockito.verify(
+			openIdConnectSessionLocalService, Mockito.never()
+		).deleteOpenIdConnectSession(
+			openIdConnectSession
+		);
 	}
 
 	@Test
@@ -121,8 +158,8 @@ public class OfflineOpenIdConnectSessionManagerTest {
 				() -> OpenIdConnectTokenRequestUtil.request(
 					Mockito.any(OIDCClientInformation.class),
 					Mockito.any(OIDCProviderMetadata.class),
-					Mockito.any(RefreshToken.class), Mockito.anyInt(),
-					Mockito.anyString())
+					Mockito.any(RefreshToken.class),
+					Mockito.eq(_tokenConnectionTimeout), Mockito.anyString())
 			).thenReturn(
 				new OIDCTokens(
 					refreshedIdTokenString, refreshedAccessToken,
@@ -169,19 +206,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 	@Test
 	public void testStartOpenIdConnectSession() {
-		AccessToken accessToken = new AccessToken(
-			new AccessTokenType("Bearer"), RandomTestUtil.randomString(5000),
-			60, new Scope("email, groups, openid, profile")) {
-
-			@Override
-			public String toAuthorizationHeader() {
-				return null;
-			}
-
-		};
-
-		String idTokenString = RandomTestUtil.randomString(5000);
-
 		OfflineOpenIdConnectSessionManager offlineOpenIdConnectSessionManager =
 			new OfflineOpenIdConnectSessionManager();
 
@@ -202,6 +226,16 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		).thenReturn(
 			openIdConnectSession
 		);
+
+		AccessToken accessToken = _createAccessToken();
+
+		PlainJWT plainJWT = new PlainJWT(
+			new JWTClaimsSet.Builder(
+			).issuer(
+				RandomTestUtil.randomString()
+			).build());
+
+		String idTokenString = plainJWT.serialize();
 
 		offlineOpenIdConnectSessionManager.startOpenIdConnectSession(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -337,10 +371,12 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			RandomTestUtil.randomLong()
 		);
 
+		_tokenConnectionTimeout = RandomTestUtil.randomInt();
+
 		Mockito.when(
 			oAuthClientEntry.getTokenConnectionTimeout()
 		).thenReturn(
-			RandomTestUtil.randomInt()
+			_tokenConnectionTimeout
 		);
 
 		Mockito.when(
@@ -355,7 +391,8 @@ public class OfflineOpenIdConnectSessionManagerTest {
 	private OfflineOpenIdConnectSessionManager
 			_createOfflineOpenIdConnectSessionManager(
 				String authServerWellKnownURI, String clientId, long companyId,
-				OpenIdConnectSessionLocalService openIdConnectSessionLocalService)
+				OpenIdConnectSessionLocalService
+					openIdConnectSessionLocalService)
 		throws Exception {
 
 		OfflineOpenIdConnectSessionManager offlineOpenIdConnectSessionManager =
@@ -450,5 +487,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		return openIdConnectSession;
 	}
+
+	private static int _tokenConnectionTimeout;
 
 }

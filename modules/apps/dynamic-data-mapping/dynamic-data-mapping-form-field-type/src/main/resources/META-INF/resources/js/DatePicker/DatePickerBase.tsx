@@ -14,7 +14,7 @@ import {dateUtils} from 'frontend-js-web';
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
 import {getTooltipTitle} from '../util/tooltip';
@@ -100,6 +100,16 @@ export default function DatePickerBase({
 
 	const [{formattedDate, rawDate, years}, setDate] = useState(date);
 
+	const timeSeparator = useMemo(
+		() => (isDateTime ? datetimeUtils.getTimeSeparator(momentFormat) : ':'),
+		[isDateTime, momentFormat]
+	);
+
+	const localizeTimeSeparator = (value: string) =>
+		isDateTime && timeSeparator !== ':'
+			? value.replace(/(\d{2}):(\d{2})$/, `$1${timeSeparator}$2`)
+			: value;
+
 	/**
 	 * Updates the rawDate state whenever the prop value or localizedValue changes,
 	 * but it keep user's input case theres no language change.
@@ -149,7 +159,7 @@ export default function DatePickerBase({
 			isDateTime,
 			momentFormat,
 			serverFormat,
-			value: dateValue,
+			value: localizeTimeSeparator(dateValue),
 		});
 
 		setDate((previousState) => ({...previousState, ...nextState}));

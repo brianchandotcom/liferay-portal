@@ -150,13 +150,6 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	@Test
-	public void testStatusNotFound() throws Exception {
-		_testStatusNotFound("/foo/no-such-model-exception");
-		_testStatusNotFound("/foo/principal-exception");
-		_testStatusNotFound("/foo/security-exception");
-	}
-
-	@Test
 	public void testServletContextInvoker1() throws Exception {
 		testServletContextInvoker("somectx", true, "/foo/hello-world");
 	}
@@ -188,6 +181,13 @@ public class JSONWebServiceServiceActionTest
 		testServletContextURL(
 			"somectx", false,
 			"/somectx.foo/hello-world/user-id/173/world-name/Jupiter");
+	}
+
+	@Test
+	public void testStatusNotFound() throws Exception {
+		_testStatusNotFound("/foo/no-such-model-exception");
+		_testStatusNotFound("/foo/principal-exception");
+		_testStatusNotFound("/foo/security-exception");
 	}
 
 	protected MockHttpServletRequest createInvokerHttpServletRequest(

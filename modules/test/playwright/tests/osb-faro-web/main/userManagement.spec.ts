@@ -180,6 +180,63 @@ test(
 );
 
 test(
+	'Admin and Owner users can invite a new user via the User Management page',
+	{
+		tag: ['@LRAC-9071', '@LRAC-9072'],
+	},
+	async ({page, project}) => {
+		const inviters = [
+			{email: 'michelle.hoshi@faro.io', role: 'Admin'},
+			{email: 'bryan.cheung@faro.io', role: 'Owner'},
+		];
+
+		try {
+			for (const inviter of inviters) {
+				await signInToAnalyticsCloud(page, inviter.email);
+
+				await navigateToACSettingsViaURL({
+					acPage: ACPage.userManagementPage,
+					page,
+					projectID: project.groupId,
+				});
+
+				const invitedEmail = `invited-${inviter.role.toLowerCase()}-${Date.now()}@liferay.com`;
+
+				await page
+					.getByRole('button', {name: 'Invite Users'})
+					.click();
+
+				await page
+					.getByPlaceholder('Enter Email Address')
+					.fill(invitedEmail);
+
+				await page.keyboard.press('Enter');
+
+				await page.getByRole('button', {name: 'Send'}).click();
+
+				await expect(
+					page.getByText('Success:Invitations have been sent.')
+				).toBeVisible();
+
+				await expect(
+					page.getByRole('cell', {name: invitedEmail})
+				).toBeVisible();
+
+				await page
+					.getByRole('row', {name: invitedEmail})
+					.getByLabel('Delete')
+					.click();
+
+				await page.getByRole('button', {name: 'Continue'}).click();
+			}
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);
+
+test(
 	'User Management settings page search filters the list to matching users',
 	{
 		tag: '@LRAC-8142',

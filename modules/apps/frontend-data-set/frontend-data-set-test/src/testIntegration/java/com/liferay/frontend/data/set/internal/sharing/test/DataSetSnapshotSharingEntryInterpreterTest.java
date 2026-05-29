@@ -85,38 +85,33 @@ public class DataSetSnapshotSharingEntryInterpreterTest {
 			).build(),
 			serviceContext);
 
-		SharingEntry sharingEntry = null;
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameLocalService.getClassNameId(
+				_objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId(), 0, true,
+			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
-		try {
-			sharingEntry = _sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), 0, 0, _toUser.getUserId(),
-				_classNameLocalService.getClassNameId(
-					_objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId(), 0, true,
-				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+				sharingEntry);
 
-			SharingEntryInterpreter sharingEntryInterpreter =
-				_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
-					sharingEntry);
+		Assert.assertEquals(
+			StringUtil.quote(label),
+			sharingEntryInterpreter.getTitle(sharingEntry, LocaleUtil.US));
+		Assert.assertEquals(
+			"Data Set User View",
+			sharingEntryInterpreter.getAssetTypeTitle(
+				sharingEntry, LocaleUtil.US));
+		Assert.assertTrue(sharingEntryInterpreter.isVisible(sharingEntry));
 
-			Assert.assertEquals(
-				StringUtil.quote(label),
-				sharingEntryInterpreter.getTitle(sharingEntry, LocaleUtil.US));
-			Assert.assertEquals(
-				"Data Set User View",
-				sharingEntryInterpreter.getAssetTypeTitle(
-					sharingEntry, LocaleUtil.US));
-			Assert.assertTrue(sharingEntryInterpreter.isVisible(sharingEntry));
+		if (sharingEntry != null) {
+			_sharingEntryLocalService.deleteSharingEntry(
+				sharingEntry.getSharingEntryId());
 		}
-		finally {
-			if (sharingEntry != null) {
-				_sharingEntryLocalService.deleteSharingEntry(
-					sharingEntry.getSharingEntryId());
-			}
 
-			_objectEntryLocalService.deleteObjectEntry(
-				objectEntry.getObjectEntryId());
-		}
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
 	}
 
 	@Inject

@@ -45,6 +45,20 @@ export function Group<T extends Record<any, any>>({
 
 	const nodeRef = React.useRef<HTMLDivElement>(null);
 
+	const setNodeHeightZero = () => {
+		nodeRef.current?.setAttribute('style', 'height: 0px');
+	};
+
+	const setNodeFullHeight = () => {
+		if (nodeRef.current) {
+			setElementFullHeight(nodeRef.current);
+		}
+	};
+
+	const removeStyleAttribute = () => {
+		nodeRef.current?.removeAttribute('style');
+	};
+
 	return (
 		<CSSTransition
 			className={classNames('collapse', className, {
@@ -65,31 +79,11 @@ export function Group<T extends Record<any, any>>({
 			id={item.key}
 			in={expandedKeys.has(item.key)}
 			nodeRef={nodeRef}
-			onEnter={() => {
-				if (nodeRef.current) {
-					nodeRef.current.setAttribute('style', 'height: 0px');
-				}
-			}}
-			onEntered={() => {
-				if (nodeRef.current) {
-					nodeRef.current.removeAttribute('style');
-				}
-			}}
-			onEntering={() => {
-				if (nodeRef.current) {
-					setElementFullHeight(nodeRef.current);
-				}
-			}}
-			onExit={() => {
-				if (nodeRef.current) {
-					setElementFullHeight(nodeRef.current);
-				}
-			}}
-			onExiting={() => {
-				if (nodeRef.current) {
-					nodeRef.current.setAttribute('style', 'height: 0px');
-				}
-			}}
+			onEnter={setNodeHeightZero}
+			onEntered={removeStyleAttribute}
+			onEntering={setNodeFullHeight}
+			onExit={setNodeFullHeight}
+			onExiting={setNodeHeightZero}
 			timeout={prefersReducedMotion ? 0 : 250}
 			unmountOnExit
 		>

@@ -165,8 +165,8 @@ public class PageSpecificationUtil {
 			publishedContentPageSpecification = contentPageSpecification;
 
 			draftContentPageSpecification = _toDraftContentPageSpecification(
-				publishedContentPageSpecification,
-				draftContentPageSpecificationExternalReferenceCode);
+				draftContentPageSpecificationExternalReferenceCode,
+				publishedContentPageSpecification);
 
 			_setDraftReferences(
 				draftContentPageSpecificationExternalReferenceCode,
@@ -261,8 +261,8 @@ public class PageSpecificationUtil {
 	}
 
 	private static ContentPageSpecification _toDraftContentPageSpecification(
-		ContentPageSpecification publishedContentPageSpecification,
-		String draftContentPageSpecificationExternalReferenceCode) {
+		String draftContentPageSpecificationExternalReferenceCode,
+		ContentPageSpecification publishedContentPageSpecification) {
 
 		ContentPageSpecification draftContentPageSpecification =
 			ContentPageSpecification.unsafeToDTO(

@@ -209,8 +209,8 @@ public class MappedProductDTOConverter
 				setId(csDiagramEntry::getCSDiagramEntryId);
 				setPrice(
 					() -> {
-						String unitOfMeasureKey = StringPool.BLANK;
 						BigDecimal priceQuantity = BigDecimal.ONE;
+						String unitOfMeasureKey = StringPool.BLANK;
 
 						if (!cpInstanceUnitOfMeasures.isEmpty()) {
 							CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =

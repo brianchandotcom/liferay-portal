@@ -127,6 +127,36 @@ test(
 );
 
 test(
+	'Owner row in User Management has its Edit, Delete and checkbox disabled',
+	{
+		tag: ['@LRAC-9049', '@LRAC-9050'],
+	},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		const ownerEmail = 'bryan.cheung@faro.io';
+
+		await page.getByPlaceholder('Search').first().fill(ownerEmail);
+
+		await page.keyboard.press('Enter');
+
+		const ownerRow = page.getByRole('row', {name: ownerEmail});
+
+		await expect(ownerRow).toBeVisible();
+
+		await expect(ownerRow.getByRole('button').first()).not.toBeVisible();
+
+		await expect(ownerRow.getByLabel('Delete')).not.toBeVisible();
+
+		await expect(ownerRow.getByRole('checkbox')).toBeDisabled();
+	}
+);
+
+test(
 	'Admin row in User Management can be selected via its checkbox',
 	{
 		tag: ['@LRAC-9052', '@LRAC-9054'],

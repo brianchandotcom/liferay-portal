@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -306,6 +307,10 @@ public class ElasticsearchConfigurationWrapper
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Set<ElasticsearchConfigurationObserver>
 		_elasticsearchConfigurationObservers = new ConcurrentSkipListSet<>();
+
+	@Reference(target = "(elasticsearch.configuration.ready=true)")
+	private Object _elasticsearchConfigurationReady;
+
 	private volatile ElasticsearchConfiguration
 		_propsElasticsearchConfiguration;
 	private volatile Map<String, Object> _propsMap = Collections.emptyMap();

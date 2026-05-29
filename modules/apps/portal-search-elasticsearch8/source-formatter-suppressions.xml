@@ -4,6 +4,7 @@
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files=".*" />
 		<suppress checks="UnprocessedExceptionCheck" files="portal-search-elasticsearch8-impl/src/main/java/com/liferay/portal/search/elasticsearch8/internal/index/CompanyIndexHelper\.java" />
+		<suppress checks="UnusedVariableCheck" files="portal-search-elasticsearch8-impl/src/main/java/com/liferay/portal/search/elasticsearch8/internal/configuration/ElasticsearchConfigurationWrapper\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaComponentAnnotationsCheck" files=".*" />

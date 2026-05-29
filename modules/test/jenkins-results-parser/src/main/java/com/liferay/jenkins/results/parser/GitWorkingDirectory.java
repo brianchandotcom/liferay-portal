@@ -1747,16 +1747,11 @@ public class GitWorkingDirectory {
 			return "";
 		}
 
-		executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			GitUtil.MILLIS_TIMEOUT,
-			JenkinsResultsParserUtil.combine(
-				"git fetch ", upstreamGitRemote.getName(), " master"));
+		RemoteGitBranch upstreamMasterRemoteGitBranch = getRemoteGitBranch(
+			"master", upstreamGitRemote, true);
 
 		return getMergeBaseCommitSHA(
-			getCurrentBranchName(),
-			JenkinsResultsParserUtil.combine(
-				upstreamGitRemote.getName(), "/master"));
+			getCurrentLocalGitBranch(), fetch(upstreamMasterRemoteGitBranch));
 	}
 
 	public List<File> getModifiedDirsList(

@@ -281,7 +281,7 @@ public class PageExperience implements Serializable {
 	private Supplier<String> _pageSpecificationExternalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The experience's priority. It must be a unique value within the page specification. The default experience will always be assigned priority 0. A priority higher than 0 will result in an experience being active and a priority lower than 0 will result in an experience being inactive."
+		description = "The experience's priority. It must be a unique value within the page specification. The default experience is always assigned priority 0; a positive priority results in an active experience and a negative priority results in an inactive one. After every create, update, or delete operation, the server compacts the priorities of the remaining experiences into sequential values (1, 2, 3, ... for active experiences and -1, -2, -3, ... for inactive experiences), so the priority returned or persisted may differ from the one supplied in the request."
 	)
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
@@ -317,7 +317,7 @@ public class PageExperience implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The experience's priority. It must be a unique value within the page specification. The default experience will always be assigned priority 0. A priority higher than 0 will result in an experience being active and a priority lower than 0 will result in an experience being inactive."
+		description = "The experience's priority. It must be a unique value within the page specification. The default experience is always assigned priority 0; a positive priority results in an active experience and a negative priority results in an inactive one. After every create, update, or delete operation, the server compacts the priorities of the remaining experiences into sequential values (1, 2, 3, ... for active experiences and -1, -2, -3, ... for inactive experiences), so the priority returned or persisted may differ from the one supplied in the request."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
@@ -669,4 +669,4 @@ public class PageExperience implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-944388258
+// LIFERAY-REST-BUILDER-HASH:-291290306

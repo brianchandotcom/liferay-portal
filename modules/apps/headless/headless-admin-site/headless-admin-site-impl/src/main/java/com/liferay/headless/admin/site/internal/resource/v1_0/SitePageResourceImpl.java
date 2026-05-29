@@ -513,8 +513,8 @@ public class SitePageResourceImpl
 					ContentPageSpecification contentPageSpecification)) {
 
 				throw new ValidationException(
-					"A content page specification is expected for a content " +
-						"page");
+					"The page specification type does not match the content " +
+						"page type");
 			}
 
 			sitePage.setPageSpecifications(

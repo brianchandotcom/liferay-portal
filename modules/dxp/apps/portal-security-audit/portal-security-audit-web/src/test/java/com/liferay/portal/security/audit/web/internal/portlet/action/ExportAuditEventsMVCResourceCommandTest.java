@@ -36,7 +36,6 @@ public class ExportAuditEventsMVCResourceCommandTest {
 	@Test
 	public void testBuildCSV() {
 		AuditEvent firstAuditEvent = Mockito.mock(AuditEvent.class);
-
 		long firstUserId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -54,7 +53,6 @@ public class ExportAuditEventsMVCResourceCommandTest {
 		);
 
 		AuditEvent secondAuditEvent = Mockito.mock(AuditEvent.class);
-
 		long secondUserId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -77,11 +75,11 @@ public class ExportAuditEventsMVCResourceCommandTest {
 				firstUserId, "\n", secondUserName, StringPool.COMMA,
 				secondUserId, "\n"),
 			_buildCSV(
-				new String[] {"user-name", "user-id"},
-				Arrays.asList(firstAuditEvent, secondAuditEvent)));
+				Arrays.asList(firstAuditEvent, secondAuditEvent),
+				new String[] {"user-name", "user-id"}));
 	}
 
-	private String _buildCSV(String[] columns, List<AuditEvent> auditEvents) {
+	private String _buildCSV(List<AuditEvent> auditEvents, String[] columns) {
 		return ReflectionTestUtil.invoke(
 			new ExportAuditEventsMVCResourceCommand(), "_buildCSV",
 			new Class<?>[] {List.class, String[].class, ProgressTracker.class},

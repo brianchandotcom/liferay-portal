@@ -225,15 +225,12 @@ public abstract class BasePrototypePropagationTestCase {
 			LayoutTestUtil.getPortletPreferences(layout, portletId);
 
 		if (linkEnabled) {
-			if (globalScope) {
+			if (globalScope || propagatesLocalEntityReferences()) {
 				Assert.assertEquals(
 					StringPool.BLANK,
 					portletPreferences.getValue("articleId", StringPool.BLANK));
 			}
 			else {
-
-				// Changes in preferences of local ids are not propagated
-
 				Assert.assertEquals(
 					journalArticle.getArticleId(),
 					portletPreferences.getValue("articleId", StringPool.BLANK));
@@ -257,6 +254,10 @@ public abstract class BasePrototypePropagationTestCase {
 		_sites.mergeLayoutPrototypeLayout(layout);
 
 		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
+	}
+
+	protected boolean propagatesLocalEntityReferences() {
+		return false;
 	}
 
 	protected abstract void setLinkEnabled(boolean linkEnabled)

@@ -56,7 +56,8 @@ public class LayoutUtilityPageEntryLayoutExternalReferenceCodeUpgradeProcess
 
 					String draftLayoutExternalReferenceCode =
 						layoutExternalReferenceCode +
-							LayoutConstants.ERC_SUFFIX_DRAFT;
+							LayoutConstants.
+								EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 
 					preparedStatement.setString(
 						1, draftLayoutExternalReferenceCode);
@@ -80,7 +81,9 @@ public class LayoutUtilityPageEntryLayoutExternalReferenceCodeUpgradeProcess
 					"where plid = ? and segmentsExperienceKey = 'DEFAULT'")) {
 
 			preparedStatement.setString(
-				1, externalReferenceCode + LayoutConstants.ERC_SUFFIX_DEFAULT);
+				1,
+				externalReferenceCode +
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT);
 			preparedStatement.setLong(2, plid);
 
 			preparedStatement.executeUpdate();

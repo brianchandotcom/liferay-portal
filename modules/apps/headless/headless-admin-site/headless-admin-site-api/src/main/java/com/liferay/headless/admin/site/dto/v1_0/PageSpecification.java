@@ -41,7 +41,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A page specification of a content page, content page template, widget page, or widget page template. A content page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. A widget page contains only 1 page specification for its published layout.",
+	description = "A page specification of a content page, content page template, widget page, or widget page template. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout. A widget page contains only 1 page specification for its published layout.",
 	value = "PageSpecification"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -646,4 +646,4 @@ public abstract class PageSpecification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1493561160
+// LIFERAY-REST-BUILDER-HASH:1992942068

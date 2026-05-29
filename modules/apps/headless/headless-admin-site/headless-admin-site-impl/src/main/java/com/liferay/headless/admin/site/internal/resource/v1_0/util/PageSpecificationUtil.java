@@ -251,32 +251,47 @@ public class PageSpecificationUtil {
 		}
 	}
 
-	private static void _setDraftReferences(
-		String draftContentPageSpecificationExternalReferenceCode,
-		ContentPageSpecification publishedContentPageSpecification) {
+	private static void _processPageElements(
+		Consumer<FragmentInstance> fragmentInstanceConsumer,
+		PageElement[] pageElements,
+		Consumer<WidgetInstancePageElementDefinition>
+			widgetInstancePageElementDefinitionConsumer) {
 
-		if (Validator.isNull(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode())) {
-
-			publishedContentPageSpecification.
-				setDraftContentPageSpecificationExternalReferenceCode(
-					() -> draftContentPageSpecificationExternalReferenceCode);
-		}
-
-		PageExperience[] pageExperiences =
-			publishedContentPageSpecification.getPageExperiences();
-
-		if (pageExperiences == null) {
+		if (pageElements == null) {
 			return;
 		}
 
-		for (PageExperience pageExperience : pageExperiences) {
+		for (PageElement pageElement : pageElements) {
+			PageElementDefinition pageElementDefinition =
+				pageElement.getPageElementDefinition();
+
+			if (pageElementDefinition instanceof
+					BasicFragmentInstancePageElementDefinition
+						basicFragmentInstancePageElementDefinition) {
+
+				fragmentInstanceConsumer.accept(
+					basicFragmentInstancePageElementDefinition.
+						getFragmentInstance());
+			}
+			else if (pageElementDefinition instanceof
+						FormFragmentInstancePageElementDefinition
+							formFragmentInstancePageElementDefinition) {
+
+				fragmentInstanceConsumer.accept(
+					formFragmentInstancePageElementDefinition.
+						getFragmentInstance());
+			}
+			else if (pageElementDefinition instanceof
+						WidgetInstancePageElementDefinition
+							widgetInstancePageElementDefinition) {
+
+				widgetInstancePageElementDefinitionConsumer.accept(
+					widgetInstancePageElementDefinition);
+			}
+
 			_processPageElements(
-				PageSpecificationUtil::_processPublishedFragmentInstance,
-				pageExperience.getPageElements(),
-				PageSpecificationUtil::
-					_processPublishedWidgetInstancePageElementDefinition);
+				fragmentInstanceConsumer, pageElement.getPageElements(),
+				widgetInstancePageElementDefinitionConsumer);
 		}
 	}
 
@@ -323,6 +338,35 @@ public class PageSpecificationUtil {
 					() ->
 						widgetInstanceExternalReferenceCode +
 							LayoutConstants.ERC_SUFFIX_DRAFT);
+		}
+	}
+
+	private static void _setDraftReferences(
+		String draftContentPageSpecificationExternalReferenceCode,
+		ContentPageSpecification publishedContentPageSpecification) {
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			publishedContentPageSpecification.
+				setDraftContentPageSpecificationExternalReferenceCode(
+					() -> draftContentPageSpecificationExternalReferenceCode);
+		}
+
+		PageExperience[] pageExperiences =
+			publishedContentPageSpecification.getPageExperiences();
+
+		if (pageExperiences == null) {
+			return;
+		}
+
+		for (PageExperience pageExperience : pageExperiences) {
+			_processPageElements(
+				PageSpecificationUtil::_processPublishedFragmentInstance,
+				pageExperience.getPageElements(),
+				PageSpecificationUtil::
+					_processPublishedWidgetInstancePageElementDefinition);
 		}
 	}
 
@@ -507,49 +551,6 @@ public class PageSpecificationUtil {
 		}
 
 		return externalReferenceCode + LayoutConstants.ERC_SUFFIX_PUBLISHED;
-	}
-	private static void _processPageElements(
-		Consumer<FragmentInstance> fragmentInstanceConsumer,
-		PageElement[] pageElements,
-		Consumer<WidgetInstancePageElementDefinition>
-			widgetInstancePageElementDefinitionConsumer) {
-
-		if (pageElements == null) {
-			return;
-		}
-
-		for (PageElement pageElement : pageElements) {
-			PageElementDefinition pageElementDefinition =
-				pageElement.getPageElementDefinition();
-
-			if (pageElementDefinition instanceof
-					BasicFragmentInstancePageElementDefinition
-						basicFragmentInstancePageElementDefinition) {
-
-				fragmentInstanceConsumer.accept(
-					basicFragmentInstancePageElementDefinition.
-						getFragmentInstance());
-			}
-			else if (pageElementDefinition instanceof
-						FormFragmentInstancePageElementDefinition
-							formFragmentInstancePageElementDefinition) {
-
-				fragmentInstanceConsumer.accept(
-					formFragmentInstancePageElementDefinition.
-						getFragmentInstance());
-			}
-			else if (pageElementDefinition instanceof
-						WidgetInstancePageElementDefinition
-							widgetInstancePageElementDefinition) {
-
-				widgetInstancePageElementDefinitionConsumer.accept(
-					widgetInstancePageElementDefinition);
-			}
-
-			_processPageElements(
-				fragmentInstanceConsumer, pageElement.getPageElements(),
-				widgetInstancePageElementDefinitionConsumer);
-		}
 	}
 
 }

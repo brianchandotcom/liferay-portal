@@ -1224,7 +1224,8 @@ public class SitePageResourceImpl
 			(pageSpecifications.length == 1)) {
 
 			throw new ValidationException(
-				"A single content page specification is only accepted on POST");
+				"A single content page specification cannot be applied to an " +
+					"existing page");
 		}
 
 		PageSpecification publishedPageSpecification = null;

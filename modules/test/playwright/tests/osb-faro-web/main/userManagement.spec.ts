@@ -188,9 +188,9 @@ test(
 );
 
 test(
-	'Member user cannot invite or delete users in User Management',
+	'Member user cannot invite, delete, or change roles in User Management',
 	{
-		tag: ['@LRAC-9066', '@LRAC-9073'],
+		tag: ['@LRAC-9066', '@LRAC-9073', '@LRAC-9098'],
 	},
 	async ({page, project}) => {
 		try {
@@ -207,6 +207,8 @@ test(
 			).toHaveCount(0);
 
 			await expect(page.getByLabel('Delete')).toHaveCount(0);
+
+			await expect(page.getByLabel('Edit')).toHaveCount(0);
 		}
 		finally {
 			await signInToAnalyticsCloud(page, faroConfig.user.login);

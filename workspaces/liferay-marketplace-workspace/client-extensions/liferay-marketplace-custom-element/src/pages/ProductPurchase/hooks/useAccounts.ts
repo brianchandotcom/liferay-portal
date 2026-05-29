@@ -54,7 +54,7 @@ const useAccounts = () => {
 	return {
 		accounts,
 		myUserAccount,
-		selectedAccount: selectedAccountWithERC || selectedAccount,
+		selectedAccount: (selectedAccountWithERC || selectedAccount) as Account,
 		setSelectedAccount,
 	};
 };

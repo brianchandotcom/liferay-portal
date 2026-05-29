@@ -509,7 +509,8 @@ public class PageSpecificationUtil {
 	private static void _visitPageElements(
 		PageElement[] pageElements,
 		Consumer<FragmentInstance> fragmentInstanceConsumer,
-		Consumer<WidgetInstancePageElementDefinition> widgetInstanceConsumer) {
+		Consumer<WidgetInstancePageElementDefinition>
+			widgetInstancePageElementDefinitionConsumer) {
 
 		if (pageElements == null) {
 			return;
@@ -539,13 +540,13 @@ public class PageSpecificationUtil {
 						WidgetInstancePageElementDefinition
 							widgetInstancePageElementDefinition) {
 
-				widgetInstanceConsumer.accept(
+				widgetInstancePageElementDefinitionConsumer.accept(
 					widgetInstancePageElementDefinition);
 			}
 
 			_visitPageElements(
 				pageElement.getPageElements(), fragmentInstanceConsumer,
-				widgetInstanceConsumer);
+				widgetInstancePageElementDefinitionConsumer);
 		}
 	}
 

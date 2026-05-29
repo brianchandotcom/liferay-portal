@@ -35,13 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"before-filter=Virtual Host Filter", "dispatcher=REQUEST",
 		"servlet-context-name=",
-		"servlet-filter-name=OAuth Authorization Server Metadata Well-Known Filter",
+		"servlet-filter-name=OAuth 2 Authorization Well-Known Server Metadata Filter",
 		"url-pattern=/.well-known/oauth-authorization-server",
 		"url-pattern=/.well-known/oauth-authorization-server/*"
 	},
 	service = Filter.class
 )
-public class OAuthAuthorizationServerMetadataWellKnownFilter
+public class OAuth2WellKnownAuthorizationServerMetadataFilter
 	extends BaseFilter {
 
 	@Override
@@ -146,7 +146,7 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 		"/.well-known/oauth-authorization-server";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthAuthorizationServerMetadataWellKnownFilter.class);
+		OAuth2WellKnownAuthorizationServerMetadataFilter.class);
 
 	@Reference
 	private OAuthClientASLocalMetadataLocalService

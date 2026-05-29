@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-63415")
 @RunWith(Arquillian.class)
-public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
+public class OAuth2WellKnownAuthorizationServerMetadataFilterTest {
 
 	@ClassRule
 	@Rule

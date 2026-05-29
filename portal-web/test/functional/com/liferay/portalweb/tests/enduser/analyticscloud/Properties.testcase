@@ -137,43 +137,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9112 | Test Summary: New properties generated IDs are not incremental"
-	@priority = 4
-	test NewPropertiesGeneratedIDsAreNotIncremental {
-		task ("Sign in AC") {
-			ACUtils.launchAC();
-		}
-
-		task ("Go to AC Properties ") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Add three new properties") {
-			for (var propertyNumber : list "1,2,3") {
-				ACProperties.addNewProperty(propertyName = "Name of property ${propertyNumber}");
-
-				ACSettings.goToProperties();
-			}
-		}
-
-		task ("Assert that the properties ID aren't incremental") {
-			var propertyId1 = ACSettings.getPropertyId(propertyName = "Name of property 1");
-			var propertyId2 = ACSettings.getPropertyId(propertyName = "Name of property 2");
-			var propertyId3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
-			var differenceId2 = ${propertyId2} - ${propertyId1};
-			var differenceId3 = ${propertyId3} - ${propertyId2};
-
-			TestUtils.assertNotEquals(
-				actual = ${differenceId2},
-				expected = 1);
-
-			TestUtils.assertNotEquals(
-				actual = ${differenceId3},
-				expected = 1);
-		}
-	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@priority = 5

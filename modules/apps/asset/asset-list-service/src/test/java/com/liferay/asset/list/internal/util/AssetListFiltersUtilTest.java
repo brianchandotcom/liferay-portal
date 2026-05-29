@@ -69,524 +69,415 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testBooleanEqBuildsTermQuery() {
-		_setUpObjectField(
-			"visible", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-			ObjectFieldConstants.DB_TYPE_BOOLEAN);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"visible", _buildFilter("eq", "visible", "true"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_boolean", "true");
-	}
-
-	@Test
-	public void testDateBetweenNormalizesBothBounds() {
+	public void testHandlesDateAndDateTimeOperators() {
 		_setUpObjectField(
 			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE);
 
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"between", "dueDate", JSONUtil.putAll("2026-01-15", "2026-01-20"));
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", filterJSONObject, BooleanClauseOccur.MUST);
+		// Date eq builds a one-day range query.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", "20260115000000",
-			"20260120235959", true, true);
-	}
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("eq", "dueDate", "2026-01-15"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", "20260115000000", "20260115235959",
+			true, true);
 
-	@Test
-	public void testDateEqBuildsOneDayRangeQuery() {
-		_setUpObjectField(
-			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", _buildFilter("eq", "dueDate", "2026-01-15"),
-			BooleanClauseOccur.MUST);
+		// Date gt normalizes the value to the end of the day, exclusive.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", "20260115000000",
-			"20260115235959", true, true);
-	}
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("gt", "dueDate", "2026-01-15"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", "20260115235959", null, false,
+			false);
 
-	@Test
-	public void testDateGeNormalizesValueToStartOfDay() {
-		_setUpObjectField(
-			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", _buildFilter("ge", "dueDate", "2026-01-15"),
-			BooleanClauseOccur.MUST);
+		// Date ge normalizes the value to the start of the day, inclusive.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", "20260115000000", null,
-			true, false);
-	}
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("ge", "dueDate", "2026-01-15"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", "20260115000000", null, true, false);
 
-	@Test
-	public void testDateGtNormalizesValueToEndOfDay() {
-		_setUpObjectField(
-			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", _buildFilter("gt", "dueDate", "2026-01-15"),
-			BooleanClauseOccur.MUST);
+		// Date lt normalizes the value to the start of the day, exclusive.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", "20260115235959", null,
-			false, false);
-	}
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("lt", "dueDate", "2026-01-15"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", null, "20260115000000", false,
+			false);
 
-	@Test
-	public void testDateLeNormalizesValueToEndOfDay() {
-		_setUpObjectField(
-			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", _buildFilter("le", "dueDate", "2026-01-15"),
-			BooleanClauseOccur.MUST);
+		// Date le normalizes the value to the end of the day, inclusive.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", null, "20260115235959",
-			false, true);
-	}
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("le", "dueDate", "2026-01-15"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", null, "20260115235959", false, true);
 
-	@Test
-	public void testDateLtNormalizesValueToStartOfDay() {
-		_setUpObjectField(
-			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"dueDate", _buildFilter("lt", "dueDate", "2026-01-15"),
-			BooleanClauseOccur.MUST);
+		// Date between normalizes both bounds.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", null, "20260115000000",
-			false, false);
-	}
+			_runAndAssertNestedRow(
+				"dueDate",
+				_buildFilterWithJSONArrayValue(
+					"between", "dueDate",
+					JSONUtil.putAll("2026-01-15", "2026-01-20")),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", "20260115000000", "20260120235959",
+			true, true);
 
-	@Test
-	public void testDateTimeEqBuildsOneMinuteRangeQuery() {
+		// Date-time eq builds a one-minute range query.
+
 		_setUpObjectField(
 			"reminderAt", ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 			ObjectFieldConstants.DB_TYPE_DATE_TIME);
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"reminderAt", _buildFilter("eq", "reminderAt", "2026-01-15 10:30"),
-			BooleanClauseOccur.MUST);
-
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_date", "20260115103000",
-			"20260115103059", true, true);
+			_runAndAssertNestedRow(
+				"reminderAt",
+				_buildFilter("eq", "reminderAt", "2026-01-15 10:30"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", "20260115103000", "20260115103059",
+			true, true);
 	}
 
 	@Test
-	public void testDecimalBetweenBuildsRangeQuery() {
+	public void testHandlesEqualityOperators() {
+
+		// Boolean eq.
+
+		_setUpObjectField(
+			"visible", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+			ObjectFieldConstants.DB_TYPE_BOOLEAN);
+
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"visible", _buildFilter("eq", "visible", "true"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_boolean", "true");
+
+		// Integer eq + not-eq.
+
+		_setUpObjectField(
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
+
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("eq", "viewCount", "5"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", "5");
+
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("not-eq", "viewCount", "5"),
+				BooleanClauseOccur.MUST_NOT),
+			"nestedFieldArray.value_integer", "5");
+
+		// Long integer eq.
+
+		_setUpObjectField(
+			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG);
+
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"externalId", _buildFilter("eq", "externalId", "99999"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_long", "99999");
+
+		// Decimal eq.
+
 		_setUpObjectField(
 			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE);
 
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"between", "priority", JSONUtil.putAll("1.0", "5.0"));
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"priority", _buildFilter("eq", "priority", "3.14"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_double", "3.14");
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"priority", filterJSONObject, BooleanClauseOccur.MUST);
+		// Text eq + not-eq.
 
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_double", "1.0", "5.0", true,
-			true);
-	}
-
-	@Test
-	public void testDecimalEqBuildsTermQuery() {
 		_setUpObjectField(
-			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
-			ObjectFieldConstants.DB_TYPE_DOUBLE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"priority", _buildFilter("eq", "priority", "3.14"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_double", "3.14");
-	}
-
-	@Test
-	public void testDecimalGtBuildsRangeQuery() {
-		_setUpObjectField(
-			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
-			ObjectFieldConstants.DB_TYPE_DOUBLE);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"priority", _buildFilter("gt", "priority", "3.14"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_double", "3.14", null, false,
-			false);
-	}
-
-	@Test
-	public void testIntegerBetweenBuildsRangeQueryWithBothBounds() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"between", "viewCount", JSONUtil.putAll("5", "10"));
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", filterJSONObject, BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_integer", "5", "10", true,
-			true);
-	}
-
-	@Test
-	public void testIntegerEqBuildsTermQuery() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("eq", "viewCount", "5"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_integer", "5");
-	}
-
-	@Test
-	public void testIntegerGeBuildsRangeQueryWithInclusiveLowerBound() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("ge", "viewCount", "5"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_integer", "5", null, true,
-			false);
-	}
-
-	@Test
-	public void testIntegerGtBuildsRangeQuery() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("gt", "viewCount", "5"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_integer", "5", null, false,
-			false);
-	}
-
-	@Test
-	public void testIntegerLeBuildsRangeQueryWithInclusiveUpperBound() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("le", "viewCount", "5"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_integer", null, "5", false,
-			true);
-	}
-
-	@Test
-	public void testIntegerLtBuildsRangeQuery() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("lt", "viewCount", "5"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_integer", null, "5", false,
-			false);
-	}
-
-	@Test
-	public void testIntegerNotEqWrapsTermQueryInMustNot() {
-		_setUpObjectField(
-			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-			ObjectFieldConstants.DB_TYPE_INTEGER);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"viewCount", _buildFilter("not-eq", "viewCount", "5"),
-			BooleanClauseOccur.MUST_NOT);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_integer", "5");
-	}
-
-	@Test
-	public void testLocalizedTextEqUsesLocalizedSubfield() {
-		ObjectField objectField = _setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING);
 
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"title", _buildFilter("eq", "title", "keyword"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_text", "keyword");
+
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"title", _buildFilter("not-eq", "title", "keyword"),
+				BooleanClauseOccur.MUST_NOT),
+			"nestedFieldArray.value_text", "keyword");
+
+		// Localized text eq uses the locale-suffixed subfield.
+
+		ObjectField localizedSubtitle = _setUpObjectField(
+			"subtitle", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
 		Mockito.when(
-			objectField.isLocalized()
+			localizedSubtitle.isLocalized()
 		).thenReturn(
 			true
 		);
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", _buildFilter("eq", "title", "keyword"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_en_US", "keyword");
+		_assertTermQuery(
+			_runAndAssertNestedRow(
+				"subtitle", _buildFilter("eq", "subtitle", "keyword"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_en_US", "keyword");
 	}
 
 	@Test
-	public void testLongIntegerBetweenBuildsRangeQuery() {
+	public void testHandlesNumericRangeOperators() {
 		_setUpObjectField(
-			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-			ObjectFieldConstants.DB_TYPE_LONG);
+			"viewCount", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.DB_TYPE_INTEGER);
 
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"between", "externalId", JSONUtil.putAll("100", "200"));
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"externalId", filterJSONObject, BooleanClauseOccur.MUST);
+		// Integer gt: exclusive lower bound.
 
 		_assertTermRangeQuery(
-			valueQuery, "nestedFieldArray.value_long", "100", "200", true,
-			true);
-	}
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("gt", "viewCount", "5"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", "5", null, false, false);
 
-	@Test
-	public void testLongIntegerEqBuildsTermQuery() {
+		// Integer ge: inclusive lower bound.
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("ge", "viewCount", "5"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", "5", null, true, false);
+
+		// Integer lt: exclusive upper bound.
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("lt", "viewCount", "5"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", null, "5", false, false);
+
+		// Integer le: inclusive upper bound.
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"viewCount", _buildFilter("le", "viewCount", "5"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", null, "5", false, true);
+
+		// Integer between: both bounds inclusive, read from a JSONArray value.
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"viewCount",
+				_buildFilterWithJSONArrayValue(
+					"between", "viewCount", JSONUtil.putAll("5", "10")),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_integer", "5", "10", true, true);
+
+		// Decimal gt.
+
+		_setUpObjectField(
+			"priority", ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			ObjectFieldConstants.DB_TYPE_DOUBLE);
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"priority", _buildFilter("gt", "priority", "3.14"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_double", "3.14", null, false, false);
+
+		// Decimal between.
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"priority",
+				_buildFilterWithJSONArrayValue(
+					"between", "priority", JSONUtil.putAll("1.0", "5.0")),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_double", "1.0", "5.0", true, true);
+
+		// Long integer between.
+
 		_setUpObjectField(
 			"externalId", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG);
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"externalId", _buildFilter("eq", "externalId", "99999"),
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"externalId",
+				_buildFilterWithJSONArrayValue(
+					"between", "externalId", JSONUtil.putAll("100", "200")),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_long", "100", "200", true, true);
+	}
+
+	@Test
+	public void testHandlesPicklistMultiValueOperators() {
+		_setUpPicklistObjectField("status");
+
+		// contains + any: SHOULD of TermQuerys.
+
+		_assertPicklistBooleanQuery(
+			_runAndAssertNestedRow(
+				"status",
+				_buildFilterWithJSONArrayValue(
+					"contains", "status",
+					JSONUtil.putAll(
+						_picklistValueJSONObject("approved"),
+						_picklistValueJSONObject("draft"))
+				).put(
+					"quantifier", "any"
+				),
+				BooleanClauseOccur.MUST),
+			BooleanClauseOccur.SHOULD, "approved", "draft");
+
+		// contains + all: MUST of TermQuerys.
+
+		_assertPicklistBooleanQuery(
+			_runAndAssertNestedRow(
+				"status",
+				_buildFilterWithJSONArrayValue(
+					"contains", "status",
+					JSONUtil.putAll(
+						_picklistValueJSONObject("approved"),
+						_picklistValueJSONObject("draft"))
+				).put(
+					"quantifier", "all"
+				),
+				BooleanClauseOccur.MUST),
+			BooleanClauseOccur.MUST, "approved", "draft");
+
+		// Missing quantifier defaults to any (SHOULD).
+
+		_assertPicklistBooleanQuery(
+			_runAndAssertNestedRow(
+				"status",
+				_buildFilterWithJSONArrayValue(
+					"contains", "status",
+					JSONUtil.putAll(_picklistValueJSONObject("approved"))),
+				BooleanClauseOccur.MUST),
+			BooleanClauseOccur.SHOULD, "approved");
+
+		// not-contains wraps the inner BooleanQuery in MUST_NOT.
+
+		_assertPicklistBooleanQuery(
+			_runAndAssertNestedRow(
+				"status",
+				_buildFilterWithJSONArrayValue(
+					"not-contains", "status",
+					JSONUtil.putAll(
+						_picklistValueJSONObject("approved"),
+						_picklistValueJSONObject("draft"))
+				).put(
+					"quantifier", "any"
+				),
+				BooleanClauseOccur.MUST_NOT),
+			BooleanClauseOccur.SHOULD, "approved", "draft");
+
+		// Picklist values are lowercased before being added to the TermQuery.
+
+		_assertPicklistBooleanQuery(
+			_runAndAssertNestedRow(
+				"status",
+				_buildFilterWithJSONArrayValue(
+					"contains", "status",
+					JSONUtil.putAll(_picklistValueJSONObject("Approved"))
+				).put(
+					"quantifier", "any"
+				),
+				BooleanClauseOccur.MUST),
+			BooleanClauseOccur.SHOULD, "approved");
+
+		// An empty value array drops the row.
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID,
+				JSONUtil.putAll(
+					_buildFilterWithJSONArrayValue(
+						"contains", "status", JSONFactoryUtil.createJSONArray()
+					).put(
+						"quantifier", "any"
+					)),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+	}
+
+	@Test
+	public void testHandlesTextContainsOperators() {
+		_setUpObjectField(
+			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		// contains: MatchQuery under MUST.
+
+		Query containsQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("contains", "title", "keyword"),
 			BooleanClauseOccur.MUST);
 
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_long", "99999");
+		Assert.assertTrue(
+			containsQuery.toString(), containsQuery instanceof MatchQuery);
+
+		// not-contains: MatchQuery under MUST_NOT.
+
+		Query notContainsQuery = _runAndAssertNestedRow(
+			"title", _buildFilter("not-contains", "title", "keyword"),
+			BooleanClauseOccur.MUST_NOT);
+
+		Assert.assertTrue(
+			notContainsQuery.toString(),
+			notContainsQuery instanceof MatchQuery);
+
+		// Quantifier on a text row is silently ignored (FE sets it but the
+		// value is a single string).
+
+		Query containsWithQuantifierQuery = _runAndAssertNestedRow(
+			"title",
+			_buildFilter(
+				"contains", "title", "keyword"
+			).put(
+				"quantifier", "any"
+			),
+			BooleanClauseOccur.MUST);
+
+		Assert.assertTrue(
+			containsWithQuantifierQuery.toString(),
+			containsWithQuantifierQuery instanceof MatchQuery);
 	}
 
 	@Test
-	public void testPicklistContainsAllBuildsMustOfTermQueries() {
-		_setUpPicklistObjectField("status");
+	public void testReturnsEmptyClausesForInvalidInput() {
 
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"contains", "status",
-			JSONUtil.putAll(
-				_picklistValueJSONObject("approved"),
-				_picklistValueJSONObject("draft"))
-		).put(
-			"quantifier", "all"
-		);
+		// Null filtersJSONArray.
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"status", filterJSONObject, BooleanClauseOccur.MUST);
-
-		_assertPicklistBooleanQuery(
-			valueQuery, BooleanClauseOccur.MUST, "approved", "draft");
-	}
-
-	@Test
-	public void testPicklistContainsAnyBuildsShouldOfTermQueries() {
-		_setUpPicklistObjectField("status");
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"contains", "status",
-			JSONUtil.putAll(
-				_picklistValueJSONObject("approved"),
-				_picklistValueJSONObject("draft"))
-		).put(
-			"quantifier", "any"
-		);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"status", filterJSONObject, BooleanClauseOccur.MUST);
-
-		_assertPicklistBooleanQuery(
-			valueQuery, BooleanClauseOccur.SHOULD, "approved", "draft");
-	}
-
-	@Test
-	public void testPicklistContainsDefaultsToAnyWhenQuantifierMissing() {
-		_setUpPicklistObjectField("status");
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"contains", "status",
-			JSONUtil.putAll(_picklistValueJSONObject("approved")));
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"status", filterJSONObject, BooleanClauseOccur.MUST);
-
-		_assertPicklistBooleanQuery(
-			valueQuery, BooleanClauseOccur.SHOULD, "approved");
-	}
-
-	@Test
-	public void testPicklistEmptyValueArraySkipsRow() {
-		_setUpPicklistObjectField("status");
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"contains", "status", JSONFactoryUtil.createJSONArray()
-		).put(
-			"quantifier", "any"
-		);
-
-		BooleanClause[] booleanClauses =
-			AssetListFiltersUtil.getFiltersBooleanClauses(
-				JSONUtil.putAll(filterJSONObject), _COMPANY_ID, LocaleUtil.US);
-
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-	}
-
-	@Test
-	public void testPicklistNotContainsAnyWrapsInMustNot() {
-		_setUpPicklistObjectField("status");
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"not-contains", "status",
-			JSONUtil.putAll(
-				_picklistValueJSONObject("approved"),
-				_picklistValueJSONObject("draft"))
-		).put(
-			"quantifier", "any"
-		);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"status", filterJSONObject, BooleanClauseOccur.MUST_NOT);
-
-		_assertPicklistBooleanQuery(
-			valueQuery, BooleanClauseOccur.SHOULD, "approved", "draft");
-	}
-
-	@Test
-	public void testPicklistValuesAreLowercased() {
-		_setUpPicklistObjectField("status");
-
-		JSONObject filterJSONObject = _buildFilterWithJSONArrayValue(
-			"contains", "status",
-			JSONUtil.putAll(_picklistValueJSONObject("Approved"))
-		).put(
-			"quantifier", "any"
-		);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"status", filterJSONObject, BooleanClauseOccur.MUST);
-
-		_assertPicklistBooleanQuery(
-			valueQuery, BooleanClauseOccur.SHOULD, "approved");
-	}
-
-	@Test
-	public void testReturnsEmptyClausesWhenFiltersJSONArrayIsEmpty() {
-		BooleanClause[] booleanClauses =
-			AssetListFiltersUtil.getFiltersBooleanClauses(
-				_COMPANY_ID, JSONFactoryUtil.createJSONArray(), LocaleUtil.US);
-
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-	}
-
-	@Test
-	public void testReturnsEmptyClausesWhenFiltersJSONArrayIsNull() {
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
 				_COMPANY_ID, null, LocaleUtil.US);
 
 		Assert.assertEquals(
 			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-	}
 
-	@Test
-	public void testTextContainsBuildsMatchQueryInsideNestedEnvelope() {
-		_setUpObjectField(
-			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING);
+		// Empty filtersJSONArray.
 
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", _buildFilter("contains", "title", "keyword"),
-			BooleanClauseOccur.MUST);
+		booleanClauses = AssetListFiltersUtil.getFiltersBooleanClauses(
+			_COMPANY_ID, JSONFactoryUtil.createJSONArray(), LocaleUtil.US);
 
-		Assert.assertTrue(
-			valueQuery.toString(), valueQuery instanceof MatchQuery);
-	}
-
-	@Test
-	public void testTextContainsIgnoresQuantifierOnTextField() {
-		_setUpObjectField(
-			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING);
-
-		JSONObject filterJSONObject = _buildFilter(
-			"contains", "title", "keyword"
-		).put(
-			"quantifier", "any"
-		);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", filterJSONObject, BooleanClauseOccur.MUST);
-
-		Assert.assertTrue(
-			valueQuery.toString(), valueQuery instanceof MatchQuery);
-	}
-
-	@Test
-	public void testTextEqBuildsTermQuery() {
-		_setUpObjectField(
-			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", _buildFilter("eq", "title", "keyword"),
-			BooleanClauseOccur.MUST);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_text", "keyword");
-	}
-
-	@Test
-	public void testTextNotContainsWrapsMatchQueryInMustNot() {
-		_setUpObjectField(
-			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", _buildFilter("not-contains", "title", "keyword"),
-			BooleanClauseOccur.MUST_NOT);
-
-		Assert.assertTrue(
-			valueQuery.toString(), valueQuery instanceof MatchQuery);
-	}
-
-	@Test
-	public void testTextNotEqWrapsTermQueryInMustNot() {
-		_setUpObjectField(
-			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING);
-
-		Query valueQuery = _runAndAssertNestedRow(
-			"title", _buildFilter("not-eq", "title", "keyword"),
-			BooleanClauseOccur.MUST_NOT);
-
-		_assertTermQuery(valueQuery, "nestedFieldArray.value_text", "keyword");
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
 	}
 
 	private static MockedStatic<ObjectDefinitionLocalServiceUtil>

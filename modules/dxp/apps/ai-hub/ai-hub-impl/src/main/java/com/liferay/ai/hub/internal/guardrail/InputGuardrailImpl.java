@@ -40,7 +40,8 @@ public class InputGuardrailImpl implements InputGuardrail {
 	public InputGuardrailResult fatal(String message) {
 		SseUtil.send(
 			message,
-			GetterUtil.getString(_workflowContext.get("outBoundEventName")),
+			GetterUtil.getString(
+				_workflowContext.get("outBoundEventName"), "Chat Message Sent"),
 			null,
 			GetterUtil.getString(_workflowContext.get("sseEventSinkKey")));
 

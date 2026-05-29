@@ -45,6 +45,15 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 	extends BaseFilter {
 
 	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return FeatureFlagManagerUtil.isEnabled(
+			CompanyThreadLocal.getCompanyId(), "LPD-63415");
+	}
+
+	@Override
 	protected Log getLog() {
 		return _log;
 	}
@@ -54,14 +63,6 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63415")) {
-			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
 
 		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.setHeader(
@@ -85,7 +86,8 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 		}
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			_resolveOAuthClientASLocalMetadata(companyId, httpServletRequest);
+			_resolveOAuthClientASLocalMetadata(
+				CompanyThreadLocal.getCompanyId(), httpServletRequest);
 
 		if ((oAuthClientASLocalMetadata == null) ||
 			!oAuthClientASLocalMetadata.isLocalWellKnownEnabled()) {

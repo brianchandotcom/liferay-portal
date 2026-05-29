@@ -16,11 +16,13 @@ public class LayoutConstants {
 
 	public static final long DEFAULT_PLID = 0;
 
-	public static final String ERC_SUFFIX_DEFAULT = "-default";
+	public static final String EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT =
+		"-default";
 
-	public static final String ERC_SUFFIX_DRAFT = "-draft";
+	public static final String EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT = "-draft";
 
-	public static final String ERC_SUFFIX_PUBLISHED = "-published";
+	public static final String EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED =
+		"-published";
 
 	public static final int FIRST_PRIORITY = 0;
 

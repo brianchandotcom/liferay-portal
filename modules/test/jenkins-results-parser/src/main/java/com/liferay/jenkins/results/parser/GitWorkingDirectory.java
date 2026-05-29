@@ -499,6 +499,27 @@ public class GitWorkingDirectory {
 		return retryable.executeWithRetries();
 	}
 
+	public boolean deepenLocalGitBranch(
+		LocalGitBranch localGitBranch, Date shallowSinceDate) {
+
+		RemoteGitBranch sourceRemoteGitBranch =
+			localGitBranch.getSourceRemoteGitBranch();
+
+		if (sourceRemoteGitBranch == null) {
+			return false;
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deepening ", localGitBranch.getName(), " to ",
+				JenkinsResultsParserUtil.toDateString(
+					shallowSinceDate, "yyyy-MM-dd'T'HH:mm:ss'Z'", "UTC")));
+
+		fetch(sourceRemoteGitBranch, shallowSinceDate);
+
+		return true;
+	}
+
 	public void deleteLocalGitBranch(LocalGitBranch localGitBranch) {
 		if (localGitBranch == null) {
 			return;
@@ -1635,45 +1656,28 @@ public class GitWorkingDirectory {
 				return executionResult.getStandardOut();
 			}
 
-			boolean canDeepen = false;
+			boolean deepened = false;
 
-			for (LocalGitBranch localGitBranch : localGitBranches) {
-				if (localGitBranch.getSourceRemoteGitBranch() != null) {
-					canDeepen = true;
+			if (deepenAttempt < _DEEPEN_MAX_ATTEMPTS) {
+				Date shallowSinceDate = new Date(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() -
+						(_DEEPEN_STEP_SIZE_MILLIS << deepenAttempt));
 
-					break;
+				for (LocalGitBranch localGitBranch : localGitBranches) {
+					if (deepenLocalGitBranch(
+							localGitBranch, shallowSinceDate)) {
+
+						deepened = true;
+					}
 				}
 			}
 
-			if (!canDeepen ||
-				(deepenAttempt >= _MERGE_BASE_DEEPEN_MAX_ATTEMPTS)) {
-
+			if (!deepened) {
 				throw new GitWorkingDirectoryRuntimeException(
 					this,
 					JenkinsResultsParserUtil.combine(
 						"Unable to get merge base commit SHA\n",
 						executionResult.getStandardError()));
-			}
-
-			Date shallowSinceDate = new Date(
-				JenkinsResultsParserUtil.getCurrentTimeMillis() -
-					(_MERGE_BASE_DEEPEN_STEP_SIZE_MILLIS << deepenAttempt));
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"WARNING: No merge base found within the local shallow ",
-					"horizon. Deepening to ",
-					JenkinsResultsParserUtil.toDateString(
-						shallowSinceDate, "yyyy-MM-dd'T'HH:mm:ss'Z'", "UTC"),
-					" and retrying."));
-
-			for (LocalGitBranch localGitBranch : localGitBranches) {
-				RemoteGitBranch sourceRemoteGitBranch =
-					localGitBranch.getSourceRemoteGitBranch();
-
-				if (sourceRemoteGitBranch != null) {
-					fetch(sourceRemoteGitBranch, shallowSinceDate);
-				}
 			}
 		}
 	}
@@ -1948,9 +1952,6 @@ public class GitWorkingDirectory {
 			LocalGitBranch rebasedLocalGitBranch = createLocalGitBranch(
 				rebasedLocalGitBranchName, true, senderSHA,
 				senderRemoteGitBranch);
-
-			getMergeBaseCommitSHA(
-				upstreamLocalGitBranch, rebasedLocalGitBranch);
 
 			rebasedLocalGitBranch = rebase(
 				true, upstreamLocalGitBranch, rebasedLocalGitBranch);
@@ -2660,32 +2661,45 @@ public class GitWorkingDirectory {
 			return localGitBranch;
 		}
 
-		checkoutLocalGitBranch(baseLocalGitBranch);
-
-		reset("--hard " + baseLocalGitBranch.getSHA());
-
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
 			"git rebase ", baseLocalGitBranch.getName(), " ",
 			localGitBranch.getName());
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			1000 * 60 * 10, rebaseCommand);
+		for (int deepenAttempt = 0;; deepenAttempt++) {
+			checkoutLocalGitBranch(baseLocalGitBranch);
 
-		if (executionResult.getExitValue() != 0) {
+			reset("--hard " + baseLocalGitBranch.getSHA());
+
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+				1000 * 60 * 10, rebaseCommand);
+
+			if (executionResult.getExitValue() == 0) {
+				return getCurrentLocalGitBranch();
+			}
+
 			if (abortOnFail) {
 				rebaseAbort();
 			}
 
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
-				JenkinsResultsParserUtil.combine(
-					"Unable to rebase ", localGitBranch.getName(), " to ",
-					baseLocalGitBranch.getName(), "\n",
-					executionResult.getStandardError()));
-		}
+			long deepenStepSizeMillis =
+				_DEEPEN_STEP_SIZE_MILLIS << deepenAttempt;
 
-		return getCurrentLocalGitBranch();
+			Date shallowSinceDate = new Date(
+				JenkinsResultsParserUtil.getCurrentTimeMillis() -
+					deepenStepSizeMillis);
+
+			if (!abortOnFail || (deepenAttempt >= _DEEPEN_MAX_ATTEMPTS) ||
+				!deepenLocalGitBranch(baseLocalGitBranch, shallowSinceDate)) {
+
+				throw new GitWorkingDirectoryRuntimeException(
+					this,
+					JenkinsResultsParserUtil.combine(
+						"Unable to rebase ", localGitBranch.getName(), " to ",
+						baseLocalGitBranch.getName(), "\n",
+						executionResult.getStandardError()));
+			}
+		}
 	}
 
 	public void rebaseAbort() {
@@ -3614,14 +3628,14 @@ public class GitWorkingDirectory {
 
 	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;
 
+	private static final int _DEEPEN_MAX_ATTEMPTS = 5;
+
+	private static final long _DEEPEN_STEP_SIZE_MILLIS =
+		1000L * 60L * 60L * 24L * 30L;
+
 	private static final String _GIT_COMMIT_LOG_SEPARATOR = "\u0000";
 
 	private static final String _GIT_COMMIT_LOG_SEPARATOR_FORMAT = "%x00";
-
-	private static final int _MERGE_BASE_DEEPEN_MAX_ATTEMPTS = 5;
-
-	private static final long _MERGE_BASE_DEEPEN_STEP_SIZE_MILLIS =
-		1000L * 60L * 60L * 24L * 30L;
 
 	private static final Pattern _badRefPattern = Pattern.compile(
 		"fatal: bad object (?<badRef>.+/HEAD)");

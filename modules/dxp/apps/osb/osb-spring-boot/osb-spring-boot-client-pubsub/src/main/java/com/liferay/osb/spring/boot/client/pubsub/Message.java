@@ -5,8 +5,6 @@
 
 package com.liferay.osb.spring.boot.client.pubsub;
 
-import com.liferay.petra.string.StringBundler;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +36,7 @@ public class Message {
 			return Collections.emptyMap();
 		}
 
-		return _attributes;
+		return Collections.unmodifiableMap(_attributes);
 	}
 
 	public String getPayload() {
@@ -58,7 +56,12 @@ public class Message {
 	}
 
 	public void setAttributes(Map<String, String> attributes) {
-		_attributes = attributes;
+		if (attributes == null) {
+			_attributes = null;
+		}
+		else {
+			_attributes = new HashMap<>(attributes);
+		}
 	}
 
 	public void setPayload(String payload) {
@@ -71,7 +74,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("{topic=");
 		sb.append(_topic);

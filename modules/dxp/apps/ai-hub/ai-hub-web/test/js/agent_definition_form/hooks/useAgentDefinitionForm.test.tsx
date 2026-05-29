@@ -140,7 +140,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_1', title: 'First'},
 					{externalReferenceCode: 'CR_2', title: 'Second'},
 				],
-				agentDefinitionsToModelArmorTemplates: [
+				aiHubAgentDefinitionsToAIHubMATemplates: [
 					{externalReferenceCode: 'MAT_1', title: 'Guard'},
 				],
 				externalReferenceCode: 'AGENT_X',
@@ -176,7 +176,7 @@ describe('useAgentDefinitionForm', () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				active: true,
 				agentDefinitionsToContentRetrievers: [],
-				agentDefinitionsToModelArmorTemplates: [],
+				aiHubAgentDefinitionsToAIHubMATemplates: [],
 				description: 'Loaded from API',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'in1,in2',
@@ -285,7 +285,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_1'},
 					{externalReferenceCode: 'CR_2'},
 				],
-				agentDefinitionsToModelArmorTemplates: [
+				aiHubAgentDefinitionsToAIHubMATemplates: [
 					{externalReferenceCode: 'MAT_1'},
 				],
 				description: 'desc',
@@ -341,7 +341,7 @@ describe('useAgentDefinitionForm', () => {
 				agentDefinitionsToContentRetrievers: [
 					{externalReferenceCode: 'CR_1'},
 				],
-				agentDefinitionsToModelArmorTemplates: [],
+				aiHubAgentDefinitionsToAIHubMATemplates: [],
 				description: 'desc',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'a',

@@ -102,7 +102,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 	@Override
 	public Page<AgentDefinition> getAgentDefinitionsPage(
 			long companyId, DTOConverterContext dtoConverterContext,
-			String filter, Pagination pagination, String search, Sort[] sorts)
+			String filterString, Pagination pagination, String search,
+			Sort[] sorts)
 		throws Exception {
 
 		Map<String, Map<String, String>> actions = null;
@@ -120,7 +121,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			companyId, _getObjectDefinition(companyId), null, null,
-			dtoConverterContext, _getFilter(filter), pagination, search, sorts);
+			dtoConverterContext, _getFilterString(filterString), pagination,
+			search, sorts);
 
 		return Page.of(
 			actions,
@@ -283,12 +285,12 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			dtoConverterContext.getUriInfo());
 	}
 
-	private String _getFilter(String filter) {
-		if (Validator.isNull(filter)) {
+	private String _getFilterString(String filterString) {
+		if (Validator.isNull(filterString)) {
 			return "externalReferenceCode ne 'L_PAGE_BUILDER'";
 		}
 
-		return "(" + filter + ") and externalReferenceCode ne 'L_PAGE_BUILDER'";
+		return "(" + filterString + ") and externalReferenceCode ne 'L_PAGE_BUILDER'";
 	}
 
 	private ObjectDefinition _getObjectDefinition(long companyId)

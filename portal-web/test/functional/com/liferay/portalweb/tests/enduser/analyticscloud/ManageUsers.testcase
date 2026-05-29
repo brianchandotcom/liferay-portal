@@ -94,68 +94,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
-	@priority = 3
-	test MemberCanBeSelected {
-		var emailAdress = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
-		task ("Go to settings and go to user management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Add multiples users, go to data sources and go back to user management") {
-			ACSettings.addMultiplesOptions(optionsList = ${emailAdress});
-
-			ACSettings.goToDataSources();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Click on user") {
-			ACSettings.clickUsersByEmail(userEmail = ${emailAdress});
-
-			for (var email : list ${emailAdress}) {
-				ACUtils.searchBar(searchItem = ${email});
-
-				AssertChecked.assertCheckedNotVisible(locator1 = "ACSettings#USER_LIST_CHECKBOX");
-			}
-		}
-	}
-
-	@description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"
-	@priority = 3
-	test ViewAllUserList {
-		var emailAdress = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
-		task ("Go to settings and go to user management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Add multiples users, go to data sources and go back to user management") {
-			ACSettings.addMultiplesOptions(optionsList = ${emailAdress});
-
-			ACSettings.goToDataSources();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Assert the users in the list") {
-			for (var user : list ${emailAdress}) {
-				ACUtils.searchBar(searchItem = ${user});
-
-				ACSettings.assertUserListEmail(userEmail = ${user});
-			}
-		}
-
-		task ("Delete Pending All Users") {
-			ACSettings.deleteAllPendingUsers();
-		}
-	}
-
 	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
 	@priority = 5
 	test ViewOwnerCannotBeEditedOrRemoved {

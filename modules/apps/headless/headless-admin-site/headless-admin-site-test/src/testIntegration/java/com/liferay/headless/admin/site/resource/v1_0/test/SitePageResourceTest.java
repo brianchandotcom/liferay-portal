@@ -2024,66 +2024,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _postContentPageSpecification(
-			ContentPageSpecification contentPageSpecification,
-			String pageExternalReferenceCode,
-			String draftContentPageSpecificationExternalReferenceCode,
-			PageSpecification.Status status, boolean inputIsDraft,
-			boolean assertSuffixMirroredFragmentEntryLinks)
-		throws Exception {
-
-		PageExperience[] pageExperiences =
-			contentPageSpecification.getPageExperiences();
-
-		PageExperience[] expectedDraftPageExperiences;
-		PageExperience[] expectedPublishedPageExperiences;
-
-		if (inputIsDraft) {
-			expectedDraftPageExperiences = pageExperiences;
-			expectedPublishedPageExperiences = TransformUtil.transform(
-				pageExperiences,
-				draftPageExperience ->
-					PageExperiencesTestUtil.toPublishedPageExperience(
-						draftPageExperience, pageExternalReferenceCode),
-				PageExperience.class);
-		}
-		else {
-			expectedDraftPageExperiences = TransformUtil.transform(
-				pageExperiences,
-				publishedPageExperience ->
-					PageExperiencesTestUtil.toDraftPageExperience(
-						draftContentPageSpecificationExternalReferenceCode,
-						publishedPageExperience),
-				PageExperience.class);
-			expectedPublishedPageExperiences = pageExperiences;
-		}
-
-		ContentPageSpecification expectedDraftContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedDraftContentPageSpecification.setExternalReferenceCode(
-			draftContentPageSpecificationExternalReferenceCode);
-		expectedDraftContentPageSpecification.setPageExperiences(
-			expectedDraftPageExperiences);
-		expectedDraftContentPageSpecification.setStatus(
-			PageSpecification.Status.APPROVED);
-
-		ContentPageSpecification expectedPublishedContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedPublishedContentPageSpecification.setExternalReferenceCode(
-			pageExternalReferenceCode);
-		expectedPublishedContentPageSpecification.setPageExperiences(
-			expectedPublishedPageExperiences);
-		expectedPublishedContentPageSpecification.setStatus(status);
-
-		_postContentPageSpecification(
-			contentPageSpecification, expectedDraftContentPageSpecification,
-			expectedPublishedContentPageSpecification, testGroup,
-			pageExternalReferenceCode, status,
-			assertSuffixMirroredFragmentEntryLinks);
-	}
-
 	private SitePage _postSiteSitePageWithPageSpecificationsWithCustomFields(
 			SitePage.Type type)
 		throws Exception {
@@ -2952,6 +2892,66 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPostSiteSitePageWithDraftContentPageSpecification(
+			ContentPageSpecification contentPageSpecification,
+			String pageExternalReferenceCode,
+			String draftContentPageSpecificationExternalReferenceCode,
+			PageSpecification.Status status, boolean inputIsDraft,
+			boolean assertSuffixMirroredFragmentEntryLinks)
+		throws Exception {
+
+		PageExperience[] pageExperiences =
+			contentPageSpecification.getPageExperiences();
+
+		PageExperience[] expectedDraftPageExperiences;
+		PageExperience[] expectedPublishedPageExperiences;
+
+		if (inputIsDraft) {
+			expectedDraftPageExperiences = pageExperiences;
+			expectedPublishedPageExperiences = TransformUtil.transform(
+				pageExperiences,
+				draftPageExperience ->
+					PageExperiencesTestUtil.toPublishedPageExperience(
+						draftPageExperience, pageExternalReferenceCode),
+				PageExperience.class);
+		}
+		else {
+			expectedDraftPageExperiences = TransformUtil.transform(
+				pageExperiences,
+				publishedPageExperience ->
+					PageExperiencesTestUtil.toDraftPageExperience(
+						draftContentPageSpecificationExternalReferenceCode,
+						publishedPageExperience),
+				PageExperience.class);
+			expectedPublishedPageExperiences = pageExperiences;
+		}
+
+		ContentPageSpecification expectedDraftContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedDraftContentPageSpecification.setExternalReferenceCode(
+			draftContentPageSpecificationExternalReferenceCode);
+		expectedDraftContentPageSpecification.setPageExperiences(
+			expectedDraftPageExperiences);
+		expectedDraftContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification expectedPublishedContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedPublishedContentPageSpecification.setExternalReferenceCode(
+			pageExternalReferenceCode);
+		expectedPublishedContentPageSpecification.setPageExperiences(
+			expectedPublishedPageExperiences);
+		expectedPublishedContentPageSpecification.setStatus(status);
+
+		_postContentPageSpecification(
+			contentPageSpecification, expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification, testGroup,
+			pageExternalReferenceCode, status,
+			assertSuffixMirroredFragmentEntryLinks);
+	}
+
+	private void _testPostSiteSitePageWithDraftContentPageSpecification(
 			PageSpecification.Status status, boolean useDraftERCSuffix)
 		throws Exception {
 
@@ -2987,7 +2987,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), status);
 
-		_postContentPageSpecification(
+		_testPostSiteSitePageWithDraftContentPageSpecification(
 			draftContentPageSpecification, pageExternalReferenceCode,
 			draftContentPageSpecificationExternalReferenceCode, status, true,
 			true);
@@ -3148,7 +3148,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), status);
 
-		_postContentPageSpecification(
+		_testPostSiteSitePageWithDraftContentPageSpecification(
 			publishedContentPageSpecification, pageExternalReferenceCode,
 			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT,
 			status, false, true);
@@ -3188,7 +3188,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		publishedContentPageSpecification.setType(
 			() -> ContentPageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
-		_postContentPageSpecification(
+		_testPostSiteSitePageWithDraftContentPageSpecification(
 			publishedContentPageSpecification,
 			pageSpecificationExternalReferenceCode,
 			draftContentPageSpecificationExternalReferenceCode,

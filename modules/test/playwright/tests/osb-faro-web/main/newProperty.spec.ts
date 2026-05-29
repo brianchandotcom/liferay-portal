@@ -229,6 +229,42 @@ test(
 );
 
 test(
+	'Email Reports widget is disabled on a property with no synced sites or channels',
+	{
+		tag: '@LRAC-11836',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		const channel = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+			'Email Disabled Property ' + getRandomString(),
+			project.groupId
+		);
+
+		try {
+			await page.goto(
+				`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/properties/${channel.id}`
+			);
+
+			await expect(
+				page.getByText('Email Reports: Disabled')
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('button', {name: 'Configure Email Reports'})
+			).toBeDisabled();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro
+				.deleteChannel(`[${channel.id}]`, project.groupId)
+				.catch(() => {});
+		}
+	}
+);
+
+test(
 	'Newly created properties receive non-consecutive identifiers',
 	{
 		tag: '@LRAC-9112',

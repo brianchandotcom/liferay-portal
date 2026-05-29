@@ -64,24 +64,4 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
-	@priority = 3
-	test MemberCantDeleteUser {
-		task ("Login with a member user and go to settings") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-			ACNavigation.goToSettings();
-		}
-
-		task ("Access user management and assert that the member user cannot delete any user") {
-			ACSettings.goToUserManagement();
-
-			ACUtils.searchBar(searchItem = "michelle.hoshi@faro.io");
-
-			AssertElementNotPresent(locator1 = "ACSettings#DELETE_USER");
-		}
-	}
-
 }

@@ -29,16 +29,16 @@ test(
 		await test.step('Assert "Styles" dropdown is visible', async () => {
 			await page.getByRole('button', {name: 'Styles'}).click();
 
-			const stylesComboZIndex = await page.evaluate(() => {
-				const stylesComboElement = document.querySelector(
-					'.cke_panel.cke_combopanel.lfr-maximized'
-				);
+			const stylesComboPanel = page.locator(
+				'.cke_panel.cke_combopanel.lfr-maximized'
+			);
 
-				const stylesComboElementStyles =
-					window.getComputedStyle(stylesComboElement);
+			await stylesComboPanel.waitFor({state: 'attached'});
 
-				return stylesComboElementStyles.getPropertyValue('z-index');
-			});
+			const stylesComboZIndex = await stylesComboPanel.evaluate(
+				(element) =>
+					window.getComputedStyle(element).getPropertyValue('z-index')
+			);
 
 			expect(stylesComboZIndex).toEqual('10000');
 		});
@@ -50,16 +50,14 @@ test(
 
 			await ckeditorEditorBody.click({button: 'right'});
 
-			const contextMenuZIndex = await page.evaluate(() => {
-				const stylesComboElement = document.querySelector(
-					'.cke_panel.cke_menu_panel'
-				);
+			const contextMenuPanel = page.locator('.cke_panel.cke_menu_panel');
 
-				const contextMenuElementStyles =
-					window.getComputedStyle(stylesComboElement);
+			await contextMenuPanel.waitFor({state: 'attached'});
 
-				return contextMenuElementStyles.getPropertyValue('z-index');
-			});
+			const contextMenuZIndex = await contextMenuPanel.evaluate(
+				(element) =>
+					window.getComputedStyle(element).getPropertyValue('z-index')
+			);
 
 			expect(contextMenuZIndex).toEqual('10001');
 		});

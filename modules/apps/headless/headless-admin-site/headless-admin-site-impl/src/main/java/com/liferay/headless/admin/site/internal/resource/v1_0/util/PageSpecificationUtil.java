@@ -259,12 +259,12 @@ public class PageSpecificationUtil {
 	}
 
 	private static ContentPageSpecification _toDraftContentPageSpecification(
-		ContentPageSpecification contentPageSpecification,
+		ContentPageSpecification publishedContentPageSpecification,
 		String draftContentPageSpecificationExternalReferenceCode) {
 
 		ContentPageSpecification draftContentPageSpecification =
 			ContentPageSpecification.unsafeToDTO(
-				contentPageSpecification.toString());
+				publishedContentPageSpecification.toString());
 
 		draftContentPageSpecification.
 			setDraftContentPageSpecificationExternalReferenceCode(() -> null);
@@ -376,18 +376,18 @@ public class PageSpecificationUtil {
 
 	private static ContentPageSpecification
 		_toPublishedContentPageSpecification(
-			ContentPageSpecification contentPageSpecification,
+			ContentPageSpecification draftContentPageSpecification,
 			String publishedContentPageSpecificationExternalReferenceCode) {
 
 		ContentPageSpecification publishedContentPageSpecification =
 			ContentPageSpecification.unsafeToDTO(
-				contentPageSpecification.toString());
+				draftContentPageSpecification.toString());
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			() -> publishedContentPageSpecificationExternalReferenceCode);
 		publishedContentPageSpecification.
 			setDraftContentPageSpecificationExternalReferenceCode(
-				contentPageSpecification::getExternalReferenceCode);
+				draftContentPageSpecification::getExternalReferenceCode);
 
 		PageExperience[] pageExperiences =
 			publishedContentPageSpecification.getPageExperiences();

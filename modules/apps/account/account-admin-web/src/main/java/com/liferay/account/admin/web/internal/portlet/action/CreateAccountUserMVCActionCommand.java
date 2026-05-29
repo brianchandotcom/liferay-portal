@@ -12,7 +12,6 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -87,12 +86,6 @@ public class CreateAccountUserMVCActionCommand
 		User user = null;
 
 		if (ticket.getType() == TicketConstants.TYPE_INVITE_COLLABORATOR) {
-			if (!FeatureFlagManagerUtil.isEnabled(
-					_portal.getCompanyId(actionRequest), "LPD-52006")) {
-
-				return;
-			}
-
 			user = _addUser(actionRequest, ticket.getEmailAddress());
 
 			_updateSharingEntries(ticket, user);

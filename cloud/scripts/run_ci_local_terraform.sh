@@ -32,11 +32,11 @@ function _list_terraform_stacks {
 }
 
 function _log {
-	printf '[%s] %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "${*}"
+	printf '[%s] %s\n' "$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ")" "${*}"
 }
 
 function _log_error {
-	printf '[%s] ERROR: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "${*}" 1>&2
+	printf '[%s] ERROR: %s\n' "$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ")" "${*}" 1>&2
 }
 
 function _run_terraform {
@@ -46,7 +46,7 @@ function _run_terraform {
 
 	if [ -z "${stacks}" ]
 	then
-		_log_error "No terraform stacks found in CI workflow matrix"
+		_log_error "No terraform stacks found in the CI workflow matrix"
 
 		exit 1
 	fi

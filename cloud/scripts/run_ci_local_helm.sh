@@ -32,11 +32,11 @@ function _list_helm_charts {
 }
 
 function _log {
-	printf '[%s] %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "${*}"
+	printf '[%s] %s\n' "$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ")" "${*}"
 }
 
 function _log_error {
-	printf '[%s] ERROR: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "${*}" 1>&2
+	printf '[%s] ERROR: %s\n' "$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ")" "${*}" 1>&2
 }
 
 function _run_helm {
@@ -46,7 +46,7 @@ function _run_helm {
 
 	if [ -z "${charts}" ]
 	then
-		_log_error "No charts found in CI workflow matrix"
+		_log_error "No charts found in the CI workflow matrix"
 
 		exit 1
 	fi
@@ -68,7 +68,10 @@ function _run_helm_one {
 
 	helm dependency update --skip-refresh
 	helm lint .
-	helm template liferay . \
+	helm \
+		template \
+		liferay \
+		. \
 		| kubeconform \
 			--schema-location default \
 			--schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \

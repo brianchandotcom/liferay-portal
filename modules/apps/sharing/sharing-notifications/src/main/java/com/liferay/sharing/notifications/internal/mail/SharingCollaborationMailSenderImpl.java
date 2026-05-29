@@ -17,11 +17,11 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.EmailAddressException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.EscapableObject;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -87,14 +88,56 @@ public class SharingCollaborationMailSenderImpl
 
 		_validateEmailAddress(emailAddress);
 
-		if (serviceContext.getRequest() == null) {
-			throw new PortalException(
-				"Unable to send sharing collaboration email for ticket " +
-					ticket.getTicketId() +
-						" because the service context has no HTTP request");
+		_sendEmail(emailAddress, serviceContext, sharingEntry, ticket);
+	}
+
+	private String _getAcceptCollaborationURL(
+			Company company, Group group, ServiceContext serviceContext,
+			Ticket ticket)
+		throws Exception {
+
+		if (serviceContext.getRequest() != null) {
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					serviceContext.getRequest(),
+					AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
+					_layoutLocalService.fetchDefaultLayout(
+						group.getGroupId(), false),
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/account_admin/create_account_user"
+			).setParameter(
+				"ticketKey", ticket.getKey()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
 		}
 
-		_sendEmail(emailAddress, serviceContext, sharingEntry, ticket);
+		Layout layout = _layoutLocalService.fetchDefaultLayout(
+			group.getGroupId(), false);
+
+		String url =
+			company.getPortalURL(group.getGroupId()) +
+				_portal.getLayoutActualURL(layout);
+
+		String namespace = _portal.getPortletNamespace(
+			AccountPortletKeys.ACCOUNT_USERS_REGISTRATION);
+
+		url = HttpComponentsUtil.addParameter(
+			url, "p_p_id", AccountPortletKeys.ACCOUNT_USERS_REGISTRATION);
+		url = HttpComponentsUtil.addParameter(url, "p_p_lifecycle", "0");
+		url = HttpComponentsUtil.addParameter(
+			url, "p_p_mode", PortletMode.VIEW.toString());
+		url = HttpComponentsUtil.addParameter(
+			url, "p_p_state", WindowState.MAXIMIZED.toString());
+		url = HttpComponentsUtil.addParameter(
+			url, namespace + "mvcRenderCommandName",
+			"/account_admin/create_account_user");
+
+		return HttpComponentsUtil.addParameter(
+			url, namespace + "ticketKey", ticket.getKey());
 	}
 
 	private String _getAssetType(
@@ -136,30 +179,17 @@ public class SharingCollaborationMailSenderImpl
 
 		long companyId = sharingEntry.getCompanyId();
 
+		Company company = _companyLocalService.getCompany(companyId);
+
 		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
-
-		String url = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				serviceContext.getRequest(),
-				AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
-				_layoutLocalService.fetchDefaultLayout(
-					group.getGroupId(), false),
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/account_admin/create_account_user"
-		).setParameter(
-			"ticketKey", ticket.getKey()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			WindowState.MAXIMIZED
-		).buildString();
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
-		mailTemplateContextBuilder.put("[$ACCEPT_COLLABORATION_URL$]", url);
+		mailTemplateContextBuilder.put(
+			"[$ACCEPT_COLLABORATION_URL$]",
+			_getAcceptCollaborationURL(company, group, serviceContext, ticket));
 
 		User user = _userLocalService.getUser(sharingEntry.getUserId());
 
@@ -168,8 +198,6 @@ public class SharingCollaborationMailSenderImpl
 			new EscapableObject<>(
 				_getAssetType(
 					sharingEntry.getClassName(), companyId, user.getLocale())));
-
-		Company company = _companyLocalService.getCompany(companyId);
 
 		mailTemplateContextBuilder.put(
 			"[$COMPANY_NAME$]", new EscapableObject<>(company.getName()));

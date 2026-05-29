@@ -2113,10 +2113,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return postSitePage;
 	}
 
-	private List<String> _setUserDraftFragmentInstanceERCs(
+	private List<String> _setAndGetDraftFragmentInstanceExternalReferenceCodes(
 		PageElement[] pageElements) {
 
-		List<String> userDraftFragmentInstanceERCs = new ArrayList<>();
+		List<String> draftFragmentInstanceExternalReferenceCodes =
+			new ArrayList<>();
 
 		for (PageElement pageElement : pageElements) {
 			if (!(pageElement.getPageElementDefinition() instanceof
@@ -2130,17 +2131,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				basicFragmentInstancePageElementDefinition.
 					getFragmentInstance();
 
-			String userDraftFragmentInstanceERC =
+			String draftFragmentInstanceExternalReferenceCode =
 				fragmentInstance.getFragmentInstanceExternalReferenceCode() +
 					_ERC_SUFFIX_USER_DRAFT;
 
 			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
-				userDraftFragmentInstanceERC);
+				draftFragmentInstanceExternalReferenceCode);
 
-			userDraftFragmentInstanceERCs.add(userDraftFragmentInstanceERC);
+			draftFragmentInstanceExternalReferenceCodes.add(
+				draftFragmentInstanceExternalReferenceCode);
 		}
 
-		return userDraftFragmentInstanceERCs;
+		return draftFragmentInstanceExternalReferenceCodes;
 	}
 
 	private void _testDeleteSiteSitePage(Layout... layouts) throws Exception {
@@ -3156,7 +3158,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			3, StringPool.BLANK, testGroup.getGroupId());
 
 		List<String> userDraftFragmentInstanceERCs =
-			_setUserDraftFragmentInstanceERCs(pageElements);
+			_setAndGetDraftFragmentInstanceExternalReferenceCodes(pageElements);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			new ContentPageSpecification();

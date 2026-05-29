@@ -229,6 +229,68 @@ test(
 );
 
 test(
+	'Saving a New Property with an existing name appends an incrementing identifier',
+	{
+		tag: '@LRAC-9037',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		const propertyName = 'Duplicate Property ' + getRandomString();
+
+		const existing = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+			propertyName,
+			project.groupId
+		);
+
+		try {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByLabel('Property Name'),
+				trigger: page.getByRole('button', {name: 'New Property'}),
+			});
+
+			await page.getByLabel('Property Name').fill(propertyName);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			// Saving redirects to the new property detail page; navigate back to the list.
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await searchByTerm({page, searchTerm: propertyName});
+
+			await expect(
+				page.getByRole('link', {exact: true, name: propertyName})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: `${propertyName} (1)`,
+				})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro
+				.deleteChannel(`[${existing.id}]`, project.groupId)
+				.catch(() => {});
+		}
+	}
+);
+
+test(
 	'New Property dialog enforces the 3-64 character length boundary',
 	{
 		tag: ['@LRAC-9102', '@LRAC-9106'],

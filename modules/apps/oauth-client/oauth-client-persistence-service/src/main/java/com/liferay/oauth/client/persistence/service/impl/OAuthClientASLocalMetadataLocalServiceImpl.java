@@ -100,6 +100,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String userInfoEndpoint)
 		throws PortalException {
 
+		issuer = _canonicalizeIssuer(issuer);
+
 		User user = _userLocalService.getUser(userId);
 
 		String localWellKnownURI = _generateLocalWellKnownURI(
@@ -303,6 +305,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
+		issuer = _canonicalizeIssuer(issuer);
+
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
@@ -345,6 +349,14 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 
 		return oAuthClientASLocalMetadata;
+	}
+
+	private String _canonicalizeIssuer(String issuer) {
+		if ((issuer == null) || !issuer.endsWith(StringPool.SLASH)) {
+			return issuer;
+		}
+
+		return issuer.substring(0, issuer.length() - 1);
 	}
 
 	private String _generateAuthorizationServerMetadataJSON(

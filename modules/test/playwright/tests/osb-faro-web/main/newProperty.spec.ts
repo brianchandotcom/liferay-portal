@@ -198,6 +198,43 @@ test(
 );
 
 test(
+	'Cancelling the New Property dialog via Cancel or Close does not create a property',
+	{
+		tag: '@LRAC-9107',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.propertiesPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		for (const dismissAction of ['Cancel', 'Close']) {
+			const propertyName = `Cancelled ${dismissAction} ${getRandomString()}`;
+
+			await clickAndExpectToBeVisible({
+				target: page.getByLabel('Property Name'),
+				trigger: page.getByRole('button', {name: 'New Property'}),
+			});
+
+			await page.getByLabel('Property Name').fill(propertyName);
+
+			await page.getByRole('button', {name: dismissAction}).click();
+
+			await searchByTerm({page, searchTerm: propertyName});
+
+			await expect(
+				page.getByRole('link', {exact: true, name: propertyName})
+			).toHaveCount(0);
+		}
+	}
+);
+
+test(
 	'Properties settings page search filters the list to matching properties',
 	{
 		tag: '@LRAC-9121',

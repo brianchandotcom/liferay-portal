@@ -274,9 +274,10 @@ paths:
     "/search":
         get:
             description:
-                "Use this API to search for matching content, products and other indexed data. Use the POST /search API
-                if you also want facets (aggregations) to be returned or you need to specify additional search context
-                attributes for your blueprint. Refer to
+                "Use this API to search for matching content, products and other indexed data. Choose GET when
+                query-string parameters are sufficient; choose POST /search when you need request body features such as
+                `facetConfigurations` (faceted aggregations), Search Blueprint context attributes
+                (`search.experiences.*`), or other request-body-only constructs. Refer to
                 https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more
                 information."
             operationId: getSearchPage
@@ -366,8 +367,11 @@ paths:
                         (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
                         entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
                         be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
-                        title on the locale specified by the 'Accept-Language' request header). Web content articles
-                        (JournalArticle) cannot be filtered by status. See
+                        title on the locale specified by the 'Accept-Language' request header). Supported operators are
+                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multi-value collections use `any()`/`all()` (for example,
+                        `groupIds/any(g:g eq 20121)`). Web content articles (JournalArticle) cannot be filtered by
+                        status - for those, limit by site using `scope`/`groupIds` instead, which returns only approved
+                        items by default. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
                         use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
@@ -390,7 +394,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Specify which page to return out of all the pages available. See
+                        Specify which page to return out of all the pages available. Defaults to 1. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information.
                     example: 1
@@ -400,7 +404,7 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        Specify how many items you want per page. See
+                        Specify how many items you want per page. Defaults to 20. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information.
                     example: 20
@@ -421,7 +425,7 @@ paths:
                     description:
                         Specify a list of Site, Asset Library, or Space IDs or External Reference Codes (ERCs) to
                         search. You can mix IDs and ERCs in the same request.
-                    example: "20121"
+                    example: 20121,L_GUEST
                     name: scope
                     required: false
                     schema:
@@ -436,15 +440,15 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Sort results by ascending or descending order. Supported fields are dateCreated (the date the
-                        entry was created in OData Edm.Date format YYYY-MM-DD), dateDisplay (the date the entry was
-                        displayed in OData Edm.Date format YYYY-MM-DD), dateExpiration (the date the entry expires in
-                        OData Edm.Date format YYYY-MM-DD), dateModified (the date the entry was modified in OData
-                        Edm.Date format YYYY-MM-DD), datePublish (the date the entry was published in OData Edm.Date
-                        format YYYY-MM-DD), dateReview (the date the entry should be reviewed in OData Edm.Date format
-                        YYYY-MM-DD), keywords (Asset tag names - corresponding search index field is
-                        assetTagNames.lowercase), and title (Asset title on the locale specified by the
-                        'Accept-Language' request header - corresponding search index field is
+                        Sort results by ascending or descending order. Use format `field:asc` or `field:desc`. Supported
+                        fields are dateCreated (the date the entry was created in OData Edm.Date format YYYY-MM-DD),
+                        dateDisplay (the date the entry was displayed in OData Edm.Date format YYYY-MM-DD),
+                        dateExpiration (the date the entry expires in OData Edm.Date format YYYY-MM-DD), dateModified
+                        (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
+                        entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
+                        be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names - corresponding
+                        search index field is assetTagNames.lowercase), and title (Asset title on the locale specified
+                        by the 'Accept-Language' request header - corresponding search index field is
                         localized_title_[locale].keyword_lowercase where 'locale' is a language ID like 'en_US').
                         Defaults to order by relevance score descending. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
@@ -474,9 +478,9 @@ paths:
             tags: ["SearchResult"]
         post:
             description:
-                "Use this API to search for matching content, products and other indexed data. Use the available request
-                body attributes to request facets (aggregations) to be also returned or to specify additional search
-                context attributes for your blueprint. Refer to
+                "Use this API to search for matching content, products and other indexed data. Choose POST over GET when
+                you need request body features such as facets (aggregations) via `facetConfigurations`, Search Blueprint
+                context attributes (`search.experiences.*`), or other request-body-only constructs. Refer to
                 https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more
                 information."
             operationId: postSearchPage
@@ -544,8 +548,11 @@ paths:
                         (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
                         entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
                         be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
-                        title on the locale specified by the 'Accept-Language' request header). Web content articles
-                        (JournalArticle) cannot be filtered by status. See
+                        title on the locale specified by the 'Accept-Language' request header). Supported operators are
+                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multi-value collections use `any()`/`all()` (for example,
+                        `groupIds/any(g:g eq 20121)`). Web content articles (JournalArticle) cannot be filtered by
+                        status - for those, limit by site using `scope`/`groupIds` instead, which returns only approved
+                        items by default. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
                         use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
@@ -568,7 +575,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Specify which page to return out of all the pages available. See
+                        Specify which page to return out of all the pages available. Defaults to 1. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information.
                     example: 1
@@ -578,7 +585,7 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        Specify how many items you want per page. See
+                        Specify how many items you want per page. Defaults to 20. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information.
                     example: 20
@@ -599,7 +606,7 @@ paths:
                     description:
                         Specify a list of Site, Asset Library, or Space IDs or External Reference Codes (ERCs) to
                         search. You can mix IDs and ERCs in the same request.
-                    example: "20121"
+                    example: 20121,L_GUEST
                     name: scope
                     required: false
                     schema:
@@ -614,15 +621,15 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Sort results by ascending or descending order. Supported fields are dateCreated (the date the
-                        entry was created in OData Edm.Date format YYYY-MM-DD), dateDisplay (the date the entry was
-                        displayed in OData Edm.Date format YYYY-MM-DD), dateExpiration (the date the entry expires in
-                        OData Edm.Date format YYYY-MM-DD), dateModified (the date the entry was modified in OData
-                        Edm.Date format YYYY-MM-DD), datePublish (the date the entry was published in OData Edm.Date
-                        format YYYY-MM-DD), dateReview (the date the entry should be reviewed in OData Edm.Date format
-                        YYYY-MM-DD), keywords (Asset tag names - corresponding search index field is
-                        assetTagNames.lowercase), and title (Asset title on the locale specified by the
-                        'Accept-Language' request header - corresponding search index field is
+                        Sort results by ascending or descending order. Use format `field:asc` or `field:desc`. Supported
+                        fields are dateCreated (the date the entry was created in OData Edm.Date format YYYY-MM-DD),
+                        dateDisplay (the date the entry was displayed in OData Edm.Date format YYYY-MM-DD),
+                        dateExpiration (the date the entry expires in OData Edm.Date format YYYY-MM-DD), dateModified
+                        (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
+                        entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
+                        be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names - corresponding
+                        search index field is assetTagNames.lowercase), and title (Asset title on the locale specified
+                        by the 'Accept-Language' request header - corresponding search index field is
                         localized_title_[locale].keyword_lowercase where 'locale' is a language ID like 'en_US').
                         Defaults to order by relevance score descending. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters

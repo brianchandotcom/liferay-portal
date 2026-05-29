@@ -83,7 +83,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(blueprintExternalReferenceCode: ___, emptySearch: ___, entryClassNames: ___, filter: ___, page: ___, pageSize: ___, scope: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Search the company index for matching content."
+		description = "Use this API to search for matching content, products and other indexed data. Choose GET when query-string parameters are sufficient; choose POST /search when you need request body features such as `facetConfigurations` (faceted aggregations), Search Blueprint context attributes (`search.experiences.*`), or other request-body-only constructs. Refer to https://learn.liferay.com/w/dxp/integration/headless-apis/search-apis/search-api-basics for more information."
 	)
 	public SearchResultPage search(
 			@GraphQLName("blueprintExternalReferenceCode") String
@@ -257,4 +257,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:550171345
+// LIFERAY-REST-BUILDER-HASH:-1282770054

@@ -2590,7 +2590,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		_assertProblemException(
-			"A single content page specification is only accepted on POST",
+			"A single content page specification cannot be applied to an " +
+				"existing page",
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				postSitePage.getExternalReferenceCode(), false, sitePage));
@@ -4375,11 +4376,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		_assertProblemException(
-			"A single content page specification is only accepted on POST",
+			"A single content page specification cannot be applied to an " +
+				"existing page",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), false,
-				postSitePage));
+				postSitePage.getExternalReferenceCode(), false, postSitePage));
 	}
 
 	private void _testPutSiteSitePageWithWidgetPageSettings() throws Exception {

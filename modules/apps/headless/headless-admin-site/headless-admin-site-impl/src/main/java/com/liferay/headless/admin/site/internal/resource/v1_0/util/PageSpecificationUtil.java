@@ -5,18 +5,28 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
+import com.liferay.headless.admin.site.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.FormFragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Rubén Pulido
@@ -127,6 +137,409 @@ public class PageSpecificationUtil {
 
 		return (WidgetPageSpecification)getPageSpecification(
 			pageSpecifications);
+	}
+
+	public static PageSpecification[] toContentPageSpecifications(
+		ContentPageSpecification contentPageSpecification,
+		String sitePageExternalReferenceCode) {
+
+		ContentPageSpecification draftContentPageSpecification;
+		ContentPageSpecification publishedContentPageSpecification;
+
+		if (Objects.equals(
+				contentPageSpecification.getExternalReferenceCode(),
+				sitePageExternalReferenceCode)) {
+
+			String draftContentPageSpecificationExternalReferenceCode =
+				contentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode();
+
+			if (Validator.isNull(
+					draftContentPageSpecificationExternalReferenceCode)) {
+
+				draftContentPageSpecificationExternalReferenceCode =
+					sitePageExternalReferenceCode +
+						LayoutConstants.ERC_SUFFIX_DRAFT;
+			}
+
+			draftContentPageSpecification = _toDraftContentPageSpecification(
+				contentPageSpecification,
+				draftContentPageSpecificationExternalReferenceCode);
+
+			publishedContentPageSpecification = contentPageSpecification;
+
+			_setDraftReferences(
+				draftContentPageSpecificationExternalReferenceCode,
+				publishedContentPageSpecification);
+		}
+		else {
+			draftContentPageSpecification = contentPageSpecification;
+			publishedContentPageSpecification =
+				_toPublishedContentPageSpecification(
+					contentPageSpecification, sitePageExternalReferenceCode);
+
+			draftContentPageSpecification.setStatus(
+				() -> PageSpecification.Status.APPROVED);
+		}
+
+		return new PageSpecification[] {
+			publishedContentPageSpecification, draftContentPageSpecification
+		};
+	}
+
+	private static void _setDraftReferences(
+		String draftContentPageSpecificationExternalReferenceCode,
+		ContentPageSpecification publishedContentPageSpecification) {
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			publishedContentPageSpecification.
+				setDraftContentPageSpecificationExternalReferenceCode(
+					() -> draftContentPageSpecificationExternalReferenceCode);
+		}
+
+		PageExperience[] pageExperiences =
+			publishedContentPageSpecification.getPageExperiences();
+
+		if (pageExperiences == null) {
+			return;
+		}
+
+		for (PageExperience pageExperience : pageExperiences) {
+			_visitPageElements(
+				pageExperience.getPageElements(),
+				fragmentInstance -> {
+					if ((fragmentInstance == null) ||
+						Validator.isNotNull(
+							fragmentInstance.
+								getDraftFragmentInstanceExternalReferenceCode())) {
+
+						return;
+					}
+
+					String fragmentInstanceExternalReferenceCode =
+						fragmentInstance.
+							getFragmentInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(
+							fragmentInstanceExternalReferenceCode)) {
+
+						fragmentInstance.
+							setDraftFragmentInstanceExternalReferenceCode(
+								() ->
+									fragmentInstanceExternalReferenceCode +
+										LayoutConstants.ERC_SUFFIX_DRAFT);
+					}
+				},
+				widgetInstancePageElementDefinition -> {
+					if (Validator.isNotNull(
+							widgetInstancePageElementDefinition.
+								getDraftWidgetInstanceExternalReferenceCode())) {
+
+						return;
+					}
+
+					String widgetInstanceExternalReferenceCode =
+						widgetInstancePageElementDefinition.
+							getWidgetInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(
+							widgetInstanceExternalReferenceCode)) {
+
+						widgetInstancePageElementDefinition.
+							setDraftWidgetInstanceExternalReferenceCode(
+								() ->
+									widgetInstanceExternalReferenceCode +
+										LayoutConstants.ERC_SUFFIX_DRAFT);
+					}
+				});
+		}
+	}
+
+	private static ContentPageSpecification _toDraftContentPageSpecification(
+		ContentPageSpecification contentPageSpecification,
+		String draftContentPageSpecificationExternalReferenceCode) {
+
+		ContentPageSpecification draftContentPageSpecification =
+			ContentPageSpecification.unsafeToDTO(
+				contentPageSpecification.toString());
+
+		draftContentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode(() -> null);
+		draftContentPageSpecification.setExternalReferenceCode(
+			() -> draftContentPageSpecificationExternalReferenceCode);
+		draftContentPageSpecification.setStatus(
+			() -> PageSpecification.Status.APPROVED);
+
+		PageExperience[] pageExperiences =
+			draftContentPageSpecification.getPageExperiences();
+
+		if (ArrayUtil.isEmpty(pageExperiences)) {
+			return draftContentPageSpecification;
+		}
+
+		for (PageExperience pageExperience : pageExperiences) {
+			String draftPageExperienceERC;
+
+			if (Objects.equals(
+					pageExperience.getKey(),
+					SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+				draftPageExperienceERC =
+					draftContentPageSpecificationExternalReferenceCode +
+						LayoutConstants.ERC_SUFFIX_DEFAULT;
+			}
+			else {
+				draftPageExperienceERC =
+					pageExperience.getExternalReferenceCode() +
+						LayoutConstants.ERC_SUFFIX_DRAFT;
+			}
+
+			pageExperience.setExternalReferenceCode(
+				() -> draftPageExperienceERC);
+			pageExperience.setPageSpecificationExternalReferenceCode(
+				() -> draftContentPageSpecificationExternalReferenceCode);
+			pageExperience.setUuid(() -> null);
+
+			_visitPageElements(
+				pageExperience.getPageElements(),
+				fragmentInstance -> {
+					if (fragmentInstance == null) {
+						return;
+					}
+
+					fragmentInstance.setUuid(() -> null);
+
+					String userDraftERC =
+						fragmentInstance.
+							getDraftFragmentInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(userDraftERC)) {
+						fragmentInstance.
+							setFragmentInstanceExternalReferenceCode(
+								() -> userDraftERC);
+						fragmentInstance.
+							setDraftFragmentInstanceExternalReferenceCode(
+								() -> null);
+
+						return;
+					}
+
+					String fragmentInstanceERC =
+						fragmentInstance.
+							getFragmentInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(fragmentInstanceERC)) {
+						fragmentInstance.
+							setFragmentInstanceExternalReferenceCode(
+								() ->
+									fragmentInstanceERC +
+										LayoutConstants.ERC_SUFFIX_DRAFT);
+					}
+				},
+				widgetInstancePageElementDefinition -> {
+					String userDraftERC =
+						widgetInstancePageElementDefinition.
+							getDraftWidgetInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(userDraftERC)) {
+						widgetInstancePageElementDefinition.
+							setWidgetInstanceExternalReferenceCode(
+								() -> userDraftERC);
+						widgetInstancePageElementDefinition.
+							setDraftWidgetInstanceExternalReferenceCode(
+								() -> null);
+
+						return;
+					}
+
+					String widgetInstanceExternalReferenceCode =
+						widgetInstancePageElementDefinition.
+							getWidgetInstanceExternalReferenceCode();
+
+					if (Validator.isNotNull(
+							widgetInstanceExternalReferenceCode)) {
+
+						widgetInstancePageElementDefinition.
+							setWidgetInstanceExternalReferenceCode(
+								() ->
+									widgetInstanceExternalReferenceCode +
+										LayoutConstants.ERC_SUFFIX_DRAFT);
+					}
+				});
+		}
+
+		return draftContentPageSpecification;
+	}
+
+	private static ContentPageSpecification
+		_toPublishedContentPageSpecification(
+			ContentPageSpecification contentPageSpecification,
+			String publishedContentPageSpecificationExternalReferenceCode) {
+
+		ContentPageSpecification publishedContentPageSpecification =
+			ContentPageSpecification.unsafeToDTO(
+				contentPageSpecification.toString());
+
+		publishedContentPageSpecification.setExternalReferenceCode(
+			() -> publishedContentPageSpecificationExternalReferenceCode);
+		publishedContentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode(
+				contentPageSpecification::getExternalReferenceCode);
+
+		PageExperience[] pageExperiences =
+			publishedContentPageSpecification.getPageExperiences();
+
+		if (pageExperiences != null) {
+			for (PageExperience pageExperience : pageExperiences) {
+				String publishedPageExperienceExternalReferenceCode;
+
+				if (Objects.equals(
+						pageExperience.getKey(),
+						SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+					publishedPageExperienceExternalReferenceCode =
+						publishedContentPageSpecificationExternalReferenceCode +
+							LayoutConstants.ERC_SUFFIX_DEFAULT;
+				}
+				else {
+					publishedPageExperienceExternalReferenceCode =
+						_toPublishedExternalReferenceCode(
+							pageExperience.getExternalReferenceCode());
+				}
+
+				String publishedPageExperienceExternalReferenceCodeFinal =
+					publishedPageExperienceExternalReferenceCode;
+
+				pageExperience.setExternalReferenceCode(
+					() -> publishedPageExperienceExternalReferenceCodeFinal);
+
+				pageExperience.setPageSpecificationExternalReferenceCode(
+					() ->
+						publishedContentPageSpecificationExternalReferenceCode);
+				pageExperience.setUuid(() -> null);
+
+				_visitPageElements(
+					pageExperience.getPageElements(),
+					fragmentInstance -> {
+						if (fragmentInstance == null) {
+							return;
+						}
+
+						fragmentInstance.setUuid(() -> null);
+
+						String draftFragmentInstanceExternalReferenceCode =
+							fragmentInstance.
+								getFragmentInstanceExternalReferenceCode();
+
+						if (Validator.isNull(
+								draftFragmentInstanceExternalReferenceCode)) {
+
+							return;
+						}
+
+						String publishedFragmentInstanceExternalReferenceCode =
+							_toPublishedExternalReferenceCode(
+								draftFragmentInstanceExternalReferenceCode);
+
+						fragmentInstance.
+							setDraftFragmentInstanceExternalReferenceCode(
+								() ->
+									draftFragmentInstanceExternalReferenceCode);
+						fragmentInstance.
+							setFragmentInstanceExternalReferenceCode(
+								() ->
+									publishedFragmentInstanceExternalReferenceCode);
+					},
+					widgetInstancePageElementDefinition -> {
+						String draftWidgetInstanceExternalReferenceCode =
+							widgetInstancePageElementDefinition.
+								getWidgetInstanceExternalReferenceCode();
+
+						if (Validator.isNull(
+								draftWidgetInstanceExternalReferenceCode)) {
+
+							return;
+						}
+
+						String publishedWidgetInstanceExternalReferenceCode =
+							_toPublishedExternalReferenceCode(
+								draftWidgetInstanceExternalReferenceCode);
+
+						widgetInstancePageElementDefinition.
+							setDraftWidgetInstanceExternalReferenceCode(
+								() -> draftWidgetInstanceExternalReferenceCode);
+						widgetInstancePageElementDefinition.
+							setWidgetInstanceExternalReferenceCode(
+								() ->
+									publishedWidgetInstanceExternalReferenceCode);
+					});
+			}
+		}
+
+		return publishedContentPageSpecification;
+	}
+
+	private static String _toPublishedExternalReferenceCode(
+		String externalReferenceCode) {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return externalReferenceCode;
+		}
+
+		if (externalReferenceCode.endsWith(LayoutConstants.ERC_SUFFIX_DRAFT)) {
+			return externalReferenceCode.substring(
+				0,
+				externalReferenceCode.length() -
+					LayoutConstants.ERC_SUFFIX_DRAFT.length());
+		}
+
+		return externalReferenceCode + LayoutConstants.ERC_SUFFIX_PUBLISHED;
+	}
+
+	private static void _visitPageElements(
+		PageElement[] pageElements,
+		Consumer<FragmentInstance> fragmentInstanceConsumer,
+		Consumer<WidgetInstancePageElementDefinition> widgetInstanceConsumer) {
+
+		if (pageElements == null) {
+			return;
+		}
+
+		for (PageElement pageElement : pageElements) {
+			PageElementDefinition pageElementDefinition =
+				pageElement.getPageElementDefinition();
+
+			if (pageElementDefinition instanceof
+					BasicFragmentInstancePageElementDefinition
+						basicFragmentInstancePageElementDefinition) {
+
+				fragmentInstanceConsumer.accept(
+					basicFragmentInstancePageElementDefinition.
+						getFragmentInstance());
+			}
+			else if (pageElementDefinition instanceof
+						FormFragmentInstancePageElementDefinition
+							formFragmentInstancePageElementDefinition) {
+
+				fragmentInstanceConsumer.accept(
+					formFragmentInstancePageElementDefinition.
+						getFragmentInstance());
+			}
+			else if (pageElementDefinition instanceof
+						WidgetInstancePageElementDefinition
+							widgetInstancePageElementDefinition) {
+
+				widgetInstanceConsumer.accept(
+					widgetInstancePageElementDefinition);
+			}
+
+			_visitPageElements(
+				pageElement.getPageElements(), fragmentInstanceConsumer,
+				widgetInstanceConsumer);
+		}
 	}
 
 }

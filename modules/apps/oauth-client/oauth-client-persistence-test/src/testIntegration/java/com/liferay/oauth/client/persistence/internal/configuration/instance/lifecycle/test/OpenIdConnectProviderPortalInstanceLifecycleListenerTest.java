@@ -48,12 +48,10 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testTokenConnectionTimeout() throws Exception {
-		int customTimeout = RandomTestUtil.randomInt();
-
+		String clientId1 = RandomTestUtil.randomString();
 		String discoveryEndpoint =
 			"https://accounts.google.com/.well-known/openid-configuration";
-
-		String clientId1 = RandomTestUtil.randomString();
+		int tokenConnectionTimeout = RandomTestUtil.randomInt();
 
 		_pid1 = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.portal.security.sso.openid.connect.internal." +
@@ -65,7 +63,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListenerTest {
 			).put(
 				"openIdConnectClientId", clientId1
 			).put(
-				"tokenConnectionTimeout", customTimeout
+				"tokenConnectionTimeout", tokenConnectionTimeout
 			).build());
 
 		OAuthClientEntry oAuthClientEntry1 =
@@ -73,7 +71,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListenerTest {
 				TestPropsValues.getCompanyId(), discoveryEndpoint, clientId1);
 
 		Assert.assertEquals(
-			customTimeout, oAuthClientEntry1.getTokenConnectionTimeout());
+			tokenConnectionTimeout,
+			oAuthClientEntry1.getTokenConnectionTimeout());
 
 		String clientId2 = RandomTestUtil.randomString();
 

@@ -1555,10 +1555,6 @@ public class GitWorkingDirectory {
 			return getUpstreamLocalGitBranch();
 		}
 
-		if (!localGitBranchExists(branchName)) {
-			return null;
-		}
-
 		return _getLocalGitBranch(branchName, required);
 	}
 

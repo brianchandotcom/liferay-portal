@@ -215,34 +215,20 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
 			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
-	}
 
-	@Test
-	public void testDoGetReturnsCompleteOAuthASMetadata() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
+		String tokenEndpoint2 = url2 + "/o/oauth2/token";
 
-		String issuer =
-			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+		_oAuthClientASLocalMetadataLocalService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadata2.getOAuthClientASLocalMetadataId(),
+				url2, url2, url2, true, url2, new String[] {supported2},
+				new String[] {supported2}, new String[] {"public"},
+				tokenEndpoint2, url2);
 
-		String tokenEndpoint = issuer + "/o/oauth2/token";
+		options.setLocation(urlString);
 
-		_oAuthClientASLocalMetadataLocalService.addOAuthClientASLocalMetadata(
-			null, TestPropsValues.getUserId(), issuer, issuer, issuer, true,
-			issuer, new String[] {"authorization_code", "client_credentials"},
-			new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
-			issuer);
-
-		Http.Options options = new Http.Options();
-
-		options.setFollowRedirects(false);
-		options.setLocation(
-			StringBundler.concat(
-				Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
-				PortalUtil.getPortalServerPort(false), _WELL_KNOWN_PATH));
-
-		Http.Response response = options.getResponse();
-		String responseJSON = HttpUtil.URLtoString(options);
+		response = options.getResponse();
+		responseJSON = HttpUtil.URLtoString(options);
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, response.getResponseCode());
@@ -251,7 +237,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			responseJSON);
 
 		Assert.assertEquals(
-			issuer + "/o/oauth2/introspect",
+			url2 + "/o/oauth2/introspect",
 			responseJSONObject.getString("introspection_endpoint"));
 
 		JSONArray codeChallengeMethodsJSONArray =

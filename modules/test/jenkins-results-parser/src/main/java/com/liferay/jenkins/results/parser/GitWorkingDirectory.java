@@ -425,8 +425,15 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch createLocalGitBranch(
+		String localGitBranchName, boolean force, String startPoint) {
+
+		return createLocalGitBranch(
+			localGitBranchName, force, startPoint, null);
+	}
+
+	public LocalGitBranch createLocalGitBranch(
 		final String localGitBranchName, final boolean force,
-		final String startPoint) {
+		final String startPoint, final RemoteGitBranch sourceRemoteGitBranch) {
 
 		Retryable<LocalGitBranch> createLocalGitBranchRetryable =
 			new Retryable<LocalGitBranch>(true, 3, 0, true) {
@@ -434,24 +441,13 @@ public class GitWorkingDirectory {
 				@Override
 				public LocalGitBranch execute() {
 					return _createLocalGitBranch(
-						localGitBranchName, force, startPoint);
+						localGitBranchName, force, startPoint,
+						sourceRemoteGitBranch);
 				}
 
 			};
 
 		return createLocalGitBranchRetryable.executeWithRetries();
-	}
-
-	public LocalGitBranch createLocalGitBranch(
-		String localGitBranchName, boolean force, String startPoint,
-		RemoteGitBranch sourceRemoteGitBranch) {
-
-		LocalGitBranch localGitBranch = createLocalGitBranch(
-			localGitBranchName, force, startPoint);
-
-		return GitBranchFactory.newLocalGitBranch(
-			localGitBranch.getLocalGitRepository(), localGitBranch.getName(),
-			localGitBranch.getSHA(), sourceRemoteGitBranch);
 	}
 
 	public String createPullRequest(
@@ -3192,7 +3188,8 @@ public class GitWorkingDirectory {
 	}
 
 	private LocalGitBranch _createLocalGitBranch(
-		String localGitBranchName, boolean force, String startPoint) {
+		String localGitBranchName, boolean force, String startPoint,
+		RemoteGitBranch sourceRemoteGitBranch) {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(localGitBranchName)) {
 			throw new GitWorkingDirectoryRuntimeException(
@@ -3260,7 +3257,16 @@ public class GitWorkingDirectory {
 				"Created local branch ", localGitBranchName, " at ",
 				startPoint));
 
-		return getLocalGitBranch(localGitBranchName, true);
+		LocalGitBranch localGitBranch = getLocalGitBranch(
+			localGitBranchName, true);
+
+		if (sourceRemoteGitBranch == null) {
+			return localGitBranch;
+		}
+
+		return GitBranchFactory.newLocalGitBranch(
+			localGitBranch.getLocalGitRepository(), localGitBranch.getName(),
+			localGitBranch.getSHA(), sourceRemoteGitBranch);
 	}
 
 	private boolean _deleteLocalGitBranches(String... branchNames) {

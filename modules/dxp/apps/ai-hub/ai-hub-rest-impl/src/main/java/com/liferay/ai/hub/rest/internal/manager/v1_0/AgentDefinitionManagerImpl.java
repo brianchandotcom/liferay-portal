@@ -290,7 +290,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			return "externalReferenceCode ne 'L_PAGE_BUILDER'";
 		}
 
-		return "(" + filterString + ") and externalReferenceCode ne 'L_PAGE_BUILDER'";
+		return "(" + filterString +
+			") and externalReferenceCode ne 'L_PAGE_BUILDER'";
 	}
 
 	private ObjectDefinition _getObjectDefinition(long companyId)

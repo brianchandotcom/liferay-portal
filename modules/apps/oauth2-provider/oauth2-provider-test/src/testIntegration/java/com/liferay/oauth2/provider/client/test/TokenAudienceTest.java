@@ -131,11 +131,9 @@ public class TokenAudienceTest extends BaseClientTestCase {
 		return new TokenAudienceTestPreparatorBundleActivator();
 	}
 
-	private static final String _CLIENT_ID =
-		RandomTestUtil.randomString();
+	private static final String _CLIENT_ID = RandomTestUtil.randomString();
 
-	private static final String _CLIENT_SECRET =
-		RandomTestUtil.randomString();
+	private static final String _CLIENT_SECRET = RandomTestUtil.randomString();
 
 	private static final String _RESOURCE_URI = "https://mcp.example.com/o/mcp";
 

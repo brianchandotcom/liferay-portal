@@ -23,7 +23,7 @@ export const test = mergeTests(
 test(
 	'Delete button to manage user permissions',
 	{
-		tag: ['@LRAC-9063', '@LRAC-9069', '@LRAC-9070'],
+		tag: ['@LRAC-9063', '@LRAC-9069', '@LRAC-9070', '@LRAC-9055'],
 	},
 
 	async ({page, project}) => {
@@ -126,7 +126,7 @@ test(
 test(
 	'Admin row in User Management can be selected via its checkbox',
 	{
-		tag: '@LRAC-9052',
+		tag: ['@LRAC-9052', '@LRAC-9054'],
 	},
 
 	async ({page, project}) => {

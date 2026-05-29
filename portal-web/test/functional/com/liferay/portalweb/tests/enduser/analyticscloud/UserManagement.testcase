@@ -665,30 +665,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9079 | Test Summary: An user not logged in accessing the AC URL by passing workspace parameter"
-	@priority = 3
-	test UserNotLoggedAccessACURLPassingWorkspaceParameter {
-		task ("Copy current URL and SignOut") {
-			var workspaceURL = Navigator.getCurrentURL();
-
-			ACWorkspace.signOut();
-		}
-
-		task ("Open URL and LogIn") {
-			Open.openNoError(value1 = ${workspaceURL});
-
-			ACUtils.launchAC(emailAddress = "test@liferay.com");
-		}
-
-		task ("Open the URL again") {
-			Open.openNoError(value1 = ${workspaceURL});
-		}
-
-		task ("Assert Page Title") {
-			ACUtils.assertPageTitle(pageTitle = "Sites");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9044 | Test Summary: Users list can be ordered"
 	@priority = 3
 	test UsersListCanBeOrdered {

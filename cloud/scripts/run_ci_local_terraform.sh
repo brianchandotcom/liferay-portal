@@ -20,7 +20,7 @@ function _check_utils {
 	do
 		if (! command -v "${util}" &> /dev/null)
 		then
-			_log_error "The utility ${util} is not installed."
+			_log_error "The utility ${util} is not installed"
 
 			exit 1
 		fi
@@ -28,8 +28,7 @@ function _check_utils {
 }
 
 function _list_terraform_stacks {
-	yq '.jobs.test-cloud-terraform.strategy.matrix.stack[]' \
-		"${_REPO_ROOT}/.github/workflows/ci-test-cloud-terraform.yaml"
+	yq '.jobs.test-cloud-terraform.strategy.matrix.stack[]' "${_REPO_ROOT}/.github/workflows/ci-test-cloud-terraform.yaml"
 }
 
 function _log {
@@ -41,23 +40,24 @@ function _log_error {
 }
 
 function _run_terraform {
-	local stack
-	local stacks_list
+	local stacks
 
-	stacks_list="$(_list_terraform_stacks)"
+	stacks="$(_list_terraform_stacks)"
 
-	if [ -z "${stacks_list}" ]
+	if [ -z "${stacks}" ]
 	then
-		_log_error "No terraform stacks found in CI workflow matrix."
+		_log_error "No terraform stacks found in CI workflow matrix"
 
 		exit 1
 	fi
+
+	local stack
 
 	while IFS= read -r stack
 	do
 		_log "=== terraform: ${stack} ==="
 		_run_terraform_one "${stack}"
-	done <<< "${stacks_list}"
+	done <<< "${stacks}"
 }
 
 function _run_terraform_one {
@@ -67,7 +67,7 @@ function _run_terraform_one {
 
 	pushd "${stack_dir}" > /dev/null
 
-	terraform init -backend=false -input=false
+	terraform init --backend=false --input=false
 	terraform validate
 	tflint --config="${config}" --init
 	tflint --config="${config}"

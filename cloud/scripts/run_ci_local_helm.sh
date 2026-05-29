@@ -20,7 +20,7 @@ function _check_utils {
 	do
 		if (! command -v "${util}" &> /dev/null)
 		then
-			_log_error "The utility ${util} is not installed."
+			_log_error "The utility ${util} is not installed"
 
 			exit 1
 		fi
@@ -28,8 +28,7 @@ function _check_utils {
 }
 
 function _list_helm_charts {
-	yq '.jobs.test-cloud-helm-chart.strategy.matrix.chart[]' \
-		"${_REPO_ROOT}/.github/workflows/ci-test-cloud-helm-chart.yaml"
+	yq '.jobs.test-cloud-helm-chart.strategy.matrix.chart[]' "${_REPO_ROOT}/.github/workflows/ci-test-cloud-helm-chart.yaml"
 }
 
 function _log {
@@ -41,23 +40,24 @@ function _log_error {
 }
 
 function _run_helm {
-	local chart
-	local charts_list
+	local charts
 
-	charts_list="$(_list_helm_charts)"
+	charts="$(_list_helm_charts)"
 
-	if [ -z "${charts_list}" ]
+	if [ -z "${charts}" ]
 	then
-		_log_error "No charts found in CI workflow matrix."
+		_log_error "No charts found in CI workflow matrix"
 
 		exit 1
 	fi
+
+	local chart
 
 	while IFS= read -r chart
 	do
 		_log "=== helm: ${chart} ==="
 		_run_helm_one "${chart}"
-	done <<< "${charts_list}"
+	done <<< "${charts}"
 }
 
 function _run_helm_one {
@@ -70,9 +70,9 @@ function _run_helm_one {
 	helm lint .
 	helm template liferay . \
 		| kubeconform \
-			-schema-location default \
-			-schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
-			-skip ClusterProviderConfig,LiferayInfrastructure \
+			--schema-location default \
+			--schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+			--skip ClusterProviderConfig,LiferayInfrastructure \
 			--strict \
 			--summary
 

@@ -7,7 +7,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
@@ -223,19 +223,35 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 
 	const isCategory = TABS[activeTab] === 'category';
 
+	const dataSourceFn = useCallback(
+		({
+			isCategory,
+			...vars
+		}: {
+			accountId: string;
+			channelId: string;
+			groupId: string;
+			isCategory: boolean;
+			selectedMetric: TaxonomyMetric;
+		}) =>
+			isCategory
+				? API.categories.fetchAccountTopCategories(vars)
+				: API.tags.fetchAccountTopTags(vars),
+		[]
+	);
+
 	const {data, loading} = useRequest<
 		{
 			accountId: string;
 			channelId: string;
 			groupId: string;
+			isCategory: boolean;
 			selectedMetric: TaxonomyMetric;
 		},
 		{items: TaxonomyItem[]}
 	>({
-		dataSourceFn: isCategory
-			? API.categories.fetchAccountTopCategories
-			: API.tags.fetchAccountTopTags,
-		variables: {accountId, channelId, groupId, selectedMetric}
+		dataSourceFn,
+		variables: {accountId, channelId, groupId, isCategory, selectedMetric}
 	});
 
 	const items = data?.items ?? [];

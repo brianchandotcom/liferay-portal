@@ -272,8 +272,6 @@ public class PageExperiencesTestUtil {
 
 		PageExperience pageExperience = new PageExperience();
 
-		pageExperience.setKey(publishedPageExperience.getKey());
-
 		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
 				publishedPageExperience.getKey())) {
 
@@ -286,6 +284,8 @@ public class PageExperiencesTestUtil {
 				publishedPageExperience.getExternalReferenceCode() +
 					LayoutConstants.ERC_SUFFIX_DRAFT);
 		}
+
+		pageExperience.setKey(publishedPageExperience.getKey());
 
 		return pageExperience;
 	}

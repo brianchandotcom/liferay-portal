@@ -23,7 +23,7 @@ export const test = mergeTests(
 test(
 	'Delete button to manage user permissions',
 	{
-		tag: '@LRAC-9063',
+		tag: ['@LRAC-9063', '@LRAC-9069', '@LRAC-9070'],
 	},
 
 	async ({page, project}) => {

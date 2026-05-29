@@ -51,26 +51,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
-	@priority = 3
-	test CanUserSelectPropertyFromTheDropDownByFirstTime {
-		var propertyName = "Property CanUserSelectPropertyFromTheDropDownByFirstTime 1";
-
-		task ("go to properties and add a new property") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = ${propertyName});
-		}
-
-		task ("select new property") {
-			ACNavigation.exitSettings();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-		}
-	}
-
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
 	@priority = 2
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {

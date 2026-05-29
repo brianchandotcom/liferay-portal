@@ -36,7 +36,7 @@ async function openShareModal(
 	const shareModalTitle = page.getByText(`Share "${objectEntryTitle}"`);
 
 	await expect(async () => {
-		if (!(await shareMenuItem.isVisible().catch(() => false))) {
+		if (!(await shareMenuItem.isVisible())) {
 			await actionsButton.click({timeout: 1000});
 
 			await expect(shareMenuItem).toBeVisible({timeout: 2000});

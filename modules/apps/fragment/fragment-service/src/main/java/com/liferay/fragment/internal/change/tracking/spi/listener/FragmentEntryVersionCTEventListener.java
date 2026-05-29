@@ -55,6 +55,9 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			_getFragmentEntryVersionCountByFragmentEntryIdMap(ctCollectionId);
 
 		if (fragmentEntryVersionCountByFragmentEntryIdMap.isEmpty()) {
+			_fragmentEntryVersionCountByCtCollectionIdMap.remove(
+				ctCollectionId);
+
 			return;
 		}
 

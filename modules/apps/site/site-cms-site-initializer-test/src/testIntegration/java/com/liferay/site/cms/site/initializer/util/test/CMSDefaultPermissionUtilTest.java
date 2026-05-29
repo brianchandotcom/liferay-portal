@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,6 +38,8 @@ import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -183,6 +185,46 @@ public class CMSDefaultPermissionUtilTest {
 		Assert.assertEquals(2, jsonArray.length());
 	}
 
+	@Test
+	@TestInfo("LPD-92654")
+	public void testGetJSONObjectWhenSpaceCreatedWithGroupExternalReferenceCode()
+		throws Exception {
+
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"groupExternalReferenceCode", groupExternalReferenceCode);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE, serviceContext);
+
+		_depotEntries.add(depotEntry);
+
+		Group group = depotEntry.getGroup();
+
+		Assert.assertEquals(
+			groupExternalReferenceCode, group.getExternalReferenceCode());
+
+		Assert.assertFalse(
+			JSONUtil.isEmpty(
+				CMSDefaultPermissionUtil.getJSONObject(
+					group.getCompanyId(), group.getCreatorUserId(),
+					group.getExternalReferenceCode(),
+					depotEntry.getModelClassName(), _filterFactory)));
+	}
+
+	@DeleteAfterTestRun
+	private final List<DepotEntry> _depotEntries = new ArrayList<>();
+
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
@@ -193,11 +235,5 @@ public class CMSDefaultPermissionUtilTest {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 }

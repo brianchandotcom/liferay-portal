@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SkuForecast")
+@GraphQLName(
+	description = "Monthly demand forecast point for one SKU, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.",
+	value = "SkuForecast"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuForecast")
 public class SkuForecast implements Serializable {
@@ -52,7 +55,10 @@ public class SkuForecast implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SkuForecast.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Observed demand in units for the period, aggregated from completed order lines by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet.",
+		example = "230225"
+	)
 	@Valid
 	public Float getActual() {
 		if (_actualSupplier != null) {
@@ -87,14 +93,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Observed demand in units for the period, aggregated from completed order lines by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float actual;
 
 	@JsonIgnore
 	private Supplier<Float> _actualSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Point estimate of monthly demand in units for the period.",
+		example = "425982.1"
+	)
 	@Valid
 	public Float getForecast() {
 		if (_forecastSupplier != null) {
@@ -129,14 +140,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Point estimate of monthly demand in units for the period."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecast;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes.",
+		example = "-63249.176"
+	)
 	@Valid
 	public Float getForecastLowerBound() {
 		if (_forecastLowerBoundSupplier != null) {
@@ -171,14 +187,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastLowerBound;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastLowerBoundSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Upper bound of the forecast confidence interval.",
+		example = "915213.4"
+	)
 	@Valid
 	public Float getForecastUpperBound() {
 		if (_forecastUpperBoundSupplier != null) {
@@ -213,14 +234,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upper bound of the forecast confidence interval."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastUpperBound;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastUpperBoundSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "SKU string identifying the variant the forecast point belongs to.",
+		example = "12341234"
+	)
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -252,14 +278,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "SKU string identifying the variant the forecast point belongs to."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision.",
+		example = "2018-02-01"
+	)
 	public Date getTimestamp() {
 		if (_timestampSupplier != null) {
 			timestamp = _timestampSupplier.get();
@@ -293,14 +324,19 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date timestamp;
 
 	@JsonIgnore
 	private Supplier<Date> _timestampSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Forecast target dimension. Always `quantity` for this schema.",
+		example = "quantity"
+	)
 	public String getUnit() {
 		if (_unitSupplier != null) {
 			unit = _unitSupplier.get();
@@ -332,7 +368,9 @@ public class SkuForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Forecast target dimension. Always `quantity` for this schema."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unit;
 
@@ -566,4 +604,4 @@ public class SkuForecast implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2110095293
+// LIFERAY-REST-BUILDER-HASH:237795102

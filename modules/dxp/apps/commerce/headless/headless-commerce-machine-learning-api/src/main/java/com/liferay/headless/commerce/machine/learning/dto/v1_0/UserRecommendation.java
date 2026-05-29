@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("UserRecommendation")
+@GraphQLName(
+	description = "Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user profiled by the categories they interact with, the model recommends products.",
+	value = "UserRecommendation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserRecommendation")
 public class UserRecommendation implements Serializable {
@@ -52,7 +55,10 @@ public class UserRecommendation implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(UserRecommendation.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "References to the categories that profile the target user (FK identifier array). The recommendation applies to users associated with this category set.",
+		example = "[10130, 10131]"
+	)
 	public Long[] getAssetCategoryIds() {
 		if (_assetCategoryIdsSupplier != null) {
 			assetCategoryIds = _assetCategoryIdsSupplier.get();
@@ -86,14 +92,19 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "References to the categories that profile the target user (FK identifier array). The recommendation applies to users associated with this category set."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
 	@JsonIgnore
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -127,14 +138,19 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the analytics training job that produced this recommendation.",
+		example = "ml-job-2025-04-01"
+	)
 	public String getJobId() {
 		if (_jobIdSupplier != null) {
 			jobId = _jobIdSupplier.get();
@@ -168,7 +184,9 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the analytics training job that produced this recommendation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
@@ -176,7 +194,8 @@ public class UserRecommendation implements Serializable {
 	private Supplier<String> _jobIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The product identifier."
+		description = "Reference to the source product the recommendation is anchored on (FK identifier).",
+		example = "30130"
 	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
@@ -211,7 +230,9 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The product identifier.")
+	@GraphQLField(
+		description = "Reference to the source product the recommendation is anchored on (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
@@ -219,7 +240,8 @@ public class UserRecommendation implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommendation rank."
+		description = "One-based ordering of the recommendation within the user's set. Lower is better.",
+		example = "1"
 	)
 	public Integer getRank() {
 		if (_rankSupplier != null) {
@@ -252,7 +274,9 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommendation rank.")
+	@GraphQLField(
+		description = "One-based ordering of the recommendation within the user's set. Lower is better."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
@@ -260,7 +284,8 @@ public class UserRecommendation implements Serializable {
 	private Supplier<Integer> _rankSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommended product identifier."
+		description = "Reference to the product the model recommends for the user (FK identifier).",
+		example = "30131"
 	)
 	public Long getRecommendedProductId() {
 		if (_recommendedProductIdSupplier != null) {
@@ -295,7 +320,9 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommended product identifier.")
+	@GraphQLField(
+		description = "Reference to the product the model recommends for the user (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
@@ -303,7 +330,8 @@ public class UserRecommendation implements Serializable {
 	private Supplier<Long> _recommendedProductIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommendation score."
+		description = "Recommendation score in [0, 1]. Higher means stronger fit to the user profile.",
+		example = "0.74"
 	)
 	@Valid
 	public Float getScore() {
@@ -337,7 +365,9 @@ public class UserRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommendation score.")
+	@GraphQLField(
+		description = "Recommendation score in [0, 1]. Higher means stronger fit to the user profile."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
@@ -577,4 +607,4 @@ public class UserRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-50034989
+// LIFERAY-REST-BUILDER-HASH:1145894139

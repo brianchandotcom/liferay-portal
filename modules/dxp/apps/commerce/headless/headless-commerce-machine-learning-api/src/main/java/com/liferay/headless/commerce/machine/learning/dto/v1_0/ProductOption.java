@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductOption")
+@GraphQLName(
+	description = "Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its parent product.",
+	value = "ProductOption"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductOption")
 public class ProductOption implements Serializable {
@@ -48,7 +51,10 @@ public class ProductOption implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductOption.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Key of the underlying option definition.",
+		example = "size"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -80,14 +86,17 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Key of the underlying option definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "option-key")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable key of the product-specific option binding. Distinct from `key` when the same global option is bound to a product under a custom alias.",
+		example = "option-key"
+	)
 	public String getOptionKey() {
 		if (_optionKeySupplier != null) {
 			optionKey = _optionKeySupplier.get();
@@ -121,14 +130,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable key of the product-specific option binding. Distinct from `key` when the same global option is bound to a product under a custom alias."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String optionKey;
 
 	@JsonIgnore
 	private Supplier<String> _optionKeySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Selectable values of the option. Each entry is a map keyed by locale code whose values are the localised value labels.",
+		example = "[{en_US=Small, hr_HR=Maleno}, {en_US=Large, hr_HR=Veliko}]"
+	)
 	@Valid
 	public Map[] getValues() {
 		if (_valuesSupplier != null) {
@@ -163,7 +177,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Selectable values of the option. Each entry is a map keyed by locale code whose values are the localised value labels."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] values;
 
@@ -352,4 +368,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-298749806
+// LIFERAY-REST-BUILDER-HASH:-554880577

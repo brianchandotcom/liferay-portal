@@ -5,7 +5,7 @@ liferay-one-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay One Etc Spring Boot OAuth Application Headless Server
     scopes:
-        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Admin.User.everything.read
     type: oAuthApplicationHeadlessServer
 liferay-one-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081

@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.net.URL;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -47,7 +45,7 @@ public class BusinessEventPermission {
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+			_lxcDXPMainDomain, _lxcDXPServerProtocol
 		).build();
 
 		UserAccount userAccount = userAccountResource.getMyUserAccount();
@@ -66,7 +64,7 @@ public class BusinessEventPermission {
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+			_lxcDXPMainDomain, _lxcDXPServerProtocol
 		).build();
 
 		Account account = accountResource.getAccountByExternalReferenceCode(

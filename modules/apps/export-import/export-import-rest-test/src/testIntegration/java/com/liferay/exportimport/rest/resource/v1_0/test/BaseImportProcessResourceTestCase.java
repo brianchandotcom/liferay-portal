@@ -797,8 +797,8 @@ public abstract class BaseImportProcessResourceTestCase {
 	protected ImportProcess testGetImportProcess_addImportProcess()
 		throws Exception {
 
-		return importProcessResource.postSiteImportProcess(
-			testGroup.getExternalReferenceCode(), randomImportProcess());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2299,4 +2299,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1386081426
+// LIFERAY-REST-BUILDER-HASH:-1862664561

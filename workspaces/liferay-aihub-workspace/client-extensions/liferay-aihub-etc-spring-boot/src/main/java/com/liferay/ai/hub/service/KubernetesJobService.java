@@ -11,6 +11,7 @@ import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
+import io.fabric8.kubernetes.client.dsl.ScalableResource;
 import io.fabric8.kubernetes.client.utils.Serialization;
 
 import jakarta.annotation.PreDestroy;
@@ -53,7 +54,7 @@ public class KubernetesJobService {
 		_kubernetesClient.close();
 	}
 
-	public Job createJob(String indexName, String url) {
+	public Job createJob(long accountEntryId, String indexName, String url) {
 		URI uri;
 
 		try {
@@ -73,13 +74,23 @@ public class KubernetesJobService {
 		).resource(
 			new JobBuilder(
 				_jobTemplate
+			).editMetadata(
+			).addToLabels(
+				"account-entry-id", String.valueOf(accountEntryId)
+			).endMetadata(
 			).editSpec(
 			).editTemplate(
+			).editMetadata(
+			).addToLabels(
+				"account-entry-id", String.valueOf(accountEntryId)
+			).endMetadata(
 			).editSpec(
 			).editFirstContainer(
 			).withImage(
 				_imageName
 			).withEnv(
+				_createEnvVar(
+					"ACCOUNT_ENTRY_ID", String.valueOf(accountEntryId)),
 				_createEnvVar(
 					"CRAWLER_DOMAIN_URL",
 					uri.getScheme() + "://" + uri.getAuthority()),
@@ -105,6 +116,20 @@ public class KubernetesJobService {
 		return job;
 	}
 
+	public Job getJob(String name) {
+		return _getJobScalableResource(
+			name
+		).get();
+	}
+
+	public String getJobLog(String name, int tailLines) {
+		return _getJobScalableResource(
+			name
+		).tailingLines(
+			tailLines
+		).getLog();
+	}
+
 	private EnvVar _createEnvVar(String name, String value) {
 		return new EnvVarBuilder(
 		).withName(
@@ -112,6 +137,17 @@ public class KubernetesJobService {
 		).withValue(
 			value
 		).build();
+	}
+
+	private ScalableResource<Job> _getJobScalableResource(String name) {
+		return _kubernetesClient.batch(
+		).v1(
+		).jobs(
+		).inNamespace(
+			_namespace
+		).withName(
+			name
+		);
 	}
 
 	private Job _loadJobTemplate() {

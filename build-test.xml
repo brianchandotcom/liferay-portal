@@ -3513,6 +3513,9 @@ sendPasswordCaptchaEnabled="false"]]></echo>
 sendBlacklist=[]
 jndiName=""
 ]]></echo>
+
+			<echo append="true" file="portal-impl/src/portal-ext.properties">
+analytics.cloud.domain.allowed=*</echo>
 		</sequential>
 	</macrodef>
 
@@ -13545,9 +13548,6 @@ outgoingSMTPPort="25000"
 feature.flag.LPD-11342=true</echo>
 			</then>
 		</if>
-
-		<echo append="true" file="portal-impl/src/portal-ext.properties">
-analytics.cloud.domain.allowed=*</echo>
 
 		<apply-portal-ext-properties />
 	</target>

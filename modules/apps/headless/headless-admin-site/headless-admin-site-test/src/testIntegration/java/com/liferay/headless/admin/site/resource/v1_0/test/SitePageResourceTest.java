@@ -2133,7 +2133,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			String draftFragmentInstanceExternalReferenceCode =
 				fragmentInstance.getFragmentInstanceExternalReferenceCode() +
-					_ERC_SUFFIX_USER_DRAFT;
+					RandomTestUtil.randomString();
 
 			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
 				draftFragmentInstanceExternalReferenceCode);
@@ -4559,8 +4559,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getPlid(),
 			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 	}
-
-	private static final String _ERC_SUFFIX_USER_DRAFT = "-user-draft";
 
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);

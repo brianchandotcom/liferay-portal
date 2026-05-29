@@ -7,6 +7,7 @@ package com.liferay.keymanager.internal.configuration.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -43,7 +44,9 @@ public class KeyManagerConfigurationCategory implements ConfigurationCategory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-88411")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyConstants.SYSTEM, "LPD-88411")) {
+
 			return;
 		}
 

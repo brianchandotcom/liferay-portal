@@ -11,7 +11,7 @@ export default function WritingAssistantDisclaimer() {
 	return (
 		<p className="writing-assistant__content-disclaimer">
 			{Liferay.Language.get(
-				'ai-generated-responses-can-be-inaccurate'
+				'ai-generated-responses-may-be-inaccurate'
 			)}
 		</p>
 	);

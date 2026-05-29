@@ -143,6 +143,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 	private volatile KeyManagerGlobalConfiguration
 		_keyManagerGlobalConfiguration;
 	private volatile String _lastBootstrappedProfileId;
-	private ServiceTrackerMap<String, KeyManagerProfile> _serviceTrackerMap;
+	private volatile ServiceTrackerMap<String, KeyManagerProfile>
+		_serviceTrackerMap;
 
 }

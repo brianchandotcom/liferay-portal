@@ -90,31 +90,7 @@ export class TemplatesPage {
 	}
 
 	async createWidgetTemplate(name: string, type: string, content?: string) {
-		const typeOption = this.page.getByRole('menuitem', {
-			name: type,
-		});
-
-		const moreButton = this.page.getByRole('button', {name: 'More'});
-
-		await clickAndExpectToBeVisible({
-			target: moreButton,
-			trigger: this.page.getByRole('button', {name: 'New'}),
-		});
-
-		if (await typeOption.isVisible()) {
-			await typeOption.click();
-		}
-		else {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: typeOption,
-				trigger: moreButton,
-			});
-		}
-
-		// Wait until the editor is loaded
-
-		await this.page.locator('.ddm_template_editor__App').waitFor();
+		await this.gotoNewWidgetTemplate(type);
 
 		await fillAndClickOutside(
 			this.page,
@@ -184,6 +160,34 @@ export class TemplatesPage {
 		await this.page.getByLabel('Properties').click();
 
 		return await this.page.getByLabel('Template Key').getAttribute('value');
+	}
+
+	async gotoNewWidgetTemplate(type: string) {
+		const typeOption = this.page.getByRole('menuitem', {
+			name: type,
+		});
+
+		const moreButton = this.page.getByRole('button', {name: 'More'});
+
+		await clickAndExpectToBeVisible({
+			target: moreButton,
+			trigger: this.page.getByRole('button', {name: 'New'}),
+		});
+
+		if (await typeOption.isVisible()) {
+			await typeOption.click();
+		}
+		else {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: typeOption,
+				trigger: moreButton,
+			});
+		}
+
+		// Wait until the editor is loaded
+
+		await this.page.locator('.ddm_template_editor__App').waitFor();
 	}
 
 	async importInformationTemplate(dirname: string, fileName: string) {

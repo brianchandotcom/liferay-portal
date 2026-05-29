@@ -253,6 +253,47 @@ test(
 );
 
 test(
+	'Escape a malicious redirect parameter in the widget template editor cancel link',
+	{
+		tag: '@LPD-92458',
+	},
+	async ({page, site, templatesPage}) => {
+
+		// Open a widget template in the editor
+
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		const widgetTemplateName = getRandomString();
+
+		await templatesPage.createWidgetTemplate(
+			widgetTemplateName,
+			'Asset Publisher Template'
+		);
+
+		await templatesPage.editWidgetTemplate(widgetTemplateName);
+
+		// Reload the editor with a malicious redirect parameter
+
+		await page.goto(
+			page
+				.url()
+				.replace(
+					/(_com_liferay_template_web_internal_portlet_TemplatePortlet_redirect=)[^&]*/,
+					`$1${encodeURIComponent('javascript:alert(document.domain)')}`
+				)
+		);
+
+		// Assert the redirect cannot execute as a javascript: link
+
+		await expect(templatesPage.saveButton).toBeVisible();
+
+		await expect(
+			page.locator('a[href*="alert(document.domain)"]')
+		).toHaveCount(0);
+	}
+);
+
+test(
 	'View usages of widget templates',
 	{
 		tag: '@LPS-169118',

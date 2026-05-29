@@ -5,7 +5,7 @@ liferay-aihub-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay AI Hub Etc Spring Boot OAuth Application Headless Server
     scopes:
-        -   c_aihubcrawlerjob.everything
+        -   aihubcrawlerjob.everything
     type: oAuthApplicationHeadlessServer
 liferay-aihub-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081

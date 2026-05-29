@@ -2007,6 +2007,64 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private void _postContentPageSpecification(
+			ContentPageSpecification contentPageSpecification,
+			String pageExternalReferenceCode,
+			String draftContentPageSpecificationExternalReferenceCode,
+			PageSpecification.Status status, boolean inputIsDraft)
+		throws Exception {
+
+		PageExperience[] inputPageExperiences =
+			contentPageSpecification.getPageExperiences();
+
+		PageExperience[] expectedDraftPageExperiences;
+		PageExperience[] expectedPublishedPageExperiences;
+
+		if (inputIsDraft) {
+			expectedDraftPageExperiences = inputPageExperiences;
+			expectedPublishedPageExperiences = TransformUtil.transform(
+				inputPageExperiences,
+				draftPageExperience ->
+					PageExperiencesTestUtil.toPublishedPageExperience(
+						draftPageExperience, pageExternalReferenceCode),
+				PageExperience.class);
+		}
+		else {
+			expectedDraftPageExperiences = TransformUtil.transform(
+				inputPageExperiences,
+				publishedPageExperience ->
+					PageExperiencesTestUtil.toDraftPageExperience(
+						draftContentPageSpecificationExternalReferenceCode,
+						publishedPageExperience),
+				PageExperience.class);
+			expectedPublishedPageExperiences = inputPageExperiences;
+		}
+
+		ContentPageSpecification expectedDraftContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedDraftContentPageSpecification.setExternalReferenceCode(
+			draftContentPageSpecificationExternalReferenceCode);
+		expectedDraftContentPageSpecification.setPageExperiences(
+			expectedDraftPageExperiences);
+		expectedDraftContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification expectedPublishedContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedPublishedContentPageSpecification.setExternalReferenceCode(
+			pageExternalReferenceCode);
+		expectedPublishedContentPageSpecification.setPageExperiences(
+			expectedPublishedPageExperiences);
+		expectedPublishedContentPageSpecification.setStatus(status);
+
+		_postContentPageSpecification(
+			contentPageSpecification, expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification, testGroup,
+			pageExternalReferenceCode, status);
+	}
+
 	private SitePage _postSiteSitePageWithPageSpecificationsWithCustomFields(
 			SitePage.Type type)
 		throws Exception {
@@ -2908,35 +2966,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), status);
 
-		ContentPageSpecification expectedDraftContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedDraftContentPageSpecification.setExternalReferenceCode(
-			draftContentPageSpecificationExternalReferenceCode);
-		expectedDraftContentPageSpecification.setPageExperiences(
-			draftContentPageSpecification.getPageExperiences());
-		expectedDraftContentPageSpecification.setStatus(
-			PageSpecification.Status.APPROVED);
-
-		ContentPageSpecification expectedPublishedContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedPublishedContentPageSpecification.setExternalReferenceCode(
-			pageExternalReferenceCode);
-		expectedPublishedContentPageSpecification.setPageExperiences(
-			TransformUtil.transform(
-				draftContentPageSpecification.getPageExperiences(),
-				draftPageExperience ->
-					PageExperiencesTestUtil.toPublishedPageExperience(
-						draftPageExperience, pageExternalReferenceCode),
-				PageExperience.class));
-		expectedPublishedContentPageSpecification.setStatus(status);
-
 		_postContentPageSpecification(
-			draftContentPageSpecification,
-			expectedDraftContentPageSpecification,
-			expectedPublishedContentPageSpecification, testGroup,
-			pageExternalReferenceCode, status);
+			draftContentPageSpecification, pageExternalReferenceCode,
+			draftContentPageSpecificationExternalReferenceCode, status, true);
 	}
 
 	private void _testPostSiteSitePageWithPageElements() throws Exception {
@@ -3083,57 +3115,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status status)
 		throws Exception {
 
-		String defaultPageExperienceExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String defaultPageExperienceUuid = RandomTestUtil.randomString();
-		String pageExperienceExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String pageExperienceKey = RandomTestUtil.randomString();
-		String pageExperienceUuid = RandomTestUtil.randomString();
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.
 				getContentPageSpecificationWithPageExperiences(
-					pageExternalReferenceCode,
-					defaultPageExperienceExternalReferenceCode,
-					defaultPageExperienceUuid, testGroup.getGroupId(),
-					pageExperienceExternalReferenceCode, pageExperienceKey,
-					pageExperienceUuid, status);
-
-		String draftContentPageSpecificationExternalReferenceCode =
-			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT;
-
-		ContentPageSpecification expectedDraftContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedDraftContentPageSpecification.setExternalReferenceCode(
-			draftContentPageSpecificationExternalReferenceCode);
-		expectedDraftContentPageSpecification.setPageExperiences(
-			TransformUtil.transform(
-				publishedContentPageSpecification.getPageExperiences(),
-				publishedPageExperience ->
-					PageExperiencesTestUtil.toDraftPageExperience(
-						draftContentPageSpecificationExternalReferenceCode,
-						publishedPageExperience),
-				PageExperience.class));
-		expectedDraftContentPageSpecification.setStatus(
-			PageSpecification.Status.APPROVED);
-
-		ContentPageSpecification expectedPublishedContentPageSpecification =
-			new ContentPageSpecification();
-
-		expectedPublishedContentPageSpecification.setExternalReferenceCode(
-			pageExternalReferenceCode);
-		expectedPublishedContentPageSpecification.setPageExperiences(
-			publishedContentPageSpecification.getPageExperiences());
-		expectedPublishedContentPageSpecification.setStatus(status);
+					pageExternalReferenceCode, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), testGroup.getGroupId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), status);
 
 		_postContentPageSpecification(
-			publishedContentPageSpecification,
-			expectedDraftContentPageSpecification,
-			expectedPublishedContentPageSpecification, testGroup,
-			pageExternalReferenceCode, status);
+			publishedContentPageSpecification, pageExternalReferenceCode,
+			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT,
+			status, false);
 	}
 
 	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()

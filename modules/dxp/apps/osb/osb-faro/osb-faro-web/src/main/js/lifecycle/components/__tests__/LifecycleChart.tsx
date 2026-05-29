@@ -229,4 +229,22 @@ describe('LifecycleChart', () => {
 			LifecycleStages.PIPELINE
 		);
 	});
+
+	it('should render a "filter by stage" tooltip on each stage filter button', () => {
+		const {getAllByRole} = renderChart({stages: sampleStages});
+
+		const filterButtons = getAllByRole('button');
+
+		expect(filterButtons[0]).toHaveAttribute('title', 'Filter By Aware');
+		expect(filterButtons[1]).toHaveAttribute('title', 'Filter By Engaged');
+		expect(filterButtons[2]).toHaveAttribute('title', 'Filter By Pipeline');
+		expect(filterButtons[3]).toHaveAttribute(
+			'title',
+			'Filter By Onboarding'
+		);
+		expect(filterButtons[4]).toHaveAttribute(
+			'title',
+			'Filter By Established'
+		);
+	});
 });

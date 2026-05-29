@@ -828,7 +828,7 @@ public class SegmentsExperimentLocalServiceTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getExternalReferenceCode(), null,
 				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				2, true, new UnicodeProperties(true),
+				1, true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		segmentsExperience1 = _publishSegmentsExperience(segmentsExperience1);
@@ -838,7 +838,7 @@ public class SegmentsExperimentLocalServiceTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getExternalReferenceCode(), null,
 				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				1, true, new UnicodeProperties(true),
+				2, true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		segmentsExperience2 = _publishSegmentsExperience(segmentsExperience2);
@@ -854,7 +854,7 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperience3 = _publishSegmentsExperience(segmentsExperience3);
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
-			segmentsExperience2);
+			segmentsExperience1);
 
 		SegmentsExperience variantSegmentsExperience =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -888,15 +888,15 @@ public class SegmentsExperimentLocalServiceTest {
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperience1.getSegmentsExperienceId());
 
-		Assert.assertTrue(segmentsExperience1.isActive());
-		Assert.assertEquals(2, segmentsExperience1.getPriority());
+		Assert.assertFalse(segmentsExperience1.isActive());
+		Assert.assertEquals(-2, segmentsExperience1.getPriority());
 
 		segmentsExperience2 =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperience2.getSegmentsExperienceId());
 
-		Assert.assertFalse(segmentsExperience2.isActive());
-		Assert.assertEquals(-2, segmentsExperience2.getPriority());
+		Assert.assertTrue(segmentsExperience2.isActive());
+		Assert.assertEquals(2, segmentsExperience2.getPriority());
 
 		segmentsExperience3 =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

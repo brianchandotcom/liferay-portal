@@ -120,14 +120,14 @@ public class ModelArmorTemplateSerDes {
 			sb.append(modelArmorTemplate.getMaliciousUriFilterEnabled());
 		}
 
-		if (modelArmorTemplate.getMultiLanguageDetectionEnabled() != null) {
+		if (modelArmorTemplate.getMultilanguageDetectionEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"multiLanguageDetectionEnabled\": ");
+			sb.append("\"multilanguageDetectionEnabled\": ");
 
-			sb.append(modelArmorTemplate.getMultiLanguageDetectionEnabled());
+			sb.append(modelArmorTemplate.getMultilanguageDetectionEnabled());
 		}
 
 		if (modelArmorTemplate.getPiAndJailbreakConfidenceLevel() != null) {
@@ -307,14 +307,14 @@ public class ModelArmorTemplateSerDes {
 					modelArmorTemplate.getMaliciousUriFilterEnabled()));
 		}
 
-		if (modelArmorTemplate.getMultiLanguageDetectionEnabled() == null) {
-			map.put("multiLanguageDetectionEnabled", null);
+		if (modelArmorTemplate.getMultilanguageDetectionEnabled() == null) {
+			map.put("multilanguageDetectionEnabled", null);
 		}
 		else {
 			map.put(
-				"multiLanguageDetectionEnabled",
+				"multilanguageDetectionEnabled",
 				String.valueOf(
-					modelArmorTemplate.getMultiLanguageDetectionEnabled()));
+					modelArmorTemplate.getMultilanguageDetectionEnabled()));
 		}
 
 		if (modelArmorTemplate.getPiAndJailbreakConfidenceLevel() == null) {
@@ -440,7 +440,7 @@ public class ModelArmorTemplateSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "multiLanguageDetectionEnabled")) {
+						jsonParserFieldName, "multilanguageDetectionEnabled")) {
 
 				return false;
 			}
@@ -531,10 +531,10 @@ public class ModelArmorTemplateSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "multiLanguageDetectionEnabled")) {
+						jsonParserFieldName, "multilanguageDetectionEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setMultiLanguageDetectionEnabled(
+					modelArmorTemplate.setMultilanguageDetectionEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
@@ -687,4 +687,4 @@ public class ModelArmorTemplateSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:370537748
+// LIFERAY-REST-BUILDER-HASH:-63021740

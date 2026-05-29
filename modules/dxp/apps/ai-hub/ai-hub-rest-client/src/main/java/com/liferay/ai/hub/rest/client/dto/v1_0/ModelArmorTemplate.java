@@ -164,30 +164,30 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 
 	protected Boolean maliciousUriFilterEnabled;
 
-	public Boolean getMultiLanguageDetectionEnabled() {
-		return multiLanguageDetectionEnabled;
+	public Boolean getMultilanguageDetectionEnabled() {
+		return multilanguageDetectionEnabled;
 	}
 
-	public void setMultiLanguageDetectionEnabled(
-		Boolean multiLanguageDetectionEnabled) {
+	public void setMultilanguageDetectionEnabled(
+		Boolean multilanguageDetectionEnabled) {
 
-		this.multiLanguageDetectionEnabled = multiLanguageDetectionEnabled;
+		this.multilanguageDetectionEnabled = multilanguageDetectionEnabled;
 	}
 
-	public void setMultiLanguageDetectionEnabled(
+	public void setMultilanguageDetectionEnabled(
 		UnsafeSupplier<Boolean, Exception>
-			multiLanguageDetectionEnabledUnsafeSupplier) {
+			multilanguageDetectionEnabledUnsafeSupplier) {
 
 		try {
-			multiLanguageDetectionEnabled =
-				multiLanguageDetectionEnabledUnsafeSupplier.get();
+			multilanguageDetectionEnabled =
+				multilanguageDetectionEnabledUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean multiLanguageDetectionEnabled;
+	protected Boolean multilanguageDetectionEnabled;
 
 	public PiAndJailbreakConfidenceLevel getPiAndJailbreakConfidenceLevel() {
 		return piAndJailbreakConfidenceLevel;
@@ -674,4 +674,4 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-832464751
+// LIFERAY-REST-BUILDER-HASH:-1483779983

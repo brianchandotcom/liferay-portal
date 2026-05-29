@@ -824,4 +824,4 @@ public abstract class BaseChatResourceTestCase {
 	private com.liferay.ai.hub.rest.resource.v1_0.ChatResource _chatResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1069462608
+// LIFERAY-REST-BUILDER-HASH:-191182255

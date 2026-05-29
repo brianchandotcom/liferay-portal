@@ -1982,7 +1982,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				group.getGroupId(), layout.getPlid());
 
 		Assert.assertEquals(
-			draftFragmentEntryLinks + " vs " + publishedFragmentEntryLinks,
+			StringBundler.concat(
+				"Draft fragment entry links: ", draftFragmentEntryLinks,
+				", published fragment entry links: ",
+				publishedFragmentEntryLinks),
 			publishedFragmentEntryLinks.size(), draftFragmentEntryLinks.size());
 
 		List<String> draftFragmentEntryLinkExternalReferenceCodes =

@@ -289,8 +289,10 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 			Key key = contextCompany.getKeyObj();
 
 			sb.append(
-				_encryptor.encrypt(
-					key, String.valueOf(commerceOrder.getCommerceOrderId())));
+				URLCodec.encodeURL(
+					_encryptor.encrypt(
+						key,
+						String.valueOf(commerceOrder.getCommerceOrderId()))));
 
 			sb.append(StringPool.AMPERSAND);
 		}

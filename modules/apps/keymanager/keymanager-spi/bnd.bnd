@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Key Manager SPI
+Bundle-SymbolicName: com.liferay.keymanager.spi
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.keymanager.spi.profile
+Liferay-Releng-Module-Group-Title: Key Manager

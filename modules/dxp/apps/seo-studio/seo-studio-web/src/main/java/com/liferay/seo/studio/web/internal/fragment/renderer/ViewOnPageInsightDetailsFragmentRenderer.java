@@ -6,9 +6,10 @@
 package com.liferay.seo.studio.web.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.seo.studio.web.internal.constants.SEOStudioFDSNames;
 import com.liferay.seo.studio.web.internal.display.context.ViewOnPageInsightDetailsDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,16 +39,15 @@ public class ViewOnPageInsightDetailsFragmentRenderer
 	protected ViewOnPageInsightDetailsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		String objectEntryExternalReferenceCode = ParamUtil.getString(
-			httpServletRequest, "objectEntryExternalReferenceCode");
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		JSONArray viewsJSONArray = fdsSerializer.serializeViews(
+			SEOStudioFDSNames.AFFECTED_PAGES_SECTION, httpServletRequest);
+
 		return new ViewOnPageInsightDetailsDisplayContext(
-			httpServletRequest, language, objectEntryExternalReferenceCode,
-			themeDisplay);
+			httpServletRequest, language, themeDisplay, viewsJSONArray);
 	}
 
 	@Override

@@ -4,6 +4,7 @@
  */
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -11,13 +12,19 @@ import {getInsightType} from './services/InsightTypeService';
 import {InsightType} from './types/InsightType';
 
 export default function InsightDetailView({
+	apiURL,
 	backURL,
 	externalReferenceCode,
+	fdsId,
 	screenName,
+	views,
 }: {
+	apiURL: string;
 	backURL: string;
 	externalReferenceCode: string;
+	fdsId: string;
 	screenName: string;
+	views: any[];
 }) {
 	const [data, setData] = useState<InsightType>({});
 
@@ -55,15 +62,28 @@ export default function InsightDetailView({
 			</section>
 
 			<section className="seo-studio-insight-detail-section">
-				<h3>{Liferay.Language.get('why-it-matters')}</h3>
-
-				<p>{data.whyItMatters}</p>
-			</section>
-
-			<section className="seo-studio-insight-detail-section">
 				<h3>{Liferay.Language.get('suggestion')}</h3>
 
 				<p>{data.fixHint}</p>
+			</section>
+
+			<section className="seo-studio-insight-detail-section">
+				<h3>
+					{`${Liferay.Language.get('affected-pages')} (${
+						data.affectedPagesCount ?? 0
+					})`}
+				</h3>
+
+				<FrontendDataSet
+					apiURL={apiURL}
+					appURL={`${Liferay.ThemeDisplay.getPortalURL()}/o/frontend-data-set-taglib/app`}
+					id={fdsId}
+					pagination={{initialDelta: 10}}
+					showManagementBar={false}
+					showPagination
+					showSearch={false}
+					views={views}
+				/>
 			</section>
 		</div>
 	);

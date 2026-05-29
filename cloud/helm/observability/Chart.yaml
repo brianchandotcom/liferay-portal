@@ -1,6 +1,11 @@
 apiVersion: v2
 appVersion: latest
 dependencies:
+    -   alias: grafana-alloy
+        condition: alloy.enabled
+        name: alloy
+        repository: https://grafana.github.io/helm-charts
+        version: 1.8.1
     -   condition: kube-state-metrics.enabled
         name: kube-state-metrics
         repository: https://prometheus-community.github.io/helm-charts

@@ -100,7 +100,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String userInfoEndpoint)
 		throws PortalException {
 
-		issuer = _stripTrailingSlash(issuer);
+		issuer = _removeTrailingSlash(issuer);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -209,7 +209,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		long companyId, String issuer) {
 
 		return oAuthClientASLocalMetadataPersistence.fetchByC_I(
-			companyId, _stripTrailingSlash(issuer));
+			companyId, _removeTrailingSlash(issuer));
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
-		issuer = _stripTrailingSlash(issuer);
+		issuer = _removeTrailingSlash(issuer);
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
@@ -521,8 +521,16 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
+	private String _removeTrailingSlash(String urlString) {
+		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
+			return urlString;
+		}
+
+		return urlString.substring(0, urlString.length() - 1);
+	}
+
 	private String _resolveIntrospectionEndpoint(String tokenEndpoint) {
-		tokenEndpoint = _stripTrailingSlash(tokenEndpoint);
+		tokenEndpoint = _removeTrailingSlash(tokenEndpoint);
 
 		if ((tokenEndpoint == null) || !tokenEndpoint.endsWith("/token")) {
 			return null;
@@ -532,14 +540,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			0, tokenEndpoint.length() - "/token".length());
 
 		return basePath + "/introspect";
-	}
-
-	private String _stripTrailingSlash(String urlString) {
-		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
-			return urlString;
-		}
-
-		return urlString.substring(0, urlString.length() - 1);
 	}
 
 	private void _validate(

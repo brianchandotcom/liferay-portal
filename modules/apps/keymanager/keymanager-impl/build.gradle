@@ -1,0 +1,18 @@
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "6.4.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.framework", version: "1.9.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.util.tracker", version: "1.5.2"
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:keymanager:keymanager-api")
+	compileOnly project(":apps:keymanager:keymanager-spi")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-string")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
+	testImplementation group: "org.mockito", name: "mockito-core", version: "4.4.0"
+}

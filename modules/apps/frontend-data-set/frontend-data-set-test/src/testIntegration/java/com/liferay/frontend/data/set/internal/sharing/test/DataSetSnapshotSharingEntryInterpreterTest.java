@@ -99,7 +99,6 @@ public class DataSetSnapshotSharingEntryInterpreterTest {
 				_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 					sharingEntry);
 
-			Assert.assertNotNull(sharingEntryInterpreter);
 			Assert.assertEquals(
 				StringUtil.quote(label),
 				sharingEntryInterpreter.getTitle(sharingEntry, LocaleUtil.US));

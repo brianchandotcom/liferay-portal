@@ -48,8 +48,10 @@ public class OAuthClientEntryLocalServiceTest {
 		).toString();
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";
-		String clientId = RandomTestUtil.randomString();
+
 		String customClaimsJSON = "{}";
+
+		String clientId = RandomTestUtil.randomString();
 
 		String infoJSON = JSONUtil.put(
 			"client_id", clientId

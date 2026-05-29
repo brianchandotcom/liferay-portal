@@ -939,4 +939,4 @@ public abstract class BaseCalendarResourceTestCase {
 			_calendarResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1640482060
+// LIFERAY-REST-BUILDER-HASH:-1290554727

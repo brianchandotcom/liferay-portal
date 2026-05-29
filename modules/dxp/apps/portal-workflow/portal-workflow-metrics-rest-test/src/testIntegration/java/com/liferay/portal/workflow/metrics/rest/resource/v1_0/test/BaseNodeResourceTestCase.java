@@ -1568,4 +1568,4 @@ public abstract class BaseNodeResourceTestCase {
 		_nodeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1921332010
+// LIFERAY-REST-BUILDER-HASH:-1151069399

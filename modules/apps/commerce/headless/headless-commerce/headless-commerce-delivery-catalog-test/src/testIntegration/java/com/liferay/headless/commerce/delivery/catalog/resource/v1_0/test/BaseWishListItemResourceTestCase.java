@@ -1953,4 +1953,4 @@ public abstract class BaseWishListItemResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-763623122
+// LIFERAY-REST-BUILDER-HASH:-387709365

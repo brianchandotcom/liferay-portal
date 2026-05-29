@@ -1273,4 +1273,4 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			CommerceChannelResource _commerceChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2048684386
+// LIFERAY-REST-BUILDER-HASH:-1126530279

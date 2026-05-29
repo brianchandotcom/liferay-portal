@@ -2731,4 +2731,4 @@ public abstract class BaseDataLayoutResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-395995808
+// LIFERAY-REST-BUILDER-HASH:-502886291

@@ -1198,4 +1198,4 @@ public abstract class BaseContactOrganizationResourceTestCase {
 		ContactOrganizationResource _contactOrganizationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:705703627
+// LIFERAY-REST-BUILDER-HASH:-851495604

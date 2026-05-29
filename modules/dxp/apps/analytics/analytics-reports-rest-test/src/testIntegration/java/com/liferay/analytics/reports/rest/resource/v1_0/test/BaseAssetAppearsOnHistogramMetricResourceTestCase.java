@@ -858,4 +858,4 @@ public abstract class BaseAssetAppearsOnHistogramMetricResourceTestCase {
 			_assetAppearsOnHistogramMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:309310849
+// LIFERAY-REST-BUILDER-HASH:460129784

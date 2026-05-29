@@ -125,7 +125,7 @@ public class ExportAuditEventsMVCResourceCommand
 			progressTracker.setPercent(percentage);
 		}
 
-		StringBundler sb = new StringBundler((auditEvents.size() * 3) + 4);
+		StringBundler sb = new StringBundler((auditEvents.size() * 2) + 2);
 
 		sb.append(
 			StringUtil.merge(

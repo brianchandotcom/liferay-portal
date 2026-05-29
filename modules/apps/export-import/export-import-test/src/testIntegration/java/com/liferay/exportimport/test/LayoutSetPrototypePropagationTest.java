@@ -943,8 +943,6 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
 			layoutSetLayoutLinkEnabled);
 
-		_layoutSetPrototypeLayout = propagateChanges(_layoutSetPrototypeLayout);
-
 		propagateChanges(group);
 
 		Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
@@ -954,15 +952,23 @@ public class LayoutSetPrototypePropagationTest
 		LayoutTestUtil.updateLayoutTemplateId(
 			layoutPrototypeLayout, "1_column");
 
-		if (layoutSetLayoutLinkEnabled) {
-			Assert.assertEquals(
-				initialLayoutTemplateId,
-				LayoutTestUtil.getLayoutTemplateId(layout));
-		}
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		Assert.assertEquals(
+			initialLayoutTemplateId,
+			LayoutTestUtil.getLayoutTemplateId(layout));
+
+		// The Page Template does not propagate on Site-Template-linked pages
+
+		_sites.mergeLayoutPrototypeLayout(layout);
+
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		Assert.assertEquals(
+			initialLayoutTemplateId,
+			LayoutTestUtil.getLayoutTemplateId(layout));
 
 		layout = propagateChanges(layout);
-
-		propagateChanges(group);
 
 		if (layoutSetLayoutLinkEnabled) {
 			Assert.assertEquals(
@@ -1069,6 +1075,22 @@ public class LayoutSetPrototypePropagationTest
 
 	protected void propagateChanges(Group group) throws Exception {
 		propagateChanges(RandomTestUtil.randomBoolean(), group);
+	}
+
+	@Override
+	protected Layout propagateChanges(Layout layout) throws Exception {
+		Layout layoutSetPrototypeLayout =
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				layout.getLayoutSetPrototypeLayoutERC(),
+				_layoutSetPrototypeGroup.getGroupId());
+
+		if (layoutSetPrototypeLayout != null) {
+			super.propagateChanges(layoutSetPrototypeLayout);
+		}
+
+		propagateChanges(group);
+
+		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
 	}
 
 	protected void setLayoutsUpdateable(boolean layoutsUpdateable)

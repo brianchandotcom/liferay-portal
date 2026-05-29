@@ -654,8 +654,8 @@ test(
 );
 
 test(
-	'User views shared with the current user appear under "Shared with Me"',
-	{tag: '@LPD-78095'},
+	'Shared user views appear under "Shared with Me" and are read-only for the recipient',
+	{tag: ['@LPD-78095', '@LPD-87016']},
 	async ({
 		apiHelpers,
 		dataSetFragmentPage,
@@ -747,6 +747,61 @@ test(
 					name: sharedSnapshotName,
 				})
 			).toBeVisible();
+		});
+
+		await test.step('Selecting the shared view makes it the active view', async () => {
+			await page.getByRole('option', {name: sharedSnapshotName}).click();
+
+			await expect(
+				dataSetFragmentPage.userViewsSelectorButton
+			).toHaveText(sharedSnapshotName);
+		});
+
+		await test.step('The shared view offers only "Save View As", not save, rename, share, or delete', async () => {
+			await dataSetFragmentPage.userViewsActionsButton.click();
+
+			const userViewsActionsDropdownId =
+				await dataSetFragmentPage.userViewsActionsButton.getAttribute(
+					'aria-controls'
+				);
+			const userViewsActionsDropdown = page.locator(
+				`#${userViewsActionsDropdownId}`
+			);
+
+			await userViewsActionsDropdown
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await expect(
+				userViewsActionsDropdown.getByRole('menuitem', {
+					name: 'Save View As...',
+				})
+			).toBeVisible();
+
+			await expect(
+				userViewsActionsDropdown.getByRole('menuitem', {
+					exact: true,
+					name: 'Save View',
+				})
+			).toHaveCount(0);
+
+			await expect(
+				userViewsActionsDropdown.getByRole('menuitem', {
+					name: 'Rename View',
+				})
+			).toHaveCount(0);
+
+			await expect(
+				userViewsActionsDropdown.getByRole('menuitem', {
+					name: 'Share View',
+				})
+			).toHaveCount(0);
+
+			await expect(
+				userViewsActionsDropdown.getByRole('menuitem', {
+					name: 'Delete View',
+				})
+			).toHaveCount(0);
 		});
 	}
 );

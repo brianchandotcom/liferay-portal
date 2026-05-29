@@ -7,11 +7,10 @@ package com.liferay.account.validator;
 
 import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.io.Serializable;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -31,8 +30,8 @@ public final class AccountEntryValidatorResult implements Serializable {
 		return _actionURL;
 	}
 
-	public Map<String, String> getAdditionalProps() {
-		return _additionalProps;
+	public JSONObject getAdditionalProps() {
+		return _jsonObject;
 	}
 
 	public String getKey() {
@@ -66,15 +65,15 @@ public final class AccountEntryValidatorResult implements Serializable {
 			return this;
 		}
 
-		public Builder additionalProps(Map<String, String> additionalProps) {
-			_additionalProps = additionalProps;
+		public Builder additionalProps(JSONObject jsonObject) {
+			_jsonObject = jsonObject;
 
 			return this;
 		}
 
 		public AccountEntryValidatorResult build() {
 			return new AccountEntryValidatorResult(
-				_actionLabel, _actionURL, _additionalProps, _key, _resultStatus,
+				_actionLabel, _actionURL, _jsonObject, _key, _resultStatus,
 				_resultMessage);
 		}
 
@@ -96,7 +95,7 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 		private String _actionLabel = StringPool.BLANK;
 		private String _actionURL = StringPool.BLANK;
-		private Map<String, String> _additionalProps = Collections.emptyMap();
+		private JSONObject _jsonObject;
 		private final String _key;
 		private String _resultMessage = StringPool.BLANK;
 		private String _resultStatus =
@@ -105,13 +104,12 @@ public final class AccountEntryValidatorResult implements Serializable {
 	}
 
 	private AccountEntryValidatorResult(
-		String actionLabel, String actionURL,
-		Map<String, String> additionalProps, String key, String resultStatus,
-		String resultMessage) {
+		String actionLabel, String actionURL, JSONObject jsonObject, String key,
+		String resultStatus, String resultMessage) {
 
 		_actionLabel = actionLabel;
 		_actionURL = actionURL;
-		_additionalProps = additionalProps;
+		_jsonObject = jsonObject;
 		_key = key;
 		_resultStatus = resultStatus;
 		_resultMessage = resultMessage;
@@ -119,7 +117,7 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 	private final String _actionLabel;
 	private final String _actionURL;
-	private final Map<String, String> _additionalProps;
+	private final JSONObject _jsonObject;
 	private final String _key;
 	private final String _resultMessage;
 	private final String _resultStatus;

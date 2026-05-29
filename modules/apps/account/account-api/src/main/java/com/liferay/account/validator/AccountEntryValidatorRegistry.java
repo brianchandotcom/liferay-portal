@@ -7,9 +7,9 @@ package com.liferay.account.validator;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Tancredi Covioli
@@ -21,7 +21,7 @@ public interface AccountEntryValidatorRegistry {
 	public List<AccountEntryValidator> getAccountEntryValidators();
 
 	public List<AccountEntryValidatorResult> validate(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
+			AccountEntry accountEntry, JSONObject jsonObject)
 		throws PortalException;
 
 }

@@ -8,9 +8,8 @@ package com.liferay.account.validator;
 import com.liferay.account.configuration.AccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-
-import java.util.Map;
 
 /**
  * @author Tancredi Covioli
@@ -20,11 +19,10 @@ public interface AccountEntryValidator {
 	public AccountEntryValidatorConfiguration getConfiguration(long companyId)
 		throws ConfigurationException;
 
-	public String getKey(
-		AccountEntry accountEntry, Map<String, Object> additionalProps);
+	public String getKey(AccountEntry accountEntry, JSONObject jsonObject);
 
 	public AccountEntryValidatorResult validate(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
+			AccountEntry accountEntry, JSONObject jsonObject)
 		throws PortalException;
 
 }

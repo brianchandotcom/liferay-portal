@@ -8,9 +8,8 @@ package com.liferay.account.validator;
 import com.liferay.account.configuration.AccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-
-import java.util.Map;
 
 /**
  * @author Tancredi Covioli
@@ -25,14 +24,14 @@ public abstract class BaseAccountEntryValidator
 
 	@Override
 	public final AccountEntryValidatorResult validate(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
+			AccountEntry accountEntry, JSONObject jsonObject)
 		throws PortalException {
 
-		return doValidate(accountEntry, additionalProps);
+		return doValidate(accountEntry, jsonObject);
 	}
 
 	protected abstract AccountEntryValidatorResult doValidate(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
+			AccountEntry accountEntry, JSONObject jsonObject)
 		throws PortalException;
 
 }

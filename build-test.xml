@@ -3593,6 +3593,144 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-ext-properties-dl-store">
+		<sequential>
+			<get-testcase-property property.name="store.migration.test" />
+
+			<if>
+				<or>
+					<equals arg1="aws.store.enabled" arg2="" />
+					<not>
+						<isset property="aws.store.enabled" />
+					</not>
+				</or>
+				<then>
+					<get-testcase-property property.name="aws.store.enabled" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${aws.store.enabled}" arg2="true" />
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+				</and>
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
+				</then>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="azure.store.enabled" arg2="" />
+					<not>
+						<isset property="azure.store.enabled" />
+					</not>
+				</or>
+				<then>
+					<get-testcase-property property.name="azure.store.enabled" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${azure.store.enabled}" arg2="true" />
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+				</and>
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+dl.store.impl=com.liferay.portal.store.azure.AzureStore</echo>
+				</then>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="gcs.store.enabled" arg2="" />
+					<not>
+						<isset property="gcs.store.enabled" />
+					</not>
+				</or>
+				<then>
+					<get-testcase-property property.name="gcs.store.enabled" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${gcs.store.enabled}" arg2="true" />
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+				</and>
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
+				</then>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="ibm.store.enabled" arg2="" />
+					<not>
+						<isset property="ibm.store.enabled" />
+					</not>
+				</or>
+				<then>
+					<get-testcase-property property.name="ibm.store.enabled" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${ibm.store.enabled}" arg2="true" />
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+				</and>
+
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="dl.store.antivirus.enabled" />
+			<propertycopy from="dl.store.antivirus.enabled[${env.CI_TEST_SUITE}]" name="dl.store.antivirus.enabled" silent="true" />
+
+			<if>
+				<equals arg1="${dl.store.antivirus.enabled}" arg2="true" />
+				<then>
+					<is-cloud-ci-node />
+
+					<if>
+						<equals arg1="${is.cloud.ci.node}" arg2="true" />
+						<then>
+							<property name="clamd.docker.image" value="clamav/clamav:stable" />
+							<pull-clamd-docker-container image="${clamd.docker.image}" />
+							<start-docker-container image="${clamd.docker.image}" name="clamd">\
+								--expose=3310 \
+							</start-docker-container>
+						</then>
+					</if>
+
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+dl.store.antivirus.enabled=true</echo>
+
+					<property name="osgi.module.configuration.file.names" value="com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config" />
+					<property name="osgi.module.configurations" value="hostname=&quot;clamd&quot;${line.separator}port=I&quot;3310&quot;" />
+
+					<antcall target="deploy-osgi-module-configurations" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-portal-licenses">
 		<sequential>
 			<get-testcase-property property.name="dxp.license.file" />
@@ -13067,65 +13205,13 @@ ${update.properties}</echo>
 
 		<prepare-portal-ext-properties-clustering />
 
+		<prepare-portal-ext-properties-dl-store />
+
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
 jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="store.migration.test" />
-
-		<if>
-			<or>
-				<equals arg1="aws.store.enabled" arg2="" />
-				<not>
-					<isset property="aws.store.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="aws.store.enabled" />
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${aws.store.enabled}" arg2="true" />
-				<not>
-					<equals arg1="${store.migration.test}" arg2="true" />
-				</not>
-			</and>
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="azure.store.enabled" arg2="" />
-				<not>
-					<isset property="azure.store.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="azure.store.enabled" />
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${azure.store.enabled}" arg2="true" />
-				<not>
-					<equals arg1="${store.migration.test}" arg2="true" />
-				</not>
-			</and>
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-dl.store.impl=com.liferay.portal.store.azure.AzureStore</echo>
 			</then>
 		</if>
 
@@ -13215,35 +13301,6 @@ company.default.web.id=www.able.com</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="dl.store.antivirus.enabled" />
-		<propertycopy from="dl.store.antivirus.enabled[${env.CI_TEST_SUITE}]" name="dl.store.antivirus.enabled" silent="true" />
-
-		<if>
-			<equals arg1="${dl.store.antivirus.enabled}" arg2="true" />
-			<then>
-				<is-cloud-ci-node />
-
-				<if>
-					<equals arg1="${is.cloud.ci.node}" arg2="true" />
-					<then>
-						<property name="clamd.docker.image" value="clamav/clamav:stable" />
-						<pull-clamd-docker-container image="${clamd.docker.image}" />
-						<start-docker-container image="${clamd.docker.image}" name="clamd">\
-							--expose=3310 \
-						</start-docker-container>
-					</then>
-				</if>
-
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-dl.store.antivirus.enabled=true</echo>
-
-				<property name="osgi.module.configuration.file.names" value="com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config" />
-				<property name="osgi.module.configurations" value="hostname=&quot;clamd&quot;${line.separator}port=I&quot;3310&quot;" />
-
-				<antcall target="deploy-osgi-module-configurations" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="external.database.enabled" />
 
 		<if>
@@ -13260,32 +13317,6 @@ jdbc.test.password=${database.password}</echo>
 					match="(jdbc.test.url.*)(lportal)"
 					replace="\1lportal1"
 				/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="store.migration.test" />
-
-		<if>
-			<or>
-				<equals arg1="gcs.store.enabled" arg2="" />
-				<not>
-					<isset property="gcs.store.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="gcs.store.enabled" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="ibm.store.enabled" arg2="" />
-				<not>
-					<isset property="ibm.store.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="ibm.store.enabled" />
 			</then>
 		</if>
 
@@ -13320,33 +13351,6 @@ storeProtocol="pop3s"
 				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
 popServerSubdomain=""
 ]]></echo>
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${gcs.store.enabled}" arg2="true" />
-				<not>
-					<equals arg1="${store.migration.test}" arg2="true" />
-				</not>
-			</and>
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${ibm.store.enabled}" arg2="true" />
-				<not>
-					<equals arg1="${store.migration.test}" arg2="true" />
-				</not>
-			</and>
-
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
 			</then>
 		</if>
 

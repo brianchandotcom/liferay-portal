@@ -149,3 +149,52 @@ test(
 		await expect(adminCheckbox).toBeChecked();
 	}
 );
+
+test(
+	'Selecting multiple invited users and clicking bulk Delete removes them at once',
+	{
+		tag: '@LRAC-9064',
+	},
+
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		const emails = [
+			`bulk1-${Date.now()}@liferay.com`,
+			`bulk2-${Date.now()}@liferay.com`,
+		];
+
+		await page.getByRole('button', {name: 'Invite Users'}).click();
+
+		for (const email of emails) {
+			await page.getByPlaceholder('Enter Email Address').fill(email);
+
+			await page.keyboard.press('Enter');
+		}
+
+		await page.getByRole('button', {name: 'Send'}).click();
+
+		await expect(
+			page.getByText('Success:Invitations have been sent.')
+		).toBeVisible();
+
+		for (const email of emails) {
+			await page
+				.getByRole('row', {name: new RegExp(email)})
+				.getByRole('checkbox')
+				.check();
+		}
+
+		await page.getByRole('button', {exact: true, name: 'Delete'}).click();
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+
+		for (const email of emails) {
+			await expect(page.getByRole('cell', {name: email})).toHaveCount(0);
+		}
+	}
+);

@@ -3404,6 +3404,118 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-ext-properties-default">
+		<sequential>
+			<delete file="portal-impl/src/portal-ext.properties" />
+
+			<if>
+				<and>
+					<isset property="test.base.dir.name" />
+					<available file="${test.base.dir.name}/portal.properties" />
+				</and>
+				<then>
+					<copy
+						file="${test.base.dir.name}/portal.properties"
+						tofile="portal-impl/src/portal-ext.properties"
+					/>
+				</then>
+			</if>
+
+			<propertycopy from="database.partition.enabled[${env.CI_TEST_SUITE}]" name="database.partition.enabled" override="true" silent="true" />
+
+			<if>
+				<or>
+					<equals arg1="database.partition.enabled" arg2="" />
+					<not>
+						<isset property="database.partition.enabled" />
+					</not>
+				</or>
+				<then>
+					<get-testcase-property property.name="database.partition.enabled" />
+				</then>
+			</if>
+
+			<get-testcase-property property.name="liferay.online.properties" />
+			<get-testcase-property property.name="portal.version" />
+
+			<if>
+				<and>
+					<isset property="portal.version" />
+					<or>
+						<equals arg1="database.partition.enabled" arg2="true" />
+						<isset property="liferay.online.properties" />
+					</or>
+				</and>
+				<then>
+					<property name="database.max.pool.size" value="50" />
+				</then>
+				<else>
+					<property name="database.max.pool.size" value="30" />
+				</else>
+			</if>
+
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.url" />
+			<get-database-property property.name="database.username" />
+			<get-database-property property.name="database.version" />
+
+			<local name="database.url.parameters" />
+
+			<prepare-database-url-parameters url="${database.url}" />
+
+			<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+liferay.home=${liferay.home}
+
+upgrade.database.dl.storage.check.disabled=true
+
+jdbc.default.jndi.name=
+jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}${database.url.parameters}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}
+
+#
+# HikariCP
+#
+
+jdbc.default.connectionTimeout=600000
+jdbc.default.maximumPoolSize=${database.max.pool.size}
+jdbc.default.minimumIdle=0
+
+enterprise.product.notification.enabled=false
+company.security.strangers.verify=false
+passwords.default.policy.change.required=false
+default.admin.password=${test.portal.default.admin.password}
+browser.launcher.url=
+setup.wizard.enabled=false
+initial.system.check.enabled=true
+memory.scheduler.org.quartz.threadPool.threadCount=1
+persisted.scheduler.org.quartz.threadPool.threadCount=1
+virtual.hosts.default.site.name=
+virtual.hosts.valid.hosts=*
+com.liferay.portal.servlet.filters.strip.StripFilter=true
+web.server.http.port=8080
+admin.email.from.address=test@liferay.com
+announcements.email.to.address=noreply@liferay.com
+login.secure.forgot.password=false
+captcha.enforce.disabled=true
+			</echo>
+
+			<mkdir dir="${liferay.home}/osgi/configs" />
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config"><![CDATA[createAccountCaptchaEnabled="false"
+maxChallenges="-1"
+sendPasswordCaptchaEnabled="false"]]></echo>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
+sendBlacklist=[]
+jndiName=""
+]]></echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-portal-licenses">
 		<sequential>
 			<get-testcase-property property.name="dxp.license.file" />
@@ -12866,113 +12978,7 @@ ${update.properties}</echo>
 	</target>
 
 	<target name="prepare-portal-ext-properties">
-		<delete file="portal-impl/src/portal-ext.properties" />
-
-		<if>
-			<and>
-				<isset property="test.base.dir.name" />
-				<available file="${test.base.dir.name}/portal.properties" />
-			</and>
-			<then>
-				<copy
-					file="${test.base.dir.name}/portal.properties"
-					tofile="portal-impl/src/portal-ext.properties"
-				/>
-			</then>
-		</if>
-
-		<propertycopy from="database.partition.enabled[${env.CI_TEST_SUITE}]" name="database.partition.enabled" override="true" silent="true" />
-
-		<if>
-			<or>
-				<equals arg1="database.partition.enabled" arg2="" />
-				<not>
-					<isset property="database.partition.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="database.partition.enabled" />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="liferay.online.properties" />
-		<get-testcase-property property.name="portal.version" />
-
-		<if>
-			<and>
-				<isset property="portal.version" />
-				<or>
-					<equals arg1="database.partition.enabled" arg2="true" />
-					<isset property="liferay.online.properties" />
-				</or>
-			</and>
-			<then>
-				<property name="database.max.pool.size" value="50" />
-			</then>
-			<else>
-				<property name="database.max.pool.size" value="30" />
-			</else>
-		</if>
-
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-		<get-database-property property.name="database.version" />
-
-		<local name="database.url.parameters" />
-
-		<prepare-database-url-parameters url="${database.url}" />
-
-		<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-liferay.home=${liferay.home}
-
-upgrade.database.dl.storage.check.disabled=true
-
-jdbc.default.jndi.name=
-jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}${database.url.parameters}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}
-
-#
-# HikariCP
-#
-
-jdbc.default.connectionTimeout=600000
-jdbc.default.maximumPoolSize=${database.max.pool.size}
-jdbc.default.minimumIdle=0
-
-enterprise.product.notification.enabled=false
-company.security.strangers.verify=false
-passwords.default.policy.change.required=false
-default.admin.password=${test.portal.default.admin.password}
-browser.launcher.url=
-setup.wizard.enabled=false
-initial.system.check.enabled=true
-memory.scheduler.org.quartz.threadPool.threadCount=1
-persisted.scheduler.org.quartz.threadPool.threadCount=1
-virtual.hosts.default.site.name=
-virtual.hosts.valid.hosts=*
-com.liferay.portal.servlet.filters.strip.StripFilter=true
-web.server.http.port=8080
-admin.email.from.address=test@liferay.com
-announcements.email.to.address=noreply@liferay.com
-login.secure.forgot.password=false
-captcha.enforce.disabled=true
-		</echo>
-
-		<mkdir dir="${liferay.home}/osgi/configs" />
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config"><![CDATA[createAccountCaptchaEnabled="false"
-maxChallenges="-1"
-sendPasswordCaptchaEnabled="false"]]></echo>
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
-sendBlacklist=[]
-jndiName=""
-]]></echo>
+		<prepare-portal-ext-properties-default />
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

@@ -86,7 +86,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 		portletLayoutPageTemplateEntryLinkEnabled.addEventListener(
 			'change',
 			(event) => {
-				var layoutPrototypeLinkChecked = event.currentTarget.checked;
+				var portletLayoutPageTemplateEntryLinkChecked =
+					event.currentTarget.checked;
 
 				var layoutPrototypeInfoMessage = document.querySelector(
 					'.layout-prototype-info-message'
@@ -97,7 +98,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				);
 
 				if (layoutPrototypeInfoMessage) {
-					if (layoutPrototypeLinkChecked) {
+					if (portletLayoutPageTemplateEntryLinkChecked) {
 						layoutPrototypeInfoMessage.classList.remove('hide');
 
 						applyLayoutPrototype.value = '<%= true %>';
@@ -114,7 +115,10 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				);
 
 				Array.prototype.forEach.call(propagatableFields, (field, index) => {
-					Liferay.Util.toggleDisabled(field, layoutPrototypeLinkChecked);
+					Liferay.Util.toggleDisabled(
+						field,
+						portletLayoutPageTemplateEntryLinkChecked
+					);
 				});
 			}
 		);

@@ -195,7 +195,9 @@ export const SegmentProfileRoutes = () => {
 				<BasePage.Row>
 					<BasePage.Header.TitleSection
 						className='mb-3'
-						subtitle={segment.externalReferenceCode}
+						subtitle={`${Liferay.Language.get('erc')}: ${
+							segment.externalReferenceCode
+						}`}
 						title={title}
 					>
 						<Label display='secondary' size='lg' uppercase>

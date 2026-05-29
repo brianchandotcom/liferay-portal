@@ -150,10 +150,10 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	@Test
-	public void testNotFoundResponse() throws Exception {
-		_testNotFoundResponse("/foo/no-such-model-exception");
-		_testNotFoundResponse("/foo/principal-exception");
-		_testNotFoundResponse("/foo/security-exception");
+	public void testStatusNotFound() throws Exception {
+		_testStatusNotFound("/foo/no-such-model-exception");
+		_testStatusNotFound("/foo/principal-exception");
+		_testStatusNotFound("/foo/security-exception");
 	}
 
 	@Test
@@ -323,7 +323,7 @@ public class JSONWebServiceServiceActionTest
 			});
 	}
 
-	private void _testNotFoundResponse(String path) throws Exception {
+	private void _testStatusNotFound(String path) throws Exception {
 		registerActionClass(FooService.class);
 
 		MockHttpServletRequest mockHttpServletRequest =

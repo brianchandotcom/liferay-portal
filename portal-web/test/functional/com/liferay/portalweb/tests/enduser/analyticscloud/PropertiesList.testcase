@@ -121,39 +121,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
-	@priority = 3
-	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
-		task ("go to properties and add 2 new properties") {
-			ACNavigation.goToSettings();
-
-			var propertyList = "Property ViewSettingInfoAreGlobalAndDontDependOfProperty 1,Property ViewSettingInfoAreGlobalAndDontDependOfProperty 2";
-
-			for (var n : list ${propertyList}) {
-				ACSettings.goToProperties();
-
-				ACProperties.addNewProperty(propertyName = ${n});
-			}
-		}
-
-		task ("switch between properties and assert the workspace settings is the same for those properties") {
-			for (var n : list ${propertyList}) {
-				ACNavigation.exitSettings();
-
-				ACProperties.switchProperty(propertyName = ${n});
-
-				ACNavigation.goToSettings();
-
-				ACSettings.goToWorkspace();
-
-				ACWorkspace.viewWorkspaceSettings(
-					timezone = "UTC",
-					timezoneId = "UTC Coordinated Universal Time (UTC)",
-					workspaceName = "FARO-DEV-liferay");
-			}
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
 	@priority = 3
 	test ViewTheDropdownTransition {

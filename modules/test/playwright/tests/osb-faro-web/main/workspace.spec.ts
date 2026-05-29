@@ -15,7 +15,7 @@ const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 test(
 	'Workspace settings cancel reverts the unsaved workspace name change',
 	{
-		tag: '@LRAC-9134',
+		tag: ['@LRAC-9134', '@LRAC-9118'],
 	},
 	async ({apiHelpers, page}) => {
 		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();

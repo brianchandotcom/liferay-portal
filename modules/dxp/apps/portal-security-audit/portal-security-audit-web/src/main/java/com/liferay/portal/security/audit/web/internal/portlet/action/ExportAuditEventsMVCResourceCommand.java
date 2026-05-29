@@ -119,10 +119,8 @@ public class ExportAuditEventsMVCResourceCommand
 		List<AuditEvent> auditEvents, String[] columns,
 		ProgressTracker progressTracker) {
 
-		int percentage = 10;
-
 		if (progressTracker != null) {
-			progressTracker.setPercent(percentage);
+			progressTracker.setPercent(10);
 		}
 
 		StringBundler sb = new StringBundler((auditEvents.size() * 2) + 2);
@@ -158,9 +156,8 @@ public class ExportAuditEventsMVCResourceCommand
 			sb.append(StringPool.NEW_LINE);
 
 			if (progressTracker != null) {
-				percentage = Math.min(10 + ((i * 90) / auditEvents.size()), 99);
-
-				progressTracker.setPercent(percentage);
+				progressTracker.setPercent(
+					Math.min(10 + ((i * 90) / auditEvents.size()), 99));
 			}
 		}
 

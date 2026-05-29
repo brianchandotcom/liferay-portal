@@ -111,10 +111,6 @@ export default function ContentEditorPreview({
 		window
 	);
 
-	if (!Liferay.FeatureFlags['LPD-44507']) {
-		return null;
-	}
-
 	return (
 		<div
 			aria-labelledby={titleId}

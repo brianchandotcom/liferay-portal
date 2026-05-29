@@ -227,52 +227,50 @@ export default function ContentEditorToolbar({
 				</>
 			)}
 
-			{Liferay.FeatureFlags['LPD-44507'] ? (
-				<Toolbar.Item className="nav-divider-end">
-					<ClayButton
-						aria-label={
-							showPreview
-								? Liferay.Language.get('close-preview')
-								: Liferay.Language.get('open-preview')
-						}
-						aria-pressed={showPreview}
-						borderless
-						className={classNames('d-lg-block d-none', {
-							active: showPreview,
-						})}
-						displayType="secondary"
-						onClick={() => {
-							const nextShowPreview = !showPreview;
+			<Toolbar.Item className="nav-divider-end">
+				<ClayButton
+					aria-label={
+						showPreview
+							? Liferay.Language.get('close-preview')
+							: Liferay.Language.get('open-preview')
+					}
+					aria-pressed={showPreview}
+					borderless
+					className={classNames('d-lg-block d-none', {
+						active: showPreview,
+					})}
+					displayType="secondary"
+					onClick={() => {
+						const nextShowPreview = !showPreview;
 
-							setShowPreview(nextShowPreview);
+						setShowPreview(nextShowPreview);
 
-							Liferay.fire(EVENT_HANDLE_PREVIEW, {
-								showPreview: nextShowPreview,
-							});
-						}}
-						ref={previewButtonRef}
-						size="sm"
-					>
-						<ClayIcon
-							className="inline-item inline-item-before"
-							symbol="view"
-						/>
-
-						{Liferay.Language.get('preview')}
-					</ClayButton>
-
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('preview')}
-						borderless
-						className="c-mr-1 d-lg-none"
-						displayType="secondary"
-						onClick={() => setShowPreviewModal(true)}
-						size="sm"
+						Liferay.fire(EVENT_HANDLE_PREVIEW, {
+							showPreview: nextShowPreview,
+						});
+					}}
+					ref={previewButtonRef}
+					size="sm"
+				>
+					<ClayIcon
+						className="inline-item inline-item-before"
 						symbol="view"
-						title={Liferay.Language.get('preview')}
 					/>
-				</Toolbar.Item>
-			) : null}
+
+					{Liferay.Language.get('preview')}
+				</ClayButton>
+
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('preview')}
+					borderless
+					className="c-mr-1 d-lg-none"
+					displayType="secondary"
+					onClick={() => setShowPreviewModal(true)}
+					size="sm"
+					symbol="view"
+					title={Liferay.Language.get('preview')}
+				/>
+			</Toolbar.Item>
 
 			<Toolbar.Item className="c-pl-0">
 				<ClayLink

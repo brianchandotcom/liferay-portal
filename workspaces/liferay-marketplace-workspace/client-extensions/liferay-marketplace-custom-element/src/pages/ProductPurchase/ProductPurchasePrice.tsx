@@ -33,13 +33,20 @@ const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 			cart?.summary?.totalFormatted ||
 			marketplaceDeliveryProduct.getPrice();
 
-		const vatText =
+		if (
 			marketplaceDeliveryProduct.getPriceModel() ===
 			ProductPriceModel.PAID
-				? `(${i18n.translate('excluding-vat')})`
-				: '';
+		) {
+			const vatText =
+				marketplaceDeliveryProduct.getPriceModel() ===
+				ProductPriceModel.PAID
+					? `(${i18n.translate('excluding-vat')})`
+					: '';
 
-		return `${productPrice} ${vatText}`;
+			return `${productPrice} ${vatText}`;
+		}
+
+		return 'Free';
 	};
 
 	return (

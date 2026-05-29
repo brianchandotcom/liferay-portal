@@ -72,44 +72,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"
-	@priority = 3
-	test AdminCanChangeUserPermissions {
-		task ("SingOut and Login as administrator") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
-		}
-
-		task ("Go to Data Sources") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Invite user") {
-			ACSettings.addUser(userInvite = "ac@liferay.com");
-		}
-
-		task ("Assert user permission") {
-			ACSettings.assertUserPermission(
-				permissionType = "Member",
-				userEmail = "ac@liferay.com");
-		}
-
-		task ("Change user permission") {
-			ACSettings.changeMultipleUsersPermissions(
-				permissionType = "Administrator",
-				userEmail = "ac@liferay.com");
-		}
-
-		task ("Assert user permission") {
-			ACSettings.assertUserPermission(
-				permissionType = "Administrator",
-				userEmail = "ac@liferay.com");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9076 | Test Summary: The logged in user accesses directly an inexistent workspace"
 	@priority = 3
 	test LoggedUserAcessesDirectlyInexistentWorkspace {

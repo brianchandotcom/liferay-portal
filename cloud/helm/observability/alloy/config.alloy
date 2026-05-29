@@ -1,14 +1,11 @@
 {{- $cloud := include "observability.cloudProvider" . -}}
 {{- $interval := .Values.alloy.scrapeInterval -}}
-{{- $ksmName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" -}}
-{{- $neName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" -}}
-{{- $pgName := index .Values "prometheus-pushgateway" "nameOverride" | default "prometheus-pushgateway" -}}
 {{- $rw := .Values.alloy.remoteWrite -}}
 {{- if and (ne $cloud "aws") (ne $cloud "gcp") (not $rw.url) -}}
 {{- fail "alloy.remoteWrite.url is required when cloudProvider is not aws or gcp" -}}
 {{- end -}}
-{{- if and (eq $cloud "aws") (not .Values.aws.ampWorkspaceUrl) -}}
-{{- fail "aws.ampWorkspaceUrl is required when cloudProvider is aws" -}}
+{{- if and (eq $cloud "aws") (not .Values.aws.ampWorkspaceURL) -}}
+{{- fail "aws.ampWorkspaceURL is required when cloudProvider is aws" -}}
 {{- end -}}
 {{- if and (eq $cloud "gcp") (not .Values.gcp.projectId) -}}
 {{- fail "gcp.projectId is required when cloudProvider is gcp" -}}
@@ -31,7 +28,7 @@ prometheus.remote_write "default" {
         sigv4 {
             region = {{ .Values.aws.region | quote }}
         }
-        url = "{{ trimSuffix "/" .Values.aws.ampWorkspaceUrl }}/api/v1/remote_write"
+        url = "{{ trimSuffix "/" .Values.aws.ampWorkspaceURL }}/api/v1/remote_write"
     }
 }
 {{- else if eq $cloud "gcp" }}
@@ -54,39 +51,6 @@ prometheus.remote_write "default" {
         {{- end }}
         url = {{ $rw.url | quote }}
     }
-}
-{{- end }}
-
-{{- if .Values.alloy.scrape.kubeStateMetrics.enabled }}
-discovery.kubernetes "kube_state_metrics" {
-    role = "service"
-    selectors {
-        label = "app.kubernetes.io/name={{ $ksmName }}"
-        role = "service"
-    }
-}
-
-discovery.relabel "kube_state_metrics" {
-    rule {
-        action = "keep"
-        regex = "{{ .Values.alloy.scrape.kubeStateMetrics.port }}"
-        source_labels = ["__meta_kubernetes_service_port_name"]
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.kubeStateMetrics.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "kube-state-metrics"
-        target_label = "job"
-    }
-    targets = discovery.kubernetes.kube_state_metrics.targets
-}
-
-prometheus.scrape "kube_state_metrics" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.kube_state_metrics.output
 }
 {{- end }}
 
@@ -124,211 +88,6 @@ prometheus.scrape "cadvisor" {
     tls_config {
         ca_file = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
         insecure_skip_verify = true
-    }
-}
-{{- end }}
-
-{{- if .Values.alloy.scrape.nodeExporter.enabled }}
-discovery.kubernetes "node_exporter" {
-    role = "pod"
-    selectors {
-        label = "app.kubernetes.io/name={{ $neName }}"
-        role = "pod"
-    }
-}
-
-discovery.relabel "node_exporter" {
-    rule {
-        action = "keep"
-        regex = "{{ .Values.alloy.scrape.nodeExporter.port }}"
-        source_labels = ["__meta_kubernetes_pod_container_port_name"]
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.nodeExporter.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "node-exporter"
-        target_label = "job"
-    }
-    targets = discovery.kubernetes.node_exporter.targets
-}
-
-prometheus.scrape "node_exporter" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.node_exporter.output
-}
-{{- end }}
-
-{{- if .Values.alloy.scrape.pushgateway.enabled }}
-discovery.kubernetes "pushgateway" {
-    role = "pod"
-    selectors {
-        label = "app.kubernetes.io/name={{ $pgName }}"
-        role = "pod"
-    }
-}
-
-discovery.relabel "pushgateway" {
-    rule {
-        action = "keep"
-        regex = "{{ .Values.alloy.scrape.pushgateway.port }}"
-        source_labels = ["__meta_kubernetes_pod_container_port_name"]
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.pushgateway.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "pushgateway"
-        target_label = "job"
-    }
-    rule {
-        action = "replace"
-        replacement = "true"
-        target_label = "honor_labels"
-    }
-    targets = discovery.kubernetes.pushgateway.targets
-}
-
-prometheus.scrape "pushgateway" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    honor_labels = true
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.pushgateway.output
-}
-{{- end }}
-
-{{- if .Values.alloy.scrape.liferay.enabled }}
-discovery.kubernetes "liferay_pods" {
-    role = "pod"
-    {{- with .Values.alloy.scrape.liferay.matchLabels }}
-    {{- $pairs := list }}
-    {{- range $k, $v := . }}
-    {{- $pairs = append $pairs (printf "%s=%s" $k $v) }}
-    {{- end }}
-    selectors {
-        label = "{{ join "," $pairs }}"
-        role = "pod"
-    }
-    {{- end }}
-}
-
-discovery.relabel "liferay_pods" {
-    rule {
-        replacement = "$1:{{ .Values.alloy.scrape.liferay.port }}"
-        source_labels = ["__meta_kubernetes_pod_ip"]
-        target_label = "__address__"
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.liferay.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "liferay"
-        target_label = "job"
-    }
-    rule {
-        source_labels = ["__meta_kubernetes_namespace"]
-        target_label = "namespace"
-    }
-    rule {
-        source_labels = ["__meta_kubernetes_pod_name"]
-        target_label = "pod"
-    }
-    targets = discovery.kubernetes.liferay_pods.targets
-}
-
-prometheus.scrape "liferay" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.liferay_pods.output
-}
-{{- end }}
-
-{{- if .Values.alloy.scrape.envoy.enabled }}
-discovery.kubernetes "envoy_pods" {
-    role = "pod"
-    selectors {
-        label = "app.kubernetes.io/managed-by=envoy-gateway"
-        role = "pod"
-    }
-}
-
-discovery.relabel "envoy_pods" {
-    rule {
-        replacement = "$1:{{ .Values.alloy.scrape.envoy.port }}"
-        source_labels = ["__meta_kubernetes_pod_ip"]
-        target_label = "__address__"
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.envoy.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "envoy"
-        target_label = "job"
-    }
-    rule {
-        source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_namespace"]
-        target_label = "namespace"
-    }
-    rule {
-        source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_name"]
-        target_label = "gateway"
-    }
-    rule {
-        source_labels = ["__meta_kubernetes_pod_name"]
-        target_label = "pod"
-    }
-    targets = discovery.kubernetes.envoy_pods.targets
-}
-
-prometheus.scrape "envoy" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.envoy_pods.output
-}
-{{- end }}
-
-{{- if and (eq $cloud "aws") .Values.alloy.scrape.rdsExporter.enabled }}
-discovery.kubernetes "rds_exporter" {
-    role = "service"
-    selectors {
-        label = "app.kubernetes.io/name=liferay-rds-exporter"
-        role = "service"
-    }
-}
-
-discovery.relabel "rds_exporter" {
-    rule {
-        action = "keep"
-        regex = "{{ .Values.alloy.scrape.rdsExporter.port }}"
-        source_labels = ["__meta_kubernetes_service_port_name"]
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.rdsExporter.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "prometheus-rds-exporter"
-        target_label = "job"
-    }
-    targets = discovery.kubernetes.rds_exporter.targets
-}
-
-prometheus.scrape "rds_exporter" {
-    forward_to = [prometheus.relabel.rds_exporter.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.rds_exporter.output
-}
-
-prometheus.relabel "rds_exporter" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    rule {
-        source_labels = ["dbidentifier"]
-        target_label = "dbinstance_identifier"
     }
 }
 {{- end }}
@@ -381,6 +140,247 @@ prometheus.relabel "cloudwatch_rds" {
     forward_to = [prometheus.remote_write.default.receiver]
     rule {
         source_labels = ["dimension_DBInstanceIdentifier"]
+        target_label = "dbinstance_identifier"
+    }
+}
+{{- end }}
+
+{{- if .Values.alloy.scrape.envoy.enabled }}
+discovery.kubernetes "envoy_pods" {
+    role = "pod"
+    selectors {
+        label = "app.kubernetes.io/managed-by=envoy-gateway"
+        role = "pod"
+    }
+}
+
+discovery.relabel "envoy_pods" {
+    rule {
+        replacement = "$1:{{ .Values.alloy.scrape.envoy.port }}"
+        source_labels = ["__meta_kubernetes_pod_ip"]
+        target_label = "__address__"
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.envoy.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "envoy"
+        target_label = "job"
+    }
+    rule {
+        source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_namespace"]
+        target_label = "namespace"
+    }
+    rule {
+        source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_name"]
+        target_label = "gateway"
+    }
+    rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label = "pod"
+    }
+    targets = discovery.kubernetes.envoy_pods.targets
+}
+
+prometheus.scrape "envoy" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.envoy_pods.output
+}
+{{- end }}
+
+{{- if .Values.alloy.scrape.kubeStateMetrics.enabled }}
+{{- $ksmName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" }}
+discovery.kubernetes "kube_state_metrics" {
+    role = "service"
+    selectors {
+        label = "app.kubernetes.io/name={{ $ksmName }}"
+        role = "service"
+    }
+}
+
+discovery.relabel "kube_state_metrics" {
+    rule {
+        action = "keep"
+        regex = "{{ .Values.alloy.scrape.kubeStateMetrics.port }}"
+        source_labels = ["__meta_kubernetes_service_port_name"]
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.kubeStateMetrics.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "kube-state-metrics"
+        target_label = "job"
+    }
+    targets = discovery.kubernetes.kube_state_metrics.targets
+}
+
+prometheus.scrape "kube_state_metrics" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.kube_state_metrics.output
+}
+{{- end }}
+
+{{- if .Values.alloy.scrape.liferay.enabled }}
+discovery.kubernetes "liferay_pods" {
+    role = "pod"
+    {{- with .Values.alloy.scrape.liferay.matchLabels }}
+    {{- $pairs := list }}
+    {{- range $k, $v := . }}
+    {{- $pairs = append $pairs (printf "%s=%s" $k $v) }}
+    {{- end }}
+    selectors {
+        label = "{{ join "," $pairs }}"
+        role = "pod"
+    }
+    {{- end }}
+}
+
+discovery.relabel "liferay_pods" {
+    rule {
+        replacement = "$1:{{ .Values.alloy.scrape.liferay.port }}"
+        source_labels = ["__meta_kubernetes_pod_ip"]
+        target_label = "__address__"
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.liferay.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "liferay"
+        target_label = "job"
+    }
+    rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        target_label = "namespace"
+    }
+    rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label = "pod"
+    }
+    targets = discovery.kubernetes.liferay_pods.targets
+}
+
+prometheus.scrape "liferay" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.liferay_pods.output
+}
+{{- end }}
+
+{{- if .Values.alloy.scrape.nodeExporter.enabled }}
+{{- $neName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" }}
+discovery.kubernetes "node_exporter" {
+    role = "pod"
+    selectors {
+        label = "app.kubernetes.io/name={{ $neName }}"
+        role = "pod"
+    }
+}
+
+discovery.relabel "node_exporter" {
+    rule {
+        action = "keep"
+        regex = "{{ .Values.alloy.scrape.nodeExporter.port }}"
+        source_labels = ["__meta_kubernetes_pod_container_port_name"]
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.nodeExporter.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "node-exporter"
+        target_label = "job"
+    }
+    targets = discovery.kubernetes.node_exporter.targets
+}
+
+prometheus.scrape "node_exporter" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.node_exporter.output
+}
+{{- end }}
+
+{{- if .Values.alloy.scrape.pushgateway.enabled }}
+{{- $pgName := index .Values "prometheus-pushgateway" "nameOverride" | default "prometheus-pushgateway" }}
+discovery.kubernetes "pushgateway" {
+    role = "pod"
+    selectors {
+        label = "app.kubernetes.io/name={{ $pgName }}"
+        role = "pod"
+    }
+}
+
+discovery.relabel "pushgateway" {
+    rule {
+        action = "keep"
+        regex = "{{ .Values.alloy.scrape.pushgateway.port }}"
+        source_labels = ["__meta_kubernetes_pod_container_port_name"]
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.pushgateway.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "pushgateway"
+        target_label = "job"
+    }
+    rule {
+        action = "replace"
+        replacement = "true"
+        target_label = "honor_labels"
+    }
+    targets = discovery.kubernetes.pushgateway.targets
+}
+
+prometheus.scrape "pushgateway" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    honor_labels = true
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.pushgateway.output
+}
+{{- end }}
+
+{{- if and (eq $cloud "aws") .Values.alloy.scrape.rdsExporter.enabled }}
+discovery.kubernetes "rds_exporter" {
+    role = "service"
+    selectors {
+        label = "app.kubernetes.io/name=liferay-rds-exporter"
+        role = "service"
+    }
+}
+
+discovery.relabel "rds_exporter" {
+    rule {
+        action = "keep"
+        regex = "{{ .Values.alloy.scrape.rdsExporter.port }}"
+        source_labels = ["__meta_kubernetes_service_port_name"]
+    }
+    rule {
+        replacement = {{ .Values.alloy.scrape.rdsExporter.path | quote }}
+        target_label = "__metrics_path__"
+    }
+    rule {
+        replacement = "prometheus-rds-exporter"
+        target_label = "job"
+    }
+    targets = discovery.kubernetes.rds_exporter.targets
+}
+
+prometheus.scrape "rds_exporter" {
+    forward_to = [prometheus.relabel.rds_exporter.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.rds_exporter.output
+}
+
+prometheus.relabel "rds_exporter" {
+    forward_to = [prometheus.remote_write.default.receiver]
+    rule {
+        source_labels = ["dbidentifier"]
         target_label = "dbinstance_identifier"
     }
 }

@@ -35,12 +35,20 @@ jest.mock(
 	})
 );
 
-const renderComponent = () =>
+const renderComponent = ({
+	commentsAndRatingsEnabled,
+	lookAndFeelEnabled,
+}: {
+	commentsAndRatingsEnabled?: boolean;
+	lookAndFeelEnabled?: boolean;
+} = {}) =>
 	render(
 		<NewImport
 			backURL="/some/back/url"
+			commentsAndRatingsEnabled={commentsAndRatingsEnabled}
 			importPreviewAPIURL="/o/export-import/v1.0/import-preview"
 			importProcessAPIURL="/o/export-import/v1.0/import-processes"
+			lookAndFeelEnabled={lookAndFeelEnabled}
 		/>
 	);
 
@@ -67,8 +75,13 @@ const uploadFile = async (fileName = 'site.lar') => {
 	jest.useRealTimers();
 };
 
-const goToDataSelectionStep = async () => {
-	const result = renderComponent();
+const goToDataSelectionStep = async (
+	options: {
+		commentsAndRatingsEnabled?: boolean;
+		lookAndFeelEnabled?: boolean;
+	} = {}
+) => {
+	const result = renderComponent(options);
 
 	await user.type(screen.getByLabelText(/^name/i), 'My import');
 
@@ -334,5 +347,31 @@ describe('NewImport', () => {
 		);
 
 		expect(screen.getByText('Deletions Only')).toBeInTheDocument();
+	});
+
+	it('renders the Look and Feel block inside the Site Builder section when lookAndFeelEnabled is true', async () => {
+		await goToDataSelectionStep({lookAndFeelEnabled: true});
+
+		expect(screen.getByText('look-and-feel')).toBeInTheDocument();
+		expect(screen.getByLabelText('theme-settings')).toBeInTheDocument();
+		expect(screen.getByLabelText('logo')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('site-pages-settings')
+		).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('site-template-settings')
+		).toBeInTheDocument();
+	});
+
+	it('renders the Comments and Ratings block inside the Site Content section when commentsAndRatingsEnabled is true', async () => {
+		await goToDataSelectionStep({commentsAndRatingsEnabled: true});
+
+		await user.click(
+			screen.getByRole('checkbox', {name: 'Content & Data'})
+		);
+
+		expect(screen.getByText('comments-and-ratings')).toBeInTheDocument();
+		expect(screen.getByLabelText('comments')).toBeInTheDocument();
+		expect(screen.getByLabelText('ratings')).toBeInTheDocument();
 	});
 });

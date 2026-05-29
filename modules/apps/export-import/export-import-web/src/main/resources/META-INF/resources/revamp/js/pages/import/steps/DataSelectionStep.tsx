@@ -11,9 +11,13 @@ import {ImportPreview} from '../../../types/exportImportPreview';
 import FileSummary from './FileSummary';
 
 export default function DataSelectionStep({
+	commentsAndRatingsEnabled = false,
 	importPreview,
+	lookAndFeelEnabled = false,
 }: {
+	commentsAndRatingsEnabled?: boolean;
 	importPreview?: ImportPreview;
+	lookAndFeelEnabled?: boolean;
 }) {
 	if (!importPreview) {
 		return null;
@@ -42,6 +46,11 @@ export default function DataSelectionStep({
 			/>
 
 			<FormikFieldContentSelector
+				commentsAndRatingsEnabled={commentsAndRatingsEnabled}
+				commentsAndRatingsSubtitle={Liferay.Language.get(
+					'for-each-of-the-selected-content-types,-import-their'
+				)}
+				lookAndFeelEnabled={lookAndFeelEnabled}
 				name="contentSelection"
 				sections={importPreview.previewPortletDataHandlerSections}
 			/>

@@ -18,12 +18,16 @@ import SettingsStep, {SETTINGS_STEP_INITIAL_VALUES} from './steps/SettingsStep';
 
 export function NewImport({
 	backURL,
+	commentsAndRatingsEnabled = false,
 	importPreviewAPIURL,
 	importProcessAPIURL,
+	lookAndFeelEnabled = false,
 }: {
 	backURL: string;
+	commentsAndRatingsEnabled?: boolean;
 	importPreviewAPIURL: string;
 	importProcessAPIURL: string;
+	lookAndFeelEnabled?: boolean;
 }) {
 	const [importPreview, setImportPreview] = useState<
 		ImportPreview | undefined
@@ -64,7 +68,11 @@ export function NewImport({
 				isStepValid={(values) => !!values.contentSelection}
 				title={Liferay.Language.get('data-selection')}
 			>
-				<DataSelectionStep importPreview={importPreview} />
+				<DataSelectionStep
+					commentsAndRatingsEnabled={commentsAndRatingsEnabled}
+					importPreview={importPreview}
+					lookAndFeelEnabled={lookAndFeelEnabled}
+				/>
 			</WizardStep>
 
 			<WizardStep

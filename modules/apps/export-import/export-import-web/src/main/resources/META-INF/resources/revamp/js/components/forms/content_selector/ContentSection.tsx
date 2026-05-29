@@ -15,19 +15,53 @@ import {
 	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
 } from '../../../types/portletDataHandler';
 import {
+	CONTENT_SECTION_KEY,
 	HandlerSelection,
+	SITE_BUILDER_SECTION_KEY,
 	getInitialSelections,
 	getSelectionSummary,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
 import CollapsibleGroup from './CollapsibleGroup';
+import CommentsAndRatings from './CommentsAndRatings';
 import PortletDataControl from './PortletDataControl';
 import SectionTags from './SectionTags';
 
 export type SectionSelection = Record<string, HandlerSelection>;
 
+const LOOK_AND_FEEL_CONTROL: PreviewPortletDataHandlerBoolean = {
+	label: Liferay.Language.get('look-and-feel'),
+	name: 'lookAndFeel',
+	previewPortletDataHandlerControls: [
+		{
+			label: Liferay.Language.get('theme-settings'),
+			name: 'themeReference',
+			type: 'Boolean',
+		},
+		{
+			label: Liferay.Language.get('logo'),
+			name: 'logo',
+			type: 'Boolean',
+		},
+		{
+			label: Liferay.Language.get('site-pages-settings'),
+			name: 'layoutSetSettings',
+			type: 'Boolean',
+		},
+		{
+			label: Liferay.Language.get('site-template-settings'),
+			name: 'layoutSetPrototypeSettings',
+			type: 'Boolean',
+		},
+	],
+	type: 'Boolean',
+};
+
 interface ContentSectionProps {
+	commentsAndRatingsEnabled?: boolean;
+	commentsAndRatingsSubtitle?: string;
+	lookAndFeelEnabled?: boolean;
 	onChange: (value: SectionSelection | undefined) => void;
 	pageTreeModalConfiguration?: PageTreeModalConfiguration;
 	section: PortletDataHandlerSectionType;
@@ -36,6 +70,9 @@ interface ContentSectionProps {
 }
 
 export default function ContentSection({
+	commentsAndRatingsEnabled = false,
+	commentsAndRatingsSubtitle,
+	lookAndFeelEnabled = false,
 	onChange,
 	pageTreeModalConfiguration,
 	section,
@@ -46,19 +83,36 @@ export default function ContentSection({
 
 	const portletContextsValue = value || {};
 
-	const controls =
+	const isSiteBuilderSection = section.name === SITE_BUILDER_SECTION_KEY;
+
+	const isContentSection = section.name === CONTENT_SECTION_KEY;
+
+	const lookAndFeelApplies = lookAndFeelEnabled && isSiteBuilderSection;
+
+	const commentsAndRatingsApplies =
+		commentsAndRatingsEnabled && isContentSection;
+
+	const portletControls =
 		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
 			(handler) => ({...handler, type: 'Boolean'})
 		);
 
+	const controls = lookAndFeelApplies
+		? [...portletControls, LOOK_AND_FEEL_CONTROL]
+		: portletControls;
+
 	const selected = controls.every((context) =>
+		isSelected(portletContextsValue[context.name], context)
+	);
+
+	const hasPortletSelection = portletControls.some((context) =>
 		isSelected(portletContextsValue[context.name], context)
 	);
 
 	return (
 		<ClayLayout.Sheet className="mt-0">
 			<CollapsibleGroup
-				bodyClassName="content-section-controls mt-2 overflow-auto pl-2"
+				bodyClassName="mt-2 pl-2"
 				checkboxId={checkboxId}
 				disclosure={({expanded, ...disclosureProps}) => (
 					<ClayButtonWithIcon
@@ -80,7 +134,11 @@ export default function ContentSection({
 					/>
 				)}
 				indeterminate={
-					!!Object.keys(portletContextsValue).length && !selected
+					!selected &&
+					controls.some(
+						(context) =>
+							portletContextsValue[context.name] !== undefined
+					)
 				}
 				label={section.label}
 				labelClassName="font-weight-bold h3"
@@ -100,25 +158,45 @@ export default function ContentSection({
 					/>
 				}
 			>
-				{controls.map((context) => (
-					<PortletDataControl
-						control={context}
-						key={context.name}
-						onChange={(controlValue) =>
+				<div className="content-section-controls overflow-auto">
+					{controls.map((context) => (
+						<PortletDataControl
+							control={context}
+							key={context.name}
+							onChange={(controlValue) =>
+								onChange(
+									updateSelection(
+										portletContextsValue,
+										context.name,
+										controlValue
+									)
+								)
+							}
+							pageTreeModalConfiguration={
+								pageTreeModalConfiguration
+							}
+							showDeletions={showDeletions}
+							topLevel
+							value={portletContextsValue[context.name]}
+						/>
+					))}
+				</div>
+
+				{commentsAndRatingsApplies && hasPortletSelection && (
+					<CommentsAndRatings
+						onChange={(commentsAndRatingsValue) =>
 							onChange(
 								updateSelection(
 									portletContextsValue,
-									context.name,
-									controlValue
+									'commentsAndRatings',
+									commentsAndRatingsValue
 								)
 							)
 						}
-						pageTreeModalConfiguration={pageTreeModalConfiguration}
-						showDeletions={showDeletions}
-						topLevel
-						value={portletContextsValue[context.name]}
+						subtitle={commentsAndRatingsSubtitle}
+						value={portletContextsValue.commentsAndRatings}
 					/>
-				))}
+				)}
 			</CollapsibleGroup>
 		</ClayLayout.Sheet>
 	);

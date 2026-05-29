@@ -11,8 +11,11 @@ import {
 	RequestPortletDataHandlerControl,
 } from '../types/portletDataHandler';
 import {
+	CONTENT_SECTION_KEY,
 	HandlerSelection,
 	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
+	SITE_BUILDER_SECTION_KEY,
+	withSiteBuilderSection,
 } from './contentSelection';
 
 export function toRequestPortletDataHandlers(
@@ -23,9 +26,13 @@ export function toRequestPortletDataHandlers(
 		return [];
 	}
 
+	const allSections = contentSelection[SITE_BUILDER_SECTION_KEY]
+		? withSiteBuilderSection(sections)
+		: sections;
+
 	const requestPortletDataHandlers: RequestPortletDataHandler[] = [];
 
-	for (const section of sections) {
+	for (const section of allSections) {
 		const sectionSelection = contentSelection[section.name];
 
 		if (!sectionSelection) {
@@ -59,9 +66,50 @@ export function toRequestPortletDataHandlers(
 				}),
 			});
 		}
+
+		if (section.name === SITE_BUILDER_SECTION_KEY) {
+			requestPortletDataHandlers.push(
+				...toExtraHandlers(sectionSelection.lookAndFeel, [
+					['themeReference', 'THEME_REFERENCE'],
+					['logo', 'LOGO'],
+					['layoutSetSettings', 'LAYOUT_SET_SETTINGS'],
+					[
+						'layoutSetPrototypeSettings',
+						'LAYOUT_SET_PROTOTYPE_SETTINGS',
+					],
+				])
+			);
+		}
+
+		if (
+			section.name === CONTENT_SECTION_KEY &&
+			section.previewPortletDataHandlers?.some(
+				(handler) => sectionSelection[handler.name]
+			)
+		) {
+			requestPortletDataHandlers.push(
+				...toExtraHandlers(sectionSelection.commentsAndRatings, [
+					['comments', 'COMMENTS'],
+					['ratings', 'RATINGS'],
+				])
+			);
+		}
 	}
 
 	return requestPortletDataHandlers;
+}
+
+function toExtraHandlers(
+	selection: HandlerSelection | undefined,
+	entries: [string, string][]
+): RequestPortletDataHandler[] {
+	if (!selection || typeof selection !== 'object') {
+		return [];
+	}
+
+	return entries
+		.filter(([field]) => selection[field])
+		.map(([, name]) => ({name}));
 }
 
 function toRequestControls(

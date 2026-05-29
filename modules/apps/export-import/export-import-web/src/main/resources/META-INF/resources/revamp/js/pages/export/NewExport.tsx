@@ -29,15 +29,19 @@ import Setup from './components/Setup';
 
 export function NewExport({
 	backURL,
+	commentsAndRatingsEnabled = false,
 	exportPreview,
 	exportPreviewAPIURL,
 	exportProcessAPIURL,
+	lookAndFeelEnabled = false,
 	pageTreeModalConfiguration,
 }: {
 	backURL: string;
+	commentsAndRatingsEnabled?: boolean;
 	exportPreview?: ExportPreview;
 	exportPreviewAPIURL: string;
 	exportProcessAPIURL: string;
+	lookAndFeelEnabled?: boolean;
 	pageTreeModalConfiguration: PageTreeModalConfiguration;
 }) {
 	const [preview, setPreview] = useState<ExportPreview | undefined>(
@@ -157,9 +161,11 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
+						commentsAndRatingsEnabled={commentsAndRatingsEnabled}
 						deletionCount={preview?.deletionCount}
 						itemsCount={preview?.additionCount}
 						loading={loading}
+						lookAndFeelEnabled={lookAndFeelEnabled}
 						onApplyFilter={handleApplyFilter}
 						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						sections={sections}

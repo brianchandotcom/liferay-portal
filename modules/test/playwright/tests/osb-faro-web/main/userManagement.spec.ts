@@ -122,3 +122,30 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Admin row in User Management can be selected via its checkbox',
+	{
+		tag: '@LRAC-9052',
+	},
+
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		const adminEmail = 'corbin.murakami@faro.io';
+
+		await page.getByPlaceholder('Search').first().fill(adminEmail);
+
+		const adminRow = page.getByRole('row', {name: new RegExp(adminEmail)});
+
+		const adminCheckbox = adminRow.getByRole('checkbox');
+
+		await adminCheckbox.check();
+
+		await expect(adminCheckbox).toBeChecked();
+	}
+);

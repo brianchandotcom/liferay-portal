@@ -65,6 +65,13 @@ describe('OverviewSection', () => {
 		expect(getAllByText('0')).toHaveLength(2);
 	});
 
+	it('should render the trend label comparing against the last 90 days', () => {
+		const {container} = render(<OverviewSection />);
+
+		expect(container.textContent).toContain('vs. Last 90 Days');
+		expect(container.textContent).not.toContain('Months');
+	});
+
 	it('should render a loading spinner in each card when loading is true', () => {
 		const {container, queryByText} = render(<OverviewSection loading />);
 

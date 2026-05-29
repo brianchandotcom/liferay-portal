@@ -202,10 +202,10 @@ public class PageSpecificationUtil {
 			fragmentInstance.getDraftFragmentInstanceExternalReferenceCode();
 
 		if (Validator.isNotNull(draftFragmentInstanceExternalReferenceCode)) {
-			fragmentInstance.setFragmentInstanceExternalReferenceCode(
-				() -> draftFragmentInstanceExternalReferenceCode);
 			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
 				() -> null);
+			fragmentInstance.setFragmentInstanceExternalReferenceCode(
+				() -> draftFragmentInstanceExternalReferenceCode);
 
 			return;
 		}
@@ -228,12 +228,12 @@ public class PageSpecificationUtil {
 					getDraftWidgetInstanceExternalReferenceCode())) {
 
 			widgetInstancePageElementDefinition.
+				setDraftWidgetInstanceExternalReferenceCode(() -> null);
+			widgetInstancePageElementDefinition.
 				setWidgetInstanceExternalReferenceCode(
 					() ->
 						widgetInstancePageElementDefinition.
 							getDraftWidgetInstanceExternalReferenceCode());
-			widgetInstancePageElementDefinition.
-				setDraftWidgetInstanceExternalReferenceCode(() -> null);
 
 			return;
 		}

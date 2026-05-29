@@ -17,7 +17,7 @@ type AccountInfoProps = {
 
 const AccountEmailInfo: React.FC<AccountInfoProps> = ({image, name}) => (
 	<div className="align-items-center d-flex">
-		<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
+		<div className="account-banner-name-text align-items-end d-flex flex-column mx-2">
 			<strong>{name}</strong>
 
 			<div className="account-banner-email-text">

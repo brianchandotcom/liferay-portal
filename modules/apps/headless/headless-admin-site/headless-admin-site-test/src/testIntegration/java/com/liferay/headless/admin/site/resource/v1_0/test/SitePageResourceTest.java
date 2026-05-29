@@ -1339,16 +1339,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String expectedDraftFragmentEntryLinkExternalReferenceCode =
 			publishedFragmentEntryLinkExternalReferenceCode +
-				LayoutConstants.ERC_SUFFIX_DRAFT;
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 
 		if (publishedFragmentEntryLinkExternalReferenceCode.endsWith(
-				LayoutConstants.ERC_SUFFIX_PUBLISHED)) {
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED)) {
+
+			int suffixPublishedLength =
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED.
+					length();
 
 			expectedDraftFragmentEntryLinkExternalReferenceCode =
 				publishedFragmentEntryLinkExternalReferenceCode.substring(
 					0,
 					publishedFragmentEntryLinkExternalReferenceCode.length() -
-						LayoutConstants.ERC_SUFFIX_PUBLISHED.length());
+						suffixPublishedLength);
 		}
 
 		return expectedDraftFragmentEntryLinkExternalReferenceCode;
@@ -2956,15 +2960,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		if (useDraftERCSuffix) {
 			draftContentPageSpecificationExternalReferenceCode =
-				pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT;
+				pageExternalReferenceCode +
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 
 			defaultPageExperienceExternalReferenceCode =
 				draftContentPageSpecificationExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_DEFAULT;
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT;
 
 			pageExperienceExternalReferenceCode =
 				RandomTestUtil.randomString() +
-					LayoutConstants.ERC_SUFFIX_DRAFT;
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 		}
 
 		ContentPageSpecification draftContentPageSpecification =
@@ -3140,8 +3145,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
 			true, publishedContentPageSpecification,
-			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT, false,
-			pageExternalReferenceCode, status);
+			pageExternalReferenceCode +
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT,
+			false, pageExternalReferenceCode, status);
 	}
 
 	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()
@@ -3170,7 +3176,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			new PageExperience[] {
 				PageExperiencesTestUtil.getDefaultPageExperience(
 					pageSpecificationExternalReferenceCode +
-						LayoutConstants.ERC_SUFFIX_DEFAULT,
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT,
 					pageElements, pageSpecificationExternalReferenceCode, null)
 			});
 		publishedContentPageSpecification.setStatus(

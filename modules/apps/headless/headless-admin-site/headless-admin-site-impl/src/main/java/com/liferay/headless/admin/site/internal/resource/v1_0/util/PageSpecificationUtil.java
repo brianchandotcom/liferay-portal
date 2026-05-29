@@ -159,7 +159,7 @@ public class PageSpecificationUtil {
 
 				draftContentPageSpecificationExternalReferenceCode =
 					sitePageExternalReferenceCode +
-						LayoutConstants.ERC_SUFFIX_DRAFT;
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 			}
 
 			publishedContentPageSpecification = contentPageSpecification;
@@ -215,7 +215,9 @@ public class PageSpecificationUtil {
 
 		if (Validator.isNotNull(fragmentInstanceERC)) {
 			fragmentInstance.setFragmentInstanceExternalReferenceCode(
-				() -> fragmentInstanceERC + LayoutConstants.ERC_SUFFIX_DRAFT);
+				() ->
+					fragmentInstanceERC +
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 	}
 
@@ -247,7 +249,8 @@ public class PageSpecificationUtil {
 				setWidgetInstanceExternalReferenceCode(
 					() ->
 						widgetInstanceExternalReferenceCode +
-							LayoutConstants.ERC_SUFFIX_DRAFT);
+							LayoutConstants.
+								EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 	}
 
@@ -313,7 +316,7 @@ public class PageSpecificationUtil {
 			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
 				() ->
 					fragmentInstanceExternalReferenceCode +
-						LayoutConstants.ERC_SUFFIX_DRAFT);
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 	}
 
@@ -337,7 +340,8 @@ public class PageSpecificationUtil {
 				setDraftWidgetInstanceExternalReferenceCode(
 					() ->
 						widgetInstanceExternalReferenceCode +
-							LayoutConstants.ERC_SUFFIX_DRAFT);
+							LayoutConstants.
+								EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 	}
 
@@ -400,7 +404,8 @@ public class PageSpecificationUtil {
 				() -> {
 					String externalReferenceCode =
 						draftContentPageSpecificationExternalReferenceCode +
-							LayoutConstants.ERC_SUFFIX_DEFAULT;
+							LayoutConstants.
+								EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT;
 
 					if (!Objects.equals(
 							pageExperience.getKey(),
@@ -408,7 +413,8 @@ public class PageSpecificationUtil {
 
 						externalReferenceCode =
 							pageExperienceExternalReferenceCode +
-								LayoutConstants.ERC_SUFFIX_DRAFT;
+								LayoutConstants.
+									EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 					}
 
 					return externalReferenceCode;
@@ -456,7 +462,8 @@ public class PageSpecificationUtil {
 
 					publishedPageExperienceExternalReferenceCode =
 						publishedContentPageSpecificationExternalReferenceCode +
-							LayoutConstants.ERC_SUFFIX_DEFAULT;
+							LayoutConstants.
+								EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT;
 				}
 				else {
 					publishedPageExperienceExternalReferenceCode =
@@ -543,14 +550,18 @@ public class PageSpecificationUtil {
 			return externalReferenceCode;
 		}
 
-		if (externalReferenceCode.endsWith(LayoutConstants.ERC_SUFFIX_DRAFT)) {
+		if (externalReferenceCode.endsWith(
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT)) {
+
+			int suffixDraftLength =
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT.length();
+
 			return externalReferenceCode.substring(
-				0,
-				externalReferenceCode.length() -
-					LayoutConstants.ERC_SUFFIX_DRAFT.length());
+				0, externalReferenceCode.length() - suffixDraftLength);
 		}
 
-		return externalReferenceCode + LayoutConstants.ERC_SUFFIX_PUBLISHED;
+		return externalReferenceCode +
+			LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED;
 	}
 
 }

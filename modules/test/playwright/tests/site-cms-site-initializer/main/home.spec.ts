@@ -19,10 +19,10 @@ import performLogin, {
 	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
+import {SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE} from '../../setup/site-cms-site/constants/space';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {DataSetPage} from './pages/DataSetPage';
-import {SpaceSummaryPage} from './pages/SpaceSummaryPage';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -72,18 +72,21 @@ test.beforeAll(async ({browser}) => {
 		surname: spaceUser.familyName,
 	};
 
-	const spaceSummaryPage = new SpaceSummaryPage(page);
-
-	await spaceSummaryPage.goto('Default');
-
-	await spaceSummaryPage.addUserOrUserGroup(spaceAdminUser.name, 'users');
-
-	await spaceSummaryPage.addRoleToSpaceMember(
-		'Space Administrator',
-		spaceAdminUser.name
+	await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+		SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+		spaceAdminUser.externalReferenceCode
 	);
 
-	await spaceSummaryPage.addUserOrUserGroup(spaceUser.name, 'users');
+	await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+		SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+		spaceAdminUser.externalReferenceCode,
+		['Asset Library Administrator']
+	);
+
+	await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+		SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+		spaceUser.externalReferenceCode
+	);
 
 	setupData = [...apiHelpers.data];
 

@@ -155,6 +155,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
@@ -234,6 +235,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -4192,9 +4194,8 @@ public class ObjectEntryLocalServiceTest {
 				}
 			).build());
 
-		AuditMessage auditMessage = auditMessages.poll();
-
-		JSONAssert.assertEquals(
+		_assertAuditMessage(
+			auditMessages, 0,
 			JSONUtil.put(
 				"assignee",
 				HashMapBuilder.put(
@@ -4217,11 +4218,9 @@ public class ObjectEntryLocalServiceTest {
 				)
 			).put(
 				"upload", JSONUtil.put("title", "Old Testament")
-			).toString(),
-			String.valueOf(auditMessage.getAdditionalInfo()),
-			JSONCompareMode.STRICT_ORDER);
-
-		auditMessages.clear();
+			),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.ADD);
 
 		User user = UserTestUtil.addUser();
 
@@ -4252,9 +4251,8 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		auditMessage = auditMessages.poll();
-
-		JSONAssert.assertEquals(
+		_assertAuditMessage(
+			auditMessages, 0,
 			JSONUtil.put(
 				"attributes",
 				JSONUtil.putAll(
@@ -4318,19 +4316,15 @@ public class ObjectEntryLocalServiceTest {
 						"newValue", JSONUtil.put("title", "New Testament")
 					).put(
 						"oldValue", JSONUtil.put("title", "Old Testament")
-					))
-			).toString(),
-			String.valueOf(auditMessage.getAdditionalInfo()),
-			JSONCompareMode.STRICT_ORDER);
-
-		auditMessages.clear();
+					))),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.UPDATE);
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		auditMessage = auditMessages.poll();
-
-		JSONAssert.assertEquals(
+		_assertAuditMessage(
+			auditMessages, 0,
 			JSONUtil.put(
 				"assignee",
 				JSONUtil.put(
@@ -4353,9 +4347,95 @@ public class ObjectEntryLocalServiceTest {
 				)
 			).put(
 				"upload", JSONUtil.put("title", "New Testament")
-			).toString(),
-			String.valueOf(auditMessage.getAdditionalInfo()),
-			JSONCompareMode.STRICT_ORDER);
+			),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.DELETE);
+
+		String objectFieldName = "a" + RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), objectFieldName)));
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService,
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(),
+					AccountEntry.class.getSimpleName()),
+				objectDefinition);
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectField.getObjectFieldId());
+
+		objectDefinition.setAccountEntryRestricted(true);
+		objectDefinition.setEnableObjectEntryHistory(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null, null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), accountEntry.getAccountEntryId()
+			).put(
+				objectFieldName, "James"
+			).build());
+
+		_assertAuditMessage(
+			auditMessages, accountEntry.getAccountEntryId(),
+			JSONUtil.put(objectFieldName, "James"),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.ADD);
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, "Peter"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertAuditMessage(
+			auditMessages, accountEntry.getAccountEntryId(),
+			JSONUtil.put(
+				"attributes",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", objectFieldName
+					).put(
+						"newValue", "Peter"
+					).put(
+						"oldValue", "James"
+					))),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.UPDATE);
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		_assertAuditMessage(
+			auditMessages, accountEntry.getAccountEntryId(),
+			JSONUtil.put(objectFieldName, "Peter"),
+			objectEntry.getModelClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()), EventTypes.DELETE);
+
+		_accountEntryLocalService.deleteAccountEntry(accountEntry);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		ReflectionTestUtil.setFieldValue(
 			_objectEntryModelListener, "_auditRouter", auditRouter);
@@ -8285,6 +8365,28 @@ public class ObjectEntryLocalServiceTest {
 			TempFileEntryUtil.getTempFileName(title + ".txt"),
 			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
+	}
+
+	private void _assertAuditMessage(
+			Queue<AuditMessage> auditMessages, long expectedAccountEntryId,
+			JSONObject expectedAdditionalInfoJSONObject,
+			String expectedClassName, String expectedClassPK,
+			String expectedEventType)
+		throws Exception {
+
+		AuditMessage auditMessage = auditMessages.poll();
+
+		Assert.assertEquals(
+			expectedAccountEntryId, auditMessage.getAccountEntryId());
+		JSONAssert.assertEquals(
+			expectedAdditionalInfoJSONObject.toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+		Assert.assertEquals(expectedClassName, auditMessage.getClassName());
+		Assert.assertEquals(expectedClassPK, auditMessage.getClassPK());
+		Assert.assertEquals(expectedEventType, auditMessage.getEventType());
+
+		auditMessages.clear();
 	}
 
 	private void _assertCommentsCount(

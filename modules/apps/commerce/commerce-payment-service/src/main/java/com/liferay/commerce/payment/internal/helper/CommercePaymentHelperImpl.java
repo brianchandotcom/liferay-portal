@@ -189,15 +189,18 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 		sb.append(URLCodec.encodeURL(commerceOrder.getUuid()));
 
 		if (commerceOrder.isGuestOrder()) {
+			sb.append("&guestToken=");
+
 			Company company = _portal.getCompany(httpServletRequest);
 
 			Key key = company.getKeyObj();
 
-			String token = _encryptor.encrypt(
-				key, String.valueOf(commerceOrder.getCommerceOrderId()));
+			sb.append(
+				URLCodec.encodeURL(
+					_encryptor.encrypt(
+						key,
+						String.valueOf(commerceOrder.getCommerceOrderId()))));
 
-			sb.append("&guestToken=");
-			sb.append(token);
 			sb.append(StringPool.AMPERSAND);
 		}
 

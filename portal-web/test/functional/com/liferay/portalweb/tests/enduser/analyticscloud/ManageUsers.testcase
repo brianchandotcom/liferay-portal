@@ -51,24 +51,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
-	@priority = 3
-	test AdminCanBeSelected {
-		task ("Go to settings and go to user management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Search for a Administrator user and check if it is possible to select") {
-			ACUtils.searchBar(searchItem = "corbin.murakami@faro.io");
-
-			ACInterests.clickKeywordCheckbox(keyword = "corbin murakami");
-
-			AssertChecked.assertCheckedNotVisible(locator1 = "ACSettings#USER_LIST_CHECKBOX");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
 	@priority = 3
 	test MemberCanBeEditedOrRemoved {

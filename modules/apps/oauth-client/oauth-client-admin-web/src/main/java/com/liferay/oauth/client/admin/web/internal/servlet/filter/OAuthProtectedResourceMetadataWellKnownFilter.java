@@ -130,7 +130,8 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			index + _WELL_KNOWN_PATH.length());
 
 		String resource =
-			_portal.getPortalURL(httpServletRequest) + resourcePath;
+			_portal.getPortalURL(httpServletRequest) +
+				requestURI.substring(0, index) + resourcePath;
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.

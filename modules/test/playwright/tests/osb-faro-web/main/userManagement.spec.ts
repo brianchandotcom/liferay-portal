@@ -10,7 +10,6 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
@@ -225,6 +224,103 @@ test(
 		}
 		finally {
 			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);
+
+test(
+	'Bulk-selected users can be promoted to Administrator and demoted to Member',
+	{
+		tag: ['@LRAC-9087', '@LRAC-9088'],
+	},
+	async ({page, project}) => {
+		const runId = Date.now();
+
+		const emails = [
+			`bulk-1-${runId}@liferay.com`,
+			`bulk-2-${runId}@liferay.com`,
+		];
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('button', {name: 'Invite Users'}).click();
+
+		for (const email of emails) {
+			await page.getByPlaceholder('Enter Email Address').fill(email);
+
+			await page.keyboard.press('Enter');
+		}
+
+		await page.getByRole('button', {name: 'Send'}).click();
+
+		await expect(
+			page.getByText('Success:Invitations have been sent.')
+		).toBeVisible();
+
+		const rows = emails.map((email) =>
+			page.getByRole('row', {name: email})
+		);
+
+		try {
+
+			// Bulk change both rows to Administrator, then back to Member.
+
+			for (const newRole of ['Administrator', 'Member']) {
+				for (const row of rows) {
+					await row.getByRole('checkbox').check();
+				}
+
+				await clickAndExpectToBeVisible({
+					target: page.getByText(
+						'Edit Permissions for Selected Users'
+					),
+					trigger: page.getByRole('button', {
+						name: 'Change Permissions',
+					}),
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('menuitem', {
+						exact: true,
+						name: newRole,
+					}),
+					trigger: page.getByRole('button', {
+						name: 'Select Permission',
+					}),
+				});
+
+				await page.getByRole('button', {name: 'Save'}).click();
+
+				await expect(
+					page.getByText(
+						'Success:Permissions have been changed for 2 users.'
+					)
+				).toBeVisible();
+
+				for (const row of rows) {
+					await expect(
+						row.getByText(newRole, {exact: true})
+					).toBeVisible();
+				}
+			}
+		}
+		finally {
+			for (const row of rows) {
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('button', {name: 'Continue'}),
+					trigger: row.getByLabel('Delete'),
+				});
+
+				await expect(
+					page.getByText('Success:1 user has been deleted.')
+				).toBeVisible();
+			}
 		}
 	}
 );

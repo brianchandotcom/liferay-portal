@@ -23,14 +23,14 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, Properties properties) {
+		String blacklistString, String masterPrefix, Properties properties) {
 
 		return getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, properties, true);
+			blacklistString, masterPrefix, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, Properties properties,
+		String blacklistString, String masterPrefix, Properties properties,
 		boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters =
@@ -95,7 +95,7 @@ public class LoadBalancerUtil {
 			properties, "blacklist");
 
 		List<JenkinsMaster> eligibleJenkinsMasters = getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, properties, verbose);
+			blacklistString, masterPrefix, properties, verbose);
 
 		if (eligibleJenkinsMasters.isEmpty()) {
 			return null;
@@ -196,10 +196,11 @@ public class LoadBalancerUtil {
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(requestBlacklistString)) {
-			String[] requestBlacklistItems = requestBlacklistString.toLowerCase(
-			).split(
-				"\\s*,\\s*"
-			);
+			String lowerCaseRequestBlacklistString =
+				requestBlacklistString.toLowerCase();
+
+			String[] requestBlacklistItems =
+				lowerCaseRequestBlacklistString.split("\\s*,\\s*");
 
 			for (String blacklistItem : requestBlacklistItems) {
 				if (!blacklist.contains(blacklistItem)) {

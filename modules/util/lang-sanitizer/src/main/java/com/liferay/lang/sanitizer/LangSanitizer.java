@@ -90,12 +90,9 @@ public class LangSanitizer {
 			if (fileName.equals("Language.properties") ||
 				fileName.equals("bundle.properties")) {
 
-				Path filePath = file.toPath();
-
-				Path fileDirPath = filePath.getParent();
-
 				System.out.println(
-					"Scanning translations of " + _getModuleName(fileDirPath));
+					"Scanning translations of " +
+						_getModuleName(file.getParentFile()));
 			}
 
 			Future<List<SanitizedMessage>> future = executorService.submit(
@@ -162,24 +159,24 @@ public class LangSanitizer {
 		return String.join(", ", differentWords);
 	}
 
-	private String _getModuleName(Path fileDirPath) {
-		Path dirPath = fileDirPath;
+	private String _getModuleName(File parentDir) {
+		File currentDir = parentDir;
 
-		while (dirPath != null) {
-			String dirName = String.valueOf(dirPath.getFileName());
+		while (currentDir != null) {
+			String dirName = currentDir.getName();
 
 			if (dirName.equals("src")) {
-				Path moduleRootPath = dirPath.getParent();
+				File moduleRootDir = currentDir.getParentFile();
 
-				return String.valueOf(moduleRootPath.getFileName());
+				return moduleRootDir.getName();
 			}
 
-			dirPath = dirPath.getParent();
+			currentDir = currentDir.getParentFile();
 		}
 
-		Path moduleRootPath = fileDirPath.getParent();
+		File moduleRootDir = parentDir.getParentFile();
 
-		return String.valueOf(moduleRootPath.getFileName());
+		return moduleRootDir.getName();
 	}
 
 	private List<File> _getPropertiesFiles(String baseDirName)

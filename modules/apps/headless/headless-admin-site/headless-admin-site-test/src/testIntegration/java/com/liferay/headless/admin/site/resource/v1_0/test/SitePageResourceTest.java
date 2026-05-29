@@ -1944,92 +1944,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
-	private void _postContentPageSpecification(
-			ContentPageSpecification contentPageSpecification,
-			ContentPageSpecification expectedDraftContentPageSpecification,
-			ContentPageSpecification expectedPublishedContentPageSpecification,
-			Group group, String sitePageExternalReferenceCode,
-			PageSpecification.Status status,
-			boolean assertSuffixMirroredFragmentEntryLinks)
-		throws Exception {
-
-		SitePage sitePage = _getRandomSitePage(
-			sitePageExternalReferenceCode, null,
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId()),
-			SitePage.Type.CONTENT_PAGE,
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-		sitePage.setPageSpecifications(
-			() -> new PageSpecification[] {contentPageSpecification});
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		sitePageResource.postSiteSitePage(
-			group.getExternalReferenceCode(), false, sitePage);
-
-		SitePage getSitePage = sitePageResource.getSiteSitePage(
-			group.getExternalReferenceCode(), sitePageExternalReferenceCode);
-
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode, group.getGroupId());
-
-		if (Objects.equals(status, PageSpecification.Status.APPROVED)) {
-			Assert.assertTrue(layout.isPublished());
-		}
-		else {
-			Assert.assertFalse(layout.isPublished());
-		}
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			expectedDraftContentPageSpecification,
-			expectedPublishedContentPageSpecification,
-			getSitePage.getPageSpecifications(), layout, status);
-
-		if (!assertSuffixMirroredFragmentEntryLinks) {
-			return;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		List<FragmentEntryLink> draftFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				group.getGroupId(), draftLayout.getPlid());
-
-		List<FragmentEntryLink> publishedFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				group.getGroupId(), layout.getPlid());
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Draft fragment entry links: ", draftFragmentEntryLinks,
-				", published fragment entry links: ",
-				publishedFragmentEntryLinks),
-			publishedFragmentEntryLinks.size(), draftFragmentEntryLinks.size());
-
-		List<String> draftFragmentEntryLinkExternalReferenceCodes =
-			TransformUtil.transform(
-				draftFragmentEntryLinks,
-				FragmentEntryLink::getExternalReferenceCode);
-
-		for (FragmentEntryLink publishedFragmentEntryLink :
-				publishedFragmentEntryLinks) {
-
-			String expectedDraftFragmentEntryLinkExternalReferenceCode =
-				_getExpectedDraftFragmentEntryLinkExternalReferenceCode(
-					publishedFragmentEntryLink.getExternalReferenceCode());
-
-			Assert.assertEquals(
-				publishedFragmentEntryLink.toString(),
-				expectedDraftFragmentEntryLinkExternalReferenceCode,
-				publishedFragmentEntryLink.getOriginalFragmentEntryLinkERC());
-			Assert.assertTrue(
-				draftFragmentEntryLinkExternalReferenceCodes.contains(
-					expectedDraftFragmentEntryLinkExternalReferenceCode));
-		}
-	}
-
 	private SitePage _postSiteSitePageWithPageSpecificationsWithCustomFields(
 			SitePage.Type type)
 		throws Exception {
@@ -2950,11 +2864,81 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			expectedPublishedPageExperiences);
 		expectedPublishedContentPageSpecification.setStatus(status);
 
-		_postContentPageSpecification(
-			contentPageSpecification, expectedDraftContentPageSpecification,
-			expectedPublishedContentPageSpecification, testGroup,
-			pageExternalReferenceCode, status,
-			assertSuffixMirroredFragmentEntryLinks);
+		SitePage sitePage = _getRandomSitePage(
+			pageExternalReferenceCode, null,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()),
+			SitePage.Type.CONTENT_PAGE,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, sitePage);
+
+		SitePage getSitePage = sitePageResource.getSiteSitePage(
+			testGroup.getExternalReferenceCode(), pageExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			pageExternalReferenceCode, testGroup.getGroupId());
+
+		if (Objects.equals(status, PageSpecification.Status.APPROVED)) {
+			Assert.assertTrue(layout.isPublished());
+		}
+		else {
+			Assert.assertFalse(layout.isPublished());
+		}
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification,
+			getSitePage.getPageSpecifications(), layout, status);
+
+		if (!assertSuffixMirroredFragmentEntryLinks) {
+			return;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		List<FragmentEntryLink> draftFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				testGroup.getGroupId(), draftLayout.getPlid());
+
+		List<FragmentEntryLink> publishedFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				testGroup.getGroupId(), layout.getPlid());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Draft fragment entry links: ", draftFragmentEntryLinks,
+				", published fragment entry links: ",
+				publishedFragmentEntryLinks),
+			publishedFragmentEntryLinks.size(), draftFragmentEntryLinks.size());
+
+		List<String> draftFragmentEntryLinkExternalReferenceCodes =
+			TransformUtil.transform(
+				draftFragmentEntryLinks,
+				FragmentEntryLink::getExternalReferenceCode);
+
+		for (FragmentEntryLink publishedFragmentEntryLink :
+				publishedFragmentEntryLinks) {
+
+			String expectedDraftFragmentEntryLinkExternalReferenceCode =
+				_getExpectedDraftFragmentEntryLinkExternalReferenceCode(
+					publishedFragmentEntryLink.getExternalReferenceCode());
+
+			Assert.assertEquals(
+				publishedFragmentEntryLink.toString(),
+				expectedDraftFragmentEntryLinkExternalReferenceCode,
+				publishedFragmentEntryLink.getOriginalFragmentEntryLinkERC());
+			Assert.assertTrue(
+				draftFragmentEntryLinkExternalReferenceCodes.contains(
+					expectedDraftFragmentEntryLinkExternalReferenceCode));
+		}
 	}
 
 	private void _testPostSiteSitePageWithDraftContentPageSpecification(

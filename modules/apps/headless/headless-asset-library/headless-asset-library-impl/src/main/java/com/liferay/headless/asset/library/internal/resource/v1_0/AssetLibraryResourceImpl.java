@@ -436,6 +436,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			return updatedDepotEntry;
 		}
 
+		if (Validator.isNotNull(externalReferenceCode)) {
+			serviceContext.setAttribute(
+				"groupExternalReferenceCode", externalReferenceCode);
+		}
+
 		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
 			nameMap, descriptionMap,
 			AssetLibraryUtil.getDepotEntryType(
@@ -446,21 +451,13 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		group = depotEntry.getGroup();
 
-		if (Validator.isNotNull(externalReferenceCode) ||
-			((unicodeProperties != null) && !unicodeProperties.isEmpty())) {
-
-			if (Validator.isNotNull(externalReferenceCode)) {
-				group.setExternalReferenceCode(externalReferenceCode);
-			}
-
-			if ((unicodeProperties != null) && !unicodeProperties.isEmpty()) {
-				group.setTypeSettingsProperties(
-					UnicodePropertiesBuilder.create(
-						group.getTypeSettingsProperties(), true
-					).putAll(
-						unicodeProperties
-					).build());
-			}
+		if ((unicodeProperties != null) && !unicodeProperties.isEmpty()) {
+			group.setTypeSettingsProperties(
+				UnicodePropertiesBuilder.create(
+					group.getTypeSettingsProperties(), true
+				).putAll(
+					unicodeProperties
+				).build());
 
 			group = _groupLocalService.updateGroup(group);
 		}

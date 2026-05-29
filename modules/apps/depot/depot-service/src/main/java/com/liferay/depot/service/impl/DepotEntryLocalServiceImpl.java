@@ -119,10 +119,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setUuid(serviceContext.getUuid());
 
 		Group group = _groupLocalService.addGroup(
-			StringPool.BLANK, serviceContext.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, DepotEntry.class.getName(),
-			depotEntry.getDepotEntryId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			nameMap, descriptionMap, GroupConstants.TYPE_DEPOT, null, true,
+			GetterUtil.getString(
+				serviceContext.getAttribute("groupExternalReferenceCode")),
+			serviceContext.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			DepotEntry.class.getName(), depotEntry.getDepotEntryId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
+			GroupConstants.TYPE_DEPOT, null, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			"/asset-library-" + depotEntry.getDepotEntryId(), false, false,
 			true, serviceContext);

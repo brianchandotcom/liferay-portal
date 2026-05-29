@@ -154,29 +154,30 @@ public class LayoutLocalServiceTest {
 
 		Map<String, String> expectedExternalReferenceCodesMap =
 			HashMapBuilder.put(
-				LayoutConstants.ERC_SUFFIX_DEFAULT,
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT,
 				RandomTestUtil.randomString()
 			).put(
-				LayoutConstants.ERC_SUFFIX_DRAFT, RandomTestUtil.randomString()
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT,
+				RandomTestUtil.randomString()
 			).put(
-				LayoutConstants.ERC_SUFFIX_DRAFT +
-					LayoutConstants.ERC_SUFFIX_DEFAULT,
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT +
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT,
 				RandomTestUtil.randomString()
 			).build();
 
 		_serviceContext.setAttribute(
 			"defaultSegmentsExperienceExternalReferenceCode",
 			expectedExternalReferenceCodesMap.get(
-				LayoutConstants.ERC_SUFFIX_DEFAULT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT));
 		_serviceContext.setAttribute(
 			"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
 			expectedExternalReferenceCodesMap.get(
-				LayoutConstants.ERC_SUFFIX_DRAFT +
-					LayoutConstants.ERC_SUFFIX_DEFAULT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT +
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT));
 		_serviceContext.setAttribute(
 			"draftLayoutExternalReferenceCode",
 			expectedExternalReferenceCodesMap.get(
-				LayoutConstants.ERC_SUFFIX_DRAFT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT));
 
 		try {
 			layout = _layoutLocalService.addLayout(
@@ -1166,13 +1167,13 @@ public class LayoutLocalServiceTest {
 			segmentsExperience.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
 				segmentsExperience.getExternalReferenceCode(),
-				LayoutConstants.ERC_SUFFIX_DEFAULT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT));
 
 		Assert.assertTrue(
 			draftLayout.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
 				draftLayout.getExternalReferenceCode(),
-				LayoutConstants.ERC_SUFFIX_DRAFT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT));
 
 		segmentsExperience =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
@@ -1182,8 +1183,8 @@ public class LayoutLocalServiceTest {
 			segmentsExperience.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
 				segmentsExperience.getExternalReferenceCode(),
-				LayoutConstants.ERC_SUFFIX_DRAFT +
-					LayoutConstants.ERC_SUFFIX_DEFAULT));
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT +
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT));
 	}
 
 	private void _assertSearch(

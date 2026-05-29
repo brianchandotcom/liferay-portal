@@ -31,7 +31,9 @@ components:
             description:
                 Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the
                 search results. The processed facet term buckets appear in the response's `searchFacets` map, where each
-                entry's key is the `aggregationName` you chose for that facet configuration.
+                entry's key is the `aggregationName` you chose for that facet configuration and each value is an array
+                of term-bucket objects with `displayName` (locale-dependent label), `term` (raw term value), and
+                `frequency` (count of matching documents).
             example:
                 aggregationName: priority
                 attributes:
@@ -49,10 +51,15 @@ components:
                         type: object
                     description:
                         Additional attributes required by some facets. The custom, date-range, and nested facets require
-                        a String attribute called field to set the field to aggregate results by. The date-range facet
-                        also requires a format String (such as yyyyMMddHHmmss) and a ranges object array to provide the
-                        ranges. The nested facet requires filterField, filterValue, and path String attributes. The
-                        vocabulary facet requires a String array of asset vocabulary IDs as vocabularyIds.
+                        a String attribute called `field` to set the field to aggregate results by. The date-range facet
+                        also requires a `format` String (such as yyyyMMddHHmmss) and a `ranges` array of objects, each
+                        with a `label` String (display name) and a `range` String in the format `[fromDate TO toDate]`
+                        (for example, `[20240101000000 TO 20240131235959]` matching the chosen `format`). The nested
+                        facet requires `filterField`, `filterValue`, and `path` String attributes. The vocabulary facet
+                        requires a String array of asset vocabulary IDs as `vocabularyIds` (discoverable via `GET
+                        /o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies`). Omitting required
+                        attributes for a given facet type causes the facet to be silently ignored - the request still
+                        succeeds but no aggregation appears in the response.
                     type: object
                 frequencyThreshold:
                     description:
@@ -68,7 +75,8 @@ components:
                         Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag,
                         type, vocabulary, and user. The custom facet uses top-level index fields only; Object and Web
                         Content Structure fields are indexed as nested fields, so use the nested facet for those
-                        entities.
+                        entities. The server gracefully ignores unrecognized values - passing an unknown facet type does
+                        not return a 500 error; the facet is simply skipped.
                     type: string
                 values:
                     description:
@@ -117,7 +125,9 @@ components:
                     description:
                         Facet aggregation configurations to apply to the search. Each entry describes a facet to compute
                         alongside the results. The processed facet term buckets appear in the response's `searchFacets`
-                        field.
+                        field - a map keyed by `aggregationName`, where each value is an array of term-bucket objects
+                        with `displayName` (locale-dependent label), `term` (raw term value), and `frequency` (count of
+                        matching documents). Only present on POST responses when `facetConfigurations` are provided.
                     items:
                         $ref: "#/components/schemas/FacetConfiguration"
                     type: array

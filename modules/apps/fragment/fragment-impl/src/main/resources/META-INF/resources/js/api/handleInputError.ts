@@ -6,9 +6,9 @@
 type ErrorArgs = {
 	errorContainer: HTMLSpanElement;
 	errorMessageContainer: HTMLSpanElement;
-	errorType: 'length' | 'required' | 'valid';
 	formGroup: HTMLDivElement;
 	lengthInfoContainer?: HTMLParagraphElement;
+	message?: string | null;
 };
 
 export function handleInputLengthError({
@@ -32,7 +32,6 @@ export function handleInputLengthError({
 	}
 
 	const params = {
-		additionalMessage: `: ${length} / ${input.attributes.maxLength}`,
 		errorContainer,
 		errorMessageContainer,
 		formGroup,
@@ -40,52 +39,51 @@ export function handleInputLengthError({
 	};
 
 	if (length > input.attributes.maxLength) {
-		showInputError({...params, errorType: 'length'});
+		const lengthFeedback = errorMessageContainer.getAttribute(
+			'data-length-feedback'
+		);
+
+		showInputError({
+			...params,
+			message: `${lengthFeedback}: ${length} / ${input.attributes.maxLength}`,
+		});
 	}
 	else if (formGroup.classList.contains('has-error')) {
-		hideInputError({...params, errorType: 'valid'});
+		const validFeedback =
+			errorMessageContainer.getAttribute('data-valid-feedback') ?? '';
+
+		hideInputError({...params, message: validFeedback});
 	}
 }
 
 export function showInputError({
-	additionalMessage,
 	errorContainer,
 	errorMessageContainer,
-	errorType = 'required',
 	formGroup,
 	lengthInfoContainer,
-}: ErrorArgs & {
-	additionalMessage?: string;
-}) {
+	message,
+}: ErrorArgs) {
 	errorContainer.classList.remove('sr-only');
 	formGroup.classList.add('has-error');
 	lengthInfoContainer?.classList.add('d-none');
 
-	updateFeedback(errorMessageContainer, errorType, additionalMessage);
+	if (message) {
+		errorMessageContainer.innerText = message;
+	}
 }
 
 function hideInputError({
 	errorContainer,
 	errorMessageContainer,
-	errorType,
 	formGroup,
 	lengthInfoContainer,
+	message,
 }: ErrorArgs) {
 	errorContainer.classList.add('sr-only');
 	formGroup.classList.remove('has-error');
 	lengthInfoContainer?.classList.remove('d-none');
 
-	updateFeedback(errorMessageContainer, errorType);
-}
-
-function updateFeedback(
-	element: HTMLElement,
-	messageType: 'length' | 'required' | 'valid',
-	additionalMessage: string = ''
-) {
-	const message = element.getAttribute(`data-${messageType}-feedback`);
-
 	if (message) {
-		element.innerText = `${message}${additionalMessage}`;
+		errorMessageContainer.innerText = message;
 	}
 }

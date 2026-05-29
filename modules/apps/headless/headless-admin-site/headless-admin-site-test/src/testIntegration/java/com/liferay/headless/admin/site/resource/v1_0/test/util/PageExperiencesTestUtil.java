@@ -13,6 +13,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -107,6 +108,24 @@ public class PageExperiencesTestUtil {
 		return null;
 	}
 
+	public static PageExperience getDefaultPageExperience(
+		String externalReferenceCode, PageElement[] pageElements,
+		String pageSpecificationExternalReferenceCode, String uuid) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setExternalReferenceCode(externalReferenceCode);
+		pageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+		pageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		pageExperience.setPageElements(pageElements);
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
+		pageExperience.setUuid(uuid);
+
+		return pageExperience;
+	}
+
 	public static PageExperience[] getDefaultPageExperiences(
 		PageElement[] pageElements,
 		String pageSpecificationExternalReferenceCode) {
@@ -173,6 +192,21 @@ public class PageExperiencesTestUtil {
 		return pageExperience;
 	}
 
+	public static PageExperience getPageExperience(
+		String externalReferenceCode, String key, int priority, String uuid) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setExternalReferenceCode(externalReferenceCode);
+		pageExperience.setKey(key);
+		pageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		pageExperience.setPriority(priority);
+		pageExperience.setUuid(uuid);
+
+		return pageExperience;
+	}
+
 	public static PageExperience[] getPageExperiences(
 			long companyGroupId, long groupId,
 			String pageSpecificationExternalReferenceCode)
@@ -233,6 +267,69 @@ public class PageExperiencesTestUtil {
 						dropZonePageElements.toArray(new PageElement[0]));
 				});
 		}
+	}
+
+	public static PageExperience toDraftPageExperience(
+		String draftContentPageSpecificationExternalReferenceCode,
+		PageExperience publishedPageExperience) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setKey(publishedPageExperience.getKey());
+
+		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
+				publishedPageExperience.getKey())) {
+
+			pageExperience.setExternalReferenceCode(
+				draftContentPageSpecificationExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_DEFAULT);
+		}
+		else {
+			pageExperience.setExternalReferenceCode(
+				publishedPageExperience.getExternalReferenceCode() +
+					LayoutConstants.ERC_SUFFIX_DRAFT);
+		}
+
+		return pageExperience;
+	}
+
+	public static PageExperience toPublishedPageExperience(
+		PageExperience draftPageExperience,
+		String publishedContentPageSpecificationExternalReferenceCode) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setKey(draftPageExperience.getKey());
+
+		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
+				draftPageExperience.getKey())) {
+
+			pageExperience.setExternalReferenceCode(
+				publishedContentPageSpecificationExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_DEFAULT);
+
+			return pageExperience;
+		}
+
+		String draftExternalReferenceCode =
+			draftPageExperience.getExternalReferenceCode();
+
+		if (draftExternalReferenceCode.endsWith(
+				LayoutConstants.ERC_SUFFIX_DRAFT)) {
+
+			pageExperience.setExternalReferenceCode(
+				draftExternalReferenceCode.substring(
+					0,
+					draftExternalReferenceCode.length() -
+						LayoutConstants.ERC_SUFFIX_DRAFT.length()));
+		}
+		else {
+			pageExperience.setExternalReferenceCode(
+				draftExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_PUBLISHED);
+		}
+
+		return pageExperience;
 	}
 
 	private static PageExperience _getPageExperience(

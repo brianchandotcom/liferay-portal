@@ -1288,45 +1288,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return _testPutSiteSitePage(sitePage, testGroup, sitePage);
 	}
 
-	private ContentPageSpecification
-		_getContentPageSpecificationWithPageExperiences(
-			String contentPageSpecificationExternalReferenceCode,
-			String defaultPageExperienceExternalReferenceCode,
-			String defaultPageExperienceUuid, long groupId,
-			String pageExperienceExternalReferenceCode,
-			String pageExperienceKey, String pageExperienceUuid,
-			PageSpecification.Status status) {
-
-		PageExperience defaultPageExperience = new PageExperience();
-
-		defaultPageExperience.setExternalReferenceCode(
-			defaultPageExperienceExternalReferenceCode);
-		defaultPageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
-		defaultPageExperience.setName_i18n(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
-		defaultPageExperience.setPageElements(
-			PageElementsTestUtil.getPageElements(
-				RandomTestUtil.randomInt(1, 3), StringPool.BLANK, groupId));
-		defaultPageExperience.setPageSpecificationExternalReferenceCode(
-			contentPageSpecificationExternalReferenceCode);
-		defaultPageExperience.setUuid(defaultPageExperienceUuid);
-
-		PageExperience pageExperience = new PageExperience();
-
-		pageExperience.setExternalReferenceCode(
-			pageExperienceExternalReferenceCode);
-		pageExperience.setKey(pageExperienceKey);
-		pageExperience.setName_i18n(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
-		pageExperience.setPriority(1);
-		pageExperience.setUuid(pageExperienceUuid);
-
-		return PageSpecificationsTestUtil.getContentPageSpecification(
-			contentPageSpecificationExternalReferenceCode, null, null,
-			new PageExperience[] {defaultPageExperience, pageExperience},
-			groupId, status);
-	}
-
 	private CustomMetaTag[] _getCustomMetaTags() {
 		return new CustomMetaTag[] {
 			new CustomMetaTag() {
@@ -2920,13 +2881,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		ContentPageSpecification draftContentPageSpecification =
-			_getContentPageSpecificationWithPageExperiences(
-				draftContentPageSpecificationExternalReferenceCode,
-				defaultPageExperienceExternalReferenceCode,
-				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				pageExperienceExternalReferenceCode,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				status);
+			PageSpecificationsTestUtil.
+				getContentPageSpecificationWithPageExperiences(
+					draftContentPageSpecificationExternalReferenceCode,
+					defaultPageExperienceExternalReferenceCode,
+					RandomTestUtil.randomString(), testGroup.getGroupId(),
+					pageExperienceExternalReferenceCode,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), status);
 
 		ContentPageSpecification expectedDraftContentPageSpecification =
 			new ContentPageSpecification();
@@ -2946,8 +2908,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		expectedPublishedContentPageSpecification.setPageExperiences(
 			TransformUtil.transform(
 				draftContentPageSpecification.getPageExperiences(),
-				draftPageExperience -> _toPublishedPageExperience(
-					draftPageExperience, pageExternalReferenceCode),
+				draftPageExperience ->
+					PageExperiencesTestUtil.toPublishedPageExperience(
+						draftPageExperience, pageExternalReferenceCode),
 				PageExperience.class));
 		expectedPublishedContentPageSpecification.setStatus(status);
 
@@ -3113,12 +3076,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
 
 		ContentPageSpecification publishedContentPageSpecification =
-			_getContentPageSpecificationWithPageExperiences(
-				pageExternalReferenceCode,
-				defaultPageExperienceExternalReferenceCode,
-				defaultPageExperienceUuid, testGroup.getGroupId(),
-				pageExperienceExternalReferenceCode, pageExperienceKey,
-				pageExperienceUuid, status);
+			PageSpecificationsTestUtil.
+				getContentPageSpecificationWithPageExperiences(
+					pageExternalReferenceCode,
+					defaultPageExperienceExternalReferenceCode,
+					defaultPageExperienceUuid, testGroup.getGroupId(),
+					pageExperienceExternalReferenceCode, pageExperienceKey,
+					pageExperienceUuid, status);
 
 		String draftContentPageSpecificationExternalReferenceCode =
 			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT;
@@ -3131,9 +3095,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		expectedDraftContentPageSpecification.setPageExperiences(
 			TransformUtil.transform(
 				publishedContentPageSpecification.getPageExperiences(),
-				publishedPageExperience -> _toDraftPageExperience(
-					publishedPageExperience,
-					draftContentPageSpecificationExternalReferenceCode),
+				publishedPageExperience ->
+					PageExperiencesTestUtil.toDraftPageExperience(
+						draftContentPageSpecificationExternalReferenceCode,
+						publishedPageExperience),
 				PageExperience.class));
 		expectedDraftContentPageSpecification.setStatus(
 			PageSpecification.Status.APPROVED);
@@ -4549,69 +4514,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage1.getExternalReferenceCode(), 1, sitePage2);
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 2, sitePage4);
-	}
-
-	private PageExperience _toDraftPageExperience(
-		PageExperience publishedPageExperience,
-		String draftContentPageSpecificationExternalReferenceCode) {
-
-		PageExperience pageExperience = new PageExperience();
-
-		pageExperience.setKey(publishedPageExperience.getKey());
-
-		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
-				publishedPageExperience.getKey())) {
-
-			pageExperience.setExternalReferenceCode(
-				draftContentPageSpecificationExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_DEFAULT);
-		}
-		else {
-			pageExperience.setExternalReferenceCode(
-				publishedPageExperience.getExternalReferenceCode() +
-					LayoutConstants.ERC_SUFFIX_DRAFT);
-		}
-
-		return pageExperience;
-	}
-
-	private PageExperience _toPublishedPageExperience(
-		PageExperience draftPageExperience,
-		String publishedContentPageSpecificationExternalReferenceCode) {
-
-		PageExperience pageExperience = new PageExperience();
-
-		pageExperience.setKey(draftPageExperience.getKey());
-
-		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
-				draftPageExperience.getKey())) {
-
-			pageExperience.setExternalReferenceCode(
-				publishedContentPageSpecificationExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_DEFAULT);
-
-			return pageExperience;
-		}
-
-		String draftExternalReferenceCode =
-			draftPageExperience.getExternalReferenceCode();
-
-		if (draftExternalReferenceCode.endsWith(
-				LayoutConstants.ERC_SUFFIX_DRAFT)) {
-
-			pageExperience.setExternalReferenceCode(
-				draftExternalReferenceCode.substring(
-					0,
-					draftExternalReferenceCode.length() -
-						LayoutConstants.ERC_SUFFIX_DRAFT.length()));
-		}
-		else {
-			pageExperience.setExternalReferenceCode(
-				draftExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_PUBLISHED);
-		}
-
-		return pageExperience;
 	}
 
 	private Layout _updateFriendlyURL(

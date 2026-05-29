@@ -5,6 +5,7 @@
 
 package com.liferay.seo.studio.web.internal.display.context;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -22,10 +23,11 @@ import java.util.Map;
 public class ViewOnPageInsightDetailsDisplayContext {
 
 	public ViewOnPageInsightDetailsDisplayContext(
-		HttpServletRequest httpServletRequest, String objectEntryExternalReferenceCode,
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest, Language language,
+		String objectEntryExternalReferenceCode, ThemeDisplay themeDisplay) {
 
 		_httpServletRequest = httpServletRequest;
+		_language = language;
 		_objectEntryExternalReferenceCode = objectEntryExternalReferenceCode;
 		_themeDisplay = themeDisplay;
 	}
@@ -48,10 +50,13 @@ public class ViewOnPageInsightDetailsDisplayContext {
 			"backURL", getBackURL()
 		).put(
 			"externalReferenceCode", _objectEntryExternalReferenceCode
+		).put(
+			"screenName", _language.get(_httpServletRequest, "on-page")
 		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
 	private final String _objectEntryExternalReferenceCode;
 	private final ThemeDisplay _themeDisplay;
 

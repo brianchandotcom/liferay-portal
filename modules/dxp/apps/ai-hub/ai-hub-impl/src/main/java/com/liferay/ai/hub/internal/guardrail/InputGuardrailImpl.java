@@ -7,9 +7,11 @@ package com.liferay.ai.hub.internal.guardrail;
 
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.guardrail.InputGuardrail;
@@ -20,6 +22,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * @author Feliphe Marinho
  * @author João Victor Alves
  */
 public class InputGuardrailImpl implements InputGuardrail {
@@ -39,7 +42,7 @@ public class InputGuardrailImpl implements InputGuardrail {
 	@Override
 	public InputGuardrailResult fatal(String message) {
 		SseUtil.send(
-			message,
+			"User prompt violates security policy",
 			GetterUtil.getString(
 				_workflowContext.get("outBoundEventName"), "Chat Message Sent"),
 			null,
@@ -51,11 +54,18 @@ public class InputGuardrailImpl implements InputGuardrail {
 	@Override
 	public InputGuardrailResult validate(UserMessage userMessage) {
 		try {
-			if (_modelArmorHandler.hasUserPromptViolation(
-					_companyId, _externalReferenceCode, _location,
-					userMessage.singleText())) {
+			String violations = _modelArmorHandler.sanitizeUserPrompt(
+				_companyId, _externalReferenceCode, _location,
+				userMessage.singleText());
 
-				return fatal("User prompt violates security policy");
+			if (Validator.isNotNull(violations)) {
+				return fatal(
+					JSONUtil.put(
+						"modelArmorTemplateExternalReferenceCode",
+						_externalReferenceCode
+					).put(
+						"violations", violations
+					).toString());
 			}
 
 			return success();

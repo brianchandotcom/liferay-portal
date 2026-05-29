@@ -3146,10 +3146,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
 		String userDraftSpecERC = RandomTestUtil.randomString();
 
-		long groupId = testGroup.getGroupId();
-
 		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
-			3, StringPool.BLANK, groupId);
+			3, StringPool.BLANK, testGroup.getGroupId());
 
 		List<String> userDraftFragmentInstanceERCs =
 			_setUserDraftFragmentInstanceERCs(pageElements);
@@ -3179,13 +3177,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			userDraftSpecERC, PageSpecification.Status.APPROVED, false, false);
 
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			pageExternalReferenceCode, groupId);
+			pageExternalReferenceCode, testGroup.getGroupId());
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		List<String> draftFragmentEntryLinkERCs = TransformUtil.transform(
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				groupId, draftLayout.getPlid()),
+				testGroup.getGroupId(), draftLayout.getPlid()),
 			FragmentEntryLink::getExternalReferenceCode);
 
 		for (String userDraftFragmentInstanceERC :

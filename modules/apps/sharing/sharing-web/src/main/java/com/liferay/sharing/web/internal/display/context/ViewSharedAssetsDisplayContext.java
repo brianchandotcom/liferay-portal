@@ -329,8 +329,8 @@ public class ViewSharedAssetsDisplayContext {
 			return false;
 		}
 
-		// See LPD-90975. ObjectEntry implements GroupedModel,
-		// but can be instance scoped.
+		// See LPD-90975. ObjectEntry implements GroupedModel, but can be
+		// instance scoped.
 
 		SharingConfiguration sharingConfiguration = null;
 

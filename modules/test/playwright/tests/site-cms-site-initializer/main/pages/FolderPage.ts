@@ -40,9 +40,16 @@ export class FolderPage {
 
 		const spaceSelector = dialog.getByLabel('SpaceMandatory');
 
-		if (await spaceSelector.isVisible()) {
+		try {
+			await spaceSelector.waitFor({state: 'visible', timeout: 1000});
+
 			await spaceSelector.click();
 			await this.page.getByRole('option', {name: spaceName}).click();
+		}
+		catch {
+
+			// The Space selector is only rendered when the feature is enabled
+
 		}
 
 		await dialog.getByRole('button', {name: 'Save'}).click();

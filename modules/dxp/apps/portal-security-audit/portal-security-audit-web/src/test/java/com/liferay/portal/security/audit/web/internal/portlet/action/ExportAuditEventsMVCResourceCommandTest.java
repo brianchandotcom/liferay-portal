@@ -35,47 +35,17 @@ public class ExportAuditEventsMVCResourceCommandTest {
 
 	@Test
 	public void testBuildCSV() {
-		AuditEvent firstAuditEvent = Mockito.mock(AuditEvent.class);
-		long firstUserId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			firstAuditEvent.getUserId()
-		).thenReturn(
-			firstUserId
-		);
-
-		String firstUserName = RandomTestUtil.randomString();
-
-		Mockito.when(
-			firstAuditEvent.getUserName()
-		).thenReturn(
-			firstUserName
-		);
-
-		AuditEvent secondAuditEvent = Mockito.mock(AuditEvent.class);
-		long secondUserId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			secondAuditEvent.getUserId()
-		).thenReturn(
-			secondUserId
-		);
-
-		String secondUserName = RandomTestUtil.randomString();
-
-		Mockito.when(
-			secondAuditEvent.getUserName()
-		).thenReturn(
-			secondUserName
-		);
+		AuditEvent auditEvent1 = _mockAuditEvent();
+		AuditEvent auditEvent2 = _mockAuditEvent();
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"user-name,user-id\n", firstUserName, StringPool.COMMA,
-				firstUserId, "\n", secondUserName, StringPool.COMMA,
-				secondUserId, "\n"),
+				"user-name,user-id\n", auditEvent1.getUserName(),
+				StringPool.COMMA, auditEvent1.getUserId(), "\n",
+				auditEvent2.getUserName(), StringPool.COMMA,
+				auditEvent2.getUserId(), "\n"),
 			_buildCSV(
-				Arrays.asList(firstAuditEvent, secondAuditEvent),
+				Arrays.asList(auditEvent1, auditEvent2),
 				new String[] {"user-name", "user-id"}));
 	}
 
@@ -84,6 +54,24 @@ public class ExportAuditEventsMVCResourceCommandTest {
 			new ExportAuditEventsMVCResourceCommand(), "_buildCSV",
 			new Class<?>[] {List.class, String[].class, ProgressTracker.class},
 			auditEvents, columns, null);
+	}
+
+	private AuditEvent _mockAuditEvent() {
+		AuditEvent auditEvent = Mockito.mock(AuditEvent.class);
+
+		Mockito.when(
+			auditEvent.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			auditEvent.getUserName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		return auditEvent;
 	}
 
 }

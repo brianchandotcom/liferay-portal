@@ -274,19 +274,22 @@ describe('TopCategoriesAndTags', () => {
 	});
 
 	describe('tab switching', () => {
-		it('should use the categories data source on initial render', () => {
+		it('should query the categories data source on initial render', () => {
 			const API = jest.requireMock('shared/api');
 
 			render(<TopCategoriesAndTags />);
 
 			const firstCall = mockedUseRequest.mock.calls[0][0];
 
-			expect(firstCall.dataSourceFn).toBe(
-				API.categories.fetchAccountTopCategories
-			);
+			expect(firstCall.variables.isCategory).toBe(true);
+
+			firstCall.dataSourceFn(firstCall.variables);
+
+			expect(API.categories.fetchAccountTopCategories).toHaveBeenCalled();
+			expect(API.tags.fetchAccountTopTags).not.toHaveBeenCalled();
 		});
 
-		it('should switch to the tags data source when the Tag tab is clicked', () => {
+		it('should query the tags data source when the Tag tab is clicked', () => {
 			const API = jest.requireMock('shared/api');
 
 			render(<TopCategoriesAndTags />);
@@ -298,7 +301,32 @@ describe('TopCategoriesAndTags', () => {
 					mockedUseRequest.mock.calls.length - 1
 				][0];
 
-			expect(lastCall.dataSourceFn).toBe(API.tags.fetchAccountTopTags);
+			expect(lastCall.variables.isCategory).toBe(false);
+
+			lastCall.dataSourceFn(lastCall.variables);
+
+			expect(API.tags.fetchAccountTopTags).toHaveBeenCalled();
+			expect(
+				API.categories.fetchAccountTopCategories
+			).not.toHaveBeenCalled();
+		});
+
+		it('should change the request variables when switching tabs so the request refetches', () => {
+			render(<TopCategoriesAndTags />);
+
+			const categoryVariables =
+				mockedUseRequest.mock.calls[0][0].variables;
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Tag'}));
+
+			const tagVariables =
+				mockedUseRequest.mock.calls[
+					mockedUseRequest.mock.calls.length - 1
+				][0].variables;
+
+			expect(tagVariables).not.toEqual(categoryVariables);
+			expect(categoryVariables.isCategory).toBe(true);
+			expect(tagVariables.isCategory).toBe(false);
 		});
 
 		it('should render tag items after switching to the Tag tab', () => {

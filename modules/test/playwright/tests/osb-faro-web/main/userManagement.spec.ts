@@ -28,7 +28,6 @@ test(
 	{
 		tag: ['@LRAC-9063', '@LRAC-9069', '@LRAC-9070', '@LRAC-9055'],
 	},
-
 	async ({page, project}) => {
 		await test.step('go to AC Properties Page', async () => {
 			await navigateToACSettingsViaURL({
@@ -108,7 +107,6 @@ test(
 	{
 		tag: '@LRAC-9048',
 	},
-
 	async ({page, project}) => {
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.userManagementPage,
@@ -161,7 +159,6 @@ test(
 	{
 		tag: ['@LRAC-9052', '@LRAC-9054'],
 	},
-
 	async ({page, project}) => {
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.userManagementPage,
@@ -612,7 +609,6 @@ test(
 	{
 		tag: '@LRAC-8142',
 	},
-
 	async ({page, project}) => {
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.userManagementPage,
@@ -635,7 +631,6 @@ test(
 	{
 		tag: '@LRAC-9064',
 	},
-
 	async ({page, project}) => {
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.userManagementPage,

@@ -28,7 +28,6 @@ test(
 	{
 		tag: '@LRAC-8720',
 	},
-
 	async ({page}) => {
 		await test.step('Create a new workspace', async () => {
 			await page.goto(faroConfig.environment.baseUrl);

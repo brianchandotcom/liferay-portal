@@ -34,7 +34,6 @@ test(
 	{
 		tag: '@LPD-26181',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const generateIndividual = (name) => {
 			const id = getRandomString();
@@ -126,7 +125,6 @@ test(
 	{
 		tag: '@LRAC-11056',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const generateIndividual = (name) => {
 			const id = getRandomString();

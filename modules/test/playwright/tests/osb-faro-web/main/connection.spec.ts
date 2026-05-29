@@ -36,7 +36,6 @@ test(
 	{
 		tag: '@LRAC-12019',
 	},
-
 	async ({apiHelpers, page}) => {
 		const propertiesList = [
 			'AC Property Pagination 1',

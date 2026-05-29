@@ -63,7 +63,6 @@ test(
 	{
 		tag: '@LRAC-10405',
 	},
-
 	async ({page}) => {
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});

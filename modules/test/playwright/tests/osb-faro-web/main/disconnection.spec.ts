@@ -37,7 +37,6 @@ test(
 	{
 		tag: '@LPD-44493',
 	},
-
 	async ({page, project}) => {
 		const {token} = await createDataSource(page);
 

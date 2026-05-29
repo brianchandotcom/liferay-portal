@@ -45,7 +45,6 @@ test(
 	{
 		tag: '@LRAC-8456',
 	},
-
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const webContentTitle = 'Web Content Title';
 

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -284,6 +285,26 @@ public class AssetPublisherDisplayContextTest {
 			localizedValuesMap.get(LocaleUtil.getSiteDefault()));
 	}
 
+	@FeatureFlag(enable = false, value = "LPD-89171")
+	@Test
+	public void testGetPortletURLWhenRedirectParameterIsDeprecated()
+		throws Exception {
+
+		String portletURL = _getPortletURL();
+
+		Assert.assertFalse(portletURL.contains("redirect"));
+	}
+
+	@FeatureFlag("LPD-89171")
+	@Test
+	public void testGetPortletURLWhenRedirectParameterIsEnabled()
+		throws Exception {
+
+		String portletURL = _getPortletURL();
+
+		Assert.assertTrue(portletURL.contains("redirect"));
+	}
+
 	@Test
 	public void testGetSelectCollectionProps() throws Exception {
 		Map<String, Object> selectCollectionProps = ReflectionTestUtil.invoke(
@@ -436,6 +457,23 @@ public class AssetPublisherDisplayContextTest {
 
 		return _mockLiferayPortletRenderRequest.getAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT);
+	}
+
+	private String _getPortletURL() throws Exception {
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue("paginationType", "regular");
+
+		Object assetPublisherDisplayContext = _getAssetPublisherDisplayContext(
+			LayoutTestUtil.addTypePortletLayout(_group), portletPreferences);
+
+		_mockLiferayPortletRenderRequest.setParameter(
+			"redirect", RandomTestUtil.randomString());
+
+		Object portletURL = ReflectionTestUtil.invoke(
+			assetPublisherDisplayContext, "getPortletURL", new Class<?>[0]);
+
+		return String.valueOf(portletURL);
 	}
 
 	private ThemeDisplay _getThemeDisplay(

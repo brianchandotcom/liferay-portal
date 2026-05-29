@@ -82,18 +82,19 @@ export const columns = {
 };
 
 export function useSnapshots(fdsName: string) {
-	if (
-		!Liferay.FeatureFlags['LPD-34594'] ||
-		!Liferay.FeatureFlags['LPS-164563']
-	) {
-		return [];
-	}
+	const enabled =
+		Liferay.FeatureFlags['LPD-34594'] && Liferay.FeatureFlags['LPS-164563'];
 
-	const [snapshots, setSnapshots] = useState<
-		Array<{headerVisible: boolean; items: any[]}>
-	>([]);
+	const [snapshots, setSnapshots] = useState<Array<{
+		headerVisible: boolean;
+		items: any[];
+	}> | null>(enabled ? null : []);
 
 	useEffect(() => {
+		if (!enabled) {
+			return;
+		}
+
 		Liferay.Util.fetch(
 			`/o/data-set-admin/snapshots?filter=fdsName eq '${fdsName}'`,
 			{headers: {'Content-Type': 'application/json'}, method: 'GET'}
@@ -121,8 +122,10 @@ export function useSnapshots(fdsName: string) {
 			.catch(error => {
 				// eslint-disable-next-line no-console
 				console.error('Failed to fetch snapshots:', error);
+
+				setSnapshots([]);
 			});
-	}, [fdsName]);
+	}, [enabled, fdsName]);
 
 	return snapshots;
 }

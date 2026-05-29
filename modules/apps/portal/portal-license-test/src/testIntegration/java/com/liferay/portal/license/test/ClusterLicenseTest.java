@@ -8,8 +8,10 @@ package com.liferay.portal.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
@@ -318,6 +320,18 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		tomcatNode1.syncExecute(this::_assertPortalLicenseRegistered);
 	}
 
+	@Test
+	public void testLimitPreviouslyValidatedClusterNode() throws Exception {
+		_testLimitPreviouslyValidatedClusterNode(true);
+	}
+
+	@Test
+	public void testLimitPreviouslyValidatedClusterNodeWithManualRecovery()
+		throws Exception {
+
+		_testLimitPreviouslyValidatedClusterNode(false);
+	}
+
 	@SafeVarargs
 	private static void _restartTomcatNode(
 			TomcatNode tomcatNode,
@@ -385,6 +399,35 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		return null;
 	}
 
+	private String _encryptLicenseProperties(Map<String, String> properties)
+		throws Exception {
+
+		Method encryptMethod = null;
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(
+			getProperty("key.generator.class"));
+
+		for (Method method : clazz.getDeclaredMethods()) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			if ((parameterTypes.length == 1) &&
+				Map.class.isAssignableFrom(parameterTypes[0])) {
+
+				method.setAccessible(true);
+
+				encryptMethod = method;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(encryptMethod);
+
+		return (String)encryptMethod.invoke(null, properties);
+	}
+
 	private TomcatNode.ClusterExecutable<Serializable> _getClusterExecutable(
 		long timestamp) {
 
@@ -416,6 +459,87 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		assertLicensePropertiesExisted(getPortalProductId());
 
 		return _assertPortalLicenseRegistered();
+	}
+
+	private void _testLimitPreviouslyValidatedClusterNode(
+			boolean overloadNodeAutoShutdown)
+		throws Exception {
+
+		TomcatNode tomcatNode1 = _startTomcatNode(overloadNodeAutoShutdown);
+
+		tomcatNode1.syncExecute(this::_testFreeTierLicense);
+		tomcatNode1.syncExecute(this::_writeBinaryLicense);
+
+		tomcatNode1.stop();
+
+		TomcatNode tomcatNode2 = _startTomcatNode(true);
+
+		tomcatNode2.syncExecute(this::_testFreeTierLicense);
+
+		Future<String> messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		String temporaryNodeConsoleKey = _CONSOLE_KEY_TEMPORARY_NODE_MANUAL;
+
+		if (overloadNodeAutoShutdown) {
+			temporaryNodeConsoleKey = _CONSOLE_KEY_TEMPORARY_NODE;
+		}
+
+		Future<String> messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), temporaryNodeConsoleKey,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		_restartTomcatNode(
+			tomcatNode1,
+			_getClusterExecutable(
+				tomcatNode2.syncExecute(this::_getTimeStamp)));
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+
+		messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_FINISHED_SHUTDOWN);
+
+		if (overloadNodeAutoShutdown) {
+			tomcatNode1.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+		}
+		else {
+			try {
+				tomcatNode1.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+
+				Assert.fail();
+			}
+			catch (Exception exception) {
+				Assert.assertTrue(exception instanceof TimeoutException);
+			}
+
+			tomcatNode1.stop();
+		}
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+
+		tomcatNode2.syncExecute(this::_assertPortalLicenseRegistered);
+	}
+
+	private Serializable _writeBinaryLicense() throws Exception {
+		Method getLicenseMethod = findMethod("get.license.method");
+
+		Object license = getLicenseMethod.invoke(null, getPortalProductId());
+
+		Method setKeyMethod = findMethod("set.key.method");
+
+		setKeyMethod.invoke(
+			license,
+			_encryptLicenseProperties(
+				LicenseManagerUtil.getLicenseProperties(getPortalProductId())));
+
+		Method writeBinaryLicenseMethod = findMethod(
+			"write.binary.license.method");
+
+		writeBinaryLicenseMethod.invoke(null, license);
+
+		return null;
 	}
 
 	private static final String _CONSOLE_KEY_BEYOND_TEMPORARY_NODE =

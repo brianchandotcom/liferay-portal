@@ -99,3 +99,26 @@ test(
 		});
 	}
 );
+
+test(
+	'User Management settings page surfaces the header and Invite Users action',
+	{
+		tag: '@LRAC-9048',
+	},
+
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.getByRole('heading', {name: 'User Management'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('button', {name: 'Invite Users'})
+		).toBeVisible();
+	}
+);

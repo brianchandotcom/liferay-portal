@@ -4,7 +4,9 @@
  */
 
 import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
+import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
+import provisioningOAuth2 from '../../../services/oauth/Provisioning';
 import {getSiteURL} from '../../../utils/site';
 import {sanitizeStringForURL} from '../../../utils/string';
 import ProductPurchase from './ProductPurchase';
@@ -12,10 +14,10 @@ import ProductPurchase from './ProductPurchase';
 type LDPProvisioningForm = z.infer<typeof zodSchema.ldpProvisioning>;
 
 export default class ProductPurchaseLDP extends ProductPurchase {
-	private form?: LDPProvisioningForm & {salesforceProjectId: string};
+	private form?: LDPProvisioningForm & {salesforceProjectId?: string};
 	protected orderTypeExternalReferenceCode = OrderTypes.ADDONS;
 
-	setForm(form: LDPProvisioningForm & {salesforceProjectId: string}) {
+	setForm(form: LDPProvisioningForm & {salesforceProjectId?: string}) {
 		this.form = form;
 	}
 
@@ -35,21 +37,9 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 			customFields: {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
+					analyticsForm: this.getAnalyticsForm(),
 					productKey,
 					productPurchaseKey,
-					provisioningForm: {
-						allowedEmailDomains: this.form?.allowedEmailDomains,
-						corpProjectName: this.form?.workspaceName,
-						corpProjectUuid: this.account.externalReferenceCode,
-						dataCenterLocation: this.form?.dataCenterLocation,
-						friendlyWorkspaceURL: this.form?.friendlyWorkspaceURL
-							? `/${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
-							: '',
-						incidentReportEmailAddresses:
-							this.form?.incidentReportContacts,
-						ownerEmailAddress: this.form?.workspaceOwnerEmail,
-						workspaceName: this.form?.workspaceName,
-					},
 					salesforceProjectId: this.form?.salesforceProjectId,
 				}),
 			},
@@ -60,11 +50,38 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 		return `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
 	}
 
+	private getAnalyticsForm() {
+		return {
+			allowedEmailDomains: this.form?.allowedEmailDomains,
+			corpProjectName: this.form?.workspaceName,
+			corpProjectUuid: this.account.externalReferenceCode,
+			serverLocation: this.form?.dataCenterLocation,
+			friendlyURL: this.form?.friendlyWorkspaceURL
+				? `${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
+				: '',
+			incidentReportEmailAddresses: this.form?.incidentReportContacts,
+			name: this.form?.workspaceName,
+			ownerEmailAddress:
+				this.form?.workspaceOwnerEmail ||
+				Liferay.ThemeDisplay.getUserEmailAddress(),
+			workspaceName: this.form?.workspaceName,
+		};
+	}
+
 	public async createOrder(cart: Cart) {
 		if (!this.form) {
 			throw new Error('Form is missing.');
 		}
 
-		return super.createOrder({...cart, ...this.getCart()});
+		const order = await super.createOrder({...cart, ...this.getCart()});
+
+		const analyticsForm = this.getAnalyticsForm();
+
+		await provisioningOAuth2.provisionLDPBeta({
+			analyticsForm,
+			orderId: order.id,
+		});
+
+		return order;
 	}
 }

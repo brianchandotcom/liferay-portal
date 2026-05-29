@@ -83,6 +83,12 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 		await this.post(`/license-key-type-free/${licenseKey}/renew`);
 	}
 
+	async provisionLDPBeta(payload: unknown) {
+		return this.post('/ldp-beta-provision', payload, {
+			earlyReturn: true,
+		});
+	}
+
 	async provisionCMPBeta(payload: unknown) {
 		return this.post('/cmp-beta-license-key', payload, {
 			earlyReturn: true,

@@ -35,12 +35,10 @@ import AIHubOpenBetaForm from './pages/LiferayProduct/AIHub/AIHubOpenBetaForm';
 import AIHubOrderSummary from './pages/LiferayProduct/AIHub/AIHubOrderSummary';
 import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
 import DSRLicenseKeyForm from './pages/LiferayProduct/DSRLicenseKeyForm';
-import LDPInformation from './pages/LiferayProduct/LDPInformation';
-import LDPOrderSummary from './pages/LiferayProduct/LDPOrderSummary';
-import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
-import ProjectSelection from './pages/LiferayProduct/Project';
+import LDPProvisioning from './pages/LiferayProduct/LDP/LDPProvisioningForm';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
+import LDPAccountSelection from './pages/LiferayProduct/LDP/LDPAccountSelection';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -181,29 +179,14 @@ export const productTypeRoutes = {
 			if (solutionType === SolutionTypes.LIFERAY_DATA_PLATFORM) {
 				return [
 					{
-						element: ProductPurchaseAccountSelection,
+						element: LDPAccountSelection,
 						index: true,
 						title: i18n.translate('account'),
-					},
-					{
-						element: ProjectSelection,
-						path: 'project',
-						title: i18n.translate('project'),
 					},
 					{
 						element: LDPProvisioning,
 						path: 'provisioning',
 						title: i18n.translate('provisioning'),
-					},
-					{
-						element: LDPInformation,
-						path: 'information',
-						title: i18n.translate('information'),
-					},
-					{
-						element: LDPOrderSummary,
-						path: 'summary',
-						title: i18n.translate('summary'),
 					},
 				];
 			}

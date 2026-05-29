@@ -180,46 +180,55 @@ test(
 );
 
 test(
-	'Admin user can delete an invited user from the User Management page',
+	'Admin and Owner users can delete an invited user from the User Management page',
 	{
-		tag: '@LRAC-9065',
+		tag: ['@LRAC-9065', '@LRAC-8143'],
 	},
 	async ({page, project}) => {
-		const invitedEmail = `admin-delete-${Date.now()}@liferay.com`;
+		const deleters = [
+			{email: 'michelle.hoshi@faro.io', role: 'admin'},
+			{email: 'bryan.cheung@faro.io', role: 'owner'},
+		];
 
 		try {
-			await signInToAnalyticsCloud(page, 'michelle.hoshi@faro.io');
+			for (const deleter of deleters) {
+				await signInToAnalyticsCloud(page, deleter.email);
 
-			await navigateToACSettingsViaURL({
-				acPage: ACPage.userManagementPage,
-				page,
-				projectID: project.groupId,
-			});
+				await navigateToACSettingsViaURL({
+					acPage: ACPage.userManagementPage,
+					page,
+					projectID: project.groupId,
+				});
 
-			await page.getByRole('button', {name: 'Invite Users'}).click();
+				const invitedEmail = `${deleter.role}-delete-${Date.now()}@liferay.com`;
 
-			await page
-				.getByPlaceholder('Enter Email Address')
-				.fill(invitedEmail);
+				await page
+					.getByRole('button', {name: 'Invite Users'})
+					.click();
 
-			await page.keyboard.press('Enter');
+				await page
+					.getByPlaceholder('Enter Email Address')
+					.fill(invitedEmail);
 
-			await page.getByRole('button', {name: 'Send'}).click();
+				await page.keyboard.press('Enter');
 
-			await expect(
-				page.getByText('Success:Invitations have been sent.')
-			).toBeVisible();
+				await page.getByRole('button', {name: 'Send'}).click();
 
-			await page
-				.getByRole('row', {name: invitedEmail})
-				.getByLabel('Delete')
-				.click();
+				await expect(
+					page.getByText('Success:Invitations have been sent.')
+				).toBeVisible();
 
-			await page.getByRole('button', {name: 'Continue'}).click();
+				await page
+					.getByRole('row', {name: invitedEmail})
+					.getByLabel('Delete')
+					.click();
 
-			await expect(
-				page.getByRole('cell', {name: invitedEmail})
-			).toHaveCount(0);
+				await page.getByRole('button', {name: 'Continue'}).click();
+
+				await expect(
+					page.getByRole('cell', {name: invitedEmail})
+				).toHaveCount(0);
+			}
 		}
 		finally {
 			await signInToAnalyticsCloud(page, faroConfig.user.login);

@@ -15,13 +15,13 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -66,7 +66,7 @@ public class AccountEntryValidatorRegistryImpl
 
 	@Override
 	public List<AccountEntryValidatorResult> validate(
-			AccountEntry accountEntry, Map<String, Object> additionalProps)
+			AccountEntry accountEntry, JSONObject jsonObject)
 		throws PortalException {
 
 		if (accountEntry == null) {
@@ -76,7 +76,7 @@ public class AccountEntryValidatorRegistryImpl
 		return TransformUtil.transform(
 			getAccountEntryValidators(),
 			accountEntryValidator -> accountEntryValidator.validate(
-				accountEntry, additionalProps));
+				accountEntry, jsonObject));
 	}
 
 	@Activate

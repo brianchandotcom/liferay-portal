@@ -13,6 +13,28 @@ import {faroConfig} from './faro.config';
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 
 test(
+	'Unauthenticated access to a workspace URL redirects to the AC login screen',
+	{
+		tag: '@LRAC-9079',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await page.goto(`${faroConfig.environment.baseUrl}/c/portal/logout`);
+
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/sites`
+		);
+
+		await expect(
+			page.getByRole('textbox', {name: 'Email Address'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Workspace settings cancel reverts the unsaved workspace name change',
 	{
 		tag: ['@LRAC-9134', '@LRAC-9118'],

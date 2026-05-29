@@ -128,7 +128,9 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 				fetchOAuthClientASLocalMetadata(companyId, true, null);
 		}
 
-		String issuer = _portal.getPortalURL(httpServletRequest) + issuerPath;
+		String issuer =
+			_portal.getPortalURL(httpServletRequest) +
+				_portal.getPathContext() + issuerPath;
 
 		return _oAuthClientASLocalMetadataLocalService.
 			fetchOAuthClientASLocalMetadata(companyId, issuer);

@@ -38,8 +38,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductSpecification")
+@GraphQLName(
+	description = "Wire shape for a product specification value attached to a product, uploaded to the analytics pipeline alongside its parent product.",
+	value = "ProductSpecification"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a product specification value attached to a product, uploaded to the analytics pipeline alongside its parent product.",
 	requiredProperties = {"specificationKey", "value"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -56,7 +60,10 @@ public class ProductSpecification implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the specification value (FK identifier).",
+		example = "31130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -88,7 +95,9 @@ public class ProductSpecification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the specification value (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -96,7 +105,10 @@ public class ProductSpecification implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the option category the specification key belongs to (FK identifier).",
+		example = "30129"
+	)
 	public Long getOptionCategoryId() {
 		if (_optionCategoryIdSupplier != null) {
 			optionCategoryId = _optionCategoryIdSupplier.get();
@@ -130,14 +142,19 @@ public class ProductSpecification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the option category the specification key belongs to (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
 	@JsonIgnore
 	private Supplier<Long> _optionCategoryIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "specification-key")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable key of the specification.",
+		example = "specification-key"
+	)
 	public String getSpecificationKey() {
 		if (_specificationKeySupplier != null) {
 			specificationKey = _specificationKeySupplier.get();
@@ -171,7 +188,7 @@ public class ProductSpecification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Stable key of the specification.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String specificationKey;
@@ -179,7 +196,10 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _specificationKeySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized value of the specification. Map keys are locale codes; values are the translated strings.",
+		example = "{en_US=Stainless Steel, hr_HR=Nehrdjajuci Celik, hu_HU=Rozsdamentes Acel}"
+	)
 	@Valid
 	public Map<String, String> getValue() {
 		if (_valueSupplier != null) {
@@ -214,7 +234,9 @@ public class ProductSpecification implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized value of the specification. Map keys are locale codes; values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> value;
@@ -403,4 +425,4 @@ public class ProductSpecification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1908278536
+// LIFERAY-REST-BUILDER-HASH:-1045170779

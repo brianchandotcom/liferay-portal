@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("FrequentPatternRecommendation")
+@GraphQLName(
+	description = "Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of antecedent products that make up a basket, the model recommends a consequent product.",
+	value = "FrequentPatternRecommendation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FrequentPatternRecommendation")
 public class FrequentPatternRecommendation implements Serializable {
@@ -54,7 +57,10 @@ public class FrequentPatternRecommendation implements Serializable {
 			FrequentPatternRecommendation.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "References to the products that make up the antecedent (left-hand side) of the association rule (FK identifier array). The recommendation applies when a basket contains all of these products.",
+		example = "[10130, 10131]"
+	)
 	public Long[] getAntecedentIds() {
 		if (_antecedentIdsSupplier != null) {
 			antecedentIds = _antecedentIdsSupplier.get();
@@ -88,14 +94,19 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "References to the products that make up the antecedent (left-hand side) of the association rule (FK identifier array). The recommendation applies when a basket contains all of these products."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] antecedentIds;
 
 	@JsonIgnore
 	private Supplier<Long[]> _antecedentIdsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Cardinality of `antecedentIds`. Persisted alongside the array so the index can filter rules by antecedent-set size without unpacking the array.",
+		example = "2"
+	)
 	public Long getAntecedentIdsLength() {
 		if (_antecedentIdsLengthSupplier != null) {
 			antecedentIdsLength = _antecedentIdsLengthSupplier.get();
@@ -129,14 +140,19 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Cardinality of `antecedentIds`. Persisted alongside the array so the index can filter rules by antecedent-set size without unpacking the array."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long antecedentIdsLength;
 
 	@JsonIgnore
 	private Supplier<Long> _antecedentIdsLengthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).",
+		example = "2017-07-21"
+	)
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -170,14 +186,19 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the analytics training job that produced this rule. Used to group rules by training run.",
+		example = "ml-job-2025-04-01"
+	)
 	public String getJobId() {
 		if (_jobIdSupplier != null) {
 			jobId = _jobIdSupplier.get();
@@ -211,7 +232,9 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the analytics training job that produced this rule. Used to group rules by training run."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
@@ -219,7 +242,8 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Supplier<String> _jobIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommended product identifier."
+		description = "Reference to the product the model recommends as the consequent of the rule (FK identifier).",
+		example = "30130"
 	)
 	public Long getRecommendedProductId() {
 		if (_recommendedProductIdSupplier != null) {
@@ -254,7 +278,9 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommended product identifier.")
+	@GraphQLField(
+		description = "Reference to the product the model recommends as the consequent of the rule (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
@@ -262,7 +288,8 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Supplier<Long> _recommendedProductIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The recommendation score."
+		description = "Association-rule confidence score in [0, 1]. Higher means the rule fires more reliably; consumers typically sort descending and apply a threshold.",
+		example = "0.78"
 	)
 	@Valid
 	public Float getScore() {
@@ -296,7 +323,9 @@ public class FrequentPatternRecommendation implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The recommendation score.")
+	@GraphQLField(
+		description = "Association-rule confidence score in [0, 1]. Higher means the rule fires more reliably; consumers typically sort descending and apply a threshold."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
@@ -526,4 +555,4 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:170575348
+// LIFERAY-REST-BUILDER-HASH:-499010665

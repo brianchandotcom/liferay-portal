@@ -73,7 +73,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountCategoryForecastsByMonthlyRevenue(accountIds: ___, categoryIds: ___, forecastLength: ___, forecastStartDate: ___, historyLength: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Get the forecast points")
+	@GraphQLField(
+		description = "Returns a page of monthly revenue forecast points broken down by AccountEntry and AssetCategory. Calls AssetCategoryCommerceMLForecastManager.getMonthlyRevenueAssetCategoryCommerceMLForecasts in AccountCategoryForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only)."
+	)
 	public AccountCategoryForecastPage accountCategoryForecastsByMonthlyRevenue(
 			@GraphQLName("accountIds") Long[] accountIds,
 			@GraphQLName("categoryIds") Long[] categoryIds,
@@ -100,7 +102,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountForecastsByMonthlyRevenue(accountIds: ___, forecastLength: ___, forecastStartDate: ___, historyLength: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Get the forecast points")
+	@GraphQLField(
+		description = "Returns a page of monthly revenue forecast points broken down by AccountEntry. Calls CommerceAccountCommerceMLForecastManager.getMonthlyRevenueCommerceAccountCommerceMLForecasts in AccountForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only)."
+	)
 	public AccountForecastPage accountForecastsByMonthlyRevenue(
 			@GraphQLName("accountIds") Long[] accountIds,
 			@GraphQLName("forecastLength") Integer forecastLength,
@@ -124,7 +128,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuForecastsByMonthlyRevenue(forecastLength: ___, forecastStartDate: ___, historyLength: ___, page: ___, pageSize: ___, skus: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Get the forecast points")
+	@GraphQLField(
+		description = "Returns a page of monthly demand forecast points broken down by SKU. Calls SkuCommerceMLForecastManager.getMonthlyQuantitySkuCommerceMLForecasts in SkuForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; the optional skus filter restricts the result to the supplied SKU strings, otherwise every trained SKU is returned). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only). Naming caveat -- the operationId is published as getSkuForecastsByMonthlyRevenuePage for backward client compatibility but the response carries demand quantity, not revenue; consult the path (/by-monthlyDemand) and the SkuForecast.unit field (`quantity`) to confirm the response dimension."
+	)
 	public SkuForecastPage skuForecastsByMonthlyRevenue(
 			@GraphQLName("forecastLength") Integer forecastLength,
 			@GraphQLName("forecastStartDate") Date forecastStartDate,
@@ -345,4 +351,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:112939055
+// LIFERAY-REST-BUILDER-HASH:1385610172

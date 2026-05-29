@@ -73,7 +73,7 @@ public abstract class BaseSkuForecastResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-machine-learning/v1.0/skuForecasts/by-monthlyDemand'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Get the forecast points"
+		description = "Returns a page of monthly demand forecast points broken down by SKU. Calls SkuCommerceMLForecastManager.getMonthlyQuantitySkuCommerceMLForecasts in SkuForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; the optional skus filter restricts the result to the supplied SKU strings, otherwise every trained SKU is returned). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only). Naming caveat -- the operationId is published as getSkuForecastsByMonthlyRevenuePage for backward client compatibility but the response carries demand quantity, not revenue; consult the path (/by-monthlyDemand) and the SkuForecast.unit field (`quantity`) to confirm the response dimension."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -788,4 +788,4 @@ public abstract class BaseSkuForecastResourceImpl
 		LogFactoryUtil.getLog(BaseSkuForecastResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1263110663
+// LIFERAY-REST-BUILDER-HASH:2145583805

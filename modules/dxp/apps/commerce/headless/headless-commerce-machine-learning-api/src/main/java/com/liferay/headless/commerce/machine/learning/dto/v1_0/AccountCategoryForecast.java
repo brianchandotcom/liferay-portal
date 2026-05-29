@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountCategoryForecast")
+@GraphQLName(
+	description = "Monthly revenue forecast point for one account restricted to one category, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.",
+	value = "AccountCategoryForecast"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountCategoryForecast")
 public class AccountCategoryForecast implements Serializable {
@@ -53,7 +56,10 @@ public class AccountCategoryForecast implements Serializable {
 			AccountCategoryForecast.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the account the forecast point belongs to (FK identifier).",
+		example = "30130"
+	)
 	public Long getAccount() {
 		if (_accountSupplier != null) {
 			account = _accountSupplier.get();
@@ -87,14 +93,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the account the forecast point belongs to (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long account;
 
 	@JsonIgnore
 	private Supplier<Long> _accountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Observed revenue for the period, aggregated from completed orders by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet.",
+		example = "43855"
+	)
 	@Valid
 	public Float getActual() {
 		if (_actualSupplier != null) {
@@ -129,14 +140,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Observed revenue for the period, aggregated from completed orders by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float actual;
 
 	@JsonIgnore
 	private Supplier<Float> _actualSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the category the forecast point belongs to (FK identifier).",
+		example = "30130"
+	)
 	public Long getCategory() {
 		if (_categorySupplier != null) {
 			category = _categorySupplier.get();
@@ -170,14 +186,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the category the forecast point belongs to (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long category;
 
 	@JsonIgnore
 	private Supplier<Long> _categorySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized title of the referenced category, resolved in the caller's preferred locale. Read-only convenience field; not persisted.",
+		example = "Default Category"
+	)
 	public String getCategoryTitle() {
 		if (_categoryTitleSupplier != null) {
 			categoryTitle = _categoryTitleSupplier.get();
@@ -211,14 +232,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Localized title of the referenced category, resolved in the caller's preferred locale. Read-only convenience field; not persisted."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String categoryTitle;
 
 	@JsonIgnore
 	private Supplier<String> _categoryTitleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Point estimate of monthly revenue for the period.",
+		example = "410459.44"
+	)
 	@Valid
 	public Float getForecast() {
 		if (_forecastSupplier != null) {
@@ -253,14 +279,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Point estimate of monthly revenue for the period."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecast;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes.",
+		example = "-21236.652"
+	)
 	@Valid
 	public Float getForecastLowerBound() {
 		if (_forecastLowerBoundSupplier != null) {
@@ -295,14 +326,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastLowerBound;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastLowerBoundSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Upper bound of the forecast confidence interval.",
+		example = "842155.5"
+	)
 	@Valid
 	public Float getForecastUpperBound() {
 		if (_forecastUpperBoundSupplier != null) {
@@ -337,14 +373,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upper bound of the forecast confidence interval."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastUpperBound;
 
 	@JsonIgnore
 	private Supplier<Float> _forecastUpperBoundSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision.",
+		example = "2018-04-01"
+	)
 	public Date getTimestamp() {
 		if (_timestampSupplier != null) {
 			timestamp = _timestampSupplier.get();
@@ -378,14 +419,19 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date timestamp;
 
 	@JsonIgnore
 	private Supplier<Date> _timestampSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Forecast target dimension. Always `revenue` for this schema.",
+		example = "revenue"
+	)
 	public String getUnit() {
 		if (_unitSupplier != null) {
 			unit = _unitSupplier.get();
@@ -417,7 +463,9 @@ public class AccountCategoryForecast implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Forecast target dimension. Always `revenue` for this schema."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unit;
 
@@ -676,4 +724,4 @@ public class AccountCategoryForecast implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:902749393
+// LIFERAY-REST-BUILDER-HASH:1827532299

@@ -229,6 +229,51 @@ test(
 );
 
 test(
+	'New Property dialog enforces the 3-64 character length boundary',
+	{
+		tag: ['@LRAC-9102', '@LRAC-9106'],
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.propertiesPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByLabel('Property Name'),
+			trigger: page.getByRole('button', {name: 'New Property'}),
+		});
+
+		const nameInput = page.getByLabel('Property Name');
+
+		const saveButton = page.getByRole('button', {name: 'Save'});
+
+		// Below the 3-character minimum: Save is disabled.
+
+		await nameInput.fill('Mi');
+
+		await expect(saveButton).toBeDisabled();
+
+		// At the 3-character minimum: Save is enabled.
+
+		await nameInput.fill('Min');
+
+		await expect(saveButton).toBeEnabled();
+
+		// At the 64-character maximum: Save is enabled.
+
+		await nameInput.fill('M'.repeat(64));
+
+		await expect(saveButton).toBeEnabled();
+	}
+);
+
+test(
 	'New Property dialog disables Save and shows an alert when the name exceeds the maximum length',
 	{
 		tag: '@LRAC-9038',

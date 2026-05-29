@@ -9,9 +9,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Cheryl Tang
  */
+@ProviderType
 public interface SitemapStorageHelper {
 
 	public void deleteSitemaps(long companyId, long groupId)

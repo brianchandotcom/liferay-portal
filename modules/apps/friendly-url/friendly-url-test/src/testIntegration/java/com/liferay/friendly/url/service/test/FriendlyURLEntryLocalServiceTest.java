@@ -93,11 +93,9 @@ public class FriendlyURLEntryLocalServiceTest {
 		throws Exception {
 
 		long classNameId = _classNameLocalService.getClassNameId(User.class);
-
-		String urlTitle = _getRandomURLTitle();
-
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
+		String urlTitle = _getRandomURLTitle();
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, 1L, TestPropsValues.getUserId(),
@@ -155,11 +153,9 @@ public class FriendlyURLEntryLocalServiceTest {
 		throws Exception {
 
 		long classNameId = _classNameLocalService.getClassNameId(User.class);
-
-		String urlTitle = _getRandomURLTitle();
-
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
+		String urlTitle = _getRandomURLTitle();
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, 1L, TestPropsValues.getUserId(),
@@ -556,11 +552,9 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			AssetCategory.class);
-
-		String urlTitle1 = _getRandomURLTitle();
-
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
+		String urlTitle1 = _getRandomURLTitle();
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId,
@@ -640,11 +634,9 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			AssetCategory.class);
-
-		String urlTitle = _getRandomURLTitle();
-
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
+		String urlTitle = _getRandomURLTitle();
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId,

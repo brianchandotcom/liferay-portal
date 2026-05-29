@@ -302,10 +302,10 @@ public class AssetCategoriesImporter {
 
 		Map<String, String> urlTitleMap = new HashMap<>();
 
-		Map<Locale, String> titleMap = assetCategory.getTitleMap();
-
 		boolean featureFlagEnabled = FeatureFlagManagerUtil.isEnabled(
 			assetCategory.getCompanyId(), "LPD-70396");
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
 
 		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(

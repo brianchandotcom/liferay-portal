@@ -113,11 +113,11 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 		StringBundler sb = new StringBundler(
 			(ancestorAssetCategories.size() * 2) + 3);
 
-		AssetVocabulary vocabulary =
+		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchAssetVocabulary(
 				_assetCategory.getVocabularyId());
 
-		sb.append(vocabulary.getName());
+		sb.append(assetVocabulary.getName());
 
 		Collections.reverse(ancestorAssetCategories);
 

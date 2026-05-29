@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -80,11 +81,11 @@ public class LayoutSetSEORobotsProviderImpl
 	public String getRobotsContributions(LayoutSet layoutSet) {
 		Set<String> disallowURLEntries = new TreeSet<>();
 
-		for (LayoutSetSEORobotsContributor layoutSetRobotsContributor :
+		for (LayoutSetSEORobotsContributor layoutSetSEORobotsContributor :
 				_serviceTrackerList.toList()) {
 
 			Set<String> contributedDisallowURLEntries =
-				layoutSetRobotsContributor.contributeDisallowURLEntries(
+				layoutSetSEORobotsContributor.contributeDisallowURLEntries(
 					layoutSet);
 
 			if (contributedDisallowURLEntries != null) {
@@ -92,7 +93,7 @@ public class LayoutSetSEORobotsProviderImpl
 			}
 		}
 
-		if (disallowURLEntries.isEmpty()) {
+		if (SetUtil.isEmpty(disallowURLEntries)) {
 			return StringPool.BLANK;
 		}
 

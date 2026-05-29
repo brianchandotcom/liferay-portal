@@ -170,7 +170,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 						List<String> metaRobotsProviderPortletTitles = layoutsSEODisplayContext.getMetaRobotsProviderPortletTitles();
 						%>
 
-						<c:if test="<%= !metaRobotsProviderPortletTitles.isEmpty() %>">
+						<c:if test="<%= !ListUtil.isEmpty(metaRobotsProviderPortletTitles) %>">
 							<clay:alert
 								displayType="info"
 							>

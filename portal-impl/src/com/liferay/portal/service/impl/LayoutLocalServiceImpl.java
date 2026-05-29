@@ -501,7 +501,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				GetterUtil.getString(
 					draftLayoutExternalReferenceCode,
 					layout.getExternalReferenceCode() +
-						LayoutConstants.ERC_SUFFIX_DRAFT),
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT),
 				userId, groupId, privateLayout, parentLayoutId,
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
@@ -862,7 +862,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				GetterUtil.getString(
 					draftLayoutExternalReferenceCode,
 					layout.getExternalReferenceCode() +
-						LayoutConstants.ERC_SUFFIX_DRAFT),
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT),
 				userId, layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getParentLayoutId(),
 				_classNameLocalService.getClassNameId(Layout.class),

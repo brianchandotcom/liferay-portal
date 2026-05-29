@@ -277,12 +277,12 @@ public class PageExperiencesTestUtil {
 
 			pageExperience.setExternalReferenceCode(
 				draftContentPageSpecificationExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_DEFAULT);
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT);
 		}
 		else {
 			pageExperience.setExternalReferenceCode(
 				publishedPageExperience.getExternalReferenceCode() +
-					LayoutConstants.ERC_SUFFIX_DRAFT);
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 
 		pageExperience.setKey(publishedPageExperience.getKey());
@@ -303,7 +303,7 @@ public class PageExperiencesTestUtil {
 
 			pageExperience.setExternalReferenceCode(
 				publishedContentPageSpecificationExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_DEFAULT);
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT);
 
 			return pageExperience;
 		}
@@ -312,18 +312,20 @@ public class PageExperiencesTestUtil {
 			draftPageExperience.getExternalReferenceCode();
 
 		if (draftExternalReferenceCode.endsWith(
-				LayoutConstants.ERC_SUFFIX_DRAFT)) {
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT)) {
+
+			int suffixDraftLength =
+				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT.length();
 
 			pageExperience.setExternalReferenceCode(
 				draftExternalReferenceCode.substring(
 					0,
-					draftExternalReferenceCode.length() -
-						LayoutConstants.ERC_SUFFIX_DRAFT.length()));
+					draftExternalReferenceCode.length() - suffixDraftLength));
 		}
 		else {
 			pageExperience.setExternalReferenceCode(
 				draftExternalReferenceCode +
-					LayoutConstants.ERC_SUFFIX_PUBLISHED);
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED);
 		}
 
 		return pageExperience;

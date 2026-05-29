@@ -167,7 +167,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			GetterUtil.getString(
 				defaultSegmentsExperienceExternalReferenceCode,
 				layout.getExternalReferenceCode() +
-					LayoutConstants.ERC_SUFFIX_DEFAULT),
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT),
 			layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 

@@ -7,11 +7,9 @@ package com.liferay.account.validator;
 
 import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.Collections;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -43,16 +41,12 @@ public class AccountEntryValidatorResultTest {
 		Assert.assertEquals(
 			StringPool.BLANK, accountEntryValidatorResult.getResultMessage());
 		Assert.assertEquals(
-			Collections.emptyMap(),
-			accountEntryValidatorResult.getAdditionalProps());
-		Assert.assertEquals(
 			AccountEntryValidatorConstants.RESULT_SUCCESS,
 			accountEntryValidatorResult.getResultStatus());
+		Assert.assertNull(accountEntryValidatorResult.getAdditionalProps());
 		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
-		Map<String, String> additionalProps = HashMapBuilder.put(
-			"field", "value"
-		).build();
+		JSONObject jsonObject = JSONUtil.put("field", "value");
 
 		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
 			"key"
@@ -61,7 +55,7 @@ public class AccountEntryValidatorResultTest {
 		).actionURL(
 			"actionURL"
 		).additionalProps(
-			additionalProps
+			jsonObject
 		).resultMessage(
 			"resultMessage"
 		).resultStatus(
@@ -74,7 +68,7 @@ public class AccountEntryValidatorResultTest {
 		Assert.assertEquals(
 			"actionURL", accountEntryValidatorResult.getActionURL());
 		Assert.assertEquals(
-			additionalProps, accountEntryValidatorResult.getAdditionalProps());
+			jsonObject, accountEntryValidatorResult.getAdditionalProps());
 		Assert.assertEquals(
 			"resultMessage", accountEntryValidatorResult.getResultMessage());
 		Assert.assertEquals(

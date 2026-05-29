@@ -12,14 +12,13 @@ import com.liferay.account.validator.AccountEntryValidatorResult;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,17 +115,13 @@ public class AccountEntryValidatorRegistryImplTest {
 	@Test
 	public void testValidate() throws Exception {
 		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			_accountEntryValidatorRegistryImpl.validate(
-				null, Collections.emptyMap());
+			_accountEntryValidatorRegistryImpl.validate(null, null);
 
 		Assert.assertTrue(accountEntryValidatorResults.isEmpty());
 
 		Mockito.verifyNoInteractions(_serviceTrackerMap);
 
-		Map<String, Object> additionalProps =
-			HashMapBuilder.<String, Object>put(
-				"field", "value"
-			).build();
+		JSONObject jsonObject = JSONUtil.put("field", "value");
 
 		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
 
@@ -139,7 +134,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			).build();
 
 		Mockito.when(
-			accountEntryValidator1.validate(accountEntry, additionalProps)
+			accountEntryValidator1.validate(accountEntry, jsonObject)
 		).thenReturn(
 			accountEntryValidatorResult1
 		);
@@ -155,7 +150,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			).build();
 
 		Mockito.when(
-			accountEntryValidator2.validate(accountEntry, additionalProps)
+			accountEntryValidator2.validate(accountEntry, jsonObject)
 		).thenReturn(
 			accountEntryValidatorResult2
 		);
@@ -173,7 +168,7 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		accountEntryValidatorResults =
 			_accountEntryValidatorRegistryImpl.validate(
-				accountEntry, additionalProps);
+				accountEntry, jsonObject);
 
 		Assert.assertEquals(
 			accountEntryValidatorResults.toString(), 2,
@@ -187,13 +182,13 @@ public class AccountEntryValidatorRegistryImplTest {
 		Mockito.verify(
 			accountEntryValidator1
 		).validate(
-			accountEntry, additionalProps
+			accountEntry, jsonObject
 		);
 
 		Mockito.verify(
 			accountEntryValidator2
 		).validate(
-			accountEntry, additionalProps
+			accountEntry, jsonObject
 		);
 	}
 

@@ -273,8 +273,8 @@ public class PageSpecificationUtil {
 
 		for (PageExperience pageExperience : pageExperiences) {
 			_processPageElements(
-				pageExperience.getPageElements(),
 				PageSpecificationUtil::_processPublishedFragmentInstance,
+				pageExperience.getPageElements(),
 				PageSpecificationUtil::
 					_processPublishedWidgetInstancePageElementDefinition);
 		}
@@ -372,8 +372,8 @@ public class PageSpecificationUtil {
 			pageExperience.setUuid(() -> null);
 
 			_processPageElements(
-				pageExperience.getPageElements(),
 				PageSpecificationUtil::_processDraftFragmentInstance,
+				pageExperience.getPageElements(),
 				PageSpecificationUtil::
 					_processDraftWidgetInstancePageElementDefinition);
 		}
@@ -429,7 +429,6 @@ public class PageSpecificationUtil {
 				pageExperience.setUuid(() -> null);
 
 				_processPageElements(
-					pageExperience.getPageElements(),
 					fragmentInstance -> {
 						if (fragmentInstance == null) {
 							return;
@@ -460,6 +459,7 @@ public class PageSpecificationUtil {
 								() ->
 									publishedFragmentInstanceExternalReferenceCode);
 					},
+					pageExperience.getPageElements(),
 					widgetInstancePageElementDefinition -> {
 						String draftWidgetInstanceExternalReferenceCode =
 							widgetInstancePageElementDefinition.
@@ -505,10 +505,9 @@ public class PageSpecificationUtil {
 
 		return externalReferenceCode + LayoutConstants.ERC_SUFFIX_PUBLISHED;
 	}
-
 	private static void _processPageElements(
-		PageElement[] pageElements,
 		Consumer<FragmentInstance> fragmentInstanceConsumer,
+		PageElement[] pageElements,
 		Consumer<WidgetInstancePageElementDefinition>
 			widgetInstancePageElementDefinitionConsumer) {
 
@@ -545,7 +544,7 @@ public class PageSpecificationUtil {
 			}
 
 			_processPageElements(
-				pageElement.getPageElements(), fragmentInstanceConsumer,
+				fragmentInstanceConsumer, pageElement.getPageElements(),
 				widgetInstancePageElementDefinitionConsumer);
 		}
 	}

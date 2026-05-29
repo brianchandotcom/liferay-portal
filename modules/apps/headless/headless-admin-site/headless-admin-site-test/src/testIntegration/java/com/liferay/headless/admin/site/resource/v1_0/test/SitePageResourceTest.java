@@ -2899,9 +2899,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
 
-		String defaultPageExperienceExternalReferenceCode;
-		String draftContentPageSpecificationExternalReferenceCode;
-		String pageExperienceExternalReferenceCode;
+		String defaultPageExperienceExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String draftContentPageSpecificationExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String pageExperienceExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		if (withDraftERCSuffix) {
 			draftContentPageSpecificationExternalReferenceCode =
@@ -2914,13 +2917,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			pageExperienceExternalReferenceCode =
 				RandomTestUtil.randomString() +
 					LayoutConstants.ERC_SUFFIX_DRAFT;
-		}
-		else {
-			defaultPageExperienceExternalReferenceCode =
-				RandomTestUtil.randomString();
-			draftContentPageSpecificationExternalReferenceCode =
-				RandomTestUtil.randomString();
-			pageExperienceExternalReferenceCode = RandomTestUtil.randomString();
 		}
 
 		ContentPageSpecification draftContentPageSpecification =

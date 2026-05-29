@@ -4,10 +4,14 @@
  */
 
 import ClayButton from '@clayui/button';
-
+import ClayIcon from '@clayui/icon';
 import {NavbarProps} from '../../../../components/Navbar';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {OrderTypes, orderTypeDocumentationURL} from '../../../../enums/Order';
+import {
+	OrderCustomFields,
+	OrderTypes,
+	orderTypeDocumentationURL,
+} from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -55,12 +59,33 @@ const LiferayProductsOutlet = () => {
 	return (
 		<BaseOutlet
 			actionButtons={(props) => {
+				let groupId;
+
 				const appBeta =
 					props?.marketplaceDeliveryProduct?.specificationValues
 						?.APP_BETA;
 
 				if (
+					props?.marketplaceDeliveryProduct?.specificationValues
+						?.SOLUTION_TYPE === 'liferay-data-platform'
+				) {
+					const orderMetadata = safeJSONParse(
+						props.placedOrder?.customFields[
+							OrderCustomFields.ORDER_METADATA
+						] || '{}',
+						{
+							analyticsProject: {groupId: 0},
+						}
+					);
+
+					console.log({orderMetadata});
+
+					groupId = orderMetadata?.analyticsProject?.groupId;
+				}
+
+				if (
 					[
+						OrderTypes.ADDONS,
 						OrderTypes.AI_HUB,
 						OrderTypes.CMP,
 						OrderTypes.DSR,
@@ -82,7 +107,6 @@ const LiferayProductsOutlet = () => {
 										);
 									}}
 									outline
-									size="sm"
 								>
 									{i18n.translate('share-beta-feedback')}
 								</ClayButton>
@@ -105,36 +129,26 @@ const LiferayProductsOutlet = () => {
 									{i18n.translate('new-activation-key')}
 								</ClayButton>
 							)}
+
+							{groupId && (
+								<ClayButton
+									displayType="primary"
+									onClick={() => {
+										window.open(
+											`${properties.analyticsCloudURL}/workspace/${groupId}`
+										);
+									}}
+									outline
+								>
+									{i18n.translate('visit')}
+
+									<ClayIcon
+										className="ml-2"
+										symbol="shortcut"
+									/>
+								</ClayButton>
+							)}
 						</div>
-					);
-				}
-
-				if (
-					props.marketplaceDeliveryProduct?.specificationValues
-						?.SOLUTION_TYPE === 'liferay-data-platform'
-				) {
-					const orderMetadata = safeJSONParse(
-						props.placedOrder?.customFields?.ORDER_METADATA || '{}',
-						{
-							analyticsProject: {groupId: 0},
-						}
-					);
-
-					const groupId = orderMetadata?.analyticsProject?.groupId;
-
-					return (
-						<ClayButton
-							displayType="primary"
-							onClick={() => {
-								window.open(
-									`${properties.analyticsCloudURL}/workspace/${groupId}`
-								);
-							}}
-							outline
-							size="regular"
-						>
-							{i18n.translate('go-to-liferay-data-platform')}
-						</ClayButton>
 					);
 				}
 			}}

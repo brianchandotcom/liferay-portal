@@ -24,12 +24,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
-
-import org.mockito.Mockito;
 
 /**
  * @author Peter Yoo
@@ -39,11 +36,6 @@ public class Test {
 	@Before
 	public void setUp() throws Exception {
 		JenkinsResultsParserUtil.clearCache();
-	}
-
-	@After
-	public void tearDown() {
-		Environment.setInstance(new Environment());
 	}
 
 	@Rule
@@ -294,18 +286,6 @@ public class Test {
 		}
 
 		return _simpleClassNames;
-	}
-
-	protected Environment mockEnvironment() {
-
-		// Mockito 4.5.1 predates per-mock strictness; unstubbed calls
-		// return null, which getEnvironmentVariable treats as missing.
-
-		Environment environment = Mockito.mock(Environment.class);
-
-		Environment.setInstance(environment);
-
-		return environment;
 	}
 
 	protected String read(File file) throws IOException {

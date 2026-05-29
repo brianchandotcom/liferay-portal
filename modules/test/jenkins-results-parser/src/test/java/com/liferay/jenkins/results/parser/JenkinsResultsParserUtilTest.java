@@ -15,6 +15,7 @@ import java.util.Properties;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +39,11 @@ public class JenkinsResultsParserUtilTest
 		downloadSample(
 			"job-1", null, "267",
 			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
+	}
+
+	@After
+	public void tearDown() {
+		Environment.setInstance(new Environment());
 	}
 
 	@Test
@@ -452,6 +458,14 @@ public class JenkinsResultsParserUtilTest
 		throws Exception {
 
 		downloadSampleURL(testSample.getSampleDir(), url, "/api/json");
+	}
+
+	protected Environment mockEnvironment() {
+		Environment environment = Mockito.mock(Environment.class);
+
+		Environment.setInstance(environment);
+
+		return environment;
 	}
 
 	protected void testToJSONObject(File file) throws Exception {

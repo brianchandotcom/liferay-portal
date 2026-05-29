@@ -445,6 +445,10 @@ export const ENABLE_GLOBAL_FILTER = false;
 
 export const ENABLE_LAST_ACCESS_DATE = false;
 
+// LPD-92538 Hide the creation of real time segments until the CAP initiative is delivered
+
+export const ENABLE_REAL_TIME_SEGMENTS = false;
+
 // LRAC-11571 Disable temporarily Salesforce
 
 export const ENABLE_SALESFORCE = false;

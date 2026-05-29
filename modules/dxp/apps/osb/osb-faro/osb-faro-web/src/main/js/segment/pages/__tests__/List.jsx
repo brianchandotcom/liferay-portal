@@ -6,6 +6,7 @@ import React from 'react';
 import {act} from '@testing-library/react';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, render, screen} from '@testing-library/react';
+import {fireEvent} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {mockChannelContext} from 'test/mock-channel-context';
 import {Provider} from 'react-redux';
@@ -16,6 +17,22 @@ import {User} from 'shared/util/records';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
+
+jest.mock('shared/util/constants', () => {
+	const actualConstants = jest.requireActual('shared/util/constants');
+
+	return new Proxy(actualConstants, {
+		get(target, property) {
+			if (property === 'ENABLE_REAL_TIME_SEGMENTS') {
+				return mockEnableRealTimeSegments;
+			}
+
+			return target[property];
+		}
+	});
+});
+
+let mockEnableRealTimeSegments = false;
 
 const MOCK_UNASSIGNED_SEGMENTS_CONTEXT = {
 	showUnassignedAlert: false,
@@ -58,6 +75,8 @@ describe('List', () => {
 		jest.clearAllMocks();
 
 		jest.useFakeTimers();
+
+		mockEnableRealTimeSegments = false;
 	});
 
 	afterEach(() => {
@@ -67,6 +86,8 @@ describe('List', () => {
 	});
 
 	it('should disable batch segment when limit is reached', async () => {
+		mockEnableRealTimeSegments = true;
+
 		API.projects.fetchFeatureUsages.mockReturnValueOnce(
 			Promise.resolve([
 				{
@@ -100,6 +121,8 @@ describe('List', () => {
 	});
 
 	it('should disable real time segment when limit is reached', async () => {
+		mockEnableRealTimeSegments = true;
+
 		API.projects.fetchFeatureUsages.mockReturnValueOnce(
 			Promise.resolve([
 				{
@@ -133,6 +156,8 @@ describe('List', () => {
 	});
 
 	it('should enable segments when usage is under the limit', async () => {
+		mockEnableRealTimeSegments = true;
+
 		API.projects.fetchFeatureUsages.mockReturnValueOnce(
 			Promise.resolve([
 				{
@@ -166,6 +191,8 @@ describe('List', () => {
 	});
 
 	it('should enable segment options when the limit is set to -1 (unlimited)', async () => {
+		mockEnableRealTimeSegments = true;
+
 		API.projects.fetchFeatureUsages.mockReturnValueOnce(
 			Promise.resolve([
 				{
@@ -276,6 +303,62 @@ describe('List', () => {
 
 		expect(
 			container.querySelector('.sticker-info')
+		).not.toBeInTheDocument();
+	});
+
+	it('should hide the new segment dropdown and create a batch segment by default', async () => {
+		mockEnableRealTimeSegments = false;
+
+		const push = jest.fn();
+
+		API.projects.fetchFeatureUsages.mockResolvedValueOnce([
+			{
+				currentUsage: 0,
+				limit: -1,
+				name: 'Segment',
+				type: 'Batch'
+			}
+		]);
+
+		render(<DefaultComponent history={{push}} />);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(
+			screen.queryByTestId('batch-segment-dropdown-item')
+		).not.toBeInTheDocument();
+
+		expect(
+			screen.queryByTestId('real-time-segment-dropdown-item')
+		).not.toBeInTheDocument();
+
+		fireEvent.click(screen.getByTestId('new-segment-button'));
+
+		expect(push).toHaveBeenCalledTimes(1);
+		expect(push).toHaveBeenCalledWith(
+			expect.stringContaining(`type=${SegmentTypes.Batch}`)
+		);
+	});
+
+	it('should show the new segment dropdown when real time segments are enabled', async () => {
+		mockEnableRealTimeSegments = true;
+
+		API.projects.fetchFeatureUsages.mockResolvedValueOnce([]);
+
+		render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(
+			screen.getByTestId('batch-segment-dropdown-item')
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByTestId('real-time-segment-dropdown-item')
+		).toBeInTheDocument();
+
+		expect(
+			screen.queryByTestId('new-segment-button')
 		).not.toBeInTheDocument();
 	});
 });

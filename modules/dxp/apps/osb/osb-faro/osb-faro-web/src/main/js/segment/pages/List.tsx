@@ -46,6 +46,12 @@ import {
 	USER_NAME
 } from 'shared/util/router';
 import {DateCell} from 'shared/components/table/cell-components';
+import {
+	ENABLE_REAL_TIME_SEGMENTS,
+	SegmentStates,
+	SegmentTypes,
+	Sizes
+} from 'shared/util/constants';
 import {FeatureName, useLimitReached} from 'shared/hooks/useLimitReached';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {
@@ -56,7 +62,6 @@ import {
 import {Link} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {SegmentStates, SegmentTypes, Sizes} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useChannelContext} from 'shared/context/channel';
@@ -486,93 +491,128 @@ export const List: React.FC<IListProps> = ({
 				<Nav>
 					<Nav.Item>
 						<div className='d-flex align-items-center'>
-							<ClayDropDown
-								alignmentPosition={Align.BottomRight}
-								trigger={
-									<ClayButton
-										aria-label={
-											pageActionsLabel &&
-											Liferay.Language.get('menu')
-										}
-										className='button-root p-2 rounded-lg'
-										disabled={
-											error ||
-											loading ||
-											allActionsDisabled
-										}
-										displayType='primary'
-										size='sm'
-									>
-										<>
-											<span>{pageActionsLabel}</span>
-											<ClayIcon
-												className='icon-root ml-2'
-												symbol='caret-bottom'
-											/>
-										</>
-									</ClayButton>
-								}
-							>
-								{usageDropDownMessage && (
-									<div
-										className='alert alert-fluid alert-info'
-										role='alert'
-									>
-										{usageDropDownMessage}
-									</div>
-								)}
-
-								<ClayDropDown.Item
-									data-testid='batch-segment-dropdown-item'
-									disabled={usageLoading || isBatchDisabled}
-									href={setUriQueryValues(
-										{type: SegmentTypes.Batch},
-										toRoute(
-											Routes.CONTACTS_SEGMENT_CREATE,
-											{channelId, groupId}
-										)
-									)}
-								>
-									<ClayIcon
-										className='mr-2'
-										symbol='diagram'
-									/>
-									{Liferay.Language.get('batch')}
-								</ClayDropDown.Item>
-
-								<ClayDropDown.Item
-									data-testid='real-time-segment-dropdown-item'
-									disabled={
-										usageLoading || isRealTimeDisabled
+							{ENABLE_REAL_TIME_SEGMENTS ? (
+								<ClayDropDown
+									alignmentPosition={Align.BottomRight}
+									trigger={
+										<ClayButton
+											aria-label={
+												pageActionsLabel &&
+												Liferay.Language.get('menu')
+											}
+											className='button-root p-2 rounded-lg'
+											disabled={
+												error ||
+												loading ||
+												allActionsDisabled
+											}
+											displayType='primary'
+											size='sm'
+										>
+											<>
+												<span>{pageActionsLabel}</span>
+												<ClayIcon
+													className='icon-root ml-2'
+													symbol='caret-bottom'
+												/>
+											</>
+										</ClayButton>
 									}
-									href={setUriQueryValues(
-										{type: SegmentTypes.RealTime},
-										toRoute(
-											Routes.CONTACTS_SEGMENT_CREATE,
-											{channelId, groupId}
-										)
+								>
+									{usageDropDownMessage && (
+										<div
+											className='alert alert-fluid alert-info'
+											role='alert'
+										>
+											{usageDropDownMessage}
+										</div>
 									)}
-								>
-									<ClayIcon className='mr-2' symbol='bolt' />
-									{Liferay.Language.get('real-time')}
-								</ClayDropDown.Item>
-							</ClayDropDown>
 
-							{usageMessage && (
+									<ClayDropDown.Item
+										data-testid='batch-segment-dropdown-item'
+										disabled={
+											usageLoading || isBatchDisabled
+										}
+										href={setUriQueryValues(
+											{type: SegmentTypes.Batch},
+											toRoute(
+												Routes.CONTACTS_SEGMENT_CREATE,
+												{channelId, groupId}
+											)
+										)}
+									>
+										<ClayIcon
+											className='mr-2'
+											symbol='diagram'
+										/>
+										{Liferay.Language.get('batch')}
+									</ClayDropDown.Item>
+
+									<ClayDropDown.Item
+										data-testid='real-time-segment-dropdown-item'
+										disabled={
+											usageLoading || isRealTimeDisabled
+										}
+										href={setUriQueryValues(
+											{type: SegmentTypes.RealTime},
+											toRoute(
+												Routes.CONTACTS_SEGMENT_CREATE,
+												{channelId, groupId}
+											)
+										)}
+									>
+										<ClayIcon
+											className='mr-2'
+											symbol='bolt'
+										/>
+										{Liferay.Language.get('real-time')}
+									</ClayDropDown.Item>
+								</ClayDropDown>
+							) : (
 								<ClayButton
-									borderless
-									className='ml-2'
-									data-tooltip-align='right'
-									displayType='unstyled'
+									aria-label={pageActionsLabel}
+									className='button-root p-2 rounded-lg'
+									data-testid='new-segment-button'
+									disabled={
+										error ||
+										loading ||
+										usageLoading ||
+										isBatchDisabled
+									}
+									displayType='primary'
+									onClick={() =>
+										history.push(
+											setUriQueryValues(
+												{type: SegmentTypes.Batch},
+												toRoute(
+													Routes.CONTACTS_SEGMENT_CREATE,
+													{channelId, groupId}
+												)
+											)
+										)
+									}
 									size='sm'
-									title={usageMessage}
 								>
-									<ClayIcon
-										className='text-secondary'
-										symbol='exclamation-full'
-									/>
+									{pageActionsLabel}
 								</ClayButton>
 							)}
+
+							{(ENABLE_REAL_TIME_SEGMENTS || isBatchDisabled) &&
+								usageMessage && (
+									<ClayButton
+										borderless
+										className='ml-2'
+										data-tooltip-align='right'
+										displayType='unstyled'
+										size='sm'
+										title={usageMessage}
+									>
+										<ClayIcon
+											className='text-secondary'
+											symbol='exclamation-full'
+										/>
+									</ClayButton>
+								)}
 						</div>
 					</Nav.Item>
 				</Nav>

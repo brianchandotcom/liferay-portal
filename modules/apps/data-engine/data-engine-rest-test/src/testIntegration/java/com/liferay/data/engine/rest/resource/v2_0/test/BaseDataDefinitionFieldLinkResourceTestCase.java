@@ -964,4 +964,4 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 			DataDefinitionFieldLinkResource _dataDefinitionFieldLinkResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-649982209
+// LIFERAY-REST-BUILDER-HASH:1835258776

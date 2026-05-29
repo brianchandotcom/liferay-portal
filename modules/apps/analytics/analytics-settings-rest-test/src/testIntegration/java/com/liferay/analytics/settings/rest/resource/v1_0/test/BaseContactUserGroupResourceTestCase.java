@@ -1166,4 +1166,4 @@ public abstract class BaseContactUserGroupResourceTestCase {
 			ContactUserGroupResource _contactUserGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:389661314
+// LIFERAY-REST-BUILDER-HASH:275650693

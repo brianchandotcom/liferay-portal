@@ -2771,4 +2771,4 @@ public abstract class BaseSkuResourceTestCase {
 			_skuResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1599901198
+// LIFERAY-REST-BUILDER-HASH:143385911

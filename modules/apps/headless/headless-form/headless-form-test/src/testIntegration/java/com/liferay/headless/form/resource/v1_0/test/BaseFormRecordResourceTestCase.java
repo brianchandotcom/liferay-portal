@@ -1925,4 +1925,4 @@ public abstract class BaseFormRecordResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-432776398
+// LIFERAY-REST-BUILDER-HASH:-313708047

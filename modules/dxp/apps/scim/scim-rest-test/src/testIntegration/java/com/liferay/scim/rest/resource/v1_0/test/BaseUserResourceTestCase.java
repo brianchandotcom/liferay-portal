@@ -1908,4 +1908,4 @@ public abstract class BaseUserResourceTestCase {
 	private com.liferay.scim.rest.resource.v1_0.UserResource _userResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-191954514
+// LIFERAY-REST-BUILDER-HASH:-731072635

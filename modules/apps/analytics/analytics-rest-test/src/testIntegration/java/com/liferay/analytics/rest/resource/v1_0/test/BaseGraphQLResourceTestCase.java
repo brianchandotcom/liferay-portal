@@ -642,4 +642,4 @@ public abstract class BaseGraphQLResourceTestCase {
 		_graphQLResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1578559867
+// LIFERAY-REST-BUILDER-HASH:-1275819224

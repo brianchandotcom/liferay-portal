@@ -1707,4 +1707,4 @@ public abstract class BasePinResourceTestCase {
 			_pinResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1187288120
+// LIFERAY-REST-BUILDER-HASH:147484587

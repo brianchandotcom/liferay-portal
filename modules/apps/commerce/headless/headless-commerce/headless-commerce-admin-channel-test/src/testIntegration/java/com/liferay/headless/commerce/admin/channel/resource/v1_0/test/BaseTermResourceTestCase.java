@@ -1100,4 +1100,4 @@ public abstract class BaseTermResourceTestCase {
 			_termResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:947557608
+// LIFERAY-REST-BUILDER-HASH:-1154994503

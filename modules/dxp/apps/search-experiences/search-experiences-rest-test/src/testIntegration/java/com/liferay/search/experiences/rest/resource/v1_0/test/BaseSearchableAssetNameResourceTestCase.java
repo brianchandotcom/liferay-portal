@@ -889,4 +889,4 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 		SearchableAssetNameResource _searchableAssetNameResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1998337378
+// LIFERAY-REST-BUILDER-HASH:1309438373

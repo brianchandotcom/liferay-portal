@@ -928,4 +928,4 @@ public abstract class BaseAssigneeResourceTestCase {
 			_assigneeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1716723927
+// LIFERAY-REST-BUILDER-HASH:-559733866

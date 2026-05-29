@@ -1751,4 +1751,4 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		ShippingFixedOptionTermResource _shippingFixedOptionTermResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1200186766
+// LIFERAY-REST-BUILDER-HASH:2004928199

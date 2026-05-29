@@ -1083,4 +1083,4 @@ public abstract class BaseAssetMetricResourceTestCase {
 		_assetMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-773870660
+// LIFERAY-REST-BUILDER-HASH:-1984223679

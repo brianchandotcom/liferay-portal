@@ -151,6 +151,29 @@ test(
 );
 
 test(
+	'User Management settings page search filters the list to matching users',
+	{
+		tag: '@LRAC-8142',
+	},
+
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		for (const userName of ['michelle hoshi', 'corbin murakami']) {
+			await page.getByPlaceholder('Search').first().fill(userName);
+
+			await expect(
+				page.getByRole('cell', {name: userName})
+			).toBeVisible();
+		}
+	}
+);
+
+test(
 	'Selecting multiple invited users and clicking bulk Delete removes them at once',
 	{
 		tag: '@LRAC-9064',

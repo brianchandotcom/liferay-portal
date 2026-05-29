@@ -29,6 +29,9 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -107,22 +110,11 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 
 		httpResponse = _send(urlString, "GET");
 
-		HttpHeaders headers = httpResponse.headers();
-
-		Assert.assertEquals(
-			StringPool.STAR,
-			headers.firstValue(
-				"Access-Control-Allow-Origin"
-			).orElse(
-				null
-			));
-		Assert.assertEquals(
-			"public, max-age=300",
-			headers.firstValue(
-				"Cache-Control"
-			).orElse(
-				null
-			));
+		_assertHeader(
+			StringPool.STAR, "Access-Control-Allow-Origin",
+			httpResponse.headers());
+		_assertHeader(
+			"public, max-age=300", "Cache-Control", httpResponse.headers());
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, httpResponse.statusCode());
@@ -138,53 +130,38 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 
 		httpResponse = _send(urlString, "OPTIONS");
 
-		headers = httpResponse.headers();
-
-		Assert.assertEquals(
-			"Authorization, Content-Type",
-			headers.firstValue(
-				"Access-Control-Allow-Headers"
-			).orElse(
-				null
-			));
-		Assert.assertEquals(
-			"GET, HEAD, OPTIONS",
-			headers.firstValue(
-				"Access-Control-Allow-Methods"
-			).orElse(
-				null
-			));
-		Assert.assertEquals(
-			StringPool.STAR,
-			headers.firstValue(
-				"Access-Control-Allow-Origin"
-			).orElse(
-				null
-			));
-		Assert.assertEquals(
-			"300",
-			headers.firstValue(
-				"Access-Control-Max-Age"
-			).orElse(
-				null
-			));
+		_assertHeader(
+			"Authorization, Content-Type", "Access-Control-Allow-Headers",
+			httpResponse.headers());
+		_assertHeader(
+			"GET, HEAD, OPTIONS", "Access-Control-Allow-Methods",
+			httpResponse.headers());
+		_assertHeader(
+			StringPool.STAR, "Access-Control-Allow-Origin",
+			httpResponse.headers());
+		_assertHeader("300", "Access-Control-Max-Age", httpResponse.headers());
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_NO_CONTENT, httpResponse.statusCode());
 
 		httpResponse = _send(urlString, "POST");
 
-		Assert.assertEquals(
-			"GET, HEAD, OPTIONS",
-			httpResponse.headers(
-			).firstValue(
-				"Allow"
-			).orElse(
-				null
-			));
+		_assertHeader("GET, HEAD, OPTIONS", "Allow", httpResponse.headers());
+
 		Assert.assertEquals(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			httpResponse.statusCode());
+	}
+
+	private void _assertHeader(
+		String expectedHeaderValue, String headerName,
+		HttpHeaders httpHeaders) {
+
+		Map<String, List<String>> map = httpHeaders.map();
+
+		List<String> headerValues = map.get(headerName);
+
+		Assert.assertEquals(expectedHeaderValue, headerValues.get(0));
 	}
 
 	private HttpResponse<String> _send(String urlString, String method)

@@ -30,7 +30,8 @@ components:
         FacetConfiguration:
             description:
                 Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the
-                search results. The response's aggregations field returns the facet buckets. Examples TBA.
+                search results. The processed facet term buckets appear in the response's `searchFacets` map, where each
+                entry's key is the `aggregationName` you chose for that facet configuration. Examples TBA.
             properties:
                 aggregationName:
                     description:
@@ -106,7 +107,8 @@ components:
                 facetConfigurations:
                     description:
                         Facet aggregation configurations to apply to the search. Each entry describes a facet to compute
-                        alongside the results; the response's aggregations field returns the facet buckets.
+                        alongside the results. The processed facet term buckets appear in the response's `searchFacets`
+                        field.
                     items:
                         $ref: "#/components/schemas/FacetConfiguration"
                     type: array
@@ -139,7 +141,7 @@ components:
                         -   Product News
                     groupId: "20121"
                 entryClassName: com.liferay.blogs.model.BlogsEntry
-                itemURL: /web/sites/marketing/-/blogs/release-notes-7.4
+                itemURL: /o/headless-delivery/v1.0/blog-posting/12345
                 score: 1.42
                 title: Release Notes for Liferay 7.4
             properties:
@@ -184,12 +186,13 @@ components:
                     description:
                         Fully-qualified class name of the indexed entity (for example,
                         com.liferay.blogs.model.BlogsEntry for a blog entry, com.liferay.journal.model.JournalArticle
-                        for a Web Content Article).
+                        for a Web Content Article). This value can be used directly as input to the entryClassNames
+                        query parameter in subsequent /search requests to narrow searches to that type.
                     type: string
                 itemURL:
                     description:
-                        Friendly URL where the item can be viewed in the portal. May be relative or absolute depending
-                        on configuration.
+                        The headless REST API URL to fetch the full entity. Can be called directly, or the response is
+                        included automatically when nestedFields=embedded is set.
                     format: uri
                     type: string
                 score:
@@ -259,8 +262,10 @@ paths:
                 -   in: query
                     description:
                         Specify the External Reference Code (ERC) of a search blueprint to control the search query and
-                        configuration. Search Blueprints is available on DXP Enterprise-tier with Liferay Enterprise
-                        Search (LES) add-on subscription.
+                        configuration. Preferred over the blueprint ID. For POST /search requests, use the
+                        `search.experiences.blueprint.external.reference.code` request body attribute instead. Search
+                        Blueprints is available on DXP Enterprise-tier with Liferay Enterprise Search (LES) add-on
+                        subscription.
                     example: PRODUCT_SEARCH
                     name: blueprintExternalReferenceCode
                     schema:
@@ -268,7 +273,8 @@ paths:
                 -   in: query
                     description:
                         Set this to 'true' to return results even if the search parameter is omitted from the request
-                        (no search keywords specified).
+                        (no search keywords specified). For POST /search requests, use the `search.empty.search` request
+                        body attribute instead.
                     example: true
                     name: emptySearch
                     schema:
@@ -320,18 +326,19 @@ paths:
                     description:
                         Filters across different fields. Supported fields are creatorId (the creator User's ID),
                         folderId (a folder's ID), groupIds (Site, Asset Library, or Space IDs - corresponding search
-                        index field is groupId), objectDefinitionId (an Object Definition's ID), status (workflow status
-                        ID - supported statuses are '-1' = Any, '0' = Approved, '1' = Pending, '2' = Draft, '3' =
-                        Expired, '4' = Denied, '5' = Inactive, '6' = Incomplete, '7' = Scheduled, '8' = In Trash, '9' =
-                        Empty), taxonomyCategoryIds (Asset category IDs), objectDefinitionExternalReferenceCode (Object
-                        Definition External Reference Code), extension (file extension), dateCreated (the date the entry
-                        was created in OData Edm.Date format YYYY-MM-DD), dateDisplay (the date the entry was displayed
-                        in OData Edm.Date format YYYY-MM-DD), dateExpiration (the date the entry expires in OData
-                        Edm.Date format YYYY-MM-DD), dateModified (the date the entry was modified in OData Edm.Date
-                        format YYYY-MM-DD), datePublish (the date the entry was published in OData Edm.Date format
-                        YYYY-MM-DD), dateReview (the date the entry should be reviewed in OData Edm.Date format
-                        YYYY-MM-DD), keywords (Asset tag names), and title (Asset title on the locale specified by the
-                        'Accept-Language' request header). See
+                        index field is groupId; only approved items are returned by default), objectDefinitionId (an
+                        Object Definition's ID), status (workflow status ID - supported statuses are '-1' = Any, '0' =
+                        Approved, '1' = Pending, '2' = Draft, '3' = Expired, '4' = Denied, '5' = Inactive, '6' =
+                        Incomplete, '7' = Scheduled, '8' = In Trash, '9' = Empty), taxonomyCategoryIds (Asset category
+                        IDs), objectDefinitionExternalReferenceCode (Object Definition External Reference Code),
+                        extension (file extension), dateCreated (the date the entry was created in OData Edm.Date format
+                        YYYY-MM-DD), dateDisplay (the date the entry was displayed in OData Edm.Date format YYYY-MM-DD),
+                        dateExpiration (the date the entry expires in OData Edm.Date format YYYY-MM-DD), dateModified
+                        (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
+                        entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
+                        be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
+                        title on the locale specified by the 'Accept-Language' request header). Web content articles
+                        (JournalArticle) cannot be filtered by status. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
                         use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
@@ -344,7 +351,8 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Supports 'embedded' to get back nested item fields.
+                        Supports 'embedded' to return the full entity payload for each result, following the entity's
+                        own headless API schema. The MCP Server may default to this value.
                     example: embedded
                     name: nestedFields
                     schema:
@@ -483,18 +491,19 @@ paths:
                     description:
                         Filters across different fields. Supported fields are creatorId (the creator User's ID),
                         folderId (a folder's ID), groupIds (Site, Asset Library, or Space IDs - corresponding search
-                        index field is groupId), objectDefinitionId (an Object Definition's ID), status (workflow status
-                        ID - supported statuses are '-1' = Any, '0' = Approved, '1' = Pending, '2' = Draft, '3' =
-                        Expired, '4' = Denied, '5' = Inactive, '6' = Incomplete, '7' = Scheduled, '8' = In Trash, '9' =
-                        Empty), taxonomyCategoryIds (Asset category IDs), objectDefinitionExternalReferenceCode (Object
-                        Definition External Reference Code), extension (file extension), dateCreated (the date the entry
-                        was created in OData Edm.Date format YYYY-MM-DD), dateDisplay (the date the entry was displayed
-                        in OData Edm.Date format YYYY-MM-DD), dateExpiration (the date the entry expires in OData
-                        Edm.Date format YYYY-MM-DD), dateModified (the date the entry was modified in OData Edm.Date
-                        format YYYY-MM-DD), datePublish (the date the entry was published in OData Edm.Date format
-                        YYYY-MM-DD), dateReview (the date the entry should be reviewed in OData Edm.Date format
-                        YYYY-MM-DD), keywords (Asset tag names), and title (Asset title on the locale specified by the
-                        'Accept-Language' request header). See
+                        index field is groupId; only approved items are returned by default), objectDefinitionId (an
+                        Object Definition's ID), status (workflow status ID - supported statuses are '-1' = Any, '0' =
+                        Approved, '1' = Pending, '2' = Draft, '3' = Expired, '4' = Denied, '5' = Inactive, '6' =
+                        Incomplete, '7' = Scheduled, '8' = In Trash, '9' = Empty), taxonomyCategoryIds (Asset category
+                        IDs), objectDefinitionExternalReferenceCode (Object Definition External Reference Code),
+                        extension (file extension), dateCreated (the date the entry was created in OData Edm.Date format
+                        YYYY-MM-DD), dateDisplay (the date the entry was displayed in OData Edm.Date format YYYY-MM-DD),
+                        dateExpiration (the date the entry expires in OData Edm.Date format YYYY-MM-DD), dateModified
+                        (the date the entry was modified in OData Edm.Date format YYYY-MM-DD), datePublish (the date the
+                        entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
+                        be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
+                        title on the locale specified by the 'Accept-Language' request header). Web content articles
+                        (JournalArticle) cannot be filtered by status. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
                         use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
@@ -507,7 +516,8 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Supports 'embedded' to get back nested item fields.
+                        Supports 'embedded' to return the full entity payload for each result, following the entity's
+                        own headless API schema. The MCP Server may default to this value.
                     example: embedded
                     name: nestedFields
                     schema:

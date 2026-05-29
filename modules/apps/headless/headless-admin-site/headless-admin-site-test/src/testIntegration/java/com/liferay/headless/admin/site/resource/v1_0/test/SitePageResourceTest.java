@@ -308,12 +308,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-74225", "LPD-75413"})
+	@TestInfo({"LPD-74225", "LPD-75413", "LPD-83094"})
 	public void testPatchSiteSitePage() throws Exception {
 		_testPatchSiteSitePage(SitePage.Type.CONTENT_PAGE);
 		_testPatchSiteSitePage(SitePage.Type.WIDGET_PAGE);
 		_testPatchSiteSitePageWithPageSpecifications();
 		_testPatchSiteSitePageWithPriority();
+		_testPatchSiteSitePageWithSingleContentPageSpecification();
 		_testPatchSiteSitePageWithWidgetPageSettings();
 		_testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
@@ -340,6 +341,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@FeatureFlag(enable = true, value = "LPD-38869")
 	@Override
 	@Test
+	@TestInfo("LPD-83094")
 	public void testPostSiteSitePage() throws Exception {
 		super.testPostSiteSitePage();
 
@@ -366,6 +368,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageWithPageElements();
 		_testPostSiteSitePageWithPageSpecifications();
+		_testPostSiteSitePageWithSingleContentPageSpecification();
 		_testPostSiteSitePageWithWidgetPageSettings();
 		_testPostSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 	}
@@ -417,7 +420,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		{
 			"LPD-72013", "LPD-74331", "LPD-75450", "LPD-77124", "LPD-77505",
 			"LPD-77576", "LPD-77852", "LPD-78667", "LPD-79415", "LPD-80061",
-			"LPD-81793"
+			"LPD-81793", "LPD-83094"
 		}
 	)
 	public void testPutSiteSitePage() throws Exception {
@@ -453,6 +456,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithPageSpecifications();
 		_testPutSiteSitePageWithParentLayout();
 		_testPutSiteSitePageWithPriority();
+		_testPutSiteSitePageWithSingleContentPageSpecification();
 		_testPutSiteSitePageWithWidgetPageSettings();
 		_testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
@@ -1284,6 +1288,45 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return _testPutSiteSitePage(sitePage, testGroup, sitePage);
 	}
 
+	private ContentPageSpecification
+		_getContentPageSpecificationWithPageExperiences(
+			String contentPageSpecificationExternalReferenceCode,
+			String defaultPageExperienceExternalReferenceCode,
+			String defaultPageExperienceUuid, long groupId,
+			String pageExperienceExternalReferenceCode,
+			String pageExperienceKey, String pageExperienceUuid,
+			PageSpecification.Status status) {
+
+		PageExperience defaultPageExperience = new PageExperience();
+
+		defaultPageExperience.setExternalReferenceCode(
+			defaultPageExperienceExternalReferenceCode);
+		defaultPageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+		defaultPageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		defaultPageExperience.setPageElements(
+			PageElementsTestUtil.getPageElements(
+				RandomTestUtil.randomInt(1, 3), StringPool.BLANK, groupId));
+		defaultPageExperience.setPageSpecificationExternalReferenceCode(
+			contentPageSpecificationExternalReferenceCode);
+		defaultPageExperience.setUuid(defaultPageExperienceUuid);
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setExternalReferenceCode(
+			pageExperienceExternalReferenceCode);
+		pageExperience.setKey(pageExperienceKey);
+		pageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		pageExperience.setPriority(1);
+		pageExperience.setUuid(pageExperienceUuid);
+
+		return PageSpecificationsTestUtil.getContentPageSpecification(
+			contentPageSpecificationExternalReferenceCode, null, null,
+			new PageExperience[] {defaultPageExperience, pageExperience},
+			groupId, status);
+	}
+
 	private CustomMetaTag[] _getCustomMetaTags() {
 		return new CustomMetaTag[] {
 			new CustomMetaTag() {
@@ -1914,6 +1957,95 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
+	private void _postSingleContentPageSpecification(
+			ContentPageSpecification contentPageSpecification,
+			ContentPageSpecification expectedDraftContentPageSpecification,
+			ContentPageSpecification expectedPublishedContentPageSpecification,
+			Group group, String sitePageExternalReferenceCode,
+			PageSpecification.Status status)
+		throws Exception {
+
+		SitePage sitePage = _getRandomSitePage(
+			sitePageExternalReferenceCode, null,
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()),
+			SitePage.Type.CONTENT_PAGE,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		sitePageResource.postSiteSitePage(
+			group.getExternalReferenceCode(), false, sitePage);
+
+		SitePage getSitePage = sitePageResource.getSiteSitePage(
+			group.getExternalReferenceCode(), sitePageExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, group.getGroupId());
+
+		if (Objects.equals(status, PageSpecification.Status.APPROVED)) {
+			Assert.assertTrue(layout.isPublished());
+		}
+		else {
+			Assert.assertFalse(layout.isPublished());
+		}
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification,
+			getSitePage.getPageSpecifications(), layout, status);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		List<FragmentEntryLink> draftFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				group.getGroupId(), draftLayout.getPlid());
+
+		List<FragmentEntryLink> publishedFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				group.getGroupId(), layout.getPlid());
+
+		Assert.assertEquals(
+			draftFragmentEntryLinks + " vs " + publishedFragmentEntryLinks,
+			publishedFragmentEntryLinks.size(), draftFragmentEntryLinks.size());
+
+		List<String> draftFragmentEntryLinkExternalReferenceCodes =
+			TransformUtil.transform(
+				draftFragmentEntryLinks,
+				FragmentEntryLink::getExternalReferenceCode);
+
+		for (FragmentEntryLink publishedFragmentEntryLink :
+				publishedFragmentEntryLinks) {
+
+			String publishedERC =
+				publishedFragmentEntryLink.getExternalReferenceCode();
+
+			String expectedDraftERC;
+
+			if (publishedERC.endsWith(LayoutConstants.ERC_SUFFIX_PUBLISHED)) {
+				expectedDraftERC = publishedERC.substring(
+					0,
+					publishedERC.length() -
+						LayoutConstants.ERC_SUFFIX_PUBLISHED.length());
+			}
+			else {
+				expectedDraftERC =
+					publishedERC + LayoutConstants.ERC_SUFFIX_DRAFT;
+			}
+
+			Assert.assertEquals(
+				publishedFragmentEntryLink.toString(), expectedDraftERC,
+				publishedFragmentEntryLink.getOriginalFragmentEntryLinkERC());
+			Assert.assertTrue(
+				draftFragmentEntryLinkExternalReferenceCodes.contains(
+					expectedDraftERC));
+		}
+	}
+
 	private SitePage _postSiteSitePageWithPageSpecificationsWithCustomFields(
 			SitePage.Type type)
 		throws Exception {
@@ -1947,6 +2079,36 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGroup.getGroupId(), postSitePage.getPageSpecifications());
 
 		return postSitePage;
+	}
+
+	private List<String> _setUserDraftFragmentInstanceERCs(
+		PageElement[] pageElements) {
+
+		List<String> userDraftFragmentInstanceERCs = new ArrayList<>();
+
+		for (PageElement pageElement : pageElements) {
+			if (!(pageElement.getPageElementDefinition() instanceof
+					BasicFragmentInstancePageElementDefinition
+						basicFragmentInstancePageElementDefinition)) {
+
+				continue;
+			}
+
+			FragmentInstance fragmentInstance =
+				basicFragmentInstancePageElementDefinition.
+					getFragmentInstance();
+
+			String userDraftFragmentInstanceERC =
+				fragmentInstance.getFragmentInstanceExternalReferenceCode() +
+					_ERC_SUFFIX_USER_DRAFT;
+
+			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
+				userDraftFragmentInstanceERC);
+
+			userDraftFragmentInstanceERCs.add(userDraftFragmentInstanceERC);
+		}
+
+		return userDraftFragmentInstanceERCs;
 	}
 
 	private void _testDeleteSiteSitePage(Layout... layouts) throws Exception {
@@ -2404,6 +2566,36 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			});
 	}
 
+	private void _testPatchSiteSitePageWithSingleContentPageSpecification()
+		throws Exception {
+
+		SitePage existingSitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false,
+			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+
+		SitePage sitePage = new SitePage();
+
+		ContentPageSpecification contentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			existingSitePage.getExternalReferenceCode());
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		_assertProblemException(
+			"A single content page specification is only accepted on POST",
+			() -> sitePageResource.patchSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				existingSitePage.getExternalReferenceCode(), false, sitePage));
+	}
+
 	private void _testPatchSiteSitePageWithWidgetPageSettings()
 		throws Exception {
 
@@ -2700,6 +2892,75 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			postSitePage);
 	}
 
+	private void _testPostSiteSitePageWithDraftSingleContentPageSpecification(
+			PageSpecification.Status status, boolean withDraftErcSuffix)
+		throws Exception {
+
+		String pageExternalReferenceCode = RandomTestUtil.randomString();
+
+		String defaultPageExperienceExternalReferenceCode;
+		String draftContentPageSpecificationExternalReferenceCode;
+		String pageExperienceExternalReferenceCode;
+
+		if (withDraftErcSuffix) {
+			draftContentPageSpecificationExternalReferenceCode =
+				pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT;
+
+			defaultPageExperienceExternalReferenceCode =
+				draftContentPageSpecificationExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_DEFAULT;
+
+			pageExperienceExternalReferenceCode =
+				RandomTestUtil.randomString() +
+					LayoutConstants.ERC_SUFFIX_DRAFT;
+		}
+		else {
+			defaultPageExperienceExternalReferenceCode =
+				RandomTestUtil.randomString();
+			draftContentPageSpecificationExternalReferenceCode =
+				RandomTestUtil.randomString();
+			pageExperienceExternalReferenceCode = RandomTestUtil.randomString();
+		}
+
+		ContentPageSpecification draftContentPageSpecification =
+			_getContentPageSpecificationWithPageExperiences(
+				draftContentPageSpecificationExternalReferenceCode,
+				defaultPageExperienceExternalReferenceCode,
+				RandomTestUtil.randomString(), testGroup.getGroupId(),
+				pageExperienceExternalReferenceCode,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				status);
+
+		ContentPageSpecification expectedDraftContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedDraftContentPageSpecification.setExternalReferenceCode(
+			draftContentPageSpecificationExternalReferenceCode);
+		expectedDraftContentPageSpecification.setPageExperiences(
+			draftContentPageSpecification.getPageExperiences());
+		expectedDraftContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification expectedPublishedContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedPublishedContentPageSpecification.setExternalReferenceCode(
+			pageExternalReferenceCode);
+		expectedPublishedContentPageSpecification.setPageExperiences(
+			TransformUtil.transform(
+				draftContentPageSpecification.getPageExperiences(),
+				draftPageExperience -> _toPublishedPageExperience(
+					draftPageExperience, pageExternalReferenceCode),
+				PageExperience.class));
+		expectedPublishedContentPageSpecification.setStatus(status);
+
+		_postSingleContentPageSpecification(
+			draftContentPageSpecification,
+			expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification, testGroup,
+			pageExternalReferenceCode, status);
+	}
+
 	private void _testPostSiteSitePageWithPageElements() throws Exception {
 		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
 			testGroup.getGroupId());
@@ -2838,6 +3099,158 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			randomSitePage.getPageSpecifications(),
 			sitePage.getPageSpecifications());
+	}
+
+	private void
+			_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
+				PageSpecification.Status status)
+		throws Exception {
+
+		String defaultPageExperienceExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String defaultPageExperienceUuid = RandomTestUtil.randomString();
+		String pageExperienceExternalReferenceCode =
+			RandomTestUtil.randomString();
+		String pageExperienceKey = RandomTestUtil.randomString();
+		String pageExperienceUuid = RandomTestUtil.randomString();
+		String pageExternalReferenceCode = RandomTestUtil.randomString();
+
+		ContentPageSpecification publishedContentPageSpecification =
+			_getContentPageSpecificationWithPageExperiences(
+				pageExternalReferenceCode,
+				defaultPageExperienceExternalReferenceCode,
+				defaultPageExperienceUuid, testGroup.getGroupId(),
+				pageExperienceExternalReferenceCode, pageExperienceKey,
+				pageExperienceUuid, status);
+
+		String draftContentPageSpecificationExternalReferenceCode =
+			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT;
+
+		ContentPageSpecification expectedDraftContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedDraftContentPageSpecification.setExternalReferenceCode(
+			draftContentPageSpecificationExternalReferenceCode);
+		expectedDraftContentPageSpecification.setPageExperiences(
+			TransformUtil.transform(
+				publishedContentPageSpecification.getPageExperiences(),
+				publishedPageExperience -> _toDraftPageExperience(
+					publishedPageExperience,
+					draftContentPageSpecificationExternalReferenceCode),
+				PageExperience.class));
+		expectedDraftContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification expectedPublishedContentPageSpecification =
+			new ContentPageSpecification();
+
+		expectedPublishedContentPageSpecification.setExternalReferenceCode(
+			pageExternalReferenceCode);
+		expectedPublishedContentPageSpecification.setPageExperiences(
+			publishedContentPageSpecification.getPageExperiences());
+		expectedPublishedContentPageSpecification.setStatus(status);
+
+		_postSingleContentPageSpecification(
+			publishedContentPageSpecification,
+			expectedDraftContentPageSpecification,
+			expectedPublishedContentPageSpecification, testGroup,
+			pageExternalReferenceCode, status);
+	}
+
+	private void _testPostSiteSitePageWithPublishedSingleContentPageSpecificationAndDraftReferences()
+		throws Exception {
+
+		String pageExternalReferenceCode = RandomTestUtil.randomString();
+		String userDraftSpecERC = RandomTestUtil.randomString();
+
+		long groupId = testGroup.getGroupId();
+
+		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
+			3, StringPool.BLANK, groupId);
+
+		List<String> userDraftFragmentInstanceERCs =
+			_setUserDraftFragmentInstanceERCs(pageElements);
+
+		PageExperience defaultPageExperience = new PageExperience();
+
+		defaultPageExperience.setExternalReferenceCode(
+			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DEFAULT);
+		defaultPageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+		defaultPageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		defaultPageExperience.setPageElements(pageElements);
+		defaultPageExperience.setPageSpecificationExternalReferenceCode(
+			pageExternalReferenceCode);
+
+		ContentPageSpecification contentPageSpecification =
+			new ContentPageSpecification();
+
+		contentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode(
+				userDraftSpecERC);
+		contentPageSpecification.setExternalReferenceCode(
+			pageExternalReferenceCode);
+		contentPageSpecification.setPageExperiences(
+			new PageExperience[] {defaultPageExperience});
+		contentPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		contentPageSpecification.setType(
+			() -> ContentPageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
+
+		SitePage sitePage = _getRandomSitePage(
+			pageExternalReferenceCode, null,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()),
+			SitePage.Type.CONTENT_PAGE,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, sitePage);
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			pageExternalReferenceCode, groupId);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			userDraftSpecERC, draftLayout.getExternalReferenceCode());
+
+		List<String> draftFragmentEntryLinkERCs = TransformUtil.transform(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				groupId, draftLayout.getPlid()),
+			FragmentEntryLink::getExternalReferenceCode);
+
+		for (String userDraftFragmentInstanceERC :
+				userDraftFragmentInstanceERCs) {
+
+			Assert.assertTrue(
+				draftFragmentEntryLinkERCs.toString(),
+				draftFragmentEntryLinkERCs.contains(
+					userDraftFragmentInstanceERC));
+		}
+	}
+
+	private void _testPostSiteSitePageWithSingleContentPageSpecification()
+		throws Exception {
+
+		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
+			PageSpecification.Status.APPROVED, true);
+		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
+			PageSpecification.Status.APPROVED, false);
+		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
+			PageSpecification.Status.DRAFT, true);
+		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
+			PageSpecification.Status.DRAFT, false);
+		_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
+			PageSpecification.Status.APPROVED);
+		_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
+			PageSpecification.Status.DRAFT);
+		_testPostSiteSitePageWithPublishedSingleContentPageSpecificationAndDraftReferences();
 	}
 
 	private void _testPostSiteSitePageWithWidgetPageSettings()
@@ -3940,6 +4353,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			});
 	}
 
+	private void _testPutSiteSitePageWithSingleContentPageSpecification()
+		throws Exception {
+
+		SitePage existingSitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false,
+			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+
+		ContentPageSpecification contentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			existingSitePage.getExternalReferenceCode());
+
+		existingSitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		_assertProblemException(
+			"A single content page specification is only accepted on POST",
+			() -> sitePageResource.putSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				existingSitePage.getExternalReferenceCode(), false,
+				existingSitePage));
+	}
+
 	private void _testPutSiteSitePageWithWidgetPageSettings() throws Exception {
 		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
 
@@ -4112,6 +4554,69 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage1.getExternalReferenceCode(), 2, sitePage4);
 	}
 
+	private PageExperience _toDraftPageExperience(
+		PageExperience publishedPageExperience,
+		String draftContentPageSpecificationExternalReferenceCode) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setKey(publishedPageExperience.getKey());
+
+		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
+				publishedPageExperience.getKey())) {
+
+			pageExperience.setExternalReferenceCode(
+				draftContentPageSpecificationExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_DEFAULT);
+		}
+		else {
+			pageExperience.setExternalReferenceCode(
+				publishedPageExperience.getExternalReferenceCode() +
+					LayoutConstants.ERC_SUFFIX_DRAFT);
+		}
+
+		return pageExperience;
+	}
+
+	private PageExperience _toPublishedPageExperience(
+		PageExperience draftPageExperience,
+		String publishedContentPageSpecificationExternalReferenceCode) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setKey(draftPageExperience.getKey());
+
+		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
+				draftPageExperience.getKey())) {
+
+			pageExperience.setExternalReferenceCode(
+				publishedContentPageSpecificationExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_DEFAULT);
+
+			return pageExperience;
+		}
+
+		String draftExternalReferenceCode =
+			draftPageExperience.getExternalReferenceCode();
+
+		if (draftExternalReferenceCode.endsWith(
+				LayoutConstants.ERC_SUFFIX_DRAFT)) {
+
+			pageExperience.setExternalReferenceCode(
+				draftExternalReferenceCode.substring(
+					0,
+					draftExternalReferenceCode.length() -
+						LayoutConstants.ERC_SUFFIX_DRAFT.length()));
+		}
+		else {
+			pageExperience.setExternalReferenceCode(
+				draftExternalReferenceCode +
+					LayoutConstants.ERC_SUFFIX_PUBLISHED);
+		}
+
+		return pageExperience;
+	}
+
 	private Layout _updateFriendlyURL(
 			Map<Locale, String> friendlyURLMap, Layout layout)
 		throws Exception {
@@ -4137,6 +4642,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getPlid(),
 			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 	}
+
+	private static final String _ERC_SUFFIX_USER_DRAFT = "-user-draft";
 
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);

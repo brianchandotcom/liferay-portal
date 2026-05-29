@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,11 +39,11 @@ import jakarta.portlet.ResourceResponse;
 
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Activate;
@@ -70,24 +71,14 @@ public class ExportAuditEventsMVCResourceCommand
 		String[] selectedColumns = GetterUtil.getStringValues(
 			properties.get("columns"));
 
-		if (selectedColumns.length < 1) {
-			selectedColumns = _functionsKeys.keySet(
-			).toArray(
-				new String[0]
-			);
+		if (ArrayUtil.isEmpty(selectedColumns)) {
+			Set<String> keys = _functionsKeys.keySet();
+
+			selectedColumns = keys.toArray(new String[0]);
 		}
 
-		List<String> columns = new ArrayList<>();
-
-		for (String column : selectedColumns) {
-			String key = _functionsKeys.get(column);
-
-			if (key != null) {
-				columns.add(key);
-			}
-		}
-
-		_columns = columns.toArray(new String[0]);
+		_columns = TransformUtil.transform(
+			selectedColumns, _functionsKeys::get, String.class);
 	}
 
 	@Override
@@ -123,7 +114,9 @@ public class ExportAuditEventsMVCResourceCommand
 			progressTracker.setPercent(10);
 		}
 
-		StringBundler sb = new StringBundler((auditEvents.size() * 2) + 2);
+		int total = auditEvents.size();
+
+		StringBundler sb = new StringBundler((total * 2) + 2);
 
 		sb.append(
 			StringUtil.merge(
@@ -131,9 +124,9 @@ public class ExportAuditEventsMVCResourceCommand
 				StringPool.COMMA));
 		sb.append(StringPool.NEW_LINE);
 
-		for (int i = 0; i < auditEvents.size(); i++) {
-			AuditEvent auditEvent = auditEvents.get(i);
+		int count = 0;
 
+		for (AuditEvent auditEvent : auditEvents) {
 			sb.append(
 				StringUtil.merge(
 					TransformUtil.transform(
@@ -157,8 +150,10 @@ public class ExportAuditEventsMVCResourceCommand
 
 			if (progressTracker != null) {
 				progressTracker.setPercent(
-					Math.min(10 + ((i * 90) / auditEvents.size()), 99));
+					Math.min(10 + ((count * 90) / total), 99));
 			}
+
+			count++;
 		}
 
 		return sb.toString();

@@ -275,14 +275,10 @@ export class CalendarWidgetPage {
 
 	async clickAddEventButton() {
 		await this.addEventButton.click();
-
-		await this.page.waitForLoadState('networkidle');
 	}
 
 	async clickAddEventMenuitem() {
 		await this.addEventMenuItem.click();
-
-		await this.page.waitForLoadState('networkidle');
 	}
 
 	async clickCalendarColor(calendarColorHex: string) {

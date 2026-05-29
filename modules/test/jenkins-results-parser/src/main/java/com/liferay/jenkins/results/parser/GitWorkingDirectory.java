@@ -2733,6 +2733,29 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public boolean refContainsSHA(LocalGitBranch localGitBranch, String sha) {
+		for (int deepenAttempt = 0;; deepenAttempt++) {
+			if (refContainsSHA(localGitBranch.getName(), sha)) {
+				return true;
+			}
+
+			boolean deepened = false;
+
+			if (deepenAttempt < _DEEPEN_MAX_ATTEMPTS) {
+				Date shallowSinceDate = new Date(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() -
+						(_DEEPEN_STEP_SIZE_MILLIS << deepenAttempt));
+
+				deepened = deepenLocalGitBranch(
+					localGitBranch, shallowSinceDate);
+			}
+
+			if (!deepened) {
+				return false;
+			}
+		}
+	}
+
 	public boolean refContainsSHA(String ref, String sha) {
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 2,

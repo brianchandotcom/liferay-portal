@@ -18,7 +18,7 @@ const ckeditor4SamplePageTest = isolatedSiteTest.extend<{
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName:
-				'com_liferay_editor_ckeditor4_sample_web_internal_portlet_CKEditorSamplePortlet',
+				'com_liferay_editor_ckeditor4_sample_web_internal_portlet_CKEditor4SamplePortlet',
 		});
 
 		const apiHelpers = new ApiHelpers(page);

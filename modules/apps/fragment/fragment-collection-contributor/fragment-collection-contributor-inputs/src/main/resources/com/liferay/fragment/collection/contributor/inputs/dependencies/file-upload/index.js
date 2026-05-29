@@ -53,8 +53,10 @@ function onInputChange() {
 		showInputError({
 			errorContainer: fileSizeError,
 			errorMessageContainer: fileSizeErrorMessage,
-			errorType: 'file-size',
 			formGroup,
+			message: fileSizeErrorMessage.getAttribute(
+				'data-file-size-feedback'
+			),
 		});
 
 		fileInput.value = '';

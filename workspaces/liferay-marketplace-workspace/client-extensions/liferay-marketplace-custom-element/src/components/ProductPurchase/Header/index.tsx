@@ -27,7 +27,7 @@ const ProductPurchaseHeaderAccount: React.FC<
 
 	return (
 		<>
-			<hr />
+			<hr className="mx-n5" />
 
 			<div className="d-flex flex-row justify-content-between">
 				<strong className="account-banner-title-text align-self-center">

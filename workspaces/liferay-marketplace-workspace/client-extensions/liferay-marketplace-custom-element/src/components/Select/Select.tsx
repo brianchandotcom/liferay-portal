@@ -57,7 +57,7 @@ const Select = React.forwardRef<HTMLInputElement, InputProps>(
 				label={label}
 				required={required}
 			>
-				{helpText && <div className="text-muted">{helpText}</div>}
+				{helpText && <div className="mb-1">{helpText}</div>}
 
 				<select
 					className={classNames(

@@ -4,11 +4,12 @@
  */
 
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 import './AccountAndAppCard.scss';
 
 interface AppCardProps {
-	category: string;
+	category: string | ReactNode;
 	className?: string;
 	logo: string;
 	title: string | JSX.Element;

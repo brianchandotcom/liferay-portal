@@ -4,7 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
@@ -13,7 +13,7 @@ import './Input.scss';
 interface InputProps
 	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
 	component?: 'input' | 'textarea';
-	description?: string;
+	description?: ReactNode | string;
 	errorMessage?: string;
 	helpMessage?: string;
 	hideFeedback?: boolean;
@@ -32,6 +32,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
 			className,
+			description,
 			component = 'input',
 			errorMessage,
 			helpMessage,
@@ -54,6 +55,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 		return (
 			<FieldBase
 				className={className}
+				description={description}
 				errorMessage={errorMessage}
 				helpMessage={helpMessage}
 				hideFeedback={hideFeedback}

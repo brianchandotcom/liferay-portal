@@ -229,6 +229,45 @@ test(
 );
 
 test(
+	'Newly created properties receive non-consecutive identifiers',
+	{
+		tag: '@LRAC-9112',
+	},
+	async ({apiHelpers}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		const channelIds: string[] = [];
+
+		try {
+			for (let index = 1; index <= 3; index++) {
+				const channel =
+					await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+						`Sequential Property ${getRandomString()} ${index}`,
+						project.groupId
+					);
+
+				channelIds.push(channel.id);
+			}
+
+			const ids = channelIds.map((id) => BigInt(id));
+
+			expect(ids[1] - ids[0]).not.toBe(BigInt(1));
+
+			expect(ids[2] - ids[1]).not.toBe(BigInt(1));
+		}
+		finally {
+			for (const id of channelIds) {
+				await apiHelpers.jsonWebServicesOSBFaro
+					.deleteChannel(`[${id}]`, project.groupId)
+					.catch(() => {});
+			}
+		}
+	}
+);
+
+test(
 	'Saving a New Property with an existing name appends an incrementing identifier',
 	{
 		tag: '@LRAC-9037',

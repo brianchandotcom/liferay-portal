@@ -38,8 +38,10 @@ function main() {
 						showInputError({
 							errorContainer: error,
 							errorMessageContainer: errorMessage,
-							errorType: 'required',
 							formGroup,
+							message: errorMessage.getAttribute(
+								'data-required-feedback'
+							),
 						});
 					});
 				}
@@ -58,10 +60,16 @@ function main() {
 					!hasError &&
 					inputElement.value.length > input.attributes.maxLength
 				) {
+					const lengthFeedback = errorMessage.getAttribute(
+						'data-length-feedback'
+					);
+
 					showInputError({
-						errorType: 'length',
+						errorContainer: error,
+						errorMessageContainer: errorMessage,
 						formGroup,
 						lengthInfoContainer: lengthInfo,
+						message: `${lengthFeedback}: ${inputElement.value.length} / ${input.attributes.maxLength}`,
 					});
 				}
 

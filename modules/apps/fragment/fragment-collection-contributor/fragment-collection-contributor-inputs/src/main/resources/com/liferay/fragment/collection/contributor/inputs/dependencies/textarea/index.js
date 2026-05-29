@@ -36,10 +36,16 @@ function main() {
 					!hasError &&
 					textarea.value.length > input.attributes.maxLength
 				) {
+					const lengthFeedback = errorMessage.getAttribute(
+						'data-length-feedback'
+					);
+
 					showInputError({
-						errorType: 'length',
+						errorContainer: error,
+						errorMessageContainer: errorMessage,
 						formGroup,
 						lengthInfoContainer: lengthInfo,
+						message: `${lengthFeedback}: ${textarea.value.length} / ${input.attributes.maxLength}`,
 					});
 				}
 

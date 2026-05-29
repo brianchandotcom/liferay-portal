@@ -10,6 +10,7 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.guardrail.OutputGuardrail;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * @author Feliphe Marinho
  * @author João Victor Alves
  */
 public class OutputGuardrailImpl implements OutputGuardrail {
@@ -39,7 +41,7 @@ public class OutputGuardrailImpl implements OutputGuardrail {
 	@Override
 	public OutputGuardrailResult fatal(String message) {
 		SseUtil.send(
-			message,
+			"Model response violates security policy",
 			GetterUtil.getString(
 				_workflowContext.get("outBoundEventName"), "Chat Message Sent"),
 			null,
@@ -51,11 +53,12 @@ public class OutputGuardrailImpl implements OutputGuardrail {
 	@Override
 	public OutputGuardrailResult validate(AiMessage aiMessage) {
 		try {
-			if (_modelArmorHandler.hasModelResponseViolation(
-					_companyId, _externalReferenceCode, _location,
-					aiMessage.text())) {
+			String violations = _modelArmorHandler.sanitizeModelResponse(
+				_companyId, _externalReferenceCode, _location,
+				aiMessage.text());
 
-				return fatal("Model response violates security policy");
+			if (Validator.isNotNull(violations)) {
+				return fatal(violations);
 			}
 
 			return success();

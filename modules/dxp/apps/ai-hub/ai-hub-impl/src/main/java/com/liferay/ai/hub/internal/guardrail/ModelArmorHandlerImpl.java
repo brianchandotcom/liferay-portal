@@ -5,28 +5,39 @@
 
 package com.liferay.ai.hub.internal.guardrail;
 
+import com.google.cloud.modelarmor.v1.CsamFilterResult;
 import com.google.cloud.modelarmor.v1.DataItem;
 import com.google.cloud.modelarmor.v1.DetectionConfidenceLevel;
 import com.google.cloud.modelarmor.v1.FilterMatchState;
+import com.google.cloud.modelarmor.v1.FilterResult;
 import com.google.cloud.modelarmor.v1.LocationName;
+import com.google.cloud.modelarmor.v1.MaliciousUriFilterResult;
 import com.google.cloud.modelarmor.v1.ModelArmorClient;
 import com.google.cloud.modelarmor.v1.ModelArmorSettings;
+import com.google.cloud.modelarmor.v1.PiAndJailbreakFilterResult;
+import com.google.cloud.modelarmor.v1.RaiFilterResult;
 import com.google.cloud.modelarmor.v1.SanitizationResult;
 import com.google.cloud.modelarmor.v1.SanitizeModelResponseRequest;
 import com.google.cloud.modelarmor.v1.SanitizeModelResponseResponse;
 import com.google.cloud.modelarmor.v1.SanitizeUserPromptRequest;
 import com.google.cloud.modelarmor.v1.SanitizeUserPromptResponse;
+import com.google.cloud.modelarmor.v1.SdpDeidentifyResult;
+import com.google.cloud.modelarmor.v1.SdpFilterResult;
+import com.google.cloud.modelarmor.v1.SdpInspectResult;
 import com.google.cloud.modelarmor.v1.Template;
 import com.google.cloud.modelarmor.v1.TemplateName;
+import com.google.cloud.modelarmor.v1.VirusScanFilterResult;
 import com.google.protobuf.FieldMask;
 
 import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -88,12 +99,12 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 	}
 
 	@Override
-	public boolean hasModelResponseViolation(
+	public String sanitizeModelResponse(
 			long companyId, String externalReferenceCode, String location,
 			String text)
 		throws Exception {
 
-		return _hasViolation(
+		return _sanitize(
 			(modelArmorClient, templateName) -> {
 				SanitizeModelResponseResponse sanitizeModelResponseResponse =
 					modelArmorClient.sanitizeModelResponse(
@@ -113,12 +124,12 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 	}
 
 	@Override
-	public boolean hasUserPromptViolation(
+	public String sanitizeUserPrompt(
 			long companyId, String externalReferenceCode, String location,
 			String text)
 		throws Exception {
 
-		return _hasViolation(
+		return _sanitize(
 			(modelArmorClient, templateName) -> {
 				SanitizeUserPromptResponse sanitizeUserPromptResponse =
 					modelArmorClient.sanitizeUserPrompt(
@@ -237,7 +248,98 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 		).build();
 	}
 
-	private boolean _hasViolation(
+	private String _getViolation(FilterResult filterResult) {
+		if (filterResult.hasCsamFilterFilterResult()) {
+			CsamFilterResult csamFilterResult =
+				filterResult.getCsamFilterFilterResult();
+
+			if (Objects.equals(
+					csamFilterResult.getMatchState(),
+					FilterMatchState.MATCH_FOUND)) {
+
+				return "Child Sexual Abuse Material";
+			}
+		}
+
+		if (filterResult.hasMaliciousUriFilterResult()) {
+			MaliciousUriFilterResult maliciousUriFilterResult =
+				filterResult.getMaliciousUriFilterResult();
+
+			if (Objects.equals(
+					maliciousUriFilterResult.getMatchState(),
+					FilterMatchState.MATCH_FOUND)) {
+
+				return "Malicious URIs";
+			}
+		}
+
+		if (filterResult.hasPiAndJailbreakFilterResult()) {
+			PiAndJailbreakFilterResult piAndJailbreakFilterResult =
+				filterResult.getPiAndJailbreakFilterResult();
+
+			if (Objects.equals(
+					piAndJailbreakFilterResult.getMatchState(),
+					FilterMatchState.MATCH_FOUND)) {
+
+				return "Prompt Injection and Jailbreak";
+			}
+		}
+
+		if (filterResult.hasRaiFilterResult()) {
+			RaiFilterResult raiFilterResult = filterResult.getRaiFilterResult();
+
+			if (Objects.equals(
+					raiFilterResult.getMatchState(),
+					FilterMatchState.MATCH_FOUND)) {
+
+				return "Responsible AI";
+			}
+		}
+
+		if (filterResult.hasSdpFilterResult()) {
+			SdpFilterResult sdpFilterResult = filterResult.getSdpFilterResult();
+
+			if (sdpFilterResult.hasDeidentifyResult()) {
+				SdpDeidentifyResult sdpDeidentifyResult =
+					sdpFilterResult.getDeidentifyResult();
+
+				if (Objects.equals(
+						sdpDeidentifyResult.getMatchState(),
+						FilterMatchState.MATCH_FOUND)) {
+
+					return "Sensitive Data Protection";
+				}
+			}
+
+			if (sdpFilterResult.hasInspectResult()) {
+				SdpInspectResult sdpInspectResult =
+					sdpFilterResult.getInspectResult();
+
+				if (Objects.equals(
+						sdpInspectResult.getMatchState(),
+						FilterMatchState.MATCH_FOUND)) {
+
+					return "Sensitive Data Protection";
+				}
+			}
+		}
+
+		if (filterResult.hasVirusScanFilterResult()) {
+			VirusScanFilterResult virusScanFilterResult =
+				filterResult.getVirusScanFilterResult();
+
+			if (Objects.equals(
+					virusScanFilterResult.getMatchState(),
+					FilterMatchState.MATCH_FOUND)) {
+
+				return "Malware and Virus";
+			}
+		}
+
+		return null;
+	}
+
+	private String _sanitize(
 			BiFunction<ModelArmorClient, String, SanitizationResult> biFunction,
 			long companyId, String externalReferenceCode, String location)
 		throws Exception {
@@ -253,9 +355,22 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 				externalReferenceCode
 			).toString());
 
-		return Objects.equals(
-			sanitizationResult.getFilterMatchState(),
-			FilterMatchState.MATCH_FOUND);
+		if (!Objects.equals(
+				sanitizationResult.getFilterMatchState(),
+				FilterMatchState.MATCH_FOUND)) {
+
+			return null;
+		}
+
+		Map<String, FilterResult> filterResults =
+			sanitizationResult.getFilterResultsMap();
+
+		String violations = StringUtil.merge(
+			TransformUtil.transform(
+				filterResults.values(), this::_getViolation),
+			", ");
+
+		return "The prompt violated " + violations + " filters";
 	}
 
 	private DetectionConfidenceLevel _toDetectionConfidenceLevel(

@@ -419,10 +419,26 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		try {
 			URL url = new URL(urlString);
 
+			String protocol = url.getProtocol();
+
+			if (!Http.HTTP.equalsIgnoreCase(protocol) &&
+				!Http.HTTPS.equalsIgnoreCase(protocol)) {
+
+				throw new OAuthClientPRLocalMetadataResourceException(
+					urlString);
+			}
+
+			String host = url.getHost();
+
+			if (Validator.isNull(host)) {
+				throw new OAuthClientPRLocalMetadataResourceException(
+					urlString);
+			}
+
 			if (Validator.isNotNull(url.getRef()) ||
-				(!Http.HTTPS.equalsIgnoreCase(url.getProtocol()) &&
+				(!Http.HTTPS.equalsIgnoreCase(protocol) &&
 				 !InetAddressUtil.isLocalInetAddress(
-					 InetAddressUtil.getInetAddressByName(url.getHost())))) {
+					 InetAddressUtil.getInetAddressByName(host)))) {
 
 				throw new OAuthClientPRLocalMetadataResourceException(
 					urlString);

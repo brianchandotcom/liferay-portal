@@ -54,9 +54,6 @@ public class DataSetSnapshotSharingEntryInterpreter
 
 	@Override
 	public SharingEntryViewRenderer getSharingEntryViewRenderer() {
-
-		// This sharing entry has no standalone preview.
-
 		return null;
 	}
 

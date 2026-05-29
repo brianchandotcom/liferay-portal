@@ -71,7 +71,6 @@ export default function CollectionFilterBuilder({
 	namespace,
 	onChange,
 	properties: initialProperties,
-	propertiesURL,
 	tagSelectorURL,
 	vocabularyIds,
 }: CollectionFilterBuilderProps) {
@@ -79,7 +78,6 @@ export default function CollectionFilterBuilder({
 		categorySelectorURL,
 		groupIds,
 		namespace,
-		propertiesURL,
 		tagSelectorURL,
 		vocabularyIds,
 	});
@@ -93,11 +91,7 @@ export default function CollectionFilterBuilder({
 			: [{id: uuidv4()}]
 	);
 
-	const properties = useTypeProperties(
-		namespace,
-		propertiesURL,
-		initialProperties
-	);
+	const properties = useTypeProperties(initialProperties);
 
 	const propertiesWithAssetFields = useMemo<FilterPropertyGroup[]>(
 		() => [

@@ -28,8 +28,6 @@
 							"namespace", liferayPortletResponse.getNamespace()
 						).put(
 							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
-						).put(
-							"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
 						).build()
 					%>'
 				/>

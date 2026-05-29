@@ -319,6 +319,10 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"classTypes", classTypesList
+		).put(
+			"initialProperties", editAssetListDisplayContext.getTypePropertiesJSONArray()
+		).put(
+			"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
 		).build()
 	%>'
 	module="{Source} from asset-list-web"

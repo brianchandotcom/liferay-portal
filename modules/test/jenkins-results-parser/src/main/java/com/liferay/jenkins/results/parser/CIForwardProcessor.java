@@ -768,14 +768,11 @@ public class CIForwardProcessor {
 			gitWorkingDirectory.getRemoteGitBranch(
 				upstreamBranchName, receiverRemoteURL, true);
 
-		GitCommit mergeBaseCommit = receiverRemoteGitBranch.getMergeBaseCommit(
-			senderRemoteGitBranch);
+		if (receiverRemoteGitBranch.getMergeBaseCommit(senderRemoteGitBranch) ==
+				null) {
 
-		if (mergeBaseCommit == null) {
 			return false;
 		}
-
-		String expectedMergeBaseSHA = mergeBaseCommit.getSHA();
 
 		gitWorkingDirectory.fetch(receiverRemoteGitBranch);
 		gitWorkingDirectory.fetch(senderRemoteGitBranch);
@@ -791,26 +788,6 @@ public class CIForwardProcessor {
 			gitWorkingDirectory.createLocalGitBranch(
 				_pullRequest.getLocalSenderBranchName() + "-precheck", true,
 				_pullRequest.getSenderSHA(), senderRemoteGitBranch);
-
-		String localMergeBaseSHA = null;
-
-		try {
-			localMergeBaseSHA = gitWorkingDirectory.getMergeBaseCommitSHA(
-				receiverLocalGitBranch, senderLocalGitBranch);
-		}
-		catch (GitWorkingDirectory.GitWorkingDirectoryRuntimeException
-					gitWorkingDirectoryRuntimeException) {
-
-			gitWorkingDirectoryRuntimeException.printStackTrace();
-		}
-
-		if ((localMergeBaseSHA == null) ||
-			!expectedMergeBaseSHA.equals(localMergeBaseSHA.trim())) {
-
-			System.out.println("WARNING: Unable to identify merge base SHA");
-
-			return false;
-		}
 
 		try {
 			gitWorkingDirectory.rebase(

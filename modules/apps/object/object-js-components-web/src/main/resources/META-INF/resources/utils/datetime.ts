@@ -109,6 +109,13 @@ export function generateDateConfigurations({
 	};
 }
 
+export function getTimeSeparator(momentFormat: string): string {
+	const timePart = momentFormat.split(' ').slice(1).join(' ');
+	const match = timePart.match(/H+([^\w])/i);
+
+	return match?.[1] ?? ':';
+}
+
 export function generateDate({
 	isDateTime,
 	momentFormat,

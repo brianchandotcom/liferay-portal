@@ -3404,6 +3404,76 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-ext-properties-clustering">
+		<sequential>
+			<if>
+				<not>
+					<isset property="cluster.enabled" />
+				</not>
+				<then>
+					<get-testcase-property property.name="cluster.enabled" />
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${cluster.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+cluster.link.autodetect.address=
+
+cluster.link.channel.logic.name.control=control-channel-logic-name
+cluster.link.channel.logic.name.transport.0=transport-channel-logic-name
+
+cluster.link.enabled=true
+
+web.server.display.node=true</echo>
+					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config">rootDir=&quot;${liferay.home}/data/document_library&quot;</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="cluster.jdbc.ping" />
+
+			<if>
+				<equals arg1="${cluster.jdbc.ping}" arg2="true" />
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_jdbc_ping.xml</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="cluster.node.ip" />
+
+			<if>
+				<equals arg1="${cluster.node.ip}" arg2="true" />
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+cluster.link.bind.addr["cluster-link-control"]=${ip.address}
+cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="cluster.tcp.jdbc.ping" />
+
+			<if>
+				<equals arg1="${cluster.tcp.jdbc.ping}" arg2="true" />
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml
+cluster.link.channel.properties.transport.0=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml</echo>
+
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+					>
+						<replacetoken>cluster.link.autodetect.address=</replacetoken>
+						<replacevalue></replacevalue>
+					</replace>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-portal-ext-properties-default">
 		<sequential>
 			<delete file="portal-impl/src/portal-ext.properties" />
@@ -12987,6 +13057,8 @@ ${update.properties}</echo>
 	<target name="prepare-portal-ext-properties">
 		<prepare-portal-ext-properties-default />
 
+		<prepare-portal-ext-properties-clustering />
+
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />
 			<then>
@@ -13064,72 +13136,6 @@ dl.store.impl=com.liferay.portal.store.azure.AzureStore</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 enterprise.product.commerce.enabled=false</echo>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="cluster.enabled" />
-			</not>
-			<then>
-				<get-testcase-property property.name="cluster.enabled" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-cluster.link.autodetect.address=
-
-cluster.link.channel.logic.name.control=control-channel-logic-name
-cluster.link.channel.logic.name.transport.0=transport-channel-logic-name
-
-cluster.link.enabled=true
-
-web.server.display.node=true</echo>
-				<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config">rootDir=&quot;${liferay.home}/data/document_library&quot;</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="cluster.jdbc.ping" />
-
-		<if>
-			<equals arg1="${cluster.jdbc.ping}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_jdbc_ping.xml</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="cluster.node.ip" />
-
-		<if>
-			<equals arg1="${cluster.node.ip}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-cluster.link.bind.addr["cluster-link-control"]=${ip.address}
-cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="cluster.tcp.jdbc.ping" />
-
-		<if>
-			<equals arg1="${cluster.tcp.jdbc.ping}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml
-cluster.link.channel.properties.transport.0=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml</echo>
-
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-				>
-					<replacetoken>cluster.link.autodetect.address=</replacetoken>
-					<replacevalue></replacevalue>
-				</replace>
 			</then>
 		</if>
 

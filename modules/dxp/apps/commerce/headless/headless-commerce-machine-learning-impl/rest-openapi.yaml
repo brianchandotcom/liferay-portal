@@ -2,28 +2,39 @@ components:
     parameters:
         accountIdsQueryParam:
             in: query
+            description:
+                Restricts the response to the supplied account identifiers. Repeat the parameter once per identifier.
+                The set is further intersected with the accounts the caller has view permission on; when the
+                intersection is empty the response is an empty page.
             explode: true
             name: accountIds
             required: false
             schema:
                 items:
                     format: int64
+                    minimum: 0
                     type: integer
                 type: array
             style: form
         categoryIdsQueryParam:
             in: query
+            description:
+                Restricts the response to the supplied category identifiers. Repeat the parameter once per identifier.
+                When omitted, forecast points across every category are returned.
             explode: true
             name: categoryIds
             required: false
             schema:
                 items:
                     format: int64
+                    minimum: 0
                     type: integer
                 type: array
             style: form
         forecastLengthQueryParam:
             in: query
+            description:
+                Number of forward months to include in the response. Defaults to 3 when omitted.
             explode: true
             name: forecastLength
             required: false
@@ -32,6 +43,10 @@ components:
             style: form
         forecastStartDateQueryParam:
             in: query
+            description:
+                Anchor date for the forecast window in ISO 8601 date format (yyyy-MM-dd). Defaults to the current server
+                date when omitted. The response covers historyLength months before this date and forecastLength months
+                from this date forward.
             explode: true
             name: forecastStartDate
             required: false
@@ -41,14 +56,35 @@ components:
             style: form
         historyLengthQueryParam:
             in: query
+            description:
+                Number of historical months to include in the response. Defaults to 8 when omitted.
             explode: true
             name: historyLength
             required: false
             schema:
                 type: integer
             style: form
+        pageQueryParam:
+            in: query
+            description:
+                One-based page index. Defaults to 1 when omitted. Combined with pageSize to slice the result set.
+            name: page
+            required: false
+            schema:
+                type: integer
+        pageSizeQueryParam:
+            in: query
+            description:
+                Maximum number of items per page. Defaults to the portal-wide Vulcan default when omitted.
+            name: pageSize
+            required: false
+            schema:
+                type: integer
         skusQueryParam:
             in: query
+            description:
+                Restricts the response to the supplied SKU strings. Repeat the parameter for each SKU. When omitted,
+                forecast points across every trained SKU are returned.
             explode: true
             name: skus
             required: false
@@ -80,74 +116,150 @@ components:
                 Authentication information is missing or invalid
     schemas:
         AccountCategoryForecast:
+            description:
+                Monthly revenue forecast point for one account restricted to one category, produced by the analytics
+                training pipeline and downloaded back into the portal by the analytics download executor.
             properties:
                 account:
+                    description:
+                        Reference to the account the forecast point belongs to (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 actual:
+                    description:
+                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline.
+                        Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not
+                        been observed yet.
+                    example: 43855
                     format: float
                     type: number
                 category:
+                    description:
+                        Reference to the category the forecast point belongs to (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 categoryTitle:
+                    description:
+                        Localized title of the referenced category, resolved in the caller's preferred locale. Read-only
+                        convenience field; not persisted.
+                    example: Default Category
+                    readOnly: true
                     type: string
                 forecast:
+                    description:
+                        Point estimate of monthly revenue for the period.
+                    example: 410459.44
                     format: float
                     type: number
                 forecastLowerBound:
+                    description:
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's
+                        confidence interval extends below zero; treat them as zero for display purposes.
+                    example: -21236.652
                     format: float
                     type: number
                 forecastUpperBound:
+                    description:
+                        Upper bound of the forecast confidence interval.
+                    example: 842155.5
                     format: float
                     type: number
                 timestamp:
+                    description:
+                        Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision.
+                    example: 2018-04-01T00:00:00Z
                     format: date-time
                     type: string
                 unit:
+                    description:
+                        Forecast target dimension. Always `revenue` for this schema.
+                    example: revenue
                     type: string
             type: object
         AccountForecast:
+            description:
+                Monthly revenue forecast point for one account, produced by the analytics training pipeline and
+                downloaded back into the portal by the analytics download executor.
             properties:
                 account:
+                    description:
+                        Reference to the account the forecast point belongs to (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 actual:
+                    description:
+                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline.
+                        Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not
+                        been observed yet.
+                    example: 43855
                     format: float
                     type: number
                 forecast:
+                    description:
+                        Point estimate of monthly revenue for the period.
+                    example: 410459.44
                     format: float
                     type: number
                 forecastLowerBound:
+                    description:
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's
+                        confidence interval extends below zero; treat them as zero for display purposes.
+                    example: -21236.652
                     format: float
                     type: number
                 forecastUpperBound:
+                    description:
+                        Upper bound of the forecast confidence interval.
+                    example: 842155.5
                     format: float
                     type: number
                 timestamp:
+                    description:
+                        Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision.
+                    example: 2018-04-01T00:00:00Z
                     format: date-time
                     type: string
                 unit:
+                    description:
+                        Forecast target dimension. Always `revenue` for this schema.
+                    example: revenue
                     type: string
             type: object
         Category:
+            description:
+                Wire shape for a category referenced from this API. Used as a lightweight projection of the portal's
+                category model when uploading categorisation data with each product or forecast point.
             properties:
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the category; must be unique per category within its vocabulary scope.
                     example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Reference to the category (FK identifier).
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 name:
                     description:
-                        Category Name
+                        Display name of the category.
+                    example: Default Category
                     type: string
                 siteId:
+                    description:
+                        Reference to the site the category belongs to (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 vocabulary:
+                    description:
+                        Name of the parent vocabulary the category sits in. Read-only convenience field; resolved from
+                        the persisted vocabulary reference.
                     example: Default Vocabulary
                     readOnly: true
                     type: string
@@ -155,24 +267,31 @@ components:
                 -   id
             type: object
         Error:
+            description:
+                Standard JSON envelope returned by every non-2xx response, carrying the HTTP status, an internal error
+                code, and a human-readable message.
             properties:
                 errorCode:
                     description:
-                        Internal error code mapping
+                        Internal numeric error code that maps to a specific failure cause.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
+                    description:
+                        Human-readable explanation of the error, intended for developers.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
-                    example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
+                    description:
+                        Short error message describing the immediate cause of the failure.
+                    example: No currency exists with the supplied key.
                     readOnly: true
                     type: string
                 status:
                     description:
-                        HTTP Status code
+                        HTTP status code returned with the response.
                     example: 404
                     readOnly: true
                     type: integer
@@ -183,105 +302,186 @@ components:
                 -   status
             type: object
         FrequentPatternRecommendation:
+            description:
+                Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of
+                antecedent products that make up a basket, the model recommends a consequent product.
             properties:
                 antecedentIds:
+                    description:
+                        References to the products that make up the antecedent (left-hand side) of the association rule
+                        (FK identifier array). The recommendation applies when a basket contains all of these products.
+                    example:
+                        -   10130
+                        -   10131
                     items:
                         format: int64
                         type: integer
                     type: array
                 antecedentIdsLength:
+                    description:
+                        Cardinality of `antecedentIds`. Persisted alongside the array so the index can filter rules by
+                        antecedent-set size without unpacking the array.
+                    example: 2
                     format: int64
                     type: integer
                 createDate:
+                    description:
+                        Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 jobId:
+                    description:
+                        Identifier of the analytics training job that produced this rule. Used to group rules by
+                        training run.
+                    example: ml-job-2025-04-01
                     type: string
                 recommendedProductId:
                     description:
-                        The recommended product identifier.
+                        Reference to the product the model recommends as the consequent of the rule (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 score:
                     description:
-                        The recommendation score.
+                        Association-rule confidence score in [0, 1]. Higher means the rule fires more reliably;
+                        consumers typically sort descending and apply a threshold.
+                    example: 0.78
                     format: float
                     type: number
         Order:
+            description:
+                Wire shape for a commerce order uploaded to the analytics pipeline. Carries the fields the training
+                models need to learn revenue and demand patterns -- account, channel, currency, status, total, and order
+                line items.
             properties:
                 accountExternalReferenceCode:
-                    example: AAB-34098-789-N
+                    description:
+                        Idempotency key of the account the order belongs to. Used by the analytics pipeline to join
+                        orders to accounts without depending on internal identifiers.
+                    example: AB-34098-789-N
                     type: string
                 accountId:
+                    description:
+                        Reference to the account the order belongs to (FK identifier).
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 channelId:
+                    description:
+                        Reference to the channel the order was placed on (FK identifier). Resolved on the server from
+                        the order's site identifier.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 createDate:
+                    description:
+                        Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
                     format: date
+                    readOnly: true
                     type: string
                 currencyCode:
+                    description:
+                        ISO 4217 three-letter currency code of the order total.
                     example: USD
                     type: string
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form custom attributes attached to the order. Map keys are the attribute names; values are
+                        their typed values serialised as JSON.
+                    example:
+                        priorityHandling: true
                     type: object
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the order; must be unique per order within the company.
                     example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Reference to the order (FK identifier).
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 modifiedDate:
+                    description:
+                        Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-08-21
                     format: date
+                    readOnly: true
                     type: string
                 orderDate:
+                    description:
+                        Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date
+                        when the order was imported.
                     example: 2017-07-21
                     format: date
                     type: string
                 orderItems:
+                    description:
+                        Order line items attached to the order.
                     items:
                         $ref: "#/components/schemas/OrderItem"
                     type: array
                 orderStatus:
+                    description:
+                        "Integer order status -- 0=Completed, 2=Open, 4=Pending, 6=InProgress, 8=Cancelled,
+                        9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined,
+                        17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested,
+                        22=QuoteProcessed."
                     example: 0
                     format: int32
                     minimum: 0
                     type: integer
                 orderTypeExternalReferenceCode:
+                    description:
+                        Idempotency key of the order type the order belongs to.
                     example: AB-34098-789-N
                     type: string
                 orderTypeId:
+                    description:
+                        Reference to the order type (FK identifier).
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 paymentMethod:
+                    description:
+                        Key of the payment method selected for the order.
                     example: paypal
                     type: string
                 paymentStatus:
+                    description:
+                        Integer payment status set by the payment engine -- 0=Pending, 1=Authorized, 2=Paid,
+                        3=PartiallyRefunded, 4=Refunded, 5=Cancelled, 6=Failed.
                     example: 0
                     format: int32
                     minimum: 0
                     type: integer
                 status:
+                    description:
+                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled,
+                        6=Incomplete, 7=Denied, 8=InTrash. Distinct from `orderStatus`.
+                    example: 0
                     type: integer
                 total:
+                    description:
+                        Order total in the order's currency. Tax inclusion follows the channel's tax-inclusive setting.
+                        Read-only on this wire shape; computed by the order engine.
                     example: 113
                     format: bigdecimal
                     minimum: 0
+                    readOnly: true
                     type: number
                 userId:
+                    description:
+                        Reference to the user who placed the order (FK identifier).
+                    example: 20078
                     format: int64
                     type: integer
             required:
@@ -289,99 +489,171 @@ components:
                 -   currencyCode
             type: object
         OrderItem:
+            description:
+                Wire shape for an order line uploaded alongside its parent order to the analytics pipeline. Carries
+                product, SKU, quantity, and price information per line.
             properties:
                 cpDefinitionId:
+                    description:
+                        Reference to the product the line points to (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 createDate:
+                    description:
+                        Date the order line was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
                     format: date
+                    readOnly: true
                     type: string
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form custom attributes attached to the order line. Map keys are the attribute names; values
+                        are their typed values serialised as JSON.
+                    example:
+                        giftWrap: true
                     type: object
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the order line; must be unique per line within the parent order.
                     example: AB-34098-789-N
                     type: string
                 finalPrice:
+                    description:
+                        Line total after discounts and promotions, expressed in the parent order's currency. Tax
+                        inclusion follows the channel's tax-inclusive setting.
                     example: 200
                     format: bigdecimal
                     minimum: 0
                     type: number
                 id:
+                    description:
+                        Reference to the order line (FK identifier).
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 modifiedDate:
+                    description:
+                        Date the order line was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
                     format: date
+                    readOnly: true
                     type: string
                 name:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized product name captured at the time the order was placed. Map keys are locale codes;
+                        values are the translated strings.
                     example:
                         en_US: Hand Saw
                         hr_HR: Product Name HR
                         hu_HU: Product Name HU
                     type: object
                 options:
+                    description:
+                        Serialised JSON of the product option selections captured at the time the order was placed.
+                    example: color=red,size=large
                     type: string
                 orderId:
+                    description:
+                        Reference to the parent order (FK identifier).
                     example: 30128
                     format: int64
                     minimum: 0
                     type: integer
                 parentOrderItemId:
+                    description:
+                        Reference to the parent order line when the line is part of a bundle (FK identifier). Zero when
+                        the line is top-level.
                     example: 30128
                     format: int64
                     minimum: 0
                     type: integer
                 quantity:
+                    description:
+                        Number of units ordered. Combined with the unit-of-measure key when the SKU is sold in
+                        fractional units.
                     example: 2
                     format: int32
                     minimum: 0
                     type: integer
                 sku:
+                    description:
+                        SKU string identifying the product variant on this line.
                     example: "12341234"
                     type: string
                 subscription:
+                    description:
+                        True when the order line represents a subscription; false for one-shot purchases.
                     example: true
                     type: boolean
                 unitOfMeasure:
+                    description:
+                        Unit-of-measure key the quantity is expressed in. Resolved against the SKU's allowed units of
+                        measure.
                     example: pc
                     type: string
                 unitPrice:
+                    description:
+                        Unit price at the time the order was placed, expressed in the parent order's currency. Tax
+                        inclusion follows the channel's tax-inclusive setting.
                     example: 101
                     format: bigdecimal
                     minimum: 0
                     type: number
                 userId:
+                    description:
+                        Reference to the user who added the line to the order (FK identifier).
+                    example: 20078
                     format: int64
                     type: integer
             type: object
         Product:
+            description:
+                Wire shape for a catalog product uploaded to the analytics pipeline. Carries the metadata the training
+                models need to learn product affinity and content-based recommendations.
             properties:
                 catalogId:
+                    description:
+                        Reference to the catalog the product belongs to (FK identifier).
                     example: 30054
                     format: int64
                     minimum: 0
                     type: integer
                 categoryIds:
+                    description:
+                        References to the categories the product is classified under (FK identifier array).
+                    example:
+                        -   10130
+                        -   10131
                     items:
                         format: int64
                         type: integer
                     type: array
                 createDate:
+                    description:
+                        Date the product was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
                     format: date
+                    readOnly: true
                     type: string
                 customFields:
                     additionalProperties: true
+                    description:
+                        Free-form custom attributes attached to the product. Map keys are the attribute names; values
+                        are their typed values serialised as JSON.
+                    example:
+                        warrantyYears: 2
                     type: object
                 description:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized long description of the product. Map keys are locale codes; values are the translated
+                        strings.
                     example:
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
@@ -389,17 +661,25 @@ components:
                         hu_HU: Product Description HU
                     type: object
                 displayDate:
+                    description:
+                        Date from which the product is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 expirationDate:
+                    description:
+                        Date from which the product is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-08-21
                     format: date
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the product; must be unique per product within the company.
                     example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Reference to the product (FK identifier). Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -408,6 +688,9 @@ components:
                 metaDescription:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized SEO meta description of the product. Map keys are locale codes; values are the
+                        translated strings.
                     example:
                         en_US: Meta description HU
                         hr_HR: Meta description HU
@@ -416,6 +699,9 @@ components:
                 metaKeyword:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized SEO meta keywords of the product. Map keys are locale codes; values are the translated
+                        strings.
                     example:
                         en_US: Meta keyword HU
                         hr_HR: Meta keyword HU
@@ -424,52 +710,86 @@ components:
                 metaTitle:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized SEO meta title of the product. Map keys are locale codes; values are the translated
+                        strings.
                     example:
                         en_US: Meta title HU
                         hr_HR: Meta title HU
                         hu_HU: Meta title HU
                     type: object
                 modifiedDate:
+                    description:
+                        Date the product was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-08-21
                     format: date
+                    readOnly: true
                     type: string
                 name:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized display name of the product. Map keys are locale codes; values are the translated
+                        strings.
                     example:
                         en_US: Hand Saw
                         hr_HR: Product Name HR
                         hu_HU: Product Name HU
                     type: object
                 productChannelIds:
+                    description:
+                        References to the channels the product is published on (FK identifier array).
+                    example:
+                        -   30130
+                        -   30131
                     items:
                         format: int64
                         type: integer
                     type: array
                 productId:
+                    description:
+                        Alias for `id`. Reference to the product (FK identifier). Read-only.
+                    example: 30130
                     format: int64
                     readOnly: true
                     type: integer
                 productOptions:
+                    description:
+                        Product option definitions attached to the product.
                     items:
                         $ref: "#/components/schemas/ProductOption"
                     type: array
                 productSpecifications:
+                    description:
+                        Product specification entries -- such as weight or material -- attached to the product.
                     items:
                         $ref: "#/components/schemas/ProductSpecification"
                     type: array
                 productType:
+                    description:
+                        Key of the product type. Resolved against the registered product types.
                     example: simple
                     type: string
                 skus:
+                    description:
+                        SKU variants attached to the product.
                     items:
                         $ref: "#/components/schemas/Sku"
                     type: array
                 status:
+                    description:
+                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled,
+                        6=Incomplete, 7=Denied, 8=InTrash.
+                    example: 0
                     type: integer
                 subscriptionEnabled:
+                    description:
+                        True when the product can be sold as a subscription; false for one-shot purchases.
+                    example: true
                     type: boolean
                 tags:
+                    description:
+                        Asset tag names attached to the product. Free-form strings.
                     example:
                         -   tag1
                         -   tag2
@@ -480,6 +800,9 @@ components:
                 urls:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized URL slugs of the product, keyed by locale code. Used to build canonical storefront
+                        URLs.
                     example:
                         en_US: product-url-us
                         hr_HR: product-url-hr
@@ -491,88 +814,150 @@ components:
                 -   productType
             type: object
         ProductChannel:
+            description:
+                Wire shape for a channel the product is published on, uploaded to the analytics pipeline alongside its
+                parent product.
             properties:
                 currencyCode:
+                    description:
+                        ISO 4217 three-letter currency code the channel transacts in.
+                    example: USD
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the channel; must be unique per channel within the company.
+                    example: AB-34098-789-N
                     type: string
                 id:
+                    description:
+                        Reference to the channel (FK identifier).
+                    example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 name:
+                    description:
+                        Display name of the channel.
+                    example: Default Channel
                     type: string
                 type:
+                    description:
+                        Channel type key. Resolved against the registered channel types.
+                    example: site
                     type: string
             required:
                 -   id
             type: object
         ProductContentRecommendation:
+            description:
+                Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a
+                source product, the model recommends similar products based on product metadata such as name,
+                description, and categorisation.
             properties:
                 createDate:
+                    description:
+                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 jobId:
+                    description:
+                        Identifier of the analytics training job that produced this recommendation. Used to group
+                        recommendations by training run.
+                    example: ml-job-2025-04-01
                     type: string
                 productId:
                     description:
-                        The product identifier.
+                        Reference to the source product the recommendation is anchored on (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 rank:
                     description:
-                        The recommendation rank.
+                        One-based ordering of the recommendation within the source product's set. Lower is better.
+                    example: 1
                     format: int32
                     type: integer
                 recommendedProductId:
                     description:
-                        The recommended product identifier.
+                        Reference to the product the model recommends for the source product (FK identifier).
+                    example: 30131
                     format: int64
                     type: integer
                 score:
                     description:
-                        The recommendation score.
+                        Similarity score in [0, 1]. Higher means stronger content similarity to the source product.
+                    example: 0.82
                     format: float
                     type: number
             type: object
         ProductInteractionRecommendation:
+            description:
+                Wire shape for a collaborative-filtering product recommendation downloaded from the analytics pipeline.
+                Given a source product, the model recommends products that users frequently interact with alongside it
+                -- for example, co-view or co-purchase.
             properties:
                 createDate:
+                    description:
+                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 jobId:
+                    description:
+                        Identifier of the analytics training job that produced this recommendation.
+                    example: ml-job-2025-04-01
                     type: string
                 productId:
                     description:
-                        The product identifier.
+                        Reference to the source product the recommendation is anchored on (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 rank:
                     description:
-                        The recommendation rank.
+                        One-based ordering of the recommendation within the source product's set. Lower is better.
+                    example: 1
                     format: int32
                     type: integer
                 recommendedProductId:
                     description:
-                        The recommended product identifier.
+                        Reference to the product the model recommends for the source product (FK identifier).
+                    example: 30131
                     format: int64
                     type: integer
                 score:
                     description:
-                        The recommendation score.
+                        Interaction-similarity score in [0, 1]. Higher means stronger co-interaction signal.
+                    example: 0.78
                     format: float
                     type: number
             type: object
         ProductOption:
+            description:
+                Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its
+                parent product.
             properties:
                 key:
+                    description:
+                        Key of the underlying option definition.
+                    example: size
                     type: string
                 optionKey:
+                    description:
+                        Stable key of the product-specific option binding. Distinct from `key` when the same global
+                        option is bound to a product under a custom alias.
                     example: option-key
                     type: string
                 values:
+                    description:
+                        Selectable values of the option. Each entry is a map keyed by locale code whose values are the
+                        localised value labels.
+                    example:
+                        -   en_US: Small
+                            hr_HR: Maleno
+                        -   en_US: Large
+                            hr_HR: Veliko
                     items:
                         additionalProperties:
                             type: string
@@ -580,197 +965,273 @@ components:
                     type: array
             type: object
         ProductSpecification:
+            description:
+                Wire shape for a product specification value attached to a product, uploaded to the analytics pipeline
+                alongside its parent product.
             properties:
                 id:
+                    description:
+                        Reference to the specification value (FK identifier).
                     example: 31130
                     format: int64
                     minimum: 0
                     type: integer
                 optionCategoryId:
+                    description:
+                        Reference to the option category the specification key belongs to (FK identifier).
                     example: 30129
                     format: int64
                     minimum: 0
                     type: integer
                 specificationKey:
+                    description:
+                        Stable key of the specification.
                     example: specification-key
                     type: string
                 value:
                     additionalProperties:
                         type: string
+                    description:
+                        Localized value of the specification. Map keys are locale codes; values are the translated
+                        strings.
+                    example:
+                        en_US: Stainless Steel
+                        hr_HR: Nehrdjajuci Celik
+                        hu_HU: Rozsdamentes Acel
                     type: object
             required:
                 -   specificationKey
                 -   value
             type: object
         Sku:
+            description:
+                Wire shape for a SKU variant of a product, uploaded to the analytics pipeline alongside its parent
+                product.
             properties:
                 cost:
+                    description:
+                        Internal cost of the SKU, expressed in the catalog's default currency. Used for margin
+                        calculations; not visible to buyers.
                     example: 101
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discontinued:
+                    description:
+                        True when the SKU is discontinued and should no longer be sold; false otherwise.
+                    example: true
                     type: boolean
                 displayDate:
+                    description:
+                        Date from which the SKU is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 expirationDate:
+                    description:
+                        Date from which the SKU is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-08-21
                     format: date
                     type: string
                 externalReferenceCode:
+                    description:
+                        Idempotency key for the SKU; must be unique per SKU within the company.
                     example: AB-34098-789-N
                     type: string
                 gtin:
+                    description:
+                        Global Trade Item Number such as a UPC, EAN, JAN, or ISBN used for retail bar codes.
                     example: "12341234"
                     type: string
                 id:
+                    description:
+                        Reference to the SKU (FK identifier). Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
                 manufacturerPartNumber:
+                    description:
+                        Manufacturer's part number for the SKU.
                     example: "12341234"
                     type: string
                 published:
+                    description:
+                        True when the SKU is visible on the storefront; false when it is still in draft.
                     example: true
                     type: boolean
                 purchasable:
+                    description:
+                        True when the SKU can be added to a cart; false when it is display-only.
                     example: true
                     type: boolean
                 sku:
+                    description:
+                        SKU string identifying the variant. Unique per product.
                     example: "12341234"
                     type: string
             required:
                 -   sku
             type: object
         SkuForecast:
+            description:
+                Monthly demand forecast point for one SKU, produced by the analytics training pipeline and downloaded
+                back into the portal by the analytics download executor.
             properties:
                 actual:
+                    description:
+                        Observed demand in units for the period, aggregated from completed order lines by the analytics
+                        pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon
+                        and have not been observed yet.
+                    example: 230225
                     format: float
                     type: number
                 forecast:
+                    description:
+                        Point estimate of monthly demand in units for the period.
+                    example: 425982.1
                     format: float
                     type: number
                 forecastLowerBound:
+                    description:
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's
+                        confidence interval extends below zero; treat them as zero for display purposes.
+                    example: -63249.176
                     format: float
                     type: number
                 forecastUpperBound:
+                    description:
+                        Upper bound of the forecast confidence interval.
+                    example: 915213.4
                     format: float
                     type: number
                 sku:
+                    description:
+                        SKU string identifying the variant the forecast point belongs to.
+                    example: "12341234"
                     type: string
                 timestamp:
+                    description:
+                        Start instant of the monthly period the point covers, in ISO 8601 UTC with date-time precision.
+                    example: 2018-02-01T00:00:00Z
                     format: date-time
                     type: string
                 unit:
+                    description:
+                        Forecast target dimension. Always `quantity` for this schema.
+                    example: quantity
                     type: string
             type: object
         UserRecommendation:
+            description:
+                Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user
+                profiled by the categories they interact with, the model recommends products.
             properties:
                 assetCategoryIds:
+                    description:
+                        References to the categories that profile the target user (FK identifier array). The
+                        recommendation applies to users associated with this category set.
+                    example:
+                        -   10130
+                        -   10131
                     items:
                         format: int64
                         type: integer
                     type: array
                 createDate:
+                    description:
+                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
                     format: date
                     type: string
                 jobId:
+                    description:
+                        Identifier of the analytics training job that produced this recommendation.
+                    example: ml-job-2025-04-01
                     type: string
                 productId:
                     description:
-                        The product identifier.
+                        Reference to the source product the recommendation is anchored on (FK identifier).
+                    example: 30130
                     format: int64
                     type: integer
                 rank:
                     description:
-                        The recommendation rank.
+                        One-based ordering of the recommendation within the user's set. Lower is better.
+                    example: 1
                     format: int32
                     type: integer
                 recommendedProductId:
                     description:
-                        The recommended product identifier.
+                        Reference to the product the model recommends for the user (FK identifier).
+                    example: 30131
                     format: int64
                     type: integer
                 score:
                     description:
-                        The recommendation score.
+                        Recommendation score in [0, 1]. Higher means stronger fit to the user profile.
+                    example: 0.74
                     format: float
                     type: number
             type: object
 info:
     description:
-        "Liferay Commerce ML API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.commerce.machine.learning.client', and version '1.0.33'."
+        "Liferay Commerce machine-learning artefacts surfaced as a REST API. Three read endpoints expose monthly
+        forecasts produced by the Analytics Cloud training pipeline -- demand at SKU granularity and revenue at account
+        and account+category granularity. The same schema set also defines the wire shapes the Analytics Cloud dispatch
+        executors use to upload commerce data (orders, products, channels, categories, SKUs) and to download trained
+        models that materialise into product, user, and frequent-pattern recommendation rows consumed by in-portal
+        recommendation widgets. -- Perspective -- the read endpoints are admin-facing analytics consumed by back-office
+        dashboards; the upload and download schemas are cross-cutting and not exposed as paths. -- DXP-only -- this is
+        the only headless commerce API that ships exclusively in DXP and not in CE. Primary entities --
+        AccountCategoryForecast (per-account, per-category monthly revenue forecast point), AccountForecast (per-account
+        monthly revenue forecast point), SkuForecast (per-SKU monthly demand forecast point), Order/OrderItem and
+        Product/ProductChannel/Sku/Category (ingestion-side wire shapes), and FrequentPatternRecommendation /
+        ProductContentRecommendation / ProductInteractionRecommendation / UserRecommendation (download-side wire
+        shapes). -- Common workflows: SKU demand forecasting -- GET /skuForecasts/by-monthlyDemand with optional skus,
+        forecastLength (default 3), historyLength (default 8), and forecastStartDate; consume forecast together with
+        forecastLowerBound and forecastUpperBound to bracket inventory replanning. -- Account revenue forecasting -- GET
+        /accountForecasts/by-monthlyRevenue with optional accountIds, forecastLength, historyLength, and
+        forecastStartDate; the response is filtered to the accountIds the caller has VIEW permission on through
+        CommerceAccountPermissionHelper. -- Account x category revenue forecasting -- GET
+        /accountCategoryForecasts/by-monthlyRevenue with the same dimensions plus categoryIds to drill into per-segment
+        revenue. -- Analytics Cloud round-trip -- the AnalyticsUpload*DispatchTaskExecutor jobs in this module push
+        Order/Product/ProductChannel/Category/Sku payloads shaped by the schemas here up to Analytics Cloud; the
+        AnalyticsDownload*ForecastDispatchTaskExecutor and AnalyticsDownload*RecommendDispatchTaskExecutor jobs then
+        materialise the trained models back into the forecast and recommendation rows surfaced by these endpoints and by
+        the storefront recommendation widgets. -- Naming caveat -- the SKU operation is published as
+        getSkuForecastsByMonthlyRevenuePage for backward client compatibility but the path is /by-monthlyDemand and the
+        underlying call is getMonthlyQuantitySkuCommerceMLForecasts -- the operationId name is historical and does not
+        describe the response (which carries demand quantity, not revenue). A Java client JAR is available for use with
+        the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.machine.learning.client', and version
+        '1.0.33'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
-    title: Liferay Commerce ML API
+    title: Liferay Commerce Machine Learning API
     version: v1.0
 openapi: 3.0.0
 paths:
     /accountCategoryForecasts/by-monthlyRevenue:
         get:
             description:
-                Get the forecast points
+                Returns a page of monthly revenue forecast points broken down by AccountEntry and AssetCategory. Calls
+                AssetCategoryCommerceMLForecastManager.getMonthlyRevenueAssetCategoryCommerceMLForecasts in
+                AccountCategoryForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history
+                months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server
+                date; account identifiers the caller cannot view are silently dropped through
+                CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support --
+                None (no filter, search, or sort exposed). Side effects -- None (read-only).
             operationId: getAccountCategoryForecastsByMonthlyRevenuePage
             parameters:
-                -   in: query
-                    explode: true
-                    name: accountIds
-                    required: false
-                    schema:
-                        items:
-                            format: int64
-                            type: integer
-                        type: array
-                    style: form
-                -   in: query
-                    explode: true
-                    name: categoryIds
-                    required: false
-                    schema:
-                        items:
-                            format: int64
-                            type: integer
-                        type: array
-                    style: form
-                -   in: query
-                    explode: true
-                    name: forecastLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: forecastStartDate
-                    required: false
-                    schema:
-                        format: date
-                        type: string
-                    style: form
-                -   in: query
-                    explode: true
-                    name: historyLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
+                -   $ref: "#/components/parameters/accountIdsQueryParam"
+                -   $ref: "#/components/parameters/categoryIdsQueryParam"
+                -   $ref: "#/components/parameters/forecastLengthQueryParam"
+                -   $ref: "#/components/parameters/forecastStartDateQueryParam"
+                -   $ref: "#/components/parameters/historyLengthQueryParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 "200":
                     content:
@@ -921,56 +1382,27 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
+            summary: Gets a list of monthly account-and-category revenue forecast points.
             tags:
                 -   AccountCategoryForecast
     /accountForecasts/by-monthlyRevenue:
         get:
             description:
-                Get the forecast points
+                Returns a page of monthly revenue forecast points broken down by AccountEntry. Calls
+                CommerceAccountCommerceMLForecastManager.getMonthlyRevenueCommerceAccountCommerceMLForecasts in
+                AccountForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from
+                CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account
+                identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an
+                empty intersection returns an empty page). List query support -- None (no filter, search, or sort
+                exposed). Side effects -- None (read-only).
             operationId: getAccountForecastsByMonthlyRevenuePage
             parameters:
-                -   in: query
-                    explode: true
-                    name: accountIds
-                    required: false
-                    schema:
-                        items:
-                            format: int64
-                            type: integer
-                        type: array
-                    style: form
-                -   in: query
-                    explode: true
-                    name: forecastLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: forecastStartDate
-                    required: false
-                    schema:
-                        format: date
-                        type: string
-                    style: form
-                -   in: query
-                    explode: true
-                    name: historyLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
+                -   $ref: "#/components/parameters/accountIdsQueryParam"
+                -   $ref: "#/components/parameters/forecastLengthQueryParam"
+                -   $ref: "#/components/parameters/forecastStartDateQueryParam"
+                -   $ref: "#/components/parameters/historyLengthQueryParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
                 "200":
                     content:
@@ -1193,55 +1625,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
+            summary: Gets a list of monthly account revenue forecast points.
             tags:
                 -   AccountForecast
     /skuForecasts/by-monthlyDemand:
         get:
             description:
-                Get the forecast points
+                Returns a page of monthly demand forecast points broken down by SKU. Calls
+                SkuCommerceMLForecastManager.getMonthlyQuantitySkuCommerceMLForecasts in SkuForecastResourceImpl.
+                Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants
+                when omitted; forecastStartDate defaults to the current server date; the optional skus filter restricts
+                the result to the supplied SKU strings, otherwise every trained SKU is returned). List query support --
+                None (no filter, search, or sort exposed). Side effects -- None (read-only). Naming caveat -- the
+                operationId is published as getSkuForecastsByMonthlyRevenuePage for backward client compatibility but
+                the response carries demand quantity, not revenue; consult the path (/by-monthlyDemand) and the
+                SkuForecast.unit field (`quantity`) to confirm the response dimension.
             operationId: getSkuForecastsByMonthlyRevenuePage
             parameters:
-                -   in: query
-                    explode: true
-                    name: forecastLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    explode: true
-                    name: forecastStartDate
-                    required: false
-                    schema:
-                        format: date
-                        type: string
-                    style: form
-                -   in: query
-                    explode: true
-                    name: historyLength
-                    required: false
-                    schema:
-                        type: integer
-                    style: form
-                -   in: query
-                    name: page
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    required: false
-                    schema:
-                        type: integer
-                -   in: query
-                    explode: true
-                    name: skus
-                    required: false
-                    schema:
-                        items:
-                            type: string
-                        type: array
-                    style: form
+                -   $ref: "#/components/parameters/forecastLengthQueryParam"
+                -   $ref: "#/components/parameters/forecastStartDateQueryParam"
+                -   $ref: "#/components/parameters/historyLengthQueryParam"
+                -   $ref: "#/components/parameters/pageQueryParam"
+                -   $ref: "#/components/parameters/pageSizeQueryParam"
+                -   $ref: "#/components/parameters/skusQueryParam"
             responses:
                 "200":
                     content:
@@ -1464,5 +1870,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
+            summary: Gets a list of monthly SKU demand forecast points.
             tags:
                 -   SkuForecast
+tags:
+    -   description:
+            Monthly revenue forecast points for one account restricted to one category. Read-only; populated by the
+            analytics download pipeline.
+        name: AccountCategoryForecast
+    -   description:
+            Monthly revenue forecast points for one account. Read-only; populated by the analytics download pipeline.
+        name: AccountForecast
+    -   description:
+            Monthly demand forecast points for one SKU. Read-only; populated by the analytics download pipeline.
+        name: SkuForecast

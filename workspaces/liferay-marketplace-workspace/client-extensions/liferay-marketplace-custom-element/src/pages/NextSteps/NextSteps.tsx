@@ -34,7 +34,7 @@ import {getSiteURL} from '../../utils/site';
 import {getAccountImage} from '../../utils/util';
 import AIHubNextSteps from '../ProductPurchase/pages/LiferayProduct/AIHub/AIHubNextSteps';
 import AIHubOpenBetaNextSteps from '../ProductPurchase/pages/LiferayProduct/AIHub/AIHubOpenBetaNextSteps';
-import LDPNextSteps from '../ProductPurchase/pages/LiferayProduct/LDPNextSteps';
+import LDPNextSteps from '../ProductPurchase/pages/LiferayProduct/LDP/LDPNextSteps';
 import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
 
 import './NextSteps.scss';
@@ -283,14 +283,7 @@ export function NextSteps() {
 		productTypeCategory === ProductTypeVocabulary.LIFERAY_PRODUCT &&
 		solutionTypeSpecificationValue === SolutionTypes.LIFERAY_DATA_PLATFORM
 	) {
-		return (
-			<LDPNextSteps
-				description={i18n.translate(
-					'hold-tight-we-re-preparing-your-environment-so-you-can-start-using-your-liferay-data-platform-this-will-only-take-a-moment'
-				)}
-				title={i18n.translate('setting-up-your-free-version-ldp')}
-			/>
-		);
+		return <LDPNextSteps data={data} isLoading={isLoading} error={error} />;
 	}
 
 	if (

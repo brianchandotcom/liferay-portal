@@ -336,9 +336,11 @@ function _set_port_offset {
 	fi
 
 	local lock_file
+
 	lock_file="$(git -C "${WORKTREE_DIR}" rev-parse --path-format=absolute --git-common-dir)/.worktree-port-offset.lock"
 
 	local lock_dir="${lock_file}.d"
+
 	local lock_fd
 	local use_flock=0
 

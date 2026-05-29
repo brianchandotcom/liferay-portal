@@ -180,6 +180,54 @@ test(
 );
 
 test(
+	'Admin user can delete an invited user from the User Management page',
+	{
+		tag: '@LRAC-9065',
+	},
+	async ({page, project}) => {
+		const invitedEmail = `admin-delete-${Date.now()}@liferay.com`;
+
+		try {
+			await signInToAnalyticsCloud(page, 'michelle.hoshi@faro.io');
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.userManagementPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByRole('button', {name: 'Invite Users'}).click();
+
+			await page
+				.getByPlaceholder('Enter Email Address')
+				.fill(invitedEmail);
+
+			await page.keyboard.press('Enter');
+
+			await page.getByRole('button', {name: 'Send'}).click();
+
+			await expect(
+				page.getByText('Success:Invitations have been sent.')
+			).toBeVisible();
+
+			await page
+				.getByRole('row', {name: invitedEmail})
+				.getByLabel('Delete')
+				.click();
+
+			await page.getByRole('button', {name: 'Continue'}).click();
+
+			await expect(
+				page.getByRole('cell', {name: invitedEmail})
+			).toHaveCount(0);
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);
+
+test(
 	'Admin and Owner users can invite a new user via the User Management page',
 	{
 		tag: ['@LRAC-9071', '@LRAC-9072'],

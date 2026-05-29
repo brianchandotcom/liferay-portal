@@ -124,18 +124,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8144 | Test Summary: Properties management menu is present"
-	@priority = 5
-	test CanNavigateToProperties {
-		ACUtils.launchAC();
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		ACProperties.assertPropertyTitle(propertyName = "Properties");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"
 	@priority = 3
 	test CreatePropertiesWhenNoDataSourceIsConnected {

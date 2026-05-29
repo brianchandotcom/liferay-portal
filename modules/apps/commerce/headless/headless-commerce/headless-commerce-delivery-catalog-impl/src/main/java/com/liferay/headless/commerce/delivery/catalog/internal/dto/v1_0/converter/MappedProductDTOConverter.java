@@ -209,14 +209,14 @@ public class MappedProductDTOConverter
 				setId(csDiagramEntry::getCSDiagramEntryId);
 				setPrice(
 					() -> {
+						BigDecimal quantity = BigDecimal.ONE;
 						String unitOfMeasureKey = StringPool.BLANK;
-						BigDecimal priceQuantity = BigDecimal.ONE;
 
 						if (!cpInstanceUnitOfMeasures.isEmpty()) {
 							CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 								cpInstanceUnitOfMeasures.get(0);
 
-							priceQuantity =
+							quantity =
 								cpInstanceUnitOfMeasure.
 									getIncrementalOrderQuantity();
 							unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
@@ -225,7 +225,7 @@ public class MappedProductDTOConverter
 						return _getPrice(
 							commerceContext, cpInstance,
 							mappedProductDTOConverterContext.getLocale(),
-							priceQuantity, unitOfMeasureKey);
+							quantity, unitOfMeasureKey);
 					});
 				setProductConfiguration(
 					() -> {

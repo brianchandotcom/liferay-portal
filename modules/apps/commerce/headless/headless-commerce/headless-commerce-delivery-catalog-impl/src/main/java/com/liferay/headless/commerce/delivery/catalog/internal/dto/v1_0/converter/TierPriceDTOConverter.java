@@ -12,18 +12,16 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.TierPrice;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.PriceUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import java.util.Locale;
 
@@ -58,33 +56,33 @@ public class TierPriceDTOConverter
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			(CPInstanceUnitOfMeasure)dtoConverterContext.getAttribute(
-				"cpInstanceUnitOfMeasure");
-
 		Locale locale = dtoConverterContext.getLocale();
 
 		CommercePriceEntry commercePriceEntry =
 			commerceTierPriceEntry.getCommercePriceEntry();
 
+		BigDecimal convertedPrice = PriceUtil.getConvertedPrice(
+			commerceCurrency, _commerceCurrencyLocalService,
+			commercePriceEntry.getCommercePriceList(),
+			commerceTierPriceEntry.getPrice());
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			(CPInstanceUnitOfMeasure)dtoConverterContext.getAttribute(
+				"cpInstanceUnitOfMeasure");
+
 		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
-			_getPricingQuantityUnitPriceCommerceMoney(
-				commerceCurrency, commercePriceEntry,
+			PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
+				commerceCurrency, _commerceCurrencyLocalService,
+				_commerceMoneyFactory, commercePriceEntry,
 				commerceTierPriceEntry.getPrice());
 
 		return new TierPrice() {
 			{
 				setCurrency(() -> commerceCurrency.getName(locale));
-
-				BigDecimal convertedPrice = _getConvertedPrice(
-					commerceCurrency, commercePriceEntry.getCommercePriceList(),
-					commerceTierPriceEntry.getPrice());
-
 				setPrice(convertedPrice::doubleValue);
 				setPriceFormatted(
 					() -> _commercePriceFormatter.format(
 						commerceCurrency, true, locale, convertedPrice));
-
 				setPricingQuantityPrice(
 					() -> {
 						if ((cpInstanceUnitOfMeasure == null) ||
@@ -130,58 +128,6 @@ public class TierPriceDTOConverter
 						commerceTierPriceEntry.getMinQuantity()));
 			}
 		};
-	}
-
-	private BigDecimal _getConvertedPrice(
-			CommerceCurrency commerceCurrency,
-			CommercePriceList commercePriceList, BigDecimal price)
-		throws PortalException {
-
-		CommerceCurrency priceListCommerceCurrency =
-			_commerceCurrencyLocalService.getCommerceCurrency(
-				commercePriceList.getCompanyId(),
-				commercePriceList.getCommerceCurrencyCode());
-
-		if (priceListCommerceCurrency.getCommerceCurrencyId() !=
-				commerceCurrency.getCommerceCurrencyId()) {
-
-			price = price.divide(
-				priceListCommerceCurrency.getRate(),
-				RoundingMode.valueOf(
-					priceListCommerceCurrency.getRoundingMode()));
-
-			price = price.multiply(commerceCurrency.getRate());
-		}
-
-		return price;
-	}
-
-	private CommerceMoney _getPricingQuantityUnitPriceCommerceMoney(
-			CommerceCurrency commerceCurrency,
-			CommercePriceEntry commercePriceEntry, BigDecimal price)
-		throws Exception {
-
-		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
-
-		if ((pricingQuantity == null) ||
-			BigDecimalUtil.lte(pricingQuantity, BigDecimal.ZERO)) {
-
-			return _commerceMoneyFactory.emptyCommerceMoney();
-		}
-
-		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
-			price
-		).divide(
-			commercePriceEntry.getQuantity(),
-			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
-		);
-
-		return _commerceMoneyFactory.create(
-			commerceCurrency,
-			_getConvertedPrice(
-				commerceCurrency, commercePriceEntry.getCommercePriceList(),
-				pricingQuantityUnitPrice));
 	}
 
 	@Reference

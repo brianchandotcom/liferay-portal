@@ -13,7 +13,6 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
@@ -22,8 +21,8 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.TierPrice;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.PriceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -99,27 +98,26 @@ public class SkuUnitOfMeasureDTOConverter
 							return null;
 						}
 
+						BigDecimal convertedPrice = PriceUtil.getConvertedPrice(
+							commerceCurrency, _commerceCurrencyLocalService,
+							commercePriceEntry.getCommercePriceList(),
+							commercePriceEntry.getPrice());
+
 						CommerceMoney pricingQuantityUnitPriceCommerceMoney =
-							_getPricingQuantityUnitPriceCommerceMoney(
-								commerceCurrency, commercePriceEntry,
+							PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
+								commerceCurrency, _commerceCurrencyLocalService,
+								_commerceMoneyFactory, commercePriceEntry,
 								commercePriceEntry.getPrice());
 
 						return new Price() {
 							{
 								setCurrency(
 									() -> commerceCurrency.getName(locale));
-
-								BigDecimal convertedPrice = _getConvertedPrice(
-									commerceCurrency,
-									commercePriceEntry.getCommercePriceList(),
-									commercePriceEntry.getPrice());
-
 								setPrice(convertedPrice::doubleValue);
 								setPriceFormatted(
 									() -> _commercePriceFormatter.format(
 										commerceCurrency, true, locale,
 										convertedPrice));
-
 								setPriceOnApplication(
 									commercePriceEntry::isPriceOnApplication);
 								setPricingQuantityPrice(
@@ -204,58 +202,6 @@ public class SkuUnitOfMeasureDTOConverter
 					});
 			}
 		};
-	}
-
-	private BigDecimal _getConvertedPrice(
-			CommerceCurrency commerceCurrency,
-			CommercePriceList commercePriceList, BigDecimal price)
-		throws PortalException {
-
-		CommerceCurrency priceListCommerceCurrency =
-			_commerceCurrencyLocalService.getCommerceCurrency(
-				commercePriceList.getCompanyId(),
-				commercePriceList.getCommerceCurrencyCode());
-
-		if (priceListCommerceCurrency.getCommerceCurrencyId() !=
-				commerceCurrency.getCommerceCurrencyId()) {
-
-			price = price.divide(
-				priceListCommerceCurrency.getRate(),
-				RoundingMode.valueOf(
-					priceListCommerceCurrency.getRoundingMode()));
-
-			price = price.multiply(commerceCurrency.getRate());
-		}
-
-		return price;
-	}
-
-	private CommerceMoney _getPricingQuantityUnitPriceCommerceMoney(
-			CommerceCurrency commerceCurrency,
-			CommercePriceEntry commercePriceEntry, BigDecimal price)
-		throws PortalException {
-
-		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
-
-		if ((pricingQuantity == null) ||
-			BigDecimalUtil.lte(pricingQuantity, BigDecimal.ZERO)) {
-
-			return _commerceMoneyFactory.emptyCommerceMoney();
-		}
-
-		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
-			price
-		).divide(
-			commercePriceEntry.getQuantity(),
-			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
-		);
-
-		return _commerceMoneyFactory.create(
-			commerceCurrency,
-			_getConvertedPrice(
-				commerceCurrency, commercePriceEntry.getCommercePriceList(),
-				pricingQuantityUnitPrice));
 	}
 
 	private TierPrice[] _toTierPrices(

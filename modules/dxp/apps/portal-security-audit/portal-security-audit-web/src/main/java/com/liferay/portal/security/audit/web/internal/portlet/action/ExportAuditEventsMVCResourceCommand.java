@@ -67,8 +67,6 @@ public class ExportAuditEventsMVCResourceCommand
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		List<String> columns = new ArrayList<>();
-
 		String[] selectedColumns = GetterUtil.getStringValues(
 			properties.get("columns"));
 
@@ -78,6 +76,8 @@ public class ExportAuditEventsMVCResourceCommand
 				new String[0]
 			);
 		}
+
+		List<String> columns = new ArrayList<>();
 
 		for (String column : selectedColumns) {
 			String key = _functionsKeys.get(column);
@@ -120,7 +120,6 @@ public class ExportAuditEventsMVCResourceCommand
 		ProgressTracker progressTracker) {
 
 		int percentage = 10;
-		int total = auditEvents.size();
 
 		if (progressTracker != null) {
 			progressTracker.setPercent(percentage);
@@ -158,9 +157,9 @@ public class ExportAuditEventsMVCResourceCommand
 
 			sb.append(StringPool.NEW_LINE);
 
-			percentage = Math.min(10 + ((i * 90) / total), 99);
-
 			if (progressTracker != null) {
+				percentage = Math.min(10 + ((i * 90) / auditEvents.size()), 99);
+
 				progressTracker.setPercent(percentage);
 			}
 		}

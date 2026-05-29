@@ -3731,6 +3731,121 @@ dl.store.antivirus.enabled=true</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-ext-properties-overrides">
+		<sequential>
+			<get-testcase-property property.name="database.jndi.enabled" />
+
+			<if>
+				<equals arg1="${database.jndi.enabled}" arg2="true" />
+				<then>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+					>
+						<replacetoken>jdbc.default.jndi.name=</replacetoken>
+						<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
+					</replace>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<if>
+						<equals arg1="${database.version}" arg2="11.2.0.1.0" />
+						<then>
+							<property name="oracle.instance.name" value="xe" />
+						</then>
+						<elseif>
+							<and>
+								<equals arg1="${database.version}" arg2="12.2.0.1" />
+								<os family="windows" />
+							</and>
+							<then>
+								<property name="oracle.instance.name" value="orcl" />
+							</then>
+						</elseif>
+						<else>
+							<property name="oracle.instance.name" value="oracl" />
+						</else>
+					</if>
+
+					<replaceregexp
+						file="portal-impl/src/portal-ext.properties"
+						match="(jdbc:oracle:.*)oracl"
+						replace="\1${oracle.instance.name}"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<isset property="set.permission.algorithm.5" />
+				<then>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="#permissions.user.check.algorithm=5"
+						value="permissions.user.check.algorithm=5"
+					/>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="#permissions.view.dynamic.inheritance=false"
+						value="permissions.view.dynamic.inheritance=false"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<isset property="set.permission.algorithm.6" />
+				<then>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="permissions.user.check.algorithm=5"
+						value=""
+					/>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="permissions.view.dynamic.inheritance=false"
+						value=""
+					/>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="portal.proxy.path" />
+			<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
+
+			<if>
+				<isset property="portal.proxy.path" />
+				<then>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+portal.proxy.path=/${portal.proxy.path}</echo>
+
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="web.server.http.port=8080"
+						value="web.server.http.port=88"
+					/>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="setup.wizard.enabled" />
+
+			<if>
+				<equals arg1="${setup.wizard.enabled}" arg2="true" />
+				<then>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="setup.wizard.enabled=false"
+						value=""
+					/>
+
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-portal-licenses">
 		<sequential>
 			<get-testcase-property property.name="dxp.license.file" />
@@ -13253,20 +13368,6 @@ upgrade.database.auto.run=true</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="database.jndi.enabled" />
-
-		<if>
-			<equals arg1="${database.jndi.enabled}" arg2="true" />
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-				>
-					<replacetoken>jdbc.default.jndi.name=</replacetoken>
-					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
-				</replace>
-			</then>
-		</if>
-
 		<if>
 			<equals arg1="${database.partition.enabled}" arg2="true" />
 			<then>
@@ -13366,36 +13467,6 @@ custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 		</if>
 
 		<if>
-			<equals arg1="${database.type}" arg2="oracle" />
-			<then>
-				<if>
-					<equals arg1="${database.version}" arg2="11.2.0.1.0" />
-					<then>
-						<property name="oracle.instance.name" value="xe" />
-					</then>
-					<elseif>
-						<and>
-							<equals arg1="${database.version}" arg2="12.2.0.1" />
-							<os family="windows" />
-						</and>
-						<then>
-							<property name="oracle.instance.name" value="orcl" />
-						</then>
-					</elseif>
-					<else>
-						<property name="oracle.instance.name" value="oracl" />
-					</else>
-				</if>
-
-				<replaceregexp
-					file="portal-impl/src/portal-ext.properties"
-					match="(jdbc:oracle:.*)oracl"
-					replace="\1${oracle.instance.name}"
-				/>
-			</then>
-		</if>
-
-		<if>
 			<and>
 				<isset property="google.drive.integration.client.id.1" />
 				<isset property="google.drive.integration.client.refresh.token.1" />
@@ -13435,73 +13506,6 @@ portal.security.manager.strategy=liferay</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 javascript.fast.load=false</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="set.permission.algorithm.5" />
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="#permissions.user.check.algorithm=5"
-					value="permissions.user.check.algorithm=5"
-				/>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="#permissions.view.dynamic.inheritance=false"
-					value="permissions.view.dynamic.inheritance=false"
-				/>
-			</then>
-		</if>
-
-		<if>
-			<isset property="set.permission.algorithm.6" />
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="permissions.user.check.algorithm=5"
-					value=""
-				/>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="permissions.view.dynamic.inheritance=false"
-					value=""
-				/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="portal.proxy.path" />
-		<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
-
-		<if>
-			<isset property="portal.proxy.path" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-portal.proxy.path=/${portal.proxy.path}</echo>
-
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="web.server.http.port=8080"
-					value="web.server.http.port=88"
-				/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="setup.wizard.enabled" />
-
-		<if>
-			<equals arg1="${setup.wizard.enabled}" arg2="true" />
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="setup.wizard.enabled=false"
-					value=""
-				/>
-
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
 
@@ -13566,6 +13570,8 @@ outgoingSMTPPort="25000"
 feature.flag.LPD-11342=true</echo>
 			</then>
 		</if>
+
+		<prepare-portal-ext-properties-overrides />
 
 		<apply-portal-ext-properties />
 	</target>

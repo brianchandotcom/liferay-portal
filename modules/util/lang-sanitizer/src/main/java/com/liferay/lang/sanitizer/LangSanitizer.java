@@ -160,18 +160,18 @@ public class LangSanitizer {
 	}
 
 	private String _getModuleName(File parentDir) {
-		File currentDir = parentDir;
+		File dir = parentDir;
 
-		while (currentDir != null) {
-			String dirName = currentDir.getName();
+		while (dir != null) {
+			String dirName = dir.getName();
 
 			if (dirName.equals("src")) {
-				File moduleRootDir = currentDir.getParentFile();
+				File moduleRootDir = dir.getParentFile();
 
 				return moduleRootDir.getName();
 			}
 
-			currentDir = currentDir.getParentFile();
+			dir = dir.getParentFile();
 		}
 
 		File moduleRootDir = parentDir.getParentFile();

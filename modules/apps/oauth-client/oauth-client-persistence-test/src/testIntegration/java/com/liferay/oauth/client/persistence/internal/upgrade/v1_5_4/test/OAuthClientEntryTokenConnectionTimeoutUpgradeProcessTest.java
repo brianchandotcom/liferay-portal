@@ -55,7 +55,6 @@ public class OAuthClientEntryTokenConnectionTimeoutUpgradeProcessTest {
 		String clientId1 = RandomTestUtil.randomString();
 		String discoveryEndpoint =
 			"https://accounts.google.com/.well-known/openid-configuration";
-
 		int tokenConnectionTimeout = RandomTestUtil.randomInt();
 
 		_pid1 = ConfigurationTestUtil.createFactoryConfiguration(

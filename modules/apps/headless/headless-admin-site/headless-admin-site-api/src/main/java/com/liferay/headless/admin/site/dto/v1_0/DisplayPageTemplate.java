@@ -604,7 +604,7 @@ public class DisplayPageTemplate implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The display page template's specifications. A display page template will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
+		description = "The display page template's specifications. A display page template will contain 1 page specification for its draft layout and 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -642,7 +642,7 @@ public class DisplayPageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The display page template's specifications. A display page template will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
+		description = "The display page template's specifications. A display page template will contain 1 page specification for its draft layout and 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;
@@ -1218,4 +1218,4 @@ public class DisplayPageTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2117674020
+// LIFERAY-REST-BUILDER-HASH:-2092366492

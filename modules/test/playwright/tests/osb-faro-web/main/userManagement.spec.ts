@@ -155,6 +155,81 @@ test(
 );
 
 test(
+	'Admin user can promote an invited user to Administrator',
+	{
+		tag: '@LRAC-9095',
+	},
+	async ({page, project}) => {
+		const invitedEmail = `admin-role-${Date.now()}@liferay.com`;
+
+		try {
+			await signInToAnalyticsCloud(page, 'michelle.hoshi@faro.io');
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.userManagementPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByRole('button', {name: 'Invite Users'}).click();
+
+			await page
+				.getByPlaceholder('Enter Email Address')
+				.fill(invitedEmail);
+
+			await page.keyboard.press('Enter');
+
+			await page.getByRole('button', {name: 'Send'}).click();
+
+			await expect(
+				page.getByText('Success:Invitations have been sent.')
+			).toBeVisible();
+
+			const invitedRow = page.getByRole('row', {name: invitedEmail});
+
+			await invitedRow.getByRole('button').first().click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					exact: true,
+					name: 'Administrator',
+				}),
+				trigger: page.getByRole('button', {
+					exact: true,
+					name: 'Member',
+				}),
+			});
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.getByText(
+					'Success:Permissions have been changed for 1 users.'
+				)
+			).toBeVisible();
+
+			await expect(
+				invitedRow.getByText('Administrator', {exact: true})
+			).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Continue'}),
+				trigger: invitedRow.getByLabel('Delete'),
+			});
+
+			await expect(
+				page.getByText('Success:1 user has been deleted.')
+			).toBeVisible();
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);
+
+test(
 	'An invited user can be promoted to Administrator and demoted back to Member',
 	{
 		tag: '@LRAC-9086',

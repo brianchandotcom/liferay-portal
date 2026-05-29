@@ -46,7 +46,8 @@ public class ViewOnPageInsightDetailsFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewOnPageInsightDetailsDisplayContext(
-			httpServletRequest, objectEntryExternalReferenceCode, themeDisplay);
+			httpServletRequest, language, objectEntryExternalReferenceCode,
+			themeDisplay);
 	}
 
 	@Override

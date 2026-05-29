@@ -77,10 +77,16 @@ const StageMetrics = ({
 					aria-labelledby={titleId}
 					borderless
 					className='ml-auto'
+					data-tooltip-align='top'
 					displayType='secondary'
 					onClick={() => onFilterClick(stageType)}
 					size='sm'
 					symbol='filter'
+					title={
+						sub(Liferay.Language.get('filter-by-x'), [
+							lifecycleStagesLabelMap[stageType].label
+						]) as string
+					}
 				/>
 			</div>
 			<Text as='p' color='secondary'>

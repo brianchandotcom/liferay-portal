@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -174,6 +175,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-92654")
 	public void testPostAssetLibrary() throws Exception {
 		super.testPostAssetLibrary();
 
@@ -188,6 +190,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			});
 		_testPostAssetLibrary(new MimeTypeLimit[0]);
 		_testPostAssetLibraryWithDuplicateExternalReferenceCode();
+		_testPostAssetLibraryWithExternalReferenceCode();
 		_testPostAssetLibraryWithNoSettings();
 
 		AssetLibrary randomAssetLibrary = randomAssetLibrary();
@@ -771,6 +774,30 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 					"this-external-reference-code-is-already-in-use"),
 				problem.getTitle());
 		}
+	}
+
+	private void _testPostAssetLibraryWithExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		randomAssetLibrary.setExternalReferenceCode(externalReferenceCode);
+		randomAssetLibrary.setType(AssetLibrary.Type.SPACE);
+
+		AssetLibrary postedAssetLibrary =
+			testGetAssetLibrariesPage_addAssetLibrary(randomAssetLibrary);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			postedAssetLibrary.getExternalReferenceCode());
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, testCompany.getCompanyId());
+
+		Assert.assertEquals(
+			externalReferenceCode, group.getExternalReferenceCode());
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {

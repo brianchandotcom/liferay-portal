@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -116,6 +117,36 @@ public class DepotEntryLocalServiceTest {
 		_addDepotEntry(
 			group.getName(LocaleUtil.getDefault()),
 			RandomTestUtil.randomString());
+	}
+
+	@Test
+	@TestInfo("LPD-92654")
+	public void testAddDepotEntryWithGroupExternalReferenceCode()
+		throws Exception {
+
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"groupExternalReferenceCode", groupExternalReferenceCode);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
+
+		_depotEntries.add(depotEntry);
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		Assert.assertEquals(
+			groupExternalReferenceCode, group.getExternalReferenceCode());
 	}
 
 	@Test(expected = DepotEntryNameException.class)

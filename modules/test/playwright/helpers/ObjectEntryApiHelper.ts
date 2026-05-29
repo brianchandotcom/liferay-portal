@@ -164,6 +164,17 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
+	async getObjectEntryCollaboratorsPage(
+		applicationName: string,
+		objectEntryId: number
+	) {
+		const response = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${applicationName}/${objectEntryId}/collaborators`
+		);
+
+		return response?.items;
+	}
+
 	async postObjectEntryCollaborators(
 		data: DataObject[],
 		applicationName: string,

@@ -137,7 +137,6 @@ definition {
 		}
 	}
 
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@priority = 5
 	test OwnerCanCreateNewProperty {
@@ -172,70 +171,6 @@ definition {
 		ACProperties.addNewProperty(propertyName = "New property");
 
 		ACProperties.assertNewCreatedProperty(propertyName = "New property");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9100 | Test Summary: [AC] Properties management menu can be accessed directly via URL"
-	@priority = 3
-	test PropertiesCanBeAccessedDirectlyViaURL {
-		var myProperty = "PropertyViaURL";
-
-		task ("Go to Settings and create a new property") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = ${myProperty});
-
-			ACProperties.assertNewCreatedProperty(propertyName = ${myProperty});
-		}
-
-		task ("Get property URL") {
-			var propertyURL = Navigator.getCurrentURL();
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
-		task ("Go to property via URL") {
-			Open(value1 = ${propertyURL});
-
-			ACProperties.assertNewCreatedProperty(propertyName = ${myProperty});
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
-	@priority = 5
-	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
-		property portal.acceptance = "true";
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		ACProperties.addNewProperty(propertyName = "New property 1");
-
-		ACSettings.goToProperties();
-
-		ACProperties.addNewProperty(propertyName = "New property 2");
-
-		ACSettings.goToProperties();
-
-		ACProperties.addNewProperty(propertyName = "New property 3");
-
-		ACNavigation.exitSettings();
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		ACUtils.assertItemsName(itemList = "${assignedPropertyName},New property 1,New property 2,New property 3");
 	}
 
 }

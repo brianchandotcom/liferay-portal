@@ -503,6 +503,25 @@ public class SitePageResourceImpl
 					"page's external reference code");
 		}
 
+		PageSpecification[] pageSpecifications =
+			sitePage.getPageSpecifications();
+
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
+			(pageSpecifications != null) && (pageSpecifications.length == 1)) {
+
+			if (!(pageSpecifications[0] instanceof
+					ContentPageSpecification contentPageSpecification)) {
+
+				throw new ValidationException(
+					"A content page specification is expected for a content " +
+						"page");
+			}
+
+			sitePage.setPageSpecifications(
+				() -> PageSpecificationUtil.toContentPageSpecifications(
+					contentPageSpecification, externalReferenceCode));
+		}
+
 		ServiceContext serviceContext = _getServiceContext(groupId, sitePage);
 
 		_validatePageSpecificationExternalReferenceCode(
@@ -532,17 +551,18 @@ public class SitePageResourceImpl
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties(groupId, sitePage);
 
+		long parentLayoutId = _getParentLayoutId(
+			groupId, sitePage.getParentSitePageExternalReferenceCode(),
+			privateLayout, serviceContext);
+
 		Layout layout = null;
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.addContentLayout(
 				_cetManager, _fragmentEntryProcessorRegistry, groupId,
 				_infoItemServiceRegistry, sitePage.getPageSpecifications(),
-				privateLayout,
-				_getParentLayoutId(
-					groupId, sitePage.getParentSitePageExternalReferenceCode(),
-					privateLayout, serviceContext),
-				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+				privateLayout, parentLayoutId, nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap,
 				SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
@@ -562,10 +582,8 @@ public class SitePageResourceImpl
 
 			layout = LayoutUtil.addLayout(
 				sitePage.getExternalReferenceCode(), groupId, privateLayout,
-				_getParentLayoutId(
-					groupId, sitePage.getParentSitePageExternalReferenceCode(),
-					privateLayout, serviceContext),
-				nameMap, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				parentLayoutId, nameMap,
+				SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
@@ -578,11 +596,8 @@ public class SitePageResourceImpl
 			layout = LayoutUtil.addPortletLayout(
 				_cetManager, sitePage.getExternalReferenceCode(),
 				_infoItemServiceRegistry, groupId, privateLayout,
-				_getParentLayoutId(
-					groupId, sitePage.getParentSitePageExternalReferenceCode(),
-					privateLayout, serviceContext),
-				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-				typeSettingsUnicodeProperties,
+				parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap,
+				robotsMap, typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
@@ -699,13 +714,18 @@ public class SitePageResourceImpl
 			contextUser.getUserId(), sitePage.getUuid());
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
-			if (sitePage.getPageSpecifications() == null) {
+			PageSpecification[] pageSpecifications =
+				sitePage.getPageSpecifications();
+
+			if ((pageSpecifications == null) ||
+				(pageSpecifications.length != 2)) {
+
 				return serviceContext;
 			}
 
 			PageSpecification[] sortedContentPageSpecifications =
 				PageSpecificationUtil.getSortedContentPageSpecifications(
-					sitePage.getPageSpecifications());
+					pageSpecifications);
 
 			ContentPageSpecification draftContentPageSpecification =
 				(ContentPageSpecification)sortedContentPageSpecifications[0];
@@ -1007,6 +1027,9 @@ public class SitePageResourceImpl
 			Layout layout, ServiceContext serviceContext, SitePage sitePage)
 		throws Exception {
 
+		_validatePageSpecificationExternalReferenceCode(
+			serviceContext, sitePage);
+
 		Map<Locale, String> nameMap = layout.getNameMap();
 
 		if (sitePage.getName_i18n() != null) {
@@ -1205,6 +1228,13 @@ public class SitePageResourceImpl
 			return;
 		}
 
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
+			(pageSpecifications.length == 1)) {
+
+			throw new ValidationException(
+				"A single content page specification is only accepted on POST");
+		}
+
 		PageSpecification publishedPageSpecification = null;
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
@@ -1231,7 +1261,7 @@ public class SitePageResourceImpl
 			publishedPageSpecification = pageSpecifications[0];
 		}
 		else {
-			throw new IllegalArgumentException(
+			throw new ValidationException(
 				"The number of page specifications does not match the page " +
 					"type requirements");
 		}

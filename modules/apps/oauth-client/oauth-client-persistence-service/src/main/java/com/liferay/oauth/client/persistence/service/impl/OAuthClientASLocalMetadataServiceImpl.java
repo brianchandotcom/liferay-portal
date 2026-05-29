@@ -11,6 +11,7 @@ import com.liferay.oauth.client.persistence.service.base.OAuthClientASLocalMetad
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
@@ -93,6 +94,10 @@ public class OAuthClientASLocalMetadataServiceImpl
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
 			long companyId, String localWellKnownURI)
 		throws PortalException {
+
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.

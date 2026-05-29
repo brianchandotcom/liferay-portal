@@ -326,25 +326,24 @@ public class JSONWebServiceServiceActionTest
 	private void _testNotFoundResponse(String path) throws Exception {
 		registerActionClass(FooService.class);
 
-		String json = toJSON(
-			LinkedHashMapBuilder.<String, Object>put(
-				path, new LinkedHashMap<>()
-			).build());
-
 		MockHttpServletRequest mockHttpServletRequest =
-			createInvokerHttpServletRequest(json);
+			createInvokerHttpServletRequest(
+				toJSON(
+				LinkedHashMapBuilder.<String, Object>put(
+					path, new LinkedHashMap<>()
+				).build()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		String result = _jsonWebServiceServiceAction.getJSON(
+		String json = _jsonWebServiceServiceAction.getJSON(
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND,
 			mockHttpServletResponse.getStatus());
 
-		Assert.assertEquals(JSONFactoryUtil.getNullJSON(), result);
+		Assert.assertEquals(JSONFactoryUtil.getNullJSON(), json);
 	}
 
 	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;

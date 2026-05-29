@@ -3516,6 +3516,10 @@ jndiName=""
 
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
 analytics.cloud.domain.allowed=*</echo>
+
+			<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
 		</sequential>
 	</macrodef>
 
@@ -13415,10 +13419,6 @@ portal.security.manager.strategy=liferay</echo>
 javascript.fast.load=false</echo>
 			</then>
 		</if>
-
-		<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
 
 		<if>
 			<isset property="set.permission.algorithm.5" />

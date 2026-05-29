@@ -1334,6 +1334,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private String _getExpectedDraftFragmentEntryLinkExternalReferenceCode(
+		String publishedFragmentEntryLinkExternalReferenceCode) {
+
+		String expectedDraftFragmentEntryLinkExternalReferenceCode =
+			publishedFragmentEntryLinkExternalReferenceCode +
+				LayoutConstants.ERC_SUFFIX_DRAFT;
+
+		if (publishedFragmentEntryLinkExternalReferenceCode.endsWith(
+				LayoutConstants.ERC_SUFFIX_PUBLISHED)) {
+
+			expectedDraftFragmentEntryLinkExternalReferenceCode =
+				publishedFragmentEntryLinkExternalReferenceCode.substring(
+					0,
+					publishedFragmentEntryLinkExternalReferenceCode.length() -
+						LayoutConstants.ERC_SUFFIX_PUBLISHED.length());
+		}
+
+		return expectedDraftFragmentEntryLinkExternalReferenceCode;
+	}
+
 	private int _getExpectedPriority(
 			String defaultParentSitePageExternalReferenceCode,
 			String parentSitePageExternalReferenceCode, Integer priority)
@@ -1996,36 +2016,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		for (FragmentEntryLink publishedFragmentEntryLink :
 				publishedFragmentEntryLinks) {
 
-			String publishedFragmentEntryLinkExternalReferenceCode =
-				publishedFragmentEntryLink.getExternalReferenceCode();
-
-			String expectedDraftExternalReferenceCode;
-
-			if (publishedFragmentEntryLinkExternalReferenceCode.endsWith(
-					LayoutConstants.ERC_SUFFIX_PUBLISHED)) {
-
-				int publishedFragmentEntryLinkExternalReferenceCodeLength =
-					publishedFragmentEntryLinkExternalReferenceCode.length();
-
-				expectedDraftExternalReferenceCode =
-					publishedFragmentEntryLinkExternalReferenceCode.substring(
-						0,
-						publishedFragmentEntryLinkExternalReferenceCodeLength -
-							LayoutConstants.ERC_SUFFIX_PUBLISHED.length());
-			}
-			else {
-				expectedDraftExternalReferenceCode =
-					publishedFragmentEntryLinkExternalReferenceCode +
-						LayoutConstants.ERC_SUFFIX_DRAFT;
-			}
+			String expectedDraftFragmentEntryLinkExternalReferenceCode =
+				_getExpectedDraftFragmentEntryLinkExternalReferenceCode(
+					publishedFragmentEntryLink.getExternalReferenceCode());
 
 			Assert.assertEquals(
 				publishedFragmentEntryLink.toString(),
-				expectedDraftExternalReferenceCode,
+				expectedDraftFragmentEntryLinkExternalReferenceCode,
 				publishedFragmentEntryLink.getOriginalFragmentEntryLinkERC());
 			Assert.assertTrue(
 				draftFragmentEntryLinkExternalReferenceCodes.contains(
-					expectedDraftExternalReferenceCode));
+					expectedDraftFragmentEntryLinkExternalReferenceCode));
 		}
 	}
 

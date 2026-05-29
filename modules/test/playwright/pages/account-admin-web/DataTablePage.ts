@@ -5,6 +5,8 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+
 export const searchTableRowByValue = async function (
 	tableLocator: Locator,
 	colPosition: number,
@@ -198,57 +200,40 @@ export class DataTablePage {
 
 	async changeView(view: string) {
 		if (view === 'List') {
-			await expect(async () => {
-				await this.selectViewButton.click();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.selectViewListButton,
+				timeout: 1000,
+				trigger: this.selectViewButton,
+			});
 
-				await expect(this.selectViewListButton).toBeVisible({
-					timeout: 100,
-				});
-			}).toPass({timeout: 1500});
-
-			await this.selectViewListButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
-
-			if (await this.selectViewListButton.isVisible()) {
-				await this.selectViewListButton.press('Escape');
-			}
 
 			return;
 		}
 		else if (view === 'Cards') {
-			await expect(async () => {
-				await this.selectViewButton.click();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.selectViewCardButton,
+				timeout: 1000,
+				trigger: this.selectViewButton,
+			});
 
-				await expect(this.selectViewCardButton).toBeVisible({
-					timeout: 100,
-				});
-			}).toPass({timeout: 1500});
-
-			await this.selectViewCardButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
-
-			if (await this.selectViewCardButton.isVisible()) {
-				await this.selectViewCardButton.press('Escape');
-			}
 
 			return;
 		}
 
-		await expect(async () => {
-			await this.selectViewButton.click();
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: this.selectViewTableButton,
+			timeout: 1000,
+			trigger: this.selectViewButton,
+		});
 
-			await expect(this.selectViewTableButton).toBeVisible({
-				timeout: 100,
-			});
-
-			await this.selectViewTableButton.click({force: true, timeout: 500});
-		}).toPass({timeout: 5000});
+		await this.selectViewTableButton.click({force: true});
 
 		await expect(this.viewStatus(view)).toBeVisible();
-
-		if (await this.selectViewTableButton.isVisible()) {
-			await this.selectViewTableButton.press('Escape');
-		}
 	}
 
 	async search(value?: string) {

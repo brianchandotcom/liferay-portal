@@ -4589,6 +4589,48 @@
 		},
 		{
 			"properties": {
+				"invitationToCollaborateEmailBody": {
+					"description": "Provide a localized template for the body of invitation to collaborate emails.",
+					"properties": {
+					},
+					"title": "Invitation to Collaborate Email Body",
+					"type": "object"
+				},
+				"invitationToCollaborateEmailSenderEmailAddress": {
+					"description": "Define a specific email address for the sender of invitation to collaborate emails. If empty, the inviter's email address is used.",
+					"title": "Invitation to Collaborate Email Sender Email Address",
+					"type": "string"
+				},
+				"invitationToCollaborateEmailSenderName": {
+					"description": "Define a specific name for the sender of invitation to collaborate emails. If empty, the inviter's name is used.",
+					"title": "Invitation to Collaborate Email Sender Name",
+					"type": "string"
+				},
+				"invitationToCollaborateEmailSubject": {
+					"description": "Provide a localized template for the subject of invitation to collaborate emails.",
+					"properties": {
+					},
+					"title": "Invitation to Collaborate Email Subject",
+					"type": "object"
+				},
+				"invitationToCollaborateTokenExpirationTime": {
+					"default": 48,
+					"description": "Define the time (in hours) before the invitation to collaborate token expires.",
+					"title": "Invitation to Collaborate Token Expiration Time",
+					"type": "number"
+				},
+				"pid": {
+					"const": "com.liferay.sharing.configuration.SharingEntryCollaborationEmailConfiguration",
+					"title": "Invitation to Collaborate"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Invitation to Collaborate"
+		},
+		{
+			"properties": {
 				"enabled": {
 					"default": true,
 					"title": "Enabled",
@@ -5040,6 +5082,7 @@
 				"com.liferay.segments.configuration.SegmentsCompanyConfiguration",
 				"com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
 				"com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration",
+				"com.liferay.sharing.configuration.SharingEntryCollaborationEmailConfiguration",
 				"com.liferay.sharing.internal.configuration.SharingCompanyConfiguration",
 				"com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration",
 				"com.liferay.site.internal.configuration.LLMSCompanyConfiguration",

@@ -198,6 +198,72 @@ test(
 );
 
 test(
+	'New Property dialog accepts a name with special characters and enables Save',
+	{
+		tag: '@LRAC-9105',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.propertiesPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByLabel('Property Name'),
+			trigger: page.getByRole('button', {name: 'New Property'}),
+		});
+
+		await page
+			.getByLabel('Property Name')
+			.fill(`Special ${getRandomString()} = @#$%&!`);
+
+		await expect(page.getByRole('button', {name: 'Save'})).toBeEnabled();
+
+		await page.getByRole('button', {name: 'Cancel'}).click();
+	}
+);
+
+test(
+	'New Property dialog disables Save and shows an alert when the name exceeds the maximum length',
+	{
+		tag: '@LRAC-9038',
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.propertiesPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByLabel('Property Name'),
+			trigger: page.getByRole('button', {name: 'New Property'}),
+		});
+
+		const nameInput = page.getByLabel('Property Name');
+
+		await nameInput.fill(
+			'uZcHpcFx3abyBF4MtqVQFsbt9lrF7lV5A9xC7tujzqicCSHoscXb0sJV6q2alW7cli'
+		);
+
+		await nameInput.press('Tab');
+
+		await expect(page.getByText('Exceeds maximum length.')).toBeVisible();
+
+		await expect(page.getByRole('button', {name: 'Save'})).toBeDisabled();
+	}
+);
+
+test(
 	'Cancelling the New Property dialog via Cancel or Close does not create a property',
 	{
 		tag: '@LRAC-9107',

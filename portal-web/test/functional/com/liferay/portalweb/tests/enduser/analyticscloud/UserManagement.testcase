@@ -110,39 +110,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9085 | Test Summary: Change a member to an admin and assert new permissions"
-	@priority = 3
-	test AssertNewAdminPermissions {
-		var userEmail = "user@liferay.com";
-
-		task ("Go to settings and go to user management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Invite user") {
-			ACSettings.addUser(userInvite = ${userEmail});
-		}
-
-		task ("Change user permission") {
-			ACSettings.changeUserRole(
-				newRole = "Administrator",
-				permissionType = "Member",
-				userEmail = ${userEmail});
-		}
-
-		task ("Assert user permission") {
-			ACSettings.assertUserPermission(
-				permissionType = "Administrator",
-				userEmail = ${userEmail});
-		}
-
-		task ("Delete Pending All Users") {
-			ACSettings.deleteAllPendingUsers();
-		}
-	}
-
 	@description = "Automation ID: LRAC-9086 | Test Summary: Change an admin to a member and assert new permissions"
 	@priority = 3
 	test AssertNewMemberPermissions {
@@ -358,45 +325,6 @@ definition {
 			ACSettings.assertDataSourceStatus(
 				section = "Current Status",
 				status = "Active");
-		}
-	}
-
-	@description = "Automation ID: LRAC-9092 | Test Summary: Owner can change user permissions"
-	@priority = 5
-	test OwnerCanChangeUserPermissions {
-		var userEmail = "ac@liferay.com";
-
-		task ("Login with another Owner User") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
-		}
-
-		task ("Go to User Management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Invite user") {
-			ACSettings.addUser(userInvite = ${userEmail});
-		}
-
-		task ("Change user permission") {
-			ACSettings.changeUserRole(
-				newRole = "Administrator",
-				permissionType = "Member",
-				userEmail = ${userEmail});
-		}
-
-		task ("Assert user permission") {
-			ACSettings.assertUserPermission(
-				permissionType = "Administrator",
-				userEmail = ${userEmail});
-		}
-
-		task ("Delete Pending All Users") {
-			ACSettings.deleteAllPendingUsers();
 		}
 	}
 

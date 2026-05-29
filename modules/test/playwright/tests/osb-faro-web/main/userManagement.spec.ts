@@ -9,6 +9,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
@@ -153,6 +155,84 @@ test(
 );
 
 test(
+	'An invited user can be promoted to Administrator and demoted back to Member',
+	{
+		tag: '@LRAC-9086',
+	},
+	async ({page, project}) => {
+		const invitedEmail = `role-roundtrip-${Date.now()}@liferay.com`;
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('button', {name: 'Invite Users'}).click();
+
+		await page.getByPlaceholder('Enter Email Address').fill(invitedEmail);
+
+		await page.keyboard.press('Enter');
+
+		await page.getByRole('button', {name: 'Send'}).click();
+
+		await expect(
+			page.getByText('Success:Invitations have been sent.')
+		).toBeVisible();
+
+		const invitedRow = page.getByRole('row', {name: invitedEmail});
+
+		try {
+
+			// Promote Member -> Administrator and back to Member, asserting the
+			// displayed role after each change.
+
+			for (const newRole of ['Administrator', 'Member']) {
+				await invitedRow.getByRole('button').first().click();
+
+				const currentRole =
+					newRole === 'Administrator' ? 'Member' : 'Administrator';
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('menuitem', {
+						exact: true,
+						name: newRole,
+					}),
+					trigger: page.getByRole('button', {
+						exact: true,
+						name: currentRole,
+					}),
+				});
+
+				await page.getByRole('button', {name: 'Save'}).click();
+
+				await expect(
+					page.getByText(
+						'Success:Permissions have been changed for 1 users.'
+					)
+				).toBeVisible();
+
+				await expect(
+					invitedRow.getByText(newRole, {exact: true})
+				).toBeVisible();
+			}
+		}
+		finally {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Continue'}),
+				trigger: invitedRow.getByLabel('Delete'),
+			});
+
+			await expect(
+				page.getByText('Success:1 user has been deleted.')
+			).toBeVisible();
+		}
+	}
+);
+
+test(
 	'Member user cannot add a data source or create a property',
 	{
 		tag: ['@LRAC-9096', '@LRAC-9083'],
@@ -239,9 +319,7 @@ test(
 
 				const invitedEmail = `${deleter.role}-delete-${Date.now()}@liferay.com`;
 
-				await page
-					.getByRole('button', {name: 'Invite Users'})
-					.click();
+				await page.getByRole('button', {name: 'Invite Users'}).click();
 
 				await page
 					.getByPlaceholder('Enter Email Address')
@@ -296,9 +374,7 @@ test(
 
 				const invitedEmail = `invited-${inviter.role.toLowerCase()}-${Date.now()}@liferay.com`;
 
-				await page
-					.getByRole('button', {name: 'Invite Users'})
-					.click();
+				await page.getByRole('button', {name: 'Invite Users'}).click();
 
 				await page
 					.getByPlaceholder('Enter Email Address')

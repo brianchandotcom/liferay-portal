@@ -248,24 +248,20 @@ public class ImportProcessResourceTest
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		try {
-			_testPostImportProcessWithObjectDefinition(
-				file -> _importPreviewResource.postSiteImportPreview(
-					testGroup.getExternalReferenceCode(), null,
-					HashMapBuilder.put(
-						"file", file
-					).build()),
-				importProcessRequest ->
-					importProcessResource.postSiteImportProcess(
-						testGroup.getExternalReferenceCode(),
-						importProcessRequest),
-				testGroup.getGroupId(), testGroup.getGroupId(),
-				objectDefinition);
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+		_testPostImportProcessWithObjectDefinition(
+			file -> _importPreviewResource.postSiteImportPreview(
+				testGroup.getExternalReferenceCode(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()),
+			importProcessRequest ->
+				importProcessResource.postSiteImportProcess(
+					testGroup.getExternalReferenceCode(),
+					importProcessRequest),
+			testGroup.getGroupId(), testGroup.getGroupId(),
+			objectDefinition);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_testPostImportProcessWithPreviewForOtherGroup(
 			file -> _importPreviewResource.postAssetLibraryImportPreview(

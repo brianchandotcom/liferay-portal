@@ -89,7 +89,9 @@ export function useSnapshots(fdsName: string) {
 		return [];
 	}
 
-	const [snapshots, setSnapshots] = useState([]);
+	const [snapshots, setSnapshots] = useState<
+		Array<{headerVisible: boolean; items: any[]}>
+	>([]);
 
 	useEffect(() => {
 		Liferay.Util.fetch(
@@ -110,7 +112,11 @@ export function useSnapshots(fdsName: string) {
 					})
 				);
 
-				setSnapshots(formattedSnapshots);
+				setSnapshots(
+					formattedSnapshots.length
+						? [{headerVisible: false, items: formattedSnapshots}]
+						: []
+				);
 			})
 			.catch(error => {
 				// eslint-disable-next-line no-console

@@ -8,42 +8,14 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {getHeader} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 import {searchByTerm, viewNameOnTableList} from './utils/utils';
 
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
-
-async function signInToAnalyticsCloud(page, login: string) {
-
-	// Logout any existing session so the new login fully replaces it.
-
-	await page.goto(`${faroConfig.environment.baseUrl}/c/portal/logout`);
-
-	const response = await page.request.post(
-		`${faroConfig.environment.baseUrl}/c/portal/login`,
-		{
-			data: new URLSearchParams({
-				login,
-				password: faroConfig.user.password,
-			}).toString(),
-			headers: await getHeader(page, 'application/x-www-form-urlencoded'),
-		}
-	);
-
-	expect(response.status()).toBe(200);
-
-	// Land on the workspace so the SPA picks up the new session.
-
-	await page.goto(faroConfig.environment.baseUrl);
-
-	await expect(
-		page.getByRole('textbox', {name: 'Email Address'})
-	).toHaveCount(0);
-}
 
 test(
 	'A user only sees the properties they are invited to and loses access when one is deleted',

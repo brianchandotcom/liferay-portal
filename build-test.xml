@@ -13323,14 +13323,6 @@ ${update.properties}</echo>
 		<prepare-portal-ext-properties-dl-store />
 
 		<if>
-			<equals arg1="${database.type}" arg2="oracle" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
-jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
-			</then>
-		</if>
-
-		<if>
 			<not>
 				<isset property="commerce.enabled" />
 			</not>
@@ -13348,6 +13340,15 @@ enterprise.product.commerce.enabled=false</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="custom.properties" />
+
+		<if>
+			<isset property="custom.properties" />
+			<then>
+				<prepare-custom-properties custom.properties="${custom.properties}" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="database.auto.upgrade.enabled" />
 
 		<if>
@@ -13359,12 +13360,15 @@ upgrade.database.auto.run=true</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="custom.properties" />
-
 		<if>
-			<isset property="custom.properties" />
+			<or>
+				<equals arg1="${database.partition.copy}" arg2="true" />
+				<equals arg1="${database.partition.export.and.import}" arg2="true" />
+			</or>
+
 			<then>
-				<prepare-custom-properties custom.properties="${custom.properties}" />
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+feature.flag.LPD-11342=true</echo>
 			</then>
 		</if>
 
@@ -13376,29 +13380,22 @@ database.partition.enabled=true</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="liferay.online.properties" />
-		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
+		<if>
+			<equals arg1="${database.type}" arg2="oracle" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
+jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
+			</then>
+		</if>
 
 		<if>
-			<equals arg1="${liferay.online.properties}" arg2="true" />
+			<equals arg1="${database.type}" arg2="db2" />
 			<then>
-				<prepare-liferay-online-properties />
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
-				<get-testcase-property property.name="data.archive.type" />
-
-				<if>
-					<contains string="${data.archive.type}" substring="partition-large" />
-					<then>
-						<echo append="true" file="portal-impl/src/portal-ext.properties">
-locales=es_ES,en_US,en_GB
-locales.enabled=es_ES,en_US,en_GB
-admin.default.role.names=User
-layout.user.public.layouts.power.user.required=true
-layout.user.private.layouts.power.user.required=true
-passwords.encryption.algorithm.legacy=SHA
-company.default.web.id=www.able.com</echo>
-					</then>
-				</if>
+hibernate.dialect=com.liferay.portal.dao.orm.hibernate.DB2Dialect
+custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
+custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 		</if>
 
@@ -13418,51 +13415,6 @@ jdbc.test.password=${database.password}</echo>
 					match="(jdbc.test.url.*)(lportal)"
 					replace="\1lportal1"
 				/>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="ms.exchange.enabled" arg2="" />
-				<not>
-					<isset property="ms.exchange.enabled" />
-				</not>
-			</or>
-			<then>
-				<get-testcase-property property.name="ms.exchange.enabled" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${ms.exchange.enabled}" arg2="true" />
-
-			<then>
-				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"><![CDATA[
-enablePOPServerNotifications=b"true"
-incomingPOPPort="995"
-incomingPOPServer="outlook.office365.com"
-outgoingSMTPPort="587"
-outgoingSMTPServer="smtp.office365.com"
-popUserName="qa-exchange-pop-test@liferay0.onmicrosoft.com"
-smtpUserName="qa-exchange-pop-test@liferay0.onmicrosoft.com"
-storeProtocol="pop3s"
-]]>
-				</echo>
-
-				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
-popServerSubdomain=""
-]]></echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${database.type}" arg2="db2" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-hibernate.dialect=com.liferay.portal.dao.orm.hibernate.DB2Dialect
-custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
-custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 		</if>
 
@@ -13506,6 +13458,66 @@ portal.security.manager.strategy=liferay</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 javascript.fast.load=false</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="liferay.online.properties" />
+		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
+
+		<if>
+			<equals arg1="${liferay.online.properties}" arg2="true" />
+			<then>
+				<prepare-liferay-online-properties />
+
+				<get-testcase-property property.name="data.archive.type" />
+
+				<if>
+					<contains string="${data.archive.type}" substring="partition-large" />
+					<then>
+						<echo append="true" file="portal-impl/src/portal-ext.properties">
+locales=es_ES,en_US,en_GB
+locales.enabled=es_ES,en_US,en_GB
+admin.default.role.names=User
+layout.user.public.layouts.power.user.required=true
+layout.user.private.layouts.power.user.required=true
+passwords.encryption.algorithm.legacy=SHA
+company.default.web.id=www.able.com</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="ms.exchange.enabled" arg2="" />
+				<not>
+					<isset property="ms.exchange.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="ms.exchange.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ms.exchange.enabled}" arg2="true" />
+
+			<then>
+				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"><![CDATA[
+enablePOPServerNotifications=b"true"
+incomingPOPPort="995"
+incomingPOPServer="outlook.office365.com"
+outgoingSMTPPort="587"
+outgoingSMTPServer="smtp.office365.com"
+popUserName="qa-exchange-pop-test@liferay0.onmicrosoft.com"
+smtpUserName="qa-exchange-pop-test@liferay0.onmicrosoft.com"
+storeProtocol="pop3s"
+]]>
+				</echo>
+
+				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
+popServerSubdomain=""
+]]></echo>
 			</then>
 		</if>
 
@@ -13556,18 +13568,6 @@ javascript.fast.load=false</echo>
 				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"><![CDATA[
 outgoingSMTPPort="25000"
 ]]></echo>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${database.partition.copy}" arg2="true" />
-				<equals arg1="${database.partition.export.and.import}" arg2="true" />
-			</or>
-
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-feature.flag.LPD-11342=true</echo>
 			</then>
 		</if>
 

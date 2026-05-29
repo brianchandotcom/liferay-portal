@@ -10,9 +10,7 @@ import '../../../css/ckeditor5/balloon.scss';
 export default function WritingAssistantDisclaimer() {
 	return (
 		<p className="writing-assistant__content-disclaimer">
-			{Liferay.Language.get(
-				'ai-generated-responses-may-be-inaccurate'
-			)}
+			{Liferay.Language.get('ai-generated-responses-may-be-inaccurate')}
 		</p>
 	);
 }

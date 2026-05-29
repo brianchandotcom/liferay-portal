@@ -75,9 +75,9 @@ public class JakartaUpgradeProcessUtil {
 		value = StringUtil.replace(value, sourcePackage, targetPackage);
 
 		return StringUtil.replace(
-			value, _escapedJSMap.computeIfAbsent(
-			sourcePackage, HtmlUtil::escapeJS), _escapedJSMap.computeIfAbsent(
-			targetPackage, HtmlUtil::escapeJS));
+			value,
+			_escapedJSMap.computeIfAbsent(sourcePackage, HtmlUtil::escapeJS),
+			_escapedJSMap.computeIfAbsent(targetPackage, HtmlUtil::escapeJS));
 	}
 
 	private static final char[] _SEPARATORS = {'-', '/'};

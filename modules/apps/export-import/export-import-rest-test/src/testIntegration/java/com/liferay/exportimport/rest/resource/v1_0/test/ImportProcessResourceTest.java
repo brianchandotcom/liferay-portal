@@ -254,12 +254,9 @@ public class ImportProcessResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importProcessRequest ->
-				importProcessResource.postSiteImportProcess(
-					testGroup.getExternalReferenceCode(),
-					importProcessRequest),
-			testGroup.getGroupId(), testGroup.getGroupId(),
-			objectDefinition);
+			importProcessRequest -> importProcessResource.postSiteImportProcess(
+				testGroup.getExternalReferenceCode(), importProcessRequest),
+			testGroup.getGroupId(), testGroup.getGroupId(), objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

@@ -2569,7 +2569,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPatchSiteSitePageWithSingleContentPageSpecification()
 		throws Exception {
 
-		SitePage existingSitePage = sitePageResource.postSiteSitePage(
+		SitePage postSitePage = sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), false,
 			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
 
@@ -2581,7 +2581,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				PageSpecification.Status.APPROVED);
 
 		contentPageSpecification.setExternalReferenceCode(
-			existingSitePage.getExternalReferenceCode());
+			postSitePage.getExternalReferenceCode());
 
 		sitePage.setPageSpecifications(
 			() -> new PageSpecification[] {contentPageSpecification});
@@ -2593,7 +2593,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"A single content page specification is only accepted on POST",
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				existingSitePage.getExternalReferenceCode(), false, sitePage));
+				postSitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPatchSiteSitePageWithWidgetPageSettings()
@@ -4356,7 +4356,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithSingleContentPageSpecification()
 		throws Exception {
 
-		SitePage existingSitePage = sitePageResource.postSiteSitePage(
+		SitePage postSitePage = sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), false,
 			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
 
@@ -4366,9 +4366,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				PageSpecification.Status.APPROVED);
 
 		contentPageSpecification.setExternalReferenceCode(
-			existingSitePage.getExternalReferenceCode());
+			postSitePage.getExternalReferenceCode());
 
-		existingSitePage.setPageSpecifications(
+		postSitePage.setPageSpecifications(
 			() -> new PageSpecification[] {contentPageSpecification});
 
 		SitePageResource sitePageResource = _getSitePageResource(
@@ -4378,8 +4378,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"A single content page specification is only accepted on POST",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				existingSitePage.getExternalReferenceCode(), false,
-				existingSitePage));
+				postSitePage.getExternalReferenceCode(), false,
+				postSitePage));
 	}
 
 	private void _testPutSiteSitePageWithWidgetPageSettings() throws Exception {

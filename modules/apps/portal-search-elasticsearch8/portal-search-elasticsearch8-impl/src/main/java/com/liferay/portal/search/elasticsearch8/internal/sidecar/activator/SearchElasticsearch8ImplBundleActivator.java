@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -65,7 +66,7 @@ public class SearchElasticsearch8ImplBundleActivator
 					sidecarProcessFile));
 		}
 
-		if ((!DBUpgrader.isUpgradeClient() &&
+		if ((!UpgradeProcessUtil.isUpgradeClient() &&
 			 !DBUpgrader.isUpgradeDatabaseAutoRunEnabled() &&
 			 !StartupHelperUtil.isUpgrading()) ||
 			!_hasLegacyElasticsearchConfiguration(bundleContext)) {

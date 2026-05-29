@@ -151,9 +151,9 @@ public class JSONWebServiceServiceActionTest
 
 	@Test
 	public void testNotFoundResponse() throws Exception {
-		_testNotFoundResponse("/foo/no-such-model");
-		_testNotFoundResponse("/foo/principal-denied");
-		_testNotFoundResponse("/foo/security-denied");
+		_testNotFoundResponse("/foo/no-such-model-exception");
+		_testNotFoundResponse("/foo/principal-exception");
+		_testNotFoundResponse("/foo/security-exception");
 	}
 
 	@Test

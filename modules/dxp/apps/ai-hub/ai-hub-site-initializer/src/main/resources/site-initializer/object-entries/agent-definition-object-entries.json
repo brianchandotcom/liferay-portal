@@ -7,6 +7,7 @@
 			"inputVariables": "text,tone",
 			"outputVariable": "rewrittenText",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Change Tone"
 			},
@@ -19,6 +20,7 @@
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Fix Spelling and Grammar"
 			},
@@ -31,6 +33,7 @@
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Improve Writing"
 			},
@@ -43,6 +46,7 @@
 			"inputVariables": "request",
 			"outputVariable": "response",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Liferay Search"
 			},
@@ -55,6 +59,7 @@
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Make Longer"
 			},
@@ -67,6 +72,7 @@
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Make Shorter"
 			},
@@ -79,6 +85,7 @@
 			"inputVariables": "instruction,current_page",
 			"outputVariable": "response",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
+			"system": true,
 			"title_i18n": {
 				"en_US": "Page Builder"
 			},

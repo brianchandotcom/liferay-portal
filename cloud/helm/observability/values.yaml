@@ -1,0 +1,8 @@
+cloudProvider: ""
+customLabels: {}
+datasource:
+    name: Prometheus
+    type: prometheus
+    uid: managed-prometheus
+fullnameOverride: ""
+nameOverride: ""

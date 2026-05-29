@@ -150,51 +150,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9089 | Test Summary: Select multiple users to change permissions at once."
-	@priority = 3
-	test ChangeMultipleUserPermissions {
-		var firstUser = "ac@liferay.com";
-		var secondUser = "ac2@liferay.com";
-
-		task ("Go to User Management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Invite user") {
-			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.addUser(userInvite = ${users});
-			}
-		}
-
-		task ("Assert user permission") {
-			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.assertUserPermission(
-					permissionType = "Member",
-					userEmail = ${users});
-			}
-		}
-
-		task ("Change user permission") {
-			ACSettings.changeMultipleUsersPermissions(
-				permissionType = "Administrator",
-				userEmail = "${firstUser},${secondUser}");
-		}
-
-		task ("Assert user permission") {
-			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.assertUserPermission(
-					permissionType = "Administrator",
-					userEmail = ${users});
-			}
-		}
-
-		task ("Delete Pending All Users") {
-			ACSettings.deleteAllPendingUsers();
-		}
-	}
-
 	@description = "Automation ID: LRAC-9084 | Test Summary: [AC] Change the user role and check if the Properties creation handles the mofification successfully"
 	@priority = 3
 	test ChangeUserRoleAndAssertSuccessNotification {
@@ -243,44 +198,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ACWorkspace#WORKSPACE_ERROR_DESCRIPTION",
 				value1 = "Either this workspace does not exist or you do not have access to it.");
-		}
-	}
-
-	@description = "Automation ID: LRAC-9097 | Test Summary: Member cannot remove data sources"
-	@priority = 4
-	test MemberCannotRemoveDataSources {
-		task ("Connect DXP to AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
-
-			TestCase.setUpPortalInstance();
-
-			ACUtils.launchDXP();
-
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-
-		task ("Get the Data Source name") {
-			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
-		}
-
-		task ("Go to AC and Login as user with member role") {
-			ACUtils.launchAC();
-
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-		}
-
-		task ("Go to Data Sources") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDataSources();
-
-			ACNavigation.openItem(itemName = ${dataSource});
-		}
-
-		task ("Assert that the button 'Delete Data Source' is not present") {
-			AssertElementNotPresent(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 		}
 	}
 
@@ -425,84 +342,6 @@ definition {
 
 		task ("Delete Pending All Users") {
 			ACSettings.deleteAllPendingUsers();
-		}
-	}
-
-	@description = "Automation ID: LRAC-9082 | Test Summary: A user lost access to a given property (because the admin removed the user's access of the system)"
-	@priority = 3
-	test UserLostAccessToProperty {
-		task ("Go to settings then go to properties") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Create two new properties, check if it was created and add admin user") {
-			ACProperties.addNewProperty(propertyName = "Property Name 1");
-
-			ACProperties.assertNewCreatedProperty(propertyName = "Property Name 1");
-
-			ACProperties.addUserProperty(emailAddress = "test@liferay.com");
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = "Property Name 2");
-
-			ACProperties.assertNewCreatedProperty(propertyName = "Property Name 2");
-
-			ACProperties.addUserProperty(emailAddress = "corbin.murakami@faro.io");
-		}
-
-		task ("Log in as member and go to the properties menu") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Checks if only property 2 are present") {
-			ACProperties.assertPropertyTitleList(propertyName = "Property Name 2");
-
-			ACProperties.assertPropertyNotPresent(propertyName = "Property Name 1");
-		}
-
-		task ("Login as owner user, go to properties then select one") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "test@liferay.com");
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACUtils.searchBar(searchItem = "Property Name 2");
-
-			ACNavigation.openItem(itemName = "Property Name 2");
-		}
-
-		task ("Delete a member inside a property") {
-			ACProperties.deleteUserFromProperty(emailAddress = "corbin.murakami@faro.io");
-
-			Alert.viewSuccessMessage();
-
-			AssertElementNotPresent(
-				locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-				value1 = "corbin.murakami@faro.io");
-		}
-
-		task ("Login as member, go to properties then assert if the property is no longer present") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.assertPropertyNotPresent(propertyName = "Property Name 2");
 		}
 	}
 

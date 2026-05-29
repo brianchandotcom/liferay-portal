@@ -130,6 +130,12 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 			oAuthClientASLocalMetadata.getOAuthASMetadataJSON(),
 			httpResponse.body());
 
+		httpResponse = _send(urlString, "HEAD");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, httpResponse.statusCode());
+		Assert.assertEquals(StringPool.BLANK, httpResponse.body());
+
 		httpResponse = _send(urlString, "OPTIONS");
 
 		headers = httpResponse.headers();
@@ -142,7 +148,7 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 				null
 			));
 		Assert.assertEquals(
-			"GET, OPTIONS",
+			"GET, HEAD, OPTIONS",
 			headers.firstValue(
 				"Access-Control-Allow-Methods"
 			).orElse(
@@ -169,7 +175,7 @@ public class OAuthAuthorizationServerMetadataWellKnownFilterTest {
 		httpResponse = _send(urlString, "POST");
 
 		Assert.assertEquals(
-			"GET, OPTIONS",
+			"GET, HEAD, OPTIONS",
 			httpResponse.headers(
 			).firstValue(
 				"Allow"

@@ -66,19 +66,21 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 
 		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.setHeader(
-			"Access-Control-Allow-Methods", "GET, OPTIONS");
+			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
 		httpServletResponse.setHeader(
 			"Access-Control-Allow-Headers", "Authorization, Content-Type");
 		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
 
-		if (Objects.equals(httpServletRequest.getMethod(), "OPTIONS")) {
+		String method = httpServletRequest.getMethod();
+
+		if (Objects.equals(method, "OPTIONS")) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
 			return;
 		}
 
-		if (!Objects.equals(httpServletRequest.getMethod(), "GET")) {
-			httpServletResponse.setHeader("Allow", "GET, OPTIONS");
+		if (!Objects.equals(method, "GET") && !Objects.equals(method, "HEAD")) {
+			httpServletResponse.setHeader("Allow", "GET, HEAD, OPTIONS");
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 
@@ -103,9 +105,11 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 			HttpHeaders.CACHE_CONTROL, "public, max-age=300");
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(
-			httpServletResponse,
-			oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
+		if (Objects.equals(method, "GET")) {
+			ServletResponseUtil.write(
+				httpServletResponse,
+				oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
+		}
 
 		httpServletResponse.flushBuffer();
 	}

@@ -6,7 +6,7 @@
 import React from 'react';
 
 const DEFAULT_DISCLAIMER_MESSAGE =
-	'AI-generated responses can be inaccurate. Please review carefully.';
+	'AI generated responses may be inaccurate. Please review carefully.';
 
 interface ChatbotFooterProps {
 	disclaimerMessage: string;

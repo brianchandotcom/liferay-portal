@@ -277,15 +277,11 @@ test(
 		const configurationPanel = page.getByLabel('Configuration Panel', {
 			exact: true,
 		});
-
 		const sidebarButtons = page.locator('.page-editor__sidebar__buttons');
-
 		const sidebarContent = page.locator('.page-editor__sidebar__content');
 
 		await expect(configurationPanel).toBeInViewport();
-
 		await expect(sidebarButtons).toBeInViewport();
-
 		await expect(sidebarContent).toBeInViewport();
 
 		// Toggle the Toggle Sidebars button
@@ -295,9 +291,7 @@ test(
 		// Check that sidebars are fully out of view
 
 		await expect(configurationPanel).not.toBeInViewport();
-
 		await expect(sidebarButtons).not.toBeInViewport();
-
 		await expect(sidebarContent).not.toBeInViewport();
 	}
 );

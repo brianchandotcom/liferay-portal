@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.oauth.client.admin.web.internal.servlet.test;
+package com.liferay.oauth.client.admin.web.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,7 +43,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-63415")
 @RunWith(Arquillian.class)
-public class OAuth2WellKnownProtectedResourceServletTest {
+public class OAuthProtectedResourceMetadataWellKnownFilterTest {
 
 	@ClassRule
 	@Rule
@@ -64,13 +65,14 @@ public class OAuth2WellKnownProtectedResourceServletTest {
 	}
 
 	@Test
-	public void testDoGetHostRootWellKnown() throws Exception {
+	public void testProcessFilter() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		String hostRootURL = StringBundler.concat(
-			Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
-			":8080/.well-known/oauth-protected-resource");
+			Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
+			PortalUtil.getPortalServerPort(false),
+			"/.well-known/oauth-protected-resource");
 
 		HttpURLConnection notFoundHttpURLConnection = _openConnection(
 			hostRootURL, "GET");
@@ -131,6 +133,17 @@ public class OAuth2WellKnownProtectedResourceServletTest {
 				).getMetadataJSON(),
 			getResponseBody);
 
+		HttpURLConnection headHttpURLConnection = _openConnection(
+			hostRootURL, "HEAD");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, headHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"public, max-age=300",
+			headHttpURLConnection.getHeaderField("Cache-Control"));
+
+		headHttpURLConnection.disconnect();
+
 		HttpURLConnection optionsHttpURLConnection = _openConnection(
 			hostRootURL, "OPTIONS");
 
@@ -142,7 +155,7 @@ public class OAuth2WellKnownProtectedResourceServletTest {
 			optionsHttpURLConnection.getHeaderField(
 				"Access-Control-Allow-Origin"));
 		Assert.assertEquals(
-			"GET, OPTIONS",
+			"GET, HEAD, OPTIONS",
 			optionsHttpURLConnection.getHeaderField(
 				"Access-Control-Allow-Methods"));
 
@@ -155,7 +168,8 @@ public class OAuth2WellKnownProtectedResourceServletTest {
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			postHttpURLConnection.getResponseCode());
 		Assert.assertEquals(
-			"GET, OPTIONS", postHttpURLConnection.getHeaderField("Allow"));
+			"GET, HEAD, OPTIONS",
+			postHttpURLConnection.getHeaderField("Allow"));
 
 		postHttpURLConnection.disconnect();
 	}

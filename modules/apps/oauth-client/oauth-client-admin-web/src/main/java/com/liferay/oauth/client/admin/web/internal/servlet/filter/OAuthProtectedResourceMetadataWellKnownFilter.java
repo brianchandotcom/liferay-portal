@@ -51,6 +51,15 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 
 	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return FeatureFlagManagerUtil.isEnabled(
+			CompanyThreadLocal.getCompanyId(), "LPD-63415");
+	}
+
+	@Override
 	protected Log getLog() {
 		return _log;
 	}
@@ -61,24 +70,18 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63415")) {
-			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
 		_setCORSHeaders(httpServletResponse);
 
-		if (Objects.equals(httpServletRequest.getMethod(), "OPTIONS")) {
+		String method = httpServletRequest.getMethod();
+
+		if (Objects.equals(method, "OPTIONS")) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
 			return;
 		}
 
-		if (!Objects.equals(httpServletRequest.getMethod(), "GET")) {
-			httpServletResponse.setHeader("Allow", "GET, OPTIONS");
+		if (!Objects.equals(method, "GET") && !Objects.equals(method, "HEAD")) {
+			httpServletResponse.setHeader("Allow", "GET, HEAD, OPTIONS");
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 
@@ -86,7 +89,7 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata = _resolve(
-			companyId, httpServletRequest);
+			CompanyThreadLocal.getCompanyId(), httpServletRequest);
 
 		if ((oAuthClientPRLocalMetadata == null) ||
 			!oAuthClientPRLocalMetadata.isLocalWellKnownEnabled()) {
@@ -102,8 +105,11 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			HttpHeaders.CACHE_CONTROL, "public, max-age=300");
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(
-			httpServletResponse, oAuthClientPRLocalMetadata.getMetadataJSON());
+		if (Objects.equals(method, "GET")) {
+			ServletResponseUtil.write(
+				httpServletResponse,
+				oAuthClientPRLocalMetadata.getMetadataJSON());
+		}
 
 		httpServletResponse.flushBuffer();
 	}
@@ -123,22 +129,49 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 		String resourcePath = requestURI.substring(
 			index + _WELL_KNOWN_PATH.length());
 
-		if (resourcePath.isEmpty()) {
+		String resource =
+			_portal.getPortalURL(httpServletRequest) + resourcePath;
+
+		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
+			_oAuthClientPRLocalMetadataLocalService.
+				fetchOAuthClientPRLocalMetadata(companyId, resource);
+
+		if (oAuthClientPRLocalMetadata != null) {
+			return oAuthClientPRLocalMetadata;
+		}
+
+		if (resource.endsWith(StringPool.SLASH)) {
+			oAuthClientPRLocalMetadata =
+				_oAuthClientPRLocalMetadataLocalService.
+					fetchOAuthClientPRLocalMetadata(
+						companyId,
+						resource.substring(0, resource.length() - 1));
+		}
+		else {
+			oAuthClientPRLocalMetadata =
+				_oAuthClientPRLocalMetadataLocalService.
+					fetchOAuthClientPRLocalMetadata(
+						companyId, resource + StringPool.SLASH);
+		}
+
+		if (oAuthClientPRLocalMetadata != null) {
+			return oAuthClientPRLocalMetadata;
+		}
+
+		if (resourcePath.isEmpty() ||
+			Objects.equals(resourcePath, StringPool.SLASH)) {
+
 			return _oAuthClientPRLocalMetadataLocalService.
 				fetchOAuthClientPRLocalMetadata(companyId, true, null);
 		}
 
-		String resource =
-			_portal.getPortalURL(httpServletRequest) + resourcePath;
-
-		return _oAuthClientPRLocalMetadataLocalService.
-			fetchOAuthClientPRLocalMetadata(companyId, resource);
+		return null;
 	}
 
 	private void _setCORSHeaders(HttpServletResponse httpServletResponse) {
 		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.setHeader(
-			"Access-Control-Allow-Methods", "GET, OPTIONS");
+			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
 		httpServletResponse.setHeader(
 			"Access-Control-Allow-Headers", "Authorization, Content-Type");
 		httpServletResponse.setHeader("Access-Control-Max-Age", "300");

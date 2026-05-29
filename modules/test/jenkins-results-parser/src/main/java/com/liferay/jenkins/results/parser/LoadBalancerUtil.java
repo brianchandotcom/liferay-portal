@@ -43,7 +43,7 @@ public class LoadBalancerUtil {
 		List<String> blacklist = _getBlacklist(
 			properties, blacklistString, verbose);
 
-		List<JenkinsMaster> eligibleJenkinsMasters = new ArrayList<>(
+		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
@@ -51,10 +51,10 @@ public class LoadBalancerUtil {
 				continue;
 			}
 
-			eligibleJenkinsMasters.add(jenkinsMaster);
+			availableJenkinsMasters.add(jenkinsMaster);
 		}
 
-		return eligibleJenkinsMasters;
+		return availableJenkinsMasters;
 	}
 
 	public static String getMasterPrefix(String baseInvocationURL) {
@@ -94,31 +94,35 @@ public class LoadBalancerUtil {
 		String blacklistString = JenkinsResultsParserUtil.getProperty(
 			properties, "blacklist");
 
-		List<JenkinsMaster> eligibleJenkinsMasters = getAvailableJenkinsMasters(
-			blacklistString, masterPrefix, properties, verbose);
+		List<JenkinsMaster> availableJenkinsMasters =
+			getAvailableJenkinsMasters(
+				blacklistString, masterPrefix, properties, verbose);
 
-		if (eligibleJenkinsMasters.isEmpty()) {
+		if (availableJenkinsMasters.isEmpty()) {
 			return null;
 		}
 
 		AtomicInteger counter = _roundRobinCounters.computeIfAbsent(
-			masterPrefix, key -> new AtomicInteger(_random.nextInt()));
+			masterPrefix,
+			key -> new AtomicInteger(
+				new Random(
+				).nextInt()));
 
 		int index = Math.floorMod(
-			counter.getAndIncrement(), eligibleJenkinsMasters.size());
+			counter.getAndIncrement(), availableJenkinsMasters.size());
 
-		JenkinsMaster selectedJenkinsMaster = eligibleJenkinsMasters.get(index);
+		JenkinsMaster jenkinsMaster = availableJenkinsMasters.get(index);
 
 		if (verbose) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Selected master ", selectedJenkinsMaster.getName(),
-					" via round-robin (",
-					String.valueOf(eligibleJenkinsMasters.size()),
+					"Selected master ", jenkinsMaster.getName(),
+					" via round robin (",
+					String.valueOf(availableJenkinsMasters.size()),
 					" eligible masters under prefix ", masterPrefix, ")"));
 		}
 
-		return "http://" + selectedJenkinsMaster.getName();
+		return "http://" + jenkinsMaster.getName();
 	}
 
 	public static String getMostAvailableMasterURL(
@@ -196,11 +200,10 @@ public class LoadBalancerUtil {
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(requestBlacklistString)) {
-			String lowerCaseRequestBlacklistString =
-				requestBlacklistString.toLowerCase();
+			requestBlacklistString = requestBlacklistString.toLowerCase();
 
-			String[] requestBlacklistItems =
-				lowerCaseRequestBlacklistString.split("\\s*,\\s*");
+			String[] requestBlacklistItems = requestBlacklistString.split(
+				"\\s*,\\s*");
 
 			for (String blacklistItem : requestBlacklistItems) {
 				if (!blacklist.contains(blacklistItem)) {
@@ -218,7 +221,6 @@ public class LoadBalancerUtil {
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new ConcurrentHashMap<>();
-	private static final Random _random = new Random();
 	private static final Map<String, AtomicInteger> _roundRobinCounters =
 		new ConcurrentHashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(

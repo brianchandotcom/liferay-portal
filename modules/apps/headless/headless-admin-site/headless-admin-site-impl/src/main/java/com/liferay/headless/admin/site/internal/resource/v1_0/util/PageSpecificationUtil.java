@@ -314,14 +314,15 @@ public class PageSpecificationUtil {
 
 					fragmentInstance.setUuid(() -> null);
 
-					String userDraftERC =
-						fragmentInstance.
-							getDraftFragmentInstanceExternalReferenceCode();
+					if (Validator.isNotNull(
+							fragmentInstance.
+								getDraftFragmentInstanceExternalReferenceCode())) {
 
-					if (Validator.isNotNull(userDraftERC)) {
 						fragmentInstance.
 							setFragmentInstanceExternalReferenceCode(
-								() -> userDraftERC);
+								() ->
+									fragmentInstance.
+										getDraftFragmentInstanceExternalReferenceCode());
 						fragmentInstance.
 							setDraftFragmentInstanceExternalReferenceCode(
 								() -> null);
@@ -342,14 +343,15 @@ public class PageSpecificationUtil {
 					}
 				},
 				widgetInstancePageElementDefinition -> {
-					String userDraftERC =
-						widgetInstancePageElementDefinition.
-							getDraftWidgetInstanceExternalReferenceCode();
+					if (Validator.isNotNull(
+							widgetInstancePageElementDefinition.
+								getDraftWidgetInstanceExternalReferenceCode())) {
 
-					if (Validator.isNotNull(userDraftERC)) {
 						widgetInstancePageElementDefinition.
 							setWidgetInstanceExternalReferenceCode(
-								() -> userDraftERC);
+								() ->
+									widgetInstancePageElementDefinition.
+										getDraftWidgetInstanceExternalReferenceCode());
 						widgetInstancePageElementDefinition.
 							setDraftWidgetInstanceExternalReferenceCode(
 								() -> null);

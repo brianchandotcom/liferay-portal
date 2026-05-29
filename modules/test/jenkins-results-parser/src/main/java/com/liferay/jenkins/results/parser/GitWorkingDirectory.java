@@ -1572,10 +1572,17 @@ public class GitWorkingDirectory {
 
 		if (branchName != null) {
 			try {
+				RemoteGitBranch upstreamRemoteGitBranch = null;
+
+				if (branchName.equals(upstreamBranchName)) {
+					upstreamRemoteGitBranch = getUpstreamRemoteGitBranch();
+				}
+
 				return Arrays.asList(
 					GitBranchFactory.newLocalGitBranch(
 						localGitRepository, branchName,
-						getLocalGitBranchSHA(branchName)));
+						getLocalGitBranchSHA(branchName),
+						upstreamRemoteGitBranch));
 			}
 			catch (Exception exception) {
 				if (!branchName.equals(upstreamBranchName)) {
@@ -1601,10 +1608,17 @@ public class GitWorkingDirectory {
 				continue;
 			}
 
+			RemoteGitBranch remoteGitBranch = null;
+
+			if (localGitBranchName.equals(upstreamBranchName)) {
+				remoteGitBranch = getUpstreamRemoteGitBranch();
+			}
+
 			localGitBranches.add(
 				GitBranchFactory.newLocalGitBranch(
 					localGitRepository, localGitBranchName,
-					localGitBranchesShaMap.get(localGitBranchName)));
+					localGitBranchesShaMap.get(localGitBranchName),
+					remoteGitBranch));
 		}
 
 		return localGitBranches;

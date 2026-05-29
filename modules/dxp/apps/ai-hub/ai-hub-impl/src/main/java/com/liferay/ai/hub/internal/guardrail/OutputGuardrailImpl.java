@@ -40,7 +40,8 @@ public class OutputGuardrailImpl implements OutputGuardrail {
 	public OutputGuardrailResult fatal(String message) {
 		SseUtil.send(
 			message,
-			GetterUtil.getString(_workflowContext.get("outBoundEventName")),
+			GetterUtil.getString(
+				_workflowContext.get("outBoundEventName"), "Chat Message Sent"),
 			null,
 			GetterUtil.getString(_workflowContext.get("sseEventSinkKey")));
 

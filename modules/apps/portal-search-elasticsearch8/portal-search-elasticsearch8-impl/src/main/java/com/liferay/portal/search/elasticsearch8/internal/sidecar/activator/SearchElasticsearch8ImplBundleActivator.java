@@ -171,8 +171,7 @@ public class SearchElasticsearch8ImplBundleActivator
 		catch (InvalidSyntaxException | IOException exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to query ConfigurationAdmin for legacy " +
-						"Elasticsearch configurations",
+					"Unable to get legacy Elasticsearch configurations",
 					exception);
 			}
 

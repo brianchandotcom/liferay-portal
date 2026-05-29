@@ -5,7 +5,7 @@
 
 package com.liferay.account.internal.validator;
 
-import com.liferay.account.constants.AccountEntryValidatorResultConstants;
+import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
 import com.liferay.account.validator.AccountEntryValidatorResult;
@@ -151,7 +151,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			AccountEntryValidatorResult.builder(
 				"key2"
 			).resultStatus(
-				AccountEntryValidatorResultConstants.FAILURE
+				AccountEntryValidatorConstants.RESULT_FAILURE
 			).build();
 
 		Mockito.when(

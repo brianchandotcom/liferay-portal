@@ -160,27 +160,6 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		};
 	}
 
-	private ReportEntry _addReportEntry(
-			String classExternalReferenceCode, String modelName,
-			boolean typeEmpty)
-		throws Exception {
-
-		ReportEntry reportEntry = randomReportEntry();
-
-		reportEntry.setClassExternalReferenceCode(classExternalReferenceCode);
-		reportEntry.setModelName(modelName);
-
-		if (typeEmpty) {
-			Type type = new Type();
-
-			type.setCode(ExportImportReportEntryConstants.TYPE_EMPTY);
-
-			reportEntry.setType(type);
-		}
-
-		return _addReportEntry(reportEntry);
-	}
-
 	private void _assertReportEntries(
 			String filterString, String sortString,
 			Long... expectedReportEntryIds)
@@ -205,6 +184,21 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		}
 	}
 
+	private ReportEntry _randomReportEntry(int typeCode) throws Exception {
+		ReportEntry reportEntry = randomReportEntry();
+
+		reportEntry.setType(
+			() -> {
+				Type type = new Type();
+
+				type.setCode(typeCode);
+
+				return type;
+			});
+
+		return reportEntry;
+	}
+
 	private void _testGetImportProcessReportEntriesPageWithEmptyExportImportReportEntry()
 		throws Exception {
 
@@ -216,7 +210,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		long totalCount = page.getTotalCount();
 
 		_addReportEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true);
+			_randomReportEntry(ExportImportReportEntryConstants.TYPE_EMPTY));
 
 		page = reportEntryResource.getImportProcessReportEntriesPage(
 			testGetImportProcessReportEntriesPage_getImportProcessId(), null,
@@ -229,8 +223,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		throws Exception {
 
 		ReportEntry reportEntry1 = _addReportEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			false);
+			_randomReportEntry(ExportImportReportEntryConstants.TYPE_ERROR));
 
 		_assertReportEntries(
 			"contains(classExternalReferenceCode, '" +
@@ -250,7 +243,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			null);
 
 		ReportEntry reportEntry2 = _addReportEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true);
+			_randomReportEntry(ExportImportReportEntryConstants.TYPE_EMPTY));
 
 		_assertReportEntries(
 			StringBundler.concat(
@@ -323,12 +316,23 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 	private void _testGetImportProcessReportEntriesPageWithSort()
 		throws Exception {
 
-		ReportEntry reportEntry1 = _addReportEntry(
-			"a" + RandomTestUtil.randomString(),
-			"z" + RandomTestUtil.randomString(), false);
-		ReportEntry reportEntry2 = _addReportEntry(
-			"z" + RandomTestUtil.randomString(),
-			"a" + RandomTestUtil.randomString(), true);
+		ReportEntry reportEntry1 = _randomReportEntry(
+			ExportImportReportEntryConstants.TYPE_EMPTY);
+
+		reportEntry1.setClassExternalReferenceCode(
+			"a" + RandomTestUtil.randomString());
+		reportEntry1.setModelName("z" + RandomTestUtil.randomString());
+
+		reportEntry1 = _addReportEntry(reportEntry1);
+
+		ReportEntry reportEntry2 = _randomReportEntry(
+			ExportImportReportEntryConstants.TYPE_ERROR);
+
+		reportEntry2.setClassExternalReferenceCode(
+			"z" + RandomTestUtil.randomString());
+		reportEntry2.setModelName("a" + RandomTestUtil.randomString());
+
+		reportEntry2 = _addReportEntry(reportEntry2);
 
 		String filterString = StringBundler.concat(
 			"id eq ", reportEntry1.getId(), " or id eq ", reportEntry2.getId());
@@ -346,17 +350,17 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			filterString, "modelName:desc", reportEntry1.getId(),
 			reportEntry2.getId());
 		_assertReportEntries(
-			filterString, "type/code:asc", reportEntry1.getId(),
-			reportEntry2.getId());
-		_assertReportEntries(
-			filterString, "type/code:desc", reportEntry2.getId(),
+			filterString, "type/code:asc", reportEntry2.getId(),
 			reportEntry1.getId());
 		_assertReportEntries(
-			filterString, "type/label:asc", reportEntry2.getId(),
-			reportEntry1.getId());
-		_assertReportEntries(
-			filterString, "type/label:desc", reportEntry1.getId(),
+			filterString, "type/code:desc", reportEntry1.getId(),
 			reportEntry2.getId());
+		_assertReportEntries(
+			filterString, "type/label:asc", reportEntry1.getId(),
+			reportEntry2.getId());
+		_assertReportEntries(
+			filterString, "type/label:desc", reportEntry2.getId(),
+			reportEntry1.getId());
 	}
 
 	@DeleteAfterTestRun

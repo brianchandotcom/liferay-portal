@@ -5,4 +5,115 @@ datasource:
     type: prometheus
     uid: managed-prometheus
 fullnameOverride: ""
+kube-state-metrics:
+    enabled: true
+    extraArgs:
+        -   --v=1
+        -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_statefulset_status_replicas_ready,kube_pod_container_status_restarts_total,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_info,kube_namespace_labels,kube_node_info,kube_node_status_condition
+    metricLabelsAllowlist:
+        -   namespaces=[liferay.com/observable]
+    networkPolicy:
+        egress:
+            -   {}
+        enabled: true
+        ingress:
+            -   from:
+                    -   podSelector: {}
+    podDisruptionBudget:
+        maxUnavailable: 1
+    prometheus:
+        monitor:
+            enabled: false
+    prometheusScrape: false
+    resources:
+        limits:
+            cpu: 100m
+            memory: 256Mi
+        requests:
+            cpu: 30m
+            memory: 128Mi
+    serviceAccount:
+        automountServiceAccountToken: false
 nameOverride: ""
+prometheus-node-exporter:
+    enabled: true
+    extraArgs:
+        -   --log.level=error
+        -   --log.format=json
+    networkPolicy:
+        enabled: true
+        ingress:
+            -   from:
+                    -   podSelector: {}
+    prometheus:
+        monitor:
+            enabled: false
+        podMonitor:
+            enabled: false
+    rbac:
+        create: true
+    resources:
+        limits:
+            cpu: 102m
+            memory: 180Mi
+        requests:
+            cpu: 102m
+            memory: 180Mi
+    securityContext:
+        fsGroup: 0
+    service:
+        enabled: true
+    serviceAccount:
+        automountServiceAccountToken: false
+        create: true
+prometheus-pushgateway:
+    automountServiceAccountToken: false
+    containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        privileged: false
+        readOnlyRootFilesystem: false
+    enabled: true
+    extraArgs:
+        -   --persistence.file=/data/pushgateway.data
+        -   --persistence.interval=1m
+        -   --log.format=json
+        -   --log.level=error
+    extraContainers:
+        -   args:
+                -   --sync-period=1m
+                -   --ttl=1m
+            image: ghcr.io/abatilo/pushgateway-cleaner:v0.1.3
+            name: pushgateway-cleaner
+            resources:
+                limits:
+                    cpu: 40m
+                    memory: 16Mi
+                requests:
+                    cpu: 20m
+                    memory: 4Mi
+            securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                    drop:
+                        -   ALL
+                privileged: false
+                readOnlyRootFilesystem: false
+    networkPolicy:
+        allowAll: true
+    resources:
+        limits:
+            cpu: 100m
+            memory: 50Mi
+        requests:
+            cpu: 100m
+            memory: 30Mi
+    securityContext:
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+            type: RuntimeDefault

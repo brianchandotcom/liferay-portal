@@ -1464,9 +1464,6 @@ test(
 		productDetailsPage,
 		site,
 	}) => {
-
-		// Create the catalog, the product, and two UOMs on its SKU
-
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 				name: getRandomString(),
@@ -1502,8 +1499,6 @@ test(
 				}
 			);
 
-		// Create the diagram product and pin the SKU to it
-
 		const productDiagram =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				catalogId: catalog.id,
@@ -1531,8 +1526,6 @@ test(
 				sequence: '1',
 			}
 		);
-
-		// Provision the account, the storefront page, and the B2B channel
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -1574,10 +1567,6 @@ test(
 			'B2B'
 		);
 
-		// Pre-fill the cart with the SKU on the Box UOM. The tooltip would add
-		// the SKU on the Each UOM (first by priority), so the two rows differ
-		// by UOM only.
-
 		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
 				accountId: account.id,
@@ -1593,8 +1582,6 @@ test(
 			channel.id
 		);
 
-		// Open the tooltip and confirm the button is not in the "added" state
-
 		await page.goto(`/web/${site.name}/p/diagram`);
 
 		await (await productDetailsPage.diagramPin(pin.sequence)).click();
@@ -1604,15 +1591,11 @@ test(
 			/is-added/
 		);
 
-		// Add the SKU on the Each UOM from the tooltip
-
 		await productDetailsPage.pinAddToCartButton.click();
 
 		await expect(productDetailsPage.pinAddToCartButton).toHaveClass(
 			/is-added/
 		);
-
-		// The cart now has two rows for the same SKU, one per UOM
 
 		const cartItems =
 			await apiHelpers.headlessCommerceDeliveryCart.getCartItems(cart.id);

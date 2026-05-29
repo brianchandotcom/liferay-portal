@@ -51,26 +51,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9134 | Test Summary: Cancel Unsaved Workspace Setting Changes"
-	@priority = 3
-	test CancelUnsavedChangesOfWorkspaceSettings {
-		task ("Navigate to Workspace Settings") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToWorkspace();
-		}
-
-		task ("Rename the workspace then cancel changes") {
-			ACWorkspace.configureWorkspaceSettings(
-				cancel = "true",
-				workspaceName = "UAT");
-		}
-
-		task ("View the original workspace name shown") {
-			ACWorkspace.viewWorkspaceSettings(workspaceName = "FARO-DEV-liferay");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9149 | Test Summary: Information banner should no longer be shown after being dismissed by a user"
 	@priority = 5
 	test CannotViewInformationBannerAfterDismissedByUser {

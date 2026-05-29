@@ -3,27 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useSelector} from '@xstate/store/react';
 import {Navigate} from 'react-router-dom';
 
-import ProductPurchase from '../../../../components/ProductPurchase';
-import i18n from '../../../../i18n';
-import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
-import {productPurchaseStore} from '../../store';
-import BillingAddress from '../App/PaymentMethod/BillingAddress/BillingAddress';
-import TaxIdDisplay from '../App/PaymentMethod/TaxIdDisplay';
+import ProductPurchase from '../../../../../components/ProductPurchase';
+import i18n from '../../../../../i18n';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
+import BillingAddress from '../../App/PaymentMethod/BillingAddress/BillingAddress';
+import TaxIdDisplay from '../../App/PaymentMethod/TaxIdDisplay';
 
 const LDPInformation = () => {
 	const {
+		selectedAccount,
 		actions: {nextStep, previousStep},
 	} = useProductPurchaseOutletContext();
 
-	const salesforceProject = useSelector(
-		productPurchaseStore,
-		({context}) => context.salesforceProject
-	);
-
-	if (!salesforceProject) {
+	if (!selectedAccount) {
 		return <Navigate to="/" />;
 	}
 

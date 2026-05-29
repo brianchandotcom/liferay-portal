@@ -102,7 +102,7 @@ const AnalyticsDetails = () => {
 							{
 								title: i18n.translate('timezone'),
 								value: analyticsProject?.timeZone
-									.displayTimeZone,
+									?.displayTimeZone,
 							},
 							{
 								title: i18n.translate('workspace-friendly-url'),

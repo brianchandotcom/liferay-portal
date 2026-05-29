@@ -154,22 +154,29 @@ public class LayoutLocalServiceTest {
 
 		Map<String, String> expectedExternalReferenceCodesMap =
 			HashMapBuilder.put(
-				"-default", RandomTestUtil.randomString()
+				LayoutConstants.ERC_SUFFIX_DEFAULT,
+				RandomTestUtil.randomString()
 			).put(
-				"-draft", RandomTestUtil.randomString()
+				LayoutConstants.ERC_SUFFIX_DRAFT, RandomTestUtil.randomString()
 			).put(
-				"-draft-default", RandomTestUtil.randomString()
+				LayoutConstants.ERC_SUFFIX_DRAFT +
+					LayoutConstants.ERC_SUFFIX_DEFAULT,
+				RandomTestUtil.randomString()
 			).build();
 
 		_serviceContext.setAttribute(
 			"defaultSegmentsExperienceExternalReferenceCode",
-			expectedExternalReferenceCodesMap.get("-default"));
+			expectedExternalReferenceCodesMap.get(
+				LayoutConstants.ERC_SUFFIX_DEFAULT));
 		_serviceContext.setAttribute(
 			"draftLayoutDefaultSegmentsExperienceExternalReferenceCode",
-			expectedExternalReferenceCodesMap.get("-draft-default"));
+			expectedExternalReferenceCodesMap.get(
+				LayoutConstants.ERC_SUFFIX_DRAFT +
+					LayoutConstants.ERC_SUFFIX_DEFAULT));
 		_serviceContext.setAttribute(
 			"draftLayoutExternalReferenceCode",
-			expectedExternalReferenceCodesMap.get("-draft"));
+			expectedExternalReferenceCodesMap.get(
+				LayoutConstants.ERC_SUFFIX_DRAFT));
 
 		try {
 			layout = _layoutLocalService.addLayout(
@@ -1181,12 +1188,14 @@ public class LayoutLocalServiceTest {
 		Assert.assertTrue(
 			segmentsExperience.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
-				segmentsExperience.getExternalReferenceCode(), "-default"));
+				segmentsExperience.getExternalReferenceCode(),
+				LayoutConstants.ERC_SUFFIX_DEFAULT));
 
 		Assert.assertTrue(
 			draftLayout.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
-				draftLayout.getExternalReferenceCode(), "-draft"));
+				draftLayout.getExternalReferenceCode(),
+				LayoutConstants.ERC_SUFFIX_DRAFT));
 
 		segmentsExperience =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
@@ -1196,7 +1205,8 @@ public class LayoutLocalServiceTest {
 			segmentsExperience.getExternalReferenceCode(),
 			unsafeBiFunction.apply(
 				segmentsExperience.getExternalReferenceCode(),
-				"-draft-default"));
+				LayoutConstants.ERC_SUFFIX_DRAFT +
+					LayoutConstants.ERC_SUFFIX_DEFAULT));
 	}
 
 	private void _assertSearch(

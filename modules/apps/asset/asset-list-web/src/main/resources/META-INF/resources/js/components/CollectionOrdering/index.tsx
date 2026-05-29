@@ -225,7 +225,6 @@ interface CollectionOrderingProps {
 	initialOrderByType2?: OrderByType;
 	namespace: string;
 	properties?: FilterPropertyGroup[];
-	propertiesURL?: string;
 }
 
 export default function CollectionOrdering({
@@ -235,7 +234,6 @@ export default function CollectionOrdering({
 	initialOrderByType2 = 'ASC',
 	namespace,
 	properties: initialProperties,
-	propertiesURL,
 }: CollectionOrderingProps) {
 	const [orderByColumn1, setOrderByColumn1] = useState<OrderBySelection>(() =>
 		parseInitialOrderByColumn(initialOrderByColumn1)
@@ -248,11 +246,7 @@ export default function CollectionOrdering({
 	const [orderByType2, setOrderByType2] =
 		useState<OrderByType>(initialOrderByType2);
 
-	const properties = useTypeProperties(
-		namespace,
-		propertiesURL,
-		initialProperties
-	);
+	const properties = useTypeProperties(initialProperties);
 
 	const items = useMemo<Array<FilterProperty | FilterPropertyGroup>>(() => {
 		return properties

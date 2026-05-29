@@ -57,8 +57,6 @@
 						).put(
 							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
 						).put(
-							"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
-						).put(
 							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
 						).put(
 							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()

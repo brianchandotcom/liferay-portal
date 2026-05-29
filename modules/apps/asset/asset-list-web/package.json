@@ -11,6 +11,7 @@
 		"@clayui/list": "^3.164.0",
 		"@clayui/multi-select": "^3.164.0",
 		"@clayui/tooltip": "^3.164.0",
+		"@liferay/frontend-js-state-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"asset-taglib": "*",
 		"classnames": "2.3.1",

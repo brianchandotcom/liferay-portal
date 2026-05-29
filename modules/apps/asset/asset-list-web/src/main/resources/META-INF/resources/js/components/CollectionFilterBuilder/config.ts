@@ -7,7 +7,6 @@ export type Config = {
 	categorySelectorURL?: string;
 	groupIds?: string[];
 	namespace: string;
-	propertiesURL?: string;
 	tagSelectorURL?: string;
 	vocabularyIds?: string[];
 };

@@ -319,7 +319,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPatchSiteSitePage(SitePage.Type.WIDGET_PAGE);
 		_testPatchSiteSitePageWithPageSpecifications();
 		_testPatchSiteSitePageWithPriority();
-		_testPatchSiteSitePageWithSingleContentPageSpecification();
+		_testPatchSiteSitePageWithContentPageSpecification();
 		_testPatchSiteSitePageWithWidgetPageSettings();
 		_testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
@@ -373,7 +373,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageWithPageElements();
 		_testPostSiteSitePageWithPageSpecifications();
-		_testPostSiteSitePageWithSingleContentPageSpecification();
+		_testPostSiteSitePageWithContentPageSpecification();
 		_testPostSiteSitePageWithWidgetPageSettings();
 		_testPostSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 		_testPostSiteSitePageWithWidgetPageTypeIsDeprecated();
@@ -462,7 +462,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithPageSpecifications();
 		_testPutSiteSitePageWithParentLayout();
 		_testPutSiteSitePageWithPriority();
-		_testPutSiteSitePageWithSingleContentPageSpecification();
+		_testPutSiteSitePageWithContentPageSpecification();
 		_testPutSiteSitePageWithWidgetPageSettings();
 		_testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
@@ -1924,7 +1924,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
-	private void _postSingleContentPageSpecification(
+	private void _postContentPageSpecification(
 			ContentPageSpecification contentPageSpecification,
 			ContentPageSpecification expectedDraftContentPageSpecification,
 			ContentPageSpecification expectedPublishedContentPageSpecification,
@@ -2281,6 +2281,37 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
+	private void _testPatchSiteSitePageWithContentPageSpecification()
+		throws Exception {
+
+		SitePage postSitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false,
+			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+
+		SitePage sitePage = new SitePage();
+
+		ContentPageSpecification contentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			postSitePage.getExternalReferenceCode());
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		_assertProblemException(
+			"A single content page specification cannot be applied to an " +
+				"existing page",
+			() -> sitePageResource.patchSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				postSitePage.getExternalReferenceCode(), false, sitePage));
+	}
+
 	private void _testPatchSiteSitePageWithFriendlyUrlPath(
 			Layout layout, SitePage sitePage)
 		throws Exception {
@@ -2531,37 +2562,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getGroupId()),
 					patchSitePage);
 			});
-	}
-
-	private void _testPatchSiteSitePageWithSingleContentPageSpecification()
-		throws Exception {
-
-		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), false,
-			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
-
-		SitePage sitePage = new SitePage();
-
-		ContentPageSpecification contentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, testGroup.getGroupId(),
-				PageSpecification.Status.APPROVED);
-
-		contentPageSpecification.setExternalReferenceCode(
-			postSitePage.getExternalReferenceCode());
-
-		sitePage.setPageSpecifications(
-			() -> new PageSpecification[] {contentPageSpecification});
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		_assertProblemException(
-			"A single content page specification cannot be applied to an " +
-				"existing page",
-			() -> sitePageResource.patchSiteSitePage(
-				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPatchSiteSitePageWithWidgetPageSettings()
@@ -2860,7 +2860,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			postSitePage);
 	}
 
-	private void _testPostSiteSitePageWithDraftSingleContentPageSpecification(
+	private void _testPostSiteSitePageWithContentPageSpecification()
+		throws Exception {
+
+		_testPostSiteSitePageWithDraftContentPageSpecification(
+			PageSpecification.Status.APPROVED, true);
+		_testPostSiteSitePageWithDraftContentPageSpecification(
+			PageSpecification.Status.APPROVED, false);
+		_testPostSiteSitePageWithDraftContentPageSpecification(
+			PageSpecification.Status.DRAFT, true);
+		_testPostSiteSitePageWithDraftContentPageSpecification(
+			PageSpecification.Status.DRAFT, false);
+		_testPostSiteSitePageWithPublishedContentPageSpecification(
+			PageSpecification.Status.APPROVED);
+		_testPostSiteSitePageWithPublishedContentPageSpecification(
+			PageSpecification.Status.DRAFT);
+		_testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences();
+	}
+
+	private void _testPostSiteSitePageWithDraftContentPageSpecification(
 			PageSpecification.Status status, boolean useDraftERCSuffix)
 		throws Exception {
 
@@ -2920,7 +2938,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				PageExperience.class));
 		expectedPublishedContentPageSpecification.setStatus(status);
 
-		_postSingleContentPageSpecification(
+		_postContentPageSpecification(
 			draftContentPageSpecification,
 			expectedDraftContentPageSpecification,
 			expectedPublishedContentPageSpecification, testGroup,
@@ -3067,9 +3085,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage.getPageSpecifications());
 	}
 
-	private void
-			_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
-				PageSpecification.Status status)
+	private void _testPostSiteSitePageWithPublishedContentPageSpecification(
+			PageSpecification.Status status)
 		throws Exception {
 
 		String defaultPageExperienceExternalReferenceCode =
@@ -3118,14 +3135,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			publishedContentPageSpecification.getPageExperiences());
 		expectedPublishedContentPageSpecification.setStatus(status);
 
-		_postSingleContentPageSpecification(
+		_postContentPageSpecification(
 			publishedContentPageSpecification,
 			expectedDraftContentPageSpecification,
 			expectedPublishedContentPageSpecification, testGroup,
 			pageExternalReferenceCode, status);
 	}
 
-	private void _testPostSiteSitePageWithPublishedSingleContentPageSpecificationAndDraftReferences()
+	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()
 		throws Exception {
 
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
@@ -3201,24 +3218,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				draftFragmentEntryLinkERCs.contains(
 					userDraftFragmentInstanceERC));
 		}
-	}
-
-	private void _testPostSiteSitePageWithSingleContentPageSpecification()
-		throws Exception {
-
-		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
-			PageSpecification.Status.APPROVED, true);
-		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
-			PageSpecification.Status.APPROVED, false);
-		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
-			PageSpecification.Status.DRAFT, true);
-		_testPostSiteSitePageWithDraftSingleContentPageSpecification(
-			PageSpecification.Status.DRAFT, false);
-		_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
-			PageSpecification.Status.APPROVED);
-		_testPostSiteSitePageWithPublishedSingleContentPageSpecification(
-			PageSpecification.Status.DRAFT);
-		_testPostSiteSitePageWithPublishedSingleContentPageSpecificationAndDraftReferences();
 	}
 
 	private void _testPostSiteSitePageWithWidgetPageSettings()
@@ -3416,6 +3415,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			putSitePage);
 
 		return putSitePage;
+	}
+
+	private void _testPutSiteSitePageWithContentPageSpecification()
+		throws Exception {
+
+		SitePage postSitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false,
+			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+
+		ContentPageSpecification contentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			postSitePage.getExternalReferenceCode());
+
+		postSitePage.setPageSpecifications(
+			() -> new PageSpecification[] {contentPageSpecification});
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		_assertProblemException(
+			"A single content page specification cannot be applied to an " +
+				"existing page",
+			() -> sitePageResource.putSiteSitePage(
+				testGroup.getExternalReferenceCode(),
+				postSitePage.getExternalReferenceCode(), false, postSitePage));
 	}
 
 	private void _testPutSiteSitePageWithDefaultAssetPublisher()
@@ -4348,35 +4376,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getGroupId()),
 					putSitePage);
 			});
-	}
-
-	private void _testPutSiteSitePageWithSingleContentPageSpecification()
-		throws Exception {
-
-		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), false,
-			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
-
-		ContentPageSpecification contentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, testGroup.getGroupId(),
-				PageSpecification.Status.APPROVED);
-
-		contentPageSpecification.setExternalReferenceCode(
-			postSitePage.getExternalReferenceCode());
-
-		postSitePage.setPageSpecifications(
-			() -> new PageSpecification[] {contentPageSpecification});
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		_assertProblemException(
-			"A single content page specification cannot be applied to an " +
-				"existing page",
-			() -> sitePageResource.putSiteSitePage(
-				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), false, postSitePage));
 	}
 
 	private void _testPutSiteSitePageWithWidgetPageSettings() throws Exception {

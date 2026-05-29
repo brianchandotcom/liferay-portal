@@ -279,26 +279,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9096 | Test Summary: Member cannot add data sources"
-	@priority = 4
-	test MemberCannotAddDataSources {
-		task ("Login as user with member role") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-		}
-
-		task ("Go to Data Sources") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDataSources();
-		}
-
-		task ("Assert that the button 'Add Data Source' is not present") {
-			AssertElementNotPresent(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9098 | Test Summary: Member cannot change user permissions"
 	@priority = 4
 	test MemberCannotChangeUserPermissions {
@@ -354,53 +334,6 @@ definition {
 
 		task ("Assert that the button 'Delete Data Source' is not present") {
 			AssertElementNotPresent(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-		}
-	}
-
-	@description = "Automation ID: LRAC-9083 | Test Summary: [AC] Only admin or owner users are able to add properties on AC"
-	@priority = 3
-	test OnlyAdminOrOwnerUsersCanAddPropertiesOnAC {
-		var userList = "michelle.hoshi@faro.io,bryan.cheung@faro.io";
-
-		for (var userEmail : list ${userList}) {
-			task ("Logout AC and login as an admin/owner user") {
-				ACWorkspace.signOut();
-
-				ACUtils.launchAC(emailAddress = ${userEmail});
-			}
-
-			task ("Go To Settings then Go To Properties") {
-				ACNavigation.goToSettings();
-
-				ACSettings.goToProperties();
-			}
-
-			task ("Add a New Property and Assert The New Property was Created") {
-				ACProperties.addNewProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property");
-
-				if (${userEmail} == "michelle.hoshi@faro.io") {
-					ACProperties.assertNewCreatedProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property");
-				}
-				else {
-					ACProperties.assertNewCreatedProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property (1)");
-				}
-			}
-		}
-
-		task ("Logout and Login as Member") {
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-		}
-
-		task ("Go To Settings then Go To Properties") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Assert New Property Button is Not Present") {
-			AssertElementNotPresent(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
 		}
 	}
 

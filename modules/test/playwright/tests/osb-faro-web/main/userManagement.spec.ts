@@ -153,6 +153,41 @@ test(
 );
 
 test(
+	'Member user cannot add a data source or create a property',
+	{
+		tag: ['@LRAC-9096', '@LRAC-9083'],
+	},
+	async ({page, project}) => {
+		try {
+			await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.dataSourcePage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Add Data Source'})
+			).toHaveCount(0);
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'New Property'})
+			).toHaveCount(0);
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);
+
+test(
 	'Member user cannot invite or delete users in User Management',
 	{
 		tag: ['@LRAC-9066', '@LRAC-9073'],

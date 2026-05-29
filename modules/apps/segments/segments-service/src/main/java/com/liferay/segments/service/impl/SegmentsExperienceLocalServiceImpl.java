@@ -155,12 +155,19 @@ public class SegmentsExperienceLocalServiceImpl
 		segmentsExperience = segmentsExperiencePersistence.update(
 			segmentsExperience);
 
+		segmentsExperiencePersistence.flush();
+
 		// Resources
 
 		_resourceLocalService.addModelResources(
 			segmentsExperience, serviceContext);
 
-		return segmentsExperience;
+		// Segments experiences priorities
+
+		_compactSegmentsExperiencesPriorities(segmentsExperience);
+
+		return segmentsExperiencePersistence.findByPrimaryKey(
+			segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override

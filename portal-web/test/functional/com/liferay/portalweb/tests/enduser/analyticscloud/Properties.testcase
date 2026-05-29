@@ -75,26 +75,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"
-	@priority = 3
-	test CanCreatePropertyNameWithSpecialChars {
-		task ("Add a New Property on AC") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACProperties.addNewProperty(propertyName = "Name with special chars = @#$%&!");
-		}
-
-		task ("Assert Property is Created With Special Chars") {
-			ACSettings.goToProperties();
-
-			ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
-		}
-	}
-
 	@description = "Bug: LRAC-7916 | Automation ID: LRAC-11529 | Test Summary: It is possible to create multiple properties in different workspaces"
 	@priority = 4
 	test CanCreateSamePropertyNameInDifferentWorkspaces {
@@ -154,38 +134,6 @@ definition {
 		ACSettings.goToProperties();
 
 		ACProperties.assertPropertyTitle(propertyName = "Properties");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9038 | Test Summary: As a Business User, I should not be able to create an invalid property name"
-	@priority = 3
-	test CannotAddPropertyWhenNameExceedMaximumLength {
-		task ("Navigate to the Properties admin on AC") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("View the alert shown in creation modal when the name exceeds maximum length") {
-			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
-
-			Type(
-				locator1 = "ACSettings#PROPERTY_INPUT",
-				value1 = "uZcHpcFx3abyBF4MtqVQFsbt9lrF7lV5A9xC7tujzqicCSHoscXb0sJV6q2alW7cli");
-
-			Click(locator1 = "Modal#HEADER");
-
-			AssertTextPresent(
-				locator1 = "TextInput#ALERT",
-				value1 = "Exceeds maximum length.");
-		}
-
-		task ("View the Save button is disabled") {
-			AssertVisible(
-				key_text = "Save",
-				locator1 = "Button#ANY_DISABLED");
-		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"

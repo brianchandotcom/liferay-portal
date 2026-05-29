@@ -248,3 +248,92 @@ test(
 		}
 	}
 );
+
+test(
+	'Deleting a property requires the matching confirmation phrase and shows a success alert',
+	{
+		tag: ['@LRAC-14648', '@LRAC-14649'],
+	},
+	async ({apiHelpers, page}) => {
+		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
+
+		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+
+		const propertyName = 'Delete Property ' + getRandomString();
+
+		let channelId: string | null = null;
+
+		try {
+			const channel =
+				await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+					propertyName,
+					project.groupId
+				);
+
+			channelId = channel.id;
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await searchByTerm({page, searchTerm: propertyName});
+
+			// Open the row kebab and click Delete
+
+			await page
+				.getByRole('row', {name: new RegExp(propertyName)})
+				.getByRole('button', {name: 'Menu'})
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			const deleteDialog = page.getByRole('dialog');
+
+			const confirmationInput = deleteDialog.getByRole('textbox');
+
+			const deleteButton = deleteDialog.getByRole('button', {
+				exact: true,
+				name: 'Delete',
+			});
+
+			// Wrong value shows the validation warning after blur
+
+			await confirmationInput.fill(propertyName);
+
+			await confirmationInput.press('Tab');
+
+			await expect(
+				page.getByText('String does not match.')
+			).toBeVisible();
+
+			// Matching confirmation phrase clears the warning
+
+			await confirmationInput.fill(`Delete ${propertyName}`);
+
+			await expect(page.getByText('String does not match.')).toHaveCount(
+				0
+			);
+
+			await deleteButton.click();
+
+			await expect(
+				page.getByText('Success:1 property has been deleted')
+			).toBeVisible();
+
+			channelId = null;
+
+			await expect(
+				page.getByRole('link', {exact: true, name: propertyName})
+			).toHaveCount(0);
+		}
+		finally {
+			if (channelId) {
+				await apiHelpers.jsonWebServicesOSBFaro
+					.deleteChannel(`[${channelId}]`, project.groupId)
+					.catch(() => {});
+			}
+		}
+	}
+);

@@ -29,7 +29,8 @@ public interface AgentDefinitionManager {
 
 	public Page<AgentDefinition> getAgentDefinitionsPage(
 			long companyId, DTOConverterContext dtoConverterContext,
-			String filter, Pagination pagination, String search, Sort[] sorts)
+			String filterString, Pagination pagination, String search,
+			Sort[] sorts)
 		throws Exception;
 
 	public AgentDefinition patchAgentDefinitionUpdateActive(

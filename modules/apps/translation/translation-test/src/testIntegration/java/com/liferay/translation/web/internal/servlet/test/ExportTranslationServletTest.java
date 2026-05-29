@@ -240,7 +240,7 @@ public class ExportTranslationServletTest {
 		try (ZipInputStream zipInputStream = new ZipInputStream(
 				new ByteArrayInputStream(zipBytes))) {
 
-			ZipEntry zipEntry;
+			ZipEntry zipEntry = null;
 
 			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
 				String name = zipEntry.getName();

@@ -22,7 +22,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -197,14 +196,15 @@ public class OAuthProtectedResourceMetadataWellKnownFilterTest {
 			return null;
 		}
 
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				inputStream, StandardCharsets.UTF_8)) {
 
 			StringBuilder stringBuilder = new StringBuilder();
-			String line;
+			char[] buffer = new char[1024];
+			int read;
 
-			while ((line = bufferedReader.readLine()) != null) {
-				stringBuilder.append(line);
+			while ((read = inputStreamReader.read(buffer)) != -1) {
+				stringBuilder.append(buffer, 0, read);
 			}
 
 			return stringBuilder.toString();

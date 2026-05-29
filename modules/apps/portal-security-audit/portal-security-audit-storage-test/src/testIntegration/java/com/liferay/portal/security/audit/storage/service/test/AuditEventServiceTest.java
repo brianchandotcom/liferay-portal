@@ -104,7 +104,7 @@ public class AuditEventServiceTest {
 
 		User accountMemberUser = UserTestUtil.addUser();
 
-		_addUserToAccount(
+		_associateUser(
 			_roleLocalService.getRole(
 				TestPropsValues.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
@@ -127,7 +127,7 @@ public class AuditEventServiceTest {
 
 		User accountAdminUser = UserTestUtil.addUser();
 
-		_addUserToAccount(
+		_associateUser(
 			_roleLocalService.getRole(
 				TestPropsValues.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
@@ -174,7 +174,7 @@ public class AuditEventServiceTest {
 		Assert.assertEquals(auditEvents.toString(), 3, auditEvents.size());
 	}
 
-	private void _addUserToAccount(Role role, User user) throws Exception {
+	private void _associateUser(Role role, User user) throws Exception {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId(), user.getUserId());
 

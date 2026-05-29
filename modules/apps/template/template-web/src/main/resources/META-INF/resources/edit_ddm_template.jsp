@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
 

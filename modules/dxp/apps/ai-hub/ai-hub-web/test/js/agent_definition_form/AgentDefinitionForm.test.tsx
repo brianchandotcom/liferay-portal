@@ -191,7 +191,7 @@ describe('AgentDefinitionForm', () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				active: true,
 				agentDefinitionsToContentRetrievers: [],
-				agentDefinitionsToModelArmorTemplates: [],
+				aiHubAgentDefinitionsToAIHubMATemplates: [],
 				description: 'Loaded',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'in',
@@ -336,7 +336,7 @@ describe('AgentDefinitionForm', () => {
 		it('fetches the single workflow by name when readOnly is true and the name is set', async () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				agentDefinitionsToContentRetrievers: [],
-				agentDefinitionsToModelArmorTemplates: [],
+				aiHubAgentDefinitionsToAIHubMATemplates: [],
 				externalReferenceCode: 'AGENT_X',
 				title_i18n: {en_US: 'Loaded'},
 				workflowDefinitionName: 'wf-1',

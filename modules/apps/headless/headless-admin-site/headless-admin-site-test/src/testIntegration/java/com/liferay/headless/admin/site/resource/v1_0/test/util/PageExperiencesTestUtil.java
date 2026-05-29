@@ -112,16 +112,13 @@ public class PageExperiencesTestUtil {
 		String externalReferenceCode, PageElement[] pageElements,
 		String pageSpecificationExternalReferenceCode, String uuid) {
 
-		PageExperience pageExperience = new PageExperience();
+		PageExperience pageExperience = getPageExperience(
+			externalReferenceCode, SegmentsExperienceConstants.KEY_DEFAULT, 0,
+			uuid);
 
-		pageExperience.setExternalReferenceCode(externalReferenceCode);
-		pageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
-		pageExperience.setName_i18n(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 		pageExperience.setPageElements(pageElements);
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			pageSpecificationExternalReferenceCode);
-		pageExperience.setUuid(uuid);
 
 		return pageExperience;
 	}

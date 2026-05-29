@@ -2898,11 +2898,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPostSiteSitePageWithDraftContentPageSpecification(
+			boolean assertSuffixMirroredFragmentEntryLinks,
 			ContentPageSpecification contentPageSpecification,
-			String pageExternalReferenceCode,
 			String draftContentPageSpecificationExternalReferenceCode,
-			PageSpecification.Status status, boolean inputIsDraft,
-			boolean assertSuffixMirroredFragmentEntryLinks)
+			boolean inputIsDraft, String pageExternalReferenceCode,
+			PageSpecification.Status status)
 		throws Exception {
 
 		PageExperience[] pageExperiences =
@@ -2994,9 +2994,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					RandomTestUtil.randomString(), status);
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
-			draftContentPageSpecification, pageExternalReferenceCode,
-			draftContentPageSpecificationExternalReferenceCode, status, true,
-			true);
+			true, draftContentPageSpecification,
+			draftContentPageSpecificationExternalReferenceCode, true,
+			pageExternalReferenceCode, status);
 	}
 
 	private void _testPostSiteSitePageWithPageElements() throws Exception {
@@ -3155,9 +3155,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					RandomTestUtil.randomString(), status);
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
-			publishedContentPageSpecification, pageExternalReferenceCode,
-			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT,
-			status, false, true);
+			true, publishedContentPageSpecification,
+			pageExternalReferenceCode + LayoutConstants.ERC_SUFFIX_DRAFT, false,
+			pageExternalReferenceCode, status);
 	}
 
 	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()
@@ -3195,10 +3195,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			() -> ContentPageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
-			publishedContentPageSpecification,
+			false, publishedContentPageSpecification,
+			draftContentPageSpecificationExternalReferenceCode, false,
 			pageSpecificationExternalReferenceCode,
-			draftContentPageSpecificationExternalReferenceCode,
-			PageSpecification.Status.APPROVED, false, false);
+			PageSpecification.Status.APPROVED);
 
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, testGroup.getGroupId());

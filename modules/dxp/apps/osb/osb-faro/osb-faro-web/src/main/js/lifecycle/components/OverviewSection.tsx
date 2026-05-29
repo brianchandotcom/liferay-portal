@@ -11,7 +11,7 @@ interface IOverviewSectionProps {
 }
 
 const renderTrendLabel = (percentageNode: React.ReactNode) =>
-	sub(Liferay.Language.get('x-vs-last-x-months'), [percentageNode, 3], false);
+	sub(Liferay.Language.get('x-vs-last-x-days'), [percentageNode, 90], false);
 
 const OverviewSection: React.FC<IOverviewSectionProps> = ({
 	loading = false,

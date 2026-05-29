@@ -862,4 +862,4 @@ public abstract class BaseSuggestionResourceTestCase {
 		_suggestionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1830257986
+// LIFERAY-REST-BUILDER-HASH:-1277447057

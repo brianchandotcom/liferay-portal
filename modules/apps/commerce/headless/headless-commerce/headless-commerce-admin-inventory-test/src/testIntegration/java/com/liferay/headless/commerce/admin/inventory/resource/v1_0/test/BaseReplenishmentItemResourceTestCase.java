@@ -2964,4 +2964,4 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1442066385
+// LIFERAY-REST-BUILDER-HASH:-250795444

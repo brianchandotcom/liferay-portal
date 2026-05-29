@@ -3397,4 +3397,4 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1844448166
+// LIFERAY-REST-BUILDER-HASH:-830770811

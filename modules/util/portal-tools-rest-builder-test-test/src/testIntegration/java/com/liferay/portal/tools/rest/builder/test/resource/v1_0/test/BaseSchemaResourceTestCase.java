@@ -844,4 +844,4 @@ public abstract class BaseSchemaResourceTestCase {
 			_schemaResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2058730704
+// LIFERAY-REST-BUILDER-HASH:1939042529

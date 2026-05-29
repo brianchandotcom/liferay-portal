@@ -72,6 +72,16 @@ describe('useSnapshots', () => {
 		delete Liferay.FeatureFlags['LPS-164563'];
 	});
 
+	it('should return null while the snapshots are still loading', () => {
+		mockFetch([]);
+
+		const {result} = renderHook(() =>
+			useSnapshots('accounts-list-dataset')
+		);
+
+		expect(result.current).toBeNull();
+	});
+
 	it('should wrap saved views in a single headerless group', async () => {
 		mockFetch([
 			{
@@ -102,15 +112,13 @@ describe('useSnapshots', () => {
 	});
 
 	it('should return an empty array when there are no saved views', async () => {
-		const fetch = mockFetch([]);
+		mockFetch([]);
 
 		const {result} = renderHook(() =>
 			useSnapshots('accounts-list-dataset')
 		);
 
-		await waitFor(() => expect(fetch).toHaveBeenCalled());
-
-		expect(result.current).toEqual([]);
+		await waitFor(() => expect(result.current).toEqual([]));
 	});
 
 	it('should not fetch when the feature flags are disabled', () => {

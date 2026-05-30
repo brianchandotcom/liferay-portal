@@ -2577,6 +2577,71 @@ test(
 );
 
 test(
+	`Save a batch segment with a Viewed Document & Media Web Behavior criterion`,
+	{
+		tag: '@LRAC-9224',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const individual = generateIndividual({
+			name: 'webbehavior' + getRandomString(),
+		});
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Document',
+				assetId: '1',
+				assetTitle: 'DM AC Title',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: new Date().toISOString(),
+				eventId: 'documentPreviewed',
+				title: 'DM AC Title',
+				userId: individual.id,
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		await addSegmentField({
+			criterionName: 'Viewed Document & Media',
+			criterionType: 'Events',
+			page,
+		});
+
+		await selectAsset({assetName: 'DM AC Title', page});
+
+		await saveSegment(page);
+
+		await expect(page.locator('.criteria-card-root')).toContainText(
+			'DM AC Title'
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await viewNameOnTableList({itemNames: segmentName, page});
+	}
+);
+
+test(
 	'Delete a batch segment via the in-editor Delete Segment button',
 	{
 		tag: ['@LPD-90772', '@LRAC-11536'],

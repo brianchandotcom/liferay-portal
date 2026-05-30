@@ -408,9 +408,8 @@ function _set_portal_http_address {
 }
 
 function _set_poshi_url {
-	local http_port=$((8080 + OFFSET))
-
 	local file="${WORKTREE_DIR}/test.${USER}.properties"
+	local http_port=$((8080 + OFFSET))
 
 	_set_property "${file}" default.portal.url "http://localhost:${http_port}"
 	_set_property "${file}" instance.url "http://localhost:${http_port}"

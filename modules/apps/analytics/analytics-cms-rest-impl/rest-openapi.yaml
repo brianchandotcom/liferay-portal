@@ -129,6 +129,16 @@ components:
                 vocabulariesCount:
                     format: int64
                     type: integer
+        PerformanceOverviewMetric:
+            properties:
+                downloadsMetric:
+                    $ref: "#/components/schemas/Metric"
+                impressionsMetric:
+                    $ref: "#/components/schemas/Metric"
+                readsMetric:
+                    $ref: "#/components/schemas/Metric"
+                viewsMetric:
+                    $ref: "#/components/schemas/Metric"
         TopPage:
             properties:
                 canonicalUrl:
@@ -497,3 +507,28 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryTopPages"
             tags: ["ObjectEntryTopPages"]
+    "/performance-overview-metric":
+        get:
+            operationId: getPerformanceOverviewMetric
+            parameters:
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceOverviewMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceOverviewMetric"
+            tags: ["PerformanceOverviewMetric"]

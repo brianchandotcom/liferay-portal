@@ -99,8 +99,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 		}
 
-		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
-			_liferayPortletRequest, _liferayPortletResponse);
+		List<Menu> menus = _getPortletTitleMenus(dlPortletToolbarContributor);
 
 		if (menus.isEmpty()) {
 			return null;
@@ -424,6 +423,36 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			_httpServletRequest, _portalPreferences);
 
 		return _orderByCol;
+	}
+
+	private List<Menu> _getPortletTitleMenus(
+		PortletToolbarContributor dlPortletToolbarContributor) {
+
+		String currentURL = (String)_liferayPortletRequest.getAttribute(
+			WebKeys.CURRENT_URL);
+
+		if (Validator.isNotNull(currentURL)) {
+			return dlPortletToolbarContributor.getPortletTitleMenus(
+				_liferayPortletRequest, _liferayPortletResponse);
+		}
+
+		PortletURL portletURL = _getPortletURL();
+
+		if (portletURL == null) {
+			return dlPortletToolbarContributor.getPortletTitleMenus(
+				_liferayPortletRequest, _liferayPortletResponse);
+		}
+
+		_liferayPortletRequest.setAttribute(
+			WebKeys.CURRENT_URL, portletURL.toString());
+
+		try {
+			return dlPortletToolbarContributor.getPortletTitleMenus(
+				_liferayPortletRequest, _liferayPortletResponse);
+		}
+		finally {
+			_liferayPortletRequest.removeAttribute(WebKeys.CURRENT_URL);
+		}
 	}
 
 	private PortletURL _getPortletURL() {

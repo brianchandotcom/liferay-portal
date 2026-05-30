@@ -122,7 +122,7 @@ test(
 		await test.step('Without any account role the user sees only Home', async () => {
 			await assertVisibleMenuPages(
 				['Home'],
-				['Account Management', 'Activity', 'Agent Builder', 'Chatbots']
+				['Account Management', 'Agent Builder', 'Chatbots']
 			);
 		});
 
@@ -131,7 +131,7 @@ test(
 
 			await assertVisibleMenuPages(
 				['Account Management', 'Home'],
-				['Activity', 'Agent Builder', 'Chatbots']
+				['Agent Builder', 'Chatbots']
 			);
 		});
 
@@ -140,7 +140,7 @@ test(
 
 			await assertVisibleMenuPages(
 				['Account Management', 'Agent Builder', 'Home'],
-				['Activity', 'Chatbots']
+				['Chatbots']
 			);
 		});
 
@@ -149,7 +149,7 @@ test(
 
 			await assertVisibleMenuPages(
 				['Account Management', 'Agent Builder', 'Home'],
-				['Activity', 'Chatbots']
+				['Chatbots']
 			);
 		});
 
@@ -157,13 +157,7 @@ test(
 			await assignAccountRole('AI Hub Administrator');
 
 			await assertVisibleMenuPages(
-				[
-					'Account Management',
-					'Activity',
-					'Agent Builder',
-					'Chatbots',
-					'Home',
-				],
+				['Account Management', 'Agent Builder', 'Chatbots', 'Home'],
 				[]
 			);
 		});

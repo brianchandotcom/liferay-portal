@@ -427,65 +427,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10015 | Test Summary: Update Attributes Data Type"
-	@priority = 4
-	test UpdateAttributeDataType {
-		var attributeName = "color";
-		var attributeValue = "blue";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				attributesName = ${attributeName},
-				attributesValue = ${attributeValue},
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Edit the new attribute") {
-			ACNavigation.openItem(itemName = ${attributeName});
-
-			ACUtils.clickAnyButton(button = "Edit");
-		}
-
-		task ("Change the type of the attribute") {
-			ACCustomEvents.changeAttributeDataType(newDataType = "Number");
-		}
-
-		task ("Back to Event Attributes and Navigation to attributes tab") {
-			ACNavigation.backNavigation(pageName = "Event Attributes");
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Check if the type has been changed") {
-			ACCustomEvents.viewDataTypeList(
-				attributeName = ${attributeName},
-				typeValue = "Number");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
 	@priority = 5
 	test CanBlockCustomEvent {

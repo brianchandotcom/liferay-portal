@@ -72,7 +72,7 @@ public class NavigationMenuItemDTOConverter
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			unicodeProperties.getProperty("externalReferenceCode"),
 			siteNavigationMenuItem.getGroupId());
-		Object navigationMenuItemSettingsObject =
+		Object navigationMenuItemSettings =
 			_getNavigationMenuItemSettings(
 				siteNavigationMenuItem.getType(), unicodeProperties);
 
@@ -190,7 +190,7 @@ public class NavigationMenuItemDTOConverter
 							NavigationMenuItem.class);
 					});
 				setNavigationMenuItemSettings(
-					() -> navigationMenuItemSettingsObject);
+					() -> navigationMenuItemSettings);
 				setType(siteNavigationMenuItem::getType);
 				setUseCustomName(
 					() -> Boolean.valueOf(

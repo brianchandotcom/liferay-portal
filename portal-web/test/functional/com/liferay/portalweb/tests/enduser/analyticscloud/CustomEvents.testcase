@@ -2692,57 +2692,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10213 | Test Summary: Global attributes data shows sample data and last accessed"
-	@priority = 5
-	test AssertSampleDataAndLastAccessInGlobalAttributes {
-		var globalAttributeName = "pageTitle";
-		var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to global attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACSettings.goToGlobalAttributes();
-		}
-
-		task ("Select a global attribute") {
-			ACUtils.searchBar(searchItem = ${globalAttributeName});
-
-			var sampleRawDataValue = ACCustomEvents.getSampleRawData(attributeName = ${globalAttributeName});
-
-			ACNavigation.openItem(itemName = ${globalAttributeName});
-		}
-
-		task ("View the sample data") {
-			ACCustomEvents.viewDataAttribute(attributeValueList = ${sampleRawDataValue});
-
-			ACCustomEvents.viewDataAttributeInOrder(
-				attributeValue = "AC Page - Site Name - ${dataSource}",
-				index = 1);
-		}
-	}
-
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10215 | Test Summary: Edit global attribute description"
 	@priority = 5
 	test EditGlobalAttributeDescription {

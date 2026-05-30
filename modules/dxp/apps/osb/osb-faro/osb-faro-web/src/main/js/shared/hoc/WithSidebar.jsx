@@ -18,6 +18,7 @@ import {get} from 'lodash';
 import {getDefaultChannel} from 'shared/components/channels-menu';
 import {hasChanges} from 'shared/util/react';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
+import {useLocation} from 'react-router-dom';
 import {User} from '../util/records';
 import {withError, withLoading} from './util';
 
@@ -189,6 +190,12 @@ export default compose(
 			}
 		}
 
-		return WithSidebar;
+		const WithSidebarWithLocation = props => {
+			const location = useLocation();
+
+			return <WithSidebar {...props} location={location} />;
+		};
+
+		return WithSidebarWithLocation;
 	}
 );

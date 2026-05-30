@@ -19,7 +19,7 @@ import {Map, OrderedMap, Set} from 'immutable';
 import {noop} from 'lodash';
 import {OrderParams} from 'shared/util/records';
 import {setUriFilterValues, setUriQueryValues} from 'shared/util/router';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const {cur: defaultPage} = Constants.pagination;
 
@@ -101,7 +101,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 	showSearch = true,
 	total = 0
 }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const itemsSelected = selectEntirePage || selectEntirePageIndeterminate;
 
@@ -131,7 +131,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 			onFilterByChange &&
 				onFilterByChange(emptyFilterBy as unknown as FilterByType);
 		} else {
-			history.push(
+			navigate(
 				setUriFilterValues(
 					emptyFilterBy as unknown as Parameters<
 						typeof setUriFilterValues
@@ -146,7 +146,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 		if (onFilterByChange) {
 			onFilterByChange(value);
 		} else {
-			history.push(
+			navigate(
 				setUriFilterValues(
 					value as unknown as Parameters<
 						typeof setUriFilterValues
@@ -165,7 +165,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 				)
 			);
 		} else {
-			history.push(
+			navigate(
 				setUriQueryValues(
 					{
 						[field]:
@@ -191,7 +191,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 				})
 			);
 		} else {
-			history.push(
+			navigate(
 				setUriQueryValues(
 					{
 						field,
@@ -207,7 +207,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 	const handleSearchSubmit = (query: string) => {
 		onQueryChange
 			? onQueryChange(query)
-			: history.push(
+			: navigate(
 					setUriQueryValues({
 						page: defaultPage,
 						query

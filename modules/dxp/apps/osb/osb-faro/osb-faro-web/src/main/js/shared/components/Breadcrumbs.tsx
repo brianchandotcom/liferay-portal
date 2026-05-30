@@ -5,7 +5,7 @@ import getCN from 'classnames';
 import React from 'react';
 import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {Link} from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 interface IBreadcrumbProps {
 	bufferSize?: number;
@@ -62,7 +62,7 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 	items,
 	onClick
 }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const totalItems = items.length;
 
 	let shownItems = items;
@@ -98,7 +98,7 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 					{items.map(({href, label}, i) => (
 						<ClayDropDown.Item
 							key={i}
-							onClick={() => href && history.push(href)}
+							onClick={() => href && navigate(href)}
 						>
 							{label}
 						</ClayDropDown.Item>

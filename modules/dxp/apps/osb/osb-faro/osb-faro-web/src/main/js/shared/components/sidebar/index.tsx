@@ -75,7 +75,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 				{
 					icon: 'ac_segment',
 					label: Liferay.Language.get('segments'),
-					route: Routes.CONTACTS_LIST_SEGMENT,
+					route: `${Routes.CONTACTS}/${SEGMENTS}`,
 					url: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 						channelId,
 						groupId,
@@ -85,7 +85,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 				LDPEnabled && {
 					icon: 'ac_account',
 					label: Liferay.Language.get('accounts'),
-					route: Routes.CONTACTS_LIST_ACCOUNT,
+					route: `${Routes.CONTACTS}/${ACCOUNTS}`,
 					url: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 						channelId,
 						groupId,
@@ -217,10 +217,11 @@ const Sidebar: React.FC<ISidebarProps> = ({
 											<SidebarItem
 												active={
 													!!matchPath(
-														activePathname,
 														{
+															end: false,
 															path: route
-														}
+														},
+														activePathname
 													)
 												}
 												href={url}
@@ -250,9 +251,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
 
 					<SidebarItem
 						active={
-							!!matchPath(activePathname, {
-								path: Routes.SETTINGS
-							})
+							!!matchPath(
+								{
+									end: false,
+									path: Routes.SETTINGS
+								},
+								activePathname
+							)
 						}
 						href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 							groupId
@@ -264,9 +269,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					{DEVELOPER_MODE && (
 						<SidebarItem
 							active={
-								!!matchPath(activePathname, {
-									path: Routes.UI_KIT
-								})
+								!!matchPath(
+									{
+										end: false,
+										path: Routes.UI_KIT
+									},
+									activePathname
+								)
 							}
 							href={toRoute(Routes.UI_KIT, {
 								channelId,

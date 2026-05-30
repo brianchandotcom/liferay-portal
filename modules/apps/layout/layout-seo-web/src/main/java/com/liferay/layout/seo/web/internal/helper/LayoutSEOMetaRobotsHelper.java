@@ -62,7 +62,7 @@ public class LayoutSEOMetaRobotsHelper {
 					return null;
 				}
 
-				jakarta.portlet.PortletPreferences jakartaPortletPreferences =
+				jakarta.portlet.PortletPreferences jxPortletPreferences =
 					_portletPreferencesLocalService.fetchPreferences(
 						portletPreferences.getCompanyId(),
 						portletPreferences.getOwnerId(),
@@ -70,15 +70,15 @@ public class LayoutSEOMetaRobotsHelper {
 						portletPreferences.getPlid(),
 						portletPreferences.getPortletId());
 
-				if ((jakartaPortletPreferences == null) ||
+				if ((jxPortletPreferences == null) ||
 					!layoutSEOMetaRobotsProvider.isProvidesContent(
-						jakartaPortletPreferences)) {
+						jxPortletPreferences)) {
 
 					return null;
 				}
 
 				return _getPortletTitle(
-					jakartaPortletPreferences, locale, portlet);
+					jxPortletPreferences, locale, portlet);
 			});
 
 		return ListUtil.sort(portletTitles);

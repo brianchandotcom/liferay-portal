@@ -4,7 +4,7 @@ import SegmentGrowthWithList, {
 	SegmentGrowthChart,
 	SelectedPointInfo
 } from '../Growth';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {render, screen} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
@@ -19,21 +19,26 @@ describe('SegmentGrowthWithList', () => {
 					'/workspace/23/123123/contacts/segments/321321/membership'
 				]}
 			>
-				<Route path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}>
-					<SegmentGrowthWithList
-						channelId='123'
-						data={[
-							{
-								added: 1,
-								modifiedDate: data.getTimestamp(),
-								removed: 3
-							}
-						]}
-						groupId='23'
-						id='3'
-						onPointSelect={jest.fn()}
+				<RouterRoutes>
+					<Route
+						element={
+							<SegmentGrowthWithList
+								channelId='123'
+								data={[
+									{
+										added: 1,
+										modifiedDate: data.getTimestamp(),
+										removed: 3
+									}
+								]}
+								groupId='23'
+								id='3'
+								onPointSelect={jest.fn()}
+							/>
+						}
+						path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}
 					/>
-				</Route>
+				</RouterRoutes>
 			</MemoryRouter>
 		);
 

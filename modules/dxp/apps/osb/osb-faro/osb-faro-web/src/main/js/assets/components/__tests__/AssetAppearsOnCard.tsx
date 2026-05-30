@@ -6,6 +6,7 @@ import {ApolloProvider} from '@apollo/client';
 import {AssetTypes} from 'shared/util/constants';
 import {cleanup, render} from '@testing-library/react';
 import {EmptyStateLink, EmptyStateText} from '../AssetAppearsOnCard';
+import {MemoryRouter} from 'react-router-dom';
 import {
 	mockAssetAppearsOnReq,
 	mockPreferenceReq,
@@ -14,7 +15,6 @@ import {
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {StaticRouter} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -47,7 +47,7 @@ const WrappedComponent = ({
 }) => (
 	<Provider store={mockStore()}>
 		<ApolloProvider client={client}>
-			<StaticRouter>
+			<MemoryRouter>
 				<MockedProvider
 					mocks={[
 						mockTimeRangeReq(),
@@ -68,7 +68,7 @@ const WrappedComponent = ({
 						emptyStateText={emptyStateText}
 					/>
 				</MockedProvider>
-			</StaticRouter>
+			</MemoryRouter>
 		</ApolloProvider>
 	</Provider>
 );

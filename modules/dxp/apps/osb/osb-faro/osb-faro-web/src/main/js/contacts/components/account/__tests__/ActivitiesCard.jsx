@@ -3,8 +3,8 @@ import * as data from 'test/data';
 import ActivitiesCard from '../ActivitiesCard';
 import React from 'react';
 import {Account} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -12,7 +12,7 @@ jest.unmock('react-dom');
 describe('ActivitiesCard', () => {
 	it('should render', async () => {
 		const {container} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<ActivitiesCard
 					account={data.getImmutableMock(
 						Account,
@@ -21,7 +21,7 @@ describe('ActivitiesCard', () => {
 					)}
 					groupId='23'
 				/>
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		jest.runAllTimers();
@@ -33,7 +33,7 @@ describe('ActivitiesCard', () => {
 
 	it('should render w/ loading', () => {
 		const {container} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<ActivitiesCard
 					account={data.getImmutableMock(
 						Account,
@@ -42,7 +42,7 @@ describe('ActivitiesCard', () => {
 					)}
 					groupId='23'
 				/>
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		expect(container.querySelector('.loading-root')).toBeTruthy();
@@ -52,7 +52,7 @@ describe('ActivitiesCard', () => {
 		API.activities.fetchHistory.mockReturnValueOnce(Promise.reject({}));
 
 		const {container, getByText} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<ActivitiesCard
 					account={data.getImmutableMock(
 						Account,
@@ -61,7 +61,7 @@ describe('ActivitiesCard', () => {
 					)}
 					groupId='23'
 				/>
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		jest.runAllTimers();

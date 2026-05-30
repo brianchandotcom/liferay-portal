@@ -3,13 +3,20 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {cleanup, render} from '@testing-library/react';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {Workspace} from '../Workspace';
 
 jest.unmock('react-dom');
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		groupId: '23'
+	})
+}));
 
 jest.mock('shared/actions/alerts', () => ({
 	actionTypes: {},
@@ -27,15 +34,25 @@ const defaultProps = {
 	project: new Project(data.mockProject())
 };
 
-const DefaultComponent = props => (
-	<Provider store={mockStore()}>
-		<MemoryRouter initialEntries={['/workspace/23/settings/workspace']}>
-			<Route path='/workspace/:groupId/settings/workspace'>
-				<Workspace {...defaultProps} {...props} />
-			</Route>
-		</MemoryRouter>
-	</Provider>
-);
+const DefaultComponent = props => {
+	const router = createMemoryRouter(
+		[
+			{
+				element: (
+					<Provider store={mockStore()}>
+						<Workspace {...defaultProps} {...props} />
+					</Provider>
+				),
+				path: '/workspace/:groupId/settings/workspace'
+			}
+		],
+		{
+			initialEntries: ['/workspace/23/settings/workspace']
+		}
+	);
+
+	return <RouterProvider router={router} />;
+};
 
 describe('Workspace Settting', () => {
 	afterEach(cleanup);

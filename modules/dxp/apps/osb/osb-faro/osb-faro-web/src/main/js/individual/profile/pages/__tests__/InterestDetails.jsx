@@ -2,8 +2,8 @@ import * as data from 'test/data';
 import InterestDetails from '../InterestDetails';
 import React from 'react';
 import {Individual} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 const defaultProps = {
@@ -19,9 +19,9 @@ jest.unmock('react-dom');
 describe('InterestDetails', () => {
 	it('should render', async () => {
 		const {container, getByText} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<InterestDetails {...defaultProps} />
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -31,9 +31,9 @@ describe('InterestDetails', () => {
 
 	it('should render an active pages list tab', async () => {
 		const {container, getByText} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<InterestDetails {...defaultProps} />
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -44,9 +44,9 @@ describe('InterestDetails', () => {
 
 	it('should render an inactive pages list tab', async () => {
 		const {container, getByText} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<InterestDetails {...defaultProps} active='false' />
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(container);

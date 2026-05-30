@@ -2,9 +2,9 @@ import React from 'react';
 import SearchableEntitiesTableModal from '../SearchableEntitiesTableModal';
 import {cleanup, render} from '@testing-library/react';
 import {createOrderIOMap, EMAIL_ADDRESS} from 'shared/util/pagination';
+import {MemoryRouter} from 'react-router-dom';
 import {noop} from 'lodash';
 import {OrderByDirections} from 'shared/util/constants';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -15,7 +15,7 @@ const ITEMS = [
 ];
 
 const DefaultComponent = props => (
-	<StaticRouter>
+	<MemoryRouter>
 		<SearchableEntitiesTableModal
 			columns={[
 				{
@@ -36,7 +36,7 @@ const DefaultComponent = props => (
 			rowIdentifier='emailAddress'
 			{...props}
 		/>
-	</StaticRouter>
+	</MemoryRouter>
 );
 
 describe('SearchableEntitiesTableModal', () => {

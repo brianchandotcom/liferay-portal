@@ -11,9 +11,9 @@ import NoPropertiesAvailable from '../NoPropertiesAvailable';
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {getImmutableMock, mockMemberUser, mockUser} from 'test/data';
+import {MemoryRouter} from 'react-router-dom';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {User} from 'shared/util/records';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -21,13 +21,13 @@ jest.unmock('react-dom');
 
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
+		<MemoryRouter>
 			<NoPropertiesAvailable
 				currentUser={getImmutableMock(User, mockUser)}
 				groupId='123123'
 				{...props}
 			/>
-		</StaticRouter>
+		</MemoryRouter>
 	</Provider>
 );
 

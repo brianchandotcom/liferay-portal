@@ -1,8 +1,8 @@
 import React from 'react';
 import SelectDataSource from '../SelectDataSource';
 import {cleanup, render} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
 import {noop} from 'lodash';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -44,9 +44,9 @@ describe('SelectDataSource', () => {
 
 	it('should render', () => {
 		const {container} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<SelectDataSource sections={mockSections} />
-			</StaticRouter>
+			</MemoryRouter>
 		);
 		expect(container).toMatchSnapshot();
 	});

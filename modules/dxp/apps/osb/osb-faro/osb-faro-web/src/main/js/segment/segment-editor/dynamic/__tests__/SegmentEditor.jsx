@@ -2,7 +2,6 @@ import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import SegmentEditor, {validateSegmentEditor} from '../index';
-import {BrowserRouter} from 'react-router-dom';
 import {
 	cleanup,
 	fireEvent,
@@ -10,6 +9,7 @@ import {
 	screen,
 	waitFor
 } from '@testing-library/react';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {Provider} from 'react-redux';
@@ -24,21 +24,26 @@ jest.mock('uuid', () => ({
 
 jest.unmock('react-dom');
 
+const renderWithRouter = element => {
+	const router = createMemoryRouter([
+		{
+			element,
+			path: '/'
+		}
+	]);
+
+	return render(<RouterProvider router={router} />);
+};
+
 describe('SegmentEditor', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container} = renderWithRouter(
 			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor
-							channelId='321'
-							groupId='23'
-							type='BATCH'
-						/>
-					</DndProvider>
-				</BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<SegmentEditor channelId='321' groupId='23' type='BATCH' />
+				</DndProvider>
 			</Provider>
 		);
 
@@ -46,25 +51,23 @@ describe('SegmentEditor', () => {
 	});
 
 	it('should render with error message', () => {
-		render(
+		renderWithRouter(
 			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor
-							channelId='321'
-							groupId='23'
-							segment={data.getImmutableMock(
-								Segment,
-								data.mockSegment,
-								123,
-								{
-									state: SegmentStates.Disabled
-								}
-							)}
-							type='BATCH'
-						/>
-					</DndProvider>
-				</BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<SegmentEditor
+						channelId='321'
+						groupId='23'
+						segment={data.getImmutableMock(
+							Segment,
+							data.mockSegment,
+							123,
+							{
+								state: SegmentStates.Disabled
+							}
+						)}
+						type='BATCH'
+					/>
+				</DndProvider>
 			</Provider>
 		);
 
@@ -72,17 +75,15 @@ describe('SegmentEditor', () => {
 	});
 
 	it('renders the realtime segment with sequential card disabled', () => {
-		render(
+		renderWithRouter(
 			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor
-							channelId='321'
-							groupId='23'
-							type='REAL_TIME'
-						/>
-					</DndProvider>
-				</BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<SegmentEditor
+						channelId='321'
+						groupId='23'
+						type='REAL_TIME'
+					/>
+				</DndProvider>
 			</Provider>
 		);
 
@@ -107,17 +108,15 @@ describe('SegmentEditor', () => {
 	});
 
 	it('renders the realtime segment with sequential card and user enable it', async () => {
-		render(
+		renderWithRouter(
 			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor
-							channelId='321'
-							groupId='23'
-							type='REAL_TIME'
-						/>
-					</DndProvider>
-				</BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<SegmentEditor
+						channelId='321'
+						groupId='23'
+						type='REAL_TIME'
+					/>
+				</DndProvider>
 			</Provider>
 		);
 
@@ -148,17 +147,11 @@ describe('SegmentEditor', () => {
 	});
 
 	it('shows the Segment ERC popover with the description and the slug rule', () => {
-		render(
+		renderWithRouter(
 			<Provider store={mockStore()}>
-				<BrowserRouter>
-					<DndProvider backend={HTML5Backend}>
-						<SegmentEditor
-							channelId='321'
-							groupId='23'
-							type='BATCH'
-						/>
-					</DndProvider>
-				</BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<SegmentEditor channelId='321' groupId='23' type='BATCH' />
+				</DndProvider>
 			</Provider>
 		);
 

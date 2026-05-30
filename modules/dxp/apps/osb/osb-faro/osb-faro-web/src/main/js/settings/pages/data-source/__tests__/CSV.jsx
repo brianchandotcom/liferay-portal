@@ -3,9 +3,9 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {CSV} from '../CSV';
 import {DataSource, User} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {UserRoleNames} from 'shared/util/constants';
 
 jest.unmock('react-dom');
@@ -19,7 +19,7 @@ jest.mock('react-router-dom', () => ({
 
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
+		<MemoryRouter>
 			<CSV
 				currentUser={new User(data.mockUser())}
 				dataSource={new DataSource(data.mockCSVDataSource())}
@@ -27,7 +27,7 @@ const DefaultComponent = props => (
 				id='test'
 				{...props}
 			/>
-		</StaticRouter>
+		</MemoryRouter>
 	</Provider>
 );
 

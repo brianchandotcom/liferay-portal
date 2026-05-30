@@ -4,11 +4,11 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import View from '../View';
 import {ApolloProvider} from '@apollo/client';
+import {MemoryRouter} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {mockEventDefinitionReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -44,9 +44,9 @@ describe('Event View page', () => {
 							)
 						]}
 					>
-						<StaticRouter>
+						<MemoryRouter>
 							<View eventId='0' groupId='23' />
-						</StaticRouter>
+						</MemoryRouter>
 					</MockedProvider>
 				</Provider>
 			</ApolloProvider>

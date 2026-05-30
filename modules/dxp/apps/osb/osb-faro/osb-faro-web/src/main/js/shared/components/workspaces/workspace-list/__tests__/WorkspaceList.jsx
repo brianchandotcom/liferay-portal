@@ -4,9 +4,9 @@ import WorkspaceList from '..';
 import {cleanup, render} from '@testing-library/react';
 import {DataSourceStates} from 'shared/util/constants';
 import {fromJS} from 'immutable';
+import {MemoryRouter} from 'react-router-dom';
 import {Project} from 'shared/util/records';
 import {range, uniqueId} from 'lodash';
-import {StaticRouter} from 'react-router';
 
 const FRIENDLY_URL_BASE = '/faro-liferay-';
 
@@ -68,9 +68,9 @@ const mockAccountWithUnconfiguredList = range(2).map(
 );
 
 const DefaultComponent = props => (
-	<StaticRouter>
+	<MemoryRouter>
 		<WorkspaceList {...props} />
-	</StaticRouter>
+	</MemoryRouter>
 );
 
 describe('WorkspaceList', () => {

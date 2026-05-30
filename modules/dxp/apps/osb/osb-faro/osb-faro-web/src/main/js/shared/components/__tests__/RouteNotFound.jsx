@@ -1,7 +1,7 @@
 import React from 'react';
 import RouteNotFound from '../RouteNotFound';
 import {cleanup, render} from '@testing-library/react';
-import {MemoryRouter} from 'react-router';
+import {MemoryRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 

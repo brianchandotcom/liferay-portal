@@ -1,15 +1,15 @@
 import * as data from 'test/data';
 import React from 'react';
 import SegmentProfileCard from '../ProfileCard';
+import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';
-import {StaticRouter} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 const DefaultComponent = props => (
-	<StaticRouter>
+	<MemoryRouter>
 		<SegmentProfileCard
 			channelId='123'
 			groupId='23'
@@ -17,7 +17,7 @@ const DefaultComponent = props => (
 			segment={data.getImmutableMock(Segment, data.mockSegment, '3')}
 			{...props}
 		/>
-	</StaticRouter>
+	</MemoryRouter>
 );
 
 describe('SegmentProfileCard', () => {

@@ -2,8 +2,8 @@ import * as API from 'shared/api';
 import client from 'shared/apollo/client';
 import React from 'react';
 import withPropertyGroups from '../WithPropertyGroups';
+import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.mock('shared/apollo/client', () => ({
@@ -146,9 +146,9 @@ describe('WithPropertyGroups', () => {
 		const WrappedComponent = withPropertyGroups(TestComponent);
 
 		const {container} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<WrappedComponent channelId='123' groupId='123' type='BATCH' />
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		jest.runAllTimers();

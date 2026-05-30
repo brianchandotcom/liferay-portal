@@ -3,9 +3,9 @@ import AssociatedSegments from '../AssociatedSegments';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {Individual} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -13,7 +13,7 @@ jest.unmock('react-dom');
 describe('IndividualAssociatedSegments', () => {
 	it('should render', async () => {
 		const {container, getByText} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<Provider store={mockStore()}>
 					<AssociatedSegments
 						groupId='23'
@@ -24,7 +24,7 @@ describe('IndividualAssociatedSegments', () => {
 						)}
 					/>
 				</Provider>
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(container);

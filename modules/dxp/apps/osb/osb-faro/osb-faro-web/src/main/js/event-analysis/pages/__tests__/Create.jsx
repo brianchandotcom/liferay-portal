@@ -6,10 +6,10 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/client';
 import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {DISPLAY_NAME} from 'shared/util/pagination';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockEventDefinitionsReq,
@@ -32,49 +32,55 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = () => (
-	<Provider store={mockStore()}>
-		<ApolloProvider client={client}>
-			<MockedProvider
-				mocks={[
-					mockTimeRangeReq(),
-					mockPreferenceReq(),
-					mockEventDefinitionsReq(
-						range(10).map(i =>
-							data.mockEventDefinition(i, {
-								__typename: 'EventDefinition'
-							})
-						),
-						{
-							eventType: 'ALL',
-							hidden: false,
-							keyword: '',
-							size: 200,
-							sort: {
-								column: DISPLAY_NAME,
-								type: OrderByDirections.Ascending
-							}
-						}
-					)
-				]}
-			>
-				<MemoryRouter
-					initialEntries={[
-						'/workspace/123/456/event-analysis/create'
-					]}
-				>
-					<Route path={Routes.EVENT_ANALYSIS_CREATE}>
-						<DataSourcesProvider groupId='123'>
-							<DndProvider backend={HTML5Backend}>
-								<EventAnalysisCreate />
-							</DndProvider>
-						</DataSourcesProvider>
-					</Route>
-				</MemoryRouter>
-			</MockedProvider>
-		</ApolloProvider>
-	</Provider>
-);
+const WrappedComponent = () => {
+	const router = createMemoryRouter(
+		[
+			{
+				element: (
+					<Provider store={mockStore()}>
+						<ApolloProvider client={client}>
+							<MockedProvider
+								mocks={[
+									mockTimeRangeReq(),
+									mockPreferenceReq(),
+									mockEventDefinitionsReq(
+										range(10).map(i =>
+											data.mockEventDefinition(i, {
+												__typename: 'EventDefinition'
+											})
+										),
+										{
+											eventType: 'ALL',
+											hidden: false,
+											keyword: '',
+											size: 200,
+											sort: {
+												column: DISPLAY_NAME,
+												type: OrderByDirections.Ascending
+											}
+										}
+									)
+								]}
+							>
+								<DataSourcesProvider groupId='123'>
+									<DndProvider backend={HTML5Backend}>
+										<EventAnalysisCreate />
+									</DndProvider>
+								</DataSourcesProvider>
+							</MockedProvider>
+						</ApolloProvider>
+					</Provider>
+				),
+				path: Routes.EVENT_ANALYSIS_CREATE
+			}
+		],
+		{
+			initialEntries: ['/workspace/123/456/event-analysis/create']
+		}
+	);
+
+	return <RouterProvider router={router} />;
+};
 
 describe('Event Analysis Create', () => {
 	afterEach(cleanup);

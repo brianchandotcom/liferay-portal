@@ -1,9 +1,9 @@
 import ConfigureCSV from '../ConfigureCSV';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
@@ -17,13 +17,18 @@ jest.mock('react-router-dom', () => ({
 
 describe('ConfigureCSV', () => {
 	it('should render', () => {
-		const {container} = render(
-			<Provider store={mockStore()}>
-				<StaticRouter>
-					<ConfigureCSV groupId='23' id='123' />
-				</StaticRouter>
-			</Provider>
-		);
+		const router = createMemoryRouter([
+			{
+				element: (
+					<Provider store={mockStore()}>
+						<ConfigureCSV groupId='23' id='123' />
+					</Provider>
+				),
+				path: '/'
+			}
+		]);
+
+		const {container} = render(<RouterProvider router={router} />);
 
 		expect(container).toMatchSnapshot();
 	});

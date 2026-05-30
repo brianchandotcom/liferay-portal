@@ -3,12 +3,12 @@ import DynamicSegmentEdit from '../Dynamic';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
 import {Provider} from 'react-redux';
 import {Segment} from 'shared/util/records';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
@@ -35,20 +35,25 @@ describe('DynamicSegmentEdit', () => {
 			{segmentType: 'BATCH'}
 		);
 
-		const {container} = render(
-			<StaticRouter>
-				<Provider store={mockStore()}>
-					<DndProvider backend={HTML5Backend}>
-						<DynamicSegmentEdit
-							groupId={GROUP_ID}
-							id={SEGMENT_ID}
-							propertyGroupsIList={new List()}
-							segment={batchSegmentMock}
-						/>
-					</DndProvider>
-				</Provider>
-			</StaticRouter>
-		);
+		const router = createMemoryRouter([
+			{
+				element: (
+					<Provider store={mockStore()}>
+						<DndProvider backend={HTML5Backend}>
+							<DynamicSegmentEdit
+								groupId={GROUP_ID}
+								id={SEGMENT_ID}
+								propertyGroupsIList={new List()}
+								segment={batchSegmentMock}
+							/>
+						</DndProvider>
+					</Provider>
+				),
+				path: '/'
+			}
+		]);
+
+		const {container} = render(<RouterProvider router={router} />);
 
 		expect(container).toMatchSnapshot();
 	});

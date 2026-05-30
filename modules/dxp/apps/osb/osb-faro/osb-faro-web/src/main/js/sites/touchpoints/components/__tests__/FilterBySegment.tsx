@@ -2,7 +2,7 @@ import * as API from 'shared/api';
 import FilterBySegment from '../FilterBySegment';
 import React from 'react';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {mockSegmentPageViewsReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -30,11 +30,16 @@ const Wrapper = ({
 			'/workspace/123/456/sites/touchpoints/http%3A%2F%2Fliferay.com/Liferay%20DXP%20-%20Home'
 		]}
 	>
-		<Route path='/workspace/:groupId/:channelId/sites/touchpoints/:touchpoint/:title'>
-			<MockedProvider addTypename={false} mocks={mocks}>
-				{children}
-			</MockedProvider>
-		</Route>
+		<RouterRoutes>
+			<Route
+				element={
+					<MockedProvider addTypename={false} mocks={mocks}>
+						{children}
+					</MockedProvider>
+				}
+				path='/workspace/:groupId/:channelId/sites/touchpoints/:touchpoint/:title'
+			/>
+		</RouterRoutes>
 	</MemoryRouter>
 );
 

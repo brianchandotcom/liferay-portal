@@ -1,10 +1,10 @@
 import * as Constants from 'shared/util/constants';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import {MemoryRouter} from 'react-router-dom';
 import {Overview} from '../Overview';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -23,9 +23,9 @@ describe('Definitions Overview', () => {
 
 		const {container} = render(
 			<Provider store={mockStore()}>
-				<StaticRouter>
+				<MemoryRouter>
 					<Overview groupId='23' />
-				</StaticRouter>
+				</MemoryRouter>
 			</Provider>
 		);
 

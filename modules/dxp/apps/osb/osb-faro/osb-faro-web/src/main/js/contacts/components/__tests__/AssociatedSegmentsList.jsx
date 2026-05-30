@@ -3,10 +3,10 @@ import AssociatedSegmentsList from '../AssociatedSegmentsList';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {fromJS} from 'immutable';
+import {MemoryRouter} from 'react-router-dom';
 import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
@@ -20,17 +20,15 @@ const defaultProps = {
 
 const WrappedComponent = () => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
-			<StaticRouter>
-				<AssociatedSegmentsList
-					channelId='123123'
-					dataSourceFn={() => Promise.resolve({})}
-					groupId='23'
-					id='test'
-					total={2}
-				/>
-			</StaticRouter>
-		</StaticRouter>
+		<MemoryRouter>
+			<AssociatedSegmentsList
+				channelId='123123'
+				dataSourceFn={() => Promise.resolve({})}
+				groupId='23'
+				id='test'
+				total={2}
+			/>
+		</MemoryRouter>
 	</Provider>
 );
 

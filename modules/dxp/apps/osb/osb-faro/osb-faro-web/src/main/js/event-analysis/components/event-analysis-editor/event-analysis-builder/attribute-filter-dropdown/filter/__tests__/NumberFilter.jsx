@@ -4,7 +4,7 @@ import mockStore from 'test/mock-store';
 import NumberFilter from '../NumberFilter';
 import React from 'react';
 import {InMemoryCache} from '@apollo/client';
-import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -15,19 +15,22 @@ describe('NumberFilter', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<NumberFilter onSubmit={jest.fn()} />
-							</MockedProvider>
-						</Route>
-					</Switch>
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
+								>
+									<NumberFilter onSubmit={jest.fn()} />
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);

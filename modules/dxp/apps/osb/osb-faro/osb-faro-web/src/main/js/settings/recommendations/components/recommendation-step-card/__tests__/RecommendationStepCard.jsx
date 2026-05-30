@@ -3,25 +3,30 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import RecommendationStepCard from '../index';
 import {ApolloProvider} from '@apollo/client';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
 describe('RecommendationStepCard', () => {
 	it('should render', () => {
-		const {container} = render(
-			<ApolloProvider client={client}>
-				<Provider store={mockStore()}>
-					<StaticRouter>
-						<RecommendationStepCard
-							router={{params: {groupId: '123'}}}
-						/>
-					</StaticRouter>
-				</Provider>
-			</ApolloProvider>
-		);
+		const router = createMemoryRouter([
+			{
+				element: (
+					<ApolloProvider client={client}>
+						<Provider store={mockStore()}>
+							<RecommendationStepCard
+								router={{params: {groupId: '123'}}}
+							/>
+						</Provider>
+					</ApolloProvider>
+				),
+				path: '/'
+			}
+		]);
+
+		const {container} = render(<RouterProvider router={router} />);
 
 		expect(container).toMatchSnapshot();
 	});

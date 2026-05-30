@@ -3,10 +3,9 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, render, screen} from '@testing-library/react';
-import {createMemoryHistory} from 'history';
+import {MemoryRouter} from 'react-router-dom';
 import {mockChannelContext} from 'test/mock-channel-context';
 import {Provider} from 'react-redux';
-import {Router, useHistory} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -46,27 +45,18 @@ jest.mock('shared/util/breadcrumbs', () => ({
 	}))
 }));
 
+const mockNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useHistory: jest.fn(),
+	useNavigate: () => mockNavigate,
 	useParams: () => ({
 		channelId: '123',
 		groupId: '23'
 	})
 }));
 
-const mockedUseHistory = useHistory as jest.Mock;
 const mockedUseRequest = useRequest as jest.Mock;
-
-const mockHistoryPush = jest.fn();
-
-const buildHistory = (path = '/workspace/23/123/accounts') => {
-	const history = createMemoryHistory({initialEntries: [path]});
-
-	history.push = mockHistoryPush;
-
-	return history;
-};
 
 const store = mockStore();
 
@@ -102,14 +92,14 @@ const useRequestImpl =
 
 const renderList = (
 	{queryString = ''}: {queryString?: string} = {},
-	history = buildHistory(`/workspace/23/123/accounts${queryString}`)
+	initialPath = `/workspace/23/123/accounts${queryString}`
 ) =>
 	render(
 		<Provider store={store}>
 			<ChannelContext.Provider value={mockChannelContext() as any}>
-				<Router history={history}>
+				<MemoryRouter initialEntries={[initialPath]}>
 					<List channelId='123' groupId='23' />
-				</Router>
+				</MemoryRouter>
 			</ChannelContext.Provider>
 		</Provider>
 	);
@@ -119,7 +109,6 @@ describe('List', () => {
 		jest.clearAllMocks();
 		lastFilters = undefined;
 
-		mockedUseHistory.mockReturnValue({push: mockHistoryPush});
 		mockedUseRequest.mockImplementation(useRequestImpl());
 	});
 

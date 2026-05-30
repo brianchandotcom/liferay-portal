@@ -22,11 +22,11 @@ jest.mock('shared/hooks/useRequest', () => ({
 	useRequest: jest.fn()
 }));
 
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useHistory: () => ({push: mockPush}),
+	useNavigate: () => mockNavigate,
 	useParams: () => ({channelId: '5', groupId: '23', id: 'acc-1'})
 }));
 
@@ -311,8 +311,8 @@ describe('TopAssets', () => {
 
 			fireEvent.click(screen.getByRole('button', {name: 'View All'}));
 
-			expect(mockPush).toHaveBeenCalledTimes(1);
-			expect(mockPush.mock.calls[0][0]).toContain('/assets');
+			expect(mockNavigate).toHaveBeenCalledTimes(1);
+			expect(mockNavigate.mock.calls[0][0]).toContain('/assets');
 		});
 	});
 

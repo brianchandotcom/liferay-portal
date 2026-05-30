@@ -3,11 +3,10 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
-import {createMemoryHistory} from 'history';
+import {MemoryRouter} from 'react-router-dom';
 import {mockChannelContext} from 'test/mock-channel-context';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {Router} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -207,26 +206,18 @@ jest.mock('shared/util/breadcrumbs', () => ({
 	}))
 }));
 
+// Default navigate spy shared across tests, reset in beforeEach.
+
+const mockNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useHistory: jest.fn(),
+	useNavigate: () => mockNavigate,
 	useParams: () => ({
 		channelId: '123',
 		groupId: '23'
 	})
 }));
-
-// Default push spy shared across tests, reset in beforeEach.
-
-const mockHistoryPush = jest.fn();
-
-const buildHistory = (path = '/workspace/23/123/assets') => {
-	const history = createMemoryHistory({initialEntries: [path]});
-
-	history.push = mockHistoryPush;
-
-	return history;
-};
 
 const store = mockStore();
 
@@ -234,28 +225,21 @@ const store = mockStore();
 
 const renderList = (
 	{queryString = ''}: {queryString?: string} = {},
-	history = buildHistory(`/workspace/23/123/assets${queryString}`)
+	initialPath = `/workspace/23/123/assets${queryString}`
 ) =>
 	render(
 		<Provider store={store}>
 			<ChannelContext.Provider value={mockChannelContext() as any}>
-				<Router history={history}>
+				<MemoryRouter initialEntries={[initialPath]}>
 					<List />
-				</Router>
+				</MemoryRouter>
 			</ChannelContext.Provider>
 		</Provider>
 	);
 
-// Obtain the mocked useHistory so we can configure it per test.
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const {useHistory} = require('react-router-dom');
-
 describe('List', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
-
-		useHistory.mockReturnValue({push: mockHistoryPush});
 	});
 
 	afterEach(cleanup);
@@ -385,7 +369,7 @@ describe('List', () => {
 
 			fireEvent.click(screen.getByTestId('change-range-btn'));
 
-			expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+			expect(mockNavigate).toHaveBeenCalledTimes(1);
 		});
 
 		it('should update the displayed range key after a change', () => {
@@ -408,7 +392,7 @@ describe('List', () => {
 
 			fireEvent.click(screen.getByTestId('change-range-btn'));
 
-			const pushedPath: string = mockHistoryPush.mock.calls[0][0];
+			const pushedPath: string = mockNavigate.mock.calls[0][0];
 
 			expect(pushedPath).toContain(RangeKeyTimeRanges.Last7Days);
 		});
@@ -419,7 +403,7 @@ describe('List', () => {
 			fireEvent.click(screen.getByTestId('change-range-btn'));
 
 			// FaroConstants.pagination.cur === 1 in the jest config globals
-			const pushedPath: string = mockHistoryPush.mock.calls[0][0];
+			const pushedPath: string = mockNavigate.mock.calls[0][0];
 
 			expect(pushedPath).toContain('page=1');
 		});
@@ -435,7 +419,7 @@ describe('List', () => {
 
 			fireEvent.click(screen.getByTestId('change-range-btn'));
 
-			const pushedPath: string = mockHistoryPush.mock.calls[0][0];
+			const pushedPath: string = mockNavigate.mock.calls[0][0];
 
 			expect(pushedPath).not.toContain('rangeEnd=2024-03-01');
 			expect(pushedPath).not.toContain('rangeStart=2024-01-01');
@@ -449,7 +433,7 @@ describe('List', () => {
 			// pickBy strips null values; rangeEnd and rangeStart are truthy
 			// for a custom range, so they should appear in the URL.
 
-			const pushedPath: string = mockHistoryPush.mock.calls[0][0];
+			const pushedPath: string = mockNavigate.mock.calls[0][0];
 
 			expect(pushedPath).toContain('rangeEnd=2024-03-01');
 			expect(pushedPath).toContain('rangeStart=2024-01-01');
@@ -499,9 +483,11 @@ describe('List', () => {
 					<ChannelContext.Provider
 						value={contextWithNoChannel as any}
 					>
-						<Router history={buildHistory()}>
+						<MemoryRouter
+							initialEntries={['/workspace/23/123/assets']}
+						>
 							<List />
-						</Router>
+						</MemoryRouter>
 					</ChannelContext.Provider>
 				</Provider>
 			);

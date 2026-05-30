@@ -3,7 +3,7 @@ import React from 'react';
 import {CHART_COLORS, MAIN_NODE_COLOR, SECONDARY_NODE_COLOR} from '../utils';
 import {cleanup, fireEvent, getByTestId, render} from '@testing-library/react';
 import {InMemoryCache} from '@apollo/client';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {mockPagePathReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -128,14 +128,19 @@ const WrapperComponent = ({
 			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fliferay.com%2Fhome/Liferay%20DXP%20-%20Home?rangeKey=30'
 		]}
 	>
-		<Route path='/workspace/:groupId/:channelId/sites/pages/overview/:touchpoint/:title'>
-			<MockedProvider
-				cache={new InMemoryCache({freezeResults: false} as any)}
-				mocks={[mockPagePathReq(data, reqOptions)]}
-			>
-				<PagePathCard rangeSelectors={rangeSelectors} />
-			</MockedProvider>
-		</Route>
+		<RouterRoutes>
+			<Route
+				element={
+					<MockedProvider
+						cache={new InMemoryCache({freezeResults: false} as any)}
+						mocks={[mockPagePathReq(data, reqOptions)]}
+					>
+						<PagePathCard rangeSelectors={rangeSelectors} />
+					</MockedProvider>
+				}
+				path='/workspace/:groupId/:channelId/sites/pages/overview/:touchpoint/:title'
+			/>
+		</RouterRoutes>
 	</MemoryRouter>
 );
 
@@ -295,7 +300,7 @@ describe('PagePathCard', () => {
 
 		expect(link).toHaveAttribute(
 			'href',
-			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay%20Home%20Page?rangeKey=0'
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay%2520Home%2520Page?rangeKey=0'
 		);
 	});
 
@@ -318,7 +323,7 @@ describe('PagePathCard', () => {
 
 		expect(link).toHaveAttribute(
 			'href',
-			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay%20Home%20Page?rangeKey=0'
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay%2520Home%2520Page?rangeKey=0'
 		);
 	});
 });

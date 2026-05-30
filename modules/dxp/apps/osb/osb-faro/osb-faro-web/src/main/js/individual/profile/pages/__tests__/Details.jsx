@@ -4,8 +4,8 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -15,7 +15,7 @@ describe('IndividualDetails', () => {
 
 	it('should render', async () => {
 		const {container} = render(
-			<StaticRouter>
+			<MemoryRouter>
 				<Provider store={mockStore()}>
 					<Details
 						groupId='23'
@@ -26,7 +26,7 @@ describe('IndividualDetails', () => {
 						)}
 					/>
 				</Provider>
-			</StaticRouter>
+			</MemoryRouter>
 		);
 
 		jest.runAllTimers();

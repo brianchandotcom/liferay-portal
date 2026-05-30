@@ -1,6 +1,6 @@
 import React from 'react';
+import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router';
 import {User} from 'shared/util/records';
 import {WorkspacesBasePage} from '../BasePage';
 
@@ -12,13 +12,13 @@ const currentUser = new User({
 });
 
 const DefaultComponent = props => (
-	<StaticRouter>
+	<MemoryRouter>
 		<WorkspacesBasePage
 			currentUser={currentUser}
 			title='Test Title'
 			{...props}
 		/>
-	</StaticRouter>
+	</MemoryRouter>
 );
 
 describe('WorkspacesBasePage', () => {

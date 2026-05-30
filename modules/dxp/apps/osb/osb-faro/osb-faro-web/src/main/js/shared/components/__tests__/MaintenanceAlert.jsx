@@ -48,9 +48,7 @@ describe('MaintenanceAlert', () => {
 
 describe('mapState', () => {
 	it('should map store state to props', () => {
-		const router = {match: {params: {groupId: '23'}}};
-
-		const result = mapState(store, router);
+		const result = mapState(store, {groupId: '23'});
 
 		expect(result).toHaveProperty('project');
 		expect(result).toHaveProperty('groupId', '23');

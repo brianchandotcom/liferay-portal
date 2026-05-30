@@ -177,7 +177,12 @@ exports[`IndividualProfileRoutes should render 1`] = `
     >
       <span
         class="children-wrapper"
-      />
+      >
+        <span
+          aria-hidden="true"
+          class="loading-root center loading-animation"
+        />
+      </span>
     </div>
   </div>
 </div>

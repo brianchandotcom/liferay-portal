@@ -7,13 +7,13 @@ import {
 	JobRunFrequencies,
 	JobTypes
 } from 'shared/util/constants';
+import {MemoryRouter} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockRecommendationActivitiesReq,
 	mockRecommendationPageAssetsReq
 } from 'test/graphql-data';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -27,7 +27,7 @@ describe('Summary', () => {
 					mockRecommendationActivitiesReq([], {rangeKey: 60})
 				]}
 			>
-				<StaticRouter>
+				<MemoryRouter>
 					<Form
 						initialValues={{
 							itemFilters: [
@@ -54,7 +54,7 @@ describe('Summary', () => {
 							</Form.Form>
 						)}
 					</Form>
-				</StaticRouter>
+				</MemoryRouter>
 			</MockedProvider>
 		);
 
@@ -70,7 +70,7 @@ describe('Summary', () => {
 					mockRecommendationActivitiesReq([], {rangeKey: 60})
 				]}
 			>
-				<StaticRouter>
+				<MemoryRouter>
 					<Form
 						initialValues={{
 							includePreviousPeriod: true,
@@ -98,7 +98,7 @@ describe('Summary', () => {
 							</Form.Form>
 						)}
 					</Form>
-				</StaticRouter>
+				</MemoryRouter>
 			</MockedProvider>
 		);
 

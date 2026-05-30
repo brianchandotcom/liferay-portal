@@ -3,9 +3,9 @@ import CreateItemSimilarity from '../CreateItemSimilarity';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/client';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
@@ -20,15 +20,22 @@ const defaultProps = {
 	router: {params: {groupId: '23'}, query: {delta: '10', page: '1'}}
 };
 
-const DefaultComponent = props => (
-	<ApolloProvider client={client}>
-		<Provider store={mockStore()}>
-			<StaticRouter>
-				<CreateItemSimilarity {...defaultProps} {...props} />
-			</StaticRouter>
-		</Provider>
-	</ApolloProvider>
-);
+const DefaultComponent = props => {
+	const router = createMemoryRouter([
+		{
+			element: (
+				<ApolloProvider client={client}>
+					<Provider store={mockStore()}>
+						<CreateItemSimilarity {...defaultProps} {...props} />
+					</Provider>
+				</ApolloProvider>
+			),
+			path: '/'
+		}
+	]);
+
+	return <RouterProvider router={router} />;
+};
 
 describe('Recommendations', () => {
 	it('should render', async () => {

@@ -3,9 +3,9 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, getByTestId, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
+import {MemoryRouter} from 'react-router-dom';
 import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {SubscriptionNames} from 'shared/util/subscriptions';
 import {SubscriptionStatuses, UserRoleNames} from 'shared/util/constants';
 import {UsageOverview} from '../UsageOverview';
@@ -40,9 +40,9 @@ const defaultProps = {
 
 const WrappedComponent = props => (
 	<Provider store={mockStore()}>
-		<StaticRouter>
+		<MemoryRouter>
 			<UsageOverview {...props} />
-		</StaticRouter>
+		</MemoryRouter>
 	</Provider>
 );
 

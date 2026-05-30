@@ -5,7 +5,7 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import {InMemoryCache} from '@apollo/client';
-import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -30,30 +30,33 @@ describe('Input', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<Formik
-									initialValues={{foo: ''}}
-									onSubmit={jest.fn()}
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
 								>
-									<Form>
-										<Field
-											component={Input}
-											inline
-											name='foo'
-										/>
-									</Form>
-								</Formik>
-							</MockedProvider>
-						</Route>
-					</Switch>
+									<Formik
+										initialValues={{foo: ''}}
+										onSubmit={jest.fn()}
+									>
+										<Form>
+											<Field
+												component={Input}
+												inline
+												name='foo'
+											/>
+										</Form>
+									</Formik>
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);
@@ -67,19 +70,22 @@ describe('Input', () => {
 		const {container, queryByText} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<DefaultComponent />
-							</MockedProvider>
-						</Route>
-					</Switch>
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
+								>
+									<DefaultComponent />
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);
@@ -93,19 +99,22 @@ describe('Input', () => {
 		const {container, queryByText} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<DefaultComponent required />
-							</MockedProvider>
-						</Route>
-					</Switch>
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
+								>
+									<DefaultComponent required />
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);

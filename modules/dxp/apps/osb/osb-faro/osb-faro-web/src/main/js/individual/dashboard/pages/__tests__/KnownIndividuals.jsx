@@ -3,7 +3,7 @@ import KnownIndividuals from '../KnownIndividuals';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {mockEmptyState, mockSuccessState} from 'test/__mocks__/mock-objects';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
@@ -20,9 +20,12 @@ const WrappedComponent = () => (
 				'/workspace/23/321321/contacts/individuals/known-individuals'
 			]}
 		>
-			<Route path={Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS}>
-				<KnownIndividuals />
-			</Route>
+			<RouterRoutes>
+				<Route
+					element={<KnownIndividuals />}
+					path={Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS}
+				/>
+			</RouterRoutes>
 		</MemoryRouter>
 	</Provider>
 );

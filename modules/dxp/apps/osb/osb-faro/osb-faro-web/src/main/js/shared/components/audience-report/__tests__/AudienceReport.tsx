@@ -2,7 +2,7 @@ import AudienceReport from '../AudienceReport';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MetricName} from 'shared/types/MetricName';
 import {
 	mockAudienceReportReq,
@@ -57,30 +57,37 @@ const WrappedComponent = ({queryProps}: {queryProps: any}) => (
 				'/workspace/123/456/Home%20Page/https%3A%2F%2Fwww.liferay.com'
 			]}
 		>
-			<Route path='/workspace/:groupId/:channelId/:title/:touchpoint'>
-				<MockedProvider
-					{...({freezeResults: false} as any)}
-					mocks={[
-						mockTimeRangeReq(),
-						mockPreferenceReq(),
-						mockAudienceReportReq({queryProps})
-					]}
-				>
-					<AudienceReport
-						filters={{devices: [], location: []}}
-						mapper={(result: any) =>
-							result?.[queryProps.name]?.[queryProps.metricName]
-						}
-						name={Name.Page}
-						Query={PageAudienceReportQuery(queryProps)}
-						rangeSelectors={{
-							rangeEnd: '',
-							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
-						}}
-					/>
-				</MockedProvider>
-			</Route>
+			<RouterRoutes>
+				<Route
+					element={
+						<MockedProvider
+							{...({freezeResults: false} as any)}
+							mocks={[
+								mockTimeRangeReq(),
+								mockPreferenceReq(),
+								mockAudienceReportReq({queryProps})
+							]}
+						>
+							<AudienceReport
+								filters={{devices: [], location: []}}
+								mapper={(result: any) =>
+									result?.[queryProps.name]?.[
+										queryProps.metricName
+									]
+								}
+								name={Name.Page}
+								Query={PageAudienceReportQuery(queryProps)}
+								rangeSelectors={{
+									rangeEnd: '',
+									rangeKey: RangeKeyTimeRanges.Last30Days,
+									rangeStart: ''
+								}}
+							/>
+						</MockedProvider>
+					}
+					path='/workspace/:groupId/:channelId/:title/:touchpoint'
+				/>
+			</RouterRoutes>
 		</MemoryRouter>
 	</Provider>
 );

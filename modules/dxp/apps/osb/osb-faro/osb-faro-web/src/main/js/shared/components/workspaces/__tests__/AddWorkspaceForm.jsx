@@ -3,7 +3,7 @@ import AddWorkspaceForm from '../AddWorkspaceForm';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {BasePageContext} from '../BasePage';
-import {MemoryRouter} from 'react-router-dom';
+import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -12,19 +12,26 @@ jest.unmock('react-dom');
 
 const mockUser = new User(data.mockUser());
 
-const DefaultComponent = props => (
-	<Provider store={mockStore()}>
-		<BasePageContext.Provider value={{currentUser: mockUser}}>
-			<MemoryRouter>
-				<AddWorkspaceForm
-					onSubmit={jest.fn()}
-					project={new Project(data.mockProject())}
-					{...props}
-				/>
-			</MemoryRouter>
-		</BasePageContext.Provider>
-	</Provider>
-);
+const DefaultComponent = props => {
+	const router = createMemoryRouter([
+		{
+			element: (
+				<Provider store={mockStore()}>
+					<BasePageContext.Provider value={{currentUser: mockUser}}>
+						<AddWorkspaceForm
+							onSubmit={jest.fn()}
+							project={new Project(data.mockProject())}
+							{...props}
+						/>
+					</BasePageContext.Provider>
+				</Provider>
+			),
+			path: '/'
+		}
+	]);
+
+	return <RouterProvider router={router} />;
+};
 
 describe('AddWorkspaceForm', () => {
 	it('should render', () => {

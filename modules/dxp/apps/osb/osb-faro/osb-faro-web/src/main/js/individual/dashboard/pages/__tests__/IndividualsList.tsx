@@ -3,12 +3,11 @@ import * as useStatefulPaginationModule from 'shared/hooks/useStatefulPagination
 
 import IndividualsList from '../IndividualsList';
 import React from 'react';
-import {createMemoryHistory} from 'history';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {Map, Set} from 'immutable';
+import {MemoryRouter} from 'react-router-dom';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
-import {Router} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 const defaultRangeSelectors = {
@@ -86,12 +85,10 @@ describe('Individuals List', () => {
 			})
 		);
 
-		const history = createMemoryHistory();
-
 		const {getByText} = render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -106,12 +103,10 @@ describe('Individuals List', () => {
 			Promise.resolve({items: [], total: 0})
 		);
 
-		const history = createMemoryHistory();
-
 		const {getByText} = render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -135,12 +130,10 @@ describe('Individuals List', () => {
 			Promise.resolve({items: [], total: 0})
 		);
 
-		const history = createMemoryHistory();
-
 		render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -160,12 +153,10 @@ describe('Individuals List', () => {
 			Promise.resolve({items: [], total: 0})
 		);
 
-		const history = createMemoryHistory();
-
 		render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -182,12 +173,10 @@ describe('Individuals List', () => {
 			Promise.resolve({items: [], total: 0})
 		);
 
-		const history = createMemoryHistory();
-
 		const {getByText} = render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -226,12 +215,10 @@ describe('Individuals List', () => {
 			})
 		);
 
-		const history = createMemoryHistory();
-
 		render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);
@@ -269,12 +256,10 @@ describe('Individuals List', () => {
 				resetPage: jest.fn()
 			});
 
-		const history = createMemoryHistory();
-
 		render(
-			<Router history={history}>
+			<MemoryRouter>
 				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
+			</MemoryRouter>
 		);
 
 		await waitForLoadingToBeRemoved(document.body);

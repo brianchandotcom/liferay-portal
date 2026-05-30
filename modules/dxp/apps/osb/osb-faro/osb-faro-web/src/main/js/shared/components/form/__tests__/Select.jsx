@@ -5,7 +5,7 @@ import React from 'react';
 import Select from '../Select';
 import {Field, Form, Formik} from 'formik';
 import {InMemoryCache} from '@apollo/client';
-import {MemoryRouter, Route, Switch} from 'react-router-dom';
+import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -16,30 +16,36 @@ describe('Select', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<Formik
-									initialValues={{test: 'red'}}
-									onSubmit={jest.fn()}
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
 								>
-									<Form>
-										<Field component={Select} name='test'>
-											<Select.Item value='red'>
-												{'red'}
-											</Select.Item>
-										</Field>
-									</Form>
-								</Formik>
-							</MockedProvider>
-						</Route>
-					</Switch>
+									<Formik
+										initialValues={{test: 'red'}}
+										onSubmit={jest.fn()}
+									>
+										<Form>
+											<Field
+												component={Select}
+												name='test'
+											>
+												<Select.Item value='red'>
+													{'red'}
+												</Select.Item>
+											</Field>
+										</Form>
+									</Formik>
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);
@@ -53,30 +59,33 @@ describe('Select', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<Formik
-									initialValues={{test: ''}}
-									onSubmit={jest.fn()}
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
 								>
-									<Form>
-										<Field
-											component={Select}
-											label='foo'
-											name='test'
-										/>
-									</Form>
-								</Formik>
-							</MockedProvider>
-						</Route>
-					</Switch>
+									<Formik
+										initialValues={{test: ''}}
+										onSubmit={jest.fn()}
+									>
+										<Form>
+											<Field
+												component={Select}
+												label='foo'
+												name='test'
+											/>
+										</Form>
+									</Formik>
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);
@@ -90,34 +99,40 @@ describe('Select', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
-					<Switch>
-						<Route path='*'>
-							<MockedProvider
-								cache={
-									new InMemoryCache({
-										addTypename: false
-									})
-								}
-							>
-								<Formik
-									initialErrors={{
-										test: 'can not be test'
-									}}
-									initialTouched={{test: true}}
-									initialValues={{test: 'red'}}
-									onSubmit={jest.fn()}
+					<RouterRoutes>
+						<Route
+							element={
+								<MockedProvider
+									cache={
+										new InMemoryCache({
+											addTypename: false
+										})
+									}
 								>
-									<Form>
-										<Field component={Select} name='test'>
-											<Select.Item value='red'>
-												{'red'}
-											</Select.Item>
-										</Field>
-									</Form>
-								</Formik>
-							</MockedProvider>
-						</Route>
-					</Switch>
+									<Formik
+										initialErrors={{
+											test: 'can not be test'
+										}}
+										initialTouched={{test: true}}
+										initialValues={{test: 'red'}}
+										onSubmit={jest.fn()}
+									>
+										<Form>
+											<Field
+												component={Select}
+												name='test'
+											>
+												<Select.Item value='red'>
+													{'red'}
+												</Select.Item>
+											</Field>
+										</Form>
+									</Formik>
+								</MockedProvider>
+							}
+							path='*'
+						/>
+					</RouterRoutes>
 				</MemoryRouter>
 			</Provider>
 		);

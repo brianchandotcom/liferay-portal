@@ -9,6 +9,7 @@ import {
 } from 'shared/components/metric-card/metrics';
 import {ApolloProvider} from '@apollo/client';
 import {cleanup, render} from '@testing-library/react';
+import {MemoryRouter} from 'react-router-dom';
 import {
 	mockAssetMetricReq,
 	mockAssetTabsReq,
@@ -17,7 +18,6 @@ import {
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {RangeKeyTimeRanges, THIRTEEN_MONTHS} from 'shared/util/constants';
-import {StaticRouter} from 'react-router-dom';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -63,7 +63,7 @@ const NAME = 'form';
 
 const WrappedComponent = ({empty = false}) => (
 	<ApolloProvider client={client}>
-		<StaticRouter>
+		<MemoryRouter>
 			<MockedProvider
 				mocks={[
 					mockTimeRangeReq(),
@@ -90,7 +90,7 @@ const WrappedComponent = ({empty = false}) => (
 					label={Liferay.Language.get('visitors-behavior')}
 				/>
 			</MockedProvider>
-		</StaticRouter>
+		</MemoryRouter>
 	</ApolloProvider>
 );
 

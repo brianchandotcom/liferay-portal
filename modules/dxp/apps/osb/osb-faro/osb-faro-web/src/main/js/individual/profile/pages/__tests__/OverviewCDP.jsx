@@ -4,8 +4,8 @@ import OverviewCDP from '../OverviewCDP';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
+import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {StaticRouter} from 'react-router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSources} from 'shared/context/dataSources';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -45,9 +45,9 @@ const mockIndividual = data.getImmutableMock(Individual, data.mockIndividual);
 const renderComponent = () =>
 	render(
 		<Provider store={mockStore()}>
-			<StaticRouter>
+			<MemoryRouter>
 				<OverviewCDP groupId='23' individual={mockIndividual} />
-			</StaticRouter>
+			</MemoryRouter>
 		</Provider>
 	);
 

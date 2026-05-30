@@ -170,6 +170,8 @@ test(
 
 		await page.getByPlaceholder('Search').first().fill(adminEmail);
 
+		await page.keyboard.press('Enter');
+
 		const adminRow = page.getByRole('row', {name: adminEmail});
 
 		const adminCheckbox = adminRow.getByRole('checkbox');
@@ -618,6 +620,8 @@ test(
 
 		for (const userName of ['michelle hoshi', 'corbin murakami']) {
 			await page.getByPlaceholder('Search').first().fill(userName);
+
+			await page.keyboard.press('Enter');
 
 			await expect(
 				page.getByRole('cell', {name: userName})

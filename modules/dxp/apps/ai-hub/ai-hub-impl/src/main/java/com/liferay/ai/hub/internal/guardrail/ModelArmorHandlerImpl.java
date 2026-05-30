@@ -372,7 +372,8 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 			StringUtil.merge(
 				TransformUtil.transform(
 					filterResults.values(), this::_getViolation),
-				", "), " filters");
+				", "),
+			" filters");
 	}
 
 	private DetectionConfidenceLevel _toDetectionConfidenceLevel(

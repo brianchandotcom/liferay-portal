@@ -60,12 +60,12 @@ public class OutputGuardrailImpl implements OutputGuardrail {
 
 			if (Validator.isNotNull(violations)) {
 				return fatal(
-						JSONUtil.put(
-							"modelArmorTemplateExternalReferenceCode",
-							_externalReferenceCode
-						).put(
-							"violations", violations
-						).toString());
+					JSONUtil.put(
+						"modelArmorTemplateExternalReferenceCode",
+						_externalReferenceCode
+					).put(
+						"violations", violations
+					).toString());
 			}
 
 			return success();

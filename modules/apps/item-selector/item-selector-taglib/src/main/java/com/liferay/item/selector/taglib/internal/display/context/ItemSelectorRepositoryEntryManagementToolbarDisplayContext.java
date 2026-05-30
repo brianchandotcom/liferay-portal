@@ -99,8 +99,31 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 		}
 
-		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
-			_liferayPortletRequest, _liferayPortletResponse);
+		String currentURL = (String)_liferayPortletRequest.getAttribute(
+			WebKeys.CURRENT_URL);
+
+		PortletURL portletURL = _getPortletURL();
+
+		boolean overrideCurrentURL = false;
+
+		if (Validator.isNull(currentURL) && (portletURL != null)) {
+			overrideCurrentURL = true;
+
+			_liferayPortletRequest.setAttribute(
+				WebKeys.CURRENT_URL, portletURL.toString());
+		}
+
+		List<Menu> menus = null;
+
+		try {
+			menus = dlPortletToolbarContributor.getPortletTitleMenus(
+				_liferayPortletRequest, _liferayPortletResponse);
+		}
+		finally {
+			if (overrideCurrentURL) {
+				_liferayPortletRequest.removeAttribute(WebKeys.CURRENT_URL);
+			}
+		}
 
 		if (menus.isEmpty()) {
 			return null;

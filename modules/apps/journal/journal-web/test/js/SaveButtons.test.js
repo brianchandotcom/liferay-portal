@@ -67,6 +67,8 @@ describe('SaveButtons', () => {
 		};
 
 		global.Liferay.Workflow = {ACTION_PUBLISH: null};
+
+		global.Liferay.on = jest.fn(() => ({detach: jest.fn()}));
 	});
 
 	it('renders', () => {

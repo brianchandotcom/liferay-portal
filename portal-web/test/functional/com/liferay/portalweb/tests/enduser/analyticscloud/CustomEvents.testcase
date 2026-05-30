@@ -199,7 +199,7 @@ definition {
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10011 | Test Summary: Attributes shown in AC"
 	@priority = 5
-	test CustomEventAttributeIsShownInACSettings {
+	test ViewCustomEventAttributesAndManageDescriptionRenameAndType {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

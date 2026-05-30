@@ -42,17 +42,19 @@ public class BasePortletLayoutSetSEORobotsContributorTest {
 	public void setUp() {
 		PropsUtil.set("feature.flag.LPD-71164", "true");
 
-		_layoutLocalService = Mockito.mock(LayoutLocalService.class);
-		_portletPreferencesLocalService = Mockito.mock(
-			PortletPreferencesLocalService.class);
-
 		_basePortletLayoutSetSEORobotsContributor = Mockito.mock(
 			BasePortletLayoutSetSEORobotsContributor.class,
 			Mockito.CALLS_REAL_METHODS);
 
+		_layoutLocalService = Mockito.mock(LayoutLocalService.class);
+
 		ReflectionTestUtil.setFieldValue(
 			_basePortletLayoutSetSEORobotsContributor, "layoutLocalService",
 			_layoutLocalService);
+
+		_portletPreferencesLocalService = Mockito.mock(
+			PortletPreferencesLocalService.class);
+
 		ReflectionTestUtil.setFieldValue(
 			_basePortletLayoutSetSEORobotsContributor,
 			"portletPreferencesLocalService", _portletPreferencesLocalService);

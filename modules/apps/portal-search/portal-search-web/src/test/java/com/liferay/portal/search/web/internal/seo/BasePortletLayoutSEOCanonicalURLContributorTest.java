@@ -44,12 +44,12 @@ public class BasePortletLayoutSEOCanonicalURLContributorTest {
 	public void setUp() {
 		PropsUtil.set("feature.flag.LPD-71164", "true");
 
-		_portletPreferencesLocalService = Mockito.mock(
-			PortletPreferencesLocalService.class);
-
 		_basePortletLayoutSEOCanonicalURLContributor = Mockito.mock(
 			BasePortletLayoutSEOCanonicalURLContributor.class,
 			Mockito.CALLS_REAL_METHODS);
+
+		_portletPreferencesLocalService = Mockito.mock(
+			PortletPreferencesLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
 			_basePortletLayoutSEOCanonicalURLContributor,

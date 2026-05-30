@@ -39,16 +39,18 @@ public class BasePortletLayoutSEOMetaRobotsProviderTest {
 	public void setUp() {
 		PropsUtil.set("feature.flag.LPD-71164", "true");
 
-		_portal = Mockito.mock(Portal.class);
-		_portletSharedRequestHelper = Mockito.mock(
-			PortletSharedRequestHelper.class);
-
 		_basePortletLayoutSEOMetaRobotsProvider = Mockito.mock(
 			BasePortletLayoutSEOMetaRobotsProvider.class,
 			Mockito.CALLS_REAL_METHODS);
 
+		_portal = Mockito.mock(Portal.class);
+
 		ReflectionTestUtil.setFieldValue(
 			_basePortletLayoutSEOMetaRobotsProvider, "portal", _portal);
+
+		_portletSharedRequestHelper = Mockito.mock(
+			PortletSharedRequestHelper.class);
+
 		ReflectionTestUtil.setFieldValue(
 			_basePortletLayoutSEOMetaRobotsProvider,
 			"portletSharedRequestHelper", _portletSharedRequestHelper);

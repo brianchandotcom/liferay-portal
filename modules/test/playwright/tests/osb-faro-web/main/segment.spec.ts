@@ -2642,6 +2642,143 @@ test(
 );
 
 test(
+	'Save a batch segment with a Viewed Web Content criterion filtered to a Last 7 days time period',
+	{
+		tag: '@LRAC-9222',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const assetTitle = 'Web Content AC Title';
+
+		const individual = generateIndividual({
+			name: 'wcviewer' + getRandomString(),
+		});
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'WebContent',
+				assetId: '1',
+				assetTitle,
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: new Date().toISOString(),
+				eventId: 'webContentViewed',
+				title: assetTitle,
+				userId: individual.id,
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		await addSegmentField({
+			criterionName: 'Viewed Web Content',
+			criterionType: 'Events',
+			page,
+		});
+
+		await selectAsset({assetName: assetTitle, page});
+
+		// Switch the time period dropdown to Last 7 days
+
+		await page
+			.locator('button[data-testid="clay-select"]', {
+				hasText: 'Last 24 hours',
+			})
+			.click();
+
+		await page.getByText('Last 7 days').click();
+
+		await saveSegment(page);
+
+		await expect(page.locator('.criteria-card-root')).toContainText(
+			'Last 7 days'
+		);
+	}
+);
+
+test(
+	'Save a batch segment with a Viewed Blog Has Not Web Behavior criterion',
+	{
+		tag: '@LRAC-Legacy-HasNot',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const assetTitle = 'Blogs AC Title';
+
+		const individual = generateIndividual({
+			name: 'blognothad' + getRandomString(),
+		});
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Blog',
+				assetId: '1',
+				assetTitle,
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: new Date().toISOString(),
+				eventId: 'blogViewed',
+				title: assetTitle,
+				userId: individual.id,
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		await addSegmentField({
+			criterionName: 'Viewed Blog',
+			criterionType: 'Events',
+			page,
+		});
+
+		await selectAsset({assetName: assetTitle, page});
+
+		// Switch the "has" operator to "has not"
+
+		await page
+			.locator('.criteria-statement button.form-control')
+			.first()
+			.click();
+
+		await page
+			.locator('button.dropdown-item', {hasText: /^has not$/})
+			.click();
+
+		await saveSegment(page);
+
+		await expect(page.locator('.criteria-card-root')).toContainText(
+			'has not'
+		);
+	}
+);
+
+test(
 	'Delete a batch segment via the in-editor Delete Segment button',
 	{
 		tag: ['@LPD-90772', '@LRAC-11536'],

@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -24,6 +25,7 @@ export const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
 	dataApiHelpersTest,
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -48,21 +50,17 @@ const assetTitle = getRandomString();
 
 let assetId = null;
 let individualIdentities = null;
-let channel = null;
 
-test.beforeEach(async ({apiHelpers, page, site}) => {
+test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
 	let individuals = null;
 
-	const channelName = 'My Property - ' + getRandomString();
-
-	const result = await syncAnalyticsCloud({
+	await syncAnalyticsCloud({
 		apiHelpers,
-		channelName,
+		channel: analyticsChannel,
 		page,
+		project,
 		siteName: site.name,
 	});
-
-	channel = result.channel;
 
 	await test.step('Create Individuals', async () => {
 		individuals = [
@@ -110,6 +108,7 @@ test.beforeEach(async ({apiHelpers, page, site}) => {
 // is taking too long to ingest events and display them in the UI.
 
 test.skip('Overview Metrics - User is able to filter Overview Metric by individuals', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -208,6 +207,7 @@ test.skip('Overview Metrics - User is able to filter Overview Metric by individu
 });
 
 test('Overview Metrics - User is able to filter Overview Metric by range selectors', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,

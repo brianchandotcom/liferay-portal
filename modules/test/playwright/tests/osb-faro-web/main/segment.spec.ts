@@ -1294,11 +1294,9 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 
 		// Remove the .skip from the test after it has been analyzed and fixed
-
-		const channelName = 'My Property - ' + getRandomString();
 
 		const organization =
 			await apiHelpers.headlessAdminUser.postOrganization();
@@ -1317,11 +1315,12 @@ test.skip(
 			);
 		});
 
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			organizationName: organization.name,
 			page,
+			project,
 		});
 
 		await test.step('Interact with the user that is not part of the organization', async () => {
@@ -1421,15 +1420,15 @@ test.skip(
 		tag: '@Legacy',
 	},
 	async ({
+		analyticsChannel: channel,
 		apiHelpers,
 		defaultUserAssociationsPage,
 		instanceSettingsPage,
 		page,
+		project,
 	}) => {
 
 		// Remove the .skip from the test after it has been analyzed and fixed
-
-		const channelName = 'My Property - ' + getRandomString();
 
 		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
 
@@ -1455,10 +1454,11 @@ test.skip(
 			surname: user.familyName,
 		};
 
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			page,
+			project,
 			userGroupName: userGroup.name,
 		});
 

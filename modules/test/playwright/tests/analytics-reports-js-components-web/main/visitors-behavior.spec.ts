@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -28,6 +29,7 @@ const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
 	dataApiHelpersTest,
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -36,7 +38,6 @@ const test = mergeTests(
 const assetTitle = getRandomString();
 
 let assetId;
-let channel;
 let individualIdentities;
 let individuals;
 
@@ -76,17 +77,14 @@ async function expectMatchingChartData({
 	expect(JSON.parse(tooltipFormattedDate)).toEqual(formatDate(rangeSelector));
 }
 
-test.beforeEach(async ({apiHelpers, page, site}) => {
-	const channelName = 'My Property - ' + getRandomString();
-
-	const result = await syncAnalyticsCloud({
+test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
+	await syncAnalyticsCloud({
 		apiHelpers,
-		channelName,
+		channel: analyticsChannel,
 		page,
+		project,
 		siteName: site.name,
 	});
-
-	channel = result.channel;
 
 	await test.step('Create Individuals', async () => {
 		individuals = [
@@ -131,6 +129,7 @@ test.beforeEach(async ({apiHelpers, page, site}) => {
 });
 
 test('User is able to see data plotted on Visitors Behavior Chart by all, anonymous and known individuals', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -203,6 +202,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 });
 
 test('User is able to see data plotted on Visitors Behavior Chart for the last 7 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -240,6 +240,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 7
 });
 
 test('User is able to see data plotted on Visitors Behavior Chart for the last 28 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -278,6 +279,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 2
 });
 
 test('User is able to see data plotted on Visitors Behavior Chart for the last 30 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -316,6 +318,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 3
 });
 
 test('User is able to see data plotted on Visitors Behavior Chart for the last 90 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,

@@ -6,6 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -22,17 +24,16 @@ import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
-const channelName = 'My Property ' + getRandomString();
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers, page, site}) => {
+test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
 	await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getFragmentDefinition({
@@ -44,23 +45,12 @@ test.beforeEach(async ({apiHelpers, page, site}) => {
 		title: 'My Page',
 	});
 
-	const result = await syncAnalyticsCloud({
+	await syncAnalyticsCloud({
 		apiHelpers,
-		channelName,
+		channel: analyticsChannel,
 		page,
+		project,
 		siteName: site.name,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
 	});
 });
 
@@ -69,7 +59,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'ac';
 		const individuals = [
 			generateIndividual({
@@ -146,7 +136,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'ac';
 		const individuals = [
 			generateIndividual({

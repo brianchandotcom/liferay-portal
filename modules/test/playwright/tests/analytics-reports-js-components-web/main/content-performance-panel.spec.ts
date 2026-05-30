@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -19,6 +20,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -27,11 +29,12 @@ const test = mergeTests(
 test(
 	'Content Performance panel shows title, URL, language switcher, traffic channels and default time range on a content page',
 	{tag: ['@LPS-108856', '@LPS-126044']},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel, apiHelpers, page, project, site}) => {
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -79,11 +82,12 @@ test(
 test(
 	'Content Performance panel renders on a widget page',
 	{tag: '@LPS-126047'},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel, apiHelpers, page, project, site}) => {
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 

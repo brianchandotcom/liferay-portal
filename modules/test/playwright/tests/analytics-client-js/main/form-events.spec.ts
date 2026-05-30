@@ -9,10 +9,10 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {captureAnalyticsEvents} from './utils/captureAnalyticsEvents';
 
@@ -23,6 +23,7 @@ const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	formsPagesTest,
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -34,10 +35,12 @@ test(
 		tag: ['@LRAC-8682', '@LRAC-8691'],
 	},
 	async ({
+		analyticsChannel: channel,
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		page,
+		project,
 		site,
 	}) => {
 
@@ -59,10 +62,11 @@ test(
 
 		// Sync the site with Analytics Cloud so the form analytics script loads
 
-		const {channel} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 

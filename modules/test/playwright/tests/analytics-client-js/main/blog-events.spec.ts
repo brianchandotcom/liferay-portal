@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -23,6 +24,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -33,7 +35,7 @@ test(
 	{
 		tag: ['@LRAC-8661', '@LRAC-8662'],
 	},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
 		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			articleBody:
 				'The quick brown fox jumps over the lazy dog one two three four five six seven eight nine ten eleven twelve thirteen',
@@ -51,10 +53,11 @@ test(
 			title: 'Blog Page ' + getRandomString(),
 		});
 
-		const {channel} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 

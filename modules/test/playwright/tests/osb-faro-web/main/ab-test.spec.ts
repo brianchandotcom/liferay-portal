@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -35,6 +36,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),
@@ -46,7 +48,7 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -60,12 +62,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -116,13 +117,6 @@ test(
 
 			await expect(modalHeader).toBeVisible();
 		});
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -131,7 +125,7 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -145,12 +139,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -206,13 +199,6 @@ test(
 		});
 
 		await checkEmptyStateOnACSide(page);
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -221,7 +207,14 @@ test(
 	{
 		tag: '@LPS-103334',
 	},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({
+		analyticsChannel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -235,12 +228,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -307,7 +299,14 @@ test(
 	{
 		tag: '@LPS-101341',
 	},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({
+		analyticsChannel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -321,12 +320,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -405,7 +403,14 @@ test(
 	{
 		tag: ['@LPS-101341', '@LPS-103334'],
 	},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({
+		analyticsChannel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -419,12 +424,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -505,7 +509,7 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -519,12 +523,11 @@ test(
 			title: pageTitle,
 		});
 
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
@@ -585,102 +588,85 @@ test(
 
 			await assertTerminatedABTest(page);
 		});
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
 test(
 	'Validate if the variant for AB Test that was added on Liferay portal is visible in the Analytics Cloud',
 	{tag: '@LPS-97195'},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			siteId: site.id,
 			title: getRandomString(),
 		});
 
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
-		try {
+		// Create an AB Test draft with a variant in DXP
 
-			// Create an AB Test draft with a variant in DXP
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await page.waitForSelector('.segments-experiment-icon');
 
-			await page.waitForSelector('.segments-experiment-icon');
+		await openABTesSidebar(page);
 
-			await openABTesSidebar(page);
+		const abTestName = 'AB Test ' + getRandomString();
 
-			const abTestName = 'AB Test ' + getRandomString();
+		await createABTest({name: abTestName, page});
 
-			await createABTest({name: abTestName, page});
+		const variantName = 'Variant ' + getRandomString();
 
-			const variantName = 'Variant ' + getRandomString();
+		await createVariant({name: variantName, page});
 
-			await createVariant({name: variantName, page});
+		// Run AB Test
 
-			// Run AB Test
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator('.modal-footer').getByText('Run'),
+			trigger: page.getByText('Review and Run Test'),
+		});
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator('.modal-footer').getByText('Run'),
-				trigger: page.getByText('Review and Run Test'),
-			});
+		await expect(page.getByText('Test is now running.')).toBeVisible();
 
-			await expect(page.getByText('Test is now running.')).toBeVisible();
+		await page.locator('.modal-footer').getByText('Ok').click();
 
-			await page.locator('.modal-footer').getByText('Ok').click();
+		// Open the AB Test in Analytics Cloud and assert the variant is listed
 
-			// Open the AB Test in Analytics Cloud and assert the variant is listed
+		await navigateToACPageViaURL({
+			acPage: ACPage.testPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
 
-			await navigateToACPageViaURL({
-				acPage: ACPage.testPage,
-				channelID: channel.id,
-				page,
-				projectID: project.groupId,
-			});
-
-			await expect(async () => {
-				await expect(
-					page.getByRole('link', {name: abTestName}).first()
-				).toBeVisible({timeout: 3000});
-
-				await page.reload();
-			}).toPass();
-
-			await navigateTo({page, pageName: abTestName});
-
+		await expect(async () => {
 			await expect(
-				page
-					.locator('.analytics-variant-card-table')
-					.getByText(variantName, {exact: true})
-			).toBeVisible();
-		}
-		finally {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		}
+				page.getByRole('link', {name: abTestName}).first()
+			).toBeVisible({timeout: 3000});
+
+			await page.reload();
+		}).toPass();
+
+		await navigateTo({page, pageName: abTestName});
+
+		await expect(
+			page
+				.locator('.analytics-variant-card-table')
+				.getByText(variantName, {exact: true})
+		).toBeVisible();
 	}
 );
 
 test(
 	'AB Test status notifications go only to the creator of the test',
 	{tag: '@LPS-96787'},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel, apiHelpers, page, project, site}) => {
 		const layout1 = await apiHelpers.headlessDelivery.createSitePage({
 			siteId: site.id,
 			title: getRandomString(),
@@ -691,159 +677,149 @@ test(
 			title: getRandomString(),
 		});
 
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 
-		try {
+		// Create a second user with the minimum permissions to terminate the AB Test
 
-			// Create a second user with the minimum permissions to terminate the AB Test
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
 
-			const companyId = await page.evaluate(() =>
-				Liferay.ThemeDisplay.getCompanyId()
-			);
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'AB Test Terminate ' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: String(companyId),
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
 
-			const role = await apiHelpers.headlessAdminUser.postRole({
-				name: 'AB Test Terminate ' + getRandomInt(),
-				rolePermissions: [
-					{
-						actionIds: ['UPDATE'],
-						primaryKey: String(companyId),
-						resourceName: 'com.liferay.portal.kernel.model.Layout',
-						scope: 1,
-					},
-				],
-			});
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
 
-			userData[user.alternateName] = {
-				name: user.givenName,
-				password: 'test',
-				surname: user.familyName,
-			};
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
 
-			await apiHelpers.headlessAdminUser.assignUserToRole(
-				role.externalReferenceCode,
-				user.id
-			);
+		// Self-termination must not generate a notification for the admin
 
-			// Self-termination must not generate a notification for the admin
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout1.friendlyUrlPath}`
+		);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout1.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await openABTesSidebar(page);
+		const selfABTestName = 'Self AB Test ' + getRandomString();
 
-			const selfABTestName = 'Self AB Test ' + getRandomString();
+		await createABTest({name: selfABTestName, page});
 
-			await createABTest({name: selfABTestName, page});
+		await createVariant({name: 'V1', page});
 
-			await createVariant({name: 'V1', page});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator('.modal-footer').getByText('Run'),
+			trigger: page.getByText('Review and Run Test'),
+		});
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator('.modal-footer').getByText('Run'),
-				trigger: page.getByText('Review and Run Test'),
-			});
+		await expect(page.getByText('Test is now running.')).toBeVisible();
 
-			await expect(page.getByText('Test is now running.')).toBeVisible();
+		await clickAndExpectToBeHidden({
+			target: page.getByRole('heading', {
+				name: 'Test Started Successfully',
+			}),
+			trigger: page.locator('.modal-footer').getByText('Ok'),
+		});
 
-			await clickAndExpectToBeHidden({
-				target: page.getByRole('heading', {
-					name: 'Test Started Successfully',
-				}),
-				trigger: page.locator('.modal-footer').getByText('Ok'),
-			});
+		await page.getByText('Terminate Test').click();
 
-			await page.getByText('Terminate Test').click();
+		await clickOnABTestModalButton({buttonName: 'Terminate', page});
 
-			await clickOnABTestModalButton({buttonName: 'Terminate', page});
+		await assertTerminatedABTest(page);
 
-			await assertTerminatedABTest(page);
+		await expect(page.getByLabel('New Notification')).not.toBeVisible();
 
-			await expect(page.getByLabel('New Notification')).not.toBeVisible();
+		// Cross-user termination must generate a notification for the admin
 
-			// Cross-user termination must generate a notification for the admin
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
+		);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await openABTesSidebar(page);
+		const crossABTestName = 'Cross AB Test ' + getRandomString();
 
-			const crossABTestName = 'Cross AB Test ' + getRandomString();
+		await createABTest({name: crossABTestName, page});
 
-			await createABTest({name: crossABTestName, page});
+		await createVariant({name: 'V1', page});
 
-			await createVariant({name: 'V1', page});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator('.modal-footer').getByText('Run'),
+			trigger: page.getByText('Review and Run Test'),
+		});
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator('.modal-footer').getByText('Run'),
-				trigger: page.getByText('Review and Run Test'),
-			});
+		await expect(page.getByText('Test is now running.')).toBeVisible();
 
-			await expect(page.getByText('Test is now running.')).toBeVisible();
+		await clickAndExpectToBeHidden({
+			target: page.getByRole('heading', {
+				name: 'Test Started Successfully',
+			}),
+			trigger: page.locator('.modal-footer').getByText('Ok'),
+		});
 
-			await clickAndExpectToBeHidden({
-				target: page.getByRole('heading', {
-					name: 'Test Started Successfully',
-				}),
-				trigger: page.locator('.modal-footer').getByText('Ok'),
-			});
+		// Sign in as the secondary user and terminate the running test
 
-			// Sign in as the secondary user and terminate the running test
+		await performUserSwitch(page, user.alternateName);
 
-			await performUserSwitch(page, user.alternateName);
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
+		);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await openABTesSidebar(page);
+		await page.getByText('Terminate Test').click();
 
-			await page.getByText('Terminate Test').click();
+		await clickOnABTestModalButton({buttonName: 'Terminate', page});
 
-			await clickOnABTestModalButton({buttonName: 'Terminate', page});
+		await assertTerminatedABTest(page);
 
-			await assertTerminatedABTest(page);
+		// Sign back in as the admin
 
-			// Sign back in as the admin
+		await performUserSwitch(page, 'test');
 
-			await performUserSwitch(page, 'test');
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
+		);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await openABTesSidebar(page);
+		// Click the notification and confirm the page opens with the AB Test panel
 
-			// Click the notification and confirm the page opens with the AB Test panel
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('link', {
+				name: 'A/B test has changed to status terminated.',
+			}),
+			trigger: page.getByLabel('New Notification'),
+		});
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('link', {
-					name: 'A/B test has changed to status terminated.',
-				}),
-				trigger: page.getByLabel('New Notification'),
-			});
+		await expect(page).toHaveURL(/segmentsExperimentKey=/);
 
-			await expect(page).toHaveURL(/segmentsExperimentKey=/);
-
-			await expect(
-				page.locator('#segmentsExperimentSidebar')
-			).toBeVisible();
-		}
-		finally {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		}
+		await expect(page.locator('#segmentsExperimentSidebar')).toBeVisible();
 	}
 );

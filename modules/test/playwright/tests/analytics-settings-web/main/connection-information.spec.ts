@@ -38,7 +38,7 @@ test(
 	{
 		tag: '@LRAC-11044',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const site1 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
@@ -49,13 +49,12 @@ test(
 				siteGroupId: site1.id,
 			});
 
-		const channelName = 'My Property - ' + getRandomString();
-
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName,
+			channel,
 			commerceChannelName: commerceChannel1.name,
 			page,
+			project,
 			siteName: site1.name,
 		});
 
@@ -75,40 +74,40 @@ test(
 		});
 
 		await expectPropertyColumn({
-			channelName,
+			channelName: channel.name,
 			expectedValue: '1',
 			index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
 			page,
 		});
 
 		await expectPropertyColumn({
-			channelName,
+			channelName: channel.name,
 			expectedValue: '1',
 			index: PROPERTY_SITE_COLUMN_INDEX,
 			page,
 		});
 
 		await toggleSiteSync({
-			channelName,
+			channelName: channel.name,
 			page,
 			siteName: site2.name,
 		});
 
 		await syncCommerce({
-			channelName,
+			channelName: channel.name,
 			commerceChannelName: commerceChannel2.name,
 			page,
 		});
 
 		await expectPropertyColumn({
-			channelName,
+			channelName: channel.name,
 			expectedValue: '2',
 			index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
 			page,
 		});
 
 		await expectPropertyColumn({
-			channelName,
+			channelName: channel.name,
 			expectedValue: '2',
 			index: PROPERTY_SITE_COLUMN_INDEX,
 			page,

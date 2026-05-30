@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -19,6 +20,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -27,11 +29,12 @@ const test = mergeTests(
 test(
 	'Switching the Content Performance panel language does not change the user locale',
 	{tag: '@LPS-110920'},
-	async ({apiHelpers, page, site}) => {
+	async ({analyticsChannel, apiHelpers, page, project, site}) => {
 		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel: analyticsChannel,
 			page,
+			project,
 			siteName: site.name,
 		});
 

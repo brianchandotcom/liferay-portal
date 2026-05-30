@@ -52,11 +52,6 @@ public class LayoutSetSEORobotsProviderImpl
 				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
-		int portalServerPort = PortalUtil.getPortalServerPort(secure);
-
-		String virtualHostname = GetterUtil.getString(
-			PortalUtil.getDefaultVirtualHostname(true, layoutSet));
-
 		String robotsTxt = GetterUtil.getString(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
@@ -65,7 +60,10 @@ public class LayoutSetSEORobotsProviderImpl
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP));
 
 		robotsTxt = _replaceWildcards(
-			robotsTxt, virtualHostname, secure, portalServerPort);
+			robotsTxt,
+			GetterUtil.getString(
+				PortalUtil.getDefaultVirtualHostname(true, layoutSet)),
+			secure, PortalUtil.getPortalServerPort(secure));
 
 		String robotsContributions = getRobotsContributions(layoutSet);
 

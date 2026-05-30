@@ -3489,58 +3489,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10005 | Test Summary: Update Custom Events description"
-	@priority = 4
-	test CanUpdateCustomEventDescription {
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = ${customEventName});
-
-			ACUtils.clickAnyButton(button = "Edit");
-		}
-
-		task ("Change the description of the custom event") {
-			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDescription = "${customEventName} Description");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.backNavigation(pageName = "Events");
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Check if the description has been changed") {
-			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${customEventName} Description");
-		}
-	}
-
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (255 chars)"
 	@priority = 4
 	test CheckLimitOfCustomEventName {
@@ -3622,6 +3570,34 @@ definition {
 
 		task ("View the new custom events") {
 			ACUtils.viewNameList(nameList = ${customEventName});
+		}
+
+		task ("Edit the custom event and set a description") {
+			ACNavigation.openItem(itemName = ${customEventName});
+
+			ACUtils.clickAnyButton(button = "Edit");
+
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDescription = "${customEventName} Description");
+
+			ACNavigation.backNavigation(pageName = "Events");
+
+			ACNavigation.openItem(itemName = "Custom Events");
+
+			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${customEventName} Description");
+		}
+
+		task ("Edit the custom event and clear the description") {
+			ACNavigation.openItem(itemName = ${customEventName});
+
+			ACUtils.clickAnyButton(button = "Edit");
+
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDescription = "");
+
+			ACNavigation.backNavigation(pageName = "Events");
+
+			ACNavigation.openItem(itemName = "Custom Events");
+
+			AssertTextNotPresent(value1 = "${customEventName} Description");
 		}
 	}
 

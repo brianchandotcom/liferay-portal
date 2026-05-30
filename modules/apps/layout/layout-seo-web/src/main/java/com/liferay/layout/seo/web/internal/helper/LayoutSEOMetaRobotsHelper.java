@@ -77,8 +77,7 @@ public class LayoutSEOMetaRobotsHelper {
 					return null;
 				}
 
-				return _getPortletTitle(
-					jxPortletPreferences, locale, portlet);
+				return _getPortletTitle(jxPortletPreferences, locale, portlet);
 			});
 
 		return ListUtil.sort(portletTitles);

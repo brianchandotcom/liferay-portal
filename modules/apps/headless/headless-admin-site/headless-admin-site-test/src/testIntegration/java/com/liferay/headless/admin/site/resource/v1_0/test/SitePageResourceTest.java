@@ -2946,7 +2946,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPostSiteSitePageWithDraftContentPageSpecification(
-			PageSpecification.Status status, boolean useDraftERCSuffix)
+			PageSpecification.Status status,
+			boolean useDraftExternalReferenceCodeSuffix)
 		throws Exception {
 
 		String pageExternalReferenceCode = RandomTestUtil.randomString();
@@ -2958,7 +2959,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String pageExperienceExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		if (useDraftERCSuffix) {
+		if (useDraftExternalReferenceCodeSuffix) {
 			draftContentPageSpecificationExternalReferenceCode =
 				pageExternalReferenceCode +
 					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;

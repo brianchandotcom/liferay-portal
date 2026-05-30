@@ -5,9 +5,16 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceOverviewMetric;
+import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceOverviewMetricResource;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.util.Http;
+
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -20,4 +27,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PerformanceOverviewMetricResourceImpl
 	extends BasePerformanceOverviewMetricResourceImpl {
+
+	@Override
+	public PerformanceOverviewMetric getPerformanceOverviewMetric(
+			Long[] groupIds, Integer rangeKey)
+		throws Exception {
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		return analyticsCloudClient.getPerformanceOverviewMetric(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			Arrays.asList(groupIds), rangeKey);
+	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private Http _http;
+
 }

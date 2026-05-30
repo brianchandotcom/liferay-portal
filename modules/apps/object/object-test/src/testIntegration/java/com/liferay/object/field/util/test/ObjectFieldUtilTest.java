@@ -51,7 +51,7 @@ public class ObjectFieldUtilTest {
 	@Test
 	public void testValidateReadOnlyObjectFields() throws PortalException {
 
-		// Conditional read only, custom object field
+		// Custom object field, conditional read only
 
 		ObjectField objectField = new TextObjectFieldBuilder(
 		).labelMap(
@@ -85,7 +85,7 @@ public class ObjectFieldUtilTest {
 				objectField.getName(), RandomTestUtil.randomString()
 			).build());
 
-		// One to many relationship, custom object field
+		// One to many relationship, custom object field, read only
 
 		String objectRelationshipERCObjectFieldName =
 			"a" + RandomTestUtil.randomString();

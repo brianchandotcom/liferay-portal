@@ -141,7 +141,7 @@ public class ExportAuditEventsMVCResourceCommand
 
 							String value = function.apply(auditEvent);
 
-							return CSVUtil.encode(value);
+							return CSVUtil.encode(GetterUtil.getString(value));
 						},
 						String.class),
 					StringPool.COMMA));
@@ -291,12 +291,6 @@ public class ExportAuditEventsMVCResourceCommand
 			).put(
 				"create-date",
 				auditEvent -> _formatDate(auditEvent.getCreateDate())
-			).put(
-				"event-id",
-				auditEvent -> String.valueOf(auditEvent.getAuditEventId())
-			).put(
-				"group-id",
-				auditEvent -> String.valueOf(auditEvent.getGroupId())
 			).put(
 				"message", AuditEvent::getMessage
 			).put(

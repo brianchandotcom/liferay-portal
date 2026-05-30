@@ -170,7 +170,7 @@ test(
 
 		await page.getByPlaceholder('Search').first().fill(adminEmail);
 
-		const adminRow = page.getByRole('row', {name: new RegExp(adminEmail)});
+		const adminRow = page.getByRole('row', {name: adminEmail});
 
 		const adminCheckbox = adminRow.getByRole('checkbox');
 

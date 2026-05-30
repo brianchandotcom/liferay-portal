@@ -205,9 +205,9 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 	className
 }) => {
 	const {
-		channelId,
-		groupId,
-		id: accountId
+		channelId = '',
+		groupId = '',
+		id: accountId = ''
 	} = useParams<{
 		channelId: string;
 		groupId: string;

@@ -10,7 +10,7 @@ import {useParams} from 'react-router-dom';
 const Activities = () => {
 	const {selectedChannel} = useContext(ChannelContext);
 
-	const {channelId: routeChannelId, id} = useParams<{
+	const {channelId: routeChannelId, id = ''} = useParams<{
 		channelId: string;
 		groupId: string;
 		id: string;

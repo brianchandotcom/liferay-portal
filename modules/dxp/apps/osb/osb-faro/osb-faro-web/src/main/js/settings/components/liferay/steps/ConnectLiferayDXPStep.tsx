@@ -10,7 +10,7 @@ import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {updateSearchParams} from 'settings/components/base-page/utis';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useQueryParams} from 'shared/hooks/useQueryParams';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
@@ -32,7 +32,7 @@ const ConnectLiferayDXPStep = ({
 }: IConnectLiferayDXPStepProps) => {
 	const {dataSource, refetchDataSource} = useWizardPage();
 	const {dataSourceId} = useQueryParams();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const [token, setToken] = useState('');
 
@@ -116,7 +116,7 @@ const ConnectLiferayDXPStep = ({
 				<WizardPageButtonGroup
 					nextButtonLabel={Liferay.Language.get('continue')}
 					onCancel={() => {
-						history.push(
+						navigate(
 							toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 								groupId
 							})
@@ -179,7 +179,11 @@ const ConnectLiferayDXPStep = ({
 									id: dataSourceId
 								});
 
-								updateSearchParams(history, 'dataSourceId', '');
+								updateSearchParams(
+									navigate,
+									'dataSourceId',
+									''
+								);
 
 								refetchDataSource(dataSourceId);
 

@@ -171,10 +171,11 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 									<li
 										className={getCN('item', {
 											active: !!matchPath(
-												location.pathname,
 												{
+													end: false,
 													path: route
-												}
+												},
+												location.pathname
 											)
 										})}
 										key={url}

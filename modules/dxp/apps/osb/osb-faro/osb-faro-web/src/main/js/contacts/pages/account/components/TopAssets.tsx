@@ -16,7 +16,7 @@ import {ITopAsset, TopAssetMetric, TopAssetObjectType} from 'shared/api/assets';
 import {Routes, toRoute} from 'shared/util/router';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
-import {useHistory, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
 interface ITopAssetsProps {
@@ -69,7 +69,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	loading,
 	setGroupBy
 }) => {
-	const {channelId, groupId} = useParams<{
+	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;
 	}>();
@@ -232,11 +232,11 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 };
 
 const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const {
-		channelId,
-		groupId,
-		id: accountId
+		channelId = '',
+		groupId = '',
+		id: accountId = ''
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -307,7 +307,7 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 						borderless
 						className='ml-auto rounded-lg'
 						onClick={() =>
-							history.push(
+							navigate(
 								toRoute(Routes.ASSETS, {channelId, groupId})
 							)
 						}

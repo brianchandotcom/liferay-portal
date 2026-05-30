@@ -19,7 +19,11 @@ interface IAccountIndividualsProps {
 const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 	className
 }) => {
-	const {channelId, groupId, id} = useParams<{
+	const {
+		channelId = '',
+		groupId = '',
+		id
+	} = useParams<{
 		channelId: string;
 		groupId: string;
 		id: string;

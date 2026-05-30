@@ -19,7 +19,6 @@ import React, {
 	useMemo,
 	useState
 } from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
 import {CSVType} from 'shared/components/download-report/utils';
@@ -27,10 +26,10 @@ import {DownloadReportDropdown} from 'shared/components/download-report/Download
 import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {formatUTCDate} from 'shared/util/date';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
+import {Route, Routes as RouterRoutes, useParams} from 'react-router-dom';
 import {Segment} from 'shared/util/records';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
-import {Switch, useParams} from 'react-router-dom';
 import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -327,45 +326,64 @@ export const SegmentProfileRoutes = () => {
 			<BasePage.Body disabled={checkDisabled()}>
 				{segment.id ? (
 					<Suspense fallback={<Loading />}>
-						<Switch>
-							<BundleRouter
-								componentProps={{segment}}
-								data={Membership}
-								exact
-								path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}
+						<RouterRoutes>
+							<Route
+								element={
+									<BundleRouter
+										componentProps={{segment}}
+										data={Membership}
+									/>
+								}
+								path='membership'
 							/>
 
-							<BundleRouter
-								componentProps={{segment}}
-								data={InterestDetails}
-								exact
-								path={Routes.CONTACTS_SEGMENT_INTEREST_DETAILS}
+							<Route
+								element={
+									<BundleRouter
+										componentProps={{segment}}
+										data={InterestDetails}
+									/>
+								}
+								path='interests/:interestId/:tabId?'
 							/>
 
-							<BundleRouter
-								componentProps={{segment}}
-								data={Interests}
-								destructured={false}
-								exact
-								path={Routes.CONTACTS_SEGMENT_INTERESTS}
+							<Route
+								element={
+									<BundleRouter
+										componentProps={{segment}}
+										data={Interests}
+										destructured={false}
+									/>
+								}
+								path='interests'
 							/>
 
-							<BundleRouter
-								componentProps={{segment}}
-								data={Distribution}
-								exact
-								path={Routes.CONTACTS_SEGMENT_DISTRIBUTION}
+							<Route
+								element={
+									<BundleRouter
+										componentProps={{segment}}
+										data={Distribution}
+									/>
+								}
+								path='distribution'
 							/>
 
-							<BundleRouter
-								componentProps={{segment}}
-								data={isBatch ? Overview : OverviewRealTime}
-								exact
-								path={Routes.CONTACTS_SEGMENT}
+							<Route
+								element={
+									<BundleRouter
+										componentProps={{segment}}
+										data={
+											isBatch
+												? Overview
+												: OverviewRealTime
+										}
+									/>
+								}
+								index
 							/>
 
-							<RouteNotFound />
-						</Switch>
+							<Route element={<ErrorPage />} path='*' />
+						</RouterRoutes>
 					</Suspense>
 				) : (
 					<Loading />

@@ -2,11 +2,11 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
+import ErrorPage from 'shared/pages/ErrorPage';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
-import {Switch} from 'react-router';
+import {Route, Routes as RouterRoutes} from 'react-router-dom';
 
 const AttributeList = lazy(
 	() => import(/* webpackChunkName: "AttributeList" */ './AttributeList')
@@ -66,25 +66,19 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 			</ClayNavigationBar>
 
 			<Suspense fallback={<Loading />}>
-				<Switch>
-					<BundleRouter
-						data={AttributeList}
-						exact
-						path={
-							Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL
-						}
+				<RouterRoutes>
+					<Route
+						element={<BundleRouter data={AttributeList} />}
+						path='local'
 					/>
 
-					<BundleRouter
-						data={GlobalAttributeList}
-						exact
-						path={
-							Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL
-						}
+					<Route
+						element={<BundleRouter data={GlobalAttributeList} />}
+						path='global'
 					/>
 
-					<RouteNotFound />
-				</Switch>
+					<Route element={<ErrorPage />} path='*' />
+				</RouterRoutes>
 			</Suspense>
 		</Card>
 	);

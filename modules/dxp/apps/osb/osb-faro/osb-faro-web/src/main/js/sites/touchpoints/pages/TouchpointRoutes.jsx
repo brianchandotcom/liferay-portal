@@ -9,7 +9,6 @@ import FilterBySegment from '../components/FilterBySegment';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect, useState} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
 import TextTruncate from 'shared/components/TextTruncate';
 import {CSVType} from 'shared/components/download-report/utils';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
@@ -18,9 +17,9 @@ import {getSafeDecodedURIComponent, getSafeTouchpoint} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
-import {Switch, useHistory} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSources} from 'shared/context/dataSources';
+import {useNavigate} from 'react-router-dom';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const KnownIndividuals = lazy(() =>
@@ -63,7 +62,8 @@ function TouchpointRoutes({className, router}) {
 		experienceId: experienceIdfromURL,
 		groupId,
 		title,
-		touchpoint
+		touchpoint,
+		touchpointType
 	} = router.params;
 	const [pathRangeSelectors, setPathRangeSelectors] =
 		useState(rangeSelectors);
@@ -73,7 +73,7 @@ function TouchpointRoutes({className, router}) {
 	const decodedTouchpoint = getSafeDecodedURIComponent(touchpoint);
 	const [selectedSegment, setSelectedSegment] = useState({});
 	const [experienceId, setExperienceId] = useState(experienceIdfromURL);
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setPathRangeSelectors(rangeSelectors);
@@ -127,7 +127,7 @@ function TouchpointRoutes({className, router}) {
 					<ExperienceDropdown
 						groupId={groupId}
 						onChange={experienceId => {
-							history.push(setUriQueryValues({experienceId}));
+							navigate(setUriQueryValues({experienceId}));
 
 							setExperienceId(experienceId);
 						}}
@@ -137,7 +137,7 @@ function TouchpointRoutes({className, router}) {
 						<DropdownRangeKey
 							legacy={false}
 							onRangeSelectorChange={rangeSelectors => {
-								history.push(
+								navigate(
 									setUriQueryValues(
 										pickBy({
 											...rangeSelectors
@@ -206,23 +206,7 @@ function TouchpointRoutes({className, router}) {
 
 				<BasePage.Body>
 					<Suspense fallback={<Loading />}>
-						<Switch>
-							<BundleRouter
-								data={TouchpointOverviewPage}
-								destructured={false}
-								exact
-								path={Routes.SITES_TOUCHPOINTS_OVERVIEW}
-							/>
-
-							<BundleRouter
-								data={KnownIndividuals}
-								destructured={false}
-								exact
-								path={
-									Routes.SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS
-								}
-							/>
-
+						{touchpointType === 'path' && (
 							<BundleRouter
 								componentProps={{
 									rangeSelectors: pathRangeSelectors,
@@ -230,12 +214,22 @@ function TouchpointRoutes({className, router}) {
 								}}
 								data={TouchpointPathPage}
 								destructured={false}
-								exact
-								path={Routes.SITES_TOUCHPOINTS_PATH}
 							/>
+						)}
 
-							<RouteNotFound />
-						</Switch>
+						{touchpointType === 'known-individuals' && (
+							<BundleRouter
+								data={KnownIndividuals}
+								destructured={false}
+							/>
+						)}
+
+						{touchpointType === 'overview' && (
+							<BundleRouter
+								data={TouchpointOverviewPage}
+								destructured={false}
+							/>
+						)}
 					</Suspense>
 				</BasePage.Body>
 			</BasePage.Context.Provider>

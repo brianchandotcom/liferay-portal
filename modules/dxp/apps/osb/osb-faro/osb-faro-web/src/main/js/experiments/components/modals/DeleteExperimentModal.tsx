@@ -6,8 +6,8 @@ import {connect} from 'react-redux';
 import {EXPERIMENT_DELETE_MUTATION} from 'experiments/queries/ExperimentMutation';
 import {Observer} from '@clayui/modal/lib/types';
 import {Routes, toRoute} from 'shared/util/router';
-import {useHistory, useParams} from 'react-router-dom';
 import {useMutation} from '@apollo/client';
+import {useNavigate, useParams} from 'react-router-dom';
 
 interface IDeleteExperimentModalProps {
 	addAlert: (alert: {alertType: string; message: string}) => void;
@@ -26,7 +26,7 @@ const DeleteExperimentModal = ({
 		channelId: string;
 		groupId: string;
 	}>();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [mutate] = useMutation(EXPERIMENT_DELETE_MUTATION);
 
 	const onSubmit = () =>
@@ -42,7 +42,7 @@ const DeleteExperimentModal = ({
 			message: Liferay.Language.get('the-test-has-been-deleted')
 		});
 
-		history.push(toRoute(Routes.TESTS, {channelId, groupId}));
+		navigate(toRoute(Routes.TESTS, {channelId, groupId}));
 	};
 
 	return (

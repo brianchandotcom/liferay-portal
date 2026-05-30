@@ -32,7 +32,7 @@ import {
 import {getConnectorStatusDisplay} from 'settings/components/3rd-party-connector/getConnectorStatusDisplay';
 import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {isLDPPlan} from 'shared/util/subscriptions';
-import {Link, useHistory, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
@@ -176,7 +176,7 @@ interface IDataSourceListProps extends React.HTMLAttributes<HTMLElement> {}
 
 const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	const currentUser = useCurrentUser();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const {groupId = ''} = useParams<{groupId: string}>();
 	const [alerts, setAlerts] = useState<
 		{
@@ -250,7 +250,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	).map(config => ({
 		label: config.displayName,
 		onClick: () => {
-			history.push(
+			navigate(
 				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
 					groupId,
 					id: config.type
@@ -264,7 +264,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	).map(({label, type}) => ({
 		label,
 		onClick: () => {
-			history.push(
+			navigate(
 				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
 					groupId,
 					id: type

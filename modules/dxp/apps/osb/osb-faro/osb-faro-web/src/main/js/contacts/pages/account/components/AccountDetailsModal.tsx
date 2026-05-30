@@ -33,7 +33,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 	accountName,
 	onClose
 }) => {
-	const {channelId, groupId} = useParams<{
+	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;
 	}>();

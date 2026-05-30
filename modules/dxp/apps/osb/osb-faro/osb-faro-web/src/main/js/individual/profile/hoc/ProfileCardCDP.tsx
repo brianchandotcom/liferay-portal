@@ -5,7 +5,7 @@ import {Individual} from 'shared/util/records';
 import {pickBy} from 'lodash';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 import {SectionHeader} from 'shared/components/SectionHeader';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 const DEFAULT_SESSIONS_DELTA = 50;
@@ -25,7 +25,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 	tabId,
 	...props
 }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const {
 		delta,
@@ -76,7 +76,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 							onDeltaChange={onDeltaChange}
 							onPageChange={onPageChange}
 							onQueryChange={query => {
-								history.push(
+								navigate(
 									setUriQueryValues(
 										pickBy({query}),
 										removeUriQueryParam(
@@ -89,7 +89,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 								onQueryChange(query);
 							}}
 							onRangeSelectorsChange={rangeSelectors => {
-								history.push(
+								navigate(
 									setUriQueryValues(
 										pickBy(rangeSelectors),
 										removeUriQueryParam(

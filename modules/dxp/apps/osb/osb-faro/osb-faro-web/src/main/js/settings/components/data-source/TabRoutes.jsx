@@ -1,9 +1,9 @@
 import BundleRouter from 'route-middleware/BundleRouter';
+import ErrorPage from 'shared/pages/ErrorPage';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
 import {PropTypes} from 'prop-types';
-import {Switch} from 'react-router-dom';
+import {Route, Routes as RouterRoutes} from 'react-router-dom';
 
 export default class TabRoutes extends React.Component {
 	static propTypes = {
@@ -19,22 +19,25 @@ export default class TabRoutes extends React.Component {
 		const {routes, ...otherProps} = this.props;
 
 		return (
-			<Switch>
+			<RouterRoutes>
 				{routes.map(({component: Component, path}) => (
-					<BundleRouter
-						componentProps={omitDefinedProps(
-							otherProps,
-							TabRoutes.propTypes
-						)}
-						data={Component}
-						exact
+					<Route
+						element={
+							<BundleRouter
+								componentProps={omitDefinedProps(
+									otherProps,
+									TabRoutes.propTypes
+								)}
+								data={Component}
+							/>
+						}
 						key={path}
 						path={path}
 					/>
 				))}
 
-				<RouteNotFound />
-			</Switch>
+				<Route element={<ErrorPage />} path='*' />
+			</RouterRoutes>
 		);
 	}
 }

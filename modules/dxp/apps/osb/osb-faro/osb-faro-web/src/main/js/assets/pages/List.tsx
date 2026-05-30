@@ -25,7 +25,7 @@ import {
 } from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useChannelContext} from 'shared/context/channel';
-import {useHistory, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const {cur: DEFAULT_CUR} = FaroConstants.pagination;
@@ -139,7 +139,7 @@ const assetsEmptyStateDescription = (
 );
 
 const List = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const {selectedChannel} = useChannelContext();
 	const {channelId, groupId} = useParams();
 	const initialRangeSelectors = useQueryRangeSelectors();
@@ -235,7 +235,7 @@ const List = () => {
 					<DropdownRangeKey
 						legacy={false}
 						onRangeSelectorChange={rangeSelectors => {
-							history.push(
+							navigate(
 								setUriQueryValues(
 									pickBy({
 										page: DEFAULT_CUR,
@@ -297,7 +297,7 @@ const List = () => {
 								icon: 'view',
 								label: Liferay.Language.get('view'),
 								onClick: ({itemData}: {itemData: any}) => {
-									history.push(
+									navigate(
 										getAssetURL({
 											channelId: channelId!,
 											groupId: groupId!,

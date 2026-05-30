@@ -70,7 +70,7 @@ function CommerceMetricCard<TGraphQlData>({
 	label,
 	mapper
 }: ICommerceMetricCardProps<TGraphQlData>): React.ReactElement {
-	const {channelId} = useParams<{channelId: string}>();
+	const {channelId = ''} = useParams<{channelId: string}>();
 	const initialRangeSelectors = useQueryRangeSelectors();
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
 		initialRangeSelectors

@@ -8,6 +8,7 @@ package com.liferay.layout.seo.web.internal.helper;
 import com.liferay.layout.seo.provider.LayoutSEOMetaRobotsProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -44,45 +44,42 @@ public class LayoutSEOMetaRobotsHelper {
 			return Collections.emptyList();
 		}
 
-		List<String> portletTitles = new ArrayList<>();
-
-		List<PortletPreferences> portletPreferencesList =
+		List<String> portletTitles = TransformUtil.transform(
 			_portletPreferencesLocalService.getPortletPreferencesByPlid(
-				layout.getPlid());
+				layout.getPlid()),
+			portletPreferences -> {
+				Portlet portlet = _portletLocalService.getPortletById(
+					layout.getCompanyId(), portletPreferences.getPortletId());
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = _portletLocalService.getPortletById(
-				layout.getCompanyId(), portletPreferences.getPortletId());
+				if (portlet == null) {
+					return null;
+				}
 
-			if (portlet == null) {
-				continue;
-			}
+				LayoutSEOMetaRobotsProvider layoutSEOMetaRobotsProvider =
+					_serviceTrackerMap.getService(portlet.getRootPortletId());
 
-			LayoutSEOMetaRobotsProvider layoutSEOMetaRobotsProvider =
-				_serviceTrackerMap.getService(portlet.getRootPortletId());
+				if (layoutSEOMetaRobotsProvider == null) {
+					return null;
+				}
 
-			if (layoutSEOMetaRobotsProvider == null) {
-				continue;
-			}
+				jakarta.portlet.PortletPreferences jakartaPortletPreferences =
+					_portletPreferencesLocalService.fetchPreferences(
+						portletPreferences.getCompanyId(),
+						portletPreferences.getOwnerId(),
+						portletPreferences.getOwnerType(),
+						portletPreferences.getPlid(),
+						portletPreferences.getPortletId());
 
-			jakarta.portlet.PortletPreferences jakartaPortletPreferences =
-				_portletPreferencesLocalService.fetchPreferences(
-					portletPreferences.getCompanyId(),
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(),
-					portletPreferences.getPlid(),
-					portletPreferences.getPortletId());
+				if ((jakartaPortletPreferences == null) ||
+					!layoutSEOMetaRobotsProvider.isProvidesContent(
+						jakartaPortletPreferences)) {
 
-			if ((jakartaPortletPreferences == null) ||
-				!layoutSEOMetaRobotsProvider.isProvidesContent(
-					jakartaPortletPreferences)) {
+					return null;
+				}
 
-				continue;
-			}
-
-			portletTitles.add(
-				_getPortletTitle(jakartaPortletPreferences, locale, portlet));
-		}
+				return _getPortletTitle(
+					jakartaPortletPreferences, locale, portlet);
+			});
 
 		return ListUtil.sort(portletTitles);
 	}

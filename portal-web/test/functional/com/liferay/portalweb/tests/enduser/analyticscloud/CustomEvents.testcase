@@ -3079,7 +3079,7 @@ definition {
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10228 | Test Summary: Hidden default event and custom event should not be visible on the Event Analysis list"
 	@priority = 5
-	test CheckDefaultAndCustomEventIsNotVisibleOnEventAnalysisList {
+	test HiddenEventIsNotVisibleAcrossDownstreamSurfaces {
 		var defaultEventName = "blogViewed";
 
 		task ("Fill fields and create custom event") {

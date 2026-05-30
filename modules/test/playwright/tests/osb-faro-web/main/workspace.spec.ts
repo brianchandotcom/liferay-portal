@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {faroConfig} from './faro.config';
+import {getDefaultProject} from './utils/project';
 
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 
@@ -18,9 +19,7 @@ test(
 		tag: '@LRAC-9079',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await page.goto(`${faroConfig.environment.baseUrl}/c/portal/logout`);
 
@@ -40,9 +39,7 @@ test(
 		tag: ['@LRAC-9134', '@LRAC-9118'],
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await page.goto(
 			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/workspace`
@@ -66,9 +63,7 @@ test(
 		tag: '@LRAC-8890',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await page.goto(
 			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/data-privacy`
@@ -101,9 +96,7 @@ test(
 		tag: ['@LRAC-9180', '@LRAC-9183'],
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await page.goto(
 			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/usage`

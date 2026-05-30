@@ -2654,7 +2654,7 @@ definition {
 
 	@description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10212 | Test Summary: Global attributes in settings"
 	@priority = 5
-	test AssertGlobalAttributesInSettings {
+	test ViewGlobalAttributesAndManageDescriptionAndRename {
 		var globalAttributesList = "canonicalUrl,pageDescription,pageKeywords,pageTitle,referrer,url";
 
 		task ("Fill fields and create custom event") {

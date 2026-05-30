@@ -11,6 +11,7 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {faroConfig} from './faro.config';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 
@@ -22,6 +23,75 @@ const test = mergeTests(
 	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
+);
+
+test(
+	'Sites Overview is the AC home page after signing in',
+	{
+		tag: '@LRAC-8261',
+	},
+	async ({page, project}) => {
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}`
+		);
+
+		await expect(
+			page.getByRole('heading', {exact: true, name: 'Sites'})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Sites Overview dashboard renders all expected cards',
+	{
+		tag: '@LRAC-8260',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.sitePage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		for (const cardTitle of [
+			'Top Pages',
+			'Acquisitions',
+			'Visitors by Day and Time',
+			'Search Terms',
+			'Interests',
+			'Sessions by Location',
+			'Session Technology',
+			'Cohort Analysis',
+		]) {
+			await expect(
+				page.getByText(cardTitle, {exact: true}).first()
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Sites Overview shows zero Unique Visitors when no data is available',
+	{
+		tag: '@LRAC-8266',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.sitePage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(page.getByText('Unique Visitors').first()).toBeVisible();
+
+		const uniqueVisitorsValue = page.locator(
+			'xpath=//span[contains(text(),"Unique Visitors")]/ancestor::button//*[contains(@class,"metric-value")]'
+		);
+
+		await expect(uniqueVisitorsValue.first()).toHaveText('0');
+	}
 );
 
 test(

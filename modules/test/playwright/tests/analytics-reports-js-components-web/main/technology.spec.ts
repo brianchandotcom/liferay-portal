@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -28,6 +29,7 @@ const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
 	dataApiHelpersTest,
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
@@ -36,7 +38,6 @@ const test = mergeTests(
 const assetTitle = getRandomString();
 
 let assetId;
-let channel;
 let individualIdentities;
 let individuals: Individual[] | null = null;
 
@@ -69,17 +70,14 @@ async function expectMatchingChartData({
 	expect(chartData).toBe(expectedResult);
 }
 
-test.beforeEach(async ({apiHelpers, page, site}) => {
-	const channelName = 'My Property - ' + getRandomString();
-
-	const result = await syncAnalyticsCloud({
+test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
+	await syncAnalyticsCloud({
 		apiHelpers,
-		channelName,
+		channel: analyticsChannel,
 		page,
+		project,
 		siteName: site.name,
 	});
-
-	channel = result.channel;
 
 	await test.step('Create Individuals', async () => {
 		individuals = [
@@ -124,6 +122,7 @@ test.beforeEach(async ({apiHelpers, page, site}) => {
 });
 
 test('User is able to see data plotted on Technology Chart by all, anonymous and known individuals', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -204,6 +203,7 @@ test('User is able to see data plotted on Technology Chart by all, anonymous and
 });
 
 test('User is able to see data plotted on technology Chart for the last 7 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -244,6 +244,7 @@ test('User is able to see data plotted on technology Chart for the last 7 days',
 });
 
 test('User is able to see data plotted on technology Chart for the last 28 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -284,6 +285,7 @@ test('User is able to see data plotted on technology Chart for the last 28 days'
 });
 
 test('User is able to see data plotted on technology Chart for the last 30 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -324,6 +326,7 @@ test('User is able to see data plotted on technology Chart for the last 30 days'
 });
 
 test('User is able to see data plotted on technology Chart for the last 90 days', async ({
+	analyticsChannel: channel,
 	apiHelpers,
 	contentDashboardPage,
 	page,

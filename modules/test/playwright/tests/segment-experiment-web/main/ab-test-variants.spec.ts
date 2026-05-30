@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -25,6 +26,7 @@ const test = mergeTests(
 		'LPD-78863': {enabled: true, system: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),
@@ -34,174 +36,148 @@ const test = mergeTests(
 test(
 	'AB Test variant content can be saved and discarded from the variant editor',
 	{tag: '@LPS-99349'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		let channel;
-		let project;
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-		try {
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: getRandomString(),
-			});
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			channel = result.channel;
-			project = result.project;
+		await openABTesSidebar(page);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await openABTesSidebar(page);
+		await createVariant({name: 'V1', page});
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		// Switch to the variant editor, add a fragment, and save
 
-			await createVariant({name: 'V1', page});
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('button', {name: 'Save Variant'}),
+			trigger: page.getByLabel('Edit Variant'),
+		});
 
-			// Switch to the variant editor, add a fragment, and save
+		await pageEditorPage.addFragment('Basic Components', 'Button');
 
-			await clickAndExpectToBeVisible({
-				target: page.getByRole('button', {name: 'Save Variant'}),
-				trigger: page.getByLabel('Edit Variant'),
-			});
+		await page.getByRole('button', {name: 'Save Variant'}).click();
 
-			await pageEditorPage.addFragment('Basic Components', 'Button');
+		await waitForAlert(page, 'Success:The variant was saved successfully.');
 
-			await page.getByRole('button', {name: 'Save Variant'}).click();
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('link', {name: 'Go Somewhere'}),
+			trigger: page.locator(`[data-title="V1"]`),
+		});
 
-			await waitForAlert(
-				page,
-				'Success:The variant was saved successfully.'
-			);
+		// Switch to the variant editor, add another fragment, and discard
 
-			await clickAndExpectToBeVisible({
-				target: page.getByRole('link', {name: 'Go Somewhere'}),
-				trigger: page.locator(`[data-title="V1"]`),
-			});
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('button', {name: 'Save Variant'}),
+			trigger: page.getByLabel('Edit Variant'),
+		});
 
-			// Switch to the variant editor, add another fragment, and discard
+		await pageEditorPage.addFragment('Basic Components', 'Button');
 
-			await clickAndExpectToBeVisible({
-				target: page.getByRole('button', {name: 'Save Variant'}),
-				trigger: page.getByLabel('Edit Variant'),
-			});
+		page.on('dialog', (dialog) => dialog.accept());
 
-			await pageEditorPage.addFragment('Basic Components', 'Button');
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator(`[data-title="V1"]`),
+			trigger: page.getByRole('button', {name: 'Discard Variant'}),
+		});
 
-			page.on('dialog', (dialog) => dialog.accept());
+		// Switch back to the variant view and assert the second fragment is gone
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator(`[data-title="V1"]`),
-				trigger: page.getByRole('button', {name: 'Discard Variant'}),
-			});
-
-			// Switch back to the variant view and assert the second fragment is gone
-
-			await expect(
-				page.getByRole('link', {name: 'Go Somewhere'})
-			).toHaveCount(1);
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await expect(
+			page.getByRole('link', {name: 'Go Somewhere'})
+		).toHaveCount(1);
 	}
 );
 
 test(
 	'AB Test variant can be edited via the top toolbar pencil icon',
 	{tag: '@LPS-146003'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		let channel;
-		let project;
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
+		const headingId = getRandomString();
 
-		try {
-			const headingId = getRandomString();
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: headingId,
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([
-					getFragmentDefinition({
-						id: headingId,
-						key: 'BASIC_COMPONENT-heading',
-					}),
-				]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			channel = result.channel;
-			project = result.project;
+		await openABTesSidebar(page);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await openABTesSidebar(page);
+		await createVariant({name: 'V1', page});
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		// Switch to the variant view and open the editor via the top toolbar pencil icon
 
-			await createVariant({name: 'V1', page});
+		await expect(async () => {
+			await page.locator(`[data-title="V1"]`).click();
 
-			// Switch to the variant view and open the editor via the top toolbar pencil icon
+			await expect(
+				page.locator('tr').filter({hasText: 'V1'})
+			).toHaveClass(/table-active/, {timeout: 3000});
+		}).toPass();
 
-			await expect(async () => {
-				await page.locator(`[data-title="V1"]`).click();
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('button', {name: 'Save Variant'}),
+			trigger: page.getByRole('link', {name: 'Edit'}),
+		});
 
-				await expect(
-					page.locator('tr').filter({hasText: 'V1'})
-				).toHaveClass(/table-active/, {timeout: 3000});
-			}).toPass();
+		await pageEditorPage.editTextEditable(
+			headingId,
+			'element-text',
+			'New text'
+		);
 
-			await clickAndExpectToBeVisible({
-				target: page.getByRole('button', {name: 'Save Variant'}),
-				trigger: page.getByRole('link', {name: 'Edit'}),
-			});
+		await page.getByRole('button', {name: 'Save Variant'}).click();
 
-			await pageEditorPage.editTextEditable(
-				headingId,
-				'element-text',
-				'New text'
-			);
+		await waitForAlert(page, 'Success:The variant was saved successfully.');
 
-			await page.getByRole('button', {name: 'Save Variant'}).click();
+		// Switch back to the variant view and assert the new text
 
-			await waitForAlert(
-				page,
-				'Success:The variant was saved successfully.'
-			);
-
-			// Switch back to the variant view and assert the new text
-
-			await clickAndExpectToBeVisible({
-				target: page.getByText('New text'),
-				trigger: page.locator(`[data-title="V1"]`),
-			});
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await clickAndExpectToBeVisible({
+			target: page.getByText('New text'),
+			trigger: page.locator(`[data-title="V1"]`),
+		});
 	}
 );

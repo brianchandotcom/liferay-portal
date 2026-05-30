@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -31,6 +32,7 @@ const test = mergeTests(
 		'LPD-78863': {enabled: true, system: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),
@@ -53,202 +55,186 @@ const criteria: Segment = {
 test(
 	'Segment can be reassigned and renamed while the AB Test is draft, and renamed but not deleted once terminated',
 	{tag: '@LPS-99225'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
 		test.setTimeout(150000);
 
-		let channel;
-		let project;
+		const segmentName = 'EmailAddress Segment';
 
-		try {
-			const segmentName = 'EmailAddress Segment';
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria,
+			groupId: site.id,
+			name: segmentName,
+		});
 
-			await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
-				criteria,
-				groupId: site.id,
-				name: segmentName,
-			});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'My Page',
+		});
 
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: 'My Page',
-			});
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
+		// Create an experience and assign the custom segment to it
 
-			channel = result.channel;
-			project = result.project;
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			// Create an experience and assign the custom segment to it
+		await pageEditorPage.createExperience('E1');
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
+		await pageEditorPage.editExperienceSegment('E1', segmentName);
 
-			await pageEditorPage.createExperience('E1');
+		await pageEditorPage.publishPage();
 
-			await pageEditorPage.editExperienceSegment('E1', segmentName);
+		// Create a draft AB Test on the experience
 
-			await pageEditorPage.publishPage();
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			// Create a draft AB Test on the experience
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: `E1 Segment: ${segmentName} Inactive`,
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: `E1 Segment: ${segmentName} Inactive`,
-				}),
-				trigger: page.getByLabel('Experience Selector'),
-			});
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await openABTesSidebar(page);
+		await createVariant({name: 'Variant ' + getRandomString(), page});
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		// Reassign the segment while the AB Test is draft
 
-			await createVariant({name: 'Variant ' + getRandomString(), page});
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			// Reassign the segment while the AB Test is draft
+		await pageEditorPage.editExperienceSegment('E1', 'Anyone');
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
+		// Rename the segment via the Segments admin while the AB Test is draft
 
-			await pageEditorPage.editExperienceSegment('E1', 'Anyone');
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
+		);
 
-			// Rename the segment via the Segments admin while the AB Test is draft
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.getByLabel(`Show More Options for ${segmentName}`),
+		});
 
-			await page.goto(
-				`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
-			);
+		const segmentRenamed = segmentName + ' (renamed)';
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {name: 'Edit'}),
-				trigger: page.getByLabel(
-					`Show More Options for ${segmentName}`
-				),
-			});
+		await fillAndClickOutside(
+			page,
+			page.getByPlaceholder('Untitled Segment'),
+			segmentRenamed
+		);
 
-			const segmentRenamed = segmentName + ' (renamed)';
+		await page.getByRole('button', {name: 'Save'}).click();
 
-			await fillAndClickOutside(
-				page,
-				page.getByPlaceholder('Untitled Segment'),
-				segmentRenamed
-			);
+		await waitForAlert(page);
 
-			await page.getByRole('button', {name: 'Save'}).click();
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
+		);
 
-			await waitForAlert(page);
+		await expect(page.getByText(segmentRenamed)).toBeVisible();
 
-			await page.goto(
-				`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
-			);
+		// Run and terminate the AB Test
 
-			await expect(page.getByText(segmentRenamed)).toBeVisible();
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			// Run and terminate the AB Test
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: `E1 Segment: ${segmentRenamed} Inactive`,
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: `E1 Segment: ${segmentRenamed} Inactive`,
-				}),
-				trigger: page.getByLabel('Experience Selector'),
-			});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('button', {name: 'Run'}),
+			trigger: page.getByText('Review and Run Test'),
+		});
 
-			await openABTesSidebar(page);
+		await expect(page.getByText('Test is now running.')).toBeVisible();
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('button', {name: 'Run'}),
-				trigger: page.getByText('Review and Run Test'),
-			});
+		await clickAndExpectToBeHidden({
+			target: page.getByText('Test is now running.'),
+			trigger: page.getByRole('button', {name: 'OK'}),
+		});
 
-			await expect(page.getByText('Test is now running.')).toBeVisible();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('button', {name: 'Terminate'}),
+			trigger: page.getByText('Terminate Test'),
+		});
 
-			await clickAndExpectToBeHidden({
-				target: page.getByText('Test is now running.'),
-				trigger: page.getByRole('button', {name: 'OK'}),
-			});
+		await assertTerminatedABTest(page);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('button', {name: 'Terminate'}),
-				trigger: page.getByText('Terminate Test'),
-			});
+		// Rename the segment again now that the AB Test is terminated
 
-			await assertTerminatedABTest(page);
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
+		);
 
-			// Rename the segment again now that the AB Test is terminated
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.getByLabel(`Show More Options for ${segmentRenamed}`),
+		});
 
-			await page.goto(
-				`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
-			);
+		const segmentRenamedTwice = segmentName + ' (renamed twice)';
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {name: 'Edit'}),
-				trigger: page.getByLabel(
-					`Show More Options for ${segmentRenamed}`
-				),
-			});
+		await fillAndClickOutside(
+			page,
+			page.getByPlaceholder('Untitled Segment'),
+			segmentRenamedTwice
+		);
 
-			const segmentRenamedTwice = segmentName + ' (renamed twice)';
+		await page.getByRole('button', {name: 'Save'}).click();
 
-			await fillAndClickOutside(
-				page,
-				page.getByPlaceholder('Untitled Segment'),
-				segmentRenamedTwice
-			);
+		await waitForAlert(page);
 
-			await page.getByRole('button', {name: 'Save'}).click();
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
+		);
 
-			await waitForAlert(page);
+		await expect(page.getByText(segmentRenamedTwice)).toBeVisible();
 
-			await page.goto(
-				`/group${site.friendlyUrlPath}${PORTLET_URLS.segments}`
-			);
+		// Deleting the segment fails because it is required by an experience
 
-			await expect(page.getByText(segmentRenamedTwice)).toBeVisible();
+		page.on('dialog', (dialog) => dialog.accept());
 
-			// Deleting the segment fails because it is required by an experience
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: page.getByLabel(
+				`Show More Options for ${segmentRenamedTwice}`
+			),
+		});
 
-			page.on('dialog', (dialog) => dialog.accept());
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {name: 'Delete'}),
-				trigger: page.getByLabel(
-					`Show More Options for ${segmentRenamedTwice}`
-				),
-			});
-
-			await expect(
-				page.getByText(
-					'The segment cannot be deleted because it is required by one or more experiences.'
-				)
-			).toBeVisible();
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await expect(
+			page.getByText(
+				'The segment cannot be deleted because it is required by one or more experiences.'
+			)
+		).toBeVisible();
 	}
 );

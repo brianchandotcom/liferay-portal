@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -25,6 +26,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	instanceSettingsPagesTest,
 	loginAnalyticsCloudTest(),
@@ -36,7 +38,14 @@ test(
 	{
 		tag: ['@LRAC-10601', '@LRAC-7848'],
 	},
-	async ({apiHelpers, instanceSettingsPage, page, site}) => {
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		instanceSettingsPage,
+		page,
+		project,
+		site,
+	}) => {
 		test.setTimeout(120000);
 
 		// Switch the instance-wide blogs rating type to stars (Instance Settings > Community Tools > Ratings)
@@ -78,10 +87,11 @@ test(
 			title: getRandomString(),
 		});
 
-		const {channel, project} = await syncAnalyticsCloud({
+		await syncAnalyticsCloud({
 			apiHelpers,
-			channelName: 'My Property - ' + getRandomString(),
+			channel,
 			page,
+			project,
 			siteName: site.name,
 		});
 

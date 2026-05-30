@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -25,6 +26,7 @@ const test = mergeTests(
 		'LPD-78863': {enabled: true, system: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),
@@ -34,280 +36,252 @@ const test = mergeTests(
 test(
 	'AB Test panel context changes when the user switches between site pages',
 	{tag: '@LPS-97882'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		let channel;
-		let project;
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
+		const layoutOne = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Page One',
+		});
 
-		try {
-			const layoutOne = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: 'Page One',
-			});
+		const layoutTwo = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Page Two',
+		});
 
-			const layoutTwo = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: 'Page Two',
-			});
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
+		// Create an experience on Page Two and add an AB Test on that experience
 
-			channel = result.channel;
-			project = result.project;
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layoutTwo.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			// Create an experience on Page Two and add an AB Test on that experience
+		await pageEditorPage.createExperience('E1');
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layoutTwo.friendlyUrlPath}?p_l_mode=edit`
-			);
+		await pageEditorPage.publishPage();
 
-			await pageEditorPage.createExperience('E1');
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layoutTwo.friendlyUrlPath}`
+		);
 
-			await pageEditorPage.publishPage();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'E1 Segment: Anyone Inactive',
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layoutTwo.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'E1 Segment: Anyone Inactive',
-				}),
-				trigger: page.getByLabel('Experience Selector'),
-			});
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await openABTesSidebar(page);
+		// Switch to Page One and assert the panel shows the empty state
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layoutOne.friendlyUrlPath}`
+		);
 
-			// Switch to Page One and assert the panel shows the empty state
+		await openABTesSidebar(page);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layoutOne.friendlyUrlPath}`
-			);
-
-			await openABTesSidebar(page);
-
-			await expect(page.getByText('Create Test')).toBeVisible();
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await expect(page.getByText('Create Test')).toBeVisible();
 	}
 );
 
 test(
 	'Deleting an experience with a draft AB Test can be cancelled or confirmed',
 	{tag: '@LPS-101341'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		let channel;
-		let project;
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
+		const experienceName = 'E1';
 
-		try {
-			const experienceName = 'E1';
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'My Page',
+		});
 
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				siteId: site.id,
-				title: 'My Page',
-			});
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
+		// Create an experience and a draft AB Test on it
 
-			channel = result.channel;
-			project = result.project;
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			// Create an experience and a draft AB Test on it
+		await pageEditorPage.createExperience(experienceName);
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
+		await pageEditorPage.publishPage();
 
-			await pageEditorPage.createExperience(experienceName);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			await pageEditorPage.publishPage();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: `${experienceName} Segment: Anyone Inactive`,
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+		await openABTesSidebar(page);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: `${experienceName} Segment: Anyone Inactive`,
-				}),
-				trigger: page.getByLabel('Experience Selector'),
-			});
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await openABTesSidebar(page);
+		await createVariant({name: 'V1', page});
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		// Try to delete the experience and cancel the confirm dialog
 
-			await createVariant({name: 'V1', page});
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			// Try to delete the experience and cancel the confirm dialog
+		await pageEditorPage.openExperienceSelector();
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
+		page.once('dialog', (dialog) => dialog.dismiss());
 
-			await pageEditorPage.openExperienceSelector();
+		await page
+			.locator('.dropdown-menu__experience', {
+				hasText: experienceName,
+			})
+			.getByLabel('Delete Experience')
+			.click();
 
-			page.once('dialog', (dialog) => dialog.dismiss());
+		await pageEditorPage.closeExperienceSelector();
 
-			await page
-				.locator('.dropdown-menu__experience', {
-					hasText: experienceName,
-				})
-				.getByLabel('Delete Experience')
-				.click();
+		await pageEditorPage.openExperienceSelector();
 
-			await pageEditorPage.closeExperienceSelector();
+		await expect(
+			page.locator('.dropdown-menu__experience', {
+				hasText: experienceName,
+			})
+		).toBeVisible();
 
-			await pageEditorPage.openExperienceSelector();
+		await pageEditorPage.closeExperienceSelector();
 
-			await expect(
-				page.locator('.dropdown-menu__experience', {
-					hasText: experienceName,
-				})
-			).toBeVisible();
+		// Delete the experience with confirm
 
-			await pageEditorPage.closeExperienceSelector();
+		await pageEditorPage.deleteExperience(experienceName);
 
-			// Delete the experience with confirm
+		await pageEditorPage.openExperienceSelector();
 
-			await pageEditorPage.deleteExperience(experienceName);
-
-			await pageEditorPage.openExperienceSelector();
-
-			await expect(
-				page.locator('.dropdown-menu__experience', {
-					hasText: experienceName,
-				})
-			).toHaveCount(0);
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await expect(
+			page.locator('.dropdown-menu__experience', {
+				hasText: experienceName,
+			})
+		).toHaveCount(0);
 	}
 );
 
 test(
 	'Locked experience elements cannot be edited from the Browser tree',
 	{tag: '@LPS-109345'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
-		let channel;
-		let project;
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		page,
+		pageEditorPage,
+		project,
+		site,
+	}) => {
+		const experienceName = 'E1';
 
-		try {
-			const experienceName = 'E1';
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([
-					getFragmentDefinition({
-						id: getRandomString(),
-						key: 'BASIC_COMPONENT-heading',
-					}),
-				]),
-				siteId: site.id,
-				title: 'My Page',
-			});
-
-			const result = await syncAnalyticsCloud({
-				apiHelpers,
-				channelName: 'My Property - ' + getRandomString(),
-				page,
-				siteName: site.name,
-			});
-
-			channel = result.channel;
-			project = result.project;
-
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
-
-			await pageEditorPage.createExperience(experienceName);
-
-			await pageEditorPage.publishPage();
-
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: `${experienceName} Segment: Anyone Inactive`,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
 				}),
-				trigger: page.getByLabel('Experience Selector'),
-			});
+			]),
+			siteId: site.id,
+			title: 'My Page',
+		});
 
-			await openABTesSidebar(page);
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
 
-			await createABTest({name: 'AB Test ' + getRandomString(), page});
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
 
-			await createVariant({name: 'V1', page});
+		await pageEditorPage.createExperience(experienceName);
 
-			// Run the test so the experience becomes locked
+		await pageEditorPage.publishPage();
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('button', {name: 'Run'}),
-				trigger: page.getByText('Review and Run Test'),
-			});
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-			await expect(page.getByText('Test is now running.')).toBeVisible();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: `${experienceName} Segment: Anyone Inactive`,
+			}),
+			trigger: page.getByLabel('Experience Selector'),
+		});
 
-			await clickAndExpectToBeHidden({
-				target: page.getByText('Test is now running.'),
-				trigger: page.getByRole('button', {name: 'OK'}),
-			});
+		await openABTesSidebar(page);
 
-			// Open the Browser tab and assert the Heading has no actions menu
+		await createABTest({name: 'AB Test ' + getRandomString(), page});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-			);
+		await createVariant({name: 'V1', page});
 
-			await pageEditorPage.goToSidebarTab('Browser');
+		// Run the test so the experience becomes locked
 
-			const headingRow = page
-				.locator('.treeview-link', {hasText: 'Heading'})
-				.first();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('button', {name: 'Run'}),
+			trigger: page.getByText('Review and Run Test'),
+		});
 
-			await expect(headingRow).toBeVisible();
+		await expect(page.getByText('Test is now running.')).toBeVisible();
 
-			await expect(
-				headingRow.locator('button.dropdown-toggle')
-			).toHaveCount(0);
-		}
-		finally {
-			if (channel && project) {
-				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-					`[${channel.id}]`,
-					project.groupId
-				);
-			}
-		}
+		await clickAndExpectToBeHidden({
+			target: page.getByText('Test is now running.'),
+			trigger: page.getByRole('button', {name: 'OK'}),
+		});
+
+		// Open the Browser tab and assert the Heading has no actions menu
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		const headingRow = page
+			.locator('.treeview-link', {hasText: 'Heading'})
+			.first();
+
+		await expect(headingRow).toBeVisible();
+
+		await expect(headingRow.locator('button.dropdown-toggle')).toHaveCount(
+			0
+		);
 	}
 );

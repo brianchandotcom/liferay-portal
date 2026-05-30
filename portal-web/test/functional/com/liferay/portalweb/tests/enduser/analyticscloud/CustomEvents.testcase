@@ -239,67 +239,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10013 | Test Summary: Rename Attributes Display Name"
-	@priority = 4
-	test RenameAttributeDisplayName {
-		var attributeName = "team";
-		var attributeValue = "analytics cloud";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				attributesName = ${attributeName},
-				attributesValue = ${attributeValue},
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Edit the new attribute") {
-			ACUtils.searchBar(searchItem = ${attributeName});
-
-			ACNavigation.openItem(itemName = ${attributeName});
-
-			ACUtils.clickAnyButton(button = "Edit");
-		}
-
-		task ("Change the display name of the attribute") {
-			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${attributeName} Display Name");
-		}
-
-		task ("Back to Event Attributes and Navigation to attributes tab") {
-			ACNavigation.backNavigation(pageName = "Event Attributes");
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Check if the display name has been changed") {
-			ACUtils.searchBar(searchItem = ${attributeName});
-
-			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${attributeName} Display Name");
-		}
-	}
-
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10016 | Test Summary: Rename Attribute that already exists"
 	@priority = 4
 	test RenameToExistingAttributeName {

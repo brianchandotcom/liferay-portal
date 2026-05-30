@@ -122,7 +122,7 @@ describe('ModelArmorTemplateService', () => {
 			await putModelArmorTemplate(template);
 
 			expect(mockFetch).toHaveBeenCalledWith(
-				`${BASE_URI}/by-external-reference-code/TEMPLATE_X`,
+				'/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/TEMPLATE_X',
 				expect.objectContaining({
 					body: JSON.stringify(template),
 					headers: {'Content-Type': 'application/json'},

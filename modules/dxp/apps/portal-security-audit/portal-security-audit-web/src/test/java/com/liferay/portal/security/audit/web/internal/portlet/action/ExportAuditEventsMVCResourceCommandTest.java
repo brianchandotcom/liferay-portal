@@ -49,6 +49,25 @@ public class ExportAuditEventsMVCResourceCommandTest {
 				new String[] {"user-name", "user-id"}));
 	}
 
+	@Test
+	public void testBuildCSVWhenColumnValueIsNull() {
+		AuditEvent auditEvent = Mockito.mock(AuditEvent.class);
+
+		long userId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			auditEvent.getUserId()
+		).thenReturn(
+			userId
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat("user-name,user-id\n,", userId, "\n"),
+			_buildCSV(
+				Arrays.asList(auditEvent),
+				new String[] {"user-name", "user-id"}));
+	}
+
 	private String _buildCSV(List<AuditEvent> auditEvents, String[] columns) {
 		return ReflectionTestUtil.invoke(
 			new ExportAuditEventsMVCResourceCommand(), "_buildCSV",

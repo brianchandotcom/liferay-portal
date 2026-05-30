@@ -180,28 +180,34 @@ export async function syncAllContacts(page: Page) {
 
 export async function syncAnalyticsCloud({
 	apiHelpers,
+	channel,
 	channelName,
 	commerceChannelName,
 	organizationName,
 	page,
+	project,
 	siteName,
 	userGroupName,
 }: {
 	apiHelpers: ApiHelpers;
-	channelName: string;
+	channel?: any;
+	channelName?: string;
 	commerceChannelName?: string;
 	organizationName?: string;
 	page: Page;
+	project?: any;
 	siteName?: string;
 	userGroupName?: string;
 }): Promise<{
 	channel: any;
 	project: any;
 }> {
-	const {channel, project} = await createChannel({
-		apiHelpers,
-		channelName,
-	});
+	if (!channel) {
+		({channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		}));
+	}
 
 	const {token} = await createDataSource(page);
 
@@ -214,15 +220,22 @@ export async function syncAnalyticsCloud({
 	await connectToAnalyticsCloud(page, {token});
 
 	await toggleSiteSync({
-		channelName,
+		channelName: channel.name,
 		page,
 		siteName,
 	});
 
 	if (commerceChannelName) {
-		await enableCommerceChannel({channelName, page});
+		await enableCommerceChannel({
+			channelName: channel.name,
+			page,
+		});
 
-		await syncCommerce({channelName, commerceChannelName, page});
+		await syncCommerce({
+			channelName: channel.name,
+			commerceChannelName,
+			page,
+		});
 	}
 
 	await goNextStep(page);

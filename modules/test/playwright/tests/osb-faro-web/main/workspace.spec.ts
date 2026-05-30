@@ -91,6 +91,37 @@ test(
 );
 
 test(
+	'Workspace settings timezone country list is sorted alphabetically',
+	{
+		tag: '@LRAC-9146',
+	},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/workspace`
+		);
+
+		const countries = (
+			await page
+				.getByLabel('Timezone')
+				.first()
+				.locator('option')
+				.allTextContents()
+		)
+			.map((text) => text.trim())
+			.filter(
+				(text) =>
+					!!text.length && !text.toLowerCase().startsWith('select')
+			);
+
+		expect(countries).toEqual(
+			[...countries].sort((a, b) => a.localeCompare(b))
+		);
+	}
+);
+
+test(
 	'Subscription and Usage settings page shows current plan, limits, and add-ons',
 	{
 		tag: ['@LRAC-9180', '@LRAC-9183'],

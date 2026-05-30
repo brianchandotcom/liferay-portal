@@ -12,6 +12,7 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {createChannel} from './utils/channel';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {getDefaultProject} from './utils/project';
 import {
 	selectPaginationItemsPerPage,
 	selectPaginationPageNumber,
@@ -55,9 +56,7 @@ test(
 			});
 		}
 
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await test.step('go to AC Properties Page', async () => {
 			await navigateToACSettingsViaURL({

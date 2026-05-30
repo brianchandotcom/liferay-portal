@@ -12,6 +12,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import getRandomString from '../../../utils/getRandomString';
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {getDefaultProject} from './utils/project';
 import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 import {searchByTerm, viewNameOnTableList} from './utils/utils';
 
@@ -23,9 +24,7 @@ test(
 		tag: ['@LRAC-8322', '@LRAC-8323'],
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const corbinUser = await apiHelpers.jsonWebServicesOSBFaro.getUser(
 			project.groupId,
@@ -141,9 +140,7 @@ test(
 
 		// Go to the AC properties settings page
 
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.propertiesPage,
@@ -175,9 +172,7 @@ test(
 		tag: '@LRAC-9105',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.propertiesPage,
@@ -206,9 +201,7 @@ test(
 		tag: '@LRAC-11836',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const channel = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
 			'Email Disabled Property ' + getRandomString(),
@@ -242,9 +235,7 @@ test(
 		tag: '@LRAC-9112',
 	},
 	async ({apiHelpers}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const channelIds: string[] = [];
 
@@ -281,9 +272,7 @@ test(
 		tag: '@LRAC-9037',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const propertyName = 'Duplicate Property ' + getRandomString();
 
@@ -343,9 +332,7 @@ test(
 		tag: ['@LRAC-9102', '@LRAC-9106'],
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.propertiesPage,
@@ -388,9 +375,7 @@ test(
 		tag: '@LRAC-9038',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.propertiesPage,
@@ -423,9 +408,7 @@ test(
 		tag: '@LRAC-9107',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		await navigateToACSettingsViaURL({
 			acPage: ACPage.propertiesPage,
@@ -460,9 +443,7 @@ test(
 		tag: '@LRAC-9121',
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const runId = getRandomString();
 
@@ -512,9 +493,7 @@ test(
 		tag: ['@LRAC-14648', '@LRAC-14649'],
 	},
 	async ({apiHelpers, page}) => {
-		const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-		const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
+		const project = await getDefaultProject(apiHelpers);
 
 		const propertyName = 'Delete Property ' + getRandomString();
 

@@ -14,10 +14,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.Metric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryAcquisitionChannel;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryHistogramMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryTopPages;
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceOverviewMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
 
@@ -296,6 +299,63 @@ public class AnalyticsCloudClient {
 		}
 	}
 
+	public PerformanceOverviewMetric getPerformanceOverviewMetric(
+			AnalyticsConfiguration analyticsConfiguration, List<Long> groupIds,
+			Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.setLocation(
+				_getUrl(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(), null,
+					groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/performance-overview-metric", rangeKey, null));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				PerformanceOverviewMetric performanceOverviewMetric = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructCollectionType(
+								List.class, Metric.class));
+
+					performanceOverviewMetric = _getPerformanceOverviewMetric(
+						objectReader.readValue(jsonNode));
+				}
+
+				return performanceOverviewMetric;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException(
+				"Unable to get performance overview metric");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get performance overview metric", exception);
+		}
+	}
+
 	private Http.Options _getOptions(
 			AnalyticsConfiguration analyticsConfiguration)
 		throws Exception {
@@ -313,6 +373,32 @@ public class AnalyticsCloudClient {
 		return options;
 	}
 
+	private PerformanceOverviewMetric _getPerformanceOverviewMetric(
+		List<Metric> metrics) {
+
+		PerformanceOverviewMetric performanceOverviewMetric =
+			new PerformanceOverviewMetric();
+
+		for (Metric metric : metrics) {
+			String metricType = metric.getMetricType();
+
+			if (StringUtil.equals(metricType, "downloadsMetric")) {
+				performanceOverviewMetric.setDownloadsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "impressionsMetric")) {
+				performanceOverviewMetric.setImpressionsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "readsMetric")) {
+				performanceOverviewMetric.setReadsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "viewsMetric")) {
+				performanceOverviewMetric.setViewsMetric(() -> metric);
+			}
+		}
+
+		return performanceOverviewMetric;
+	}
+
 	private String _getUrl(
 		String dataSourceId, String externalReferenceCode, List<Long> groupIds,
 		String liferayAnalyticsFaroBackendURL, String path, Integer rangeKey,
@@ -324,8 +410,11 @@ public class AnalyticsCloudClient {
 
 		url = HttpComponentsUtil.addParameter(
 			url, "dataSourceId", dataSourceId);
-		url = HttpComponentsUtil.addParameter(
-			url, "externalReferenceCode", externalReferenceCode);
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			url = HttpComponentsUtil.addParameter(
+				url, "externalReferenceCode", externalReferenceCode);
+		}
 
 		if (!groupIds.isEmpty()) {
 			url = HttpComponentsUtil.addParameter(

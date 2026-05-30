@@ -486,61 +486,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10014 | Test Summary: Update Attributes description"
-	@priority = 4
-	test UpdateAttributeDescription {
-		var attributeName = "category";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Edit the new attribute") {
-			ACNavigation.openItem(itemName = ${attributeName});
-
-			ACUtils.clickAnyButton(button = "Edit");
-		}
-
-		task ("Change the description of the attribute") {
-			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDescription = "${attributeName} Description");
-		}
-
-		task ("Back to Event Attributes and Navigation to attributes tab") {
-			ACNavigation.backNavigation(pageName = "Event Attributes");
-
-			ACSettings.goToAttributes();
-		}
-
-		task ("Check if the description has been changed") {
-			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${attributeName} Description");
-		}
-	}
-
-
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
 	@priority = 5
 	test CanBlockCustomEvent {

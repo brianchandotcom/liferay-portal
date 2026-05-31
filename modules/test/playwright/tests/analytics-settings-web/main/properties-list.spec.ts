@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {getDefaultProject} from '../../osb-faro-web/main/utils/project';
-import {goToSettingsStep} from './utils/analytics-settings';
 
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 
@@ -48,7 +48,9 @@ test(
 		await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
 
 		try {
-			await goToSettingsStep({page, stepName: 'Properties'});
+			await page.goto(PORTLET_URLS.analyticsCloudConnection);
+
+			await page.getByRole('button', {exact: true, name: 'Next'}).click();
 
 			const searchBar = page.locator('.management-bar').filter({
 				has: page.locator(
@@ -83,6 +85,86 @@ test(
 				`[${keptChannel.id}]`,
 				project.groupId
 			);
+		}
+	}
+);
+
+test(
+	'AC property search in the DXP Properties wizard step matches by name and handles the empty state',
+	{tag: '@LRAC-12585'},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		const foundName = 'AC Search Property ' + getRandomString();
+		const otherName1 = 'Other Property ' + getRandomString();
+		const otherName2 = 'Other Property ' + getRandomString();
+
+		const channels = await Promise.all(
+			[foundName, otherName1, otherName2].map((name) =>
+				apiHelpers.jsonWebServicesOSBFaro.createChannel(
+					name,
+					project.groupId
+				)
+			)
+		);
+
+		const connectionToken =
+			await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+				project.groupId
+			);
+
+		await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
+
+		try {
+			await page.goto(PORTLET_URLS.analyticsCloudConnection);
+
+			await page.getByRole('button', {exact: true, name: 'Next'}).click();
+
+			const searchBar = page.locator('.management-bar').filter({
+				has: page.locator(
+					'input[placeholder="Search"]:not([disabled])'
+				),
+			});
+
+			// A matching property appears alone
+
+			await searchBar.getByPlaceholder('Search').fill(foundName);
+
+			await searchBar.getByRole('button', {name: 'Search'}).click();
+
+			await expect(
+				page.getByRole('cell', {name: foundName})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('cell', {name: otherName1})
+			).toHaveCount(0);
+
+			await expect(
+				page.getByRole('cell', {name: otherName2})
+			).toHaveCount(0);
+
+			// A non-existent term shows the empty state
+
+			await searchBar
+				.getByPlaceholder('Search')
+				.fill('NoSuchProperty' + getRandomString());
+
+			await searchBar.getByRole('button', {name: 'Search'}).click();
+
+			await expect(
+				page.getByText('No properties were found.')
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			for (const channel of channels) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
 		}
 	}
 );

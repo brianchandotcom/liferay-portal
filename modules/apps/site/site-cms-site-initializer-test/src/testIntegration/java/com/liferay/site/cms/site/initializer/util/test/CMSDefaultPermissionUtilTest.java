@@ -190,13 +190,13 @@ public class CMSDefaultPermissionUtilTest {
 	public void testGetJSONObjectWhenSpaceCreatedWithGroupExternalReferenceCode()
 		throws Exception {
 
-		String groupExternalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
 		serviceContext.setAttribute(
-			"groupExternalReferenceCode", groupExternalReferenceCode);
+			"groupExternalReferenceCode", externalReferenceCode);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -212,7 +212,7 @@ public class CMSDefaultPermissionUtilTest {
 		Group group = depotEntry.getGroup();
 
 		Assert.assertEquals(
-			groupExternalReferenceCode, group.getExternalReferenceCode());
+			externalReferenceCode, group.getExternalReferenceCode());
 
 		Assert.assertFalse(
 			JSONUtil.isEmpty(

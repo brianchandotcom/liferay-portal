@@ -793,11 +793,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			externalReferenceCode,
 			postedAssetLibrary.getExternalReferenceCode());
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			externalReferenceCode, testCompany.getCompanyId());
-
-		Assert.assertEquals(
-			externalReferenceCode, group.getExternalReferenceCode());
+		Assert.assertNotNull(
+			_groupLocalService.fetchGroupByExternalReferenceCode(
+				externalReferenceCode, testCompany.getCompanyId()));
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {

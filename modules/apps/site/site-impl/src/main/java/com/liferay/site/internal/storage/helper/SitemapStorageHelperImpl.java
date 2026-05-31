@@ -103,27 +103,24 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 	}
 
 	private String _getDirName(long groupId) {
-		return StringBundler.concat(
-			_DIR_NAME_PREFIX, StringPool.SLASH, groupId);
+		return "sitemaps/" + groupId;
 	}
 
 	private String _getDirName(long groupId, String assetTypeKey) {
 		return StringBundler.concat(
-			_DIR_NAME_PREFIX, StringPool.SLASH, groupId, StringPool.SLASH,
-			assetTypeKey);
+			"sitemaps/", groupId, StringPool.SLASH, assetTypeKey);
 	}
 
 	private String _getSitemapFileName(long groupId) {
-		return StringBundler.concat(
-			_DIR_NAME_PREFIX, StringPool.SLASH, groupId, "/sitemap-index.xml");
+		return StringBundler.concat("sitemaps/", groupId, "/sitemap-index.xml");
 	}
 
 	private String _getSitemapFileName(
 		long groupId, String assetTypeKey, int page) {
 
 		return StringBundler.concat(
-			_DIR_NAME_PREFIX, StringPool.SLASH, groupId, StringPool.SLASH,
-			assetTypeKey, StringPool.SLASH, page, ".xml");
+			"sitemaps/", groupId, StringPool.SLASH, assetTypeKey,
+			StringPool.SLASH, page, ".xml");
 	}
 
 	private void _storeSitemapFile(long companyId, String fileName, String xml)
@@ -141,8 +138,6 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 
 		_dlStore.addFile(dlStoreRequest, bytes);
 	}
-
-	private static final String _DIR_NAME_PREFIX = "sitemaps";
 
 	@Reference
 	private DLStore _dlStore;

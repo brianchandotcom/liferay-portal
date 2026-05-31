@@ -690,7 +690,9 @@ public class LayoutStructureRulesHelperTest {
 				HashMapBuilder.put(
 					"FIELD_NAME", fieldName
 				).put(
-					"FIELD_VALUE", fieldValueJSONArray.toString()
+					"FIELD_VALUE",
+					StringUtil.merge(
+						JSONUtil.toStringArray(fieldValueJSONArray), "\",\"")
 				).put(
 					"OPERATOR", operator
 				).build()));

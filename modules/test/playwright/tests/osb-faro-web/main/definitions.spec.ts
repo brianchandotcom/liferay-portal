@@ -150,6 +150,55 @@ test(
 );
 
 test(
+	'Connected DXP data source appears as the source of every default individual attribute',
+	{tag: '@Legacy'},
+	async ({apiHelpers, page, project}) => {
+		const connectionToken =
+			await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+				project.groupId
+			);
+
+		await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
+
+		try {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.dataSourcePage,
+				page,
+				projectID: project.groupId,
+			});
+
+			const connectedRow = page
+				.locator('table tbody tr')
+				.filter({hasNotText: 'DISCONNECTED'})
+				.filter({hasText: 'CONNECTED'});
+
+			const dataSourceName =
+				(await connectedRow.locator('td').first().textContent()) || '';
+
+			expect(dataSourceName.trim()).not.toBe('');
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsIndividualAttributesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			// Open the 'email' attribute and verify its source is the
+			// freshly-connected DXP data source
+
+			await page.getByRole('button', {name: 'email'}).click();
+
+			await expect(
+				page.getByRole('cell', {name: dataSourceName}).first()
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+		}
+	}
+);
+
+test(
 	'Add button is hidden after reaching the 5-query limit',
 	{tag: '@LRAC-8782'},
 	async ({page, project}) => {

@@ -307,4 +307,26 @@ export class JSONWebServicesOSBFaroApiHelper {
 			}
 		);
 	}
+
+	async fetchDataSourceConnectionToken(groupId: string): Promise<string> {
+		const header = new Headers();
+
+		header.append('Authorization', _authorization);
+
+		const response = await fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/contacts/${groupId}/data_source/token`,
+			{
+				headers: header,
+				method: 'GET',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error(
+				`fetchDataSourceConnectionToken failed: ${response.status} ${await response.text()}`
+			);
+		}
+
+		return response.text();
+	}
 }

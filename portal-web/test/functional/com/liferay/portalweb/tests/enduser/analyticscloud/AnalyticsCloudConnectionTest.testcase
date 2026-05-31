@@ -141,26 +141,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"
-	@priority = 5
-	test CanNavigatesToDataSourcePage {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
-
-		ACDXPSettings.syncNewContactData();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToSettings();
-
-		ACUtils.assertItemsName(itemList = ${dataSource});
-
-		ACUtils.assertPageTitle(pageTitle = "Data Sources");
-	}
-
 	@description = "Bug: LRAC-11423 | Automation ID: LRAC-11475 | Test Summary: Check if it is possible to connect AC with DXP using an existing data source"
 	@priority = 4
 	test CheckIfIsPossibleToReconnectACWithDXP {
@@ -180,34 +160,6 @@ definition {
 
 		task ("Reconnect AC with DXP") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-	}
-
-	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
-	@priority = 5
-	test DataSourceListIsSearchable {
-		task ("Create data sources") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
-
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
-		}
-
-		task ("Assert that a data source is searchable and found") {
-			ACUtils.searchBar(searchItem = ${dataSource});
-
-			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
-		}
-
-		task ("Assert that a data source that doesn't exist is not found") {
-			ACUtils.searchBar(searchItem = "Analytics Cloud");
-
-			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 

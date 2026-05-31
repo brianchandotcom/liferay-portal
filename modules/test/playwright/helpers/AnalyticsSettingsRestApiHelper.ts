@@ -45,6 +45,25 @@ export class AnalyticsSettingsRestApiHelper {
 		);
 	}
 
+	async putContactsConfiguration(configuration: {
+		syncAllAccounts?: boolean;
+		syncAllContacts?: boolean;
+		syncedAccountGroupIds?: number[];
+		syncedOrganizationIds?: number[];
+		syncedUserGroupIds?: number[];
+	}) {
+		return this.apiHelpers.page.request.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/contacts/configuration`,
+			{
+				data: configuration,
+				headers: {
+					'Content-Type': 'application/json',
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+			}
+		);
+	}
+
 	async syncSitesToChannel(
 		channelId: string,
 		siteIds: number[]

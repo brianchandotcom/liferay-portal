@@ -178,6 +178,69 @@ export async function syncAllContacts(page: Page) {
 	}
 }
 
+export async function syncAnalyticsCloudViaAPI({
+	apiHelpers,
+	channel,
+	channelName,
+	project,
+	siteId,
+	syncedOrganizationIds,
+	syncedUserGroupIds,
+}: {
+	apiHelpers: ApiHelpers;
+	channel?: any;
+	channelName?: string;
+	project?: any;
+	siteId?: number;
+	syncedOrganizationIds?: number[];
+	syncedUserGroupIds?: number[];
+}): Promise<{
+	channel: any;
+	project: any;
+}> {
+	if (!channel) {
+		({channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		}));
+	}
+
+	const connectionToken =
+		await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+			project.groupId
+		);
+
+	await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
+
+	if (siteId !== undefined) {
+		await apiHelpers.analyticsSettingsRest.syncSitesToChannel(channel.id, [
+			siteId,
+		]);
+	}
+
+	if (syncedOrganizationIds?.length) {
+		await apiHelpers.analyticsSettingsRest.putContactsConfiguration({
+			syncedOrganizationIds,
+		});
+	}
+	else if (syncedUserGroupIds?.length) {
+		await apiHelpers.analyticsSettingsRest.putContactsConfiguration({
+			syncedUserGroupIds,
+		});
+	}
+	else {
+		await apiHelpers.analyticsSettingsRest.putContactsConfiguration({
+			syncAllAccounts: true,
+			syncAllContacts: true,
+		});
+	}
+
+	return {
+		channel,
+		project,
+	};
+}
+
 export async function syncAnalyticsCloud({
 	apiHelpers,
 	channel,

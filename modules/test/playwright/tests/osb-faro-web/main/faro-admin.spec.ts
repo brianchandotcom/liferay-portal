@@ -10,7 +10,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {navigateToACAdmin} from './utils/navigation';
 
 export const test = mergeTests(
@@ -34,10 +34,9 @@ test('Assert disconnect data source option is enabled when connected', async ({
 	});
 
 	await test.step('Connect the DXP to AC', async () => {
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
 		});
 	});

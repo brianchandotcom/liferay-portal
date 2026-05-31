@@ -17,7 +17,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {
@@ -62,12 +62,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Go to site page', async () => {
@@ -139,12 +138,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Go to site page', async () => {
@@ -228,12 +226,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Go to site page', async () => {
@@ -320,12 +317,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Create a new Experience', async () => {
@@ -424,12 +420,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Create a new Experience', async () => {
@@ -523,12 +518,11 @@ test(
 			title: pageTitle,
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await test.step('Go to site page', async () => {
@@ -600,12 +594,11 @@ test(
 			title: getRandomString(),
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		// Create an AB Test draft with a variant in DXP
@@ -677,12 +670,11 @@ test(
 			title: getRandomString(),
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		// Create a second user with the minimum permissions to terminate the AB Test

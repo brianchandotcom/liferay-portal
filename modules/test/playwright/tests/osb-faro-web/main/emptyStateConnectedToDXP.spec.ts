@@ -11,7 +11,7 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {switchChannel} from './utils/channel';
 import {
 	ACPage,
@@ -32,13 +32,12 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
-	await syncAnalyticsCloud({
+test.beforeEach(async ({analyticsChannel, apiHelpers, project, site}) => {
+	await syncAnalyticsCloudViaAPI({
 		apiHelpers,
 		channel: analyticsChannel,
-		page,
 		project,
-		siteName: site.name,
+		siteId: Number(site.id),
 	});
 });
 

@@ -12,7 +12,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {
@@ -33,7 +33,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
+test.beforeEach(async ({analyticsChannel, apiHelpers, project, site}) => {
 	await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getFragmentDefinition({
@@ -45,12 +45,11 @@ test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
 		title: 'My Page',
 	});
 
-	await syncAnalyticsCloud({
+	await syncAnalyticsCloudViaAPI({
 		apiHelpers,
 		channel: analyticsChannel,
-		page,
 		project,
-		siteName: site.name,
+		siteId: Number(site.id),
 	});
 });
 

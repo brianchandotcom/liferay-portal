@@ -15,7 +15,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {createABTest, createVariant, openABTesSidebar} from './utils/ab-test';
@@ -49,12 +49,11 @@ test(
 			title: getRandomString(),
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
@@ -132,12 +131,11 @@ test(
 			title: getRandomString(),
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);

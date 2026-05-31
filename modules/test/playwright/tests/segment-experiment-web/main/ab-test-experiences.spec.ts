@@ -15,7 +15,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {createABTest, createVariant, openABTesSidebar} from './utils/ab-test';
@@ -54,12 +54,11 @@ test(
 			title: 'Page Two',
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		// Create an experience on Page Two and add an AB Test on that experience
@@ -118,12 +117,11 @@ test(
 			title: 'My Page',
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		// Create an experience and a draft AB Test on it
@@ -219,12 +217,11 @@ test(
 			title: 'My Page',
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		await page.goto(

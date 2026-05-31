@@ -57,18 +57,16 @@ public class TemplateRestrictedVariablesTest {
 				serviceReference);
 
 			try {
-				String[] restrictedVariables =
-					templateManager.getRestrictedVariables();
-
 				String name = templateManager.getName();
-
 				Template template = templateManager.getTemplate(
 					new StringTemplateResource(
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()),
 					true);
 
-				for (String restrictedVariable : restrictedVariables) {
+				for (String restrictedVariable :
+						templateManager.getRestrictedVariables()) {
+
 					Assert.assertFalse(
 						restrictedVariable + " accessible in " + name,
 						template.containsKey(restrictedVariable));

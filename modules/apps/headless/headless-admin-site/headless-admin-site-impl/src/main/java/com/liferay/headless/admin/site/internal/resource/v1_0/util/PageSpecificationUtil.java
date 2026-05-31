@@ -210,13 +210,13 @@ public class PageSpecificationUtil {
 			return;
 		}
 
-		String fragmentInstanceERC =
+		String fragmentInstanceExternalReferenceCode =
 			fragmentInstance.getFragmentInstanceExternalReferenceCode();
 
-		if (Validator.isNotNull(fragmentInstanceERC)) {
+		if (Validator.isNotNull(fragmentInstanceExternalReferenceCode)) {
 			fragmentInstance.setFragmentInstanceExternalReferenceCode(
 				() ->
-					fragmentInstanceERC +
+					fragmentInstanceExternalReferenceCode +
 						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT);
 		}
 	}

@@ -65,7 +65,6 @@ public class PageExperiencesTestUtil {
 			PageExperience pageExperience = pageExperiencesByKey.get(
 				expectedPageExperience.getKey());
 
-			Assert.assertNotNull(pageExperience);
 			Assert.assertEquals(
 				expectedPageExperience.getExternalReferenceCode(),
 				pageExperience.getExternalReferenceCode());

@@ -122,9 +122,6 @@ public class SharingCollaborationMailSenderImpl
 			company.getPortalURL(group.getGroupId()) +
 				_portal.getLayoutActualURL(layout);
 
-		String namespace = _portal.getPortletNamespace(
-			AccountPortletKeys.ACCOUNT_USERS_REGISTRATION);
-
 		url = HttpComponentsUtil.addParameter(
 			url, "p_p_id", AccountPortletKeys.ACCOUNT_USERS_REGISTRATION);
 		url = HttpComponentsUtil.addParameter(url, "p_p_lifecycle", "0");
@@ -132,6 +129,10 @@ public class SharingCollaborationMailSenderImpl
 			url, "p_p_state", WindowState.MAXIMIZED.toString());
 		url = HttpComponentsUtil.addParameter(
 			url, "p_p_mode", PortletMode.VIEW.toString());
+
+		String namespace = _portal.getPortletNamespace(
+			AccountPortletKeys.ACCOUNT_USERS_REGISTRATION);
+
 		url = HttpComponentsUtil.addParameter(
 			url, namespace + "mvcRenderCommandName",
 			"/account_admin/create_account_user");

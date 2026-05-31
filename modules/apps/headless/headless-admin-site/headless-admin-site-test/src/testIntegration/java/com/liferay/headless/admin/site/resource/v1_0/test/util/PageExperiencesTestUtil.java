@@ -42,7 +42,7 @@ public class PageExperiencesTestUtil {
 		PageExperience[] expectedPageExperiences, Layout layout,
 		PageExperience[] pageExperiences) {
 
-		if (_supportsMultiplePageExperiences(layout)) {
+		if (_isMultiplePageExperiencesSupported(layout)) {
 			Assert.assertEquals(
 				Arrays.toString(pageExperiences),
 				expectedPageExperiences.length, pageExperiences.length);
@@ -347,7 +347,7 @@ public class PageExperiencesTestUtil {
 		return pageExperience;
 	}
 
-	private static boolean _supportsMultiplePageExperiences(Layout layout) {
+	private static boolean _isMultiplePageExperiencesSupported(Layout layout) {
 		if (!layout.isTypeContent()) {
 			return false;
 		}

@@ -2819,7 +2819,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			boolean assertSuffixMirroredFragmentEntryLinks,
 			ContentPageSpecification contentPageSpecification,
 			String draftContentPageSpecificationExternalReferenceCode,
-			boolean inputIsDraft, String pageExternalReferenceCode,
+			boolean inputIsDraft, String sitePageExternalReferenceCode,
 			PageSpecification.Status status)
 		throws Exception {
 
@@ -2835,7 +2835,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				pageExperiences,
 				draftPageExperience ->
 					PageExperiencesTestUtil.toPublishedPageExperience(
-						draftPageExperience, pageExternalReferenceCode),
+						draftPageExperience, sitePageExternalReferenceCode),
 				PageExperience.class);
 		}
 		else {
@@ -2863,13 +2863,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			new ContentPageSpecification();
 
 		expectedPublishedContentPageSpecification.setExternalReferenceCode(
-			pageExternalReferenceCode);
+			sitePageExternalReferenceCode);
 		expectedPublishedContentPageSpecification.setPageExperiences(
 			expectedPublishedPageExperiences);
 		expectedPublishedContentPageSpecification.setStatus(status);
 
 		SitePage sitePage = _getRandomSitePage(
-			pageExternalReferenceCode, null,
+			sitePageExternalReferenceCode, null,
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId()),
 			SitePage.Type.CONTENT_PAGE,
@@ -2885,10 +2885,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGroup.getExternalReferenceCode(), false, sitePage);
 
 		SitePage getSitePage = sitePageResource.getSiteSitePage(
-			testGroup.getExternalReferenceCode(), pageExternalReferenceCode);
+			testGroup.getExternalReferenceCode(),
+			sitePageExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			pageExternalReferenceCode, testGroup.getGroupId());
+			sitePageExternalReferenceCode, testGroup.getGroupId());
 
 		if (Objects.equals(status, PageSpecification.Status.APPROVED)) {
 			Assert.assertTrue(layout.isPublished());
@@ -2950,7 +2951,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			boolean useDraftExternalReferenceCodeSuffix)
 		throws Exception {
 
-		String pageExternalReferenceCode = RandomTestUtil.randomString();
+		String sitePageExternalReferenceCode = RandomTestUtil.randomString();
 
 		String defaultPageExperienceExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -2961,7 +2962,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		if (useDraftExternalReferenceCodeSuffix) {
 			draftContentPageSpecificationExternalReferenceCode =
-				pageExternalReferenceCode +
+				sitePageExternalReferenceCode +
 					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT;
 
 			defaultPageExperienceExternalReferenceCode =
@@ -2986,7 +2987,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageWithDraftContentPageSpecification(
 			true, draftContentPageSpecification,
 			draftContentPageSpecificationExternalReferenceCode, true,
-			pageExternalReferenceCode, status);
+			sitePageExternalReferenceCode, status);
 	}
 
 	private void _testPostSiteSitePageWithPageElements() throws Exception {
@@ -3133,12 +3134,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status status)
 		throws Exception {
 
-		String pageExternalReferenceCode = RandomTestUtil.randomString();
+		String sitePageExternalReferenceCode = RandomTestUtil.randomString();
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.
 				getContentPageSpecificationWithPageExperiences(
-					pageExternalReferenceCode, RandomTestUtil.randomString(),
+					sitePageExternalReferenceCode,
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), testGroup.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
@@ -3146,9 +3148,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
 			true, publishedContentPageSpecification,
-			pageExternalReferenceCode +
+			sitePageExternalReferenceCode +
 				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT,
-			false, pageExternalReferenceCode, status);
+			false, sitePageExternalReferenceCode, status);
 	}
 
 	private void _testPostSiteSitePageWithPublishedContentPageSpecificationAndDraftReferences()

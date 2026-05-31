@@ -12,7 +12,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 import {contentDashboardPagesTest} from '../../content-dashboard-web/main/fixtures/contentDashboardPagesTest';
 import {
@@ -54,12 +54,11 @@ let individualIdentities = null;
 test.beforeEach(async ({analyticsChannel, apiHelpers, page, project, site}) => {
 	let individuals = null;
 
-	await syncAnalyticsCloud({
+	await syncAnalyticsCloudViaAPI({
 		apiHelpers,
 		channel: analyticsChannel,
-		page,
 		project,
-		siteName: site.name,
+		siteId: Number(site.id),
 	});
 
 	await test.step('Create Individuals', async () => {

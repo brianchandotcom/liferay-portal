@@ -18,7 +18,7 @@ import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {
 	assertTerminatedABTest,
 	createABTest,
@@ -78,12 +78,11 @@ test(
 			title: 'My Page',
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		// Create an experience and assign the custom segment to it

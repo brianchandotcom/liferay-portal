@@ -13,7 +13,7 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -30,12 +30,11 @@ test(
 	'Content Performance panel shows title, URL, language switcher, traffic channels and default time range on a content page',
 	{tag: ['@LPS-108856', '@LPS-126044']},
 	async ({analyticsChannel, apiHelpers, page, project, site}) => {
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		const title = getRandomString();
@@ -83,12 +82,11 @@ test(
 	'Content Performance panel renders on a widget page',
 	{tag: '@LPS-126047'},
 	async ({analyticsChannel, apiHelpers, page, project, site}) => {
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel: analyticsChannel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		const title = getRandomString();

@@ -13,7 +13,7 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {captureAnalyticsEvents} from './utils/captureAnalyticsEvents';
 
 const test = mergeTests(
@@ -62,12 +62,11 @@ test(
 
 		// Sync the site with Analytics Cloud so the form analytics script loads
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			siteName: site.name,
+			siteId: Number(site.id),
 		});
 
 		const capturedEvents = captureAnalyticsEvents(page);

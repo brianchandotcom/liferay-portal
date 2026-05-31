@@ -19,7 +19,7 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {faroConfig} from './faro.config';
 import {switchChannel} from './utils/channel';
 import {
@@ -1315,12 +1315,11 @@ test.skip(
 			);
 		});
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			organizationName: organization.name,
-			page,
 			project,
+			syncedOrganizationIds: [Number(organization.id)],
 		});
 
 		await test.step('Interact with the user that is not part of the organization', async () => {
@@ -1454,12 +1453,11 @@ test.skip(
 			surname: user.familyName,
 		};
 
-		await syncAnalyticsCloud({
+		await syncAnalyticsCloudViaAPI({
 			apiHelpers,
 			channel,
-			page,
 			project,
-			userGroupName: userGroup.name,
+			syncedUserGroupIds: [Number(userGroup.id)],
 		});
 
 		await test.step('Interact with the user that is not part of the user group', async () => {

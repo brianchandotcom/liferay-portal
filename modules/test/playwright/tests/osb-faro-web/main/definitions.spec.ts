@@ -1,0 +1,182 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Page, expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {faroConfig} from './faro.config';
+import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+
+const test = mergeTests(
+	apiHelpersTest,
+	isolatedChannelTest,
+	loginAnalyticsCloudTest(),
+	loginTest()
+);
+
+async function resetSearchQueriesPreference(page: Page, projectID: string) {
+	const response = await page.request.post(
+		`${faroConfig.environment.baseUrl}/o/cerebro/graphql?opname=Preference&projectGroupId=${projectID}`,
+		{
+			data: {
+				operationName: 'Preference',
+				query: 'mutation Preference($key: String!, $value: String!) { preference(key: $key, value: $value) { key value } }',
+				variables: {
+					key: 'search-query-strings',
+					value: '[]',
+				},
+			},
+		}
+	);
+
+	expect(response.ok()).toBe(true);
+}
+
+test.beforeEach(async ({page, project}) => {
+	await resetSearchQueriesPreference(page, project.groupId);
+});
+
+test(
+	'Add, edit, and delete a search query parameter',
+	{tag: ['@LRAC-8779', '@LRAC-8780', '@LRAC-8781']},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Add a search query parameter
+
+		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page
+			.locator('input[name="queryStringList.0"]')
+			.fill('Test Query');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		// Verify the parameter persists after reload
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.locator('input[name="queryStringList.0"]')
+		).toHaveValue('Test Query');
+
+		// Edit the parameter
+
+		await page.locator('input[name="queryStringList.0"]').fill('Test Edit');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.locator('input[name="queryStringList.0"]')
+		).toHaveValue('Test Edit');
+
+		// Add a second parameter so deleting the first leaves a valid form
+
+		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page.locator('input[name="queryStringList.1"]').fill('Keep This');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		// Delete the first parameter
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('button', {name: 'Delete'}).first().click();
+
+		// Re-fill the remaining input and blur to force Formik to re-run
+		// validation after the FieldArray remove; otherwise Save stays disabled.
+
+		await page.locator('input[name="queryStringList.0"]').fill('Keep This');
+
+		await page.keyboard.press('Tab');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.locator('input[name="queryStringList.0"]')
+		).toHaveValue('Keep This');
+
+		await expect(
+			page.locator('input[name="queryStringList.1"]')
+		).toHaveCount(0);
+	}
+);
+
+test(
+	'Add button is hidden after reaching the 5-query limit',
+	{tag: '@LRAC-8782'},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Add 5 query strings
+
+		for (let i = 0; i < 5; i++) {
+			await page.getByRole('button', {name: 'Add'}).click();
+
+			await page
+				.locator(`input[name="queryStringList.${i}"]`)
+				.fill(`Test Query ${i + 1}`);
+		}
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		// Assert no Add button is rendered when the limit is reached
+
+		await expect(page.getByRole('button', {name: 'Add'})).not.toBeVisible();
+	}
+);

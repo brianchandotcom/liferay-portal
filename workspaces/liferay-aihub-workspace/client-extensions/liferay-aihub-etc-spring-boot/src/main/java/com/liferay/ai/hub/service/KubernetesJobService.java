@@ -117,15 +117,15 @@ public class KubernetesJobService {
 	}
 
 	public Job getJob(String name) {
-		return _getJobScalableResource(
-			name
-		).get();
+		ScalableResource<Job> scalableResource = _getJobScalableResource(name);
+
+		return scalableResource.get();
 	}
 
 	public String getJobLog(String name, int tailLines) {
-		return _getJobScalableResource(
-			name
-		).tailingLines(
+		ScalableResource<Job> scalableResource = _getJobScalableResource(name);
+
+		return scalableResource.tailingLines(
 			tailLines
 		).getLog();
 	}

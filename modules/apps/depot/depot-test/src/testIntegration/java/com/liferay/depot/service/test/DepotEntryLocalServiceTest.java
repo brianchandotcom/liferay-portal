@@ -124,13 +124,13 @@ public class DepotEntryLocalServiceTest {
 	public void testAddDepotEntryWithGroupExternalReferenceCode()
 		throws Exception {
 
-		String groupExternalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
 		serviceContext.setAttribute(
-			"groupExternalReferenceCode", groupExternalReferenceCode);
+			"groupExternalReferenceCode", externalReferenceCode);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -146,7 +146,7 @@ public class DepotEntryLocalServiceTest {
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
 		Assert.assertEquals(
-			groupExternalReferenceCode, group.getExternalReferenceCode());
+			externalReferenceCode, group.getExternalReferenceCode());
 	}
 
 	@Test(expected = DepotEntryNameException.class)

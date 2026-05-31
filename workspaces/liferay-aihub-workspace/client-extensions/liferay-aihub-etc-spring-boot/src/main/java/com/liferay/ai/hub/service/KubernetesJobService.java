@@ -7,10 +7,12 @@ package com.liferay.ai.hub.service;
 
 import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.EnvVarBuilder;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
+import io.fabric8.kubernetes.client.dsl.PrettyLoggable;
 import io.fabric8.kubernetes.client.dsl.ScalableResource;
 import io.fabric8.kubernetes.client.utils.Serialization;
 
@@ -107,27 +109,27 @@ public class KubernetesJobService {
 		).create();
 
 		if (_log.isInfoEnabled()) {
-			String jobName = job.getMetadata(
-			).getName();
+			ObjectMeta objectMeta = job.getMetadata();
 
-			_log.info("Kubernetes job dispatched: " + jobName);
+			_log.info("Kubernetes job dispatched: " + objectMeta.getName());
 		}
 
 		return job;
 	}
 
 	public Job getJob(String name) {
-		return _getJobScalableResource(
-			name
-		).get();
+		ScalableResource<Job> scalableResource = _getJobScalableResource(name);
+
+		return scalableResource.get();
 	}
 
 	public String getJobLog(String name, int tailLines) {
-		return _getJobScalableResource(
-			name
-		).tailingLines(
-			tailLines
-		).getLog();
+		ScalableResource<Job> scalableResource = _getJobScalableResource(name);
+
+		PrettyLoggable prettyLoggable = scalableResource.tailingLines(
+			tailLines);
+
+		return prettyLoggable.getLog();
 	}
 
 	private EnvVar _createEnvVar(String name, String value) {

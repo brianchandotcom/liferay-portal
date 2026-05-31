@@ -3412,9 +3412,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithContentPageSpecification()
 		throws Exception {
 
-		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), false,
-			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		String sitePageExternalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		SitePage sitePage = _getRandomSitePage(
+			sitePageExternalReferenceCode, null,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()),
+			SitePage.Type.CONTENT_PAGE,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 		ContentPageSpecification contentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
@@ -3422,20 +3431,37 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				PageSpecification.Status.APPROVED);
 
 		contentPageSpecification.setExternalReferenceCode(
-			postSitePage.getExternalReferenceCode());
+			sitePageExternalReferenceCode);
 
-		postSitePage.setPageSpecifications(
+		sitePage.setPageSpecifications(
 			() -> new PageSpecification[] {contentPageSpecification});
 
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
+		sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(), sitePageExternalReferenceCode,
+			false, sitePage);
+
+		SitePage getSitePage = sitePageResource.getSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			sitePageExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			layout, getSitePage.getPageSpecifications());
+
+		PageSpecification[] pageSpecifications =
+			getSitePage.getPageSpecifications();
+
+		getSitePage.setPageSpecifications(
+			() -> new PageSpecification[] {pageSpecifications[0]});
 
 		_assertProblemException(
 			"A single content page specification cannot be applied to an " +
 				"existing page",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), false, postSitePage));
+				sitePageExternalReferenceCode, false, getSitePage));
 	}
 
 	private void _testPutSiteSitePageWithDefaultAssetPublisher()

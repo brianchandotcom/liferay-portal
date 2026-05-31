@@ -6,6 +6,7 @@
 import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getDefaultProject} from './project';
 
 export async function createChannel({
@@ -38,6 +39,11 @@ export async function switchChannel({
 	channelName: string;
 	page: Page;
 }) {
-	await page.locator('.channels-menu.button-root').click();
-	await page.getByRole('link', {name: channelName}).click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.locator('.channels-menu-dropdown-body')
+			.getByRole('link', {name: channelName}),
+		trigger: page.locator('.channels-menu.button-root'),
+	});
 }

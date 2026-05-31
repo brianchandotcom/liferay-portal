@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedDXPSyncedChannelTest} from '../../../fixtures/isolatedDXPSyncedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {faroConfig} from './faro.config';
 
 const test = mergeTests(
@@ -47,5 +48,45 @@ test(
 		// The property status stays Disabled
 
 		await expect(page.getByText('Email Reports: Disabled')).toBeVisible();
+	}
+);
+
+test(
+	'Email report frequency can be set to daily, weekly, or monthly',
+	{tag: '@LRAC-11841'},
+	async ({analyticsChannel, page, project}) => {
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/properties/${analyticsChannel.id}`
+		);
+
+		// Enable the toggle once; the property keeps its enabled state across
+		// frequency changes within the same modal session
+
+		await page
+			.getByRole('button', {name: 'Configure Email Reports'})
+			.click();
+
+		await page.locator('.toggle-switch-bar').click();
+
+		for (const frequency of ['daily', 'weekly', 'monthly']) {
+			await page
+				.locator('select[name="frequency"]')
+				.selectOption(frequency);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(page, 'Changes to email reports saved', {
+				autoClose: false,
+				first: true,
+			});
+
+			await expect(
+				page.getByText('Email Reports: Enabled')
+			).toBeVisible();
+
+			await page
+				.getByRole('button', {name: 'Configure Email Reports'})
+				.click();
+		}
 	}
 );

@@ -527,6 +527,8 @@ public class SitePageResourceImpl
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
 
+		Layout layout = null;
+
 		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
 			sitePage.getName_i18n());
 
@@ -554,8 +556,6 @@ public class SitePageResourceImpl
 		long parentLayoutId = _getParentLayoutId(
 			groupId, sitePage.getParentSitePageExternalReferenceCode(),
 			privateLayout, serviceContext);
-
-		Layout layout = null;
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.addContentLayout(

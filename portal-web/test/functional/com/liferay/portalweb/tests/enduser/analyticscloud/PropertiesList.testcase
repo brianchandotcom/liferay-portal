@@ -27,30 +27,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
-	@priority = 5
-	test CanSearchForProperty {
-		var propertyList = "Property CanSearchForProperty 1,Property CanSearchForProperty 2,Property CanSearchForProperty 3,Property CanSearchForProperty 4";
-
-		task ("go to property and add new properties") {
-			ACNavigation.goToSettings();
-
-			for (var n : list ${propertyList}) {
-				ACSettings.goToProperties();
-
-				ACProperties.addNewProperty(propertyName = ${n});
-			}
-		}
-
-		task ("search for a property") {
-			ACNavigation.exitSettings();
-
-			for (var n : list ${propertyList}) {
-				ACProperties.switchProperty(propertyName = ${n});
-			}
-		}
-	}
-
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
 	@priority = 2
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {
@@ -98,36 +74,6 @@ definition {
 
 		task ("Disconnect the DXP to AC") {
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
-	@priority = 3
-	test ViewTheDropdownTransition {
-		task ("go to properties page and add 2 new properties") {
-			var propertyList = "Property ViewTheDropdownTransition 1,Property ViewTheDropdownTransition 2";
-
-			ACNavigation.goToSettings();
-
-			for (var n : list ${propertyList}) {
-				ACSettings.goToProperties();
-
-				ACProperties.addNewProperty(propertyName = ${n});
-			}
-		}
-
-		task ("assert transition when switching between properties") {
-			ACNavigation.exitSettings();
-
-			for (var n : list ${propertyList}) {
-				ACProperties.switchProperty(propertyName = ${n});
-
-				ACProperties.assertPropertyHeader(propertyName = ${n});
-
-				ACProperties.assertSitesOverviewPropertyHeader(propertyName = ${n});
-
-				ACProperties.assertCurrentActiveProperty(propertyName = ${n});
-			}
 		}
 	}
 

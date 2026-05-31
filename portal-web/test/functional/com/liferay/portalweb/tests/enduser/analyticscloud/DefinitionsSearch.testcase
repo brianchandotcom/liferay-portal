@@ -35,68 +35,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
-	@priority = 5
-	test CanAddSearchQueryParameters {
-		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.viewSearchQuery(query = "Test Query");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8780 | Test Summary: Delete search query parameters"
-	@priority = 5
-	test CanDeleteSearchQueryParameters {
-		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.deleteSearchQuerySuccessfully(query = "Test Query");
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.noViewSearchQuery(query = "Test Query");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8781 | Test Summary: Edit search query parameters"
-	@priority = 4
-	test CanEditSearchQueryParameters {
-		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.editSearchQuerySuccessfully(query = "Test Edit");
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.viewSearchQuery(query = "Test Edit");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
-	@priority = 4
-	test CantSearchMoreThanFiveSearchQueryStrings {
-		var queryStringList = "Test Query 1,Test Query 2,Test Query 3,Test Query 4,Test Query 5";
-
-		ACDefinitions.addMultipleSearchQuerySuccessfully(queryStringList = ${queryStringList});
-
-		ACSettings.goToDefinitions();
-
-		ACDefinitions.goToDefinitionType(definitionType = "Search");
-
-		ACDefinitions.noViewAddSearchQueryButton(query = "Test Query 5");
-	}
-
 	@description = "Feature ID: LRAC-13934 | Automation ID: LRAC-14680 | Test Summary: Customized query string will still collect search term"
 	@priority = 4
 	test ViewKeywordSearchedNewStringParameter {

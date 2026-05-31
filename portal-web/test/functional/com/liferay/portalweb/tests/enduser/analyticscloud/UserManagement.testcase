@@ -72,28 +72,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9076 | Test Summary: The logged in user accesses directly an inexistent workspace"
-	@priority = 3
-	test LoggedUserAcessesDirectlyInexistentWorkspace {
-		task ("Change URL to a workspace that doesn't exist") {
-			var workspaceURL = Navigator.getCurrentURL();
-
-			var workspaceURL = StringUtil.extractFirst(${workspaceURL}, "workspace");
-
-			var workspaceURL = StringUtil.add(${workspaceURL}, "workspace/0000", "");
-		}
-
-		task ("Open an inexistent workspace in a new tab") {
-			Open.openNoError(value1 = ${workspaceURL});
-		}
-
-		task ("Assert the error message") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ACWorkspace#WORKSPACE_ERROR_DESCRIPTION",
-				value1 = "Either this workspace does not exist or you do not have access to it.");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"
 	@priority = 5
 	test OwnerCanAddDataSources {

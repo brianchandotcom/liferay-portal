@@ -587,14 +587,12 @@ public class LayoutTestUtil {
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryERC",
 				layoutPageTemplateEntry.getExternalReferenceCode());
-
+			serviceContext.setAttribute(
+				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryScopeERC",
 				ScopeUtil.getItemScopeExternalReferenceCode(
 					layoutPageTemplateEntryGroupId, groupId));
-
-			serviceContext.setAttribute(
-				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 		}
 
 		return LayoutLocalServiceUtil.addLayout(

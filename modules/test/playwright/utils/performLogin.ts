@@ -7,6 +7,7 @@ import {Cookie, Page, expect} from '@playwright/test';
 
 import {getHeader} from '../helpers/ApiHelpers';
 import {liferayConfig} from '../liferay.config';
+import {faroConfig} from '../tests/osb-faro-web/main/faro.config';
 
 export type LoginScreenName =
 	| 'demo.company.admin'
@@ -122,6 +123,47 @@ export async function performLoginViaApi({
 	}
 	catch (error) {
 		error.message = `Login via API failed\n\n${error.message}`;
+
+		throw error;
+	}
+
+	return await page.context().cookies();
+}
+
+export async function performAnalyticsCloudLoginViaApi(
+	page: Page
+): Promise<Cookie[]> {
+	const loginUrl = faroConfig.environment.baseUrl;
+
+	const params = new URLSearchParams({
+		login: faroConfig.user.login,
+		password: faroConfig.user.password,
+		rememberMe: 'true',
+	});
+
+	try {
+		await page.goto(loginUrl);
+
+		const url = `${loginUrl}/c/portal/login`;
+
+		await expect
+			.poll(async () => {
+				const response = await page.request.post(url, {
+					data: params.toString(),
+					headers: await getHeader(
+						page,
+						'application/x-www-form-urlencoded'
+					),
+				});
+
+				return response.status();
+			})
+			.toBe(200);
+
+		await page.goto(loginUrl);
+	}
+	catch (error) {
+		error.message = `Analytics Cloud login via API failed\n\n${error.message}`;
 
 		throw error;
 	}

@@ -12,6 +12,7 @@ import {
 import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
+import {AnalyticsSettingsRestApiHelper} from './AnalyticsSettingsRestApiHelper';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {CookiesApiHelper} from './CookiesApiHelper';
 import {DataEngineApiHelper} from './DataEngineApiHelper';
@@ -118,6 +119,7 @@ export async function getHeader(
 }
 
 export class ApiHelpers {
+	readonly analyticsSettingsRest: AnalyticsSettingsRestApiHelper;
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
 	readonly cookies: CookiesApiHelper;
@@ -194,6 +196,7 @@ export class ApiHelpers {
 	)}`;
 
 	constructor(page: Page, baseUrl?: string) {
+		this.analyticsSettingsRest = new AnalyticsSettingsRestApiHelper(this);
 		this.apiBuilder = new ApiBuilderHelper(this);
 		this.baseUrl = baseUrl
 			? baseUrl + '/o/'

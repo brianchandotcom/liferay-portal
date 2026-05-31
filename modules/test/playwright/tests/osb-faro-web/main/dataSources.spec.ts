@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 import {getDefaultProject} from './utils/project';
 
@@ -35,7 +36,8 @@ test(
 
 			const connectedRow = page
 				.locator('table tbody tr')
-				.filter({hasText: 'Connected'});
+				.filter({hasNotText: 'DISCONNECTED'})
+				.filter({hasText: 'CONNECTED'});
 
 			const dataSourceName =
 				(await connectedRow.locator('td').first().textContent()) || '';
@@ -62,6 +64,64 @@ test(
 		}
 		finally {
 			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+		}
+	}
+);
+
+test(
+	'A property created before any DXP connection becomes the target of the connected data source',
+	{tag: '@LRAC-9103'},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		const channel = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+			'No DS Property ' + getRandomString(),
+			project.groupId
+		);
+
+		try {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.propertiesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(
+				page.getByRole('cell', {name: channel.name})
+			).toBeVisible();
+
+			const connectionToken =
+				await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+					project.groupId
+				);
+
+			await apiHelpers.analyticsSettingsRest.postDataSource(
+				connectionToken
+			);
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.dataSourcePage,
+				page,
+				projectID: project.groupId,
+			});
+
+			// The newly connected data source must appear in CONNECTED status
+			// alongside any historical disconnected rows from previous runs.
+
+			await expect(
+				page
+					.locator('table tbody tr')
+					.filter({hasNotText: 'DISCONNECTED'})
+					.filter({hasText: 'CONNECTED'})
+			).not.toHaveCount(0);
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
 		}
 	}
 );

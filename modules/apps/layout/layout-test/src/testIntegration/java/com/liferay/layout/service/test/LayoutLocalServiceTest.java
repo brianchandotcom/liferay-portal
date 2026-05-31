@@ -1109,9 +1109,7 @@ public class LayoutLocalServiceTest {
 
 	@Test
 	@TestInfo("LPD-88081")
-	public void testUpdateStyleBookEntryERCWithScopePersistsBothColumns()
-		throws Exception {
-
+	public void testUpdateStyleBookEntry() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		String styleBookEntryERC = RandomTestUtil.randomString();

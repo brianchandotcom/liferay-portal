@@ -225,17 +225,16 @@ public class PageSpecificationUtil {
 		WidgetInstancePageElementDefinition
 			widgetInstancePageElementDefinition) {
 
-		if (Validator.isNotNull(
-				widgetInstancePageElementDefinition.
-					getDraftWidgetInstanceExternalReferenceCode())) {
+		String draftWidgetInstanceExternalReferenceCode =
+			widgetInstancePageElementDefinition.
+				getDraftWidgetInstanceExternalReferenceCode();
 
+		if (Validator.isNotNull(draftWidgetInstanceExternalReferenceCode)) {
 			widgetInstancePageElementDefinition.
 				setDraftWidgetInstanceExternalReferenceCode(() -> null);
 			widgetInstancePageElementDefinition.
 				setWidgetInstanceExternalReferenceCode(
-					() ->
-						widgetInstancePageElementDefinition.
-							getDraftWidgetInstanceExternalReferenceCode());
+					() -> draftWidgetInstanceExternalReferenceCode);
 
 			return;
 		}

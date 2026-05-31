@@ -180,7 +180,7 @@
 					"type": "string"
 				},
 				"pid": {
-					"const": "com.liferay.ai.hub.internal.configuration.VertexAIConfiguration",
+					"const": "com.liferay.ai.hub.configuration.VertexAIConfiguration",
 					"title": "Vertex AI Configuration"
 				},
 				"projectId": {
@@ -1991,6 +1991,24 @@
 			]
 		},
 		{
+			"properties": {
+				"handlersURL": {
+					"description": "Provide the URL of the JavaScript personalization handlers file.",
+					"title": "Handlers URL",
+					"type": "string"
+				},
+				"pid": {
+					"const": "com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration",
+					"title": "Audiences"
+				}
+			},
+			"required": [
+				"pid",
+				"handlersURL"
+			],
+			"title": "Audiences"
+		},
+		{
 			"description": "For changes made here to take effect, you must reload the browser page after saving.",
 			"properties": {
 				"cacheExpirationTime": {
@@ -2558,7 +2576,7 @@
 					"type": "boolean"
 				},
 				"pid": {
-					"const": "com.liferay.mcp.server.internal.configuration.MCPServerConfiguration",
+					"const": "com.liferay.mcp.server.rest.internal.configuration.MCPServerConfiguration",
 					"description": "The settings in this configuration let you control the MCP Server.",
 					"title": "MCP Server"
 				}
@@ -4976,7 +4994,7 @@
 				"com.liferay.adaptive.media.image.internal.configuration.AMImageCompanyConfiguration",
 				"com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",
 				"com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
-				"com.liferay.ai.hub.internal.configuration.VertexAIConfiguration",
+				"com.liferay.ai.hub.configuration.VertexAIConfiguration",
 				"com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 				"com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
 				"com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",
@@ -5027,6 +5045,7 @@
 				"com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration",
 				"com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration",
 				"com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration",
+				"com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration",
 				"com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration",
 				"com.liferay.frontend.js.web.internal.configuration.CustomDialogsSettingsConfiguration",
 				"com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration",
@@ -5039,7 +5058,7 @@
 				"com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration",
 				"com.liferay.mail.outlook.auth.connector.provider.internal.configuration.MailOutlookAuthConnectorCompanyConfiguration",
 				"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration",
-				"com.liferay.mcp.server.internal.configuration.MCPServerConfiguration",
+				"com.liferay.mcp.server.rest.internal.configuration.MCPServerConfiguration",
 				"com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration",
 				"com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration",
 				"com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration",

@@ -9,6 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Access
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobCondition;
 import io.fabric8.kubernetes.api.model.batch.v1.JobStatus;
@@ -127,10 +128,10 @@ public class CrawlerJobStatusService extends BaseService {
 
 					patchJSONObject.put("endDate", endDate);
 
+					ObjectMeta objectMeta = job.getMetadata();
+
 					_putIndexedDocumentStats(
-						patchJSONObject,
-						job.getMetadata(
-						).getName());
+						patchJSONObject, objectMeta.getName());
 				}
 
 				long id = jsonObject.getLong("id");

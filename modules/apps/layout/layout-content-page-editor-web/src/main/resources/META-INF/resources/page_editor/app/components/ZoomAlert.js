@@ -4,27 +4,17 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import React, {useEffect, useRef, useState} from 'react';
+import {
+	useControlledState,
+	useMediaQuery,
+} from '@liferay/layout-js-components-web';
+import React, {useEffect, useRef} from 'react';
 
 export default function ZoomAlert() {
-	const [showZoomAlert, setShowZoomAlert] = useState(false);
+	const isSmallResolution = useMediaQuery('(max-width: 576px)');
+	const [showZoomAlert, setShowZoomAlert] =
+		useControlledState(isSmallResolution);
 	const alertRef = useRef();
-
-	useEffect(() => {
-		const onChange = (event) => {
-			setShowZoomAlert(event.matches);
-		};
-
-		const mediaQuery = window.matchMedia('(max-width: 576px)');
-
-		if (mediaQuery.matches) {
-			setShowZoomAlert(true);
-		}
-
-		mediaQuery.addEventListener('change', onChange);
-
-		return () => mediaQuery.removeEventListener('change', onChange);
-	}, []);
 
 	useEffect(() => {
 		if (showZoomAlert) {

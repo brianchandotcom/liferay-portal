@@ -4,6 +4,7 @@
  */
 
 import {ReactPortal} from '@liferay/frontend-js-react-web';
+import {useMediaQuery} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -11,7 +12,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import useIsSmallResolution from '../../utils/useIsSmallResolution';
 
 const TOPPER_BAR_HEIGHT = 24;
 const TOPPER_BAR_BORDER_WIDTH = 2;
@@ -32,7 +32,7 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 
 	const [visible, setVisible] = useState(false);
 
-	const isSmallResolution = useIsSmallResolution();
+	const isSmallResolution = useMediaQuery('(max-width: 768px)');
 
 	useEffect(() => {
 		setTimeout(() => setVisible(true), 1);

@@ -123,6 +123,10 @@ public class ExportImportPreviewDisplayContext {
 		return false;
 	}
 
+	public boolean isCompanyGroup() {
+		return _stagingGroupHelper.isCompanyGroup(_group);
+	}
+
 	public boolean isLookAndFeelEnabled() {
 		if (GroupCapabilityUtil.isSupportsPages(_group) &&
 			!_group.isCompany() && !_group.isLayoutPrototype()) {

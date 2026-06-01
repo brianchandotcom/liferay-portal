@@ -14,7 +14,7 @@ export const SETTINGS_STEP_INITIAL_VALUES = {
 	userIdStrategy: 'CURRENT_USER_ID',
 };
 
-export default function SettingsStep() {
+export default function SettingsStep({instance}: {instance: boolean}) {
 	return (
 		<>
 			<ClayLayout.Sheet>
@@ -57,35 +57,58 @@ export default function SettingsStep() {
 					title={Liferay.Language.get('update-data')}
 				/>
 
-				<FormikFieldRadioGroup
-					aria-labelledby="dataStrategy-label"
-					name="dataStrategy"
-					options={[
-						{
-							description: Liferay.Language.get(
-								'import-data-strategy-mirror-help'
-							),
-							label: Liferay.Language.get('mirror'),
-							value: 'MIRROR',
-						},
-						{
-							description: Liferay.Language.get(
-								'import-data-strategy-mirror-with-overwriting-help'
-							),
-							label: Liferay.Language.get(
-								'mirror-with-overwriting'
-							),
-							value: 'MIRROR_OVERWRITE',
-						},
-						{
-							description: Liferay.Language.get(
-								'import-data-strategy-copy-as-new-help'
-							),
-							label: Liferay.Language.get('copy-as-new'),
-							value: 'COPY_AS_NEW',
-						},
-					]}
-				/>
+				{instance ? (
+					<div className="d-flex mb-2">
+						<span
+							aria-hidden="true"
+							className="inline-item inline-item-before invisible small text-secondary"
+						>
+							<ClayIcon className="mr-1" symbol="restore" />
+						</span>
+
+						<div>
+							<span className="d-block font-weight-semi-bold text-dark">
+								{Liferay.Language.get('mirror')}
+							</span>
+
+							<span className="d-block small text-secondary">
+								{Liferay.Language.get(
+									'import-data-strategy-mirror-help'
+								)}
+							</span>
+						</div>
+					</div>
+				) : (
+					<FormikFieldRadioGroup
+						aria-labelledby="dataStrategy-label"
+						name="dataStrategy"
+						options={[
+							{
+								description: Liferay.Language.get(
+									'import-data-strategy-mirror-help'
+								),
+								label: Liferay.Language.get('mirror'),
+								value: 'MIRROR',
+							},
+							{
+								description: Liferay.Language.get(
+									'import-data-strategy-mirror-with-overwriting-help'
+								),
+								label: Liferay.Language.get(
+									'mirror-with-overwriting'
+								),
+								value: 'MIRROR_OVERWRITE',
+							},
+							{
+								description: Liferay.Language.get(
+									'import-data-strategy-copy-as-new-help'
+								),
+								label: Liferay.Language.get('copy-as-new'),
+								value: 'COPY_AS_NEW',
+							},
+						]}
+					/>
+				)}
 			</ClayLayout.Sheet>
 		</>
 	);

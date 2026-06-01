@@ -16,14 +16,15 @@ const defaultInitialValues = {
 };
 
 const renderSettingsStep = (
-	overrides: Partial<typeof defaultInitialValues> = {}
+	overrides: Partial<typeof defaultInitialValues> = {},
+	instance = false
 ) =>
 	render(
 		<Formik
 			initialValues={{...defaultInitialValues, ...overrides}}
 			onSubmit={jest.fn()}
 		>
-			<SettingsStep />
+			<SettingsStep instance={instance} />
 		</Formik>
 	);
 
@@ -82,5 +83,24 @@ describe('SettingsStep', () => {
 
 		expect(radio).toBeChecked();
 		expect(screen.getByLabelText('mirror')).not.toBeChecked();
+	});
+
+	it('shows mirror as a read-only label at the instance level', () => {
+		renderSettingsStep({}, true);
+
+		expect(screen.getByText('mirror')).toBeInTheDocument();
+		expect(
+			screen.getByText('import-data-strategy-mirror-help')
+		).toBeInTheDocument();
+	});
+
+	it('hides the update-data strategy options at the instance level', () => {
+		renderSettingsStep({}, true);
+
+		expect(screen.queryByLabelText('mirror')).not.toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('mirror-with-overwriting')
+		).not.toBeInTheDocument();
+		expect(screen.queryByLabelText('copy-as-new')).not.toBeInTheDocument();
 	});
 });

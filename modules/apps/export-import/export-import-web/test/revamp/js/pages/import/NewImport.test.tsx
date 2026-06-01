@@ -37,6 +37,7 @@ const renderComponent = ({
 			commentsAndRatingsEnabled={commentsAndRatingsEnabled}
 			importPreviewAPIURL="/o/export-import/v1.0/import-preview"
 			importProcessAPIURL="/o/export-import/v1.0/import-processes"
+			instance={false}
 			lookAndFeelEnabled={lookAndFeelEnabled}
 		/>
 	);

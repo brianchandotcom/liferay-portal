@@ -23,12 +23,14 @@ export function NewImport({
 	commentsAndRatingsEnabled = false,
 	importPreviewAPIURL,
 	importProcessAPIURL,
+	instance,
 	lookAndFeelEnabled = false,
 }: {
 	backURL: string;
 	commentsAndRatingsEnabled?: boolean;
 	importPreviewAPIURL: string;
 	importProcessAPIURL: string;
+	instance: boolean;
 	lookAndFeelEnabled?: boolean;
 }) {
 	const [importPreview, setImportPreview] = useState<
@@ -139,7 +141,7 @@ export function NewImport({
 				}}
 				title={Liferay.Language.get('settings')}
 			>
-				<SettingsStep />
+				<SettingsStep instance={instance} />
 			</WizardStep>
 		</Wizard>
 	);

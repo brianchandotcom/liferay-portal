@@ -118,6 +118,7 @@ test(
 		await exportImportPage.goToExport();
 
 		const exportFilePath = await exportImportPage.export({
+			includePageSettings: false,
 			portletLabels: [
 				`${objectDefinition1.name} 1 Items`,
 				`${objectDefinition2.name} 1 Items`,

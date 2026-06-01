@@ -8,7 +8,7 @@ import React from 'react';
 
 import {initialContributorShape} from '../../utils/types.es';
 
-function ContributorInputs({contributors}) {
+function ContributorInputs({audiences = false, contributors}) {
 	return contributors
 		.filter((criteria) => criteria.query)
 		.map((criteria, i) => {
@@ -21,7 +21,11 @@ function ContributorInputs({contributors}) {
 						name={criteria.inputId}
 						readOnly
 						type="hidden"
-						value={criteria.query}
+						value={
+							audiences
+								? JSON.stringify(criteria.criteriaMap)
+								: criteria.query
+						}
 					/>
 
 					<input
@@ -37,6 +41,7 @@ function ContributorInputs({contributors}) {
 }
 
 ContributorInputs.propTypes = {
+	audiences: PropTypes.bool,
 	contributors: PropTypes.arrayOf(initialContributorShape),
 };
 

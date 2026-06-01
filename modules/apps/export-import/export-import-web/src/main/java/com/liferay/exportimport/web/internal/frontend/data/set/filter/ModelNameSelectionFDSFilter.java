@@ -65,9 +65,8 @@ public class ModelNameSelectionFDSFilter
 			ProjectionFactoryUtil.distinct(
 				ProjectionFactoryUtil.property("modelNameLanguageKey")));
 
-		List<Object> modelNameLanguageKeys =
-			(List<Object>)_exportImportReportEntryLocalService.dynamicQuery(
-				dynamicQuery);
+		List<String> modelNameLanguageKeys =
+			_exportImportReportEntryLocalService.dynamicQuery(dynamicQuery);
 
 		if (modelNameLanguageKeys == null) {
 			return Collections.emptyList();
@@ -75,12 +74,13 @@ public class ModelNameSelectionFDSFilter
 
 		return TransformUtil.transform(
 			modelNameLanguageKeys,
-			key -> {
-				if (Validator.isBlank((String)key)) {
+			modelNameLanguageKey -> {
+				if (Validator.isBlank(modelNameLanguageKey)) {
 					return null;
 				}
 
-				String translatedModelName = _language.get(locale, (String)key);
+				String translatedModelName = _language.get(
+					locale, modelNameLanguageKey);
 
 				return new SelectionFDSFilterItem(
 					translatedModelName, translatedModelName);

@@ -200,7 +200,7 @@ public abstract class BaseBundlePersistentResource
 		buildParameters.put("AXIS_VARIABLE", _getAxisVariable());
 		buildParameters.put("BUILD_PRIORITY", _BUILD_PRIORITY);
 		buildParameters.put("JOB_VARIANT", _JOB_VARIANT);
-		buildParameters.put("SLAVE_LABEL", _SLAVE_LABEL);
+		buildParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 
 		JenkinsMaster producerJenkinsMaster =
 			JenkinsResultsParserUtil.getMostAvailableJenkinsMaster(
@@ -432,8 +432,6 @@ public abstract class BaseBundlePersistentResource
 	private static final int _MAX_FAIL_COUNT = 2;
 
 	private static final int _MAX_MISSING_COUNT = 2;
-
-	private static final String _SLAVE_LABEL = "slave-bundle-builder";
 
 	private Build _build;
 	private int _failCount;

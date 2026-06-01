@@ -2986,8 +2986,9 @@ public class JenkinsResultsParserUtil {
 
 			List<JenkinsMaster> availableJenkinsMasters =
 				LoadBalancerUtil.getAvailableJenkinsMasters(
+					blacklist,
 					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
-					blacklist, buildProperties, true);
+					buildProperties, true);
 
 			Random random = new Random(getCurrentTimeMillis());
 

@@ -23,14 +23,14 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, Properties properties) {
+		String blacklistString, String masterPrefix, Properties properties) {
 
 		return getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, properties, true);
+			blacklistString, masterPrefix, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, Properties properties,
+		String blacklistString, String masterPrefix, Properties properties,
 		boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters =
@@ -43,7 +43,7 @@ public class LoadBalancerUtil {
 		List<String> blacklist = _getBlacklist(
 			properties, blacklistString, verbose);
 
-		List<JenkinsMaster> eligibleJenkinsMasters = new ArrayList<>(
+		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
@@ -51,20 +51,10 @@ public class LoadBalancerUtil {
 				continue;
 			}
 
-			eligibleJenkinsMasters.add(jenkinsMaster);
+			availableJenkinsMasters.add(jenkinsMaster);
 		}
 
-		return eligibleJenkinsMasters;
-	}
-
-	public static String getMasterPrefix(String baseInvocationURL) {
-		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
-
-		if (!matcher.find()) {
-			return baseInvocationURL;
-		}
-
-		return matcher.group("masterPrefix");
+		return availableJenkinsMasters;
 	}
 
 	public static String getMostAvailableMasterURL(
@@ -94,31 +84,37 @@ public class LoadBalancerUtil {
 		String blacklistString = JenkinsResultsParserUtil.getProperty(
 			properties, "blacklist");
 
-		List<JenkinsMaster> eligibleJenkinsMasters = getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, properties, verbose);
+		List<JenkinsMaster> availableJenkinsMasters =
+			getAvailableJenkinsMasters(
+				blacklistString, masterPrefix, properties, verbose);
 
-		if (eligibleJenkinsMasters.isEmpty()) {
+		if (availableJenkinsMasters.isEmpty()) {
 			return null;
 		}
 
 		AtomicInteger counter = _roundRobinCounters.computeIfAbsent(
-			masterPrefix, key -> new AtomicInteger(_random.nextInt()));
+			masterPrefix,
+			key -> {
+				Random random = new Random();
+
+				return new AtomicInteger(random.nextInt());
+			});
 
 		int index = Math.floorMod(
-			counter.getAndIncrement(), eligibleJenkinsMasters.size());
+			counter.getAndIncrement(), availableJenkinsMasters.size());
 
-		JenkinsMaster selectedJenkinsMaster = eligibleJenkinsMasters.get(index);
+		JenkinsMaster jenkinsMaster = availableJenkinsMasters.get(index);
 
 		if (verbose) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Selected master ", selectedJenkinsMaster.getName(),
-					" via round-robin (",
-					String.valueOf(eligibleJenkinsMasters.size()),
+					"Selected master ", jenkinsMaster.getName(),
+					" via round robin (",
+					String.valueOf(availableJenkinsMasters.size()),
 					" eligible masters under prefix ", masterPrefix, ")"));
 		}
 
-		return "http://" + selectedJenkinsMaster.getName();
+		return "http://" + jenkinsMaster.getName();
 	}
 
 	public static String getMostAvailableMasterURL(
@@ -177,6 +173,16 @@ public class LoadBalancerUtil {
 		return getMostAvailableMasterURL(properties, verbose);
 	}
 
+	protected static String getMasterPrefix(String baseInvocationURL) {
+		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
+
+		if (!matcher.find()) {
+			return baseInvocationURL;
+		}
+
+		return matcher.group("masterPrefix");
+	}
+
 	private static List<String> _getBlacklist(
 		Properties properties, String requestBlacklistString, boolean verbose) {
 
@@ -196,10 +202,10 @@ public class LoadBalancerUtil {
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(requestBlacklistString)) {
-			String[] requestBlacklistItems = requestBlacklistString.toLowerCase(
-			).split(
-				"\\s*,\\s*"
-			);
+			requestBlacklistString = requestBlacklistString.toLowerCase();
+
+			String[] requestBlacklistItems = requestBlacklistString.split(
+				"\\s*,\\s*");
 
 			for (String blacklistItem : requestBlacklistItems) {
 				if (!blacklist.contains(blacklistItem)) {
@@ -217,7 +223,6 @@ public class LoadBalancerUtil {
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new ConcurrentHashMap<>();
-	private static final Random _random = new Random();
 	private static final Map<String, AtomicInteger> _roundRobinCounters =
 		new ConcurrentHashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(

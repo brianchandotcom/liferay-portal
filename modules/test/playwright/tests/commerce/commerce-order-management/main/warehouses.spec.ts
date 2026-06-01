@@ -942,15 +942,18 @@ test(
 		await commerceAdminWarehousesPage.warehouseLink(warehouseName).click();
 		await commerceAdminWarehouseEligibilityPage.linkTab.click();
 
-		await commerceAdminWarehouseEligibilityPage.addChannels.fill(
-			channel.name
-		);
-
-		await expect(
-			commerceAdminWarehouseEligibilityPage.channelRowSelectButton(
+		await expect(async () => {
+			await commerceAdminWarehouseEligibilityPage.addChannels.fill('');
+			await commerceAdminWarehouseEligibilityPage.addChannels.fill(
 				channel.name
-			)
-		).toHaveCount(0);
+			);
+
+			await expect(
+				commerceAdminWarehouseEligibilityPage.channelRowSelectButton(
+					channel.name
+				)
+			).toHaveCount(0, {timeout: 2000});
+		}).toPass({timeout: 15000});
 	}
 );
 

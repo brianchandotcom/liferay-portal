@@ -9,9 +9,12 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,7 +49,7 @@ import java.util.regex.Pattern;
  */
 public class ConfigurationEnvBuilder {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, JSONException {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		Path languagePropertiesPath = Paths.get(
@@ -466,7 +469,9 @@ public class ConfigurationEnvBuilder {
 		return objectDef;
 	}
 
-	private static String _generateJSON(List<ObjectDef> objectDefs) {
+	private static String _generateJSON(List<ObjectDef> objectDefs)
+		throws JSONException {
+
 		JSONObject schemaJSONObject = _toJSONObject(
 			jsonObject -> jsonObject.put(
 				"oneOf", _toJSONArray()
@@ -504,7 +509,8 @@ public class ConfigurationEnvBuilder {
 			);
 		}
 
-		return schemaJSONObject.toString();
+		return JSONUtil.toString(
+			new JSONObjectImpl(schemaJSONObject.toString()));
 	}
 
 	private static String _lang(String key) {

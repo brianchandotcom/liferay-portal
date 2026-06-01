@@ -14,4 +14,13 @@ public interface AIHubEventTypes {
 	public static final String AI_HUB_GUARDRAIL_VIOLATION =
 		"AI_HUB_GUARDRAIL_VIOLATION";
 
+	public static final String AI_HUB_WORKFLOW_DEFINITION_ADD =
+		"AI_HUB_WORKFLOW_DEFINITION_ADD";
+
+	public static final String AI_HUB_WORKFLOW_DEFINITION_DELETE =
+		"AI_HUB_WORKFLOW_DEFINITION_DELETE";
+
+	public static final String AI_HUB_WORKFLOW_DEFINITION_UPDATE =
+		"AI_HUB_WORKFLOW_DEFINITION_UPDATE";
+
 }

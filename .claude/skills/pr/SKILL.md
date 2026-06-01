@@ -17,7 +17,7 @@ Create a GitHub PR for the current branch, transition the linked Jira ticket to 
 
 - The current branch is a development branch, not `master` or any other protected branch.
 
-- The `pr-check` skill must pass. Skip only when `${ARGUMENTS}` contains `--skip-pr-check`.
+- The `pr-check` skill must pass. Skip only when `${ARGUMENTS}` contains `--skip-pr-check`. A skip requires a reason: take it from the text following the flag when present, otherwise prompt the user for one. The reason is recorded in the **PR Check** section, which is written for a skip rather than omitted.
 
 ## Input
 
@@ -94,11 +94,27 @@ Explain the approach taken across all commits. Describe the key changes and the 
 ## Why Are There No Tests?
 
 This optional section is only included when the commits do not add any tests. It should contain the rationale provided by the user.
+
+## PR Check
+
+<pr-check Results Summary>
+
+<!-- pr-check {"result": "<state>", "sha": "<tested-SHA>"} -->
 ```
 
-Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
+The **PR Check** section is the Results Summary block emitted by the `pr-check` skill that ran as the precondition — the overall state line, the tested SHA, and the per-validation table, pasted verbatim — followed by a hidden marker. The marker is an HTML comment, invisible in rendered Markdown, whose payload is a JSON object of the form `<!-- pr-check {"result": "<state>", "sha": "<tested-SHA>"} -->`, where `<state>` is `success` when the overall state is `PASS` and `failure` when it is `FAIL`, and `<tested-SHA>` is the full 40-character SHA from the Results Summary. The webhook reads the `result` and `sha` fields to apply the `pr-check` commit status to that SHA and the `pr-check - <state>` label to the PR, so this skill records no status or label itself.
 
-When pr-check passes, invoke the `pr-check-publish` skill with the newly created PR URL.
+When pr-check was skipped via `--skip-pr-check`, still write the section, but as a skip rather than a run. Under the same `## PR Check` heading, the body is a single `**pr-check: SKIPPED** — <reason>` line with no table, and the marker payload adds a `reason` field alongside `result` (set to `skipped`) and the PR head SHA. The JSON object keys are alphabetical (`reason`, `result`, `sha`).
+
+```markdown
+**pr-check: SKIPPED** — <reason>
+
+<!-- pr-check {"reason": "<reason>", "result": "skipped", "sha": "<head-SHA>"} -->
+```
+
+The webhook applies the status and label when it processes the `pull_request` event for the newly opened PR, so no publish step is needed at creation. Use the `pr-check-publish` skill only to record a later pr-check run on an existing PR.
+
+Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
 ### Transitioned Jira Ticket
 

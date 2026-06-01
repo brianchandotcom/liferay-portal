@@ -30,7 +30,7 @@ git diff --name-status "$(git merge-base HEAD master)...HEAD"
 
 ## Expected Output
 
-**`PASS`** or **`FAIL`**.
+**`PASS`** or **`FAIL`**, followed by a **Results Summary** table the `pr` and `pr-check-publish` skills reuse to record what was tested on the GitHub PR.
 
 The procedure runs in two passes over the validations, in the order below. The order is dependency-driven: drift first (later validations see the regenerated tree), then formatting, then build, then tests.
 
@@ -89,3 +89,23 @@ When the validation's **Command** is a build (gradle, ant, npm, jest), bound the
 Decide PASS/FAIL from the build tool's success markers in the captured output (`BUILD SUCCESSFUL` / `BUILD FAILED`, `Tests: N passed, M failed`, etc.). Apply only to build commands. Leave inert commands like `git status --porcelain` and `git diff --quiet` untouched.
 
 When all validations pass, report `PASS`. When any fail, report `FAIL` and surface the failed validations.
+
+## Results Summary
+
+After the two passes complete, emit a Results Summary block. It is the canonical record of what was tested, embedded verbatim by the `pr` skill into the PR description and reused by the `pr-check-publish` skill when recording a run on an existing PR.
+
+Capture the tested commit with `git rev-parse HEAD` **after** Pass 2 completes, so the SHA reflects the tree that was actually exercised — including any autocommits the validations made, such as the `<TICKET> SF` source-format commit. This is the commit the `pr` skill pushes as the PR head and the commit the webhook binds the `pr-check` status to, so a reviewer can tell whether the current head is the one that was tested.
+
+The block is the overall state and tested SHA, followed by a table with one row per **matched** validation — the validations that actually ran, in the execution order above. Validations whose `## Match` regex did not fire are omitted rather than listed as skipped, so the table reflects only what the diff exercised.
+
+```markdown
+**pr-check: PASS** — tested on `<head-SHA>`
+
+| Validation | Result |
+| --- | --- |
+| Source Format | PASS |
+| Full Portal Build | PASS |
+| Java Unit Tests | PASS |
+```
+
+The overall state is `PASS` only when every row is `PASS`; any `FAIL` row makes it `FAIL`.

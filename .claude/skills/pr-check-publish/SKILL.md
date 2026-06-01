@@ -2,55 +2,58 @@
 
 allowed-tools: [Bash]
 argument-hint: "<pr-url>"
-description: Publish pr-check success signals to an existing GitHub PR. Use when the user wants to mark an existing PR as pr-check-passed, or when the `pr` skill publishes results after creating a PR.
+description: Comment a pr-check run on an existing GitHub PR with a marker the webhook parses to apply the commit status and label. Use after rerunning pr-check on an open PR.
 name: pr-check-publish
 
 ---
 
 # Publish pr-check Results
 
-Record on a GitHub PR that pr-check passed locally for its head SHA, so reviewers and the GitHub PR UI can see the signal alongside CI.
+Post the `pr-check` Results Summary as a comment on an existing GitHub PR, ending the comment with a hidden marker. The webhook parses that marker and applies the `pr-check` commit status to the tested SHA and the `pr-check - <state>` label to the PR — this skill never writes the status or label itself, so it works the same whether or not the user has write access on the target repository.
+
+Newly created PRs do not need this skill: the `pr` skill writes the same Results Summary and marker into the PR description at creation, and the webhook reads it from there. Reach for this skill only to record a later run — for example after pushing more commits and rerunning `pr-check` on an open PR — where the description no longer reflects the current head.
 
 ## Input
 
 ### Pull Request
 
-`${ARGUMENTS}` carries a PR URL of the form `https://github.com/<target-org>/liferay-portal/pull/<number>`. When missing or malformed, abort and ask the user for the URL. Parse the URL to extract `<target-org>/<target-repo>` and `<PR-number>`.
+`${ARGUMENTS}` carries a PR URL of the form `https://github.com/<target-org>/liferay-portal/pull/<number>`. When missing or malformed, abort and ask the user for the URL.
 
-### Head Fork
+### Results Summary
 
-Resolve the PR's head SHA and head repository (`<head-fork-owner>/<head-fork-repo>`). The head fork is the repository that hosts the branch and SHA — typically the developer's fork — and is used as the fallback when the developer lacks write access on the target repository.
+Use the **Results Summary** block emitted by the `pr-check` run in the current session — the overall state line, the tested SHA, and the per-validation table. When no Results Summary is available (pr-check has not run this session), abort and ask the user to run `pr-check` first; this skill records a run, it does not perform one.
 
 ## Expected Output
 
-### Posted Commit Status
+### Posted Comment
 
-Post a `pr-check` commit status to the head SHA using the call below. Try the target repository first, because the GitHub PR UI only renders statuses recorded against the base repository's view of the SHA. Fall back to the head fork only when the target call fails (typically a cross-fork PR where the developer lacks write access on the target).
+Post a fresh comment on each run rather than editing a prior one, so the PR keeps a chronological record. The comment body is the Results Summary verbatim, a blank line, then the marker — an HTML comment, invisible in rendered Markdown, whose payload is a JSON object of the form `<!-- pr-check {"result": "<state>", "sha": "<tested-SHA>"} -->`, where `<state>` is `success` when the overall state is `PASS` and `failure` when it is `FAIL`, and `<tested-SHA>` is the full 40-character SHA from the Results Summary:
 
-```bash
-gh api \
-	--field "context=pr-check" \
-	--field "description=All pr-check validations passed locally" \
-	--field "state=success" \
-	--method POST \
-	"repos/<owner>/<repo>/statuses/<head-SHA>"
+```markdown
+**pr-check: PASS** — tested on `<tested-SHA>`
+
+| Validation | Result |
+| --- | --- |
+| Source Format | PASS |
+| Full Portal Build | PASS |
+| Java Unit Tests | PASS |
+
+<!-- pr-check {"result": "success", "sha": "<tested-SHA>"} -->
 ```
 
-Substitute `<owner>/<repo>` in this order:
+Write that body to a file and post it with `--body-file`:
 
-1. `<target-org>/<target-repo>` — the PR's base repository.
+```bash
+gh pr comment \
+	--body-file "${comment_file}" \
+	"<pr-url>"
+```
 
-1. `<head-fork-owner>/<head-fork-repo>` — only when the previous call fails.
-
-When both calls fail, surface the error and continue with **Applied Label** — the two signals are independent.
-
-### Applied Label
-
-Apply the `pr-check - success` label to the PR on the target repository, creating the label first when it does not exist (color `c7e8cb`). On error, continue and note it in the summary.
+When the comment fails to post, surface the error — without it the webhook has nothing to parse, so the status and label will not appear.
 
 ### Summary
 
 Report back to the user with:
 
-- Whether the commit status posted, which repository it landed on (target repository or head fork fallback), and the SHA.
-- Whether the label applied, or that it was skipped because of cross-fork limitations.
+- The comment URL and the tested SHA the marker records.
+- That the `pr-check` commit status and `pr-check - <state>` label are applied by the webhook once it processes the comment, and so may lag the comment by a moment.

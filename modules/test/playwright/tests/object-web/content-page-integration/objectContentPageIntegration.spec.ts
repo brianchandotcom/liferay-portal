@@ -384,23 +384,23 @@ test.describe('Collection Display', () => {
 		site,
 		viewObjectDefinitionsPage,
 	}) => {
-		const objectDefinitionA =
+		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
 			});
 
-		const objectDefinitionB =
+		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: objectDefinitionA.id,
+			id: objectDefinition1.id,
 			type: 'objectDefinition',
 		});
 
 		apiHelpers.data.push({
-			id: objectDefinitionB.id,
+			id: objectDefinition2.id,
 			type: 'objectDefinition',
 		});
 
@@ -410,17 +410,17 @@ test.describe('Collection Display', () => {
 
 		const {body: objectRelationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				objectDefinitionA.externalReferenceCode,
+				objectDefinition1.externalReferenceCode,
 				{
 					label: {en_US: 'Relationship'},
 					name: 'relationship' + getRandomInt(),
 					objectDefinitionExternalReferenceCode1:
-						objectDefinitionA.externalReferenceCode,
+						objectDefinition1.externalReferenceCode,
 					objectDefinitionExternalReferenceCode2:
-						objectDefinitionB.externalReferenceCode,
-					objectDefinitionId1: objectDefinitionA.id,
-					objectDefinitionId2: objectDefinitionB.id,
-					objectDefinitionName2: objectDefinitionB.name,
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition1.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
 					type: 'oneToMany',
 				}
 			);
@@ -430,22 +430,22 @@ test.describe('Collection Display', () => {
 			type: 'objectRelationship',
 		});
 
-		const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
-		const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+		const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
+		const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 		const entryA = await apiHelpers.objectEntry.postObjectEntry(
 			{['textField']: 'Entry A'},
-			restPathA
+			applicationName1
 		);
 
 		const entryB = await apiHelpers.objectEntry.postObjectEntry(
 			{['textField']: 'Entry B'},
-			restPathB
+			applicationName2
 		);
 
 		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
 			{
-				applicationName: restPathA,
+				applicationName: applicationName1,
 				currentExternalReferenceCode: entryA.externalReferenceCode,
 				objectRelationshipName: objectRelationship.name,
 				relatedExternalReferenceCode: entryB.externalReferenceCode,
@@ -471,7 +471,7 @@ test.describe('Collection Display', () => {
 
 		await pageEditorPage.chooseCollectionDisplayCollection(
 			'Collection Providers',
-			objectDefinitionB.label['en_US'],
+			objectDefinition2.label['en_US'],
 			{search: true}
 		);
 
@@ -502,7 +502,7 @@ test.describe('Collection Display', () => {
 		await viewObjectDefinitionsPage.goto();
 
 		await viewObjectDefinitionsPage.changeObjectActivateStatus(
-			objectDefinitionA.label['en_US']
+			objectDefinition1.label['en_US']
 		);
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
@@ -839,24 +839,24 @@ test.describe('Content Pages Mapping', () => {
 			site,
 			viewObjectDefinitionsPage,
 		}) => {
-			const objectDefinitionA =
+			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
-			const objectDefinitionB =
+			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 					titleObjectFieldName: 'textField',
 				});
 
 			apiHelpers.data.push({
-				id: objectDefinitionA.id,
+				id: objectDefinition1.id,
 				type: 'objectDefinition',
 			});
 
 			apiHelpers.data.push({
-				id: objectDefinitionB.id,
+				id: objectDefinition2.id,
 				type: 'objectDefinition',
 			});
 
@@ -865,17 +865,17 @@ test.describe('Content Pages Mapping', () => {
 
 			const {body: objectRelationship} =
 				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinitionA.externalReferenceCode,
+					objectDefinition1.externalReferenceCode,
 					{
 						label: {en_US: 'Relationship'},
 						name: 'relationship' + getRandomInt(),
 						objectDefinitionExternalReferenceCode1:
-							objectDefinitionA.externalReferenceCode,
+							objectDefinition1.externalReferenceCode,
 						objectDefinitionExternalReferenceCode2:
-							objectDefinitionB.externalReferenceCode,
-						objectDefinitionId1: objectDefinitionA.id,
-						objectDefinitionId2: objectDefinitionB.id,
-						objectDefinitionName2: objectDefinitionB.name,
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
 						type: 'oneToMany',
 					}
 				);
@@ -885,11 +885,11 @@ test.describe('Content Pages Mapping', () => {
 				type: 'objectRelationship',
 			});
 
-			const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+			const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{['textField']: 'Entry B'},
-				restPathB
+				applicationName2
 			);
 
 			const headingDefinition = getFragmentDefinition({
@@ -913,7 +913,7 @@ test.describe('Content Pages Mapping', () => {
 
 			await selectFrame
 				.getByRole('menuitem', {
-					name: objectDefinitionB.label['en_US'],
+					name: objectDefinition2.label['en_US'],
 				})
 				.click();
 
@@ -933,7 +933,7 @@ test.describe('Content Pages Mapping', () => {
 			await viewObjectDefinitionsPage.goto();
 
 			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinitionA.label.en_US
+				objectDefinition1.label.en_US
 			);
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
@@ -944,7 +944,7 @@ test.describe('Content Pages Mapping', () => {
 
 			await selectFrame
 				.getByRole('menuitem', {
-					name: objectDefinitionB.label['en_US'],
+					name: objectDefinition2.label['en_US'],
 				})
 				.click();
 

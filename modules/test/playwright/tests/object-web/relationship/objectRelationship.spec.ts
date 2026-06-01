@@ -17,6 +17,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {ObjectRelationshipFormPage} from '../../../pages/object-web/object-relationship/ObjectRelationshipFormPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -1408,7 +1409,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 						'L_ACCOUNT',
 						{
 							label: {en_US: 'Relationship Account'},
-							name: 'relationshipAccount',
+							name: 'relationshipAccount' + getRandomInt(),
 							objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
 							objectDefinitionExternalReferenceCode2:
 								objectDefinition.externalReferenceCode,
@@ -2397,25 +2398,25 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 		'prevent deletion type blocks parent entry deletion',
 		{tag: '@LPS-135401'},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const objectDefinitionA =
+			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 					titleObjectFieldName: 'textField',
 				});
 
-			const objectDefinitionB =
+			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 					titleObjectFieldName: 'textField',
 				});
 
 			apiHelpers.data.push({
-				id: objectDefinitionA.id,
+				id: objectDefinition1.id,
 				type: 'objectDefinition',
 			});
 
 			apiHelpers.data.push({
-				id: objectDefinitionB.id,
+				id: objectDefinition2.id,
 				type: 'objectDefinition',
 			});
 
@@ -2424,14 +2425,14 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 
 			const {body: objectRelationship} =
 				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinitionA.externalReferenceCode,
+					objectDefinition1.externalReferenceCode,
 					{
 						label: {en_US: `Relationship${getRandomInt()}`},
 						name: `relationship${getRandomInt()}`,
 						objectDefinitionExternalReferenceCode2:
-							objectDefinitionB.externalReferenceCode,
-						objectDefinitionId2: objectDefinitionB.id,
-						objectDefinitionName2: objectDefinitionB.name,
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
 						type: 'oneToMany',
 					}
 				);
@@ -2442,10 +2443,10 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			});
 
 			const applicationNameA =
-				'c/' + objectDefinitionA.name.toLowerCase() + 's';
+				'c/' + objectDefinition1.name.toLowerCase() + 's';
 
 			const applicationNameB =
-				'c/' + objectDefinitionB.name.toLowerCase() + 's';
+				'c/' + objectDefinition2.name.toLowerCase() + 's';
 
 			const entryA = await apiHelpers.objectEntry.postObjectEntry(
 				{textField: 'Entry A'},
@@ -2457,7 +2458,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 				applicationNameB
 			);
 
-			await viewObjectEntriesPage.goto(objectDefinitionB.className);
+			await viewObjectEntriesPage.goto(objectDefinition2.className);
 
 			await page.getByRole('link', {name: entryB.id.toString()}).click();
 
@@ -2472,7 +2473,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 
 			await waitForAlert(page);
 
-			await viewObjectEntriesPage.goto(objectDefinitionA.className);
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
 
 			await expect(
 				page.getByRole('link', {name: entryA.id.toString()})
@@ -2940,31 +2941,29 @@ test.describe('Manage object relationship entries', () => {
 			page,
 			viewObjectEntriesPage,
 		}) => {
-			await test.step('', async () => {});
-
-			let objectDefinitionA: ObjectDefinition;
-			let objectDefinitionB: ObjectDefinition;
+			let objectDefinition1: ObjectDefinition;
+			let objectDefinition2: ObjectDefinition;
 
 			await test.step('add two custom objects with a M:M relationship', async () => {
-				objectDefinitionA =
+				objectDefinition1 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
-				objectDefinitionB =
+				objectDefinition2 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
 				apiHelpers.data.push({
-					id: objectDefinitionA.id,
+					id: objectDefinition1.id,
 					type: 'objectDefinition',
 				});
 
 				apiHelpers.data.push({
-					id: objectDefinitionB.id,
+					id: objectDefinition2.id,
 					type: 'objectDefinition',
 				});
 
@@ -2973,17 +2972,17 @@ test.describe('Manage object relationship entries', () => {
 
 				const {body: objectRelationship} =
 					await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-						objectDefinitionA.externalReferenceCode,
+						objectDefinition1.externalReferenceCode,
 						{
 							label: {en_US: 'Relationship'},
 							name: 'relationship' + getRandomInt(),
 							objectDefinitionExternalReferenceCode1:
-								objectDefinitionA.externalReferenceCode,
+								objectDefinition1.externalReferenceCode,
 							objectDefinitionExternalReferenceCode2:
-								objectDefinitionB.externalReferenceCode,
-							objectDefinitionId1: objectDefinitionA.id,
-							objectDefinitionId2: objectDefinitionB.id,
-							objectDefinitionName2: objectDefinitionB.name,
+								objectDefinition2.externalReferenceCode,
+							objectDefinitionId1: objectDefinition1.id,
+							objectDefinitionId2: objectDefinition2.id,
+							objectDefinitionName2: objectDefinition2.name,
 							type: 'manyToMany',
 						}
 					);
@@ -3041,25 +3040,25 @@ test.describe('Manage object relationship entries', () => {
 					);
 				};
 
-				await setupLayout(objectDefinitionA, 'textField');
+				await setupLayout(objectDefinition1, 'textField');
 
-				await setupLayout(objectDefinitionB, 'textField');
+				await setupLayout(objectDefinition2, 'textField');
 			});
 
 			await test.step('create entries A1 and A2 for Object A and entry B for Object B ', async () => {
-				const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
-				const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+				const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
+				const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 				for (const letter of ['A1', 'A2']) {
 					await apiHelpers.objectEntry.postObjectEntry(
 						{['textField']: `Entry ${letter}`},
-						restPathA
+						applicationName1
 					);
 				}
 
 				await apiHelpers.objectEntry.postObjectEntry(
 					{['textField']: 'Entry B'},
-					restPathB
+					applicationName2
 				);
 			});
 
@@ -3094,7 +3093,7 @@ test.describe('Manage object relationship entries', () => {
 			await test.step('relate Entry B to both Entry A1 and Entry A2 from Object A', async () => {
 				for (const letter of ['A1', 'A2']) {
 					await openRelationshipTab(
-						objectDefinitionA.className,
+						objectDefinition1.className,
 						`Entry ${letter}`
 					);
 
@@ -3119,7 +3118,7 @@ test.describe('Manage object relationship entries', () => {
 
 			await test.step('assert Entry A1 relationship tab still shows Entry B', async () => {
 				await openRelationshipTab(
-					objectDefinitionA.className,
+					objectDefinition1.className,
 					'Entry A1'
 				);
 
@@ -3669,11 +3668,10 @@ test.describe('Manage object relationship entries', () => {
 					.getByRole('button', {name: 'Add ' + objectDefinition.name})
 					.click();
 
-				await page.getByPlaceholder('Search').click();
-
-				await expect(
-					page.getByRole('menuitem', {name: 'Entry Test'})
-				).toBeVisible();
+				await clickAndExpectToBeVisible({
+					target: page.getByRole('menuitem', {name: 'Entry Test'}),
+					trigger: page.getByPlaceholder('Search'),
+				});
 			});
 		}
 	);
@@ -4035,30 +4033,30 @@ test.describe('Manage object relationship entries', () => {
 			page,
 			viewObjectEntriesPage,
 		}) => {
-			let objectDefinitionA: ObjectDefinition;
-			let objectDefinitionB: ObjectDefinition;
+			let objectDefinition1: ObjectDefinition;
+			let objectDefinition2: ObjectDefinition;
 			let objectRelationship: ObjectRelationship;
 
 			await test.step('create objects A and B with a disassociate deletion one-to-many relationship and a layout with a relationship tab for Object A', async () => {
-				objectDefinitionA =
+				objectDefinition1 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
-				objectDefinitionB =
+				objectDefinition2 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
 				apiHelpers.data.push({
-					id: objectDefinitionA.id,
+					id: objectDefinition1.id,
 					type: 'objectDefinition',
 				});
 
 				apiHelpers.data.push({
-					id: objectDefinitionB.id,
+					id: objectDefinition2.id,
 					type: 'objectDefinition',
 				});
 
@@ -4067,18 +4065,18 @@ test.describe('Manage object relationship entries', () => {
 
 				({body: objectRelationship} =
 					await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-						objectDefinitionA.externalReferenceCode,
+						objectDefinition1.externalReferenceCode,
 						{
 							deletionType: 'disassociate',
 							label: {en_US: 'Relationship'},
 							name: 'relationship' + getRandomInt(),
 							objectDefinitionExternalReferenceCode1:
-								objectDefinitionA.externalReferenceCode,
+								objectDefinition1.externalReferenceCode,
 							objectDefinitionExternalReferenceCode2:
-								objectDefinitionB.externalReferenceCode,
-							objectDefinitionId1: objectDefinitionA.id,
-							objectDefinitionId2: objectDefinitionB.id,
-							objectDefinitionName2: objectDefinitionB.name,
+								objectDefinition2.externalReferenceCode,
+							objectDefinitionId1: objectDefinition1.id,
+							objectDefinitionId2: objectDefinition2.id,
+							objectDefinitionName2: objectDefinition2.name,
 							type: 'oneToMany',
 						}
 					));
@@ -4090,7 +4088,7 @@ test.describe('Manage object relationship entries', () => {
 
 				const layoutName = 'Layout' + getRandomInt();
 
-				await objectLayoutsPage.goto(objectDefinitionA.label['en_US']);
+				await objectLayoutsPage.goto(objectDefinition1.label['en_US']);
 
 				await objectLayoutsPage.createObjectLayout(layoutName);
 
@@ -4129,22 +4127,22 @@ test.describe('Manage object relationship entries', () => {
 			});
 
 			await test.step('create entries A and B and associate entry B to entry A', async () => {
-				const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
-				const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+				const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
+				const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 				const entryA = await apiHelpers.objectEntry.postObjectEntry(
 					{['textField']: 'Entry A'},
-					restPathA
+					applicationName1
 				);
 
 				const entryB = await apiHelpers.objectEntry.postObjectEntry(
 					{['textField']: 'Entry B'},
-					restPathB
+					applicationName2
 				);
 
 				await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
 					{
-						applicationName: restPathA,
+						applicationName: applicationName1,
 						currentExternalReferenceCode:
 							entryA.externalReferenceCode,
 						objectRelationshipName: objectRelationship.name,
@@ -4155,7 +4153,7 @@ test.describe('Manage object relationship entries', () => {
 			});
 
 			await test.step('delete Entry B and assert it is removed from both objects', async () => {
-				await viewObjectEntriesPage.goto(objectDefinitionB.className);
+				await viewObjectEntriesPage.goto(objectDefinition2.className);
 
 				const entryBRow = page.getByRole('row', {name: /Entry B/});
 
@@ -4173,7 +4171,7 @@ test.describe('Manage object relationship entries', () => {
 					page.getByRole('row', {name: /Entry B/})
 				).not.toBeVisible();
 
-				await viewObjectEntriesPage.goto(objectDefinitionA.className);
+				await viewObjectEntriesPage.goto(objectDefinition1.className);
 
 				const entryARow = page.getByRole('row', {name: /Entry A/});
 
@@ -4205,29 +4203,29 @@ test.describe('Manage object relationship entries', () => {
 			page,
 			viewObjectEntriesPage,
 		}) => {
-			let objectDefinitionA: ObjectDefinition;
-			let objectDefinitionB: ObjectDefinition;
+			let objectDefinition1: ObjectDefinition;
+			let objectDefinition2: ObjectDefinition;
 
 			await test.step('add two custom objects with a M:M relationship', async () => {
-				objectDefinitionA =
+				objectDefinition1 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
-				objectDefinitionB =
+				objectDefinition2 =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
 						status: {code: 0},
 						titleObjectFieldName: 'textField',
 					});
 
 				apiHelpers.data.push({
-					id: objectDefinitionA.id,
+					id: objectDefinition1.id,
 					type: 'objectDefinition',
 				});
 
 				apiHelpers.data.push({
-					id: objectDefinitionB.id,
+					id: objectDefinition2.id,
 					type: 'objectDefinition',
 				});
 
@@ -4236,17 +4234,17 @@ test.describe('Manage object relationship entries', () => {
 
 				const {body: objectRelationship} =
 					await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-						objectDefinitionA.externalReferenceCode,
+						objectDefinition1.externalReferenceCode,
 						{
 							label: {en_US: 'Relationship' + getRandomInt()},
 							name: 'relationship' + getRandomInt(),
 							objectDefinitionExternalReferenceCode1:
-								objectDefinitionA.externalReferenceCode,
+								objectDefinition1.externalReferenceCode,
 							objectDefinitionExternalReferenceCode2:
-								objectDefinitionB.externalReferenceCode,
-							objectDefinitionId1: objectDefinitionA.id,
-							objectDefinitionId2: objectDefinitionB.id,
-							objectDefinitionName2: objectDefinitionB.name,
+								objectDefinition2.externalReferenceCode,
+							objectDefinitionId1: objectDefinition1.id,
+							objectDefinitionId2: objectDefinition2.id,
+							objectDefinitionName2: objectDefinition2.name,
 							type: 'manyToMany',
 						}
 					);
@@ -4255,6 +4253,25 @@ test.describe('Manage object relationship entries', () => {
 					id: objectRelationship.id,
 					type: 'objectRelationship',
 				});
+			});
+
+			await test.step('multiple entries are created for both objects', async () => {
+				const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
+				const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
+
+				for (const letter of ['A', 'B', 'C']) {
+					await apiHelpers.objectEntry.postObjectEntry(
+						{['textField']: `Entry ${letter}`},
+						applicationName1
+					);
+				}
+
+				for (const letter of ['D', 'E', 'F']) {
+					await apiHelpers.objectEntry.postObjectEntry(
+						{['textField']: `Entry ${letter}`},
+						applicationName2
+					);
+				}
 			});
 
 			await test.step('add layouts with a relationship tab for each definition', async () => {
@@ -4304,28 +4321,9 @@ test.describe('Manage object relationship entries', () => {
 					);
 				};
 
-				await setupLayout(objectDefinitionA, 'textField');
+				await setupLayout(objectDefinition1, 'textField');
 
-				await setupLayout(objectDefinitionB, 'textField');
-			});
-
-			await test.step('multiple entries are created for both objects', async () => {
-				const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
-				const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
-
-				for (const letter of ['A', 'B', 'C']) {
-					await apiHelpers.objectEntry.postObjectEntry(
-						{['textField']: `Entry ${letter}`},
-						restPathA
-					);
-				}
-
-				for (const letter of ['D', 'E', 'F']) {
-					await apiHelpers.objectEntry.postObjectEntry(
-						{['textField']: `Entry ${letter}`},
-						restPathB
-					);
-				}
+				await setupLayout(objectDefinition2, 'textField');
 			});
 
 			await test.step('many entries from Object A can be related to many entries from Object B', async () => {
@@ -4379,14 +4377,14 @@ test.describe('Manage object relationship entries', () => {
 				};
 
 				await openRelationshipTab(
-					objectDefinitionA.className,
+					objectDefinition1.className,
 					'Entry A'
 				);
 
 				await selectRelationshipEntry('Entry D');
 
 				await openRelationshipTab(
-					objectDefinitionA.className,
+					objectDefinition1.className,
 					'Entry A'
 				);
 
@@ -4397,7 +4395,7 @@ test.describe('Manage object relationship entries', () => {
 				await selectRelationshipEntry('Entry E');
 
 				await openRelationshipTab(
-					objectDefinitionA.className,
+					objectDefinition1.className,
 					'Entry A'
 				);
 
@@ -4410,14 +4408,14 @@ test.describe('Manage object relationship entries', () => {
 				).toBeVisible();
 
 				await openRelationshipTab(
-					objectDefinitionB.className,
+					objectDefinition2.className,
 					'Entry F'
 				);
 
 				await selectRelationshipEntry('Entry B');
 
 				await openRelationshipTab(
-					objectDefinitionB.className,
+					objectDefinition2.className,
 					'Entry F'
 				);
 
@@ -4428,7 +4426,7 @@ test.describe('Manage object relationship entries', () => {
 				await selectRelationshipEntry('Entry C');
 
 				await openRelationshipTab(
-					objectDefinitionB.className,
+					objectDefinition2.className,
 					'Entry F'
 				);
 
@@ -4452,23 +4450,23 @@ test.describe('Manage object relationship entries', () => {
 			viewObjectDefinitionsPage,
 			viewObjectEntriesPage,
 		}) => {
-			const objectDefinitionA =
+			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
-			const objectDefinitionB =
+			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
 			apiHelpers.data.push({
-				id: objectDefinitionA.id,
+				id: objectDefinition1.id,
 				type: 'objectDefinition',
 			});
 
 			apiHelpers.data.push({
-				id: objectDefinitionB.id,
+				id: objectDefinition2.id,
 				type: 'objectDefinition',
 			});
 
@@ -4477,17 +4475,17 @@ test.describe('Manage object relationship entries', () => {
 
 			const {body: objectRelationship} =
 				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinitionA.externalReferenceCode,
+					objectDefinition1.externalReferenceCode,
 					{
 						label: {en_US: 'Relationship' + getRandomInt()},
 						name: 'relationship' + getRandomInt(),
 						objectDefinitionExternalReferenceCode1:
-							objectDefinitionA.externalReferenceCode,
+							objectDefinition1.externalReferenceCode,
 						objectDefinitionExternalReferenceCode2:
-							objectDefinitionB.externalReferenceCode,
-						objectDefinitionId1: objectDefinitionA.id,
-						objectDefinitionId2: objectDefinitionB.id,
-						objectDefinitionName2: objectDefinitionB.name,
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
 						type: 'oneToMany',
 					}
 				);
@@ -4497,25 +4495,25 @@ test.describe('Manage object relationship entries', () => {
 				type: 'objectRelationship',
 			});
 
-			const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+			const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{['textField']: 'Entry 1'},
-				restPathB
+				applicationName2
 			);
 
 			await test.step('inactivate Object A and assert relationship field is hidden for Object B entry form', async () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionA.label['en_US']
+					objectDefinition1.label['en_US']
 				);
 
-				await viewObjectEntriesPage.goto(objectDefinitionB.className);
+				await viewObjectEntriesPage.goto(objectDefinition2.className);
 
 				await page
 					.getByRole('button', {
-						name: 'Add ' + objectDefinitionB.name,
+						name: 'Add ' + objectDefinition2.name,
 					})
 					.click();
 
@@ -4530,14 +4528,14 @@ test.describe('Manage object relationship entries', () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionA.label.en_US
+					objectDefinition1.label.en_US
 				);
 
-				await viewObjectEntriesPage.goto(objectDefinitionB.className);
+				await viewObjectEntriesPage.goto(objectDefinition2.className);
 
 				await page
 					.getByRole('button', {
-						name: 'Add ' + objectDefinitionB.name,
+						name: 'Add ' + objectDefinition2.name,
 					})
 					.click();
 
@@ -4560,23 +4558,23 @@ test.describe('Manage object relationship entries', () => {
 			viewObjectDefinitionsPage,
 			viewObjectEntriesPage,
 		}) => {
-			const objectDefinitionA =
+			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
-			const objectDefinitionB =
+			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
 			apiHelpers.data.push({
-				id: objectDefinitionA.id,
+				id: objectDefinition1.id,
 				type: 'objectDefinition',
 			});
 
 			apiHelpers.data.push({
-				id: objectDefinitionB.id,
+				id: objectDefinition2.id,
 				type: 'objectDefinition',
 			});
 
@@ -4585,17 +4583,17 @@ test.describe('Manage object relationship entries', () => {
 
 			const {body: objectRelationship} =
 				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinitionA.externalReferenceCode,
+					objectDefinition1.externalReferenceCode,
 					{
 						label: {en_US: 'Relationship'},
 						name: 'relationship' + getRandomInt(),
 						objectDefinitionExternalReferenceCode1:
-							objectDefinitionA.externalReferenceCode,
+							objectDefinition1.externalReferenceCode,
 						objectDefinitionExternalReferenceCode2:
-							objectDefinitionB.externalReferenceCode,
-						objectDefinitionId1: objectDefinitionA.id,
-						objectDefinitionId2: objectDefinitionB.id,
-						objectDefinitionName2: objectDefinitionB.name,
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
 						type: 'manyToMany',
 					}
 				);
@@ -4606,7 +4604,7 @@ test.describe('Manage object relationship entries', () => {
 			});
 
 			const setupLayout = async (
-				objectDefinition: typeof objectDefinitionA,
+				objectDefinition: typeof objectDefinition1,
 				fieldLabel: string
 			) => {
 				const layoutName = 'Layout' + getRandomInt();
@@ -4649,21 +4647,21 @@ test.describe('Manage object relationship entries', () => {
 				);
 			};
 
-			await setupLayout(objectDefinitionA, 'textField');
+			await setupLayout(objectDefinition1, 'textField');
 
-			await setupLayout(objectDefinitionB, 'textField');
+			await setupLayout(objectDefinition2, 'textField');
 
-			const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
-			const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+			const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
+			const applicationName2 = `c/${objectDefinition2.name.toLowerCase()}s`;
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{['textField']: 'Entry A'},
-				restPathA
+				applicationName1
 			);
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{['textField']: 'Entry B'},
-				restPathB
+				applicationName2
 			);
 
 			const openEntryDetails = async (
@@ -4689,10 +4687,10 @@ test.describe('Manage object relationship entries', () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionB.label['en_US']
+					objectDefinition2.label['en_US']
 				);
 
-				await openEntryDetails(objectDefinitionA.className, 'Entry A');
+				await openEntryDetails(objectDefinition1.className, 'Entry A');
 
 				await expect(
 					page.getByRole('link', {
@@ -4706,10 +4704,10 @@ test.describe('Manage object relationship entries', () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionB.label['en_US']
+					objectDefinition2.label['en_US']
 				);
 
-				await openEntryDetails(objectDefinitionA.className, 'Entry A');
+				await openEntryDetails(objectDefinition1.className, 'Entry A');
 
 				await expect(
 					page.getByRole('link', {
@@ -4731,23 +4729,23 @@ test.describe('Manage object relationship entries', () => {
 			viewObjectDefinitionsPage,
 			viewObjectEntriesPage,
 		}) => {
-			const objectDefinitionA =
+			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
-			const objectDefinitionB =
+			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
 
 			apiHelpers.data.push({
-				id: objectDefinitionA.id,
+				id: objectDefinition1.id,
 				type: 'objectDefinition',
 			});
 
 			apiHelpers.data.push({
-				id: objectDefinitionB.id,
+				id: objectDefinition2.id,
 				type: 'objectDefinition',
 			});
 
@@ -4756,17 +4754,17 @@ test.describe('Manage object relationship entries', () => {
 
 			const {body: objectRelationship} =
 				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinitionA.externalReferenceCode,
+					objectDefinition1.externalReferenceCode,
 					{
 						label: {en_US: 'Relationship'},
 						name: 'relationship' + getRandomInt(),
 						objectDefinitionExternalReferenceCode1:
-							objectDefinitionA.externalReferenceCode,
+							objectDefinition1.externalReferenceCode,
 						objectDefinitionExternalReferenceCode2:
-							objectDefinitionB.externalReferenceCode,
-						objectDefinitionId1: objectDefinitionA.id,
-						objectDefinitionId2: objectDefinitionB.id,
-						objectDefinitionName2: objectDefinitionB.name,
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
 						type: 'oneToMany',
 					}
 				);
@@ -4778,7 +4776,7 @@ test.describe('Manage object relationship entries', () => {
 
 			const layoutName = 'Layout' + getRandomInt();
 
-			await objectLayoutsPage.goto(objectDefinitionA.label['en_US']);
+			await objectLayoutsPage.goto(objectDefinition1.label['en_US']);
 
 			await objectLayoutsPage.createObjectLayout(layoutName);
 
@@ -4813,15 +4811,15 @@ test.describe('Manage object relationship entries', () => {
 				'Success:The object layout was updated successfully'
 			);
 
-			const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
+			const applicationName1 = `c/${objectDefinition1.name.toLowerCase()}s`;
 
 			await apiHelpers.objectEntry.postObjectEntry(
 				{['textField']: 'Entry 1'},
-				restPathA
+				applicationName1
 			);
 
 			const openEntry1Details = async () => {
-				await viewObjectEntriesPage.goto(objectDefinitionA.className);
+				await viewObjectEntriesPage.goto(objectDefinition1.className);
 
 				const entryRow = page.getByRole('row', {name: /Entry 1/});
 
@@ -4838,7 +4836,7 @@ test.describe('Manage object relationship entries', () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionB.label['en_US']
+					objectDefinition2.label['en_US']
 				);
 
 				await openEntry1Details();
@@ -4855,7 +4853,7 @@ test.describe('Manage object relationship entries', () => {
 				await viewObjectDefinitionsPage.goto();
 
 				await viewObjectDefinitionsPage.changeObjectActivateStatus(
-					objectDefinitionB.label['en_US']
+					objectDefinition2.label['en_US']
 				);
 
 				await openEntry1Details();

@@ -66,6 +66,7 @@ export class ExportImportPage {
 	readonly removeFilterButton: Locator;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
+	readonly showResultsButton: Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
 	readonly taskStatusLabel: (
@@ -195,6 +196,9 @@ export class ExportImportPage {
 		this.removeFilterButton = page.getByLabel('Remove Filter');
 		this.searchButton = page.getByRole('button', {name: 'Search'});
 		this.searchInput = page.getByRole('searchbox', {name: 'Search'});
+		this.showResultsButton = page.getByRole('button', {
+			name: 'Show Results',
+		});
 		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName) =>
@@ -643,12 +647,12 @@ export class ExportImportPage {
 	async excludeReportFilter() {
 		await this.filterButton.click();
 		await this.excludeSwitch.check();
+		await this.showResultsButton.click();
 		const responsePromise = this.page.waitForResponse(
 			(response) =>
 				response.url().includes('report-entries') &&
 				response.status() === 200
 		);
-		await this.addFilterButton.click();
 		await responsePromise;
 	}
 

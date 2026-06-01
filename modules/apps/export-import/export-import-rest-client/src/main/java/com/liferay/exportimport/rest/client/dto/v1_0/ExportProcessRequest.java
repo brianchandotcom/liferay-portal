@@ -26,6 +26,27 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 		return ExportProcessRequestSerDes.toDTO(json);
 	}
 
+	public Boolean getComments() {
+		return comments;
+	}
+
+	public void setComments(Boolean comments) {
+		this.comments = comments;
+	}
+
+	public void setComments(
+		UnsafeSupplier<Boolean, Exception> commentsUnsafeSupplier) {
+
+		try {
+			comments = commentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean comments;
+
 	public Boolean getDeletions() {
 		return deletions;
 	}
@@ -86,6 +107,25 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 	}
 
 	protected Integer last;
+
+	public Boolean getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Boolean logo) {
+		this.logo = logo;
+	}
+
+	public void setLogo(UnsafeSupplier<Boolean, Exception> logoUnsafeSupplier) {
+		try {
+			logo = logoUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean logo;
 
 	public String getName() {
 		return name;
@@ -154,6 +194,27 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 
 	protected Range range;
 
+	public Boolean getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Boolean ratings) {
+		this.ratings = ratings;
+	}
+
+	public void setRatings(
+		UnsafeSupplier<Boolean, Exception> ratingsUnsafeSupplier) {
+
+		try {
+			ratings = ratingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean ratings;
+
 	public RequestPortletDataHandler[] getRequestPortletDataHandlers() {
 		return requestPortletDataHandlers;
 	}
@@ -179,6 +240,48 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 
 	protected RequestPortletDataHandler[] requestPortletDataHandlers;
 
+	public Boolean getSitePagesSettings() {
+		return sitePagesSettings;
+	}
+
+	public void setSitePagesSettings(Boolean sitePagesSettings) {
+		this.sitePagesSettings = sitePagesSettings;
+	}
+
+	public void setSitePagesSettings(
+		UnsafeSupplier<Boolean, Exception> sitePagesSettingsUnsafeSupplier) {
+
+		try {
+			sitePagesSettings = sitePagesSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean sitePagesSettings;
+
+	public Boolean getSiteTemplateSettings() {
+		return siteTemplateSettings;
+	}
+
+	public void setSiteTemplateSettings(Boolean siteTemplateSettings) {
+		this.siteTemplateSettings = siteTemplateSettings;
+	}
+
+	public void setSiteTemplateSettings(
+		UnsafeSupplier<Boolean, Exception> siteTemplateSettingsUnsafeSupplier) {
+
+		try {
+			siteTemplateSettings = siteTemplateSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean siteTemplateSettings;
+
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -199,6 +302,27 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 	}
 
 	protected Date startDate;
+
+	public Boolean getThemeSettings() {
+		return themeSettings;
+	}
+
+	public void setThemeSettings(Boolean themeSettings) {
+		this.themeSettings = themeSettings;
+	}
+
+	public void setThemeSettings(
+		UnsafeSupplier<Boolean, Exception> themeSettingsUnsafeSupplier) {
+
+		try {
+			themeSettings = themeSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean themeSettings;
 
 	@Override
 	public ExportProcessRequest clone() throws CloneNotSupportedException {
@@ -266,4 +390,4 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:922683815
+// LIFERAY-REST-BUILDER-HASH:61670162

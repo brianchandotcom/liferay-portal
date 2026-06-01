@@ -9,9 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,7 +32,6 @@ import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -77,7 +78,8 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 
 		String urlString = StringBundler.concat(
 			Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
-			PortalUtil.getPortalServerPort(false), _WELL_KNOWN_PATH);
+			PortalUtil.getPortalServerPort(false),
+			"/o/.well-known/oauth-authorization-server");
 
 		options.setLocation(urlString);
 
@@ -185,7 +187,9 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			responseJSON, oAuthClientASLocalMetadata1.getOAuthASMetadataJSON());
 
 		options.setFollowRedirects(false);
-		options.setLocation(urlString + RandomTestUtil.randomString());
+		options.setLocation(
+			StringBundler.concat(
+				urlString, StringPool.SLASH, RandomTestUtil.randomString()));
 
 		HttpUtil.URLtoString(options);
 
@@ -194,7 +198,8 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND, response.getResponseCode());
 
-		options.setLocation(urlString + issuer1);
+		options.setLocation(
+			StringBundler.concat(urlString, StringPool.SLASH, issuer1));
 
 		HttpUtil.URLtoString(options);
 
@@ -206,7 +211,8 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		String issuerSegment = URLEncoder.encode(
 			issuer2.trim(), StandardCharsets.UTF_8);
 
-		options.setLocation(urlString + issuerSegment);
+		options.setLocation(
+			StringBundler.concat(urlString, StringPool.SLASH, issuerSegment));
 
 		response = options.getResponse();
 		responseJSON = HttpUtil.URLtoString(options);
@@ -258,12 +264,8 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 
 		Assert.assertEquals(3, tokenEndpointAuthMethodsJSONArray.length());
 
-		List<String> tokenEndpointAuthMethods = new ArrayList<>();
-
-		for (int i = 0; i < tokenEndpointAuthMethodsJSONArray.length(); i++) {
-			tokenEndpointAuthMethods.add(
-				tokenEndpointAuthMethodsJSONArray.getString(i));
-		}
+		List<String> tokenEndpointAuthMethods = JSONUtil.toStringList(
+			tokenEndpointAuthMethodsJSONArray);
 
 		Assert.assertTrue(
 			tokenEndpointAuthMethods.contains("client_secret_basic"));
@@ -271,9 +273,6 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			tokenEndpointAuthMethods.contains("client_secret_post"));
 		Assert.assertTrue(tokenEndpointAuthMethods.contains("none"));
 	}
-
-	private static final String _WELL_KNOWN_PATH =
-		"/o/.well-known/oauth-authorization-server/";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

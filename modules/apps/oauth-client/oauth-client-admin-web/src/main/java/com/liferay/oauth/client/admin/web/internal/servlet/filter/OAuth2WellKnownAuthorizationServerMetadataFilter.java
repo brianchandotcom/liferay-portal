@@ -64,11 +64,11 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilter
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader(
-			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
 		httpServletResponse.setHeader(
 			"Access-Control-Allow-Headers", "Authorization, Content-Type");
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
 
 		String method = httpServletRequest.getMethod();

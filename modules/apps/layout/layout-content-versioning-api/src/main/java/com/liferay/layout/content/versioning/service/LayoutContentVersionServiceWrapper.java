@@ -28,6 +28,57 @@ public class LayoutContentVersionServiceWrapper
 		_layoutContentVersionService = layoutContentVersionService;
 	}
 
+	@Override
+	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+			addLayoutContentVersion(
+				String externalReferenceCode, long plid,
+				java.util.Map<java.util.Locale, String> nameMap, String data,
+				int status, boolean skipIfUnchanged)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.addLayoutContentVersion(
+			externalReferenceCode, plid, nameMap, data, status,
+			skipIfUnchanged);
+	}
+
+	@Override
+	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+			deleteLayoutContentVersion(long layoutContentVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.deleteLayoutContentVersion(
+			layoutContentVersionId);
+	}
+
+	@Override
+	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+			getLayoutContentVersion(long layoutContentVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.getLayoutContentVersion(
+			layoutContentVersionId);
+	}
+
+	@Override
+	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+			getLayoutContentVersionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.
+			getLayoutContentVersionByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.layout.content.versioning.model.LayoutContentVersion>
+				getLayoutContentVersions(long plid)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.getLayoutContentVersions(plid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -36,6 +87,17 @@ public class LayoutContentVersionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _layoutContentVersionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+			updateLayoutContentVersion(
+				long layoutContentVersionId,
+				java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionService.updateLayoutContentVersion(
+			layoutContentVersionId, nameMap);
 	}
 
 	@Override
@@ -53,4 +115,4 @@ public class LayoutContentVersionServiceWrapper
 	private LayoutContentVersionService _layoutContentVersionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1840797700
+// LIFERAY-SERVICE-BUILDER-HASH:-662040126

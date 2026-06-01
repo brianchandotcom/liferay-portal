@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for LayoutContentVersion. This utility wraps
@@ -51,6 +52,17 @@ public class LayoutContentVersionLocalServiceUtil {
 		LayoutContentVersion layoutContentVersion) {
 
 		return getService().addLayoutContentVersion(layoutContentVersion);
+	}
+
+	public static LayoutContentVersion addLayoutContentVersion(
+			String externalReferenceCode, long userId, long plid,
+			Map<java.util.Locale, String> nameMap, String data, int status,
+			boolean skipIfUnchanged)
+		throws PortalException {
+
+		return getService().addLayoutContentVersion(
+			externalReferenceCode, userId, plid, nameMap, data, status,
+			skipIfUnchanged);
 	}
 
 	/**
@@ -271,6 +283,12 @@ public class LayoutContentVersionLocalServiceUtil {
 		return getService().getLayoutContentVersions(start, end);
 	}
 
+	public static List<LayoutContentVersion> getLayoutContentVersions(long plid)
+		throws PortalException {
+
+		return getService().getLayoutContentVersions(plid);
+	}
+
 	/**
 	 * Returns the number of layout content versions.
 	 *
@@ -314,6 +332,14 @@ public class LayoutContentVersionLocalServiceUtil {
 		return getService().updateLayoutContentVersion(layoutContentVersion);
 	}
 
+	public static LayoutContentVersion updateLayoutContentVersion(
+			long layoutContentVersionId, Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().updateLayoutContentVersion(
+			layoutContentVersionId, nameMap);
+	}
+
 	public static LayoutContentVersionLocalService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -324,4 +350,4 @@ public class LayoutContentVersionLocalServiceUtil {
 			LayoutContentVersionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1208027189
+// LIFERAY-SERVICE-BUILDER-HASH:305199102

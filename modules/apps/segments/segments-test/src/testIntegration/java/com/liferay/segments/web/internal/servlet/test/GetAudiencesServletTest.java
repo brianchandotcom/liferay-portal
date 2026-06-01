@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -72,7 +73,9 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiences() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(), "(url eq '/pricing')",
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and", _createRuleJSONObject("url", "/pricing")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -123,11 +126,15 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesReturnsOnlyAudienceSources() throws Exception {
 		_addSegmentsEntry(
-			RandomTestUtil.randomString(), "(url eq '/decoy')",
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and", _createRuleJSONObject("url", "/decoy")),
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(), "(url eq '/pricing')",
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and", _createRuleJSONObject("url", "/pricing")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -144,11 +151,13 @@ public class GetAudiencesServletTest {
 	@Test
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesWithNestedRules() throws Exception {
-		String segmentsEntryKey = RandomTestUtil.randomString();
-
 		_addSegmentsEntry(
-			segmentsEntryKey,
-			"(url eq '/pricing' and (url eq '/features' or url eq '/billing'))",
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and", _createRuleJSONObject("url", "/pricing"),
+				_createGroupJSONObject(
+					"or", _createRuleJSONObject("url", "/features"),
+					_createRuleJSONObject("url", "/billing"))),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -191,7 +200,10 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesWithOrRule() throws Exception {
 		_addSegmentsEntry(
-			"OR_RULE", "(url eq 'facebook.com' or url eq 'twitter.com')",
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"or", _createRuleJSONObject("url", "facebook.com"),
+				_createRuleJSONObject("url", "twitter.com")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -219,13 +231,13 @@ public class GetAudiencesServletTest {
 	}
 
 	private SegmentsEntry _addSegmentsEntry(
-			String segmentsEntryKey, String filterString, String source)
+			String segmentsEntryKey, JSONObject queryJSONObject, String source)
 		throws Exception {
 
 		Criteria criteria = new Criteria();
 
 		_contextSegmentsCriteriaContributor.contribute(
-			criteria, filterString, Criteria.Conjunction.AND);
+			criteria, queryJSONObject.toString(), Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			segmentsEntryKey, segmentsEntryKey, segmentsEntryKey,
@@ -236,6 +248,28 @@ public class GetAudiencesServletTest {
 		_segmentsEntries.add(segmentsEntry);
 
 		return segmentsEntry;
+	}
+
+	private JSONObject _createGroupJSONObject(
+		String conjunctionName, JSONObject... itemJSONObjects) {
+
+		return JSONUtil.put(
+			"conjunctionName", conjunctionName
+		).put(
+			"items", JSONUtil.putAll((Object[])itemJSONObjects)
+		);
+	}
+
+	private JSONObject _createRuleJSONObject(
+		String propertyName, String value) {
+
+		return JSONUtil.put(
+			"operatorName", _TYPE_EQUALS
+		).put(
+			"propertyName", propertyName
+		).put(
+			"value", value
+		);
 	}
 
 	private JSONArray _getAudiencesJSONArray() throws Exception {
@@ -261,6 +295,8 @@ public class GetAudiencesServletTest {
 
 		return mockHttpServletResponse;
 	}
+
+	private static final String _TYPE_EQUALS = "eq";
 
 	private Group _companyGroup;
 

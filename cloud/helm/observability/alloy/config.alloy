@@ -106,7 +106,7 @@ prometheus.exporter.cloudwatch "rds" {
         metric {
             name = {{ .name | quote }}
             period = "1m"
-            statistics = [{{ range $i, $s := .statistics }}{{ if $i }}, {{ end }}{{ $s | quote }}{{ end }}]
+            statistics = {{ .statistics | toJson }}
         }
         {{- end }}
         regions = [{{ $cwRegion | quote }}]

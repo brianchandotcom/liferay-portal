@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Fragment Collection Contributor Inputs
 Bundle-SymbolicName: com.liferay.fragment.collection.contributor.inputs
-Bundle-Version: 1.0.69
+Bundle-Version: 1.0.70
 Web-ContextPath: /fragment-collection-contributor-inputs
 -dsannotations-options: inherit

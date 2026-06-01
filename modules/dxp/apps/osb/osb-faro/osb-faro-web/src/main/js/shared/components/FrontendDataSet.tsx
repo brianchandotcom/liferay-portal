@@ -1,10 +1,17 @@
 import ClayLink from '@clayui/link';
 import FaroConstants from 'shared/util/constants';
 import Label from '@clayui/label';
+import Loading from 'shared/components/Loading';
 import React, {useEffect, useState} from 'react';
-import {CUSTOM_DATE_FORMAT, formatUTCDate} from './date';
+import {
+	FrontendDataSet as BaseFrontendDataSet,
+	EConfigInURLBehavior
+} from '@liferay/frontend-data-set-web';
+import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
 import {Text} from '@clayui/core';
-import {toRoute} from './router';
+import {toRoute} from 'shared/util/router';
+
+export * from '@liferay/frontend-data-set-web';
 
 const {cur, delta, deltaValues} = FaroConstants.pagination;
 
@@ -81,17 +88,19 @@ export const columns = {
 	}
 };
 
-export function useSnapshots(fdsName: string) {
-	const enabled =
-		Liferay.FeatureFlags['LPD-34594'] && Liferay.FeatureFlags['LPS-164563'];
+export function useSnapshots(fdsName: string, enabled = true) {
+	const fetchSnapshots =
+		enabled &&
+		Liferay.FeatureFlags['LPD-34594'] &&
+		Liferay.FeatureFlags['LPS-164563'];
 
 	const [snapshots, setSnapshots] = useState<Array<{
 		headerVisible: boolean;
 		items: any[];
-	}> | null>(enabled ? null : []);
+	}> | null>(fetchSnapshots ? null : []);
 
 	useEffect(() => {
-		if (!enabled) {
+		if (!fetchSnapshots) {
 			return;
 		}
 
@@ -125,7 +134,43 @@ export function useSnapshots(fdsName: string) {
 
 				setSnapshots([]);
 			});
-	}, [enabled, fdsName]);
+	}, [fetchSnapshots, fdsName]);
 
 	return snapshots;
 }
+
+type IBaseFrontendDataSetProps = React.ComponentProps<
+	typeof BaseFrontendDataSet
+>;
+
+/**
+ * Drop-in wrapper around the @liferay/frontend-data-set-web FrontendDataSet.
+ * Everything from the original module is re-exported, so this is the single
+ * entry point for the data set across the app. When `snapshotsEnabled` is set,
+ * the data set's saved view snapshots are fetched and the data set is only
+ * mounted once they are ready (the base FrontendDataSet reads `snapshots` only
+ * when its reducer is initialized on mount). `configInURLBehavior` defaults to
+ * OFF so the data set does not dirty the URL unless a consumer overrides it.
+ */
+const FrontendDataSet = ({
+	configInURLBehavior = EConfigInURLBehavior.OFF,
+	snapshotsEnabled = false,
+	...props
+}: IBaseFrontendDataSetProps) => {
+	const snapshots = useSnapshots(props.id, snapshotsEnabled);
+
+	if (snapshots === null) {
+		return <Loading />;
+	}
+
+	return (
+		<BaseFrontendDataSet
+			{...props}
+			configInURLBehavior={configInURLBehavior}
+			snapshots={snapshots}
+			snapshotsEnabled={snapshotsEnabled}
+		/>
+	);
+};
+
+export {FrontendDataSet};

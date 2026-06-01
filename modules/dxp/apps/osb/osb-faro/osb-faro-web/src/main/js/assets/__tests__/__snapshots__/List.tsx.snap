@@ -89,6 +89,7 @@ exports[`List rendering should match the snapshot 1`] = `
     >
       <div
         class="card card-root"
+        style="min-height: 300px;"
       >
         <div
           data-testid="fds-component"

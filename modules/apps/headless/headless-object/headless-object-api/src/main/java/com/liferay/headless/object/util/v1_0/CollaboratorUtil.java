@@ -8,6 +8,7 @@ package com.liferay.headless.object.util.v1_0;
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -35,6 +36,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.sharing.configuration.SharingEntryCollaborationEmailConfiguration;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -53,6 +55,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mikel Lorza
@@ -62,10 +65,10 @@ public class CollaboratorUtil {
 	public static Collaborator addOrUpdateCollaborator(
 			AcceptLanguage acceptLanguage, String className, long classNameId,
 			long classPK, Collaborator collaborator, long collaboratorId,
-			long companyId,
+			long companyId, ConfigurationProvider configurationProvider,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
-			DTOConverterRegistry dtoConverterRegistry, Date expirationDate,
-			long groupId, HttpServletRequest httpServletRequest,
+			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, String type, UriInfo uriInfo,
 			User user, UserGroupLocalService userGroupLocalService,
@@ -77,8 +80,8 @@ public class CollaboratorUtil {
 		if (StringUtil.equals("Email", type)) {
 			return addOrUpdateCollaboratorByEmailAddress(
 				acceptLanguage, className, classNameId, classPK, collaborator,
-				companyId, dtoConverter, dtoConverterRegistry,
-				collaborator.getEmailAddress(), expirationDate, groupId,
+				companyId, configurationProvider, dtoConverter,
+				dtoConverterRegistry, collaborator.getEmailAddress(), groupId,
 				httpServletRequest, sharingEntryService, ticketLocalService,
 				uriInfo, user, userGroupLocalService, userLocalService);
 		}
@@ -95,10 +98,10 @@ public class CollaboratorUtil {
 	public static Collaborator addOrUpdateCollaboratorByEmailAddress(
 			AcceptLanguage acceptLanguage, String className, long classNameId,
 			long classPK, Collaborator collaborator, long companyId,
+			ConfigurationProvider configurationProvider,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry, String emailAddress,
-			Date expirationDate, long groupId,
-			HttpServletRequest httpServletRequest,
+			long groupId, HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, UriInfo uriInfo, User user,
 			UserGroupLocalService userGroupLocalService,
@@ -147,7 +150,8 @@ public class CollaboratorUtil {
 		}
 
 		Ticket ticket = _addOrUpdateTicket(
-			className, classPK, companyId, emailAddress, expirationDate,
+			className, classPK, companyId, emailAddress,
+			_getExpirationDate(companyId, configurationProvider),
 			_fetchTicketByEmailAddress(
 				className, classPK, companyId, emailAddress,
 				ticketLocalService),
@@ -165,9 +169,10 @@ public class CollaboratorUtil {
 	public static Page<Collaborator> addOrUpdateCollaborators(
 			AcceptLanguage acceptLanguage, String className, long classNameId,
 			long classPK, Collaborator[] collaborators, long companyId,
+			ConfigurationProvider configurationProvider,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
-			DTOConverterRegistry dtoConverterRegistry, Date expirationDate,
-			long groupId, HttpServletRequest httpServletRequest,
+			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, UriInfo uriInfo, User user,
 			UserGroupLocalService userGroupLocalService,
@@ -182,6 +187,8 @@ public class CollaboratorUtil {
 		List<SharingEntry> newSharingEntries = new ArrayList<>();
 		Set<Long> sharingEntryIds = new HashSet<>();
 		Set<Long> ticketIds = new HashSet<>();
+		Date expirationDate = _getExpirationDate(
+			companyId, configurationProvider);
 
 		for (Collaborator collaborator : collaborators) {
 			_validateType(companyId, collaborator.getType());
@@ -560,6 +567,23 @@ public class CollaboratorUtil {
 		}
 
 		return null;
+	}
+
+	private static Date _getExpirationDate(
+			long companyId, ConfigurationProvider configurationProvider)
+		throws Exception {
+
+		SharingEntryCollaborationEmailConfiguration
+			sharingEntryCollaborationEmailConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					SharingEntryCollaborationEmailConfiguration.class,
+					companyId);
+
+		return new Date(
+			System.currentTimeMillis() +
+				TimeUnit.HOURS.toMillis(
+					sharingEntryCollaborationEmailConfiguration.
+						invitationToCollaborateTokenExpirationTime()));
 	}
 
 	private static boolean _hasViewPermission(User user) throws Exception {

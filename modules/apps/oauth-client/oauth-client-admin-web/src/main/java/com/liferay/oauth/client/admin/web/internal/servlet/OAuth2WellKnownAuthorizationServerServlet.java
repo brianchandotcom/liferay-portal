@@ -15,11 +15,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,9 +53,9 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
+		long companyId = CompanyThreadLocal.getCompanyId();
 
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63415")) {
 			return;
 		}
 
@@ -65,8 +63,6 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-		long companyId = GetterUtil.getLong(
-			httpServletRequest.getAttribute(WebKeys.COMPANY_ID));
 		String issuer = _getIssuer(httpServletRequest);
 
 		if (issuer == null) {

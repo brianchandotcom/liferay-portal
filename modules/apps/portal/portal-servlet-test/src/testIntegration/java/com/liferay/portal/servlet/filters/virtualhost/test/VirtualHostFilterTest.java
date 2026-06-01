@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -86,6 +87,25 @@ public class VirtualHostFilterTest {
 		_portalUtil.setPortal(_portal);
 
 		_virtualHostFilter.destroy();
+	}
+
+	@Test
+	public void testProcessFilterDoesNotSetGroupOnRequestForUnknownPath() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			MockHttpServletRequest mockHttpServletRequest = _processFilter(
+				null, StringPool.SLASH + RandomTestUtil.randomString());
+
+			Assert.assertNull(
+				mockHttpServletRequest.getAttribute(
+					WebKeys.FRIENDLY_URL_GROUP));
+			Assert.assertNull(
+				mockHttpServletRequest.getAttribute(
+					WebKeys.GROUP_FRIENDLY_URL));
+		}
 	}
 
 	@Test
@@ -216,6 +236,56 @@ public class VirtualHostFilterTest {
 		}
 	}
 
+	@Test
+	public void testProcessFilterSetsGroupOnRequestWhenLayoutSetMatches()
+		throws Exception {
+
+		String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+		MockHttpServletRequest mockHttpServletRequest = _processFilter(
+			_publicLayoutSet,
+			groupFriendlyURL + StringPool.SLASH +
+				RandomTestUtil.randomString());
+
+		Group group = (Group)mockHttpServletRequest.getAttribute(
+			WebKeys.FRIENDLY_URL_GROUP);
+
+		Assert.assertEquals(_publicLayoutSet.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			groupFriendlyURL,
+			mockHttpServletRequest.getAttribute(WebKeys.GROUP_FRIENDLY_URL));
+	}
+
+	@Test
+	public void testProcessFilterSetsGroupOnRequestWhenPathForwards()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+			MockHttpServletRequest mockHttpServletRequest = _processFilter(
+				null,
+				groupFriendlyURL + StringPool.SLASH +
+					RandomTestUtil.randomString());
+
+			Group group = (Group)mockHttpServletRequest.getAttribute(
+				WebKeys.FRIENDLY_URL_GROUP);
+
+			Assert.assertEquals(
+				_publicLayoutSet.getGroupId(), group.getGroupId());
+
+			Assert.assertEquals(
+				groupFriendlyURL,
+				mockHttpServletRequest.getAttribute(
+					WebKeys.GROUP_FRIENDLY_URL));
+		}
+	}
+
 	private String _getForwardedURL(LayoutSet layoutSet, String requestURI) {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layoutSet, requestURI);
@@ -308,6 +378,26 @@ public class VirtualHostFilterTest {
 		String requestURI) {
 
 		return _getMockHttpServletRequest(_publicLayoutSet, requestURI);
+	}
+
+	private MockHttpServletRequest _processFilter(
+		LayoutSet layoutSet, String requestURI) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layoutSet, requestURI);
+
+		_virtualHostFilter.init(new MockFilterConfig());
+
+		ReflectionTestUtil.invoke(
+			_virtualHostFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			new MockFilterChain());
+
+		return mockHttpServletRequest;
 	}
 
 	private void _testProcessFilterLastPath(

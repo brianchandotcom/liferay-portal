@@ -19,6 +19,8 @@ import dev.langchain4j.guardrail.GuardrailResult;
 
 import java.time.Duration;
 
+import java.util.List;
+
 /**
  * @author Pedro Leite
  */
@@ -50,17 +52,17 @@ public abstract class BaseGuardrailExecutedListener {
 				).put(
 					"duration", duration.toMillis()
 				).put(
-					"errors",
-					JSONUtil.toJSONArray(
-						guardrailResult.failures(),
-						GuardrailResult.Failure::message)
-				).put(
 					"guardrailType", guardrailType
 				).put(
-					"sseEventSinkKey",
-					MapUtil.getString(
-						_executionContext.getWorkflowContext(),
-						"sseEventSinkKey")
+					"violation",
+					() -> {
+						List<GuardrailResult.Failure> failures =
+							guardrailResult.failures();
+
+						GuardrailResult.Failure failure = failures.get(0);
+
+						return failure.message();
+					}
 				).put(
 					"workflowInstanceId",
 					kaleoInstanceToken.getKaleoInstanceId()

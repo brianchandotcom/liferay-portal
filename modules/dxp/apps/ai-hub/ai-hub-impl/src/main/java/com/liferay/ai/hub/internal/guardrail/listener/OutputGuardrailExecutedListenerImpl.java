@@ -7,10 +7,7 @@ package com.liferay.ai.hub.internal.guardrail.listener;
 
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
-import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.guardrail.OutputGuardrailRequest;
 import dev.langchain4j.guardrail.OutputGuardrailResult;
-import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.observability.api.event.OutputGuardrailExecutedEvent;
 import dev.langchain4j.observability.api.listener.OutputGuardrailExecutedListener;
 
@@ -38,15 +35,8 @@ public class OutputGuardrailExecutedListenerImpl
 			return;
 		}
 
-		OutputGuardrailRequest outputGuardrailRequest =
-			outputGuardrailExecutedEvent.request();
-
-		ChatResponse chatResponse = outputGuardrailRequest.responseFromLLM();
-
-		AiMessage aiMessage = chatResponse.aiMessage();
-
 		route(
-			aiMessage.text(), outputGuardrailExecutedEvent.duration(),
+			null, outputGuardrailExecutedEvent.duration(),
 			outputGuardrailResult, "output");
 	}
 

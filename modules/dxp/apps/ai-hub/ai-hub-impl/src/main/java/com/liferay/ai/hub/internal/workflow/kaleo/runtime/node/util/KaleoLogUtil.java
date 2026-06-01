@@ -46,8 +46,6 @@ public class KaleoLogUtil {
 				HashMapBuilder.<String, Serializable>put(
 					"inputTokenCount", String.valueOf(inputTokenCount)
 				).put(
-					"output", output
-				).put(
 					"outputTokenCount", String.valueOf(outputTokenCount)
 				).put(
 					"promptInput", prompt

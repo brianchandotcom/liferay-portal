@@ -59,6 +59,47 @@ public class ExportProcessRequest implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getComments() {
+		if (_commentsSupplier != null) {
+			comments = _commentsSupplier.get();
+
+			_commentsSupplier = null;
+		}
+
+		return comments;
+	}
+
+	public void setComments(Boolean comments) {
+		this.comments = comments;
+
+		_commentsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setComments(
+		UnsafeSupplier<Boolean, Exception> commentsUnsafeSupplier) {
+
+		_commentsSupplier = () -> {
+			try {
+				return commentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean comments;
+
+	@JsonIgnore
+	private Supplier<Boolean> _commentsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDeletions() {
 		if (_deletionsSupplier != null) {
 			deletions = _deletionsSupplier.get();
@@ -178,6 +219,45 @@ public class ExportProcessRequest implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Integer> _lastSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getLogo() {
+		if (_logoSupplier != null) {
+			logo = _logoSupplier.get();
+
+			_logoSupplier = null;
+		}
+
+		return logo;
+	}
+
+	public void setLogo(Boolean logo) {
+		this.logo = logo;
+
+		_logoSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLogo(UnsafeSupplier<Boolean, Exception> logoUnsafeSupplier) {
+		_logoSupplier = () -> {
+			try {
+				return logoUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean logo;
+
+	@JsonIgnore
+	private Supplier<Boolean> _logoSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
@@ -313,6 +393,47 @@ public class ExportProcessRequest implements Serializable {
 	private Supplier<Range> _rangeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getRatings() {
+		if (_ratingsSupplier != null) {
+			ratings = _ratingsSupplier.get();
+
+			_ratingsSupplier = null;
+		}
+
+		return ratings;
+	}
+
+	public void setRatings(Boolean ratings) {
+		this.ratings = ratings;
+
+		_ratingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRatings(
+		UnsafeSupplier<Boolean, Exception> ratingsUnsafeSupplier) {
+
+		_ratingsSupplier = () -> {
+			try {
+				return ratingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean ratings;
+
+	@JsonIgnore
+	private Supplier<Boolean> _ratingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public RequestPortletDataHandler[] getRequestPortletDataHandlers() {
 		if (_requestPortletDataHandlersSupplier != null) {
@@ -360,6 +481,88 @@ public class ExportProcessRequest implements Serializable {
 		_requestPortletDataHandlersSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getSitePagesSettings() {
+		if (_sitePagesSettingsSupplier != null) {
+			sitePagesSettings = _sitePagesSettingsSupplier.get();
+
+			_sitePagesSettingsSupplier = null;
+		}
+
+		return sitePagesSettings;
+	}
+
+	public void setSitePagesSettings(Boolean sitePagesSettings) {
+		this.sitePagesSettings = sitePagesSettings;
+
+		_sitePagesSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSitePagesSettings(
+		UnsafeSupplier<Boolean, Exception> sitePagesSettingsUnsafeSupplier) {
+
+		_sitePagesSettingsSupplier = () -> {
+			try {
+				return sitePagesSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean sitePagesSettings;
+
+	@JsonIgnore
+	private Supplier<Boolean> _sitePagesSettingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getSiteTemplateSettings() {
+		if (_siteTemplateSettingsSupplier != null) {
+			siteTemplateSettings = _siteTemplateSettingsSupplier.get();
+
+			_siteTemplateSettingsSupplier = null;
+		}
+
+		return siteTemplateSettings;
+	}
+
+	public void setSiteTemplateSettings(Boolean siteTemplateSettings) {
+		this.siteTemplateSettings = siteTemplateSettings;
+
+		_siteTemplateSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSiteTemplateSettings(
+		UnsafeSupplier<Boolean, Exception> siteTemplateSettingsUnsafeSupplier) {
+
+		_siteTemplateSettingsSupplier = () -> {
+			try {
+				return siteTemplateSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean siteTemplateSettings;
+
+	@JsonIgnore
+	private Supplier<Boolean> _siteTemplateSettingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getStartDate() {
 		if (_startDateSupplier != null) {
 			startDate = _startDateSupplier.get();
@@ -400,6 +603,47 @@ public class ExportProcessRequest implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _startDateSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getThemeSettings() {
+		if (_themeSettingsSupplier != null) {
+			themeSettings = _themeSettingsSupplier.get();
+
+			_themeSettingsSupplier = null;
+		}
+
+		return themeSettings;
+	}
+
+	public void setThemeSettings(Boolean themeSettings) {
+		this.themeSettings = themeSettings;
+
+		_themeSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setThemeSettings(
+		UnsafeSupplier<Boolean, Exception> themeSettingsUnsafeSupplier) {
+
+		_themeSettingsSupplier = () -> {
+			try {
+				return themeSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean themeSettings;
+
+	@JsonIgnore
+	private Supplier<Boolean> _themeSettingsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -430,6 +674,18 @@ public class ExportProcessRequest implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		Boolean comments = getComments();
+
+		if (comments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"comments\": ");
+
+			sb.append(comments);
+		}
 
 		Boolean deletions = getDeletions();
 
@@ -469,6 +725,18 @@ public class ExportProcessRequest implements Serializable {
 			sb.append("\"last\": ");
 
 			sb.append(last);
+		}
+
+		Boolean logo = getLogo();
+
+		if (logo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logo\": ");
+
+			sb.append(logo);
 		}
 
 		String name = getName();
@@ -513,6 +781,18 @@ public class ExportProcessRequest implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean ratings = getRatings();
+
+		if (ratings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ratings\": ");
+
+			sb.append(ratings);
+		}
+
 		RequestPortletDataHandler[] requestPortletDataHandlers =
 			getRequestPortletDataHandlers();
 
@@ -536,6 +816,30 @@ public class ExportProcessRequest implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean sitePagesSettings = getSitePagesSettings();
+
+		if (sitePagesSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sitePagesSettings\": ");
+
+			sb.append(sitePagesSettings);
+		}
+
+		Boolean siteTemplateSettings = getSiteTemplateSettings();
+
+		if (siteTemplateSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteTemplateSettings\": ");
+
+			sb.append(siteTemplateSettings);
+		}
+
 		Date startDate = getStartDate();
 
 		if (startDate != null) {
@@ -550,6 +854,18 @@ public class ExportProcessRequest implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(startDate));
 
 			sb.append("\"");
+		}
+
+		Boolean themeSettings = getThemeSettings();
+
+		if (themeSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeSettings\": ");
+
+			sb.append(themeSettings);
 		}
 
 		sb.append("}");
@@ -691,4 +1007,4 @@ public class ExportProcessRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:533579518
+// LIFERAY-REST-BUILDER-HASH:-1681577752

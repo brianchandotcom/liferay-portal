@@ -35,93 +35,6 @@ export const test = mergeTests(
 
 const assignments = [];
 
-test('Pagination of Pending Items works correctly', async ({
-	apiHelpers,
-	metricsPage,
-	page,
-	site,
-}) => {
-	test.slow();
-	await test.step('assign the "Single Approver" workflow to Web Content Article', async () => {
-		await page.goto(
-			`/group${site.friendlyUrlPath}${PORTLET_URLS.workflow}`
-		);
-
-		await page.waitForLoadState('networkidle');
-
-		await page
-			.getByRole('row', {name: 'Web Content Article'})
-			.getByRole('button', {name: 'Edit'})
-			.click();
-
-		await page.getByRole('combobox').selectOption('Single Approver@1');
-
-		await page.getByRole('button', {name: 'Save'}).click();
-	});
-
-	const basicWebContentStructureId =
-		await getBasicWebContentStructureId(apiHelpers);
-
-	for (let i = 1; i <= 21; i++) {
-		const webContent =
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				ddmStructureId: basicWebContentStructureId,
-				groupId: site.id,
-				titleMap: {en_US: `Web content ${i}`},
-			});
-
-		apiHelpers.data.push({
-			id: `${site.id}_${webContent.articleId}`,
-			type: 'webContent',
-		});
-	}
-	await test.step('set web content workflow assignments to single approver', async () => {
-		await metricsPage.goTo();
-
-		await page
-			.getByRole('cell', {name: 'Single Approver'})
-			.getByRole('link')
-			.click();
-
-		await page
-			.getByRole('link')
-			.filter({hasText: 'Total Pending'})
-			.first()
-			.click();
-	});
-
-	await test.step('assert that the correct number of entries based on the selected entries per page option is displayed', async () => {
-		await expect(
-			page.getByRole('row').filter({hasText: 'Web content'})
-		).toHaveCount(20);
-
-		await page.getByLabel('Go to the next page').click();
-
-		await expect(
-			page.getByRole('row').filter({hasText: 'Web content'})
-		).toHaveCount(1);
-	});
-
-	await test.step('assert that ascending Creation Date sorting is preserved when the user changes the pagination', async () => {
-		await page.getByLabel('Items per Page').click();
-
-		await page.getByRole('option').filter({hasText: '40'}).click();
-
-		await page.getByRole('link', {name: 'Creation Date'}).dblclick();
-
-		for (let i = 1; i <= 21; i++) {
-			await expect(
-				page
-					.getByRole('cell', {
-						exact: true,
-						name: `Web Content Article: Web content ${i}`,
-					})
-					.last()
-			).toBeVisible();
-		}
-	});
-});
-
 test('Can search assignees and steps in Performance by Assignee and Step views', async ({
 	apiHelpers,
 	metricsPage,
@@ -345,6 +258,93 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 				name: 'Sep 22, 2018 - Nov 11, 2018',
 			})
 		).toBeVisible();
+	});
+});
+
+test('Pagination of Pending Items works correctly', async ({
+	apiHelpers,
+	metricsPage,
+	page,
+	site,
+}) => {
+	test.slow();
+	await test.step('assign the "Single Approver" workflow to Web Content Article', async () => {
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.workflow}`
+		);
+
+		await page.waitForLoadState('networkidle');
+
+		await page
+			.getByRole('row', {name: 'Web Content Article'})
+			.getByRole('button', {name: 'Edit'})
+			.click();
+
+		await page.getByRole('combobox').selectOption('Single Approver@1');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+	});
+
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
+
+	for (let i = 1; i <= 21; i++) {
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: `Web content ${i}`},
+			});
+
+		apiHelpers.data.push({
+			id: `${site.id}_${webContent.articleId}`,
+			type: 'webContent',
+		});
+	}
+	await test.step('set web content workflow assignments to single approver', async () => {
+		await metricsPage.goTo();
+
+		await page
+			.getByRole('cell', {name: 'Single Approver'})
+			.getByRole('link')
+			.click();
+
+		await page
+			.getByRole('link')
+			.filter({hasText: 'Total Pending'})
+			.first()
+			.click();
+	});
+
+	await test.step('assert that the correct number of entries based on the selected entries per page option is displayed', async () => {
+		await expect(
+			page.getByRole('row').filter({hasText: 'Web content'})
+		).toHaveCount(20);
+
+		await page.getByLabel('Go to the next page').click();
+
+		await expect(
+			page.getByRole('row').filter({hasText: 'Web content'})
+		).toHaveCount(1);
+	});
+
+	await test.step('assert that ascending Creation Date sorting is preserved when the user changes the pagination', async () => {
+		await page.getByLabel('Items per Page').click();
+
+		await page.getByRole('option').filter({hasText: '40'}).click();
+
+		await page.getByRole('link', {name: 'Creation Date'}).dblclick();
+
+		for (let i = 1; i <= 21; i++) {
+			await expect(
+				page
+					.getByRole('cell', {
+						exact: true,
+						name: `Web Content Article: Web content ${i}`,
+					})
+					.last()
+			).toBeVisible();
+		}
 	});
 });
 

@@ -374,7 +374,8 @@ public class LayoutsAdminDisplayContextTest {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext = Mockito.spy(
 			new LayoutsAdminDisplayContext(
-				null, _layoutActionsHelper, null, null, _liferayPortletRequest,
+				null, _layoutActionsHelper, null, null, null,
+				_liferayPortletRequest,
 				new MockLiferayPortletActionResponse()));
 
 		Mockito.doReturn(

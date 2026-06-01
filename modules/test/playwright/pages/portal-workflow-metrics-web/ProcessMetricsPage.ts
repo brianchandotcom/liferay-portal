@@ -15,4 +15,10 @@ export class ProcessMetricsPage {
 		this.viewAllAssigneesButton = this.page.getByText('View All Assignees');
 		this.viewAllStepsButton = this.page.getByText('View All Steps');
 	}
+
+	getPanel(title: string): Locator {
+		return this.page.locator('.panel').filter({
+			has: this.page.getByText(title),
+		});
+	}
 }

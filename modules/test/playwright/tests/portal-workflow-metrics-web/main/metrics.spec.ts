@@ -11,6 +11,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, userData} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -308,17 +309,14 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 	await page.locator('#backButton').getByRole('link').click();
 
 	await test.step('assert custom date range filter displays selected dates', async () => {
-		const panel = page.locator('.panel').filter({
-			has: page.getByText('Performance by Step'),
-		});
-
-		await panel
-			.getByRole('button', {
-				name: 'Last 30 Days',
-			})
-			.click();
+		const panel = processMetricsPage.getPanel('Performance by Step');
 
 		const dropdown = page.locator('.dropdown-menu.show');
+
+		await clickAndExpectToBeVisible({
+			target: dropdown,
+			trigger: panel.getByRole('button', {name: 'Last 30 Days'}),
+		});
 
 		await dropdown.getByRole('menuitem', {name: 'Custom Range'}).click();
 
@@ -342,4 +340,38 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 			})
 		).toBeVisible();
 	});
+});
+
+test('Selecting a date range in the Completed Items panel deselects the previous one', async ({
+	metricsPage,
+	page,
+	processMetricsPage,
+	workflowTasksPage,
+}) => {
+	await metricsPage.goTo();
+
+	await workflowTasksPage.processSingleAprover.click();
+
+	await workflowTasksPage.performanceTab.click();
+
+	const completedItemsPanel = processMetricsPage.getPanel('Completed Items');
+
+	const dropdown = page.locator('.dropdown-menu.show');
+
+	await clickAndExpectToBeVisible({
+		target: dropdown,
+		trigger: completedItemsPanel.getByRole('button', {
+			name: 'Last 30 Days',
+		}),
+	});
+
+	await dropdown.getByRole('menuitem', {name: 'Last 7 Days'}).click();
+
+	await expect(
+		completedItemsPanel.getByRole('button', {name: 'Last 7 Days'})
+	).toBeVisible();
+
+	await expect(
+		completedItemsPanel.getByRole('button', {name: 'Last 30 Days'})
+	).not.toBeVisible();
 });

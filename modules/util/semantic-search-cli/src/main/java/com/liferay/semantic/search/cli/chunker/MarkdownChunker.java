@@ -30,12 +30,13 @@ import java.util.regex.Pattern;
  *
  * @author JR Houn
  */
-public class MarkdownChunker {
+public class MarkdownChunker implements Chunker {
 
 	public static final int CHUNK_OVERLAP_WORDS = 60;
 
 	public static final int CHUNK_WINDOW_WORDS = 350;
 
+	@Override
 	public List<Chunk> parse(String text, String relPath) {
 		String body = _stripFrontMatter(text);
 
@@ -163,12 +164,12 @@ public class MarkdownChunker {
 
 		int step = Math.max(window - overlap, 1);
 
+		List<String> wordList = Arrays.asList(words);
+
 		for (int start = 0; start < words.length; start += step) {
 			int end = Math.min(start + window, words.length);
 
-			List<String> sub = Arrays.asList(words);
-
-			result.add(String.join(" ", sub.subList(start, end)));
+			result.add(String.join(" ", wordList.subList(start, end)));
 
 			if ((start + window) >= words.length) {
 				break;

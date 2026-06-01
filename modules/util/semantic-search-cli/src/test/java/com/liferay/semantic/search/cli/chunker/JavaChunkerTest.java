@@ -25,7 +25,7 @@ import org.junit.Test;
 public class JavaChunkerTest {
 
 	@Test
-	public void testClassNameDrivesHeadingPath() {
+	public void testParseClassNameDrivesHeadingPath() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -33,14 +33,14 @@ public class JavaChunkerTest {
 		List<Chunk> chunks = javaChunker.parse(text, "SampleResourceImpl.java");
 
 		for (Chunk chunk : chunks) {
-			List<String> headingPath = chunk.headingPath();
+			List<String> headingPath = chunk.getHeadingPath();
 
 			Assert.assertEquals("SampleResourceImpl", headingPath.get(0));
 		}
 	}
 
 	@Test
-	public void testImportBlockIsStripped() {
+	public void testParseImportBlockIsStripped() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -50,7 +50,7 @@ public class JavaChunkerTest {
 		for (Chunk chunk : chunks) {
 			Assert.assertFalse(
 				"chunks must not contain raw import lines",
-				chunk.text(
+				chunk.getText(
 				).contains(
 					"import com.example.other.SampleService"
 				));
@@ -58,7 +58,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testLicenseHeaderIsStripped() {
+	public void testParseLicenseHeaderIsStripped() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -68,7 +68,7 @@ public class JavaChunkerTest {
 		for (Chunk chunk : chunks) {
 			Assert.assertFalse(
 				"chunks must not contain license-header text",
-				chunk.text(
+				chunk.getText(
 				).contains(
 					"SPDX-FileCopyrightText"
 				));
@@ -76,7 +76,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testMethodNamesBecomeSecondHeadingElement() {
+	public void testParseMethodNamesBecomeSecondHeadingElement() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -86,7 +86,7 @@ public class JavaChunkerTest {
 		List<String> methodNames = new ArrayList<>();
 
 		for (Chunk chunk : chunks) {
-			List<String> headingPath = chunk.headingPath();
+			List<String> headingPath = chunk.getHeadingPath();
 
 			if (headingPath.size() == 2) {
 				methodNames.add(headingPath.get(1));
@@ -99,7 +99,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testOneChunkPerMethodPlusIntro() {
+	public void testParseOneChunkPerMethodPlusIntro() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();

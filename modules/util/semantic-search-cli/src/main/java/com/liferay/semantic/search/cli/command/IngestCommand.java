@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.semantic.search.cli.chunker.Chunkers;
 import com.liferay.semantic.search.cli.client.QdrantClientWrapper;
 import com.liferay.semantic.search.cli.client.TextEmbeddingsClient;
-import com.liferay.semantic.search.cli.util.Args;
+import com.liferay.semantic.search.cli.util.Arguments;
 import com.liferay.semantic.search.cli.util.Chunk;
 
 import java.io.IOException;
@@ -46,9 +46,9 @@ public class IngestCommand implements Command {
 
 	@Override
 	public int run(String[] args) throws Exception {
-		Args parsed = new Args(args);
+		Arguments arguments = new Arguments(args);
 
-		List<String> positional = parsed.positional();
+		List<String> positional = arguments.getPositional();
 
 		if (positional.isEmpty()) {
 			System.err.println("search: ingest requires a <dir> argument");
@@ -56,49 +56,53 @@ public class IngestCommand implements Command {
 			return 2;
 		}
 
-		Path root = Paths.get(
-			positional.get(0)
-		).toAbsolutePath();
+		Path targetPath = Paths.get(positional.get(0));
 
-		if (!Files.exists(root)) {
-			System.err.println("search: ingest target does not exist: " + root);
+		Path rootPath = targetPath.toAbsolutePath();
 
-			return 1;
-		}
-
-		List<Path> files = _indexableFiles(root);
-
-		if (files.isEmpty()) {
+		if (!Files.exists(rootPath)) {
 			System.err.println(
-				"search: no indexable files found under " + root);
+				"search: ingest target does not exist: " + rootPath);
 
 			return 1;
 		}
 
-		QdrantClientWrapper qdrantClient = new QdrantClientWrapper();
+		List<Path> paths = _indexableFiles(rootPath);
 
-		if (!qdrantClient.isReachable()) {
+		if (paths.isEmpty()) {
+			System.err.println(
+				"search: no indexable files found under " + rootPath);
+
+			return 1;
+		}
+
+		QdrantClientWrapper qdrantClientWrapper = new QdrantClientWrapper();
+
+		if (!qdrantClientWrapper.isReachable()) {
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl());
+					qdrantClientWrapper.getQdrantURL());
 
 			return 5;
 		}
 
-		Path base = Files.isDirectory(root) ? root : root.getParent();
+		Path basePath =
+			Files.isDirectory(rootPath) ? rootPath : rootPath.getParent();
 
-		TextEmbeddingsClient teiClient = new TextEmbeddingsClient();
+		TextEmbeddingsClient textEmbeddingsClient = new TextEmbeddingsClient();
 
-		int vectorDim = teiClient.embedQuery("warmup").length;
+		int vectorDim = textEmbeddingsClient.embedQuery("warmup").length;
 
-		qdrantClient.dropCollectionsIfVectorSizeChanged(vectorDim);
+		qdrantClientWrapper.dropCollectionsIfVectorSizeChanged(vectorDim);
 
-		qdrantClient.ensureCollection(
+		qdrantClientWrapper.ensureCollection(
 			QdrantClientWrapper.COLLECTION, vectorDim);
 
-		qdrantClient.ensureCollection(QdrantClientWrapper.META_COLLECTION, 1);
+		qdrantClientWrapper.ensureCollection(
+			QdrantClientWrapper.META_COLLECTION, 1);
 
-		Map<String, String> existingHashes = qdrantClient.loadFileHashes();
+		Map<String, String> existingHashes =
+			qdrantClientWrapper.loadFileHashes();
 
 		Set<String> seenRelPaths = new HashSet<>();
 
@@ -110,21 +114,21 @@ public class IngestCommand implements Command {
 
 		System.err.println(
 			StringBundler.concat(
-				"Scanning ", files.size(), " file(s) under ", root));
+				"Scanning ", paths.size(), " file(s) under ", rootPath));
 
-		for (Path file : files) {
+		for (Path filePath : paths) {
 			String text = new String(
-				Files.readAllBytes(file), StandardCharsets.UTF_8);
+				Files.readAllBytes(filePath), StandardCharsets.UTF_8);
 
 			String sha = _sha256(text);
 
-			String relPath = base.relativize(
-				file
-			).toString();
+			String relPath = String.valueOf(basePath.relativize(filePath));
 
 			seenRelPaths.add(relPath);
 
-			if (!parsed.force() && sha.equals(existingHashes.get(relPath))) {
+			if (!arguments.isForce() &&
+				sha.equals(existingHashes.get(relPath))) {
+
 				skipped++;
 
 				continue;
@@ -143,10 +147,11 @@ public class IngestCommand implements Command {
 			Set<String> changedRelPaths = new TreeSet<>();
 
 			for (Chunk chunk : pendingChunks) {
-				changedRelPaths.add(chunk.relPath());
+				changedRelPaths.add(chunk.getRelPath());
 			}
 
-			qdrantClient.deleteByRelPaths(new ArrayList<>(changedRelPaths));
+			qdrantClientWrapper.deleteByRelPaths(
+				new ArrayList<>(changedRelPaths));
 
 			// A smaller default than the embedding server's client-batch cap:
 			// a heavier code model embedding large method chunks needs fewer
@@ -158,37 +163,39 @@ public class IngestCommand implements Command {
 
 			int upserted = 0;
 
-			for (int from = 0; from < pendingChunks.size(); from += batchSize) {
-				int to = Math.min(from + batchSize, pendingChunks.size());
+			int pendingChunksSize = pendingChunks.size();
+
+			for (int from = 0; from < pendingChunksSize; from += batchSize) {
+				int to = Math.min(from + batchSize, pendingChunksSize);
 
 				List<Chunk> batch = pendingChunks.subList(from, to);
 
 				List<String> texts = new ArrayList<>();
 
 				for (Chunk chunk : batch) {
-					texts.add(chunk.embeddingText());
+					texts.add(chunk.getEmbeddingText());
 				}
 
-				float[][] vectors = teiClient.embedDocuments(texts);
+				float[][] vectors = textEmbeddingsClient.embedDocuments(texts);
 
-				qdrantClient.upsertChunks(batch, vectors);
+				qdrantClientWrapper.upsertChunks(batch, vectors);
 
 				upserted += batch.size();
 
 				System.err.println(
 					StringBundler.concat(
-						"  embedded ", upserted, "/", pendingChunks.size(),
+						"  embedded ", upserted, "/", pendingChunksSize,
 						" chunks"));
 			}
 		}
 
 		for (String[] fileEntry : pendingFiles) {
-			qdrantClient.writeMetaFile(fileEntry[0], fileEntry[1]);
+			qdrantClientWrapper.writeMetaFile(fileEntry[0], fileEntry[1]);
 		}
 
 		List<String> removed = new ArrayList<>();
 
-		if (Files.isDirectory(root)) {
+		if (Files.isDirectory(rootPath)) {
 			Set<String> stale = new HashSet<>(existingHashes.keySet());
 
 			stale.removeAll(seenRelPaths);
@@ -198,13 +205,14 @@ public class IngestCommand implements Command {
 			}
 
 			if (!removed.isEmpty()) {
-				qdrantClient.deleteByRelPaths(removed);
+				qdrantClientWrapper.deleteByRelPaths(removed);
 
-				qdrantClient.deleteMetaFiles(removed);
+				qdrantClientWrapper.deleteMetaFiles(removed);
 			}
 		}
 
-		qdrantClient.writeMetaState(base.toString(), seenRelPaths.size());
+		qdrantClientWrapper.writeMetaState(
+			basePath.toString(), seenRelPaths.size());
 
 		System.err.println(
 			StringBundler.concat(
@@ -236,23 +244,23 @@ public class IngestCommand implements Command {
 		return exts.toArray(new String[0]);
 	}
 
-	private List<Path> _indexableFiles(Path root) throws Exception {
+	private List<Path> _indexableFiles(Path rootPath) throws Exception {
 		String[] exts = _fileExtensions();
 
-		List<Path> files = new ArrayList<>();
+		List<Path> paths = new ArrayList<>();
 
-		if (Files.isRegularFile(root)) {
-			String name = String.valueOf(root.getFileName());
+		if (Files.isRegularFile(rootPath)) {
+			String name = String.valueOf(rootPath.getFileName());
 
-			if (_matchesExtension(name, exts) && !name.startsWith(".")) {
-				files.add(root);
+			if (_isMatchingExtension(name, exts) && !name.startsWith(".")) {
+				paths.add(rootPath);
 			}
 
-			return files;
+			return paths;
 		}
 
 		Files.walkFileTree(
-			root,
+			rootPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -288,10 +296,10 @@ public class IngestCommand implements Command {
 
 					String fileName = fileNamePath.toString();
 
-					if (_matchesExtension(fileName, exts) &&
+					if (_isMatchingExtension(fileName, exts) &&
 						!fileName.startsWith(".")) {
 
-						files.add(file);
+						paths.add(file);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -299,12 +307,12 @@ public class IngestCommand implements Command {
 
 			});
 
-		Collections.sort(files);
+		Collections.sort(paths);
 
-		return files;
+		return paths;
 	}
 
-	private boolean _matchesExtension(String name, String[] exts) {
+	private boolean _isMatchingExtension(String name, String[] exts) {
 		for (String ext : exts) {
 			if (name.endsWith(ext)) {
 				return true;
@@ -315,17 +323,18 @@ public class IngestCommand implements Command {
 	}
 
 	private String _sha256(String text) throws Exception {
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
-		byte[] bytes = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+		byte[] bytes = messageDigest.digest(
+			text.getBytes(StandardCharsets.UTF_8));
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBundler sb = new StringBundler(bytes.length);
 
 		for (byte b : bytes) {
-			stringBuilder.append(String.format("%02x", b));
+			sb.append(String.format("%02x", b));
 		}
 
-		return stringBuilder.toString();
+		return sb.toString();
 	}
 
 }

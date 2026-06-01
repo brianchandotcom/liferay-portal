@@ -26,23 +26,23 @@ public class Hit {
 		_headingPath = headingPath;
 	}
 
-	public String chunkId() {
+	public String getChunkId() {
 		return _chunkId;
 	}
 
-	public List<String> headingPath() {
+	public List<String> getHeadingPath() {
 		return _headingPath;
 	}
 
-	public String path() {
+	public String getPath() {
 		return _path;
 	}
 
-	public double score() {
+	public double getScore() {
 		return _score;
 	}
 
-	public String snippet() {
+	public String getSnippet() {
 		return _snippet;
 	}
 

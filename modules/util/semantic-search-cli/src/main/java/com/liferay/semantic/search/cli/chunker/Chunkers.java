@@ -24,9 +24,8 @@ public class Chunkers {
 		return _MARKDOWN_CHUNKER.parse(text, relPath);
 	}
 
-	private static final JavaChunker _JAVA_CHUNKER = new JavaChunker();
+	private static final Chunker _JAVA_CHUNKER = new JavaChunker();
 
-	private static final MarkdownChunker _MARKDOWN_CHUNKER =
-		new MarkdownChunker();
+	private static final Chunker _MARKDOWN_CHUNKER = new MarkdownChunker();
 
 }

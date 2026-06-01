@@ -42,21 +42,12 @@ public class QdrantClientWrapper {
 
 	public static final String META_COLLECTION = "meta";
 
-	public boolean collectionExists(String name) throws Exception {
-		QdrantClient qdrantClient = _client();
-
-		List<String> names = qdrantClient.listCollectionsAsync(
-		).get();
-
-		return names.contains(name);
-	}
-
 	public void deleteByRelPaths(List<String> relPaths) throws Exception {
 		if (relPaths.isEmpty()) {
 			return;
 		}
 
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		for (String relPath : relPaths) {
 			Points.Filter filter = Points.Filter.newBuilder(
@@ -86,7 +77,7 @@ public class QdrantClientWrapper {
 			return;
 		}
 
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		List<Points.PointId> ids = new ArrayList<>();
 
@@ -115,7 +106,7 @@ public class QdrantClientWrapper {
 	public void dropCollectionsIfVectorSizeChanged(int vectorSize)
 		throws Exception {
 
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		List<String> existing = qdrantClient.listCollectionsAsync(
 		).get();
@@ -141,7 +132,7 @@ public class QdrantClientWrapper {
 		System.err.println(
 			StringBundler.concat(
 				"search: embedding dimension changed (", storedSize, " -> ",
-				vectorSize, "); rebuilding the index."));
+				vectorSize, "); rebuilding the index"));
 
 		qdrantClient.deleteCollectionAsync(
 			COLLECTION
@@ -155,7 +146,7 @@ public class QdrantClientWrapper {
 	}
 
 	public void ensureCollection(String name, int vectorSize) throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		List<String> existing = qdrantClient.listCollectionsAsync(
 		).get();
@@ -191,7 +182,7 @@ public class QdrantClientWrapper {
 	}
 
 	public int getChunkCount() throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		Collections.CollectionInfo info = qdrantClient.getCollectionInfoAsync(
 			COLLECTION
@@ -200,13 +191,22 @@ public class QdrantClientWrapper {
 		return (int)info.getPointsCount();
 	}
 
-	public String getQdrantUrl() {
+	public String getQdrantURL() {
 		return StringBundler.concat("http://", _host(), ":", _port());
+	}
+
+	public boolean hasCollection(String name) throws Exception {
+		QdrantClient qdrantClient = _getQdrantClient();
+
+		List<String> names = qdrantClient.listCollectionsAsync(
+		).get();
+
+		return names.contains(name);
 	}
 
 	public boolean isReachable() {
 		try {
-			QdrantClient qdrantClient = _client();
+			QdrantClient qdrantClient = _getQdrantClient();
 
 			qdrantClient.listCollectionsAsync(
 			).get();
@@ -219,7 +219,7 @@ public class QdrantClientWrapper {
 	}
 
 	public Map<String, String> loadFileHashes() throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		Points.Filter filter = Points.Filter.newBuilder(
 		).addMust(
@@ -290,7 +290,7 @@ public class QdrantClientWrapper {
 	}
 
 	public MetaState readMetaState() throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		Points.ScrollResponse response = qdrantClient.scrollAsync(
 			Points.ScrollPoints.newBuilder(
@@ -341,14 +341,17 @@ public class QdrantClientWrapper {
 			(docCount != null) ? (int)docCount.getIntegerValue() : 0);
 	}
 
-	public List<Hit> search(float[] vector, int limit) throws Exception {
+	public List<SearchResult> search(float[] vector, int limit)
+		throws Exception {
+
 		return search(vector, limit, null);
 	}
 
-	public List<Hit> search(float[] vector, int limit, String pathPrefix)
+	public List<SearchResult> search(
+			float[] vector, int limit, String pathPrefix)
 		throws Exception {
 
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		List<Float> vectorList = new ArrayList<>(vector.length);
 
@@ -401,17 +404,19 @@ public class QdrantClientWrapper {
 			searchPointsBuilder.build()
 		).get();
 
-		List<Hit> hits = new ArrayList<>();
+		List<SearchResult> searchResults = new ArrayList<>();
 
-		for (Points.ScoredPoint scored : scoredPoints) {
-			Map<String, JsonWithInt.Value> payload = scored.getPayloadMap();
+		for (Points.ScoredPoint scoredPoint : scoredPoints) {
+			Map<String, JsonWithInt.Value> payload =
+				scoredPoint.getPayloadMap();
 
 			List<String> headingPath = new ArrayList<>();
 
-			JsonWithInt.Value hp = payload.get("heading_path");
+			JsonWithInt.Value headingPathValue = payload.get("heading_path");
 
-			if ((hp != null) && hp.hasListValue()) {
-				JsonWithInt.ListValue listValue = hp.getListValue();
+			if ((headingPathValue != null) && headingPathValue.hasListValue()) {
+				JsonWithInt.ListValue listValue =
+					headingPathValue.getListValue();
 
 				for (JsonWithInt.Value entry : listValue.getValuesList()) {
 					headingPath.add(entry.getStringValue());
@@ -422,14 +427,14 @@ public class QdrantClientWrapper {
 			JsonWithInt.Value chunkIdValue = payload.get("chunk_id");
 			JsonWithInt.Value textValue = payload.get("text");
 
-			hits.add(
-				new Hit(
-					relPathValue.getStringValue(), scored.getScore(),
+			searchResults.add(
+				new SearchResult(
+					relPathValue.getStringValue(), scoredPoint.getScore(),
 					chunkIdValue.getStringValue(), textValue.getStringValue(),
 					headingPath));
 		}
 
-		return hits;
+		return searchResults;
 	}
 
 	public void upsertChunks(List<Chunk> chunks, float[][] vectors)
@@ -439,7 +444,7 @@ public class QdrantClientWrapper {
 			return;
 		}
 
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		List<Points.PointStruct> points = new ArrayList<>();
 
@@ -455,46 +460,23 @@ public class QdrantClientWrapper {
 			JsonWithInt.ListValue.Builder listBuilder =
 				JsonWithInt.ListValue.newBuilder();
 
-			for (String heading : chunk.headingPath()) {
+			for (String heading : chunk.getHeadingPath()) {
 				listBuilder.addValues(_stringValue(heading));
 			}
 
 			JsonWithInt.ListValue.Builder dirPrefixesBuilder =
 				JsonWithInt.ListValue.newBuilder();
 
-			for (String dirPrefix : _dirPrefixes(chunk.relPath())) {
+			for (String dirPrefix : _dirPrefixes(chunk.getRelPath())) {
 				dirPrefixesBuilder.addValues(_stringValue(dirPrefix));
 			}
-
-			Map<String, JsonWithInt.Value> payload =
-				HashMapBuilder.<String, JsonWithInt.Value>put(
-					"chunk_id", _stringValue(chunk.chunkId())
-				).put(
-					"dir_prefixes",
-					JsonWithInt.Value.newBuilder(
-					).setListValue(
-						dirPrefixesBuilder.build()
-					).build()
-				).put(
-					"heading_path",
-					JsonWithInt.Value.newBuilder(
-					).setListValue(
-						listBuilder.build()
-					).build()
-				).put(
-					"rel_path", _stringValue(chunk.relPath())
-				).put(
-					"text", _stringValue(chunk.text())
-				).build();
-
-			UUID pointId = chunk.pointId();
 
 			points.add(
 				Points.PointStruct.newBuilder(
 				).setId(
 					Points.PointId.newBuilder(
 					).setUuid(
-						pointId.toString()
+						String.valueOf(chunk.getPointId())
 					).build()
 				).setVectors(
 					Points.Vectors.newBuilder(
@@ -505,7 +487,25 @@ public class QdrantClientWrapper {
 						).build()
 					).build()
 				).putAllPayload(
-					payload
+					HashMapBuilder.<String, JsonWithInt.Value>put(
+						"chunk_id", _stringValue(chunk.getChunkId())
+					).put(
+						"dir_prefixes",
+						JsonWithInt.Value.newBuilder(
+						).setListValue(
+							dirPrefixesBuilder.build()
+						).build()
+					).put(
+						"heading_path",
+						JsonWithInt.Value.newBuilder(
+						).setListValue(
+							listBuilder.build()
+						).build()
+					).put(
+						"rel_path", _stringValue(chunk.getRelPath())
+					).put(
+						"text", _stringValue(chunk.getText())
+					).build()
 				).build());
 		}
 
@@ -515,7 +515,7 @@ public class QdrantClientWrapper {
 	}
 
 	public void writeMetaFile(String relPath, String sha256) throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
 
 		Map<String, JsonWithInt.Value> payload =
 			HashMapBuilder.<String, JsonWithInt.Value>put(
@@ -552,7 +552,9 @@ public class QdrantClientWrapper {
 	}
 
 	public void writeMetaState(String rootPath, int docCount) throws Exception {
-		QdrantClient qdrantClient = _client();
+		QdrantClient qdrantClient = _getQdrantClient();
+
+		UUID pointId = _metaStateRecordId();
 
 		qdrantClient.upsertAsync(
 			META_COLLECTION,
@@ -561,7 +563,7 @@ public class QdrantClientWrapper {
 				).setId(
 					Points.PointId.newBuilder(
 					).setUuid(
-						_metaStateRecordId().toString()
+						pointId.toString()
 					).build()
 				).setVectors(
 					Points.Vectors.newBuilder(
@@ -595,9 +597,29 @@ public class QdrantClientWrapper {
 		).get();
 	}
 
-	public static class Hit {
+	public static class MetaState {
 
-		public Hit(
+		public MetaState(String lastIngest, int docCount) {
+			_lastIngest = lastIngest;
+			_docCount = docCount;
+		}
+
+		public int getDocCount() {
+			return _docCount;
+		}
+
+		public String getLastIngest() {
+			return _lastIngest;
+		}
+
+		private final int _docCount;
+		private final String _lastIngest;
+
+	}
+
+	public static class SearchResult {
+
+		public SearchResult(
 			String relPath, double score, String chunkId, String text,
 			List<String> headingPath) {
 
@@ -608,23 +630,23 @@ public class QdrantClientWrapper {
 			_headingPath = headingPath;
 		}
 
-		public String chunkId() {
+		public String getChunkId() {
 			return _chunkId;
 		}
 
-		public List<String> headingPath() {
+		public List<String> getHeadingPath() {
 			return _headingPath;
 		}
 
-		public String relPath() {
+		public String getRelPath() {
 			return _relPath;
 		}
 
-		public double score() {
+		public double getScore() {
 			return _score;
 		}
 
-		public String text() {
+		public String getText() {
 			return _text;
 		}
 
@@ -634,37 +656,6 @@ public class QdrantClientWrapper {
 		private final double _score;
 		private final String _text;
 
-	}
-
-	public static class MetaState {
-
-		public MetaState(String lastIngest, int docCount) {
-			_lastIngest = lastIngest;
-			_docCount = docCount;
-		}
-
-		public int docCount() {
-			return _docCount;
-		}
-
-		public String lastIngest() {
-			return _lastIngest;
-		}
-
-		private final int _docCount;
-		private final String _lastIngest;
-
-	}
-
-	private synchronized QdrantClient _client() {
-		if (_qdrantClient == null) {
-			_qdrantClient = new QdrantClient(
-				QdrantGrpcClient.newBuilder(
-					_host(), _grpcPort(), false
-				).build());
-		}
-
-		return _qdrantClient;
 	}
 
 	private List<String> _dirPrefixes(String relPath) {
@@ -681,6 +672,17 @@ public class QdrantClientWrapper {
 		}
 
 		return dirPrefixes;
+	}
+
+	private synchronized QdrantClient _getQdrantClient() {
+		if (_qdrantClient == null) {
+			_qdrantClient = new QdrantClient(
+				QdrantGrpcClient.newBuilder(
+					_host(), _grpcPort(), false
+				).build());
+		}
+
+		return _qdrantClient;
 	}
 
 	private int _grpcPort() {

@@ -24,7 +24,7 @@ public class StatusCommand implements Command {
 
 	@Override
 	public int run(String[] args) throws Exception {
-		QdrantClientWrapper qdrantClient = new QdrantClientWrapper();
+		QdrantClientWrapper qdrantClientWrapper = new QdrantClientWrapper();
 
 		JSONObject statusJSONObject = new JSONObject();
 
@@ -37,50 +37,52 @@ public class StatusCommand implements Command {
 		).put(
 			"qdrant_reachable", false
 		).put(
-			"qdrant_url", qdrantClient.getQdrantUrl()
+			"qdrant_url", qdrantClientWrapper.getQdrantURL()
 		).put(
 			"stale_days", JSONObject.NULL
 		);
 
-		if (!qdrantClient.isReachable()) {
+		if (!qdrantClientWrapper.isReachable()) {
 			System.out.println(statusJSONObject.toString(2));
 
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl() +
-						". Start it: docker compose up -d qdrant");
+					qdrantClientWrapper.getQdrantURL() +
+						". Start it: docker compose up --detach qdrant");
 
 			return 5;
 		}
 
 		statusJSONObject.put("qdrant_reachable", true);
 
-		boolean indexExists = qdrantClient.collectionExists(
+		boolean indexExists = qdrantClientWrapper.hasCollection(
 			QdrantClientWrapper.COLLECTION);
 
 		statusJSONObject.put("index_exists", indexExists);
 
-		boolean metaExists = qdrantClient.collectionExists(
+		boolean metaExists = qdrantClientWrapper.hasCollection(
 			QdrantClientWrapper.META_COLLECTION);
 
 		QdrantClientWrapper.MetaState metaState =
-			metaExists ? qdrantClient.readMetaState() : null;
+			metaExists ? qdrantClientWrapper.readMetaState() : null;
 
 		if (metaState != null) {
 			statusJSONObject.put(
-				"doc_count", metaState.docCount()
+				"doc_count", metaState.getDocCount()
 			).put(
-				"last_ingest", metaState.lastIngest()
+				"last_ingest", metaState.getLastIngest()
 			);
 
-			String lastIngest = metaState.lastIngest();
+			String lastIngest = metaState.getLastIngest();
 
 			if (lastIngest != null) {
-				OffsetDateTime when = OffsetDateTime.parse(lastIngest);
+				OffsetDateTime offsetDateTime = OffsetDateTime.parse(
+					lastIngest);
 
-				Duration elapsed = Duration.between(when, OffsetDateTime.now());
+				Duration duration = Duration.between(
+					offsetDateTime, OffsetDateTime.now());
 
-				double elapsedSeconds = elapsed.toSeconds();
+				double elapsedSeconds = duration.toSeconds();
 
 				double days = elapsedSeconds / 86400.0;
 
@@ -89,7 +91,8 @@ public class StatusCommand implements Command {
 		}
 
 		if (indexExists && (metaState == null)) {
-			statusJSONObject.put("chunk_count", qdrantClient.getChunkCount());
+			statusJSONObject.put(
+				"chunk_count", qdrantClientWrapper.getChunkCount());
 		}
 
 		System.out.println(statusJSONObject.toString(2));

@@ -43,7 +43,7 @@ public class Chunk {
 		_header = header;
 	}
 
-	public String chunkId() {
+	public String getChunkId() {
 		return _chunkId;
 	}
 
@@ -51,9 +51,9 @@ public class Chunk {
 	 * The text actually sent to the embedding model. When a header is
 	 * present (code chunks prepend file path and scope), it is embedded
 	 * along with the body so the vector reflects where the code lives;
-	 * the stored snippet ({@link #text()}) stays the raw body.
+	 * the stored snippet ({@link #getText()}) stays the raw body.
 	 */
-	public String embeddingText() {
+	public String getEmbeddingText() {
 		if ((_header == null) || _header.isEmpty()) {
 			return _text;
 		}
@@ -61,19 +61,19 @@ public class Chunk {
 		return _header + "\n\n" + _text;
 	}
 
-	public List<String> headingPath() {
+	public List<String> getHeadingPath() {
 		return _headingPath;
 	}
 
-	public UUID pointId() {
+	public UUID getPointId() {
 		return _uuid5(NAMESPACE, _chunkId);
 	}
 
-	public String relPath() {
+	public String getRelPath() {
 		return _relPath;
 	}
 
-	public String text() {
+	public String getText() {
 		return _text;
 	}
 

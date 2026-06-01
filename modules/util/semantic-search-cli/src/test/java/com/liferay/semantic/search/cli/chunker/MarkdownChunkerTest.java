@@ -5,6 +5,7 @@
 
 package com.liferay.semantic.search.cli.chunker;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.semantic.search.cli.util.Chunk;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import org.junit.Test;
 public class MarkdownChunkerTest {
 
 	@Test
-	public void testFrontMatterIsStripped() {
+	public void testParseFrontMatterIsStripped() {
 		String text = _read("simple.md");
 
 		MarkdownChunker chunker = new MarkdownChunker();
@@ -33,7 +34,7 @@ public class MarkdownChunkerTest {
 
 		Chunk firstChunk = chunks.get(0);
 
-		String firstChunkText = firstChunk.text();
+		String firstChunkText = firstChunk.getText();
 
 		Assert.assertFalse(
 			"chunk text should not contain front matter",
@@ -41,7 +42,7 @@ public class MarkdownChunkerTest {
 	}
 
 	@Test
-	public void testH2SectionsGetH1H2HeadingPath() {
+	public void testParseH2SectionsGetH1H2HeadingPath() {
 		String text = _read("simple.md");
 
 		MarkdownChunker chunker = new MarkdownChunker();
@@ -51,7 +52,7 @@ public class MarkdownChunkerTest {
 		List<List<String>> headingPaths = new ArrayList<>();
 
 		for (Chunk chunk : chunks) {
-			headingPaths.add(chunk.headingPath());
+			headingPaths.add(chunk.getHeadingPath());
 		}
 
 		Assert.assertEquals(List.of("Simple Document"), headingPaths.get(0));
@@ -64,7 +65,7 @@ public class MarkdownChunkerTest {
 	}
 
 	@Test
-	public void testIntroBecomesH1Chunk() {
+	public void testParseIntroBecomesH1Chunk() {
 		String text = _read("simple.md");
 
 		MarkdownChunker chunker = new MarkdownChunker();
@@ -73,20 +74,20 @@ public class MarkdownChunkerTest {
 
 		Chunk intro = chunks.get(0);
 
-		List<String> headingPath = intro.headingPath();
+		List<String> headingPath = intro.getHeadingPath();
 
 		Assert.assertEquals(headingPath.toString(), 1, headingPath.size());
 
 		Assert.assertEquals(
 			headingPath.toString(), "Simple Document", headingPath.get(0));
 
-		String introText = intro.text();
+		String introText = intro.getText();
 
 		Assert.assertTrue(introText.startsWith("This is the intro"));
 	}
 
 	@Test
-	public void testNoH2_singleChunkUnderH1() {
+	public void testParseNoH2SingleChunkUnderH1() {
 		String text = _read("no-h2.md");
 
 		MarkdownChunker chunker = new MarkdownChunker();
@@ -97,11 +98,11 @@ public class MarkdownChunkerTest {
 
 		Chunk only = chunks.get(0);
 
-		Assert.assertEquals(List.of("Just an H1"), only.headingPath());
+		Assert.assertEquals(List.of("Just an H1"), only.getHeadingPath());
 	}
 
 	@Test
-	public void testSimpleDocumentChunkCount() {
+	public void testParseSimpleDocumentChunkCount() {
 		String text = _read("simple.md");
 
 		MarkdownChunker chunker = new MarkdownChunker();
@@ -112,22 +113,24 @@ public class MarkdownChunkerTest {
 	}
 
 	@Test
-	public void testSlidingWindowSplitsLongSections() {
-		StringBuilder stringBuilder = new StringBuilder("# Long Doc\n\n");
+	public void testParseSlidingWindowSplitsLongSections() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("# Long Doc\n\n");
 
 		for (int i = 0; i < 500; i++) {
-			stringBuilder.append("word ");
+			sb.append("word ");
 		}
 
 		MarkdownChunker chunker = new MarkdownChunker();
 
-		List<Chunk> chunks = chunker.parse(stringBuilder.toString(), "long.md");
+		List<Chunk> chunks = chunker.parse(sb.toString(), "long.md");
 
 		Assert.assertTrue(
 			"long intro should produce more than one chunk", chunks.size() > 1);
 
 		for (Chunk chunk : chunks) {
-			Assert.assertEquals(List.of("Long Doc"), chunk.headingPath());
+			Assert.assertEquals(List.of("Long Doc"), chunk.getHeadingPath());
 		}
 	}
 

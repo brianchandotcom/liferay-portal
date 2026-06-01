@@ -8,7 +8,7 @@ package com.liferay.semantic.search.cli.command;
 import com.liferay.semantic.search.cli.chunker.Chunkers;
 import com.liferay.semantic.search.cli.client.QdrantClientWrapper;
 import com.liferay.semantic.search.cli.client.TextEmbeddingsClient;
-import com.liferay.semantic.search.cli.util.Args;
+import com.liferay.semantic.search.cli.util.Arguments;
 import com.liferay.semantic.search.cli.util.Chunk;
 import com.liferay.semantic.search.cli.util.Hit;
 import com.liferay.semantic.search.cli.util.Output;
@@ -34,9 +34,9 @@ public class SimilarCommand implements Command {
 
 	@Override
 	public int run(String[] args) throws Exception {
-		Args parsed = new Args(args);
+		Arguments arguments = new Arguments(args);
 
-		List<String> positional = parsed.positional();
+		List<String> positional = arguments.getPositional();
 
 		if (positional.isEmpty()) {
 			System.err.println("search: similar requires a <path> argument");
@@ -61,24 +61,26 @@ public class SimilarCommand implements Command {
 
 		if (chunks.isEmpty()) {
 			System.err.println(
-				"search: target file has no extractable content.");
+				"search: target file has no extractable content");
 
 			return 4;
 		}
 
-		QdrantClientWrapper qdrantClient = new QdrantClientWrapper();
+		QdrantClientWrapper qdrantClientWrapper = new QdrantClientWrapper();
 
-		if (!qdrantClient.isReachable()) {
+		if (!qdrantClientWrapper.isReachable()) {
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl());
+					qdrantClientWrapper.getQdrantURL());
 
 			return 5;
 		}
 
-		if (!qdrantClient.collectionExists(QdrantClientWrapper.COLLECTION)) {
+		if (!qdrantClientWrapper.hasCollection(
+				QdrantClientWrapper.COLLECTION)) {
+
 			System.err.println(
-				"search: index does not exist. Run ingest first.");
+				"search: index does not exist; run ingest first");
 
 			return 3;
 		}
@@ -86,22 +88,24 @@ public class SimilarCommand implements Command {
 		Chunk seed = chunks.get(0);
 
 		String queryText =
-			String.join(" > ", seed.headingPath()) + "\n\n" + seed.text();
+			String.join(" > ", seed.getHeadingPath()) + "\n\n" + seed.getText();
 
-		TextEmbeddingsClient teiClient = new TextEmbeddingsClient();
+		TextEmbeddingsClient textEmbeddingsClient = new TextEmbeddingsClient();
 
-		// similar is code-to-code: embed the seed as a document (no query
+		// Similar is code-to-code: embed the seed as a document (no query
 		// instruction prefix), matching the document side of the model.
 
-		float[] vector = teiClient.embedDocuments(List.of(queryText))[0];
+		float[] vector =
+			textEmbeddingsClient.embedDocuments(List.of(queryText))[0];
 
-		List<QdrantClientWrapper.Hit> rawHits = qdrantClient.search(
-			vector, (parsed.top() * 3) + 10, parsed.path());
+		List<QdrantClientWrapper.SearchResult> searchResults =
+			qdrantClientWrapper.search(
+				vector, (arguments.getTop() * 3) + 10, arguments.getPath());
 
 		List<Hit> hits = new ArrayList<>();
 
-		for (QdrantClientWrapper.Hit rawHit : rawHits) {
-			String relPath = rawHit.relPath();
+		for (QdrantClientWrapper.SearchResult searchResult : searchResults) {
+			String relPath = searchResult.getRelPath();
 
 			if (relPath.equals(targetBaseName) ||
 				relPath.endsWith("/" + targetBaseName)) {
@@ -111,15 +115,16 @@ public class SimilarCommand implements Command {
 
 			hits.add(
 				new Hit(
-					relPath, rawHit.score(), rawHit.chunkId(),
-					Output.snippet(rawHit.text()), rawHit.headingPath()));
+					relPath, searchResult.getScore(), searchResult.getChunkId(),
+					Output.snippet(searchResult.getText()),
+					searchResult.getHeadingPath()));
 
-			if (hits.size() >= parsed.top()) {
+			if (hits.size() >= arguments.getTop()) {
 				break;
 			}
 		}
 
-		System.out.println(Output.formatHits(hits, parsed.format()));
+		System.out.println(Output.formatHits(hits, arguments.getFormat()));
 
 		return 0;
 	}

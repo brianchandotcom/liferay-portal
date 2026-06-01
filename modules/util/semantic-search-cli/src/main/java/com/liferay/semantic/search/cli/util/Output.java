@@ -5,6 +5,8 @@
 
 package com.liferay.semantic.search.cli.util;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -55,15 +57,15 @@ public class Output {
 			JSONObject hitJSONObject = new JSONObject();
 
 			hitJSONObject.put(
-				"chunk_id", hit.chunkId()
+				"chunk_id", hit.getChunkId()
 			).put(
-				"heading_path", new JSONArray(hit.headingPath())
+				"heading_path", new JSONArray(hit.getHeadingPath())
 			).put(
-				"path", hit.path()
+				"path", hit.getPath()
 			).put(
-				"score", _round(hit.score(), 4)
+				"score", _round(hit.getScore(), 4)
 			).put(
-				"snippet", hit.snippet()
+				"snippet", hit.getSnippet()
 			);
 
 			hitsJSONArray.put(hitJSONObject);
@@ -77,32 +79,32 @@ public class Output {
 			return "(no results)";
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		int i = 1;
 
 		for (Hit hit : hits) {
-			String head = String.join(" > ", hit.headingPath());
+			String head = String.join(" > ", hit.getHeadingPath());
 
 			if (head.isEmpty()) {
 				head = "(no heading)";
 			}
 
-			stringBuilder.append(i++);
-			stringBuilder.append(". ");
-			stringBuilder.append(hit.path());
-			stringBuilder.append("  [");
-			stringBuilder.append(String.format("%.3f", hit.score()));
-			stringBuilder.append("]\n   ");
-			stringBuilder.append(head);
-			stringBuilder.append("\n   ");
-			stringBuilder.append(hit.snippet());
-			stringBuilder.append('\n');
+			sb.append(i++);
+			sb.append(". ");
+			sb.append(hit.getPath());
+			sb.append("  [");
+			sb.append(String.format("%.3f", hit.getScore()));
+			sb.append("]\n   ");
+			sb.append(head);
+			sb.append("\n   ");
+			sb.append(hit.getSnippet());
+			sb.append('\n');
 		}
 
-		stringBuilder.setLength(stringBuilder.length() - 1);
+		sb.setIndex(sb.index() - 1);
 
-		return stringBuilder.toString();
+		return sb.toString();
 	}
 
 	private static double _round(double value, int decimals) {

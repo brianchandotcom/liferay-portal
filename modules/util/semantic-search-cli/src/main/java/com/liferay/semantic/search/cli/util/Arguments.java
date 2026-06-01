@@ -25,9 +25,9 @@ import java.util.List;
  *
  * @author JR Houn
  */
-public class Args {
+public class Arguments {
 
-	public Args(String[] args) {
+	public Arguments(String[] args) {
 		List<String> positional = new ArrayList<>();
 
 		boolean force = false;
@@ -60,11 +60,7 @@ public class Args {
 		_positional = positional;
 	}
 
-	public boolean force() {
-		return _force;
-	}
-
-	public String format() {
+	public String getFormat() {
 		return _format;
 	}
 
@@ -73,16 +69,20 @@ public class Args {
 	 * ingest root (for example, "modules/apps/headless"). Empty when no
 	 * --path flag was given, meaning the whole index is searched.
 	 */
-	public String path() {
+	public String getPath() {
 		return _path;
 	}
 
-	public List<String> positional() {
+	public List<String> getPositional() {
 		return _positional;
 	}
 
-	public int top() {
+	public int getTop() {
 		return _top;
+	}
+
+	public boolean isForce() {
+		return _force;
 	}
 
 	private String _normalizePath(String path) {

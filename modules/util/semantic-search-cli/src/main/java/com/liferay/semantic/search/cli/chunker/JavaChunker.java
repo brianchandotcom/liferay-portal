@@ -8,6 +8,7 @@ package com.liferay.semantic.search.cli.chunker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.semantic.search.cli.util.Chunk;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
@@ -40,8 +41,9 @@ import java.util.regex.Pattern;
  *
  * @author JR Houn
  */
-public class JavaChunker {
+public class JavaChunker implements Chunker {
 
+	@Override
 	public List<Chunk> parse(String text, String relPath) {
 		String className = _classNameFromFile(relPath);
 
@@ -117,10 +119,9 @@ public class JavaChunker {
 	}
 
 	private String _classNameFromFile(String relPath) {
-		String name = String.valueOf(
-			Paths.get(
-				relPath
-			).getFileName());
+		Path path = Paths.get(relPath);
+
+		String name = String.valueOf(path.getFileName());
 
 		return name.replaceFirst("\\.java$", "");
 	}
@@ -135,13 +136,13 @@ public class JavaChunker {
 			return;
 		}
 
-		List<String> parts = _splitCode(stripped, _MAX_CODE_CHARS);
+		List<String> parts = _splitCode(stripped, 4000);
 
 		String headingSlug = String.join(" > ", headingPath);
 
-		// Prepended to the embedded text (not the stored snippet) so the
-		// vector reflects where the code lives — file path and class/method
-		// scope. See Chunk.embeddingText.
+		// The header is prepended to the embedded text (not the stored
+		// snippet) so the vector reflects where the code lives: its file
+		// path and class/method scope. See Chunk.embeddingText.
 
 		String header = StringBundler.concat(
 			"// File: ", relPath, "\n// ", headingSlug);
@@ -171,15 +172,17 @@ public class JavaChunker {
 			return parts;
 		}
 
-		StringBuilder current = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		int depth = 0;
 
 		for (String line : text.split("\n", -1)) {
-			current.append(line);
-			current.append("\n");
+			sb.append(line);
+			sb.append("\n");
 
-			for (int i = 0; i < line.length(); i++) {
+			int lineLength = line.length();
+
+			for (int i = 0; i < lineLength; i++) {
 				char c = line.charAt(i);
 
 				if (c == '{') {
@@ -201,8 +204,8 @@ public class JavaChunker {
 				atBoundary = true;
 			}
 
-			if ((current.length() >= maxChars) && atBoundary) {
-				String part = current.toString();
+			if ((sb.length() >= maxChars) && atBoundary) {
+				String part = sb.toString();
 
 				part = part.strip();
 
@@ -210,11 +213,11 @@ public class JavaChunker {
 					parts.add(part);
 				}
 
-				current.setLength(0);
+				sb.setIndex(0);
 			}
 		}
 
-		String tail = current.toString();
+		String tail = sb.toString();
 
 		tail = tail.strip();
 
@@ -224,8 +227,6 @@ public class JavaChunker {
 
 		return parts;
 	}
-
-	private static final int _MAX_CODE_CHARS = 4000;
 
 	private static final Pattern _classPattern = Pattern.compile(
 		"\\b(class|interface|enum|@interface)\\s+(\\w+)");

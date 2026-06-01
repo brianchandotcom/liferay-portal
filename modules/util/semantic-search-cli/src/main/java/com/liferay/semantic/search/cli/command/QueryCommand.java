@@ -8,7 +8,7 @@ package com.liferay.semantic.search.cli.command;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.semantic.search.cli.client.QdrantClientWrapper;
 import com.liferay.semantic.search.cli.client.TextEmbeddingsClient;
-import com.liferay.semantic.search.cli.util.Args;
+import com.liferay.semantic.search.cli.util.Arguments;
 import com.liferay.semantic.search.cli.util.Hit;
 import com.liferay.semantic.search.cli.util.Output;
 
@@ -28,9 +28,9 @@ public class QueryCommand implements Command {
 
 	@Override
 	public int run(String[] args) throws Exception {
-		Args parsed = new Args(args);
+		Arguments arguments = new Arguments(args);
 
-		List<String> positional = parsed.positional();
+		List<String> positional = arguments.getPositional();
 
 		if (positional.isEmpty()) {
 			System.err.println("search: query requires a \"<text>\" argument");
@@ -38,41 +38,45 @@ public class QueryCommand implements Command {
 			return 2;
 		}
 
-		QdrantClientWrapper qdrantClient = new QdrantClientWrapper();
+		QdrantClientWrapper qdrantClientWrapper = new QdrantClientWrapper();
 
-		if (!qdrantClient.isReachable()) {
+		if (!qdrantClientWrapper.isReachable()) {
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl());
+					qdrantClientWrapper.getQdrantURL());
 
 			return 5;
 		}
 
-		if (!qdrantClient.collectionExists(QdrantClientWrapper.COLLECTION)) {
+		if (!qdrantClientWrapper.hasCollection(
+				QdrantClientWrapper.COLLECTION)) {
+
 			System.err.println(
-				"search: index does not exist. Run ingest first.");
+				"search: index does not exist; run ingest first");
 
 			return 3;
 		}
 
 		String text = positional.get(0);
 
-		TextEmbeddingsClient teiClient = new TextEmbeddingsClient();
+		TextEmbeddingsClient textEmbeddingsClient = new TextEmbeddingsClient();
 
-		float[] vector = teiClient.embedQuery(text);
+		float[] vector = textEmbeddingsClient.embedQuery(text);
 
-		String path = parsed.path();
+		String path = arguments.getPath();
 
-		List<QdrantClientWrapper.Hit> rawHits = qdrantClient.search(
-			vector, parsed.top(), path);
+		List<QdrantClientWrapper.SearchResult> searchResults =
+			qdrantClientWrapper.search(vector, arguments.getTop(), path);
 
 		List<Hit> hits = new ArrayList<>();
 
-		for (QdrantClientWrapper.Hit rawHit : rawHits) {
+		for (QdrantClientWrapper.SearchResult searchResult : searchResults) {
 			hits.add(
 				new Hit(
-					rawHit.relPath(), rawHit.score(), rawHit.chunkId(),
-					Output.snippet(rawHit.text()), rawHit.headingPath()));
+					searchResult.getRelPath(), searchResult.getScore(),
+					searchResult.getChunkId(),
+					Output.snippet(searchResult.getText()),
+					searchResult.getHeadingPath()));
 		}
 
 		if (hits.isEmpty() && !path.isEmpty()) {
@@ -84,7 +88,7 @@ public class QueryCommand implements Command {
 					"with --path support."));
 		}
 
-		System.out.println(Output.formatHits(hits, parsed.format()));
+		System.out.println(Output.formatHits(hits, arguments.getFormat()));
 
 		return 0;
 	}

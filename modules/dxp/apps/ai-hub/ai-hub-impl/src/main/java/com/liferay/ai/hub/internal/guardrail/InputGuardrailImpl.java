@@ -54,17 +54,17 @@ public class InputGuardrailImpl implements InputGuardrail {
 	@Override
 	public InputGuardrailResult validate(UserMessage userMessage) {
 		try {
-			String violations = _modelArmorHandler.sanitizeUserPrompt(
+			String violationMessage = _modelArmorHandler.sanitizeUserPrompt(
 				_companyId, _externalReferenceCode, _location,
 				userMessage.singleText());
 
-			if (Validator.isNotNull(violations)) {
+			if (Validator.isNotNull(violationMessage)) {
 				return fatal(
 					JSONUtil.put(
 						"modelArmorTemplateExternalReferenceCode",
 						_externalReferenceCode
 					).put(
-						"violations", violations
+						"violationMessage", violationMessage
 					).toString());
 			}
 

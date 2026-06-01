@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataC
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -75,11 +76,15 @@ import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
@@ -1203,8 +1208,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		reportFile = _getReportFile(
-			reportFileName + "." + reportFile1LastModified);
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMdd_HHmmss", LocaleUtil.US, TimeZone.getTimeZone("UTC"));
+
+		String timestamp = dateFormat.format(new Date(reportFile1LastModified));
+
+		reportFile = _getReportFile(reportFileName + "." + timestamp);
 
 		Assert.assertTrue(reportFile.exists());
 

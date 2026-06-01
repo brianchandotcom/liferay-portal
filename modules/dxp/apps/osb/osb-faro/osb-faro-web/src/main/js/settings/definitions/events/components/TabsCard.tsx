@@ -3,11 +3,9 @@ import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import ErrorPage from 'shared/pages/ErrorPage';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
-import {Route, Routes as RouterRoutes} from 'react-router-dom';
 
 const CustomEventList = lazy(
 	() => import(/* webpackChunkName: "CustomEventList" */ './CustomEventList')
@@ -82,19 +80,11 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 			)}
 
 			<Suspense fallback={<Loading />}>
-				<RouterRoutes>
-					<Route
-						element={<BundleRouter data={EventList} />}
-						path='default'
-					/>
-
-					<Route
-						element={<BundleRouter data={CustomEventList} />}
-						path='custom'
-					/>
-
-					<Route element={<ErrorPage />} path='*' />
-				</RouterRoutes>
+				{customEventTab ? (
+					<BundleRouter data={CustomEventList} />
+				) : (
+					<BundleRouter data={EventList} />
+				)}
 			</Suspense>
 		</Card>
 	);

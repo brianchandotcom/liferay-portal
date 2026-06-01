@@ -65,7 +65,7 @@ public class AudiencesJSONObjectBuilder {
 		int index = source.indexOf(':');
 
 		if (index < 0) {
-			return "SESSION";
+			return "BROWSER";
 		}
 
 		return StringUtil.toUpperCase(source.substring(index + 1));

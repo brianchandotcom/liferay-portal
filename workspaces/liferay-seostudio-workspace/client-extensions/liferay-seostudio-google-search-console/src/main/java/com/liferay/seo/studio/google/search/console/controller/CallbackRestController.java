@@ -96,7 +96,7 @@ public class CallbackRestController extends BaseRestController {
 					credentialEntry.getClientId(),
 					credentialEntry.getClientSecret(), code, callbackURL);
 
-			String emailString = _googleOAuth2Service.fetchUserEmail(
+			String emailAddress = _googleOAuth2Service.fetchUserEmail(
 				googleTokenResponse.getAccessToken());
 
 			Long expiresInSeconds = googleTokenResponse.getExpiresInSeconds();
@@ -112,7 +112,7 @@ public class CallbackRestController extends BaseRestController {
 
 			_liferayObjectService.updateTokens(
 				googleTokenResponse.getAccessToken(), accessTokenExpirationTime,
-				emailString, credentialEntry.getId(),
+				emailAddress, credentialEntry.getId(),
 				googleTokenResponse.getRefreshToken());
 
 			return _redirect(redirectURL + "?gsc_success=true");

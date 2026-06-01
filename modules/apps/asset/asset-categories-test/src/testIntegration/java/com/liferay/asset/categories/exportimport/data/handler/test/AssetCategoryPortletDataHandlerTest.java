@@ -43,6 +43,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -95,8 +98,15 @@ public class AssetCategoryPortletDataHandlerTest
 		ExportImportConfiguration exportImportConfiguration =
 			_setUpExportImportConfiguration();
 
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
+
+			_exportImportLocalService.importLayouts(
+				exportImportConfiguration, larFile);
+
+			_assertBatchEngineImportTaskError(logCapture);
+		}
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
@@ -136,8 +146,15 @@ public class AssetCategoryPortletDataHandlerTest
 		ExportImportConfiguration exportImportConfiguration =
 			_setUpExportImportConfiguration();
 
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
+
+			_exportImportLocalService.importLayouts(
+				exportImportConfiguration, larFile);
+
+			_assertBatchEngineImportTaskError(logCapture);
+		}
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
@@ -331,6 +348,16 @@ public class AssetCategoryPortletDataHandlerTest
 		return _enableLocalStaging(depotEntry);
 	}
 
+	private void _assertBatchEngineImportTaskError(LogCapture logCapture) {
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+	}
+
 	private DepotEntry _enableLocalStaging(DepotEntry depotEntry)
 		throws Exception {
 
@@ -415,6 +442,11 @@ public class AssetCategoryPortletDataHandlerTest
 							new String[] {Boolean.TRUE.toString()}
 						).build()));
 	}
+
+	private static final String
+		_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL =
+			"com.liferay.batch.engine.internal." +
+				"BatchEngineImportTaskExecutorImpl";
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

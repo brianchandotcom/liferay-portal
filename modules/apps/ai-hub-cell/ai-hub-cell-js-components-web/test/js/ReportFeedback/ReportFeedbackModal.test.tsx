@@ -23,15 +23,13 @@ const openToast = jest.fn();
 function renderModal(
 	props: Partial<{
 		onClose: () => void;
-		onSubmitted: () => void;
 	}> = {}
 ) {
 	return render(
 		<ReportFeedbackModal
-			agentId="agent-1"
+			agentDefinitionExternalReferenceCodes={['agent-1']}
 			onClose={jest.fn()}
-			surface="AI_ASSISTANT"
-			traceId="trace-1"
+			surface="aiAssistant"
 			{...props}
 		/>
 	);
@@ -59,7 +57,7 @@ describe('ReportFeedbackModal', () => {
 			screen.getByText('incorrect-or-inaccurate-response')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText('exposure-of-personal-sensitive-data-pii')
+			screen.getByText('exposure-of-personal-or-sensitive-data-pii')
 		).toBeInTheDocument();
 		expect(
 			screen.getByText('agent-error-or-malfunction')
@@ -74,55 +72,43 @@ describe('ReportFeedbackModal', () => {
 		expect(send).toBeDisabled();
 
 		fireEvent.change(screen.getByRole('combobox'), {
-			target: {value: 'OTHER'},
+			target: {value: 'other'},
 		});
 
 		expect(send).toBeEnabled();
 	});
 
-	it('submits the report, fires a success toast, and closes', async () => {
+	it('submits the report and fires a success toast', async () => {
 		mockPostAIIssueReport.mockResolvedValue({id: 'report-1'});
 
-		const onClose = jest.fn();
-		const onSubmitted = jest.fn();
-
-		renderModal({onClose, onSubmitted});
+		renderModal();
 
 		fireEvent.change(await screen.findByRole('combobox'), {
-			target: {value: 'INCORRECT_OR_INACCURATE_RESPONSE'},
+			target: {value: 'incorrect'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'send'}));
 
-		await waitFor(() => expect(onSubmitted).toHaveBeenCalledTimes(1));
-
-		expect(mockPostAIIssueReport).toHaveBeenCalledWith(
-			expect.objectContaining({
-				agentId: 'agent-1',
-				reason: 'INCORRECT_OR_INACCURATE_RESPONSE',
-				surface: 'AI_ASSISTANT',
-				traceId: 'trace-1',
+		await waitFor(() =>
+			expect(openToast).toHaveBeenCalledWith({
+				message: 'thank-you-for-your-feedback',
+				type: 'success',
 			})
 		);
-		expect(openToast).toHaveBeenCalledWith({
-			message: 'thanks-for-your-feedback',
-			type: 'success',
-		});
+
+		expect(mockPostAIIssueReport).toHaveBeenCalled();
 	});
 
 	it('shows an inline error and stays open on failure', async () => {
 		mockPostAIIssueReport.mockRejectedValue(new Error('submit failed'));
 
-		const onSubmitted = jest.fn();
-
-		renderModal({onSubmitted});
+		renderModal();
 
 		fireEvent.change(await screen.findByRole('combobox'), {
-			target: {value: 'OTHER'},
+			target: {value: 'other'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'send'}));
 
 		expect(await screen.findByText('submit failed')).toBeInTheDocument();
-		expect(onSubmitted).not.toHaveBeenCalled();
 		expect(openToast).not.toHaveBeenCalled();
 	});
 });

@@ -24,15 +24,14 @@ describe('useReportFeedback', () => {
 	it('cannot submit until a reason is selected', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
-				agentId: 'agent-1',
-				surface: 'AI_ASSISTANT',
-				traceId: 'trace-1',
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				surface: 'aiAssistant',
 			})
 		);
 
 		expect(result.current.canSubmit).toBe(false);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		expect(result.current.canSubmit).toBe(true);
 	});
@@ -40,9 +39,8 @@ describe('useReportFeedback', () => {
 	it('does not post when no reason is selected', async () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
-				agentId: 'agent-1',
-				surface: 'AI_ASSISTANT',
-				traceId: 'trace-1',
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				surface: 'aiAssistant',
 			})
 		);
 
@@ -61,15 +59,14 @@ describe('useReportFeedback', () => {
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-				agentId: 'agent-1',
-				surface: 'CMS_ASSISTANT',
-				traceId: 'trace-1',
+				agentDefinitionExternalReferenceCodes: ['agent-1', 'agent-2'],
+				surface: 'aiAssistant',
 			})
 		);
 
 		act(() => {
-			result.current.setReason('PII_EXPOSURE');
-			result.current.setComment('  leaked data  ');
+			result.current.setReason('piiExposure');
+			result.current.setUserMessage('  leaked data  ');
 		});
 
 		let outcome: boolean | undefined;
@@ -80,36 +77,33 @@ describe('useReportFeedback', () => {
 
 		expect(outcome).toBe(true);
 		expect(mockPostAIIssueReport).toHaveBeenCalledWith({
-			agentId: 'agent-1',
-			comment: 'leaked data',
-			reason: 'PII_EXPOSURE',
-			surface: 'CMS_ASSISTANT',
-			traceId: 'trace-1',
+			agentDefinitionExternalReferenceCodes: ['agent-1', 'agent-2'],
+			reason: 'piiExposure',
+			surface: 'aiAssistant',
+			userMessage: 'leaked data',
 		});
 	});
 
-	it('omits an empty comment from the payload', async () => {
+	it('omits an empty userMessage from the payload', async () => {
 		mockPostAIIssueReport.mockResolvedValue({id: 'report-1'});
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-				agentId: 'agent-1',
-				surface: 'AI_ASSISTANT',
-				traceId: 'trace-1',
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				surface: 'aiAssistant',
 			})
 		);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		await act(async () => {
 			await result.current.submit();
 		});
 
 		expect(mockPostAIIssueReport).toHaveBeenCalledWith({
-			agentId: 'agent-1',
-			reason: 'OTHER',
-			surface: 'AI_ASSISTANT',
-			traceId: 'trace-1',
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			reason: 'other',
+			surface: 'aiAssistant',
 		});
 	});
 
@@ -118,13 +112,12 @@ describe('useReportFeedback', () => {
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-				agentId: 'agent-1',
-				surface: 'AI_ASSISTANT',
-				traceId: 'trace-1',
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				surface: 'aiAssistant',
 			})
 		);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		let outcome: boolean | undefined;
 

@@ -12,22 +12,24 @@ export const REASON_OPTIONS: {
 	{label: Liferay.Language.get('select-reason'), value: ''},
 	{
 		label: Liferay.Language.get('incorrect-or-inaccurate-response'),
-		value: 'INCORRECT_OR_INACCURATE_RESPONSE',
+		value: 'incorrect',
 	},
 	{
 		label: Liferay.Language.get('inappropriate-or-harmful-content'),
-		value: 'INAPPROPRIATE_OR_HARMFUL_CONTENT',
+		value: 'harmfulContent',
 	},
 	{
-		label: Liferay.Language.get('exposure-of-personal-sensitive-data-pii'),
-		value: 'PII_EXPOSURE',
+		label: Liferay.Language.get(
+			'exposure-of-personal-or-sensitive-data-pii'
+		),
+		value: 'piiExposure',
 	},
 	{
 		label: Liferay.Language.get('agent-error-or-malfunction'),
-		value: 'AGENT_ERROR_OR_MALFUNCTION',
+		value: 'agentError',
 	},
 	{
 		label: Liferay.Language.get('other'),
-		value: 'OTHER',
+		value: 'other',
 	},
 ];

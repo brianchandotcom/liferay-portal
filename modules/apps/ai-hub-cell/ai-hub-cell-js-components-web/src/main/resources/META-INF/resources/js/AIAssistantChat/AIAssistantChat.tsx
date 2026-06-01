@@ -25,9 +25,14 @@ import UserMessageBalloon from './components/UserMessageBalloon';
 import './chat.scss';
 
 interface message {
+	error?: boolean;
+	messageId?: string;
 	sender: string;
 	text: string;
-	traceId?: string;
+}
+
+interface ReportContext {
+	agentDefinitionExternalReferenceCodes: string[];
 }
 
 interface AIAssistantChatProps {
@@ -43,9 +48,13 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
-	const [reportTraceId, setReportTraceId] = useState<string | null>(null);
+	const [reportContext, setReportContext] = useState<ReportContext | null>(
+		null
+	);
+	const currentMessageIdRef = useRef<string | null>(null);
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
+	const messageAgentsRef = useRef<Map<string, string[]>>(new Map());
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
 	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -55,6 +64,11 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 		if (!message.trim()) {
 			return;
 		}
+
+		currentMessageIdRef.current = crypto.randomUUID();
+
+		messageAgentsRef.current.set(currentMessageIdRef.current, []);
+
 		setMessages((previousMessages) => {
 			setTimeout(() => {
 				messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -144,6 +158,20 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			eventSourceRef.current.addEventListener(
 				'Chat Message Sent',
 				(event) => {
+					const dataJSON = JSON.parse(event.data);
+
+					const messageId = currentMessageIdRef.current;
+
+					if (messageId) {
+						messageAgentsRef.current.set(
+							messageId,
+							dataJSON['agentDefinitionExternalReferenceCodes'] ??
+								[]
+						);
+					}
+
+					currentMessageIdRef.current = null;
+
 					setMessages((previousMessages) => {
 						setTimeout(() => {
 							messagesEndRef.current?.scrollIntoView({
@@ -151,17 +179,12 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 							});
 						}, 0);
 
-						const dataJSON = JSON.parse(event.data);
-
 						return [
 							...previousMessages,
 							{
+								messageId: messageId ?? undefined,
 								sender: 'assistant',
 								text: dataJSON['data'],
-								traceId:
-									dataJSON['traceId'] ??
-									eventSourceReference.current ??
-									undefined,
 							},
 						];
 					});
@@ -175,6 +198,32 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			eventSourceRef.current.addEventListener('Subscribe', (event) => {
 				eventSourceReference.current = event.data;
 			});
+
+			eventSourceRef.current.addEventListener(
+				'Agent Invocation Failed',
+				(event) => {
+					const dataJSON = JSON.parse(event.data);
+
+					setMessages((previousMessages) => {
+						setTimeout(() => {
+							messagesEndRef.current?.scrollIntoView({
+								behavior: 'smooth',
+							});
+						}, 0);
+
+						return [
+							...previousMessages,
+							{
+								error: true,
+								sender: 'assistant',
+								text: dataJSON['data'],
+							},
+						];
+					});
+
+					setIsGenerating(false);
+				}
+			);
 		});
 	}
 
@@ -267,16 +316,22 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 							/>
 						) : (
 							<AIAssistantMessageBalloon
-								error={false}
+								error={item.error ?? false}
 								key={index}
 								message={item.text}
 								onReport={
-									item.traceId
-										? () => setReportTraceId(item.traceId!)
+									item.messageId
+										? () =>
+												setReportContext({
+													agentDefinitionExternalReferenceCodes:
+														messageAgentsRef.current.get(
+															item.messageId!
+														) ?? [],
+												})
 										: undefined
 								}
 								onThumbsUp={
-									item.traceId
+									item.messageId
 										? () =>
 												Liferay.Util.openToast({
 													message:
@@ -350,12 +405,13 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 				<AIAssistantFooterDisclaimer />
 			</div>
 
-			{reportTraceId !== null && (
+			{reportContext !== null && (
 				<ReportFeedbackModal
-					agentId={instructionDefinitionScope}
-					onClose={() => setReportTraceId(null)}
-					surface="AI_ASSISTANT"
-					traceId={reportTraceId}
+					agentDefinitionExternalReferenceCodes={
+						reportContext.agentDefinitionExternalReferenceCodes
+					}
+					onClose={() => setReportContext(null)}
+					surface="aiAssistant"
 				/>
 			)}
 		</ClayDropDown>

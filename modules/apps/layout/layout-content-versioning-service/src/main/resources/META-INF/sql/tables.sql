@@ -12,7 +12,7 @@ create table LayoutContentVersion (
 	name STRING null,
 	version INTEGER,
 	specSchemaVersion VARCHAR(75) null,
-	data_ VARCHAR(75) null,
+	data_ TEXT null,
 	dataHash VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,

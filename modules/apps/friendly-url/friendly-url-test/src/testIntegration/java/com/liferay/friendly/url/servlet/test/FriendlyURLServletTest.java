@@ -503,6 +503,23 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testGetRedirectWithGroupInRequestAttributes() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.FRIENDLY_URL_GROUP, _group);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.GROUP_FRIENDLY_URL, _group.getFriendlyURL());
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		testGetRedirect(
+			mockHttpServletRequest,
+			StringPool.SLASH + RandomTestUtil.randomString() +
+				_layout.getFriendlyURL(),
+			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
+	@Test
 	public void testGetRedirectWithI18nPath() throws Throwable {
 		testGetI18nRedirect("/fr");
 		testGetI18nRedirect("/hu");

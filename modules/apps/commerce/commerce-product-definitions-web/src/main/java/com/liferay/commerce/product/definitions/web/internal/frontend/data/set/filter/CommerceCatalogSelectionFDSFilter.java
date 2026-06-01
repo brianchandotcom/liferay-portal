@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
@@ -23,6 +24,11 @@ public class CommerceCatalogSelectionFDSFilter extends BaseSelectionFDSFilter {
 	@Override
 	public String getAPIURL() {
 		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
+	}
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.INTEGER;
 	}
 
 	@Override

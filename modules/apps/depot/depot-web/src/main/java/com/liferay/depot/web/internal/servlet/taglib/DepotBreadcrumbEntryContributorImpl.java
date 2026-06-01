@@ -84,9 +84,12 @@ public class DepotBreadcrumbEntryContributorImpl
 				return originalBreadcrumbEntries;
 			}
 
-			breadcrumbEntries.add(
-				_getAssetLibrariesBreadcrumbEntry(
-					themeDisplay.getControlPanelGroup(), httpServletRequest));
+			if (depotEntry.getType() != DepotConstants.TYPE_DESIGN_LIBRARY) {
+				breadcrumbEntries.add(
+					_getAssetLibrariesBreadcrumbEntry(
+						themeDisplay.getControlPanelGroup(),
+						httpServletRequest));
+			}
 
 			breadcrumbEntries.add(
 				_getAssetLibraryBreadcrumbEntry(

@@ -1,5 +1,7 @@
 @import 'atlas-variables';
 
+$page-version-history-toolbar-height: 3rem;
+
 .page-version-history {
 	&__side-panel {
 		@include media-breakpoint-up(lg) {
@@ -8,4 +10,16 @@
 			}
 		}
 	}
+
+	&__toolbar {
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: var(--control-menu-container-height, 0);
+		z-index: 100;
+	}
+}
+
+#wrapper.c-slideout-container {
+	padding-top: $page-version-history-toolbar-height;
 }

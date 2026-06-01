@@ -127,8 +127,10 @@ public class FragmentEntryVersionTestUtil {
 						"createDate, modifiedDate, name, status) values (0, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
+			int startVersion = 1000;
+
 			for (int i = 0; i < count; i++) {
-				int version = _START_VERSION + i;
+				int version = startVersion + i;
 
 				versions.add(version);
 
@@ -166,8 +168,6 @@ public class FragmentEntryVersionTestUtil {
 
 		FragmentEntryLocalServiceUtil.updateFragmentEntry(fragmentEntry);
 	}
-
-	private static final int _START_VERSION = 1000;
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

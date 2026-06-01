@@ -120,16 +120,16 @@ function getOdataString({
 
 	const quotedSelectedItems = selectedItems.map((item) => {
 		if (
-			entityFieldType === EEntityFieldType.INTEGER ||
-			entityFieldType === EEntityFieldType.COLLECTION_INTEGER
+			entityFieldType === EEntityFieldType.COLLECTION_INTEGER ||
+			entityFieldType === EEntityFieldType.INTEGER
 		) {
 			return item.value;
 		}
 
 		if (
-			entityFieldType === EEntityFieldType.STRING ||
 			entityFieldType === EEntityFieldType.COLLECTION ||
-			entityFieldType === EEntityFieldType.COLLECTION_STRING
+			entityFieldType === EEntityFieldType.COLLECTION_STRING ||
+			entityFieldType === EEntityFieldType.STRING
 		) {
 			return `'${item.value}'`;
 		}
@@ -150,9 +150,9 @@ function getOdataString({
 	});
 
 	if (
-		entityFieldType === EEntityFieldType.COLLECTION_STRING ||
+		entityFieldType === EEntityFieldType.COLLECTION ||
 		entityFieldType === EEntityFieldType.COLLECTION_INTEGER ||
-		entityFieldType === EEntityFieldType.COLLECTION
+		entityFieldType === EEntityFieldType.COLLECTION_STRING
 	) {
 		return `${id}/any(x:${quotedSelectedItems
 			.map((value) => `(x ${exclude ? 'ne' : 'eq'} ${value})`)

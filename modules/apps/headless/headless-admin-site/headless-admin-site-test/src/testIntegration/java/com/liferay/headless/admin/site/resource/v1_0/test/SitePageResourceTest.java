@@ -44,6 +44,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
@@ -55,6 +56,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePageNavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -1977,36 +1979,60 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return postSitePage;
 	}
 
-	private List<String> _setAndGetDraftFragmentInstanceExternalReferenceCodes(
-		PageElement[] pageElements) {
+	private List<String>
+		_setAndGetDraftFragmentOrWidgetInstanceExternalReferenceCodes(
+			PageElement[] pageElements) {
 
-		List<String> draftFragmentInstanceExternalReferenceCodes =
+		List<String> draftFragmentOrWidgetInstanceExternalReferenceCodes =
 			new ArrayList<>();
 
 		for (PageElement pageElement : pageElements) {
-			if (!(pageElement.getPageElementDefinition() instanceof
+			PageElementDefinition pageElementDefinition =
+				pageElement.getPageElementDefinition();
+
+			if (pageElementDefinition instanceof
 					BasicFragmentInstancePageElementDefinition
-						basicFragmentInstancePageElementDefinition)) {
+						basicFragmentInstancePageElementDefinition) {
 
-				continue;
+				FragmentInstance fragmentInstance =
+					basicFragmentInstancePageElementDefinition.
+						getFragmentInstance();
+
+				String fragmentInstanceExternalReferenceCode =
+					fragmentInstance.getFragmentInstanceExternalReferenceCode();
+
+				String draftFragmentInstanceExternalReferenceCode =
+					fragmentInstanceExternalReferenceCode +
+						RandomTestUtil.randomString();
+
+				fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
+					draftFragmentInstanceExternalReferenceCode);
+
+				draftFragmentOrWidgetInstanceExternalReferenceCodes.add(
+					draftFragmentInstanceExternalReferenceCode);
 			}
+			else if (pageElementDefinition instanceof
+						WidgetInstancePageElementDefinition
+							widgetInstancePageElementDefinition) {
 
-			FragmentInstance fragmentInstance =
-				basicFragmentInstancePageElementDefinition.
-					getFragmentInstance();
+				String widgetInstanceExternalReferenceCode =
+					widgetInstancePageElementDefinition.
+						getWidgetInstanceExternalReferenceCode();
 
-			String draftFragmentInstanceExternalReferenceCode =
-				fragmentInstance.getFragmentInstanceExternalReferenceCode() +
-					RandomTestUtil.randomString();
+				String draftWidgetInstanceExternalReferenceCode =
+					widgetInstanceExternalReferenceCode +
+						RandomTestUtil.randomString();
 
-			fragmentInstance.setDraftFragmentInstanceExternalReferenceCode(
-				draftFragmentInstanceExternalReferenceCode);
+				widgetInstancePageElementDefinition.
+					setDraftWidgetInstanceExternalReferenceCode(
+						draftWidgetInstanceExternalReferenceCode);
 
-			draftFragmentInstanceExternalReferenceCodes.add(
-				draftFragmentInstanceExternalReferenceCode);
+				draftFragmentOrWidgetInstanceExternalReferenceCodes.add(
+					draftWidgetInstanceExternalReferenceCode);
+			}
 		}
 
-		return draftFragmentInstanceExternalReferenceCodes;
+		return draftFragmentOrWidgetInstanceExternalReferenceCodes;
 	}
 
 	private void _testDeleteSiteSitePage(Layout... layouts) throws Exception {
@@ -3155,11 +3181,23 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String pageSpecificationExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
-			3, StringPool.BLANK, testGroup.getGroupId());
+		PageElement pageElement = new PageElement();
 
-		List<String> draftFragmentInstanceExternalReferenceCodes =
-			_setAndGetDraftFragmentInstanceExternalReferenceCodes(pageElements);
+		pageElement.setExternalReferenceCode(RandomTestUtil.randomString());
+		pageElement.setPageElementDefinition(
+			PageElementsTestUtil.getPageElementDefinition(
+				PageElementDefinition.Type.WIDGET, testGroup.getGroupId()));
+		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setPosition(3);
+
+		PageElement[] pageElements = ArrayUtil.append(
+			PageElementsTestUtil.getPageElements(
+				3, StringPool.BLANK, testGroup.getGroupId()),
+			pageElement);
+
+		List<String> draftFragmentOrWidgetInstanceExternalReferenceCodes =
+			_setAndGetDraftFragmentOrWidgetInstanceExternalReferenceCodes(
+				pageElements);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			new ContentPageSpecification();
@@ -3198,13 +3236,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					testGroup.getGroupId(), draftLayout.getPlid()),
 				FragmentEntryLink::getExternalReferenceCode);
 
-		for (String draftFragmentInstanceExternalReferenceCode :
-				draftFragmentInstanceExternalReferenceCodes) {
+		for (String draftFragmentOrWidgetInstanceExternalReferenceCode :
+				draftFragmentOrWidgetInstanceExternalReferenceCodes) {
 
 			Assert.assertTrue(
 				draftFragmentEntryLinkExternalReferenceCodes.toString(),
 				draftFragmentEntryLinkExternalReferenceCodes.contains(
-					draftFragmentInstanceExternalReferenceCode));
+					draftFragmentOrWidgetInstanceExternalReferenceCode));
 		}
 	}
 

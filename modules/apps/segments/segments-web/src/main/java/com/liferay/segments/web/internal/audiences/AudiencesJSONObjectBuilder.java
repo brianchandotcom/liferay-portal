@@ -34,29 +34,11 @@ public class AudiencesJSONObjectBuilder {
 		JSONObject audienceJSONObject = _toAudienceJSONObject(
 			jsonFactory, jsonFactory.createJSONObject(criteria));
 
-		if (!audienceJSONObject.has("rules")) {
-			audienceJSONObject = JSONUtil.put(
-				"conjunction", "AND"
-			).put(
-				"rules", JSONUtil.putAll(audienceJSONObject)
-			);
-		}
-
 		return audienceJSONObject.put(
 			"id", segmentsEntry.getSegmentsEntryKey()
 		).put(
-			"retentionType", _getRetentionType(segmentsEntry.getSource())
+			"retentionType", "BROWSER"
 		);
-	}
-
-	private static String _getRetentionType(String source) {
-		int index = source.indexOf(':');
-
-		if (index < 0) {
-			return "BROWSER";
-		}
-
-		return StringUtil.toUpperCase(source.substring(index + 1));
 	}
 
 	private static JSONObject _toAudienceJSONObject(
@@ -93,9 +75,6 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			"rules", rulesJSONArray
 		);
-	}
-
-	private AudiencesJSONObjectBuilder() {
 	}
 
 	private static final Map<String, String> _attributeNames =

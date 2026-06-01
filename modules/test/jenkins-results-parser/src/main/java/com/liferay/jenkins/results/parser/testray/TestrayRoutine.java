@@ -118,13 +118,13 @@ public class TestrayRoutine {
 			return testrayBuild;
 		}
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"id eq '", String.valueOf(buildID), "' and ",
 			"r_routineToBuilds_c_routineId eq '", String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"builds", TestrayBuild.FIELD_NAMES, filter, null, 1, 1);
+				"builds", TestrayBuild.FIELD_NAMES, filterString, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -314,12 +314,13 @@ public class TestrayRoutine {
 
 		setTestrayServer(testrayServer);
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"id eq '", matcher.group("routineID"), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
-				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
+				"routines", TestrayRoutine.FIELD_NAMES, filterString, null, 1,
+				1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return;

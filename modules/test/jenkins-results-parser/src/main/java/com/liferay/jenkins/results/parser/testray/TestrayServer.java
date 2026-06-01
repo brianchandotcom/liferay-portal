@@ -415,7 +415,7 @@ public class TestrayServer {
 
 	protected Set<JSONObject> requestGraphQL(
 			boolean checkCache, String entityName, String[] entityFields,
-			String filter, String sort, long maxCount, int pageSize)
+			String filterString, String sortString, long maxCount, int pageSize)
 		throws IOException {
 
 		if (maxCount <= 0) {
@@ -448,15 +448,15 @@ public class TestrayServer {
 			sb.append(", pageSize: ");
 			sb.append(pageSize);
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(filter)) {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(filterString)) {
 				sb.append(", filter: \"");
-				sb.append(filter);
+				sb.append(filterString);
 				sb.append("\"");
 			}
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(sort)) {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(sortString)) {
 				sb.append(", sort: \"");
-				sb.append(sort);
+				sb.append(sortString);
 				sb.append("\"");
 			}
 
@@ -528,20 +528,22 @@ public class TestrayServer {
 	}
 
 	protected Set<JSONObject> requestGraphQL(
-			String entityName, String[] entityFields, String filter,
-			String sort)
-		throws IOException {
-
-		return requestGraphQL(entityName, entityFields, filter, sort, 0, 0);
-	}
-
-	protected Set<JSONObject> requestGraphQL(
-			String entityName, String[] entityFields, String filter,
-			String sort, long maxCount, int pageSize)
+			String entityName, String[] entityFields, String filterString,
+			String sortString)
 		throws IOException {
 
 		return requestGraphQL(
-			false, entityName, entityFields, filter, sort, maxCount, pageSize);
+			entityName, entityFields, filterString, sortString, 0, 0);
+	}
+
+	protected Set<JSONObject> requestGraphQL(
+			String entityName, String[] entityFields, String filterString,
+			String sortString, long maxCount, int pageSize)
+		throws IOException {
+
+		return requestGraphQL(
+			false, entityName, entityFields, filterString, sortString, maxCount,
+			pageSize);
 	}
 
 	private void _importCaseResultsToGCP(

@@ -19,6 +19,7 @@ import com.liferay.seo.studio.web.internal.constants.SEOStudioFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,30 +37,24 @@ public class ViewOnPageInsightDetailsDisplayContext {
 		_viewsJSONArray = viewsJSONArray;
 	}
 
-	public String getBackURL() throws Exception {
-		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return backURL;
-		}
-
-		return PortalUtil.getLayoutFullURL(
-			LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-				_themeDisplay.getScopeGroupId(), false, "/content-seo"),
-			_themeDisplay);
+	public List<Map<String, Object>> getBreadcrumbItems() throws Exception {
+		return List.of(
+			HashMapBuilder.<String, Object>put(
+				"href", _getBackURL()
+			).put(
+				"label", _language.get(_httpServletRequest, "on-page")
+			).build());
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"apiURL", _getAPIURL()
 		).put(
-			"backURL", getBackURL()
+			"breadcrumbItems", getBreadcrumbItems()
 		).put(
 			"externalReferenceCode", _getObjectEntryExternalReferenceCode()
 		).put(
 			"fdsId", SEOStudioFDSNames.AFFECTED_PAGES_SECTION
-		).put(
-			"screenName", _language.get(_httpServletRequest, "on-page")
 		).put(
 			"views", _viewsJSONArray
 		).build();
@@ -72,6 +67,19 @@ public class ViewOnPageInsightDetailsDisplayContext {
 			"/seoStudioInsightTypeToScanInsights?nestedFields=",
 			URLCodec.encodeURL(
 				"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage", true));
+	}
+
+	private String _getBackURL() throws Exception {
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		return PortalUtil.getLayoutFullURL(
+			LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+				_themeDisplay.getScopeGroupId(), false, "/content-seo"),
+			_themeDisplay);
 	}
 
 	private String _getObjectEntryExternalReferenceCode() {

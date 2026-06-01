@@ -82,7 +82,6 @@ public class InstanceConfigurationResourceTest
 		InstanceConfiguration instanceConfiguration1 =
 			testGetInstanceConfigurationsPage_addInstanceConfiguration(
 				randomInstanceConfiguration());
-
 		InstanceConfiguration instanceConfiguration2 =
 			testGetInstanceConfigurationsPage_addInstanceConfiguration(
 				randomInstanceConfiguration());

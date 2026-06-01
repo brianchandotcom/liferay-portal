@@ -82,7 +82,6 @@ public class SystemConfigurationResourceTest
 		SystemConfiguration systemConfiguration1 =
 			testGetSystemConfigurationsPage_addSystemConfiguration(
 				randomSystemConfiguration());
-
 		SystemConfiguration systemConfiguration2 =
 			testGetSystemConfigurationsPage_addSystemConfiguration(
 				randomSystemConfiguration());

@@ -5,4 +5,27 @@
  */
 --%>
 
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ include file="/init.jsp" %>
+
+<%
+Layout draftLayout = themeDisplay.getLayout();
+
+Layout publishedLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getClassPK());
+
+String siteExternalReferenceCode = themeDisplay.getScopeGroup(
+).getExternalReferenceCode();
+String sitePageExternalReferenceCode = publishedLayout.getExternalReferenceCode();
+
+String pageSpecificationVersionsURL = "/o/headless-admin-site/v1.0/sites/" + siteExternalReferenceCode + "/site-pages/" + sitePageExternalReferenceCode + "/page-specification-versions";
+%>
+
+<react:component
+	module="{PageVersionHistory} from layout-content-web"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"pageSpecificationVersionsURL", pageSpecificationVersionsURL
+		).build()
+	%>'
+/>

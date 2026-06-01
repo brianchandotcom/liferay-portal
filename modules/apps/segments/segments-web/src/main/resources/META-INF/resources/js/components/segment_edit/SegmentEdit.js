@@ -524,7 +524,10 @@ function SegmentEdit({
 						render={renderContributors}
 					/>
 
-					<ContributorInputs contributors={data.contributors} />
+					<ContributorInputs
+						audiences={audiences}
+						contributors={data.contributors}
+					/>
 				</div>
 			</div>
 		</>

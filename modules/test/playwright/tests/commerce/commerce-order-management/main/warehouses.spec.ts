@@ -589,19 +589,25 @@ test(
 				],
 			});
 
-		const channelASkus =
-			await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
-				channel.id,
-				product.productId
-			);
-		const channelBSkus =
-			await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
-				channelB.id,
-				product.productId
-			);
+		await expect(async () => {
+			const channelASkus =
+				await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
+					channel.id,
+					product.productId
+				);
+			const channelBSkus =
+				await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
+					channelB.id,
+					product.productId
+				);
 
-		expect(channelASkus.items[0].availability.stockQuantity).toBe(80);
-		expect(channelBSkus.items[0].availability.stockQuantity).toBe(120);
+			expect(channelASkus.items?.[0]?.availability?.stockQuantity).toBe(
+				80
+			);
+			expect(channelBSkus.items?.[0]?.availability?.stockQuantity).toBe(
+				120
+			);
+		}).toPass({timeout: 15000});
 	}
 );
 

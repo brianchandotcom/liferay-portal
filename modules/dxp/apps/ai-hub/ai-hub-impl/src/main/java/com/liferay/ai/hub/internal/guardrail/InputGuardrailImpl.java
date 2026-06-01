@@ -6,6 +6,9 @@
 package com.liferay.ai.hub.internal.guardrail;
 
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
+import com.liferay.ai.hub.quota.QuotaManager;
+import com.liferay.ai.hub.quota.Source;
+import com.liferay.ai.hub.quota.Usage;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,13 +32,15 @@ public class InputGuardrailImpl implements InputGuardrail {
 
 	public InputGuardrailImpl(
 		long companyId, String externalReferenceCode, String location,
-		ModelArmorHandler modelArmorHandler,
-		Map<String, Serializable> workflowContext) {
+		ModelArmorHandler modelArmorHandler, QuotaManager quotaManager,
+		long userId, Map<String, Serializable> workflowContext) {
 
 		_companyId = companyId;
 		_externalReferenceCode = externalReferenceCode;
 		_location = location;
 		_modelArmorHandler = modelArmorHandler;
+		_quotaManager = quotaManager;
+		_userId = userId;
 		_workflowContext = workflowContext;
 	}
 
@@ -53,10 +58,11 @@ public class InputGuardrailImpl implements InputGuardrail {
 
 	@Override
 	public InputGuardrailResult validate(UserMessage userMessage) {
+		String text = userMessage.singleText();
+
 		try {
 			String violationMessage = _modelArmorHandler.sanitizeUserPrompt(
-				_companyId, _externalReferenceCode, _location,
-				userMessage.singleText());
+				_companyId, _externalReferenceCode, _location, text);
 
 			if (Validator.isNotNull(violationMessage)) {
 				return fatal(
@@ -75,6 +81,22 @@ public class InputGuardrailImpl implements InputGuardrail {
 
 			return fatal("Unable to validate against security policy");
 		}
+		finally {
+			try {
+				_quotaManager.updateUsage(
+					_companyId,
+					Usage.builder(
+					).source(
+						Source.MODEL_ARMOR
+					).text(
+						text
+					).build(),
+					_userId);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -84,6 +106,8 @@ public class InputGuardrailImpl implements InputGuardrail {
 	private final String _externalReferenceCode;
 	private final String _location;
 	private final ModelArmorHandler _modelArmorHandler;
+	private final QuotaManager _quotaManager;
+	private final long _userId;
 	private final Map<String, Serializable> _workflowContext;
 
 }

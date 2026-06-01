@@ -336,6 +336,113 @@ test(
 );
 
 test(
+	'Can export and import a design library from the listing row',
+	{tag: ['@LPD-79455']},
+	async ({apiHelpers, designLibrariesPage, page}) => {
+		const designLibraryName = getRandomString();
+
+		const createdDesignLibrary =
+			await test.step('Create temporary design library via headless', async () => {
+				return await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+					{
+						name: designLibraryName,
+						settings: {},
+						type: 'DesignLibrary',
+					}
+				);
+			});
+
+		const openRowActions = async () => {
+			await page
+				.getByRole('cell', {name: `${designLibraryName} Actions`})
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await expect(page.getByRole('menu')).toBeVisible();
+		};
+
+		const expectCleanBreadcrumb = async () => {
+			const breadcrumb = page.locator('.breadcrumb').first();
+
+			await expect(breadcrumb).toBeVisible();
+
+			await expect(breadcrumb.getByText('Asset Libraries')).toBeHidden();
+
+			await expect(breadcrumb.getByText(designLibraryName)).toBeVisible();
+		};
+
+		try {
+			await test.step('Listing row ellipsis exposes Export and Import actions', async () => {
+				await designLibrariesPage.goto();
+
+				await openRowActions();
+
+				await expect(
+					page
+						.getByRole('menu')
+						.getByRole('menuitem', {name: 'Export'})
+				).toBeVisible();
+
+				await expect(
+					page
+						.getByRole('menu')
+						.getByRole('menuitem', {name: 'Import'})
+				).toBeVisible();
+			});
+
+			await test.step('Clicking Export navigates to the Export portlet scoped to the design library with a back URL', async () => {
+				await page
+					.getByRole('menu')
+					.getByRole('menuitem', {name: 'Export'})
+					.click();
+
+				await expect(page).toHaveURL(
+					/p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet/
+				);
+
+				await expect(page).toHaveURL(/asset-library-\d+/);
+
+				await expect(page).toHaveURL(/backURL=/);
+			});
+
+			await test.step('Export portlet breadcrumb omits Asset Libraries and includes the design library', async () => {
+				await expectCleanBreadcrumb();
+			});
+
+			await test.step('Clicking Import navigates to the Import portlet scoped to the design library with a back URL', async () => {
+				await designLibrariesPage.goto();
+
+				await openRowActions();
+
+				await page
+					.getByRole('menu')
+					.getByRole('menuitem', {name: 'Import'})
+					.click();
+
+				await expect(page).toHaveURL(
+					/p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet/
+				);
+
+				await expect(page).toHaveURL(/asset-library-\d+/);
+
+				await expect(page).toHaveURL(/backURL=/);
+			});
+
+			await test.step('Import portlet breadcrumb omits Asset Libraries and includes the design library', async () => {
+				await expectCleanBreadcrumb();
+			});
+		}
+		finally {
+			await test.step('Remove temporary design library', async () => {
+				await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+					createdDesignLibrary.externalReferenceCode
+				);
+			});
+		}
+	}
+);
+
+test(
 	'Can view and edit a design library settings',
 	{tag: '@LPD-79533'},
 	async ({apiHelpers, designLibrariesPage, page}) => {

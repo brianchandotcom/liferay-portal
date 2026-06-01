@@ -296,8 +296,8 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			return _types;
 		}
 
-		boolean widgetPageFFEnabled = FeatureFlagManagerUtil.isEnabled(
-			_themeDisplay.getCompanyId(), "LPD-76864");
+		boolean widgetPageFeatureFlagEnabled =
+			_isWidgetPageFeatureFlagEnabled();
 
 		_types = ListUtil.filter(
 			ListUtil.fromArray(LayoutTypeControllerTracker.getTypes()),
@@ -317,14 +317,14 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				if (ParamUtil.getBoolean(_httpServletRequest, "emptyLayout")) {
 					return layoutTypeController.isInstanceable() &&
 						   !layoutTypeController.isPrimaryType() &&
-						   (!deprecatedType || widgetPageFFEnabled) &&
+						   (!deprecatedType || widgetPageFeatureFlagEnabled) &&
 						   !type.equals(LayoutConstants.TYPE_URL) &&
 						   !type.equals(LayoutConstants.TYPE_EMBEDDED);
 				}
 
 				return layoutTypeController.isInstanceable() &&
 					   !layoutTypeController.isPrimaryType() &&
-					   (!deprecatedType || widgetPageFFEnabled);
+					   (!deprecatedType || widgetPageFeatureFlagEnabled);
 			});
 
 		return _types;

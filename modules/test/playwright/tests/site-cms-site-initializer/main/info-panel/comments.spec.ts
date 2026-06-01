@@ -31,7 +31,7 @@ const test = mergeTests(
 
 test(
 	'Info Panel Comments and view Delete confirmation modal for added content',
-	{tag: ['@LPD-62554', '@LPD-86000']},
+	{tag: ['@LPD-62554', '@LPD-86000', '@LPD-93071']},
 	async ({apiHelpers, assetsPage, infoPanelPage, page, spaceSummaryPage}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const spaceName = `Space ${getRandomString()}`;

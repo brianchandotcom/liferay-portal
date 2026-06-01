@@ -1943,7 +1943,8 @@ test(
 
 			await waitForAlert(
 				page,
-				`Success:${basicDocumentTitle} was successfully expired.`
+				`Success:${basicDocumentTitle} was successfully expired.`,
+				{first: true}
 			);
 
 			await expect(
@@ -1979,7 +1980,8 @@ test(
 
 			await waitForAlert(
 				page,
-				'Success:2 assets were successfully expired.'
+				'Success:2 assets were successfully expired.',
+				{first: true}
 			);
 
 			for (const row of rows) {

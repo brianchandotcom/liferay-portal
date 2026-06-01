@@ -1,7 +1,7 @@
 {{- $cloud := include "observability.cloudProvider" . -}}
 {{- $interval := .Values.alloy.scrapeInterval -}}
-{{- $rw := .Values.alloy.remoteWrite -}}
-{{- if and (ne $cloud "aws") (ne $cloud "gcp") (not $rw.url) -}}
+{{- $remoteWrite := .Values.alloy.remoteWrite -}}
+{{- if and (ne $cloud "aws") (ne $cloud "gcp") (not $remoteWrite.url) -}}
 {{- fail "alloy.remoteWrite.url is required when cloudProvider is not aws or gcp" -}}
 {{- end -}}
 {{- if and (eq $cloud "aws") (not .Values.aws.ampWorkspaceURL) -}}
@@ -18,7 +18,7 @@ logging {
 {{- if eq $cloud "aws" }}
 prometheus.remote_write "default" {
     endpoint {
-        {{- with $rw.headers }}
+        {{- with $remoteWrite.headers }}
         headers = {
             {{- range $k, $v := . }}
             {{ $k | quote }} = {{ $v | quote }},
@@ -41,15 +41,15 @@ prometheus.remote_write "default" {
 {{- else }}
 prometheus.remote_write "default" {
     endpoint {
-        {{- if and $rw.basicAuth.username $rw.basicAuth.password }}
+        {{- if and $remoteWrite.basicAuth.username $remoteWrite.basicAuth.password }}
         basic_auth {
             password_file = "/var/run/secrets/alloy/password"
-            username = {{ $rw.basicAuth.username | quote }}
+            username = {{ $remoteWrite.basicAuth.username | quote }}
         }
-        {{- else if $rw.bearerToken }}
+        {{- else if $remoteWrite.bearerToken }}
         bearer_token_file = "/var/run/secrets/alloy/bearer-token"
         {{- end }}
-        url = {{ $rw.url | quote }}
+        url = {{ $remoteWrite.url | quote }}
     }
 }
 {{- end }}
@@ -92,31 +92,31 @@ prometheus.scrape "cadvisor" {
 }
 {{- end }}
 
-{{- if and (eq $cloud "aws") .Values.alloy.scrape.cloudwatchRds.enabled }}
-{{- $cw := .Values.alloy.scrape.cloudwatchRds -}}
-{{- $cwRegion := default .Values.aws.region $cw.region }}
+{{- if and (eq $cloud "aws") .Values.alloy.scrape.cloudwatchRDS.enabled }}
+{{- $cloudwatchRDS := .Values.alloy.scrape.cloudwatchRDS -}}
+{{- $cloudwatchRDSRegion := default .Values.aws.region $cloudwatchRDS.region }}
 prometheus.exporter.cloudwatch "rds" {
     decoupled_scraping {
         enabled = true
-        scrape_interval = {{ $cw.discoveryInterval | quote }}
+        scrape_interval = {{ $cloudwatchRDS.discoveryInterval | quote }}
     }
 
     discovery {
-        {{- range $cw.metrics }}
+        {{- range $cloudwatchRDS.metrics }}
         metric {
             name = {{ .name | quote }}
             period = "1m"
             statistics = {{ .statistics | toJson }}
         }
         {{- end }}
-        regions = [{{ $cwRegion | quote }}]
+        regions = [{{ $cloudwatchRDSRegion | quote }}]
         search_tags = {
-            Name = {{ $cw.nameTagRegex | quote }},
+            Name = {{ $cloudwatchRDS.nameTagRegex | quote }},
         }
         type = "AWS/RDS"
     }
 
-    sts_region = {{ $cwRegion | quote }}
+    sts_region = {{ $cloudwatchRDSRegion | quote }}
 }
 
 discovery.relabel "cloudwatch_rds" {
@@ -140,7 +140,7 @@ prometheus.scrape "cloudwatch_rds" {
         enabled = true
     }
     forward_to = [prometheus.relabel.cloudwatch_rds.receiver]
-    scrape_interval = {{ $cw.scrapeInterval | quote }}
+    scrape_interval = {{ $cloudwatchRDS.scrapeInterval | quote }}
     targets = discovery.relabel.cloudwatch_rds.output
 }
 {{- end }}
@@ -191,11 +191,11 @@ prometheus.scrape "envoy" {
 {{- end }}
 
 {{- if .Values.alloy.scrape.kubeStateMetrics.enabled }}
-{{- $ksmName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" }}
+{{- $kubeStateMetricsName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" }}
 discovery.kubernetes "kube_state_metrics" {
     role = "service"
     selectors {
-        label = "app.kubernetes.io/name={{ $ksmName }}"
+        label = "app.kubernetes.io/name={{ $kubeStateMetricsName }}"
         role = "service"
     }
 }
@@ -272,11 +272,11 @@ prometheus.scrape "liferay" {
 {{- end }}
 
 {{- if .Values.alloy.scrape.nodeExporter.enabled }}
-{{- $neName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" }}
+{{- $nodeExporterName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" }}
 discovery.kubernetes "node_exporter" {
     role = "pod"
     selectors {
-        label = "app.kubernetes.io/name={{ $neName }}"
+        label = "app.kubernetes.io/name={{ $nodeExporterName }}"
         role = "pod"
     }
 }
@@ -331,17 +331,17 @@ discovery.relabel "rds_exporter" {
     targets = discovery.kubernetes.rds_exporter.targets
 }
 
-prometheus.scrape "rds_exporter" {
-    forward_to = [prometheus.relabel.rds_exporter.receiver]
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.rds_exporter.output
-}
-
 prometheus.relabel "rds_exporter" {
     forward_to = [prometheus.remote_write.default.receiver]
     rule {
         source_labels = ["dbidentifier"]
         target_label = "dbinstance_identifier"
     }
+}
+
+prometheus.scrape "rds_exporter" {
+    forward_to = [prometheus.relabel.rds_exporter.receiver]
+    scrape_interval = {{ $interval | quote }}
+    targets = discovery.relabel.rds_exporter.output
 }
 {{- end }}

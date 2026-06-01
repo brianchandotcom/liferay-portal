@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 		"jakarta.portlet.expiration-cache=0",
 		"jakarta.portlet.init-param.template-path=/META-INF/resources/",
 		"jakarta.portlet.init-param.view-template=/view.jsp",
-		"jakarta.portlet.name=" + CKEditor5SamplePortletKeys.CKEDITOR5_SAMPLE,
+		"jakarta.portlet.name=" + CKEditor5SamplePortletKeys.CKEDITOR_5_SAMPLE,
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=power-user,user",
 		"jakarta.portlet.version=4.0"

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"editor.config.key=sampleBalloonEditor",
-		"jakarta.portlet.name=" + CKEditor4SamplePortletKeys.CKEDITOR4_SAMPLE
+		"jakarta.portlet.name=" + CKEditor4SamplePortletKeys.CKEDITOR_4_SAMPLE
 	},
 	service = EditorConfigContributor.class
 )

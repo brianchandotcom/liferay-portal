@@ -10,7 +10,7 @@ package com.liferay.frontend.editor.ckeditor5.sample.web.internal.constants;
  */
 public class CKEditor5SamplePortletKeys {
 
-	public static final String CKEDITOR5_SAMPLE =
+	public static final String CKEDITOR_5_SAMPLE =
 		"com_liferay_editor_ckeditor5_sample_web_internal_portlet_" +
 			"CKEditor5SamplePortlet";
 

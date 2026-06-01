@@ -329,11 +329,6 @@ discovery.relabel "pushgateway" {
         replacement = "pushgateway"
         target_label = "job"
     }
-    rule {
-        action = "replace"
-        replacement = "true"
-        target_label = "honor_labels"
-    }
     targets = discovery.kubernetes.pushgateway.targets
 }
 

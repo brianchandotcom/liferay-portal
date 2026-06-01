@@ -215,7 +215,7 @@ test(
 			});
 
 			await infoPanelPage.expectMetadata('Resolución', /.+/);
-			await infoPanelPage.expectMetadata('Aspect Ratio', /.+/);
+			await infoPanelPage.expectMetadata('Relación de aspecto', /.+/);
 		}
 		finally {
 			await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage(

@@ -78,7 +78,7 @@ public class LayoutContentVersionModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"version", Types.INTEGER},
-		{"specSchemaVersion", Types.VARCHAR}, {"data_", Types.VARCHAR},
+		{"specSchemaVersion", Types.VARCHAR}, {"data_", Types.CLOB},
 		{"dataHash", Types.VARCHAR}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -101,7 +101,7 @@ public class LayoutContentVersionModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("specSchemaVersion", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("data_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("dataHash", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -110,7 +110,7 @@ public class LayoutContentVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutContentVersion (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,layoutContentVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,name STRING null,version INTEGER,specSchemaVersion VARCHAR(75) null,data_ VARCHAR(75) null,dataHash VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table LayoutContentVersion (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,layoutContentVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,name STRING null,version INTEGER,specSchemaVersion VARCHAR(75) null,data_ TEXT null,dataHash VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutContentVersion";
@@ -1590,4 +1590,4 @@ public class LayoutContentVersionModelImpl
 	private LayoutContentVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1949127759
+// LIFERAY-SERVICE-BUILDER-HASH:626894610

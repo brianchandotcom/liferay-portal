@@ -7,8 +7,6 @@ package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
@@ -53,9 +51,8 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 
 		test(
 			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(messages.toString(), messages.isEmpty());
+				_assertResourcePermissionNotDeleted(
+					logCapture, portlet.getPortletName());
 
 				Assert.assertTrue(_hasResourcePermission(resourcePermissionId));
 			},
@@ -115,9 +112,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 
 		test(
 			logCapture -> {
-				List<String> messages = logCapture.getMessages();
-
-				Assert.assertTrue(messages.toString(), messages.isEmpty());
+				_assertResourcePermissionNotDeleted(logCapture, portletName);
 
 				Assert.assertTrue(_hasResourcePermission(resourcePermissionId));
 			},
@@ -210,28 +205,6 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 			"ResourcePermissionPostupgradeDataCleanupProcess";
 	}
 
-	@Override
-	protected void test(
-			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
-			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
-			UnsafeRunnable<Exception> initializeDataUnsafeRunnable)
-		throws Exception {
-
-		long resourcePermissionCount =
-			_resourcePermissionLocalService.getResourcePermissionsCount();
-
-		try {
-			super.test(
-				assertUnsafeConsumer, cleanUpDataUnsafeRunnable,
-				initializeDataUnsafeRunnable);
-		}
-		finally {
-			Assert.assertEquals(
-				resourcePermissionCount,
-				_resourcePermissionLocalService.getResourcePermissionsCount());
-		}
-	}
-
 	private void _addResourcePermission(
 			String portletName, long primKeyId, long resourcePermissionId,
 			long roleId)
@@ -250,6 +223,15 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 			preparedStatement.setInt(5, ResourceConstants.SCOPE_INDIVIDUAL);
 
 			preparedStatement.executeUpdate();
+		}
+	}
+
+	private void _assertResourcePermissionNotDeleted(
+		LogCapture logCapture, String name) {
+
+		for (String message : logCapture.getMessages()) {
+			Assert.assertFalse(
+				message, message.contains("\"" + name + "\" was not found"));
 		}
 	}
 

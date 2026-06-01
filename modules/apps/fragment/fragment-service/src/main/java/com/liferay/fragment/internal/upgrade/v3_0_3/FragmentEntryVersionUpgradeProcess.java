@@ -31,10 +31,12 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 		for (Map.Entry<Long, List<Long>> entry :
 				fragmentEntryIdsByCtCollectionId.entrySet()) {
 
+			long ctCollectionId = entry.getKey();
+
 			for (Long fragmentEntryId : entry.getValue()) {
 				List<Long> fragmentEntryVersionIds =
 					_getFragmentEntryVersionIds(
-						entry.getKey(), fragmentEntryId);
+						ctCollectionId, fragmentEntryId);
 
 				List<Long> fragmentEntryVersionIdsToDelete =
 					fragmentEntryVersionIds.subList(

@@ -410,44 +410,10 @@ export const DATA_RETENTION_PERIOD_KEY = 'data-retention-period';
 
 export const DEVELOPER_MODE = FARO_DEV_MODE;
 
-export const ENABLE_ASSET_OBJECT_ENTRY = true;
-
 export const ENABLE_ADD_TRIAL_WORKSPACE =
 	FARO_ENV === FaroEnv.Local || FARO_ENV === FaroEnv.Staging;
 
-// LRAC - 11652 Hide Displayed Asset Card on the Page report
-
-export const ENABLE_ASSET_CARD = false;
-
-// LRAC-13649 Hide the keywords blocklist screen from Settings>Definitions
-
-export const ENABLE_BLOCKLIST_KEYWORDS = false;
-
-// LRAC-11651 Disable temporarily CSV File
-
-export const ENABLE_CSVFILE = false;
-
-// LRAC-13389 Disable temporarily Delete Property and Delete Data Source buttons
-
-export const ENABLE_DELETE_DATA_SOURCE_BUTTON = false;
-
-export const ENABLE_DELETE_PROPERTY_BUTTON = false;
-
-// LRAC-11650 Hide Form Abandonment Card
-
-export const ENABLE_FORM_ABANDONMENT = false;
-
-// LRAC-10908 Hide global filters
-
-export const ENABLE_GLOBAL_FILTER = false;
-
-// LRAC-13781 [BUG] The Last Seen column only displays the creation date of the token
-
-export const ENABLE_LAST_ACCESS_DATE = false;
-
-// LRAC-11571 Disable temporarily Salesforce
-
-export const ENABLE_SALESFORCE = false;
+// Feature flags toggled at runtime now live in `shared/util/feature-flags.ts`.
 
 export const EXPIRATION_DATE_LABELS = {
 	[ExpirationPeriod.In30Days]: Liferay.Language.get('30-days'),

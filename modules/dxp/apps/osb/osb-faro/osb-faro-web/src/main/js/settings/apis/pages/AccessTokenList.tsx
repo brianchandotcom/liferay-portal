@@ -20,7 +20,7 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
-import {ENABLE_LAST_ACCESS_DATE, ExpirationPeriod} from 'shared/util/constants';
+import {ExpirationPeriod} from 'shared/util/constants';
 import {formatDateToTimeZone, getDateNow} from 'shared/util/date';
 import {RootState} from 'shared/store';
 import {sub} from 'shared/util/lang';
@@ -146,17 +146,6 @@ const TokenList: React.FC<
 									accessor: 'token',
 									cellRenderer: TokenCell,
 									label: Liferay.Language.get('token'),
-									sortable: false
-								},
-								ENABLE_LAST_ACCESS_DATE && {
-									accessor: 'lastAccessDate',
-									dataFormatter: (val: string) =>
-										formatDateToTimeZone(
-											val,
-											CUSTOM_DATE_FORMAT,
-											timeZoneId
-										),
-									label: Liferay.Language.get('last-seen'),
 									sortable: false
 								},
 								{

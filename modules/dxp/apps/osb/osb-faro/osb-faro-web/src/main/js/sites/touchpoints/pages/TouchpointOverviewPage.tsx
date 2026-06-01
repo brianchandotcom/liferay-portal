@@ -4,7 +4,7 @@ import DevicesCard from 'sites/touchpoints/hocs/DevicesCard';
 import LocationsCard from 'sites/touchpoints/hocs/LocationsCard';
 import PageMetricCard from 'sites/touchpoints/components/PageMetricCard';
 import React from 'react';
-import {ENABLE_ASSET_CARD} from 'shared/util/constants';
+import {ENABLE_ASSET_CARD} from 'shared/util/feature-flags';
 import {MetricName} from 'shared/types/MetricName';
 import {Name} from 'shared/components/audience-report/types';
 

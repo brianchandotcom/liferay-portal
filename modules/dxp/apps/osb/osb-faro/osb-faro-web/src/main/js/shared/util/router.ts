@@ -341,6 +341,7 @@ export const Routes = buildRoutes({
 									SETTINGS_DEFINITIONS_SEARCH: '/search'
 								}
 							},
+							SETTINGS_FEATURE_FLAGS: '/feature-flags',
 							SETTINGS_RECOMMENDATIONS: {
 								path: '/recommendations',
 								routes: {

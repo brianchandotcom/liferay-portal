@@ -45,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
+public class OAuth2WellKnownAuthorizationServerMetadataServlet
+	extends HttpServlet {
 
 	@Override
 	protected void doGet(
@@ -138,7 +139,7 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2WellKnownAuthorizationServerServlet.class);
+		OAuth2WellKnownAuthorizationServerMetadataServlet.class);
 
 	@Reference
 	private OAuthClientASLocalMetadataLocalService

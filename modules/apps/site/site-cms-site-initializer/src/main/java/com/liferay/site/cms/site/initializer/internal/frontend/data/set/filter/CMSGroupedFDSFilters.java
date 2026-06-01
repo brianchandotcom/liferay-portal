@@ -57,7 +57,7 @@ public class CMSGroupedFDSFilters implements GroupedFDSFilters {
 				LanguageUtil.get(resourceBundle, "filter-by-date"),
 				JSONUtil.putAll(
 					"dateCreated", "dateDisplay", "dateExpiration",
-					"dateModified", "datePublish", "dateReview")));
+					"dateModified", "dateReview")));
 	}
 
 }

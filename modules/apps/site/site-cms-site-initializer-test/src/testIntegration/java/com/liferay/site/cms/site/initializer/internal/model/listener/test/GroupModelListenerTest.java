@@ -9,12 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
+import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,26 +63,14 @@ public class GroupModelListenerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-92888")
 	public void testUpdateDepotEntry() throws Exception {
-		Layout layout = _getRecycleBinLayout(_cmsGroup);
-
-		Assert.assertFalse(layout.isHidden());
-
 		DepotEntry depotEntry = _addDepotEntry();
 
 		Group depotGroup = depotEntry.getGroup();
 
-		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
-
-		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
+		_testSetTrashEnabled(depotGroup);
+		_testUpdateExternalReferenceCode(depotEntry, depotGroup);
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -114,6 +108,56 @@ public class GroupModelListenerTest {
 			group.getGroupId(), unicodeProperties.toString());
 	}
 
+	private void _testSetTrashEnabled(Group depotGroup) throws Exception {
+		Layout layout = _getRecycleBinLayout(_cmsGroup);
+
+		Assert.assertFalse(layout.isHidden());
+
+		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
+	}
+
+	private void _testUpdateExternalReferenceCode(
+			DepotEntry depotEntry, Group depotGroup)
+		throws Exception {
+
+		String originalExternalReferenceCode =
+			depotGroup.getExternalReferenceCode();
+
+		Assert.assertNotNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				originalExternalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		depotGroup.setExternalReferenceCode(externalReferenceCode);
+
+		depotGroup = _groupLocalService.updateGroup(depotGroup);
+
+		Assert.assertNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				originalExternalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
+
+		Assert.assertNotNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				externalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
+	}
+
 	private Group _cmsGroup;
 
 	@DeleteAfterTestRun
@@ -121,6 +165,11 @@ public class GroupModelListenerTest {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject(
+		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+	)
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

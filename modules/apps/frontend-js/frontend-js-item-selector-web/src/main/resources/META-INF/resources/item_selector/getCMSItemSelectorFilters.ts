@@ -119,12 +119,6 @@ export function getCMSItemSelectorFilters(
 		},
 		{
 			entityFieldType: EEntityFieldType.DATE_TIME,
-			id: 'datePublish',
-			label: Liferay.Language.get('publish-date'),
-			type: 'dateRange',
-		},
-		{
-			entityFieldType: EEntityFieldType.DATE_TIME,
 			id: 'dateReview',
 			label: Liferay.Language.get('review-date'),
 			type: 'dateRange',
@@ -160,7 +154,6 @@ export function getCMSItemSelectorGroupedFilters(
 				'dateDisplay',
 				'dateExpiration',
 				'dateModified',
-				'datePublish',
 				'dateReview',
 			],
 			label: Liferay.Language.get('filter-by-date'),

@@ -89,9 +89,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoSelectCategory() {
-		IFrame.selectCategoryFrame();
-
-		Portlet.expandTree();
+		AssertVisible(locator1 = "Modal#BODY");
 	}
 
 	@summary = "Default summary"

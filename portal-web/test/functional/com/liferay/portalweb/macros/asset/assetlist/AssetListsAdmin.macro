@@ -30,8 +30,6 @@ definition {
 				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 
-		SelectFrameTop();
-
 		Click(locator1 = "Button#DONE");
 
 		PortletEntry.save();

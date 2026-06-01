@@ -24,7 +24,7 @@ describe('getCMSItemSelectorFilters', () => {
 	it('returns the correct filter configurations', () => {
 		const filters = getCMSItemSelectorFilters(12345);
 
-		expect(filters.length).toBe(12);
+		expect(filters.length).toBe(11);
 
 		expect(filters.map((f) => f.id)).toEqual([
 			'groupIds',
@@ -37,7 +37,6 @@ describe('getCMSItemSelectorFilters', () => {
 			'dateDisplay',
 			'dateExpiration',
 			'dateModified',
-			'datePublish',
 			'dateReview',
 		]);
 
@@ -83,7 +82,7 @@ describe('getCMSItemSelectorFilters', () => {
 		expect(groupedFilters.length).toBe(2);
 		expect(groupedFilters[0].filters.length).toBe(6);
 		expect(groupedFilters[0].filters[0]).toBe('groupIds');
-		expect(groupedFilters[1].filters.length).toBe(6);
+		expect(groupedFilters[1].filters.length).toBe(5);
 	});
 
 	it('lets the caller override the space filter id', () => {

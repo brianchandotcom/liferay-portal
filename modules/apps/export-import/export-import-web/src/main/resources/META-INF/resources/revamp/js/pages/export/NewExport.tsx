@@ -15,6 +15,7 @@ import {
 	Range,
 	normalizeDateFilter,
 } from '../../components/date_filter';
+import {ContentSelection} from '../../components/forms/content_selector/ContentSelector';
 import {FormikDebug} from '../../components/forms/formik';
 import {
 	ExportPreviewParams,
@@ -22,6 +23,10 @@ import {
 } from '../../services/getExportPreview';
 import {postExportProcess} from '../../services/postExportProcess';
 import {ExportPreview} from '../../types/exportImportPreview';
+import {
+	CONTENT_SECTION_KEY,
+	SITE_BUILDER_SECTION_KEY,
+} from '../../utils/contentSelection';
 import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelection from './components/DataSelection';
 import {PageTreeModalConfiguration} from './components/PageTreeModal';
@@ -111,17 +116,34 @@ export function NewExport({
 				permissions: false,
 			}}
 			onSubmit={async (values) => {
+				const contentSelection = values.contentSelection as
+					| ContentSelection
+					| undefined;
+
+				const commentsAndRatings = contentSelection?.[
+					CONTENT_SECTION_KEY
+				]?.commentsAndRatings as Record<string, boolean> | undefined;
+				const lookAndFeel = contentSelection?.[SITE_BUILDER_SECTION_KEY]
+					?.lookAndFeel as Record<string, boolean> | undefined;
+
 				const result = await postExportProcess({
 					exportProcessRequest: {
 						...normalizeDateFilter(values.dateFilter),
+						comments: !!commentsAndRatings?.comments,
 						deletions: !!values.deletions,
+						logo: !!lookAndFeel?.logo,
 						name: values.name,
 						permissions: !!values.permissions,
+						ratings: !!commentsAndRatings?.ratings,
 						requestPortletDataHandlers:
 							toRequestPortletDataHandlers(
 								sections,
 								values.contentSelection
 							),
+						sitePagesSettings: !!lookAndFeel?.sitePagesSettings,
+						siteTemplateSettings:
+							!!lookAndFeel?.siteTemplateSettings,
+						themeSettings: !!lookAndFeel?.themeSettings,
 					},
 					url: exportProcessAPIURL,
 				});

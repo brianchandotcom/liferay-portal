@@ -463,7 +463,7 @@ describe('NewExport', () => {
 		});
 	});
 
-	it('submits the checked Look and Feel entries as top-level requestPortletDataHandlers', async () => {
+	it('submits the checked Look and Feel entries as request flags', async () => {
 		renderComponent({lookAndFeelEnabled: true});
 
 		await screen.findByText('loaded');
@@ -495,18 +495,62 @@ describe('NewExport', () => {
 			expect(exportCall).toBeDefined();
 
 			const body = JSON.parse(exportCall![1]!.body as string);
-			const names = body.requestPortletDataHandlers.map(
-				(entry: {name: string}) => entry.name
+
+			expect(body.themeSettings).toBe(true);
+			expect(body.sitePagesSettings).toBe(true);
+			expect(body.logo).toBe(false);
+			expect(body.siteTemplateSettings).toBe(false);
+
+			const handlerNames = body.requestPortletDataHandlers.map(
+				(handler: {name: string}) => handler.name
 			);
 
-			expect(names).toContain('THEME_REFERENCE');
-			expect(names).toContain('LAYOUT_SET_SETTINGS');
-			expect(names).not.toContain('LOGO');
-			expect(names).not.toContain('LAYOUT_SET_PROTOTYPE_SETTINGS');
+			expect(handlerNames).not.toContain('lookAndFeel');
+			expect(handlerNames).not.toContain('logo');
+			expect(handlerNames).not.toContain('THEME_REFERENCE');
 		});
 	});
 
-	it('submits the checked Comments and Ratings entries as top-level requestPortletDataHandlers', async () => {
+	it('checks every look and feel option when the Site Builder section is selected', async () => {
+		renderComponent({lookAndFeelEnabled: true});
+
+		await screen.findByText('loaded');
+
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
+		});
+		await userEvent.type(nameInput, 'test-file');
+
+		await userEvent.click(
+			screen.getByRole('checkbox', {name: 'Site Builder'})
+		);
+
+		fetch.mockResponseOnce(JSON.stringify({}));
+
+		await userEvent.click(screen.getByRole('button', {name: /^export$/i}));
+
+		await waitFor(() => {
+			const exportCall = fetch.mock.calls.find(([, init]) => {
+				const body = init?.body;
+
+				return (
+					typeof body === 'string' &&
+					body.includes('"requestPortletDataHandlers"')
+				);
+			});
+
+			expect(exportCall).toBeDefined();
+
+			const body = JSON.parse(exportCall![1]!.body as string);
+
+			expect(body.themeSettings).toBe(true);
+			expect(body.logo).toBe(true);
+			expect(body.sitePagesSettings).toBe(true);
+			expect(body.siteTemplateSettings).toBe(true);
+		});
+	});
+
+	it('submits the checked Comments and Ratings entries as request flags', async () => {
 		renderComponent({commentsAndRatingsEnabled: true});
 
 		await screen.findByText('loaded');
@@ -541,12 +585,17 @@ describe('NewExport', () => {
 			expect(exportCall).toBeDefined();
 
 			const body = JSON.parse(exportCall![1]!.body as string);
-			const names = body.requestPortletDataHandlers.map(
-				(entry: {name: string}) => entry.name
+
+			expect(body.comments).toBe(true);
+			expect(body.ratings).toBe(false);
+
+			const handlerNames = body.requestPortletDataHandlers.map(
+				(handler: {name: string}) => handler.name
 			);
 
-			expect(names).toContain('COMMENTS');
-			expect(names).not.toContain('RATINGS');
+			expect(handlerNames).not.toContain('commentsAndRatings');
+			expect(handlerNames).not.toContain('comments');
+			expect(handlerNames).not.toContain('COMMENTS');
 		});
 	});
 });

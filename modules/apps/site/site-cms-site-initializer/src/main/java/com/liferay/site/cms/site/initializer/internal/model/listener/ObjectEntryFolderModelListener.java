@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -35,12 +36,16 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
+import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,6 +90,16 @@ public class ObjectEntryFolderModelListener
 		throws ModelListenerException {
 
 		try {
+			if (!Objects.equals(
+					originalObjectEntryFolder.getExternalReferenceCode(),
+					objectEntryFolder.getExternalReferenceCode())) {
+
+				_updateCMSDefaultPermissionObjectEntry(
+					objectEntryFolder.getExternalReferenceCode(),
+					objectEntryFolder,
+					originalObjectEntryFolder.getExternalReferenceCode());
+			}
+
 			if (originalObjectEntryFolder.getParentObjectEntryFolderId() !=
 					objectEntryFolder.getParentObjectEntryFolderId()) {
 
@@ -251,6 +266,38 @@ public class ObjectEntryFolderModelListener
 			objectEntry.getObjectEntryId());
 	}
 
+	private void _updateCMSDefaultPermissionObjectEntry(
+			String externalReferenceCode, ObjectEntryFolder objectEntryFolder,
+			String originalExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+			originalExternalReferenceCode,
+			objectEntryFolder.getModelClassName(), _filterFactory);
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			objectEntry.getExternalReferenceCode(),
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+			externalReferenceCode, objectEntryFolder.getModelClassName(),
+			_jsonFactory.createJSONObject(
+				GetterUtil.getString(values.get("defaultPermissions"), "{}")),
+			GetterUtil.getLong(values.get("depotGroupId")),
+			GetterUtil.getString(values.get("treePath")));
+	}
+
 	private void _updateCMSDefaultPermissions(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
@@ -290,6 +337,9 @@ public class ObjectEntryFolderModelListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

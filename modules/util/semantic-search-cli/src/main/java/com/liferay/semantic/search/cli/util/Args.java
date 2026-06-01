@@ -60,12 +60,12 @@ public class Args {
 		_positional = positional;
 	}
 
-	public boolean force() {
-		return _force;
-	}
-
 	public String format() {
 		return _format;
+	}
+
+	public boolean isForce() {
+		return _force;
 	}
 
 	/**

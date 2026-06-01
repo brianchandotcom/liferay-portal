@@ -25,7 +25,7 @@ import org.junit.Test;
 public class JavaChunkerTest {
 
 	@Test
-	public void testClassNameDrivesHeadingPath() {
+	public void testParseClassNameDrivesHeadingPath() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -40,7 +40,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testImportBlockIsStripped() {
+	public void testParseImportBlockIsStripped() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -58,7 +58,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testLicenseHeaderIsStripped() {
+	public void testParseLicenseHeaderIsStripped() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -76,7 +76,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testMethodNamesBecomeSecondHeadingElement() {
+	public void testParseMethodNamesBecomeSecondHeadingElement() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();
@@ -99,7 +99,7 @@ public class JavaChunkerTest {
 	}
 
 	@Test
-	public void testOneChunkPerMethodPlusIntro() {
+	public void testParseOneChunkPerMethodPlusIntro() {
 		String text = _read("SampleResourceImpl.java.txt");
 
 		JavaChunker javaChunker = new JavaChunker();

@@ -5,6 +5,8 @@
 
 package com.liferay.semantic.search.cli.util;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -77,7 +79,7 @@ public class Output {
 			return "(no results)";
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		int i = 1;
 
@@ -88,21 +90,21 @@ public class Output {
 				head = "(no heading)";
 			}
 
-			stringBuilder.append(i++);
-			stringBuilder.append(". ");
-			stringBuilder.append(hit.path());
-			stringBuilder.append("  [");
-			stringBuilder.append(String.format("%.3f", hit.score()));
-			stringBuilder.append("]\n   ");
-			stringBuilder.append(head);
-			stringBuilder.append("\n   ");
-			stringBuilder.append(hit.snippet());
-			stringBuilder.append('\n');
+			sb.append(i++);
+			sb.append(". ");
+			sb.append(hit.path());
+			sb.append("  [");
+			sb.append(String.format("%.3f", hit.score()));
+			sb.append("]\n   ");
+			sb.append(head);
+			sb.append("\n   ");
+			sb.append(hit.snippet());
+			sb.append('\n');
 		}
 
-		stringBuilder.setLength(stringBuilder.length() - 1);
+		sb.setIndex(sb.index() - 1);
 
-		return stringBuilder.toString();
+		return sb.toString();
 	}
 
 	private static double _round(double value, int decimals) {

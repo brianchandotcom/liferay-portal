@@ -144,7 +144,7 @@ the stack up:
 | AMD ROCm | not supported by TEI today | — |
 
 ```bash
-TEI_IMAGE_TAG=cpu-ipex-1.6 docker compose up -d
+TEI_IMAGE_TAG=cpu-ipex-1.6 docker compose up --detach
 ```
 
 Intel Arc and Apple Silicon GPU acceleration would require switching
@@ -214,5 +214,5 @@ SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery/
 
 The pattern generalizes to any number of repos: cd into the
 checkout that contains the corpus you want to search, run the same
-CLI. The data-home resolution handles separation; you don't need to
+CLI. The data-home resolution handles separation; you do not need to
 juggle collection names.

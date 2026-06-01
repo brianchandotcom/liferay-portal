@@ -108,5 +108,10 @@
 		"externalReferenceCode": "ERC-022",
 		"name": "Legacy SaaS Test Account",
 		"type": "business"
+	},
+	{
+		"externalReferenceCode": "ERC-023",
+		"name": "AI Hub Test Account",
+		"type": "business"
 	}
 ]

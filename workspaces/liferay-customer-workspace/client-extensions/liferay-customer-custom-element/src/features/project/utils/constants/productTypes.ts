@@ -4,6 +4,7 @@
  */
 
 export const PRODUCT_TYPES = {
+	aiHub: 'AI Hub',
 	analyticsCloud: 'Analytics Cloud',
 	cloudNative: 'Cloud Native',
 	commerce: 'Commerce',

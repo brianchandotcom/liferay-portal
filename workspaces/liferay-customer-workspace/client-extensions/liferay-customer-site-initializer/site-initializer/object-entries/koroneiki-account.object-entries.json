@@ -354,6 +354,22 @@
 			"slaCurrent": "Platinum Subscription",
 			"slaCurrentEndDate": "2026-12-31 00:00:00.0",
 			"slaCurrentStartDate": "2023-01-01 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-023",
+			"code": "TESTACCOUNT23",
+			"dxpVersion": "7.4",
+			"externalReferenceCode": "ERC-023",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "AI Hub Test Account",
+			"partner": false,
+			"r_accountEntryToKoroneikiAccount_accountEntryERC": "ERC-023",
+			"region": "United States",
+			"slaCurrent": "Platinum Subscription",
+			"slaCurrentEndDate": "2026-12-31 00:00:00.0",
+			"slaCurrentStartDate": "2023-01-01 00:00:00.0"
 		}
 	],
 	"objectDefinitionName": "KoroneikiAccount"

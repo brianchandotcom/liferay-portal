@@ -6,10 +6,13 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {SidePanel} from '@clayui/core';
 import ClayToolbar from '@clayui/toolbar';
+import {useMediaQuery} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import './PageVersionHistory.scss';
+
+const LARGE_MEDIA_QUERY = '(min-width: 992px)';
 
 interface Props {
 	pageSpecificationVersionsURL: string;
@@ -24,10 +27,14 @@ export default function PageVersionHistory({
 		document.getElementById('wrapper')
 	);
 
+	const isScreenLarge = useMediaQuery(LARGE_MEDIA_QUERY);
+
+	const isSidePanelOpen = isScreenLarge || isOpen;
+
 	return (
 		<>
-			<ClayToolbar className="bg-white page-version-history__toolbar">
-				{!isOpen ? (
+			<ClayToolbar className="bg-white page-version-history__toolbar px-3">
+				{!isSidePanelOpen ? (
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item>
 							<ClayButtonWithIcon

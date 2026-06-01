@@ -84,11 +84,11 @@ public class JournalConverterImplTest {
 
 		languageUtil.setLanguage(language);
 
-		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
-
 		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();
 
 		secureSAXReaderImpl.setSecure(true);
+
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		saxReaderUtil.setSAXReader(secureSAXReaderImpl);
 
@@ -144,9 +144,9 @@ public class JournalConverterImplTest {
 			ddmForm
 		);
 
-		int leafCount = 50;
+		int leafCount = RandomTestUtil.randomInt(10, 50);
 
-		StringBundler contentSB = new StringBundler(3 + (leafCount * 7));
+		StringBundler contentSB = new StringBundler(3 + (leafCount * 9));
 
 		contentSB.append("<?xml version=\"1.0\"?><root available-locales=");
 		contentSB.append("\"en_US\" default-locale=\"en_US\">");
@@ -173,7 +173,9 @@ public class JournalConverterImplTest {
 			contentSB.append("\" name=\"");
 			contentSB.append(name);
 			contentSB.append("\" type=\"text\"><dynamic-content language-id=");
-			contentSB.append("\"en_US\"><![CDATA[v]]></dynamic-content>");
+			contentSB.append("\"en_US\"><![CDATA[");
+			contentSB.append(RandomTestUtil.randomString());
+			contentSB.append("]]></dynamic-content>");
 			contentSB.append("</dynamic-element>");
 
 			if (i > 0) {

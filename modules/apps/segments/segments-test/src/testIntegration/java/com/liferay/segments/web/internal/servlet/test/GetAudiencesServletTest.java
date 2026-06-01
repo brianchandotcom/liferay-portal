@@ -97,6 +97,40 @@ public class GetAudiencesServletTest {
 
 	@Test
 	@TestInfo("LPD-91094")
+	public void testGetAudiencesMapsAttributeNames() throws Exception {
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and", _createRuleJSONObject("localDate", "eq", "2026-06-01"),
+				_createRuleJSONObject("userAgent", "eq", "chrome")),
+			SegmentsEntryConstants.SOURCE_AUDIENCE);
+
+		JSONObject audienceJSONObject = _getAudienceJSONObject(
+			_getAudiencesJSONArray(), segmentsEntry.getSegmentsEntryKey());
+
+		Assert.assertNotNull(audienceJSONObject);
+
+		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
+
+		Assert.assertEquals(2, rulesJSONArray.length());
+		Assert.assertEquals(
+			"local_date",
+			rulesJSONArray.getJSONObject(
+				0
+			).getString(
+				"attribute"
+			));
+		Assert.assertEquals(
+			"user_agent",
+			rulesJSONArray.getJSONObject(
+				1
+			).getString(
+				"attribute"
+			));
+	}
+
+	@Test
+	@TestInfo("LPD-91094")
 	public void testGetAudiencesReturnsEmptyWhenNoAudienceEntriesExist()
 		throws Exception {
 

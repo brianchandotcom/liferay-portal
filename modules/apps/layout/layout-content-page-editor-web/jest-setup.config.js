@@ -131,8 +131,9 @@ jest.mock(
 	})
 );
 
-jest.mock(
-	'./src/main/resources/META-INF/resources/page_editor/app/utils/useIsSmallResolution',
-
-	() => jest.fn(() => false)
-);
+window.matchMedia = (query) => ({
+	addEventListener: () => {},
+	matches: false,
+	media: query,
+	removeEventListener: () => {},
+});

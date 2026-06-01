@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useMediaQuery} from '@liferay/layout-js-components-web';
 import {debounce} from 'frontend-js-web';
 import {useEffect} from 'react';
 
 import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
-import useIsSmallResolution from '../../utils/useIsSmallResolution';
 
 const ELEMENTS_SELECTORS = [
 	'.page-editor__sidebar__content',
@@ -21,7 +21,7 @@ export default function useApplySmallResolutionChanges() {
 
 	const sidebarRef = useSelectorRef((state) => state.sidebar);
 
-	const isSmallResolution = useIsSmallResolution();
+	const isSmallResolution = useMediaQuery('(max-width: 768px)');
 
 	useEffect(() => {
 		document.body.classList.toggle(

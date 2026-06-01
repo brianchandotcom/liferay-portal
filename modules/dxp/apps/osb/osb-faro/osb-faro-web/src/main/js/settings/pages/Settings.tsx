@@ -4,7 +4,6 @@ import Loading from 'shared/components/Loading';
 import React, {Fragment, lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {compose} from 'shared/hoc';
-import {ENABLE_CSVFILE} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useStore} from 'react-redux';
@@ -13,18 +12,6 @@ import {withOnboarding} from 'shared/hoc';
 // APIS
 
 const Apis = lazy(() => import(/* webpackChunkName: "Apis" */ '../apis/pages'));
-
-// CSV data source
-
-const ConfigureCSV = lazy(
-	() =>
-		import(
-			/* webpackChunkName: "ConfigureCSV" */ './data-source/ConfigureCSV'
-		)
-);
-const UploadCSV = lazy(
-	() => import(/* webpackChunkName: "UploadCSV" */ './data-source/UploadCSV')
-);
 
 // Data Privacy
 
@@ -107,6 +94,10 @@ const RecommendationView = lazy(
 
 // Other
 
+const FeatureFlags = lazy(
+	() => import(/* webpackChunkName: "FeatureFlags" */ './FeatureFlags')
+);
+
 const UsageOverview = lazy(
 	() => import(/* webpackChunkName: "UsageOverview" */ './UsageOverview')
 );
@@ -162,22 +153,6 @@ export const Settings = () => {
 					exact
 					path={Routes.SETTINGS_DATA_SOURCE_EDIT}
 				/>
-
-				{ENABLE_CSVFILE && (
-					<BundleRouter
-						data={ConfigureCSV}
-						exact
-						path={Routes.SETTINGS_CSV_UPLOAD_CONFIGURE}
-					/>
-				)}
-
-				{ENABLE_CSVFILE && (
-					<BundleRouter
-						data={UploadCSV}
-						exact
-						path={Routes.SETTINGS_CSV_UPLOAD}
-					/>
-				)}
 
 				<BundleRouter
 					data={DataSource}
@@ -263,6 +238,12 @@ export const Settings = () => {
 						/>
 					</Fragment>
 				)}
+
+				<BundleRouter
+					data={FeatureFlags}
+					exact
+					path={Routes.SETTINGS_FEATURE_FLAGS}
+				/>
 
 				<RouteNotFound />
 			</Switch>

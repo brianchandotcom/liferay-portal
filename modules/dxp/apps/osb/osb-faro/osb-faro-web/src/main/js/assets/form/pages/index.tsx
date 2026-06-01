@@ -3,13 +3,11 @@ import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
-import Filter from '../hocs/Filter';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {CSVType} from 'shared/components/download-report/utils';
-import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {pickBy} from 'lodash';
@@ -58,7 +56,7 @@ const Form: React.FC<{
 		}
 	} = router;
 
-	const [filters, setFilters] = useState({});
+	const [filters] = useState({});
 
 	const dataSourceStates = useDataSources();
 
@@ -140,12 +138,6 @@ const Form: React.FC<{
 			)}
 
 			<BasePage.Context.Provider value={{filters, router}}>
-				{ENABLE_GLOBAL_FILTER && (
-					<BasePage.SubHeader>
-						<Filter onChange={setFilters} />
-					</BasePage.SubHeader>
-				)}
-
 				<BasePage.Body>
 					<Suspense fallback={<Loading />}>
 						<Switch>

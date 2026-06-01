@@ -10,7 +10,8 @@ import {
 	EmptyStateLink,
 	EmptyStateText
 } from 'assets/components/AssetAppearsOnCard';
-import {AssetTypes, ENABLE_FORM_ABANDONMENT} from 'shared/util/constants';
+import {AssetTypes} from 'shared/util/constants';
+import {ENABLE_FORM_ABANDONMENT} from 'shared/util/feature-flags';
 import {MetricName} from 'shared/types/MetricName';
 import {Name} from 'shared/components/audience-report/types';
 

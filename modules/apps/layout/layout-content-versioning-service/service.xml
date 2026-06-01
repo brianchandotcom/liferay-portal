@@ -40,5 +40,35 @@
 		<order by="desc">
 			<order-column name="createDate" />
 		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Plid" return-type="Collection">
+			<finder-column name="plid" />
+		</finder>
+		<finder name="G_DH" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="dataHash" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="P_V" return-type="LayoutContentVersion">
+			<finder-column name="plid" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="P_S" return-type="Collection">
+			<finder-column name="plid" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateLayoutContentVersionExternalReferenceCode</exception>
+		<exception>LayoutContentVersionExternalReferenceCode</exception>
+		<exception>LayoutContentVersionName</exception>
+		<exception>NoSuchLayoutContentVersion</exception>
+		<exception>RequiredLayoutContentVersion</exception>
+		<exception>UnsupportedLayoutLayoutContentVersion</exception>
+	</exceptions>
 </service-builder>

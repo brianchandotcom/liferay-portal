@@ -73,8 +73,8 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 		public AccountEntryValidatorResult build() {
 			return new AccountEntryValidatorResult(
-				_actionLabel, _actionURL, _jsonObject, _key, _resultStatus,
-				_resultMessage);
+				_actionLabel, _actionURL, _jsonObject, _key, _resultMessage,
+				_resultStatus);
 		}
 
 		public Builder resultMessage(String resultMessage) {
@@ -105,14 +105,14 @@ public final class AccountEntryValidatorResult implements Serializable {
 
 	private AccountEntryValidatorResult(
 		String actionLabel, String actionURL, JSONObject jsonObject, String key,
-		String resultStatus, String resultMessage) {
+		String resultMessage, String resultStatus) {
 
 		_actionLabel = actionLabel;
 		_actionURL = actionURL;
 		_jsonObject = jsonObject;
 		_key = key;
-		_resultStatus = resultStatus;
 		_resultMessage = resultMessage;
+		_resultStatus = resultStatus;
 	}
 
 	private final String _actionLabel;

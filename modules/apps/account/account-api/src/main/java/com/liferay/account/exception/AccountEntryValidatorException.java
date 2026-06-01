@@ -5,10 +5,7 @@
 
 package com.liferay.account.exception;
 
-import com.liferay.account.validator.AccountEntryValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.List;
 
 /**
  * @author Tancredi Covioli
@@ -16,12 +13,6 @@ import java.util.List;
 public class AccountEntryValidatorException extends PortalException {
 
 	public AccountEntryValidatorException() {
-	}
-
-	public AccountEntryValidatorException(
-		List<AccountEntryValidatorResult> accountEntryValidatorResults) {
-
-		_accountEntryValidatorResults = accountEntryValidatorResults;
 	}
 
 	public AccountEntryValidatorException(String msg) {
@@ -35,11 +26,5 @@ public class AccountEntryValidatorException extends PortalException {
 	public AccountEntryValidatorException(Throwable throwable) {
 		super(throwable);
 	}
-
-	public List<AccountEntryValidatorResult> getAccountEntryValidatorResults() {
-		return _accountEntryValidatorResults;
-	}
-
-	private List<AccountEntryValidatorResult> _accountEntryValidatorResults;
 
 }

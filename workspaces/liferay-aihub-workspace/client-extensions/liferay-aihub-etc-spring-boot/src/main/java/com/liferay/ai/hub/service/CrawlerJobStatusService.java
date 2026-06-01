@@ -71,26 +71,26 @@ public class CrawlerJobStatusService extends BaseService {
 				}
 
 				JobStatus jobStatus = null;
-				String startDate = null;
+				String startDateString = null;
 
 				if (job != null) {
 					jobStatus = job.getStatus();
 
-					startDate = jobStatus.getStartTime();
+					startDateString = jobStatus.getStartTime();
 				}
 
 				JSONObject patchJSONObject = new JSONObject(
 				).put(
 					"crawlerJobStatus", crawlerJobStatus
 				).put(
-					"startDate", startDate
+					"startDate", startDateString
 				);
 
 				if (crawlerJobStatus.equals("abandoned")) {
 					patchJSONObject.put(
 						"endDate", _getCurrentDateTime()
 					).put(
-						"errorMessage", "Kubernetes job not found"
+						"errorMessage", "Kubernetes job does not exist"
 					);
 				}
 				else if (crawlerJobStatus.equals("failed")) {
@@ -101,10 +101,10 @@ public class CrawlerJobStatusService extends BaseService {
 						continue;
 					}
 
-					String endDate = jobCondition.getLastTransitionTime();
+					String endDateString = jobCondition.getLastTransitionTime();
 
-					if (endDate == null) {
-						endDate = _getCurrentDateTime();
+					if (endDateString == null) {
+						endDateString = _getCurrentDateTime();
 					}
 
 					String errorMessage = jobCondition.getMessage();
@@ -114,19 +114,19 @@ public class CrawlerJobStatusService extends BaseService {
 					}
 
 					patchJSONObject.put(
-						"endDate", endDate
+						"endDate", endDateString
 					).put(
 						"errorMessage", errorMessage
 					);
 				}
 				else if (crawlerJobStatus.equals("succeeded")) {
-					String endDate = jobStatus.getCompletionTime();
+					String endDateString = jobStatus.getCompletionTime();
 
-					if (endDate == null) {
-						endDate = _getCurrentDateTime();
+					if (endDateString == null) {
+						endDateString = _getCurrentDateTime();
 					}
 
-					patchJSONObject.put("endDate", endDate);
+					patchJSONObject.put("endDate", endDateString);
 
 					ObjectMeta objectMeta = job.getMetadata();
 
@@ -186,10 +186,10 @@ public class CrawlerJobStatusService extends BaseService {
 			return null;
 		}
 
-		Integer succeeded = jobStatus.getSucceeded();
+		Integer active = jobStatus.getActive();
 
-		if ((succeeded != null) && (succeeded > 0)) {
-			return "succeeded";
+		if ((active != null) && (active > 0)) {
+			return "running";
 		}
 
 		Integer failed = jobStatus.getFailed();
@@ -198,10 +198,10 @@ public class CrawlerJobStatusService extends BaseService {
 			return "failed";
 		}
 
-		Integer active = jobStatus.getActive();
+		Integer succeeded = jobStatus.getSucceeded();
 
-		if ((active != null) && (active > 0)) {
-			return "running";
+		if ((succeeded != null) && (succeeded > 0)) {
+			return "succeeded";
 		}
 
 		return null;

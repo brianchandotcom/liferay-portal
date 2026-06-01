@@ -36,7 +36,7 @@ const LOOK_AND_FEEL_CONTROL: PreviewPortletDataHandlerBoolean = {
 	previewPortletDataHandlerControls: [
 		{
 			label: Liferay.Language.get('theme-settings'),
-			name: 'themeReference',
+			name: 'themeSettings',
 			type: 'Boolean',
 		},
 		{
@@ -46,12 +46,12 @@ const LOOK_AND_FEEL_CONTROL: PreviewPortletDataHandlerBoolean = {
 		},
 		{
 			label: Liferay.Language.get('site-pages-settings'),
-			name: 'layoutSetSettings',
+			name: 'sitePagesSettings',
 			type: 'Boolean',
 		},
 		{
 			label: Liferay.Language.get('site-template-settings'),
-			name: 'layoutSetPrototypeSettings',
+			name: 'siteTemplateSettings',
 			type: 'Boolean',
 		},
 	],

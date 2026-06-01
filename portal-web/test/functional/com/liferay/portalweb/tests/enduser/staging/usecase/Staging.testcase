@@ -9,6 +9,9 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Staging";
 
+	static var randomSiteURLKey = "site-name";
+	static var randomSiteName = "Site Name";
+
 	setUp {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -638,9 +641,6 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var randomSiteURLKey = "guest";
-		var randomSiteName = "Liferay DXP";
-
 		task ("Given: Replicate Individual Deletions is active, MULTIPLE (specifically two) Web Contents are created and Staging is enabled") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -705,9 +705,6 @@ definition {
 	test DraftedWebContentTitleIsNotDisplayedInPublicationSummary {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-
-		var randomSiteURLKey = "guest";
-		var randomSiteName = "Liferay DXP";
 
 		task ("Given: Staging is enabled and a Web Content is SAVED AS DRAFT") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
@@ -953,9 +950,6 @@ definition {
 	test MultipleWebContentTitlesAreNotDisplayedInPublicationSummary {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-
-		var randomSiteURLKey = "guest";
-		var randomSiteName = "Liferay DXP";
 
 		task ("Given: Staging is enabled and MULTIPLE (specifically three) Web Contents are created") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
@@ -1967,9 +1961,6 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var randomSiteURLKey = "guest";
-		var randomSiteName = "Liferay DXP";
-
 		task ("Given: Staging is enabled and ONE Web Content is created and moved into a Web Content Folder") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
 
@@ -2010,9 +2001,6 @@ definition {
 	test SingleWebContentTitleIsProperlyDisplayedInPublicationSummary {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-
-		var randomSiteURLKey = "guest";
-		var randomSiteName = "Liferay DXP";
 
 		task ("Given: Staging is enabled and ONE Web Content is created") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});

@@ -110,7 +110,7 @@ public class JournalConverterImpl implements JournalConverter {
 			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 				_addDDMFields(
 					availableLanguageIds, defaultLanguageId, ddmFields,
-					ddmFormField, ddmStructure, rootElement, rootElement, sb);
+					ddmFormField, ddmStructure, rootElement, sb, rootElement);
 			}
 
 			fieldsDisplayField.setValue(sb.toString());
@@ -160,8 +160,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private void _addDDMFields(
 			String[] availableLanguageIds, String defaultLanguageId,
 			Fields ddmFields, DDMFormField ddmFormField,
-			DDMStructure ddmStructure, Element element, Element rootElement,
-			StringBundler sb)
+			DDMStructure ddmStructure, Element element, StringBundler sb,
+			Element rootElement)
 		throws PortalException {
 
 		String ddmFormFieldName = ddmFormField.getName();
@@ -196,7 +196,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			_addNestedDDMFields(
 				availableLanguageIds, defaultLanguageId, ddmFields,
-				ddmFormField, ddmStructure, element, rootElement, sb);
+				ddmFormField, ddmStructure, element, sb, rootElement);
 
 			return;
 		}
@@ -243,16 +243,16 @@ public class JournalConverterImpl implements JournalConverter {
 
 			_addNestedDDMFields(
 				availableLanguageIds, defaultLanguageId, ddmFields,
-				ddmFormField, ddmStructure, dynamicElementElement, rootElement,
-				sb);
+				ddmFormField, ddmStructure, dynamicElementElement, sb,
+				rootElement);
 		}
 	}
 
 	private void _addNestedDDMFields(
 			String[] availableLanguageIds, String defaultLanguageId,
 			Fields ddmFields, DDMFormField ddmFormField,
-			DDMStructure ddmStructure, Element element, Element rootElement,
-			StringBundler sb)
+			DDMStructure ddmStructure, Element element, StringBundler sb,
+			Element rootElement)
 		throws PortalException {
 
 		for (DDMFormField nestedDDMFormField :
@@ -260,7 +260,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			_addDDMFields(
 				availableLanguageIds, defaultLanguageId, ddmFields,
-				nestedDDMFormField, ddmStructure, element, rootElement, sb);
+				nestedDDMFormField, ddmStructure, element, sb, rootElement);
 		}
 	}
 

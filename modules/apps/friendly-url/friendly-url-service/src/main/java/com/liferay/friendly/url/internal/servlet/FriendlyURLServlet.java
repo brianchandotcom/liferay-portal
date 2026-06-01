@@ -81,9 +81,9 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.FriendlyURLUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.AsyncPortletServletRequest;
-import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.tracker.RedirectNotFoundTracker;
 import com.liferay.site.model.SiteFriendlyURL;
@@ -127,30 +127,33 @@ public class FriendlyURLServlet extends HttpServlet {
 			return new Redirect();
 		}
 
-		String groupFriendlyURL = path;
-
-		int pos = path.indexOf(CharPool.SLASH, 1);
-
-		if (pos != -1) {
-			String friendlyURL = path.substring(pos);
-
-			if (friendlyURL.startsWith(
-					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT)) {
-
-				String fileEntryFriendlyURL = friendlyURL.substring(
-					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT.length() - 1);
-
-				groupFriendlyURL = fileEntryFriendlyURL.substring(
-					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
-			}
-			else {
-				groupFriendlyURL = path.substring(0, pos);
-			}
-		}
+		Group group = (Group)httpServletRequest.getAttribute(
+			WebKeys.FRIENDLY_URL_GROUP);
+		String groupFriendlyURL = (String)httpServletRequest.getAttribute(
+			WebKeys.GROUP_FRIENDLY_URL);
 
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
-		Group group = _getGroup(path, groupFriendlyURL, companyId);
+		if (group == null) {
+			groupFriendlyURL = FriendlyURLUtil.parseGroupFriendlyURL(path);
+
+			group = FriendlyURLUtil.fetchFriendlyURLGroup(
+				companyId, groupFriendlyURL);
+		}
+
+		if ((group == null) ||
+			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&
+			 !inactiveRequestHandler.isShowInactiveRequestMessage() &&
+			 !path.startsWith(GroupConstants.CONTROL_PANEL_FRIENDLY_URL) &&
+			 !path.startsWith(
+				 groupFriendlyURL +
+					 VirtualLayoutConstants.CANONICAL_URL_SEPARATOR))) {
+
+			throw new NoSuchGroupException(
+				StringBundler.concat(
+					"{companyId=", companyId, ", friendlyURL=",
+					groupFriendlyURL, "}"));
+		}
 
 		if (!group.isActive() && groupLocalService.isMaintenanceMode(group)) {
 			User user = _getUser(httpServletRequest);
@@ -175,6 +178,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String layoutFriendlyURL = null;
 		Redirect redirectProviderRedirect = null;
+
+		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			layoutFriendlyURL = path.substring(pos);
@@ -967,43 +972,6 @@ public class FriendlyURLServlet extends HttpServlet {
 					getCompanyFriendlyURLRedirectionConfiguration(companyId);
 
 		return friendlyURLRedirectionConfiguration.redirectionType();
-	}
-
-	private Group _getGroup(String path, String friendlyURL, long companyId)
-		throws NoSuchGroupException {
-
-		Group group = groupLocalService.fetchFriendlyURLGroup(
-			companyId, friendlyURL);
-
-		if (group == null) {
-			String screenName = friendlyURL.substring(1);
-
-			User user = userLocalService.fetchUserByScreenName(
-				companyId, screenName);
-
-			if (user != null) {
-				group = user.getGroup();
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("No user exists with friendly URL " + screenName);
-			}
-		}
-
-		if ((group == null) ||
-			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&
-			 !inactiveRequestHandler.isShowInactiveRequestMessage() &&
-			 !path.startsWith(GroupConstants.CONTROL_PANEL_FRIENDLY_URL) &&
-			 !path.startsWith(
-				 friendlyURL +
-					 VirtualLayoutConstants.CANONICAL_URL_SEPARATOR))) {
-
-			throw new NoSuchGroupException(
-				StringBundler.concat(
-					"{companyId=", companyId, ", friendlyURL=", friendlyURL,
-					"}"));
-		}
-
-		return group;
 	}
 
 	private LastPath _getLastPath(

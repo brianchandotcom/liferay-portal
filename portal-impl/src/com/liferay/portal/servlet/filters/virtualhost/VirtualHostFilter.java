@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.FriendlyURLUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.webserver.WebServerServlet;
 
@@ -261,8 +261,11 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (layoutSet == null) {
-			Group group = _fetchGroupByFriendlyURLPrefix(
-				CompanyThreadLocal.getCompanyId(), friendlyURL);
+			String groupFriendlyURL = FriendlyURLUtil.parseGroupFriendlyURL(
+				friendlyURL);
+
+			Group group = FriendlyURLUtil.fetchFriendlyURLGroup(
+				CompanyThreadLocal.getCompanyId(), groupFriendlyURL);
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
@@ -280,6 +283,11 @@ public class VirtualHostFilter extends BasePortalFilter {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Forward to " + sb.toString());
 				}
+
+				httpServletRequest.setAttribute(
+					WebKeys.FRIENDLY_URL_GROUP, group);
+				httpServletRequest.setAttribute(
+					WebKeys.GROUP_FRIENDLY_URL, groupFriendlyURL);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher(sb.toString());
@@ -346,8 +354,18 @@ public class VirtualHostFilter extends BasePortalFilter {
 					StringPool.BLANK);
 			}
 
-			Group group = _fetchGroupByFriendlyURLPrefix(
-				companyId, friendlyURL);
+			String groupFriendlyURL = FriendlyURLUtil.parseGroupFriendlyURL(
+				friendlyURL);
+
+			Group group = FriendlyURLUtil.fetchFriendlyURLGroup(
+				companyId, groupFriendlyURL);
+
+			if (group != null) {
+				httpServletRequest.setAttribute(
+					WebKeys.FRIENDLY_URL_GROUP, group);
+				httpServletRequest.setAttribute(
+					WebKeys.GROUP_FRIENDLY_URL, groupFriendlyURL);
+			}
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
@@ -445,28 +463,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class.getName(), httpServletRequest,
 				httpServletResponse, filterChain);
 		}
-	}
-
-	private Group _fetchGroupByFriendlyURLPrefix(
-		long companyId, String friendlyURL) {
-
-		if (friendlyURL.equals(StringPool.SLASH)) {
-			return null;
-		}
-
-		int index = friendlyURL.indexOf(CharPool.SLASH, 1);
-
-		String groupFriendlyURL;
-
-		if (index != -1) {
-			groupFriendlyURL = friendlyURL.substring(0, index);
-		}
-		else {
-			groupFriendlyURL = friendlyURL;
-		}
-
-		return GroupLocalServiceUtil.fetchFriendlyURLGroup(
-			companyId, groupFriendlyURL);
 	}
 
 	private String _findLanguageId(String friendlyURL) {

@@ -8,6 +8,7 @@ package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
 import com.liferay.ai.hub.internal.guardrail.InputGuardrailImpl;
 import com.liferay.ai.hub.internal.guardrail.OutputGuardrailImpl;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -42,7 +43,8 @@ public class GuardrailsUtil {
 		List<InputGuardrail> inputGuardrails,
 		ModelArmorHandler modelArmorHandler,
 		ObjectEntryManager objectEntryManager,
-		List<OutputGuardrail> outputGuardrails, ServiceContext serviceContext,
+		List<OutputGuardrail> outputGuardrails, QuotaManager quotaManager,
+		ServiceContext serviceContext,
 		Map<String, Serializable> workflowContext) {
 
 		NestedFieldsContext nestedFieldsContext =
@@ -99,7 +101,8 @@ public class GuardrailsUtil {
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorHandler, workflowContext));
+							modelArmorHandler, quotaManager,
+							serviceContext.getUserId(), workflowContext));
 				}
 				else if (Objects.equals(listEntry.getKey(), "output")) {
 					outputGuardrails.add(
@@ -110,7 +113,8 @@ public class GuardrailsUtil {
 							GetterUtil.getString(
 								modelArmorTemplateObjectEntry.getPropertyValue(
 									"location")),
-							modelArmorHandler, workflowContext));
+							modelArmorHandler, quotaManager,
+							serviceContext.getUserId(), workflowContext));
 				}
 			}
 		}

@@ -42,6 +42,9 @@ components:
             type: object
         ExportProcessRequest:
             properties:
+                comments:
+                    default: false
+                    type: boolean
                 deletions:
                     default: false
                     type: boolean
@@ -51,6 +54,9 @@ components:
                 last:
                     format: int32
                     type: integer
+                logo:
+                    default: false
+                    type: boolean
                 name:
                     type: string
                 permissions:
@@ -60,13 +66,25 @@ components:
                     default: all
                     enum: [all, dateRange, last]
                     type: string
+                ratings:
+                    default: false
+                    type: boolean
                 requestPortletDataHandlers:
                     items:
                         $ref: "#/components/schemas/RequestPortletDataHandler"
                     type: array
+                sitePagesSettings:
+                    default: false
+                    type: boolean
+                siteTemplateSettings:
+                    default: false
+                    type: boolean
                 startDate:
                     format: date-time
                     type: string
+                themeSettings:
+                    default: false
+                    type: boolean
             required:
                 -   name
             type: object
@@ -136,6 +154,9 @@ components:
             type: object
         ImportProcessRequest:
             properties:
+                comments:
+                    default: false
+                    type: boolean
                 dataStrategy:
                     default: MIRROR
                     enum: [MIRROR, MIRROR_OVERWRITE, COPY_AS_NEW]
@@ -143,15 +164,30 @@ components:
                 deletions:
                     default: false
                     type: boolean
+                logo:
+                    default: false
+                    type: boolean
                 name:
                     type: string
                 permissions:
+                    default: false
+                    type: boolean
+                ratings:
                     default: false
                     type: boolean
                 requestPortletDataHandlers:
                     items:
                         $ref: "#/components/schemas/RequestPortletDataHandler"
                     type: array
+                sitePagesSettings:
+                    default: false
+                    type: boolean
+                siteTemplateSettings:
+                    default: false
+                    type: boolean
+                themeSettings:
+                    default: false
+                    type: boolean
                 userIdStrategy:
                     default: CURRENT_USER_ID
                     enum: [CURRENT_USER_ID, ALWAYS_CURRENT_USER_ID]

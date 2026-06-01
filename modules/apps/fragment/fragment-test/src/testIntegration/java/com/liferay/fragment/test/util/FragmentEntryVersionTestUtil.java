@@ -127,6 +127,8 @@ public class FragmentEntryVersionTestUtil {
 						"createDate, modifiedDate, name, status) values (0, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
+			String className = FragmentEntryVersion.class.getName();
+
 			for (int i = 0; i < count; i++) {
 				int version = _START_VERSION + i;
 
@@ -134,9 +136,7 @@ public class FragmentEntryVersionTestUtil {
 
 				preparedStatement.setLong(1, ctCollectionId);
 				preparedStatement.setLong(
-					2,
-					CounterLocalServiceUtil.increment(
-						FragmentEntryVersion.class.getName()));
+					2, CounterLocalServiceUtil.increment(className));
 				preparedStatement.setInt(3, version);
 				preparedStatement.setLong(
 					4, fragmentEntry.getFragmentEntryId());

@@ -77,6 +77,19 @@ public class LayoutContentVersionLocalServiceImpl
 
 		int version = _generateVersion(plid);
 
+		if (Validator.isNull(externalReferenceCode)) {
+			String defaultExternalReferenceCode =
+				layout.getExternalReferenceCode() + "_v_" + version;
+
+			if (defaultExternalReferenceCode.length() <=
+					ModelHintsUtil.getMaxLength(
+						LayoutContentVersion.class.getName(),
+						"externalReferenceCode")) {
+
+				externalReferenceCode = defaultExternalReferenceCode;
+			}
+		}
+
 		layoutContentVersion.setExternalReferenceCode(externalReferenceCode);
 
 		layoutContentVersion.setGroupId(layout.getGroupId());

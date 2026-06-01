@@ -6,14 +6,18 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,6 +35,9 @@ public class ViewDesignLibraryAdminDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -40,8 +47,6 @@ public class ViewDesignLibraryAdminDisplayContext {
 
 	public Map<String, Object> getBreadcrumbProps() {
 		return HashMapBuilder.<String, Object>put(
-			"actionItems", _getActionItemsJSONArray()
-		).put(
 			"breadcrumbItems", _getBreadcrumbItemsJSONArray()
 		).build();
 	}
@@ -73,6 +78,16 @@ public class ViewDesignLibraryAdminDisplayContext {
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				null, null, "link"),
 			new FDSActionDropdownItem(
+				_getExportImportPortletURL(ExportImportPortletKeys.EXPORT),
+				"export", "export",
+				LanguageUtil.get(_httpServletRequest, "export"), "get",
+				"update", null),
+			new FDSActionDropdownItem(
+				_getExportImportPortletURL(ExportImportPortletKeys.IMPORT),
+				"import", "import",
+				LanguageUtil.get(_httpServletRequest, "import"), "get",
+				"update", null),
+			new FDSActionDropdownItem(
 				"{actions.delete.href}", "trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", null));
@@ -91,17 +106,6 @@ public class ViewDesignLibraryAdminDisplayContext {
 		).build();
 	}
 
-	private JSONArray _getActionItemsJSONArray() {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"href", "#import"
-			).put(
-				"label", LanguageUtil.get(_httpServletRequest, "import")
-			).put(
-				"symbolLeft", "import"
-			));
-	}
-
 	private JSONArray _getBreadcrumbItemsJSONArray() {
 		return JSONUtil.putAll(
 			JSONUtil.put(
@@ -112,7 +116,15 @@ public class ViewDesignLibraryAdminDisplayContext {
 			));
 	}
 
+	private String _getExportImportPortletURL(String portletId) {
+		return StringBundler.concat(
+			_themeDisplay.getCDNBaseURL(),
+			_themeDisplay.getPathFriendlyURLPrivateGroup(),
+			"/asset-library-{id}/~/control_panel/manage?p_p_id=", portletId);
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

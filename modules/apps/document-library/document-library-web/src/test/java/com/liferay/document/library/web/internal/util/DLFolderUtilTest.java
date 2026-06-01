@@ -9,9 +9,11 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -137,6 +139,59 @@ public class DLFolderUtilTest {
 			RandomTestUtil.randomLong());
 	}
 
+	@Test
+	public void testValidateFolderInsideRootFolder() throws PortalException {
+		long rootFolderId = RandomTestUtil.randomLong();
+
+		Folder rootFolder = _mockFolder(rootFolderId, null);
+
+		Folder folder = _mockFolder(RandomTestUtil.randomLong(), rootFolder);
+
+		DLFolderUtil.validateFolder(folder, rootFolderId);
+	}
+
+	@Test
+	public void testValidateFolderNestedUnderRootFolder()
+		throws PortalException {
+
+		long rootFolderId = RandomTestUtil.randomLong();
+
+		Folder rootFolder = _mockFolder(rootFolderId, null);
+
+		Folder parentFolder = _mockFolder(
+			RandomTestUtil.randomLong(), rootFolder);
+
+		Folder folder = _mockFolder(RandomTestUtil.randomLong(), parentFolder);
+
+		DLFolderUtil.validateFolder(folder, rootFolderId);
+	}
+
+	@Test(expected = NoSuchFolderException.class)
+	public void testValidateFolderOutsideRootFolder() throws PortalException {
+		Folder topFolder = _mockFolder(RandomTestUtil.randomLong(), null);
+
+		Folder folder = _mockFolder(RandomTestUtil.randomLong(), topFolder);
+
+		DLFolderUtil.validateFolder(folder, RandomTestUtil.randomLong());
+	}
+
+	@Test
+	public void testValidateFolderRootFolder() throws PortalException {
+		long rootFolderId = RandomTestUtil.randomLong();
+
+		Folder folder = _mockFolder(rootFolderId, null);
+
+		DLFolderUtil.validateFolder(folder, rootFolderId);
+	}
+
+	@Test
+	public void testValidateFolderWithoutRootFolder() throws PortalException {
+		Folder folder = _mockFolder(RandomTestUtil.randomLong(), null);
+
+		DLFolderUtil.validateFolder(
+			folder, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
 	private DepotEntry _addDepotEntry(long depotGroupId) {
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
@@ -169,6 +224,26 @@ public class DLFolderUtilTest {
 
 	private List<DepotEntry> _getGroupConnectedDepotEntries(long depotGroupId) {
 		return ListUtil.fromArray(_addDepotEntry(depotGroupId));
+	}
+
+	private Folder _mockFolder(long folderId, Folder parentFolder)
+		throws PortalException {
+
+		Folder folder = Mockito.mock(Folder.class);
+
+		Mockito.doReturn(
+			folderId
+		).when(
+			folder
+		).getFolderId();
+
+		Mockito.doReturn(
+			parentFolder
+		).when(
+			folder
+		).getParentFolder();
+
+		return folder;
 	}
 
 }

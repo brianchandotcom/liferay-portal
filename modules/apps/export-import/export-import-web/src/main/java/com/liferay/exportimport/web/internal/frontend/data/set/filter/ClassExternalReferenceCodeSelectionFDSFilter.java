@@ -12,9 +12,9 @@ import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -73,19 +73,16 @@ public class ClassExternalReferenceCodeSelectionFDSFilter
 			return Collections.emptyList();
 		}
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			classExternalReferenceCodes,
+			classExternalReferenceCode -> {
+				if (Validator.isBlank(classExternalReferenceCode)) {
+					return null;
+				}
 
-		for (String classExternalReferenceCode : classExternalReferenceCodes) {
-			if (!Validator.isBlank(classExternalReferenceCode)) {
-				selectionFDSFilterItems.add(
-					new SelectionFDSFilterItem(
-						classExternalReferenceCode,
-						classExternalReferenceCode));
-			}
-		}
-
-		return selectionFDSFilterItems;
+				return new SelectionFDSFilterItem(
+					classExternalReferenceCode, classExternalReferenceCode);
+			});
 	}
 
 	@Override

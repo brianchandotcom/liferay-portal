@@ -6,6 +6,8 @@
 package com.liferay.seo.studio.google.search.console.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -55,14 +57,12 @@ public class StateTokenService {
 	}
 
 	public Claims verifyState(String state) {
-		return Jwts.parser(
+		JwtParser jwtParser = Jwts.parser(
 		).verifyWith(
 			_secretKey
-		).build(
-		).parseSignedClaims(
-			state
-		).getPayload();
-	}
+		).build();
+
+		Jws<Claims> jws = jwtParser.parseSignedClaims(state);
 
 	private static final long _ONE_HOUR_MS = 3600000;
 

@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -73,19 +74,20 @@ public class LiferayObjectService {
 	public CredentialEntry fetchCredentialEntry(long seoStudioInstanceId)
 		throws InterruptedException, IOException {
 
+		UriComponents uriComponents = UriComponentsBuilder.fromUriString(
+			_liferayBaseURL + _CREDENTIAL_ENTRIES_PATH
+		).queryParam(
+			"filter",
+			StringBundler.concat(
+				"r_seoStudioInstanceToGSCCredentialEntries_",
+				"seoStudioInstanceId eq '", seoStudioInstanceId, "'")
+		).build();
+
 		HttpRequest httpRequest = HttpRequest.newBuilder(
 		).header(
 			"Authorization", _getAuthorization()
 		).uri(
-			UriComponentsBuilder.fromUriString(
-				_liferayBaseURL + _CREDENTIAL_ENTRIES_PATH
-			).queryParam(
-				"filter",
-				StringBundler.concat(
-					"r_seoStudioInstanceToGSCCredentialEntries_",
-					"seoStudioInstanceId eq '", seoStudioInstanceId, "'")
-			).build(
-			).toUri()
+			uriComponents.toUri()
 		).build();
 
 		HttpResponse<String> httpResponse = _httpClient.send(
@@ -99,11 +101,9 @@ public class LiferayObjectService {
 
 		_checkStatus("fetch credential entry", httpResponse.statusCode());
 
-		JSONArray jsonArray = new JSONObject(
-			httpResponse.body()
-		).getJSONArray(
-			"items"
-		);
+		JSONObject jsonObject = new JSONObject(httpResponse.body());
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
 		if (jsonArray.isEmpty()) {
 			return null;
@@ -127,11 +127,11 @@ public class LiferayObjectService {
 		);
 
 		if (accessTokenExpirationTime != null) {
+			Instant truncatedInstant = accessTokenExpirationTime.truncatedTo(
+				ChronoUnit.SECONDS);
+
 			jsonObject.put(
-				"accessTokenExpirationTime",
-				accessTokenExpirationTime.truncatedTo(
-					ChronoUnit.SECONDS
-				).toString());
+				"accessTokenExpirationTime", truncatedInstant.toString());
 		}
 
 		_patchById(jsonObject.toString(), id);

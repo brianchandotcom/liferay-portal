@@ -38,7 +38,7 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 
 				List<Long> fragmentEntryVersionIdsToDelete =
 					fragmentEntryVersionIds.subList(
-						FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+						FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 						fragmentEntryVersionIds.size());
 
 				for (int i = 0; i < fragmentEntryVersionIdsToDelete.size();
@@ -72,7 +72,7 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 					"select ctCollectionId, fragmentEntryId from ",
 					"FragmentEntryVersion group by ctCollectionId, ",
 					"fragmentEntryId having count(*) > ",
-					FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT));
+					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

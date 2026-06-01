@@ -50,7 +50,7 @@ public class FragmentEntryVersionModelListener
 				));
 
 			if (versionCount <=
-					FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT) {
+					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX) {
 
 				return;
 			}
@@ -71,7 +71,7 @@ public class FragmentEntryVersionModelListener
 					).orderBy(
 						FragmentEntryVersionTable.INSTANCE.version.descending()
 					).limit(
-						FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+						FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 						versionCount
 					));
 

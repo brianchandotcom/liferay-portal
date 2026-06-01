@@ -85,7 +85,7 @@ public class FragmentEntryVersionCTEventListenerTest {
 		FragmentEntryVersionUtil.clearCache();
 
 		Assert.assertEquals(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry1));
 
@@ -96,7 +96,7 @@ public class FragmentEntryVersionCTEventListenerTest {
 			versions.toString(), versions.contains(oldestVersion));
 
 		Assert.assertEquals(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2));
 	}
@@ -106,11 +106,11 @@ public class FragmentEntryVersionCTEventListenerTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		Assert.assertEquals(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT + 1,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
 

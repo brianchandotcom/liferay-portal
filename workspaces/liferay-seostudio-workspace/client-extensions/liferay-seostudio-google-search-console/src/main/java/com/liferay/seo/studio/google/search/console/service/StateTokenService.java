@@ -39,7 +39,7 @@ public class StateTokenService {
 			stateSecret.getBytes(StandardCharsets.UTF_8));
 	}
 
-	public String generateState(long seoStudioInstanceId, String redirectURL) {
+	public String generateState(String redirectURL, long seoStudioInstanceId) {
 		Date nowDate = new Date();
 
 		return Jwts.builder(

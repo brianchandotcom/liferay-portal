@@ -32,7 +32,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
-			"activationProductName": "Cloud Native, Liferay PaaS, Liferay SaaS",
+			"activationProductName": "AI Hub, Cloud Native, Liferay PaaS, Liferay SaaS",
 			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_liferay-cloud",
 			"hasActivation": true,
@@ -295,6 +295,17 @@
 			"menuOrder": 1,
 			"name": "Liferay Cloud",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-022",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-023",
+			"activationProductName": "AI Hub",
+			"activationStatus": "Active",
+			"externalReferenceCode": "ERC-023_liferay-cloud",
+			"hasActivation": false,
+			"menuOrder": 1,
+			"name": "Liferay Cloud",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-023",
 			"tabOrder": 2
 		}
 	],

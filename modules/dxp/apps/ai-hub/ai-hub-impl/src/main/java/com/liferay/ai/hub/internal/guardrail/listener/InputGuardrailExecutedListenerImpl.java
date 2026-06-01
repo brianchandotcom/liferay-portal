@@ -37,6 +37,8 @@ public class InputGuardrailExecutedListenerImpl
 			return;
 		}
 
+		completeExceptionally();
+
 		InputGuardrailRequest inputGuardrailRequest =
 			inputGuardrailExecutedEvent.request();
 

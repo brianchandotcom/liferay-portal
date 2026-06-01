@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountEntryValidatorConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -33,20 +34,21 @@ public class AccountEntryValidatorResultTest {
 				"key"
 			).build();
 
-		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
 		Assert.assertEquals(
 			StringPool.BLANK, accountEntryValidatorResult.getActionLabel());
 		Assert.assertEquals(
 			StringPool.BLANK, accountEntryValidatorResult.getActionURL());
+		Assert.assertNull(accountEntryValidatorResult.getAdditionalProps());
+		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
 		Assert.assertEquals(
 			StringPool.BLANK, accountEntryValidatorResult.getResultMessage());
 		Assert.assertEquals(
 			AccountEntryValidatorConstants.RESULT_SUCCESS,
 			accountEntryValidatorResult.getResultStatus());
-		Assert.assertNull(accountEntryValidatorResult.getAdditionalProps());
 		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
-		JSONObject jsonObject = JSONUtil.put("field", "value");
+		JSONObject jsonObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
 			"key"
@@ -62,13 +64,13 @@ public class AccountEntryValidatorResultTest {
 			AccountEntryValidatorConstants.RESULT_WARNING
 		).build();
 
-		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
 		Assert.assertEquals(
 			"actionLabel", accountEntryValidatorResult.getActionLabel());
 		Assert.assertEquals(
 			"actionURL", accountEntryValidatorResult.getActionURL());
 		Assert.assertEquals(
 			jsonObject, accountEntryValidatorResult.getAdditionalProps());
+		Assert.assertEquals("key", accountEntryValidatorResult.getKey());
 		Assert.assertEquals(
 			"resultMessage", accountEntryValidatorResult.getResultMessage());
 		Assert.assertEquals(
@@ -79,44 +81,38 @@ public class AccountEntryValidatorResultTest {
 
 	@Test
 	public void testIsValid() {
-		AccountEntryValidatorResult accountEntryValidatorResult =
+		AccountEntryValidatorResult.Builder accountEntryValidatorResultBuilder =
 			AccountEntryValidatorResult.builder(
-				"key"
+				RandomTestUtil.randomString()
 			).resultStatus(
 				AccountEntryValidatorConstants.RESULT_FAILURE
-			).build();
+			);
+
+		AccountEntryValidatorResult accountEntryValidatorResult =
+			accountEntryValidatorResultBuilder.build();
 
 		Assert.assertFalse(accountEntryValidatorResult.isValid());
 
-		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
-			"key"
-		).resultStatus(
-			AccountEntryValidatorConstants.RESULT_MANUAL
-		).build();
+		accountEntryValidatorResult =
+			accountEntryValidatorResultBuilder.resultStatus(
+				AccountEntryValidatorConstants.RESULT_MANUAL
+			).build();
 
-		Assert.assertTrue(
-			AccountEntryValidatorConstants.RESULT_MANUAL,
-			accountEntryValidatorResult.isValid());
+		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
-		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
-			"key"
-		).resultStatus(
-			AccountEntryValidatorConstants.RESULT_SUCCESS
-		).build();
+		accountEntryValidatorResult =
+			accountEntryValidatorResultBuilder.resultStatus(
+				AccountEntryValidatorConstants.RESULT_SUCCESS
+			).build();
 
-		Assert.assertTrue(
-			AccountEntryValidatorConstants.RESULT_SUCCESS,
-			accountEntryValidatorResult.isValid());
+		Assert.assertTrue(accountEntryValidatorResult.isValid());
 
-		accountEntryValidatorResult = AccountEntryValidatorResult.builder(
-			"key"
-		).resultStatus(
-			AccountEntryValidatorConstants.RESULT_WARNING
-		).build();
+		accountEntryValidatorResult =
+			accountEntryValidatorResultBuilder.resultStatus(
+				AccountEntryValidatorConstants.RESULT_WARNING
+			).build();
 
-		Assert.assertTrue(
-			AccountEntryValidatorConstants.RESULT_WARNING,
-			accountEntryValidatorResult.isValid());
+		Assert.assertTrue(accountEntryValidatorResult.isValid());
 	}
 
 }

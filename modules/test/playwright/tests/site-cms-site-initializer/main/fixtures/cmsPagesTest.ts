@@ -15,6 +15,7 @@ import {HomePage} from '../pages/HomePage';
 import {InfoPanelPage} from '../pages/InfoPanelPage';
 import {PicklistBuilderPage} from '../pages/PicklistBuilderPage';
 import {RecycleBinPage} from '../pages/RecycleBinPage';
+import {ShareModalPage} from '../pages/ShareModalPage';
 import {SharedWithMePage} from '../pages/SharedWithMePage';
 import {SpaceSummaryPage} from '../pages/SpaceSummaryPage';
 import {StructuresPage} from '../pages/StructuresPage';
@@ -32,6 +33,7 @@ const cmsPagesTest = test.extend<{
 	infoPanelPage: InfoPanelPage;
 	picklistBuilderPage: PicklistBuilderPage;
 	recycleBinPage: RecycleBinPage;
+	shareModalPage: ShareModalPage;
 	sharedWithMePage: SharedWithMePage;
 	spaceSummaryPage: SpaceSummaryPage;
 	structuresPage: StructuresPage;
@@ -67,6 +69,9 @@ const cmsPagesTest = test.extend<{
 	},
 	recycleBinPage: async ({page}, use) => {
 		await use(new RecycleBinPage(page));
+	},
+	shareModalPage: async ({page}, use) => {
+		await use(new ShareModalPage(page));
 	},
 	sharedWithMePage: async ({page}, use) => {
 		await use(new SharedWithMePage(page));

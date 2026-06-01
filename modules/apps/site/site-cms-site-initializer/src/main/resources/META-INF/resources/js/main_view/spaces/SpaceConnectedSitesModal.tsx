@@ -39,10 +39,17 @@ const showSuccessMessage = (message: string) => {
 
 const isSiteTemplate = (site: Site) => site.type === SITE_TEMPLATE_TYPE;
 
-const getConnectionLabel = (site: Site) =>
-	isSiteTemplate(site)
-		? `${site.descriptiveName} (${Liferay.Language.get('site-template')})`
-		: site.descriptiveName;
+const getConnectionLabel = (site: Site) => {
+	if (isSiteTemplate(site)) {
+		return `${site.descriptiveName} (${Liferay.Language.get('site-template')})`;
+	}
+
+	if (site.stagingType && site.stagingType === 'STAGING') {
+		return `${site.descriptiveName} (${Liferay.Language.get('staging')})`;
+	}
+
+	return site.descriptiveName;
+};
 
 const ConnectableActions = ({
 	externalReferenceCode,

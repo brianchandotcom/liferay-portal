@@ -9,10 +9,14 @@ import React from 'react';
 import {SITE_TEMPLATE_TYPE} from '../../../common/utils/constants';
 
 const SiteRenderer = ({itemData, value}: {itemData: any; value: string}) => {
-	const label =
-		itemData.type === SITE_TEMPLATE_TYPE
-			? `${value} (${Liferay.Language.get('site-template')})`
-			: value;
+	let label = value;
+
+	if (itemData.type === SITE_TEMPLATE_TYPE) {
+		label = `${value} (${Liferay.Language.get('site-template')})`;
+	}
+	else if (itemData.stagingType && itemData.stagingType === 'STAGING') {
+		label = `${value} (${Liferay.Language.get('staging')})`;
+	}
 
 	return (
 		<span className="align-items-center d-flex">

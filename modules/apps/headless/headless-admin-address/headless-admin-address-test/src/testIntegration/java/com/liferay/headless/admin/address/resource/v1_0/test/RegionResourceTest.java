@@ -191,6 +191,11 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified"};
+	}
+
+	@Override
 	protected Region randomRegion() throws Exception {
 		Region region = super.randomRegion();
 

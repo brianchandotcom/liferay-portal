@@ -283,6 +283,11 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified"};
+	}
+
+	@Override
 	protected Country randomCountry() throws Exception {
 		Country country = super.randomCountry();
 

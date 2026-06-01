@@ -257,6 +257,69 @@ describe('ActivityStreamTimeline rendering', () => {
 		).toBeInTheDocument();
 	});
 
+	it('renders an event canonicalUrl and not its raw url', () => {
+		const {getByText, queryByText} = render(
+			<ActivityStreamTimeline
+				{...baseProps}
+				sessions={[
+					buildSession({
+						events: [
+							{
+								applicationId: 'app',
+								assetTitle: 'Asset',
+								canonicalUrl: 'https://example.com/canonical',
+								createDate: '2024-04-03T08:05:00.000Z',
+								name: 'View Page',
+								pageDescription: '',
+								pageKeywords: '',
+								pageTitle: 'Home',
+								referrer: '',
+								url: 'https://example.com/raw?utm=1'
+							}
+						]
+					})
+				]}
+				totalItems={1}
+			/>
+		);
+
+		expect(getByText('https://example.com/canonical')).toBeInTheDocument();
+		expect(
+			queryByText('https://example.com/raw?utm=1')
+		).not.toBeInTheDocument();
+	});
+
+	it('omits the event url line when canonicalUrl is empty', () => {
+		const {queryByText} = render(
+			<ActivityStreamTimeline
+				{...baseProps}
+				sessions={[
+					buildSession({
+						events: [
+							{
+								applicationId: 'app',
+								assetTitle: 'Asset',
+								canonicalUrl: '',
+								createDate: '2024-04-03T08:05:00.000Z',
+								name: 'View Page',
+								pageDescription: '',
+								pageKeywords: '',
+								pageTitle: 'Home',
+								referrer: '',
+								url: 'https://example.com/raw?utm=1'
+							}
+						]
+					})
+				]}
+				totalItems={1}
+			/>
+		);
+
+		expect(
+			queryByText('https://example.com/raw?utm=1')
+		).not.toBeInTheDocument();
+	});
+
 	it('renders an anonymous session with the anonymize icon', () => {
 		const {container, getByText} = render(
 			<ActivityStreamTimeline

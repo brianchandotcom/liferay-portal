@@ -234,13 +234,13 @@ public class CrawlerJobStatusService extends BaseService {
 
 	private void _putIndexedDocumentStats(JSONObject jsonObject, String name) {
 		try {
-			String log = _kubernetesJobService.getJobLog(name, 50);
+			String jobLog = _kubernetesJobService.getJobLog(name, 50);
 
-			if (log == null) {
+			if (jobLog == null) {
 				return;
 			}
 
-			for (String line : log.split("\n")) {
+			for (String line : jobLog.split("\n")) {
 				if (!line.contains("crawler_final_report")) {
 					continue;
 				}

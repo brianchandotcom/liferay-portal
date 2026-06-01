@@ -101,8 +101,18 @@ public class GetAudiencesServletTest {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("localDate", "eq", "2026-06-01"),
-				_createRuleJSONObject("userAgent", "eq", "chrome")),
+				"and", _createRuleJSONObject("browser", "eq", "chrome"),
+				_createRuleJSONObject(
+					"customContext/ipGeocoderCountry", "eq", "ES"),
+				_createRuleJSONObject("languageId", "eq", "en_US"),
+				_createRuleJSONObject(
+					"lastSignInDateTime", "eq", "2026-05-31T00:00:00.000Z"),
+				_createRuleJSONObject("localDate", "eq", "2026-06-01"),
+				_createRuleJSONObject("referrerURL", "eq", "/referrer"),
+				_createRuleJSONObject("requestParameters", "eq", "key=value"),
+				_createRuleJSONObject("signedIn", "eq", "true"),
+				_createRuleJSONObject("userAgent", "eq", "chrome"),
+				_createRuleJSONObject("url", "eq", "/home")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -112,21 +122,20 @@ public class GetAudiencesServletTest {
 
 		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
 
-		Assert.assertEquals(2, rulesJSONArray.length());
-		Assert.assertEquals(
-			"local_date",
-			rulesJSONArray.getJSONObject(
-				0
-			).getString(
-				"attribute"
-			));
-		Assert.assertEquals(
-			"user_agent",
-			rulesJSONArray.getJSONObject(
-				1
-			).getString(
-				"attribute"
-			));
+		String[] attributes = {
+			"browser_name", "ip_geocoder_country", "language",
+			"last_sign_in_date", "local_date", "referrer_url",
+			"request_parameters", "signed_in", "user_agent", "url"
+		};
+
+		Assert.assertEquals(attributes.length, rulesJSONArray.length());
+
+		for (int i = 0; i < attributes.length; i++) {
+			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
+
+			Assert.assertEquals(
+				attributes[i], ruleJSONObject.getString("attribute"));
+		}
 	}
 
 	@Test

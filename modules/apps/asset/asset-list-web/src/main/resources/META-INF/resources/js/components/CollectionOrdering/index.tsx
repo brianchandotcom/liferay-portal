@@ -50,8 +50,10 @@ function parseInitialOrderByColumn(value: string): OrderBySelection {
 				};
 			}
 		}
-		catch {
-			console.error('Failed to parse initial selection: ', value);
+		catch (error) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error('Failed to parse initial selection: ', error);
+			}
 		}
 	}
 

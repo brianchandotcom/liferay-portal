@@ -172,6 +172,12 @@ components:
                 searchable:
                     default: true
                     type: boolean
+                stagingType:
+                    description:
+                        The connected site's staging type.
+                    enum: [LIVE, STAGING]
+                    readOnly: true
+                    type: string
                 type:
                     enum: [Site, SiteTemplate]
                     readOnly: true

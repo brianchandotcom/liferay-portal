@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,11 +86,11 @@ public abstract class BaseImportReportEntrySelectionFDSFilter
 			return 0;
 		}
 
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
 		return GetterUtil.getLong(
-			backgroundTask.getTaskContextMap(
-			).get(
-				"exportImportConfigurationId"
-			));
+			taskContextMap.get("exportImportConfigurationId"));
 	}
 
 	@Reference

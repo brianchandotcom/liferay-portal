@@ -12,6 +12,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -504,7 +505,7 @@ public class ConfigurationEnvBuilder {
 			);
 		}
 
-		return schemaJSONObject.toString();
+		return JSONUtil.toString(schemaJSONObject);
 	}
 
 	private static String _lang(String key) {

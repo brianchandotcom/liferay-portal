@@ -45,7 +45,12 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				<li class="card-page-item card-page-item-directory" data-qa-id="cardPageItemDirectory">
 					<c:choose>
 						<c:when test="<%= selectBasicTemplatesNavigationCard.isDeprecated() %>">
-							<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-template template-card-horizontal" data-add-layout-url="<%= HtmlUtil.escapeAttribute(selectBasicTemplatesNavigationCard.getDynamicAttributes().get("data-add-layout-url")) %>" role="button" tabindex="0">
+
+							<%
+							Map<String, String> dynamicAttributes = selectBasicTemplatesNavigationCard.getDynamicAttributes();
+							%>
+
+							<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-template template-card-horizontal" data-add-layout-url="<%= HtmlUtil.escapeAttribute(dynamicAttributes.get("data-add-layout-url")) %>" role="button" tabindex="0">
 								<span class="card-body">
 									<span class="card-row">
 										<div class="autofit-col">

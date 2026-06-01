@@ -119,15 +119,17 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		Mockito.verifyNoInteractions(_serviceTrackerMap);
 
+		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
 		AccountEntryValidator accountEntryValidator1 = Mockito.mock(
 			AccountEntryValidator.class);
-		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
-		JSONObject jsonObject = JSONUtil.put(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
 		AccountEntryValidatorResult accountEntryValidatorResult1 =
 			AccountEntryValidatorResult.builder(
 				RandomTestUtil.randomString()
 			).build();
+
+		JSONObject jsonObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		Mockito.when(
 			accountEntryValidator1.validate(accountEntry, jsonObject)
@@ -137,6 +139,7 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		AccountEntryValidator accountEntryValidator2 = Mockito.mock(
 			AccountEntryValidator.class);
+
 		AccountEntryValidatorResult accountEntryValidatorResult2 =
 			AccountEntryValidatorResult.builder(
 				RandomTestUtil.randomString()

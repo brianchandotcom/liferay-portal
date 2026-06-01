@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const spritemap = require('@clayui/css/src/images/icons/icons.svg');
 import React from 'react';
 
 import ClayBadge from '../src';
@@ -19,6 +20,9 @@ export default {
 				'success',
 				'warning',
 			],
+		},
+		symbol: {
+			control: {type: 'text'},
 		},
 	},
 	component: ClayBadge,
@@ -37,5 +41,26 @@ export function Default(args: any) {
 Default.args = {
 	displayType: 'primary',
 	label: '100',
+	translucent: false,
+};
+
+export function WithIcon(args: any) {
+	return (
+		<ClayBadge
+			dark={args.dark}
+			displayType={args.displayType}
+			label={args.label}
+			spritemap={spritemap}
+			symbol={args.symbol}
+			translucent={args.translucent}
+		/>
+	);
+}
+
+WithIcon.args = {
+	dark: false,
+	displayType: 'primary',
+	label: '100',
+	symbol: 'check',
 	translucent: false,
 };

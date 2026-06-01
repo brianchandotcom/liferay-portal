@@ -8,6 +8,7 @@ package com.liferay.layout.content.versioning.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -63,8 +64,8 @@ public class LayoutContentVersionTable
 		createColumn(
 			"specSchemaVersion", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionTable, String> data = createColumn(
-		"data_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionTable, Clob> data = createColumn(
+		"data_", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutContentVersionTable, String> dataHash =
 		createColumn(
 			"dataHash", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -87,4 +88,4 @@ public class LayoutContentVersionTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-388203025
+// LIFERAY-SERVICE-BUILDER-HASH:-1770749044

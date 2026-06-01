@@ -295,7 +295,11 @@ public class BatchBuildTestrayCaseResult
 
 		TestrayProject testrayProject = testrayBuild.getTestrayProject();
 
-		return testrayProject.getTestrayCase(name, testrayCaseType);
+		testrayCase = testrayProject.getTestrayCase(name, testrayCaseType);
+
+		setTestrayCase(testrayCase);
+
+		return testrayCase;
 	}
 
 	@Override

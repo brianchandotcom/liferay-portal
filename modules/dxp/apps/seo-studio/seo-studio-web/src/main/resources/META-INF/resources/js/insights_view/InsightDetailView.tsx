@@ -9,8 +9,12 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import AuthorCellRenderer from './cell_renderers/AuthorCellRenderer';
+import TitleCellRenderer from './cell_renderers/TitleCellRenderer';
 import {getInsightType} from './services/InsightTypeService';
 import {InsightType} from './types/InsightType';
+
+import './InsightDetailView.scss';
 
 type BreadcrumbItem = {
 	href?: string;
@@ -52,7 +56,7 @@ export default function InsightDetailView({
 	}, [breadcrumbItems, externalReferenceCode]);
 
 	return (
-		<div className="seo-studio-insight-detail">
+		<>
 			<ClayBreadcrumb
 				items={[
 					...breadcrumbItems,
@@ -60,36 +64,56 @@ export default function InsightDetailView({
 				]}
 			/>
 
-			<h2 className="seo-studio-insight-detail-title">
-				{sub(
-					Liferay.Language.get('x-from-x-pages'),
-					data.name ?? '',
-					String(data.affectedPagesCount ?? 0)
-				)}
-			</h2>
+			<div className="insight-detail-info">
+				<h2 className="mb-4 py-2 text-7 text-dark">
+					{sub(
+						Liferay.Language.get('x-from-x-pages'),
+						data.name ?? '',
+						String(data.affectedPagesCount ?? 0)
+					)}
+				</h2>
 
-			<section className="seo-studio-insight-detail-section">
-				<h3>{Liferay.Language.get('description')}</h3>
+				<div className="mb-4">
+					<p className="section-title">
+						{Liferay.Language.get('description')}
+					</p>
 
-				<p>{data.description}</p>
-			</section>
+					<p className="text-3">{data.description}</p>
+				</div>
 
-			<section className="seo-studio-insight-detail-section">
-				<h3>{Liferay.Language.get('suggestion')}</h3>
+				<div className="mb-4">
+					<p className="section-title">
+						{Liferay.Language.get('suggestion')}
+					</p>
 
-				<p>{data.fixHint}</p>
-			</section>
+					<p className="text-3">{data.fixHint}</p>
+				</div>
+			</div>
 
-			<section className="seo-studio-insight-detail-section">
-				<h3>
+			<div className="insight-detail-affected-pages">
+				<h4 className="mb-3">
 					{`${Liferay.Language.get('affected-pages')} (${
 						data.affectedPagesCount ?? 0
 					})`}
-				</h3>
+				</h4>
 
 				<FrontendDataSet
 					apiURL={apiURL}
 					appURL={`${Liferay.ThemeDisplay.getPortalURL()}/o/frontend-data-set-taglib/app`}
+					customRenderers={{
+						tableCell: [
+							{
+								component: AuthorCellRenderer,
+								name: 'authorCellRenderer',
+								type: 'internal',
+							},
+							{
+								component: TitleCellRenderer,
+								name: 'titleCellRenderer',
+								type: 'internal',
+							},
+						],
+					}}
 					id={fdsId}
 					pagination={{initialDelta: 10}}
 					showManagementBar={false}
@@ -97,7 +121,7 @@ export default function InsightDetailView({
 					showSearch={false}
 					views={views}
 				/>
-			</section>
-		</div>
+			</div>
+		</>
 	);
 }

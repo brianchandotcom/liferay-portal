@@ -34,7 +34,7 @@ export default function OnPage({
 	};
 
 	return (
-		<div className="seo-studio-on-page">
+		<>
 			<SectionHeader
 				lastScanDate={lastScanDate}
 				title={Liferay.Language.get('on-page')}
@@ -48,6 +48,6 @@ export default function OnPage({
 				onSelectInsight={handleSelectInsight}
 				views={views}
 			/>
-		</div>
+		</>
 	);
 }

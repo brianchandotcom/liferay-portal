@@ -2309,7 +2309,7 @@ info:
         pair to add an item; (3) PATCH /wishlists/<wishListId> (JSON Merge Patch) to rename the list or toggle the
         default flag; (4) DELETE /wishlist-items/<wishListItemId> to remove a single item or DELETE
         /wishlists/<wishListId> to remove the entire list. A Java client JAR is available for use with the group ID
-        'com.liferay', artifact ID 'com.liferay.headless.commerce.delivery.catalog.client', and version '4.0.65'."
+        'com.liferay', artifact ID 'com.liferay.headless.commerce.delivery.catalog.client', and version '4.0.66'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

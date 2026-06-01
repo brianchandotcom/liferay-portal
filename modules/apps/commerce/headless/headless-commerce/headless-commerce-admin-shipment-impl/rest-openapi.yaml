@@ -557,7 +557,7 @@ info:
         shippingDate, or shippingMethodId without changing the line items; (2) PATCH
         /shipments/<shipmentId>/shipping-address to retarget the parcel before it leaves the warehouse; (3) DELETE
         /shipments/<shipmentId> to roll the shipment back. A Java client JAR is available for use with the group ID
-        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.shipment.client', and version '1.0.41'."
+        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.shipment.client', and version '1.0.42'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

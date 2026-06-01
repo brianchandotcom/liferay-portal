@@ -4373,7 +4373,7 @@ info:
         downloadable SKUs; (2) POST /skus/<id>/sku-unit-of-measures to define tiered units (for example, case or pallet)
         on top of the base unit, and GET /unit-of-measure-skus to enumerate SKUs by a unit-of-measure key. A Java client
         JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.77'."
+        'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.78'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

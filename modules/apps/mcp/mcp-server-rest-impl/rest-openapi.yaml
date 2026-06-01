@@ -59,7 +59,7 @@ info:
         matching their intent, then `getToolSummaries` to find the right tool in it, then `getTool` to fetch the tool's
         input schema, then `invokeTool` with an input map matching that schema to execute it. A Java client JAR is
         available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version
-        '1.0.0'."
+        '1.0.2'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

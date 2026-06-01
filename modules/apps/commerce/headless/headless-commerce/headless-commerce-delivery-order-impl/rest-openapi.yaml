@@ -2050,7 +2050,7 @@ info:
         /placed-orders/<placedOrderId> and inspect PlacedOrderItem.virtualItems[] on each line item; (2) follow
         VirtualItem.url for each downloadable file, observing the remaining usages quota and the optional version label.
         A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.commerce.delivery.order.client', and version '1.0.35'."
+        'com.liferay.headless.commerce.delivery.order.client', and version '1.0.36'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

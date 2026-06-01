@@ -1655,7 +1655,7 @@ info:
         for an account in a channel, with OData filter and search; (2) GET /carts/<cartId> or
         /carts/by-externalReferenceCode/<externalReferenceCode> to retrieve a single cart with summary, items,
         addresses, and status. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.55'."
+        'com.liferay.headless.commerce.delivery.cart.client', and version '4.0.56'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

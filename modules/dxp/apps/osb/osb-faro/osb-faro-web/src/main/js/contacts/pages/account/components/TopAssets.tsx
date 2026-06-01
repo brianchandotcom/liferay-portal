@@ -43,6 +43,15 @@ const TAB_OBJECT_TYPES: Record<(typeof TABS)[number], TopAssetObjectType> = {
 	files: 'file'
 };
 
+const TAB_GROUP_BY_METRICS: Record<(typeof TABS)[number], GroupByMetric[]> = {
+	content: [GroupByMetric.IMPRESSIONS, GroupByMetric.VIEWS],
+	files: [
+		GroupByMetric.DOWNLOADS,
+		GroupByMetric.IMPRESSIONS,
+		GroupByMetric.VIEWS
+	]
+};
+
 const ASSET_ROUTE_MAP = {
 	blog: Routes.ASSETS_BLOGS_OVERVIEW,
 	document: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
@@ -59,6 +68,7 @@ interface ITopAssetsTabContentProps {
 	groupBy: GroupByMetric;
 	isFiles: boolean;
 	loading: boolean;
+	metrics: GroupByMetric[];
 	setGroupBy: (metric: GroupByMetric) => void;
 }
 
@@ -67,6 +77,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	groupBy,
 	isFiles,
 	loading,
+	metrics,
 	setGroupBy
 }) => {
 	const {channelId, groupId} = useParams<{
@@ -138,19 +149,17 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{(Object.keys(groupByLabels) as GroupByMetric[]).map(
-							key => (
-								<ClayDropDown.Item
-									key={key}
-									onClick={() => setGroupBy(key)}
-									symbolRight={
-										groupBy === key ? 'check' : undefined
-									}
-								>
-									{groupByLabels[key]}
-								</ClayDropDown.Item>
-							)
-						)}
+						{metrics.map(key => (
+							<ClayDropDown.Item
+								key={key}
+								onClick={() => setGroupBy(key)}
+								symbolRight={
+									groupBy === key ? 'check' : undefined
+								}
+							>
+								{groupByLabels[key]}
+							</ClayDropDown.Item>
+						))}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 
@@ -250,6 +259,16 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 
 	const selectedMetric = GROUP_BY_TO_METRIC[groupBy];
 
+	const metrics = TAB_GROUP_BY_METRICS[TABS[activeTab]];
+
+	const handleActiveTabChange = (index: number) => {
+		setActiveTab(index);
+
+		if (!TAB_GROUP_BY_METRICS[TABS[index]].includes(groupBy)) {
+			setGroupBy(GroupByMetric.IMPRESSIONS);
+		}
+	};
+
 	const {data, loading} = useRequest<
 		Parameters<typeof API.assets.fetchAccountTopAssets>[0],
 		{items: ITopAsset[]}
@@ -272,6 +291,7 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 			groupBy={groupBy}
 			isFiles={TABS[activeTab] === 'files'}
 			loading={loading}
+			metrics={metrics}
 			setGroupBy={setGroupBy}
 		/>
 	);
@@ -284,7 +304,10 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 				</Text>
 			</Card.Title>
 			<Card.Body className='p-0'>
-				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
+				<ClayTabs
+					active={activeTab}
+					onActiveChange={handleActiveTabChange}
+				>
 					<ClayTabs.Item>
 						{Liferay.Language.get('content')}
 					</ClayTabs.Item>

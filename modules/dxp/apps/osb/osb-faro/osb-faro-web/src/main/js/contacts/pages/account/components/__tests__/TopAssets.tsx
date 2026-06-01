@@ -250,8 +250,10 @@ describe('TopAssets', () => {
 			expect(lastCall.variables.selectedMetric).toBe('viewsMetric');
 		});
 
-		it('should refetch with downloadsMetric when the user picks Downloads', () => {
+		it('should refetch with downloadsMetric when the user picks Downloads on the Files tab', () => {
 			render(<TopAssets />);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
 
 			fireEvent.click(
 				screen.getAllByRole('button', {name: /Group By/})[0]
@@ -267,6 +269,62 @@ describe('TopAssets', () => {
 				][0];
 
 			expect(lastCall.variables.selectedMetric).toBe('downloadsMetric');
+		});
+
+		it('should not offer the Downloads metric on the Content tab', () => {
+			render(<TopAssets />);
+
+			fireEvent.click(
+				screen.getAllByRole('button', {name: /Group By/})[0]
+			);
+
+			expect(
+				screen.queryByRole('menuitem', {name: 'Downloads'})
+			).toBeNull();
+			expect(
+				screen.getAllByRole('menuitem', {name: 'Impressions'}).length
+			).toBeGreaterThan(0);
+			expect(
+				screen.getAllByRole('menuitem', {name: 'Views'}).length
+			).toBeGreaterThan(0);
+		});
+
+		it('should offer the Downloads metric on the Files tab', () => {
+			render(<TopAssets />);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
+
+			fireEvent.click(
+				screen.getAllByRole('button', {name: /Group By/})[0]
+			);
+
+			expect(
+				screen.getAllByRole('menuitem', {name: 'Downloads'}).length
+			).toBeGreaterThan(0);
+		});
+
+		it('should reset to impressionsMetric when switching to Content while Downloads is selected', () => {
+			render(<TopAssets />);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
+
+			fireEvent.click(
+				screen.getAllByRole('button', {name: /Group By/})[0]
+			);
+
+			fireEvent.click(
+				screen.getAllByRole('menuitem', {name: 'Downloads'})[0]
+			);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Content'}));
+
+			const lastCall =
+				mockedUseRequest.mock.calls[
+					mockedUseRequest.mock.calls.length - 1
+				][0];
+
+			expect(lastCall.variables.objectType).toBe('content');
+			expect(lastCall.variables.selectedMetric).toBe('impressionsMetric');
 		});
 	});
 

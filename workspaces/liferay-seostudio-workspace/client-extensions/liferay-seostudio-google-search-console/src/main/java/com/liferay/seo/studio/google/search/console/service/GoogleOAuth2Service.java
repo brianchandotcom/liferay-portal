@@ -35,11 +35,11 @@ import org.springframework.stereotype.Service;
 public class GoogleOAuth2Service {
 
 	public String buildAuthorizationURL(
-		String callbackURI, String clientId, String state) {
+		String callbackURL, String clientId, String state) {
 
 		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
 			new GoogleAuthorizationCodeRequestUrl(
-				clientId, callbackURI,
+				clientId, callbackURL,
 				List.of(
 					"email",
 					"https://www.googleapis.com/auth/webmasters.readonly",
@@ -53,7 +53,7 @@ public class GoogleOAuth2Service {
 	}
 
 	public GoogleTokenResponse exchangeCode(
-			String callbackURI, String clientId, String clientSecret,
+			String callbackURL, String clientId, String clientSecret,
 			String code)
 		throws IOException {
 
@@ -61,7 +61,7 @@ public class GoogleOAuth2Service {
 			googleAuthorizationCodeTokenRequest =
 				new GoogleAuthorizationCodeTokenRequest(
 					_netHttpTransport, GsonFactory.getDefaultInstance(),
-					clientId, clientSecret, code, callbackURI);
+					clientId, clientSecret, code, callbackURL);
 
 		return googleAuthorizationCodeTokenRequest.execute();
 	}

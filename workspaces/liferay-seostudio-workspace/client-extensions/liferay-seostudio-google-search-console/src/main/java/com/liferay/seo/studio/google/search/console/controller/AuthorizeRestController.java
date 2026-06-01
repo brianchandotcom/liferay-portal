@@ -58,7 +58,7 @@ public class AuthorizeRestController extends BaseRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		String stateString = _stateTokenService.generateState(
+		String state = _stateTokenService.generateState(
 			redirectURL, seoStudioInstanceId);
 
 		String callbackURL = ServletUriComponentsBuilder.fromContextPath(
@@ -68,12 +68,12 @@ public class AuthorizeRestController extends BaseRestController {
 		).toUriString();
 
 		String authorizationURL = _googleOAuth2Service.buildAuthorizationURL(
-			callbackURL, credentialEntry.getClientId(), stateString);
+			callbackURL, credentialEntry.getClientId(), state);
 
 		return ResponseEntity.ok(
 			new JSONObject(
 			).put(
-				"authorizationUrl", authorizationURL
+				"authorizationURL", authorizationURL
 			).toString());
 	}
 

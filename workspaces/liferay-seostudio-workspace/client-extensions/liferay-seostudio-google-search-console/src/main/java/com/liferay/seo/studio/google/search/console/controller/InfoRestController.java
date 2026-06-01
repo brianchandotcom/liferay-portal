@@ -37,7 +37,7 @@ public class InfoRestController extends BaseRestController {
 		return ResponseEntity.ok(
 			new JSONObject(
 			).put(
-				"callbackUrl", callbackURL
+				"callbackURL", callbackURL
 			).toString());
 	}
 

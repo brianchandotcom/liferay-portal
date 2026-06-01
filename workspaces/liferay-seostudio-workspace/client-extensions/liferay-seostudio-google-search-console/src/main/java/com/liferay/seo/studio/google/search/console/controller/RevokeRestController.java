@@ -54,15 +54,15 @@ public class RevokeRestController extends BaseRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		String tokenString = credentialEntry.getRefreshToken();
+		String token = credentialEntry.getRefreshToken();
 
-		if (tokenString == null) {
-			tokenString = credentialEntry.getAccessToken();
+		if (token == null) {
+			token = credentialEntry.getAccessToken();
 		}
 
-		if (tokenString != null) {
+		if (token != null) {
 			try {
-				_googleOAuth2Service.revokeToken(tokenString);
+				_googleOAuth2Service.revokeToken(token);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

@@ -5,25 +5,29 @@
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {getInsightType} from './services/InsightTypeService';
 import {InsightType} from './types/InsightType';
 
+type BreadcrumbItem = {
+	href?: string;
+	label: string;
+};
+
 export default function InsightDetailView({
 	apiURL,
-	backURL,
+	breadcrumbItems,
 	externalReferenceCode,
 	fdsId,
-	screenName,
 	views,
 }: {
 	apiURL: string;
-	backURL: string;
+	breadcrumbItems: BreadcrumbItem[];
 	externalReferenceCode: string;
 	fdsId: string;
-	screenName: string;
 	views: any[];
 }) {
 	const [data, setData] = useState<InsightType>({});
@@ -35,14 +39,23 @@ export default function InsightDetailView({
 
 		getInsightType(externalReferenceCode)
 			.then((json) => setData(json))
-			.catch(() => setData({}));
-	}, [externalReferenceCode]);
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'unable-to-load-insight-details'
+					),
+					type: 'danger',
+				});
+
+				window.location.assign(breadcrumbItems[0]?.href ?? '');
+			});
+	}, [breadcrumbItems, externalReferenceCode]);
 
 	return (
 		<div className="seo-studio-insight-detail">
 			<ClayBreadcrumb
 				items={[
-					{href: backURL, label: screenName},
+					...breadcrumbItems,
 					{active: true, label: data.name ?? ''},
 				]}
 			/>

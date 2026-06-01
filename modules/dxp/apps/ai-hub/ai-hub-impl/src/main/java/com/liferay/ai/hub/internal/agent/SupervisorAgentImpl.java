@@ -38,6 +38,9 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.agentic.internal.InternalAgent;
+import dev.langchain4j.agentic.scope.AgentInvocation;
+import dev.langchain4j.agentic.scope.AgenticScope;
+import dev.langchain4j.agentic.scope.ResultWithAgenticScope;
 import dev.langchain4j.agentic.supervisor.SupervisorContextStrategy;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
@@ -224,6 +227,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			VertexAiGeminiChatModel vertexAiGeminiChatModel)
 		throws PortalException {
 
+		String[] agentDefinitionExternalReferenceCodes = null;
+
 		_quotaManager.checkTokensUsage(
 			agentContext.getCompanyId(), agentContext.getUserId());
 
@@ -244,8 +249,22 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				SupervisorResponseStrategy.SCORED
 			).build();
 
-		String data = supervisorAgent.invoke(
-			MapUtil.getString(agentContext.getInput(), "message"));
+		ResultWithAgenticScope<String> resultWithAgenticScope =
+			supervisorAgent.invokeWithAgenticScope(
+				MapUtil.getString(agentContext.getInput(), "message"));
+
+		AgenticScope agenticScope = resultWithAgenticScope.agenticScope();
+
+		if ((agenticScope != null) &&
+			(agenticScope.agentInvocations() != null)) {
+
+			agentDefinitionExternalReferenceCodes = ArrayUtil.distinct(
+				TransformUtil.transformToArray(
+					agenticScope.agentInvocations(), AgentInvocation::agentName,
+					String.class));
+		}
+
+		String data = resultWithAgenticScope.result();
 
 		if (Validator.isBlank(data)) {
 			DTOConverterContext dtoConverterContext =
@@ -257,7 +276,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		}
 
 		SseUtil.send(
-			data, "Chat Message Sent", null, agentContext.getSseEventSinkKey());
+			agentDefinitionExternalReferenceCodes, data, "Chat Message Sent",
+			null, agentContext.getSseEventSinkKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

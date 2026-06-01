@@ -50,6 +50,7 @@ export type MappingField = {
 };
 
 export type MappingFieldAttributes = {
+	countrySource?: string;
 	options?: {label: string; value: string}[];
 };
 

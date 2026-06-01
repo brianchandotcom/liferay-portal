@@ -91,7 +91,7 @@ public class CommerceHealthStatusTest {
 	}
 
 	@Test
-	public void testCommerceHealthStatus1() throws Exception {
+	public void testFixIssue1() throws Exception {
 		CommerceHealthStatus commerceHealthStatus =
 			_commerceHealthStatusRegistry.getCommerceHealthStatus(
 				CommerceHealthStatusConstants.
@@ -133,7 +133,7 @@ public class CommerceHealthStatusTest {
 	}
 
 	@Test
-	public void testCommerceHealthStatus2() throws Exception {
+	public void testFixIssue2() throws Exception {
 		CommerceHealthStatus commerceHealthStatus =
 			_commerceHealthStatusRegistry.getCommerceHealthStatus(
 				CommerceHealthStatusConstants.

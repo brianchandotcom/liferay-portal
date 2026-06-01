@@ -627,7 +627,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private static final Pattern _testrayBuildURLPattern = Pattern.compile(
 		"(?<serverURL>https://[^/]+)/#/project/(?<projectID>\\d+)/routines/" +
 			"(?<routineID>\\d+)/build/(?<buildID>\\d+)");
-	private static final Map<String, Long> _testrayRunIDs = new HashMap<>();
 
 	private final JSONObject _jsonObject;
 	private String _pullRequestSenderUsername;
@@ -635,6 +634,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private TestrayProductVersion _testrayProductVersion;
 	private TestrayProject _testrayProject;
 	private TestrayRoutine _testrayRoutine;
+	private final Map<String, Long> _testrayRunIDs = new HashMap<>();
 	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 	private TopLevelBuildReport _topLevelBuildReport;

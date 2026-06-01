@@ -13,43 +13,43 @@ const REASON_OPTIONS: {label: string; value: ReportFeedbackReason | ''}[] = [
 	{label: 'Select Reason', value: ''},
 	{
 		label: 'Incorrect or Inaccurate Response',
-		value: 'INCORRECT_OR_INACCURATE_RESPONSE',
+		value: 'incorrect',
 	},
 	{
 		label: 'Inappropriate or Harmful Content',
-		value: 'INAPPROPRIATE_OR_HARMFUL_CONTENT',
+		value: 'harmfulContent',
 	},
 	{
 		label: 'Exposure of personal / Sensitive Data (PII)',
-		value: 'PII_EXPOSURE',
+		value: 'piiExposure',
 	},
-	{label: 'Agent Error / Malfunction', value: 'AGENT_ERROR_OR_MALFUNCTION'},
-	{label: 'Other', value: 'OTHER'},
+	{label: 'Agent Error / Malfunction', value: 'agentError'},
+	{label: 'Other', value: 'other'},
 ];
 
 interface SendFeedbackModalProps {
-	agentId: string;
+	agentDefinitionExternalReferenceCodes: string[];
 	onClose: () => void;
 	onSubmitted: () => void;
 	traceId: string;
 }
 
 export default function SendFeedbackModal({
-	agentId,
+	agentDefinitionExternalReferenceCodes,
 	onClose,
 	onSubmitted,
 	traceId,
 }: SendFeedbackModalProps) {
 	const {
 		canSubmit,
-		comment,
 		error,
 		reason,
-		setComment,
 		setReason,
+		setUserMessage,
 		submit,
 		submitting,
-	} = useReportFeedback({agentId, traceId});
+		userMessage,
+	} = useReportFeedback({agentDefinitionExternalReferenceCodes, traceId});
 
 	async function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -124,10 +124,10 @@ export default function SendFeedbackModal({
 								disabled={submitting}
 								id="aihub-feedback-comment"
 								onChange={(event) =>
-									setComment(event.target.value)
+									setUserMessage(event.target.value)
 								}
 								rows={4}
-								value={comment}
+								value={userMessage}
 							/>
 						</div>
 					</div>

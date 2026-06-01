@@ -12,16 +12,16 @@ import {
 } from '../api';
 
 interface UseReportFeedbackOptions {
-	agentId: string;
+	agentDefinitionExternalReferenceCodes: string[];
 	traceId: string;
 }
 
 export default function useReportFeedback({
-	agentId,
+	agentDefinitionExternalReferenceCodes,
 	traceId,
 }: UseReportFeedbackOptions) {
 	const [reason, setReason] = useState<ReportFeedbackReason | ''>('');
-	const [comment, setComment] = useState('');
+	const [userMessage, setUserMessage] = useState('');
 	const [submitting, setSubmitting] = useState(false);
 	const [error, setError] = useState('');
 
@@ -33,11 +33,11 @@ export default function useReportFeedback({
 		}
 
 		const payload: ReportFeedbackPayload = {
-			agentId,
+			agentDefinitionExternalReferenceCodes,
 			reason,
-			surface: 'CLICK_TO_CHAT',
+			surface: 'clickToChat',
 			traceId,
-			...(comment.trim() ? {comment: comment.trim()} : {}),
+			...(userMessage.trim() ? {userMessage: userMessage.trim()} : {}),
 		};
 
 		setError('');
@@ -63,12 +63,12 @@ export default function useReportFeedback({
 
 	return {
 		canSubmit,
-		comment,
 		error,
 		reason,
-		setComment,
 		setReason,
+		setUserMessage,
 		submit,
 		submitting,
+		userMessage,
 	};
 }

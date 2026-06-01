@@ -103,6 +103,11 @@ grafana-alloy:
             create: false
             key: config.alloy
             name: liferay-alloy-config
+        mounts:
+            extra:
+                -   mountPath: /var/run/secrets/alloy
+                    name: remote-write-credentials
+                    readOnly: true
         securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -120,6 +125,12 @@ grafana-alloy:
             readOnlyRootFilesystem: false
     controller:
         type: daemonset
+        volumes:
+            extra:
+                -   name: remote-write-credentials
+                    secret:
+                        optional: true
+                        secretName: liferay-alloy-remote-write
     global:
         podSecurityContext:
             fsGroup: 473
@@ -185,8 +196,6 @@ prometheus-node-exporter:
         requests:
             cpu: 102m
             memory: 180Mi
-    securityContext:
-        fsGroup: 0
     service:
         enabled: true
     serviceAccount:

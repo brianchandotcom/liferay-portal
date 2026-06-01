@@ -43,11 +43,11 @@ prometheus.remote_write "default" {
     endpoint {
         {{- if and $rw.basicAuth.username $rw.basicAuth.password }}
         basic_auth {
-            password = {{ $rw.basicAuth.password | quote }}
+            password_file = "/var/run/secrets/alloy/password"
             username = {{ $rw.basicAuth.username | quote }}
         }
         {{- else if $rw.bearerToken }}
-        bearer_token = {{ $rw.bearerToken | quote }}
+        bearer_token_file = "/var/run/secrets/alloy/bearer-token"
         {{- end }}
         url = {{ $rw.url | quote }}
     }

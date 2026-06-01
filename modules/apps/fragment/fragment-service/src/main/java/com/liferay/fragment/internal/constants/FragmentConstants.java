@@ -10,6 +10,6 @@ package com.liferay.fragment.internal.constants;
  */
 public class FragmentConstants {
 
-	public static final int MAX_FRAGMENT_ENTRY_VERSION_COUNT = 10;
+	public static final int FRAGMENT_ENTRY_VERSIONS_COUNT_MAX = 10;
 
 }

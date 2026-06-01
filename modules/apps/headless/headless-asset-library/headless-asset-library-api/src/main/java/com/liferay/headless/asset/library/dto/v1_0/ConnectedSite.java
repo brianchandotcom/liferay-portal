@@ -391,6 +391,62 @@ public class ConnectedSite implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _searchableSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The connected site's staging type."
+	)
+	@JsonGetter("stagingType")
+	@Valid
+	public StagingType getStagingType() {
+		if (_stagingTypeSupplier != null) {
+			stagingType = _stagingTypeSupplier.get();
+
+			_stagingTypeSupplier = null;
+		}
+
+		return stagingType;
+	}
+
+	@JsonIgnore
+	public String getStagingTypeAsString() {
+		StagingType stagingType = getStagingType();
+
+		if (stagingType == null) {
+			return null;
+		}
+
+		return stagingType.toString();
+	}
+
+	public void setStagingType(StagingType stagingType) {
+		this.stagingType = stagingType;
+
+		_stagingTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStagingType(
+		UnsafeSupplier<StagingType, Exception> stagingTypeUnsafeSupplier) {
+
+		_stagingTypeSupplier = () -> {
+			try {
+				return stagingTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The connected site's staging type.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected StagingType stagingType;
+
+	@JsonIgnore
+	private Supplier<StagingType> _stagingTypeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
 	@Valid
@@ -582,6 +638,20 @@ public class ConnectedSite implements Serializable {
 			sb.append(searchable);
 		}
 
+		StagingType stagingType = getStagingType();
+
+		if (stagingType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stagingType\": ");
+
+			sb.append("\"");
+			sb.append(stagingType);
+			sb.append("\"");
+		}
+
 		Type type = getType();
 
 		if (type != null) {
@@ -607,6 +677,44 @@ public class ConnectedSite implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("StagingType")
+	public static enum StagingType {
+
+		LIVE("LIVE"), STAGING("STAGING");
+
+		@JsonCreator
+		public static StagingType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (StagingType stagingType : values()) {
+				if (Objects.equals(stagingType.getValue(), value)) {
+					return stagingType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private StagingType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("Type")
 	public static enum Type {
@@ -735,4 +843,4 @@ public class ConnectedSite implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:109143184
+// LIFERAY-REST-BUILDER-HASH:-460521873

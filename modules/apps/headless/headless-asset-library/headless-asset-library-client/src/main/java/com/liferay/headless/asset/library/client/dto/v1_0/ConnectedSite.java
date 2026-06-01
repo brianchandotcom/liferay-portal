@@ -192,6 +192,35 @@ public class ConnectedSite implements Cloneable, Serializable {
 
 	protected Boolean searchable;
 
+	public StagingType getStagingType() {
+		return stagingType;
+	}
+
+	public String getStagingTypeAsString() {
+		if (stagingType == null) {
+			return null;
+		}
+
+		return stagingType.toString();
+	}
+
+	public void setStagingType(StagingType stagingType) {
+		this.stagingType = stagingType;
+	}
+
+	public void setStagingType(
+		UnsafeSupplier<StagingType, Exception> stagingTypeUnsafeSupplier) {
+
+		try {
+			stagingType = stagingTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected StagingType stagingType;
+
 	public Type getType() {
 		return type;
 	}
@@ -250,6 +279,39 @@ public class ConnectedSite implements Cloneable, Serializable {
 		return ConnectedSiteSerDes.toJSON(this);
 	}
 
+	public static enum StagingType {
+
+		LIVE("LIVE"), STAGING("STAGING");
+
+		public static StagingType create(String value) {
+			for (StagingType stagingType : values()) {
+				if (Objects.equals(stagingType.getValue(), value) ||
+					Objects.equals(stagingType.name(), value)) {
+
+					return stagingType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private StagingType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	public static enum Type {
 
 		SITE("Site"), SITE_TEMPLATE("SiteTemplate");
@@ -284,4 +346,4 @@ public class ConnectedSite implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1771151761
+// LIFERAY-REST-BUILDER-HASH:787305991

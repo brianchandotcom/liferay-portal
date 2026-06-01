@@ -14,6 +14,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -74,6 +75,19 @@ public class LayoutContentVersionLocalServiceImpl
 			layoutContentVersionPersistence.create(layoutContentVersionId);
 
 		int version = _generateVersion(plid);
+
+		if (Validator.isNull(externalReferenceCode)) {
+			String defaultExternalReferenceCode =
+				layout.getExternalReferenceCode() + "_v_" + version;
+
+			if (defaultExternalReferenceCode.length() <=
+					ModelHintsUtil.getMaxLength(
+						LayoutContentVersion.class.getName(),
+						"externalReferenceCode")) {
+
+				externalReferenceCode = defaultExternalReferenceCode;
+			}
+		}
 
 		layoutContentVersion.setExternalReferenceCode(externalReferenceCode);
 

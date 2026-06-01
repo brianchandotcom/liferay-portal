@@ -24,9 +24,9 @@ export interface ChatbotConfiguration {
 }
 
 export interface ChatMessage {
+	agentDefinitionExternalReferenceCodes?: string[];
 	sender: 'assistant' | 'error' | 'user';
 	text: string;
-	traceId?: string;
 }
 
 export interface WidgetConfiguration {

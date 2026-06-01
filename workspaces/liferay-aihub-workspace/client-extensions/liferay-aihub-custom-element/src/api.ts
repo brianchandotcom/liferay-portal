@@ -161,30 +161,40 @@ export async function postChatMessage(
 }
 
 export type ReportFeedbackReason =
-	| 'AGENT_ERROR_OR_MALFUNCTION'
-	| 'INAPPROPRIATE_OR_HARMFUL_CONTENT'
-	| 'INCORRECT_OR_INACCURATE_RESPONSE'
-	| 'OTHER'
-	| 'PII_EXPOSURE';
+	| 'agentError'
+	| 'harmfulContent'
+	| 'incorrect'
+	| 'other'
+	| 'piiExposure';
 
 export interface ReportFeedbackPayload {
-	agentId: string;
-	comment?: string;
+	agentDefinitionExternalReferenceCodes: string[];
 	reason: ReportFeedbackReason;
-	surface: 'CLICK_TO_CHAT';
+	surface: 'clickToChat';
 	traceId: string;
+	userMessage?: string;
 }
-
-// TODO LPD-92295 replace with a real POST to
-// `${aiHubURL}/o/ai-hub-cell/v1.0/ai-issue-reports` once the backend endpoint
-// lands (tracked under LPD-92286's follow-ups).
 
 export async function postAIIssueReport(
 	payload: ReportFeedbackPayload
 ): Promise<{id: string}> {
-	void payload;
+	const response = await fetch(
+		`${aiHubURL}/o/ai-hub/v1.0/agent-issue-reports`,
+		{
+			body: JSON.stringify(payload),
+			headers: new Headers({
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}),
+			method: 'POST',
+		}
+	);
 
-	await new Promise((resolve) => setTimeout(resolve, 400));
+	if (!response.ok) {
+		throw new Error(
+			`Unable to send feedback (${response.status} ${response.statusText})`
+		);
+	}
 
-	return {id: `mock-${Date.now()}`};
+	return (await response.json()) as {id: string};
 }

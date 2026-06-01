@@ -18,7 +18,7 @@ function renderModal(
 	overrides: Partial<{onClose: () => void; onSubmitted: () => void}> = {}
 ) {
 	const props = {
-		agentId: 'agent-1',
+		agentDefinitionExternalReferenceCodes: ['agent-1'],
 		onClose: vi.fn(),
 		onSubmitted: vi.fn(),
 		traceId: 'trace-1',
@@ -58,7 +58,7 @@ describe('SendFeedbackModal', () => {
 		expect(send).toBeDisabled();
 
 		fireEvent.change(screen.getByLabelText(/Reason/), {
-			target: {value: 'OTHER'},
+			target: {value: 'other'},
 		});
 
 		expect(send).toBeEnabled();
@@ -70,7 +70,7 @@ describe('SendFeedbackModal', () => {
 		const {onSubmitted} = renderModal();
 
 		fireEvent.change(screen.getByLabelText(/Reason/), {
-			target: {value: 'INCORRECT_OR_INACCURATE_RESPONSE'},
+			target: {value: 'incorrect'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'Send'}));
 
@@ -78,8 +78,8 @@ describe('SendFeedbackModal', () => {
 
 		expect(mockedPost).toHaveBeenCalledWith(
 			expect.objectContaining({
-				reason: 'INCORRECT_OR_INACCURATE_RESPONSE',
-				surface: 'CLICK_TO_CHAT',
+				reason: 'incorrect',
+				surface: 'clickToChat',
 			})
 		);
 	});
@@ -90,7 +90,7 @@ describe('SendFeedbackModal', () => {
 		const {onSubmitted} = renderModal();
 
 		fireEvent.change(screen.getByLabelText(/Reason/), {
-			target: {value: 'OTHER'},
+			target: {value: 'other'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'Send'}));
 

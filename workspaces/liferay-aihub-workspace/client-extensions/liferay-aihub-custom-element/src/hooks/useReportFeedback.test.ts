@@ -20,19 +20,25 @@ describe('useReportFeedback', () => {
 
 	it('cannot submit until a reason is selected', () => {
 		const {result} = renderHook(() =>
-			useReportFeedback({agentId: 'agent-1', traceId: 'trace-1'})
+			useReportFeedback({
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			traceId: 'trace-1',
+		})
 		);
 
 		expect(result.current.canSubmit).toBe(false);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		expect(result.current.canSubmit).toBe(true);
 	});
 
 	it('does not post when no reason is selected', async () => {
 		const {result} = renderHook(() =>
-			useReportFeedback({agentId: 'agent-1', traceId: 'trace-1'})
+			useReportFeedback({
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			traceId: 'trace-1',
+		})
 		);
 
 		let outcome: boolean | undefined;
@@ -49,12 +55,15 @@ describe('useReportFeedback', () => {
 		mockedPost.mockResolvedValue({id: 'mock-1'});
 
 		const {result} = renderHook(() =>
-			useReportFeedback({agentId: 'agent-1', traceId: 'trace-1'})
+			useReportFeedback({
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			traceId: 'trace-1',
+		})
 		);
 
 		act(() => {
-			result.current.setReason('PII_EXPOSURE');
-			result.current.setComment('  sensitive  ');
+			result.current.setReason('piiExposure');
+			result.current.setUserMessage('  sensitive  ');
 		});
 
 		let outcome: boolean | undefined;
@@ -65,11 +74,11 @@ describe('useReportFeedback', () => {
 
 		expect(outcome).toBe(true);
 		expect(mockedPost).toHaveBeenCalledWith({
-			agentId: 'agent-1',
-			comment: 'sensitive',
-			reason: 'PII_EXPOSURE',
-			surface: 'CLICK_TO_CHAT',
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			reason: 'piiExposure',
+			surface: 'clickToChat',
 			traceId: 'trace-1',
+			userMessage: 'sensitive',
 		});
 	});
 
@@ -77,19 +86,22 @@ describe('useReportFeedback', () => {
 		mockedPost.mockResolvedValue({id: 'mock-1'});
 
 		const {result} = renderHook(() =>
-			useReportFeedback({agentId: 'agent-1', traceId: 'trace-1'})
+			useReportFeedback({
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			traceId: 'trace-1',
+		})
 		);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		await act(async () => {
 			await result.current.submit();
 		});
 
 		expect(mockedPost).toHaveBeenCalledWith({
-			agentId: 'agent-1',
-			reason: 'OTHER',
-			surface: 'CLICK_TO_CHAT',
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			reason: 'other',
+			surface: 'clickToChat',
 			traceId: 'trace-1',
 		});
 	});
@@ -98,10 +110,13 @@ describe('useReportFeedback', () => {
 		mockedPost.mockRejectedValue(new Error('boom'));
 
 		const {result} = renderHook(() =>
-			useReportFeedback({agentId: 'agent-1', traceId: 'trace-1'})
+			useReportFeedback({
+			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			traceId: 'trace-1',
+		})
 		);
 
-		act(() => result.current.setReason('OTHER'));
+		act(() => result.current.setReason('other'));
 
 		let outcome: boolean | undefined;
 

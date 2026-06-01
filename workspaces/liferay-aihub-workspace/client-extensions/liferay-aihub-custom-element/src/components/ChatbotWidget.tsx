@@ -34,6 +34,19 @@ interface ChatbotWidgetProps {
 	widgetConfiguration: WidgetConfiguration;
 }
 
+interface ReportContext {
+	agentDefinitionExternalReferenceCodes: string[];
+	messageId: string;
+}
+
+function generateMessageId(): string {
+	if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+		return crypto.randomUUID();
+	}
+
+	return Math.random().toString(36).substring(2, 15);
+}
+
 export default function ChatbotWidget({
 	widgetConfiguration,
 }: ChatbotWidgetProps) {
@@ -43,7 +56,9 @@ export default function ChatbotWidget({
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [notificationDismissed, setNotificationDismissed] = useState(false);
 	const [open, setOpen] = useState(false);
-	const [reportTraceId, setReportTraceId] = useState<string | null>(null);
+	const [reportContext, setReportContext] = useState<ReportContext | null>(
+		null
+	);
 	const [subscribed, setSubscribed] = useState(false);
 	const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -104,12 +119,12 @@ export default function ChatbotWidget({
 						setMessages((prev) => [
 							...prev,
 							{
+								agentDefinitionExternalReferenceCodes:
+									data.agentDefinitionExternalReferenceCodes ??
+									[],
+								messageId: generateMessageId(),
 								sender: 'assistant',
 								text: data.data,
-								traceId:
-									data.traceId ??
-									eventSourceReference.current ??
-									undefined,
 							},
 						]);
 					}
@@ -124,6 +139,33 @@ export default function ChatbotWidget({
 
 					setLoading(false);
 				});
+
+				eventSource.addEventListener(
+					'Agent Invocation Failed',
+					(event) => {
+						if (loadingTimeoutRef.current) {
+							clearTimeout(loadingTimeoutRef.current);
+							loadingTimeoutRef.current = null;
+						}
+
+						let text = '';
+
+						try {
+							text =
+								JSON.parse((event as MessageEvent).data).data ??
+								'';
+						}
+						catch (error) {
+							console.error(
+								'Error parsing agent invocation failure:',
+								error
+							);
+						}
+
+						setMessages((prev) => [...prev, {sender: 'error', text}]);
+						setLoading(false);
+					}
+				);
 
 				eventSource.addEventListener('Subscribe', (event) => {
 					eventSourceReference.current = (event as MessageEvent).data;
@@ -284,15 +326,19 @@ export default function ChatbotWidget({
 									avatar={avatarURL}
 									key={index}
 									onReport={
-										msg.traceId
+										msg.messageId
 											? () =>
-													setReportTraceId(
-														msg.traceId!
-													)
+													setReportContext({
+														agentDefinitionExternalReferenceCodes:
+															msg.agentDefinitionExternalReferenceCodes ??
+															[],
+														messageId:
+															msg.messageId!,
+													})
 											: undefined
 									}
 									onThumbsUp={
-										msg.traceId
+										msg.messageId
 											? () =>
 													setToastMessage(
 														'Thanks for your feedback!'
@@ -354,15 +400,17 @@ export default function ChatbotWidget({
 				{open ? <CloseIcon /> : <ChatIcon />}
 			</button>
 
-			{reportTraceId !== null && (
+			{reportContext !== null && (
 				<SendFeedbackModal
-					agentId={widgetConfiguration.chatbotExternalReferenceCode}
-					onClose={() => setReportTraceId(null)}
+					agentDefinitionExternalReferenceCodes={
+						reportContext.agentDefinitionExternalReferenceCodes
+					}
+					onClose={() => setReportContext(null)}
 					onSubmitted={() => {
-						setReportTraceId(null);
+						setReportContext(null);
 						setToastMessage('Thanks for your feedback!');
 					}}
-					traceId={reportTraceId}
+					traceId={reportContext.messageId}
 				/>
 			)}
 

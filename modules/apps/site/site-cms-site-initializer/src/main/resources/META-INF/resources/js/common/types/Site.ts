@@ -10,5 +10,6 @@ export type Site = {
 	logo: string;
 	name: string;
 	searchable: boolean;
+	stagingType?: 'LIVE' | 'STAGING';
 	type?: 'Site' | 'SiteTemplate';
 };

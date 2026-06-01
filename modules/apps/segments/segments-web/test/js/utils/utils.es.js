@@ -79,6 +79,14 @@ describe('utils', () => {
 		});
 	});
 
+	describe('jsDatetoYYYYMMDD', () => {
+		it('formats a date as YYYY-MM-DD regardless of the locale', () => {
+			expect(Utils.jsDatetoYYYYMMDD(new Date(2026, 5, 1))).toEqual(
+				'2026-06-01'
+			);
+		});
+	});
+
 	describe('objectToFormData', () => {
 		it('takes an object of key value pairs and return a form data object with the same values', () => {
 			const testData = {

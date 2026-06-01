@@ -498,10 +498,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Manage your Liferay account, subscriptions, permissions, fast and efficient.",
-																		"es_ES": "Gestiona tu cuenta, suscripciones y permisos de Liferay, rápido y eficiente.",
-																		"ja_JP": "Liferayアカウント、サブスクリプション、権限を迅速かつ効率的に管理します。",
-																		"pt_BR": "Gerencie sua conta, assinaturas e permissões Liferay de forma rápida e eficiente."
+																		"en_US": "Manage your Liferay account, projects, permissions, fast and efficient.",
+																		"es_ES": "Gestiona tu cuenta, proyectos y permisos de Liferay, rápido y eficiente.",
+																		"ja_JP": "Liferayアカウント、プロジェクト、権限を迅速かつ効率的に管理します。",
+																		"pt_BR": "Gerencie sua conta, projetos e permissões Liferay de forma rápida e eficiente."
 																	}
 																}
 															}

@@ -527,3 +527,8 @@ b43d8a041841775b91d6811c120decbd0ca0104f^..790a52ea1a2c648dc9bc18bc9f421c84cbe85
 # Bundle Version 4.0.97
 #
 ae7e9313d927b79affebb31dc59cd4074fa4edbc^..88feb128c32de9efbf8c3ddfa2334f34a73f5dc3=LPD-86387
+
+#
+# Bundle Version 4.0.98
+#
+88feb128c32de9efbf8c3ddfa2334f34a73f5dc3^..ed3c9bc6f6071369be539e7b8259e1690ccdfab5=LPD-58746 LPD-89587 LPD-90002

@@ -428,7 +428,8 @@ test.describe("Category tests that don't focus on creation", () => {
 
 			await clickAndExpectToBeVisible({
 				target: page.getByText(
-					'Please enter a unique name. This one is already in use.'
+					'Please enter a unique name. This one is already in use.',
+					{exact: true}
 				),
 				trigger: editCategoryPage.saveButton,
 			});

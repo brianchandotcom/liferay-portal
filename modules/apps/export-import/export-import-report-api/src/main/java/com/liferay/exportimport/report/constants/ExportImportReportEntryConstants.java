@@ -30,12 +30,10 @@ public class ExportImportReportEntryConstants {
 		if (type == TYPE_EMPTY) {
 			return "empty";
 		}
-
-		if (type == TYPE_ERROR) {
+		else if (type == TYPE_ERROR) {
 			return "error";
 		}
-
-		if (type == TYPE_MISSING_REFERENCE) {
+		else if (type == TYPE_MISSING_REFERENCE) {
 			return "missing-reference";
 		}
 

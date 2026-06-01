@@ -127,11 +127,11 @@ public class LiferayObjectService {
 		);
 
 		if (accessTokenExpirationTime != null) {
-			Instant truncatedInstant = accessTokenExpirationTime.truncatedTo(
-				ChronoUnit.SECONDS);
-
 			jsonObject.put(
-				"accessTokenExpirationTime", truncatedInstant.toString());
+				"accessTokenExpirationTime",
+				accessTokenExpirationTime.truncatedTo(
+					ChronoUnit.SECONDS
+				).toString());
 		}
 
 		_patchById(jsonObject.toString(), id);

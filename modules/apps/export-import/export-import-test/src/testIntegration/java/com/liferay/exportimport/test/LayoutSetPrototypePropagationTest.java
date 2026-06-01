@@ -7,6 +7,7 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -87,6 +88,7 @@ import jakarta.portlet.PortletPreferences;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -380,6 +382,18 @@ public class LayoutSetPrototypePropagationTest
 		_assertLayoutSetPrototypeLayoutERC(linkToURLLayout, group.getGroupId());
 		_assertLayoutSetPrototypeLayoutERC(nodeLayout, group.getGroupId());
 		_assertLayoutSetPrototypeLayoutERC(widgetLayout, group.getGroupId());
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationWithExportImportInProcess()
+		throws Exception {
+
+		_testLayoutSetPrototypePropagationWithExportImportInProcess(
+			ExportImportThreadLocal::setLayoutExportInProcess);
+		_testLayoutSetPrototypePropagationWithExportImportInProcess(
+			ExportImportThreadLocal::setLayoutImportInProcess);
+		_testLayoutSetPrototypePropagationWithExportImportInProcess(
+			ExportImportThreadLocal::setLayoutStagingInProcess);
 	}
 
 	@Test
@@ -1299,6 +1313,24 @@ public class LayoutSetPrototypePropagationTest
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
 				ActionKeys.CUSTOMIZE));
+	}
+
+	private void _testLayoutSetPrototypePropagationWithExportImportInProcess(
+			Consumer<Boolean> exportImportThreadLocalConsumer)
+		throws Exception {
+
+		try {
+			exportImportThreadLocalConsumer.accept(true);
+
+			propagateChanges(group);
+
+			Assert.fail();
+		}
+		catch (IllegalStateException illegalStateException) {
+		}
+		finally {
+			exportImportThreadLocalConsumer.accept(false);
+		}
 	}
 
 	private void _verifyPortletPreferenceValue(

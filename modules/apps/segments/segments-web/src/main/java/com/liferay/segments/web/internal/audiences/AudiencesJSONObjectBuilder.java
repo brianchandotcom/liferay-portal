@@ -5,18 +5,16 @@
 
 package com.liferay.segments.web.internal.audiences;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.odata.filter.FilterParser;
-import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.web.internal.odata.AudiencesExpressionVisitor;
 
 /**
  * @author Eudaldo Alonso
@@ -24,7 +22,7 @@ import com.liferay.segments.web.internal.odata.AudiencesExpressionVisitor;
 public class AudiencesJSONObjectBuilder {
 
 	public static JSONObject toAudienceJSONObject(
-			FilterParserProvider filterParserProvider,
+			JSONFactory jsonFactory,
 			SegmentsCriteriaContributor contextContributor,
 			SegmentsEntry segmentsEntry)
 		throws Exception {
@@ -45,24 +43,18 @@ public class AudiencesJSONObjectBuilder {
 			return null;
 		}
 
-		FilterParser filterParser = filterParserProvider.provide(
-			contextContributor.getEntityModel());
+		JSONObject audienceJSONObject = _toAudienceJSONObject(
+			jsonFactory, jsonFactory.createJSONObject(filterString));
 
-		Expression expression = filterParser.parse(filterString);
-
-		JSONObject jsonObject = (JSONObject)expression.accept(
-			new AudiencesExpressionVisitor(
-				contextContributor.getEntityModel()));
-
-		if (!jsonObject.has("rules")) {
-			jsonObject = JSONUtil.put(
+		if (!audienceJSONObject.has("rules")) {
+			audienceJSONObject = JSONUtil.put(
 				"conjunction", "AND"
 			).put(
-				"rules", JSONUtil.putAll(jsonObject)
+				"rules", JSONUtil.putAll(audienceJSONObject)
 			);
 		}
 
-		return jsonObject.put(
+		return audienceJSONObject.put(
 			"id", segmentsEntry.getSegmentsEntryKey()
 		).put(
 			"retentionType", _getRetentionType(segmentsEntry.getSource())
@@ -77,6 +69,39 @@ public class AudiencesJSONObjectBuilder {
 		}
 
 		return StringUtil.toUpperCase(source.substring(index + 1));
+	}
+
+	private static JSONObject _toAudienceJSONObject(
+		JSONFactory jsonFactory, JSONObject queryJSONObject) {
+
+		if (!queryJSONObject.has("items")) {
+			return JSONUtil.put(
+				"attribute", queryJSONObject.getString("propertyName")
+			).put(
+				"operation",
+				StringUtil.replace(
+					queryJSONObject.getString("operatorName"), '-', '_')
+			).put(
+				"value", queryJSONObject.getString("value")
+			);
+		}
+
+		JSONArray rulesJSONArray = jsonFactory.createJSONArray();
+
+		JSONArray itemsJSONArray = queryJSONObject.getJSONArray("items");
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			rulesJSONArray.put(
+				_toAudienceJSONObject(
+					jsonFactory, itemsJSONArray.getJSONObject(i)));
+		}
+
+		return JSONUtil.put(
+			"conjunction",
+			StringUtil.toUpperCase(queryJSONObject.getString("conjunctionName"))
+		).put(
+			"rules", rulesJSONArray
+		);
 	}
 
 	private AudiencesJSONObjectBuilder() {

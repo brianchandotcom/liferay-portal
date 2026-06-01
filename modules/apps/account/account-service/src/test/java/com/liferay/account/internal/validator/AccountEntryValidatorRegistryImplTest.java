@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -59,17 +60,15 @@ public class AccountEntryValidatorRegistryImplTest {
 			serviceWrapper
 		);
 
-		Assert.assertSame(
-			accountEntryValidator,
-			_accountEntryValidatorRegistryImpl.getAccountEntryValidator("key"));
-
-		Mockito.clearInvocations(_serviceTrackerMap);
-
 		Assert.assertNull(
 			_accountEntryValidatorRegistryImpl.getAccountEntryValidator(
 				StringPool.BLANK));
 
 		Mockito.verifyNoInteractions(_serviceTrackerMap);
+
+		Assert.assertSame(
+			accountEntryValidator,
+			_accountEntryValidatorRegistryImpl.getAccountEntryValidator("key"));
 
 		Mockito.when(
 			_serviceTrackerMap.getService("key")
@@ -105,7 +104,6 @@ public class AccountEntryValidatorRegistryImplTest {
 		Assert.assertEquals(
 			accountEntryValidators.toString(), 2,
 			accountEntryValidators.size());
-
 		Assert.assertSame(
 			accountEntryValidator1, accountEntryValidators.get(0));
 		Assert.assertSame(
@@ -121,16 +119,14 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		Mockito.verifyNoInteractions(_serviceTrackerMap);
 
-		JSONObject jsonObject = JSONUtil.put("field", "value");
-
-		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
-
 		AccountEntryValidator accountEntryValidator1 = Mockito.mock(
 			AccountEntryValidator.class);
-
+		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
+		JSONObject jsonObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		AccountEntryValidatorResult accountEntryValidatorResult1 =
 			AccountEntryValidatorResult.builder(
-				"key1"
+				RandomTestUtil.randomString()
 			).build();
 
 		Mockito.when(
@@ -141,10 +137,9 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		AccountEntryValidator accountEntryValidator2 = Mockito.mock(
 			AccountEntryValidator.class);
-
 		AccountEntryValidatorResult accountEntryValidatorResult2 =
 			AccountEntryValidatorResult.builder(
-				"key2"
+				RandomTestUtil.randomString()
 			).resultStatus(
 				AccountEntryValidatorConstants.RESULT_FAILURE
 			).build();
@@ -170,15 +165,6 @@ public class AccountEntryValidatorRegistryImplTest {
 			_accountEntryValidatorRegistryImpl.validate(
 				accountEntry, jsonObject);
 
-		Assert.assertEquals(
-			accountEntryValidatorResults.toString(), 2,
-			accountEntryValidatorResults.size());
-
-		Assert.assertSame(
-			accountEntryValidatorResult1, accountEntryValidatorResults.get(0));
-		Assert.assertSame(
-			accountEntryValidatorResult2, accountEntryValidatorResults.get(1));
-
 		Mockito.verify(
 			accountEntryValidator1
 		).validate(
@@ -190,6 +176,14 @@ public class AccountEntryValidatorRegistryImplTest {
 		).validate(
 			accountEntry, jsonObject
 		);
+
+		Assert.assertEquals(
+			accountEntryValidatorResults.toString(), 2,
+			accountEntryValidatorResults.size());
+		Assert.assertSame(
+			accountEntryValidatorResult1, accountEntryValidatorResults.get(0));
+		Assert.assertSame(
+			accountEntryValidatorResult2, accountEntryValidatorResults.get(1));
 	}
 
 	private ServiceWrapper<AccountEntryValidator> _getMockServiceWrapper(

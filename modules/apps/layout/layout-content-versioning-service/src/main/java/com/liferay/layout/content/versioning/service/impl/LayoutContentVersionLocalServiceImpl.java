@@ -9,9 +9,12 @@ import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVer
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionNameException;
 import com.liferay.layout.content.versioning.exception.RequiredLayoutContentVersionException;
+import com.liferay.layout.content.versioning.exception.UnsupportedLayoutLayoutContentVersionException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.base.LayoutContentVersionLocalServiceBaseImpl;
 import com.liferay.layout.content.versioning.util.comparator.LayoutContentVersionVersionComparator;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,6 +58,7 @@ public class LayoutContentVersionLocalServiceImpl
 
 		FeatureFlagManagerUtil.checkEnabled(layout.getCompanyId(), "LPD-10622");
 
+		_validateLayout(layout);
 		_validateExternalReferenceCode(
 			externalReferenceCode, layout.getGroupId());
 
@@ -142,6 +146,9 @@ public class LayoutContentVersionLocalServiceImpl
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
 
+		_validateLayout(
+			_layoutLocalService.getLayout(layoutContentVersion.getPlid()));
+
 		if (layoutContentVersion.getStatus() ==
 				WorkflowConstants.STATUS_APPROVED) {
 
@@ -213,6 +220,9 @@ public class LayoutContentVersionLocalServiceImpl
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
 
+		_validateLayout(
+			_layoutLocalService.getLayout(layoutContentVersion.getPlid()));
+
 		if (MapUtil.isEmpty(nameMap)) {
 			throw new LayoutContentVersionNameException(
 				"The name must not be null");
@@ -265,10 +275,30 @@ public class LayoutContentVersionLocalServiceImpl
 		}
 	}
 
+	private void _validateLayout(Layout layout) throws PortalException {
+		if (!layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
+			layout.isTypeUtility()) {
+
+			throw new UnsupportedLayoutLayoutContentVersionException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedLayoutLayoutContentVersionException();
+		}
+	}
+
 	private static final String _SPEC_SCHEMA_VERSION = "v1.0";
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -411,9 +411,9 @@ const EventRow: React.FC<IEventRowProps> = ({event, timeZoneId}) => {
 								{event.pageTitle || event.assetTitle}
 							</div>
 
-							{event.url && (
+							{event.canonicalUrl && (
 								<div className='text-secondary text-truncate'>
-									{event.url}
+									{event.canonicalUrl}
 								</div>
 							)}
 						</div>

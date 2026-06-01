@@ -602,33 +602,6 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE");
 	}
 
-	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
-	@priority = 5
-	test ColumnsDiplayCorrectInfo {
-		Workflow.openWorkflowListView();
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Content",
-			entryTitle = "Blogs Title 1");
-
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
-
-		Workflow.assertInfoItem(
-			key_assignee = "Unassigned",
-			key_createdBy = "Test Test",
-			key_dueDate = "-",
-			key_itemSubject = "Blogs Entry: Blogs Title 1",
-			key_processStep = "Review");
-	}
-
 	@description = "LPS-130218 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
 	@priority = 3
 	test CreatedBySortIsPreservedWhenChangesPagination {

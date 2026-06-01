@@ -120,8 +120,8 @@ public class FragmentEntryVersionUpgradeProcessTest {
 		List<Integer> initialProductionVersions = _getFragmentEntryVersions(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
-		List<Integer> insertedCtCollectionVersions = new ArrayList<>();
 		long ctCollectionId = RandomTestUtil.randomLong();
+		List<Integer> insertedCtCollectionVersions = new ArrayList<>();
 
 		if (actualCtCollectionVersionsCount > 0) {
 			insertedCtCollectionVersions =

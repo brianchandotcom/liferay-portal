@@ -9,9 +9,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsEntry;
+
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -60,8 +63,11 @@ public class AudiencesJSONObjectBuilder {
 		JSONFactory jsonFactory, JSONObject queryJSONObject) {
 
 		if (!queryJSONObject.has("items")) {
+			String propertyName = queryJSONObject.getString("propertyName");
+
 			return JSONUtil.put(
-				"attribute", queryJSONObject.getString("propertyName")
+				"attribute",
+				_attributeNames.getOrDefault(propertyName, propertyName)
 			).put(
 				"operation",
 				StringUtil.replace(
@@ -91,5 +97,26 @@ public class AudiencesJSONObjectBuilder {
 
 	private AudiencesJSONObjectBuilder() {
 	}
+
+	private static final Map<String, String> _attributeNames =
+		HashMapBuilder.put(
+			"browser", "browser_name"
+		).put(
+			"customContext/ipGeocoderCountry", "ip_geocoder_country"
+		).put(
+			"languageId", "language"
+		).put(
+			"lastSignInDateTime", "last_sign_in_date"
+		).put(
+			"localDate", "local_date"
+		).put(
+			"referrerURL", "referrer_url"
+		).put(
+			"requestParameters", "request_parameters"
+		).put(
+			"signedIn", "signed_in"
+		).put(
+			"userAgent", "user_agent"
+		).build();
 
 }

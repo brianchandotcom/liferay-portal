@@ -293,10 +293,13 @@ public class DesignLibraryResourcesDisplayContext {
 	}
 
 	private String _getExportImportPortletURL(Group group, String portletId) {
-		return PortalUtil.getControlPanelPortletURL(
-			_httpServletRequest, group, portletId, 0, 0,
-			PortletRequest.RENDER_PHASE
-		).toString();
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, group, portletId, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setBackURL(
+			PortalUtil.getCurrentURL(_httpServletRequest)
+		).buildString();
 	}
 
 	private boolean _hasManageStyleBookEntriesPermission(long groupId) {

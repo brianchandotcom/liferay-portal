@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
@@ -86,8 +85,7 @@ public class GetAudiencesServlet extends HttpServlet {
 				for (SegmentsEntry segmentsEntry : segmentsEntries) {
 					JSONObject audienceJSONObject =
 						AudiencesJSONObjectBuilder.toAudienceJSONObject(
-							_filterParserProvider, contextContributor,
-							segmentsEntry);
+							_jsonFactory, contextContributor, segmentsEntry);
 
 					if (audienceJSONObject != null) {
 						audiencesJSONArray.put(audienceJSONObject);
@@ -126,9 +124,6 @@ public class GetAudiencesServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetAudiencesServlet.class);
-
-	@Reference
-	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

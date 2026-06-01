@@ -17,6 +17,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 		Map<Long, Integer> fragmentEntryVersionCountByFragmentEntryIdMap =
 			_getFragmentEntryVersionCountByFragmentEntryIdMap(ctCollectionId);
 
-		if (fragmentEntryVersionCountByFragmentEntryIdMap.isEmpty()) {
+		if (MapUtil.isEmpty(fragmentEntryVersionCountByFragmentEntryIdMap)) {
 			_fragmentEntryVersionCountByCtCollectionIdMap.remove(
 				ctCollectionId);
 

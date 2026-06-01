@@ -72,13 +72,12 @@ public class ExportAuditEventsMVCResourceCommand
 			properties.get("columns"));
 
 		if (ArrayUtil.isEmpty(selectedColumns)) {
-			Set<String> keys = _functionsKeys.keySet();
+			Set<String> keys = _functions.keySet();
 
 			selectedColumns = keys.toArray(new String[0]);
 		}
 
-		_columns = TransformUtil.transform(
-			selectedColumns, _functionsKeys::get, String.class);
+		_columns = selectedColumns;
 	}
 
 	@Override
@@ -135,13 +134,9 @@ public class ExportAuditEventsMVCResourceCommand
 							Function<AuditEvent, String> function =
 								_functions.get(column);
 
-							if (function == null) {
-								return StringPool.BLANK;
-							}
-
-							String value = function.apply(auditEvent);
-
-							return CSVUtil.encode(GetterUtil.getString(value));
+							return CSVUtil.encode(
+								GetterUtil.getString(
+									function.apply(auditEvent)));
 						},
 						String.class),
 					StringPool.COMMA));
@@ -228,7 +223,7 @@ public class ExportAuditEventsMVCResourceCommand
 		return user.getEmailAddress();
 	}
 
-	private String _getUserLogin(AuditEvent auditEvent) {
+	private String _getUserScreenName(AuditEvent auditEvent) {
 		User user = _userLocalService.fetchUser(auditEvent.getUserId());
 
 		if (user == null) {
@@ -241,79 +236,44 @@ public class ExportAuditEventsMVCResourceCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportAuditEventsMVCResourceCommand.class);
 
-	private static final Map<String, String> _functionsKeys =
-		LinkedHashMapBuilder.put(
-			"additionalInfo", "additional-information"
-		).put(
-			"className", "resource-name"
-		).put(
-			"classPK", "resource-id"
-		).put(
-			"clientHost", "client-host"
-		).put(
-			"clientIP", "client-ip"
-		).put(
-			"companyId", "company-id"
-		).put(
-			"eventType", "resource-action"
-		).put(
-			"message", "message"
-		).put(
-			"serverName", "server-name"
-		).put(
-			"serverPort", "server-port"
-		).put(
-			"sessionID", "session-id"
-		).put(
-			"timestamp", "create-date"
-		).put(
-			"userEmailAddress", "user-email-address"
-		).put(
-			"userId", "user-id"
-		).put(
-			"userLogin", "user-login"
-		).put(
-			"userName", "user-name"
-		).build();
-
 	private volatile String[] _columns;
 	private final LinkedHashMap<String, Function<AuditEvent, String>>
 		_functions =
 			LinkedHashMapBuilder.<String, Function<AuditEvent, String>>put(
-				"additional-information", AuditEvent::getAdditionalInfo
+				"additionalInfo", AuditEvent::getAdditionalInfo
 			).put(
-				"client-host", AuditEvent::getClientHost
+				"className", AuditEvent::getClassName
 			).put(
-				"client-ip", AuditEvent::getClientIP
+				"classPK", AuditEvent::getClassPK
 			).put(
-				"company-id",
+				"clientHost", AuditEvent::getClientHost
+			).put(
+				"clientIP", AuditEvent::getClientIP
+			).put(
+				"companyId",
 				auditEvent -> String.valueOf(auditEvent.getCompanyId())
 			).put(
-				"create-date",
-				auditEvent -> _formatDate(auditEvent.getCreateDate())
+				"eventType", AuditEvent::getEventType
 			).put(
 				"message", AuditEvent::getMessage
 			).put(
-				"resource-action", AuditEvent::getEventType
+				"serverName", AuditEvent::getServerName
 			).put(
-				"resource-id", AuditEvent::getClassPK
-			).put(
-				"resource-name", AuditEvent::getClassName
-			).put(
-				"server-name", AuditEvent::getServerName
-			).put(
-				"server-port",
+				"serverPort",
 				auditEvent -> String.valueOf(auditEvent.getServerPort())
 			).put(
-				"session-id", AuditEvent::getSessionID
+				"sessionID", AuditEvent::getSessionID
 			).put(
-				"user-email-address", this::_getUserEmailAddress
+				"timestamp",
+				auditEvent -> _formatDate(auditEvent.getCreateDate())
 			).put(
-				"user-id", auditEvent -> String.valueOf(auditEvent.getUserId())
+				"userEmailAddress", this::_getUserEmailAddress
 			).put(
-				"user-login", this::_getUserLogin
+				"userId", auditEvent -> String.valueOf(auditEvent.getUserId())
 			).put(
-				"user-name", AuditEvent::getUserName
+				"userLogin", this::_getUserScreenName
+			).put(
+				"userName", AuditEvent::getUserName
 			).build();
 
 	@Reference

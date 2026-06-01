@@ -40,13 +40,13 @@ public class ExportAuditEventsMVCResourceCommandTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"user-name,user-id\n", auditEvent1.getUserName(),
+				"userName,userId\n", auditEvent1.getUserName(),
 				StringPool.COMMA, auditEvent1.getUserId(), "\n",
 				auditEvent2.getUserName(), StringPool.COMMA,
 				auditEvent2.getUserId(), "\n"),
 			_buildCSV(
 				Arrays.asList(auditEvent1, auditEvent2),
-				new String[] {"user-name", "user-id"}));
+				new String[] {"userName", "userId"}));
 	}
 
 	@Test
@@ -62,10 +62,10 @@ public class ExportAuditEventsMVCResourceCommandTest {
 		);
 
 		Assert.assertEquals(
-			StringBundler.concat("user-name,user-id\n,", userId, "\n"),
+			StringBundler.concat("userName,userId\n,", userId, "\n"),
 			_buildCSV(
 				Arrays.asList(auditEvent),
-				new String[] {"user-name", "user-id"}));
+				new String[] {"userName", "userId"}));
 	}
 
 	private String _buildCSV(List<AuditEvent> auditEvents, String[] columns) {

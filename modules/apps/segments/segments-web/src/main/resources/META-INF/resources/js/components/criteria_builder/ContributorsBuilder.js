@@ -157,51 +157,53 @@ export default function ContributorsBuilder({
 											)}
 										</h2>
 
-										<div className="c-ml-2 criterion-string">
-											<div className="btn-group">
-												<div className="btn-group-item d-flex flex-wrap inline-item">
-													{membersCountLoading && (
-														<ClayLoadingIndicator
-															className="c-mr-4"
-															small
-														/>
-													)}
-
-													{!membersCountLoading && (
-														<span className="c-mr-4">
-															{Liferay.Language.get(
-																'conditions-match'
-															)}
-
-															<b className="c-ml-2 font-weight-bold text-dark">
-																{getPluralMessage(
-																	Liferay.Language.get(
-																		'x-member'
-																	),
-																	Liferay.Language.get(
-																		'x-members'
-																	),
-																	membersCount
-																)}
-															</b>
-														</span>
-													)}
-
-													<ClayButton
-														displayType="secondary"
-														onClick={
-															onPreviewMembers
-														}
-														small
-														type="button"
-													>
-														{Liferay.Language.get(
-															'view-members'
+										{!audiences && (
+											<div className="c-ml-2 criterion-string">
+												<div className="btn-group">
+													<div className="btn-group-item d-flex flex-wrap inline-item">
+														{membersCountLoading && (
+															<ClayLoadingIndicator
+																className="c-mr-4"
+																small
+															/>
 														)}
-													</ClayButton>
+
+														{!membersCountLoading && (
+															<span className="c-mr-4">
+																{Liferay.Language.get(
+																	'conditions-match'
+																)}
+
+																<b className="c-ml-2 font-weight-bold text-dark">
+																	{getPluralMessage(
+																		Liferay.Language.get(
+																			'x-member'
+																		),
+																		Liferay.Language.get(
+																			'x-members'
+																		),
+																		membersCount
+																	)}
+																</b>
+															</span>
+														)}
+
+														<ClayButton
+															displayType="secondary"
+															onClick={
+																onPreviewMembers
+															}
+															small
+															type="button"
+														>
+															{Liferay.Language.get(
+																'view-members'
+															)}
+														</ClayButton>
+													</div>
 												</div>
 											</div>
-										</div>
+										)}
 									</div>
 
 									{emptyContributors &&

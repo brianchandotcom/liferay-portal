@@ -54,12 +54,11 @@ public class CallbackRestController extends BaseRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		Claims claims;
 		String redirectURL;
 		long seoStudioInstanceId;
 
 		try {
-			claims = _stateTokenService.verifyState(state);
+			Claims claims = _stateTokenService.verifyState(state);
 
 			redirectURL = claims.get("redirectURL", String.class);
 

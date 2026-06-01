@@ -45,9 +45,9 @@ public class CallbackRestController extends BaseRestController {
 
 	@GetMapping
 	public ResponseEntity<Void> get(
-		HttpServletRequest httpServletRequest,
 		@RequestParam(required = false) String code,
 		@RequestParam(required = false) String error,
+		HttpServletRequest httpServletRequest,
 		@RequestParam(required = false) String state) {
 
 		if ((state == null) || ((code == null) && (error == null))) {
@@ -95,8 +95,8 @@ public class CallbackRestController extends BaseRestController {
 
 			GoogleTokenResponse googleTokenResponse =
 				_googleOAuth2Service.exchangeCode(
-					credentialEntry.getClientId(),
-					credentialEntry.getClientSecret(), code, callbackURL);
+					callbackURL, credentialEntry.getClientId(),
+					credentialEntry.getClientSecret(), code);
 
 			String emailString = _googleOAuth2Service.fetchUserEmail(
 				googleTokenResponse.getAccessToken());

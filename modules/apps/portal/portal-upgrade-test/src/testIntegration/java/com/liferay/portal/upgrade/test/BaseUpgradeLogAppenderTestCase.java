@@ -1211,9 +1211,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMdd_HHmmss", LocaleUtil.US, TimeZone.getTimeZone("UTC"));
 
-		String timestamp = dateFormat.format(new Date(reportFile1LastModified));
-
-		reportFile = _getReportFile(reportFileName + "." + timestamp);
+		reportFile = _getReportFile(
+			reportFileName + "." +
+				dateFormat.format(new Date(reportFile1LastModified)));
 
 		Assert.assertTrue(reportFile.exists());
 

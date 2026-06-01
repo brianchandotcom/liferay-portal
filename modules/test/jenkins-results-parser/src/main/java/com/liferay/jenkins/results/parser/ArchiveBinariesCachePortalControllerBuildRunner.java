@@ -79,7 +79,7 @@ public class ArchiveBinariesCachePortalControllerBuildRunner
 		invocationParameters.put(
 			"PORTAL_UPSTREAM_BRANCH_NAME",
 			buildData.getPortalUpstreamBranchName());
-		invocationParameters.put("SLAVE_LABEL", _SLAVE_LABEL);
+		invocationParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 		invocationParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE", _TEST_PORTAL_BUILD_PROFILE);
 
@@ -149,8 +149,6 @@ public class ArchiveBinariesCachePortalControllerBuildRunner
 			JenkinsResultsParserUtil.combine(
 				masterURL, "/job/", invocationJobName));
 	}
-
-	private static final String _SLAVE_LABEL = "slave-bundle-builder";
 
 	private static final String _TEST_PORTAL_BUILD_PROFILE = "dxp";
 

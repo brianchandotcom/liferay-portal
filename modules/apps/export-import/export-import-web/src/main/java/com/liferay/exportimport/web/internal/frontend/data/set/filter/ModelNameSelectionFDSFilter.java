@@ -9,11 +9,11 @@ import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServi
 import com.liferay.exportimport.web.internal.constants.ExportImportFDSNames;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -47,14 +47,13 @@ public class ModelNameSelectionFDSFilter
 	}
 
 	@Override
-	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
-		Locale locale) {
+	public boolean isAutocompleteEnabled() {
+		return true;
+	}
 
-		long exportImportConfigurationId = getExportImportConfigurationId();
-
-		if (exportImportConfigurationId == 0) {
-			return Collections.emptyList();
-		}
+	@Override
+	protected List<SelectionFDSFilterItem> doGetSelectionFDSFilterItems(
+		long exportImportConfigurationId, Locale locale) {
 
 		DynamicQuery dynamicQuery =
 			_exportImportReportEntryLocalService.dynamicQuery();
@@ -86,11 +85,6 @@ public class ModelNameSelectionFDSFilter
 				return new SelectionFDSFilterItem(
 					translatedModelName, translatedModelName);
 			});
-	}
-
-	@Override
-	public boolean isAutocompleteEnabled() {
-		return true;
 	}
 
 	@Reference

@@ -54,6 +54,31 @@ describe('ContributorInputs', () => {
 		expect(organizationInput).toHaveValue(organizationContributor.query);
 	});
 
+	it('submits the criteria as JSON instead of the OData query for audiences', () => {
+		const audienceContributor = {
+			...userContributor,
+			criteriaMap: {
+				conjunctionName: 'and',
+				groupId: 'group_0',
+				items: [
+					{
+						operatorName: 'eq',
+						propertyName: 'firstName',
+						value: 'Test',
+					},
+				],
+			},
+		};
+
+		render(
+			<ContributorInputs audiences contributors={[audienceContributor]} />
+		);
+
+		expect(screen.getByTestId(audienceContributor.inputId)).toHaveValue(
+			JSON.stringify(audienceContributor.criteriaMap)
+		);
+	});
+
 	it('renders one query and conjunction input for each contributor with a query', () => {
 		const {container} = render(
 			<ContributorInputs

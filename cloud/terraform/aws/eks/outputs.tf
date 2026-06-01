@@ -1,3 +1,6 @@
+output "alloy_role_arn" {
+	value=try(module.alloy_role.iam_role_arn, "")
+}
 output "arn_partition" {
 	value=var.arn_partition
 }
@@ -9,22 +12,6 @@ output "deployment_name" {
 }
 output "deployment_namespace" {
 	value=var.deployment_namespace
-}
-output "grafana_enabled" {
-	value=length(aws_grafana_workspace.amg) == 1 ? true : false
-}
-output "grafana_workspace_api_key" {
-	value=try(aws_grafana_workspace_api_key.amg_api_key[0].key, "")
-	sensitive=true
-}
-output "grafana_workspace_endpoint" {
-	value=try(aws_grafana_workspace.amg[0].endpoint, "")
-}
-output "grafana_workspace_id" {
-	value=try(aws_grafana_workspace.amg[0].id, "")
-}
-output "grafana_workspace_role_arn" {
-	value=try(aws_iam_role.grafana[0].arn, "")
 }
 output "liferay_sa_role_arn" {
 	value=aws_iam_role.irsa.arn
@@ -40,6 +27,9 @@ output "prometheus_workspace_endpoint" {
 }
 output "prometheus_workspace_id" {
 	value=try(aws_prometheus_workspace.amp[0].id, "")
+}
+output "rds_exporter_role_arn" {
+	value=try(module.rds_exporter_role.iam_role_arn, "")
 }
 output "region" {
 	value=var.region

@@ -89,7 +89,7 @@ public class GetAudiencesServletTest {
 			audienceJSONObject.getString("id"));
 		Assert.assertEquals("AND", audienceJSONObject.getString("conjunction"));
 		Assert.assertEquals(
-			"SESSION", audienceJSONObject.getString("retentionType"));
+			"BROWSER", audienceJSONObject.getString("retentionType"));
 
 		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
 

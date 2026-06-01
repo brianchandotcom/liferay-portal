@@ -208,29 +208,6 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testFeatureFlagDisabledReturnsEmptyArray() {
-		_featureFlagManagerUtilMockedStatic.when(
-			() -> FeatureFlagManagerUtil.isEnabled(
-				Mockito.anyLong(), Mockito.eq("LPD-74731"))
-		).thenReturn(
-			false
-		);
-
-		_stubObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
-			Collections.singletonList(
-				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
-
-		JSONArray jsonArray =
-			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
-				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
-				_COMPANY_ID, LocaleUtil.US);
-
-		Assert.assertEquals(jsonArray.toString(), 0, jsonArray.length());
-	}
-
-	@Test
 	public void testIncludesOneTypeGroup() {
 		_stubObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,

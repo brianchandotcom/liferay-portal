@@ -525,7 +525,7 @@ info:
         reads (GET /warehouse/<id>) and deletes (DELETE /warehouse/<id>) warehouse definitions; the POST and PUT
         operations here are non-persisting stubs, so per-SKU stock, replenishment, and account/group/channel scoping are
         administered through the admin-inventory API. A Java client JAR is available for use with the group ID
-        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.site.setting.client', and version '4.0.42'."
+        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.site.setting.client', and version '4.0.43'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

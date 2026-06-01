@@ -848,7 +848,7 @@ info:
         availabilityDate to record an expected delivery. Audit recent changes -- GET /warehouseItems/updated with start
         and end query parameters to retrieve every WarehouseItem modified in the requested timespan (defaulting to a
         30-day window when only one bound is supplied). A Java client JAR is available for use with the group ID
-        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.43'."
+        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.44'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

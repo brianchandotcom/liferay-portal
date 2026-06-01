@@ -211,7 +211,9 @@ public class LayoutContentVersionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -231,7 +233,7 @@ public class LayoutContentVersionCacheModel
 
 		version = objectInput.readInt();
 		specSchemaVersion = objectInput.readUTF();
-		data = objectInput.readUTF();
+		data = (String)objectInput.readObject();
 		dataHash = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -289,10 +291,10 @@ public class LayoutContentVersionCacheModel
 		}
 
 		if (data == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(data);
+			objectOutput.writeObject(data);
 		}
 
 		if (dataHash == null) {
@@ -337,4 +339,4 @@ public class LayoutContentVersionCacheModel
 	public long statusDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1503786054
+// LIFERAY-SERVICE-BUILDER-HASH:-1901399511

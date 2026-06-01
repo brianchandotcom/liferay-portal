@@ -153,8 +153,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		GuardrailsUtil.populate(
 			_dtoConverterRegistry, inputGuardrails, _modelArmorHandler,
-			_objectEntryManager, outputGuardrails, serviceContext,
-			workflowContext);
+			_objectEntryManager, outputGuardrails, _quotaManager,
+			serviceContext, workflowContext);
 
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(

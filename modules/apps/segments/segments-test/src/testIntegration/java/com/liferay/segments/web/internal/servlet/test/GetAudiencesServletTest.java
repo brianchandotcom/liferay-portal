@@ -100,8 +100,28 @@ public class GetAudiencesServletTest {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("localDate", "eq", "2026-06-01"),
-				_createRuleJSONObject("userAgent", "eq", "chrome")),
+				"and",
+				_createRuleJSONObject(
+					"browser", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"customContext/ipGeocoderCountry", "eq",
+					RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"languageId", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"lastSignInDateTime", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"localDate", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"referrerURL", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"requestParameters", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"signedIn", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"url", "eq", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"userAgent", "eq", RandomTestUtil.randomString())),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -109,21 +129,20 @@ public class GetAudiencesServletTest {
 
 		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
 
-		Assert.assertEquals(2, rulesJSONArray.length());
-		Assert.assertEquals(
-			"local_date",
-			rulesJSONArray.getJSONObject(
-				0
-			).getString(
-				"attribute"
-			));
-		Assert.assertEquals(
-			"user_agent",
-			rulesJSONArray.getJSONObject(
-				1
-			).getString(
-				"attribute"
-			));
+		String[] attributes = {
+			"browser_name", "ip_geocoder_country", "language",
+			"last_sign_in_date", "local_date", "referrer_url",
+			"request_parameters", "signed_in", "url", "user_agent"
+		};
+
+		Assert.assertEquals(attributes.length, rulesJSONArray.length());
+
+		for (int i = 0; i < attributes.length; i++) {
+			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
+
+			Assert.assertEquals(
+				attributes[i], ruleJSONObject.getString("attribute"));
+		}
 	}
 
 	@Test

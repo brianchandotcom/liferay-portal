@@ -100,9 +100,13 @@ public class AudiencesJSONObjectBuilder {
 
 	private static final Map<String, String> _attributeNames =
 		HashMapBuilder.put(
-			"languageId", "language_id"
+			"browser", "browser_name"
 		).put(
-			"lastSignInDateTime", "last_sign_in_date_time"
+			"customContext/ipGeocoderCountry", "ip_geocoder_country"
+		).put(
+			"languageId", "language"
+		).put(
+			"lastSignInDateTime", "last_sign_in_date"
 		).put(
 			"localDate", "local_date"
 		).put(

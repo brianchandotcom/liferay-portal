@@ -59,6 +59,13 @@ public class SseUtil {
 	public static void send(
 		String data, String name, String nodeName, String sseEventSinkKey) {
 
+		send(null, data, name, nodeName, sseEventSinkKey);
+	}
+
+	public static void send(
+		String[] agentDefinitionExternalReferenceCodes, String data,
+		String name, String nodeName, String sseEventSinkKey) {
+
 		if (Validator.isBlank(sseEventSinkKey)) {
 			return;
 		}
@@ -71,6 +78,16 @@ public class SseUtil {
 			).data(
 				String.class,
 				JSONUtil.put(
+					"agentDefinitionExternalReferenceCodes",
+					() -> {
+						if (agentDefinitionExternalReferenceCodes == null) {
+							return null;
+						}
+
+						return JSONUtil.putAll(
+							agentDefinitionExternalReferenceCodes);
+					}
+				).put(
 					"data", data
 				).put(
 					"nodeName", nodeName

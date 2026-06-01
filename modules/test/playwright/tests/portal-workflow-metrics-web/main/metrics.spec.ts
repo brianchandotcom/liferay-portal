@@ -259,6 +259,49 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 	});
 });
 
+test('Columns on the All Items page display correct info for a pending instance', async ({
+	apiHelpers,
+	metricsPage,
+	page,
+	site,
+	workflowPage,
+}) => {
+	await workflowPage.goto(site.friendlyUrlPath);
+
+	await workflowPage.changeWorkflow('Blogs Entry', 'Single Approver');
+
+	const blogTitle = getRandomString();
+
+	await apiHelpers.headlessDelivery.postBlog(site.id, {
+		articleBody: 'Blogs Content',
+		headline: blogTitle,
+	});
+
+	await metricsPage.goTo(site.friendlyUrlPath);
+
+	await metricsPage.chooseProcess('Single Approver');
+
+	await metricsPage.viewAllPendingItems();
+
+	const row = page
+		.getByRole('row')
+		.filter({hasText: `Blogs Entry: ${blogTitle}`});
+
+	await expect(
+		row.getByRole('cell', {exact: true, name: 'Review'})
+	).toBeVisible();
+
+	await expect(
+		row.getByRole('cell', {exact: true, name: 'Unassigned'})
+	).toBeVisible();
+
+	await expect(
+		row.getByRole('cell', {exact: true, name: 'Test Test'})
+	).toBeVisible();
+
+	await expect(row.getByRole('cell', {exact: true, name: '-'})).toBeVisible();
+});
+
 test('Pagination of Pending Items works correctly', async ({
 	apiHelpers,
 	metricsPage,

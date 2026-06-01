@@ -13,6 +13,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewFolderSectionDisplayContext;
 import com.liferay.trash.TrashHelper;
 
@@ -54,7 +55,7 @@ public class ViewFolderJSPSectionFragmentRenderer
 		return new ViewFolderSectionDisplayContext(
 			_depotEntryLocalService, _dlConfiguration, _groupLocalService,
 			httpServletRequest, language, _objectDefinitionService,
-			_objectEntryFolderLocalService, _portal,
+			_objectEntryFolderLocalService, _portal, _sharingEntryLocalService,
 			translationInfoItemFieldValuesExporterRegistry, _trashHelper);
 	}
 
@@ -79,6 +80,9 @@ public class ViewFolderJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private TrashHelper _trashHelper;

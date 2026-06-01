@@ -1,11 +1,11 @@
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import React from 'react';
-import {columns, pagination} from 'shared/util/frontend-data-set';
 import {
-	EConfigInURLBehavior,
-	FrontendDataSet
-} from '@liferay/frontend-data-set-web';
+	columns,
+	FrontendDataSet,
+	pagination
+} from 'shared/components/FrontendDataSet';
 import {Routes} from 'shared/util/router';
 import {Text} from '@clayui/core';
 import {useParams} from 'react-router-dom';
@@ -26,7 +26,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 	}>();
 
 	return (
-		<Card className={classNames(className)}>
+		<Card className={classNames(className)} minHeight={300}>
 			<Card.Title className='mt-3 mx-3'>
 				<Text size={4} weight='semi-bold'>
 					<span className='text-uppercase'>
@@ -45,7 +45,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 				<div className='mt-3'>
 					<FrontendDataSet
 						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals?channelId=${channelId}`}
-						configInURLBehavior={EConfigInURLBehavior.OFF}
 						customDataRenderers={{
 							department: ({
 								itemData

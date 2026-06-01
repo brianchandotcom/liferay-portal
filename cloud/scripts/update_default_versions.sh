@@ -27,7 +27,6 @@ function main {
 		"${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 		"${_ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 		"${_ROOT_CLOUD_DIR}/terraform/aws/gitops/resources"
-		"${_ROOT_CLOUD_DIR}/terraform/aws/grafana"
 	)
 
 	_check_bootstrap "aws" "${aws_bootstrap_sources[@]}"

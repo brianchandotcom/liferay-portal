@@ -25,7 +25,7 @@ Both behavior-change and surface-only edits fire this validation — the build v
 Set up once, then deploy each module:
 
 ```bash
-(cd "${REPO_ROOT}/portal-impl" && ant compile install-portal-snapshots)
+(cd "${REPO_ROOT}/portal-impl" && ant compile install-portal-snapshot)
 ```
 
 ```bash
@@ -38,7 +38,7 @@ Set up once, then deploy each module:
 ## Checklist
 
 ```
-- [ ] Setup: ant compile install-portal-snapshots
+- [ ] Setup: ant compile install-portal-snapshot
 - [ ] (One subitem per deploy-set module:) Deploy <module path>
 ```
 

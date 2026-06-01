@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -115,7 +116,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			try {
 				exportImportConfigurations.put(
 					layoutSet.getLayoutSetId(),
-					_buildExportImportConfiguration(false, layoutSet));
+					_buildExportImportConfiguration(false, layoutSet, userId));
 			}
 			catch (PortalException portalException) {
 				_log.error(
@@ -146,7 +147,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					_runSyncInBackground(
 						exportImportConfigurations.get(
 							layoutSet.getLayoutSetId()),
-						layoutSet);
+						layoutSet, userId);
 				}
 				catch (Exception exception) {
 					_log.error(
@@ -179,8 +180,11 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
+		long userId = PrincipalThreadLocal.getUserId();
+
 		_runSyncInBackground(
-			_buildExportImportConfiguration(initialSync, layoutSet), layoutSet);
+			_buildExportImportConfiguration(initialSync, layoutSet, userId),
+			layoutSet, userId);
 	}
 
 	@Override
@@ -410,7 +414,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	private ExportImportConfiguration _buildExportImportConfiguration(
-			boolean initialSync, LayoutSet layoutSet)
+			boolean initialSync, LayoutSet layoutSet, long userId)
 		throws PortalException {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -434,7 +438,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
 
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
+		User user = _userLocalService.getUser(userId);
 
 		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
 			layoutSetPrototype.getGroupId(), true);
@@ -448,8 +452,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 		return _exportImportConfigurationLocalService.
 			addDraftExportImportConfiguration(
-				user.getUserId(),
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				userId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 				exportLayoutSettingsMap);
 	}
 
@@ -771,14 +774,11 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	private void _runSyncInBackground(
 			ExportImportConfiguration exportImportConfiguration,
-			LayoutSet layoutSet)
+			LayoutSet layoutSet, long userId)
 		throws PortalException {
 
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
-
 		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
+			userId, layoutSet.getGroupId(), exportImportConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

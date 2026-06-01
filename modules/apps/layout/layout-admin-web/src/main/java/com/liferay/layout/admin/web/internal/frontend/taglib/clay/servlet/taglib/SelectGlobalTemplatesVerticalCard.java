@@ -17,14 +17,11 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +38,6 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -137,7 +132,6 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectGlobalTemplatesVerticalCard.class);
 
-	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

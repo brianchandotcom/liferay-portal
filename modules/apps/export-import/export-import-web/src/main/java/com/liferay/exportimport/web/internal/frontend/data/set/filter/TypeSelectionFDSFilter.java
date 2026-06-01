@@ -56,7 +56,10 @@ public class TypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 				ExportImportReportEntryConstants.TYPE_EMPTY),
 			new SelectionFDSFilterItem(
 				LanguageUtil.get(locale, "error"),
-				ExportImportReportEntryConstants.TYPE_ERROR));
+				ExportImportReportEntryConstants.TYPE_ERROR),
+			new SelectionFDSFilterItem(
+				LanguageUtil.get(locale, "missing-reference"),
+				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE));
 	}
 
 }

@@ -13,8 +13,8 @@ import TaxIdDisplay from '../../App/PaymentMethod/TaxIdDisplay';
 
 const LDPInformation = () => {
 	const {
-		selectedAccount,
 		actions: {nextStep, previousStep},
+		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
 	if (!selectedAccount) {

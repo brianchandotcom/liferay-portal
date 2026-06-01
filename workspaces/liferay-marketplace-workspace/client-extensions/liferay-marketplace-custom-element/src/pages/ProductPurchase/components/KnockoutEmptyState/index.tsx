@@ -8,19 +8,33 @@ import {ReactNode} from 'react';
 
 import './KnockoutEmptyState.scss';
 
+import classNames from 'classnames';
+
 type KnockoutEmptyStateProps = {
 	description: string | ReactNode;
 	title: string;
+	variant?: 'info' | 'warning';
 };
 
 export default function KnockoutEmptyState(props: KnockoutEmptyStateProps) {
+	const variant = props.variant ?? 'warning';
+
 	return (
 		<div
 			className="align-items-center d-flex flex-column justify-content-center px-2 text-center"
 			id="knockout-empty-state"
 		>
-			<div className="alert">
-				<ClayIcon color="#0B5FFF" fontSize={32} symbol="warning-full" />
+			<div
+				className={classNames('alert', {
+					'alert-info': variant === 'info',
+					'alert-warning': variant === 'warning',
+				})}
+			>
+				<ClayIcon
+					color={variant === 'info' ? '#0B5FFF' : '#B95000'}
+					fontSize={32}
+					symbol="warning-full"
+				/>
 			</div>
 
 			<h3 className="mb-4">{props.title}</h3>

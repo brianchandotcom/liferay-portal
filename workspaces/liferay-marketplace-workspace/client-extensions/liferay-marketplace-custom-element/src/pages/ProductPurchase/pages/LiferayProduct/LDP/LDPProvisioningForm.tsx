@@ -35,8 +35,8 @@ const LDPProvisioning = () => {
 
 	const {
 		actions: {previousStep},
-		product,
 		handlePurchase,
+		product,
 		selectedAccount,
 		setForm,
 	} = useProductPurchaseOutletContext();
@@ -77,13 +77,6 @@ const LDPProvisioning = () => {
 		productPurchase.setForm(form);
 
 		await handlePurchase(productPurchase);
-
-		console.log(form);
-
-		// productPurchaseCart.addCart(Number(product.id), product.skus[0].id);
-
-		// nextStep();
-
 	};
 
 	if (!selectedAccount) {
@@ -159,7 +152,7 @@ const LDPProvisioning = () => {
 				<div className="d-flex flex-column">
 					<div>
 						<label
-							className="required mr-1"
+							className="mr-1 required"
 							htmlFor="incident-report-contacts"
 						>
 							Add Incident Report Contacts{' '}

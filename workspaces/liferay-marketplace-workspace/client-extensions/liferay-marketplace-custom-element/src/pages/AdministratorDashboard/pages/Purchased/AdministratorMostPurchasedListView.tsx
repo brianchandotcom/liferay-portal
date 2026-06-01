@@ -27,7 +27,7 @@ type AdministratorMostPurchasedListViewProps = {
 };
 
 function getAppTypeLabel(erc: string) {
-	return orderTypeLabel[erc as OrderTypes] ?? erc;
+	return (orderTypeLabel as any)[erc as OrderTypes] ?? erc;
 }
 
 const AdministratorMostPurchasedListView: React.FC<

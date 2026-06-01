@@ -55,15 +55,15 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 			allowedEmailDomains: this.form?.allowedEmailDomains,
 			corpProjectName: this.form?.workspaceName,
 			corpProjectUuid: this.account.externalReferenceCode,
-			serverLocation: this.form?.dataCenterLocation,
 			friendlyURL: this.form?.friendlyWorkspaceURL
-				? `${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
+				? `/${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
 				: '',
 			incidentReportEmailAddresses: this.form?.incidentReportContacts,
 			name: this.form?.workspaceName,
 			ownerEmailAddress:
 				this.form?.workspaceOwnerEmail ||
 				Liferay.ThemeDisplay.getUserEmailAddress(),
+			serverLocation: this.form?.dataCenterLocation,
 			workspaceName: this.form?.workspaceName,
 		};
 	}

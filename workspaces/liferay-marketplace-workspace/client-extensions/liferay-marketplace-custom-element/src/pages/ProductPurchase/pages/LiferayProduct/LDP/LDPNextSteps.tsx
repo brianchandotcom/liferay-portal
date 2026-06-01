@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import useSWR from 'swr';
 
 import {AccountAndAppCard} from '../../../../../components/Card/AccountAndAppCard';
@@ -12,11 +12,11 @@ import {Header} from '../../../../../components/Header/Header';
 import {PageRenderer} from '../../../../../components/Page';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessAdminUser from '../../../../../services/rest/HeadlessAdminUser';
+import {getSiteURL} from '../../../../../utils/site';
 import {getAccountImage} from '../../../../../utils/util';
 import checkCircleIcon from '../../.././../../assets/icons/check_circle_icon.svg';
-import {Liferay} from '../../../../../liferay/liferay';
-import {getSiteURL} from '../../../../../utils/site';
 
 type LDPNextStepsProps = {
 	data: ReturnType<typeof useGetProductByOrderId>['data'];
@@ -62,7 +62,7 @@ const LDPNextSteps: React.FC<LDPNextStepsProps> = ({
 							'catalog'
 						}
 						title={
-							<div className="align-items-center text-4 d-flex">
+							<div className="align-items-center d-flex text-4">
 								<span>{productName}</span>
 							</div>
 						}

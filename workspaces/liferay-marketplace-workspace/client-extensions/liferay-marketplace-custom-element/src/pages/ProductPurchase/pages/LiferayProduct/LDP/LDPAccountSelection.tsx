@@ -5,15 +5,15 @@
 
 import {ComponentProps, ReactNode, useState} from 'react';
 import {Navigate} from 'react-router-dom';
+import useSWR from 'swr';
+
+import AccountSelection from '../../../../../components/Checkout/AccountSelection';
+import ProductPurchase from '../../../../../components/ProductPurchase';
 import ProductPurchaseFooter from '../../../../../components/ProductPurchase/Footer';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
-import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
-import AccountSelection from '../../../../../components/Checkout/AccountSelection';
-import CreateNewAccount from '../../CreateNewAccount';
-import useSWR from 'swr';
 import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import KnockoutEmptyState from '../../../components/KnockoutEmptyState';
 
 type LDPAccountSelectionProps = {
@@ -103,15 +103,14 @@ const LDPAccountSelection: React.FC<LDPAccountSelectionProps> = ({
 
 			{_showKnockout && (
 				<KnockoutEmptyState
-					title="Account not eligible for purchase"
 					description={
 						<>
 							<p>
-								The account you’ve selected isn’t linked to an
-								active Liferay DXP subscription, which is
-								required to continue. Please sign in with a
-								subscribed account or contact your administrator
-								for access.
+								The account you&apos;ve selected isn&apos;t
+								linked to an active Liferay DXP subscription,
+								which is required to continue. Please sign in
+								with a subscribed account or contact your
+								administrator for access.
 							</p>
 
 							<strong className="text-4">
@@ -122,6 +121,7 @@ const LDPAccountSelection: React.FC<LDPAccountSelectionProps> = ({
 							</strong>
 						</>
 					}
+					title="Account not eligible for purchase"
 				/>
 			)}
 

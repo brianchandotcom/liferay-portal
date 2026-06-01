@@ -283,7 +283,7 @@ export function NextSteps() {
 		productTypeCategory === ProductTypeVocabulary.LIFERAY_PRODUCT &&
 		solutionTypeSpecificationValue === SolutionTypes.LIFERAY_DATA_PLATFORM
 	) {
-		return <LDPNextSteps data={data} isLoading={isLoading} error={error} />;
+		return <LDPNextSteps data={data} error={error} isLoading={isLoading} />;
 	}
 
 	if (

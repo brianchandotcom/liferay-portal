@@ -35,10 +35,16 @@ public class AffectedPagesSectionSEOStudioTableFDSView
 		return fdsTableSchemaBuilder.add(
 			"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage.title",
 			"title",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"titleCellRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage.author",
-			"author"
+			"author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorCellRenderer")
 		).add(
 			"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage.type", "type",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

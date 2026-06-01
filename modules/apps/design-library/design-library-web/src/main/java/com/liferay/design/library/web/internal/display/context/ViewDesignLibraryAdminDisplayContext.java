@@ -16,7 +16,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -117,10 +119,14 @@ public class ViewDesignLibraryAdminDisplayContext {
 	}
 
 	private String _getExportImportPortletURL(String portletId) {
-		return StringBundler.concat(
-			_themeDisplay.getCDNBaseURL(),
-			_themeDisplay.getPathFriendlyURLPrivateGroup(),
-			"/asset-library-{id}/~/control_panel/manage?p_p_id=", portletId);
+		return HttpComponentsUtil.addParameter(
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(),
+				_themeDisplay.getPathFriendlyURLPrivateGroup(),
+				"/asset-library-{id}/~/control_panel/manage?p_p_id=",
+				portletId),
+			PortalUtil.getPortletNamespace(portletId) + "backURL",
+			PortalUtil.getCurrentURL(_httpServletRequest));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

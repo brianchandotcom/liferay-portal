@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.CountryLocalService;
-import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -627,9 +625,6 @@ public class CommerceOrderLocalServiceTest {
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	@Inject
-	private CountryLocalService _countryLocalService;
-
-	@Inject
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
 	private CPInstance _cpInstance;
@@ -637,9 +632,6 @@ public class CommerceOrderLocalServiceTest {
 
 	@Inject
 	private Portal _portal;
-
-	@Inject
-	private RegionLocalService _regionLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;

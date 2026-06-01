@@ -13,13 +13,20 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,6 +35,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -106,8 +115,164 @@ public class ViewFolderSectionDisplayContextTest
 		Assert.assertEquals(Boolean.FALSE, additionalProps.get("trashEnabled"));
 	}
 
+	@Test
+	public void testGetBreadcrumbProps() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		Group depotEntryGroup = _groupLocalService.getGroup(
+			depotEntry.getGroupId());
+
+		ObjectEntryFolder rootObjectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					depotEntry.getGroupId(), depotEntry.getCompanyId());
+
+		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+			depotEntry, rootObjectEntryFolder.getObjectEntryFolderId());
+
+		ObjectEntryFolder sharedObjectEntryFolder = _addObjectEntryFolder(
+			depotEntry, parentObjectEntryFolder.getObjectEntryFolderId());
+
+		ObjectEntryFolder childObjectEntryFolder = _addObjectEntryFolder(
+			depotEntry, sharedObjectEntryFolder.getObjectEntryFolderId());
+
+		Map<String, Object> breadcrumbProps = _getBreadcrumbProps(
+			getMockHttpServletRequest(childObjectEntryFolder));
+
+		Assert.assertEquals(
+			breadcrumbProps.toString(), Boolean.FALSE,
+			breadcrumbProps.get("hideSpace"));
+
+		_assertBreadcrumbLabels(
+			breadcrumbProps, depotEntryGroup.getName(LocaleUtil.getDefault()),
+			rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+			parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+			sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+			childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+
+		User user = UserTestUtil.addUser();
+
+		_sharingEntryService.addSharingEntry(
+			null, 0, 0, user.getUserId(),
+			portal.getClassNameId(ObjectEntryFolder.class.getName()),
+			sharedObjectEntryFolder.getObjectEntryFolderId(),
+			depotEntry.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			breadcrumbProps = _getBreadcrumbProps(
+				getMockHttpServletRequest(childObjectEntryFolder, user));
+
+			Assert.assertEquals(
+				breadcrumbProps.toString(), Boolean.TRUE,
+				breadcrumbProps.get("hideSpace"));
+
+			_assertBreadcrumbLabels(
+				breadcrumbProps,
+				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+
+			breadcrumbProps = _getBreadcrumbProps(
+				getMockHttpServletRequest(sharedObjectEntryFolder, user));
+
+			Assert.assertEquals(
+				breadcrumbProps.toString(), Boolean.TRUE,
+				breadcrumbProps.get("hideSpace"));
+
+			_assertBreadcrumbLabels(
+				breadcrumbProps,
+				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+		}
+
+		User cmsAdministratorUser = UserTestUtil.addCompanyUser(
+			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+			RoleConstants.CMS_ADMINISTRATOR);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				cmsAdministratorUser)) {
+
+			breadcrumbProps = _getBreadcrumbProps(
+				getMockHttpServletRequest(
+					childObjectEntryFolder, cmsAdministratorUser));
+
+			Assert.assertEquals(
+				breadcrumbProps.toString(), Boolean.FALSE,
+				breadcrumbProps.get("hideSpace"));
+
+			_assertBreadcrumbLabels(
+				breadcrumbProps,
+				depotEntryGroup.getName(LocaleUtil.getDefault()),
+				rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+		}
+	}
+
+	private ObjectEntryFolder _addObjectEntryFolder(
+			DepotEntry depotEntry, long parentObjectEntryFolderId)
+		throws Exception {
+
+		return _objectEntryFolderLocalService.addObjectEntryFolder(
+			null, depotEntry.getGroupId(), TestPropsValues.getUserId(),
+			parentObjectEntryFolderId, RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId()));
+	}
+
+	private void _assertBreadcrumbLabels(
+		Map<String, Object> breadcrumbProps, String... expectedLabels) {
+
+		JSONArray jsonArray = (JSONArray)breadcrumbProps.get("breadcrumbItems");
+
+		Assert.assertEquals(
+			jsonArray.toString(), expectedLabels.length, jsonArray.length());
+
+		for (int i = 0; i < expectedLabels.length; i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Assert.assertEquals(
+				jsonArray.toString(), expectedLabels[i],
+				jsonObject.getString("label"));
+		}
+
+		JSONObject lastJSONObject = jsonArray.getJSONObject(
+			expectedLabels.length - 1);
+
+		Assert.assertTrue(
+			jsonArray.toString(), lastJSONObject.getBoolean("active"));
+	}
+
 	private Map<String, Object> _getAdditionalProps(
 			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_getDisplayContext(httpServletRequest), "getAdditionalProps",
+			new Class<?>[0]);
+	}
+
+	private Map<String, Object> _getBreadcrumbProps(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_getDisplayContext(httpServletRequest), "getBreadcrumbProps",
+			new Class<?>[0]);
+	}
+
+	private Object _getDisplayContext(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		_fragmentRenderer.render(
@@ -120,9 +285,7 @@ public class ViewFolderSectionDisplayContextTest
 
 		Assert.assertNotNull(viewFolderSectionDisplayContext);
 
-		return ReflectionTestUtil.invoke(
-			viewFolderSectionDisplayContext, "getAdditionalProps",
-			new Class<?>[0]);
+		return viewFolderSectionDisplayContext;
 	}
 
 	private void _setTrashEnabled(DepotEntry depotEntry, boolean trashEnabled)
@@ -153,5 +316,11 @@ public class ViewFolderSectionDisplayContextTest
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Inject
+	private SharingEntryService _sharingEntryService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

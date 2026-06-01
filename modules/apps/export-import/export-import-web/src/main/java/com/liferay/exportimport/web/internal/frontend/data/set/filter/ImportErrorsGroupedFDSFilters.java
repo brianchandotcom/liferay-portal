@@ -35,7 +35,7 @@ public class ImportErrorsGroupedFDSFilters implements GroupedFDSFilters {
 			JSONUtil.put(
 				LanguageUtil.get(httpServletRequest, "filters"),
 				JSONUtil.putAll(
-					"modelName", "classExternalReferenceCode", "type/code")));
+					"classExternalReferenceCode", "modelName", "type/code")));
 	}
 
 }

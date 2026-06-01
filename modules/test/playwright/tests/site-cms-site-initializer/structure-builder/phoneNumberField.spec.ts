@@ -31,7 +31,7 @@ const test = mergeTests(
 
 test(
 	'Phone field disambiguates +1 (US vs CA), supports fixed prefix, and respects customized fragment configuration',
-	{tag: '@LPD-91059'},
+	{tag: ['@LPD-91059', '@LPD-91575']},
 	async ({contentsPage, page, pageEditorPage, structureBuilderPage}) => {
 		const structureLabel = `Structure${getRandomInt()}`;
 		const contentTitle = getRandomString();
@@ -84,7 +84,34 @@ test(
 
 		await contentsPage.saveContent();
 
-		// Go back to the structure and switch the prefix to fixed +44 (UK)
+		// While the user picks the country, the editor does not offer the "Show
+		// Prefix" configuration because the prefix picker is mandatory
+
+		await structureBuilderPage.editStructure(structureId);
+
+		await structureBuilderPage.customizeEditor();
+
+		await pageEditorPage.selectFragment(
+			await pageEditorPage.getFragmentId('Phone Number')
+		);
+
+		await pageEditorPage.goToConfigurationTab('General');
+
+		await expect(
+			page
+				.getByRole('tabpanel', {name: 'General'})
+				.getByLabel('Show Country Flag', {exact: true})
+		).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('tabpanel', {name: 'General'})
+				.getByLabel('Show Prefix', {exact: true})
+		).toBeHidden();
+
+		await pageEditorPage.publishPage();
+
+		// Switch the structure prefix to fixed +44 (UK)
 
 		await structureBuilderPage.editStructure(structureId);
 
@@ -115,7 +142,8 @@ test(
 
 		await expect(page.getByText('+44', {exact: true})).toBeVisible();
 
-		// Customize the editor and hide the prefix on the phone fragment
+		// Customize the editor — now that the prefix is fixed, the "Show Prefix"
+		// configuration is offered; turning it off hides the static prefix
 
 		await structureBuilderPage.editStructure(structureId);
 
@@ -132,8 +160,8 @@ test(
 
 		await pageEditorPage.publishPage();
 
-		// Edit content — the prefix picker should no longer be rendered, only
-		// the bare phone input remains
+		// Edit content — the prefix is no longer rendered, only the bare phone
+		// input remains
 
 		await contentsPage.goto();
 

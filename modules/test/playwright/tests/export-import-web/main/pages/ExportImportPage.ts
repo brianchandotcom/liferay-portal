@@ -53,6 +53,7 @@ export class ExportImportPage {
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
 	readonly page: Page;
+	readonly pagesFieldset: Locator;
 	readonly portletListContainer: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly rangeDateRangeEndDate: Locator;
@@ -137,6 +138,7 @@ export class ExportImportPage {
 		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.page = page;
+		this.pagesFieldset = page.locator('#pages-fieldset');
 		this.portletListContainer = page
 			.locator(
 				'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
@@ -358,6 +360,18 @@ export class ExportImportPage {
 		}
 	}
 
+	async uncheckPageSettings() {
+		await this.pagesFieldset.waitFor({state: 'attached'});
+
+		await this.pagesFieldset.evaluate((fieldset) => {
+			fieldset
+				.querySelectorAll<HTMLInputElement>(
+					'input[type="checkbox"]:checked'
+				)
+				.forEach((input) => input.click());
+		});
+	}
+
 	async uncheckPortlets() {
 		const portletListContainer = this.portletListContainer;
 
@@ -375,12 +389,14 @@ export class ExportImportPage {
 	async export({
 		dateFilter,
 		exportAllPortlets = false,
+		includePageSettings = true,
 		includePermissions = false,
 		portletLabels,
 		taskName = `Export-${getRandomString()}`,
 	}: {
 		dateFilter?: DateFilter;
 		exportAllPortlets?: boolean;
+		includePageSettings?: boolean;
 		includePermissions?: boolean;
 		portletLabels?: string[];
 		taskName?: string;
@@ -388,6 +404,10 @@ export class ExportImportPage {
 		await this.newExportButton.click();
 
 		await this.title.fill(taskName);
+
+		if (!includePageSettings) {
+			await this.uncheckPageSettings();
+		}
 
 		if (exportAllPortlets) {
 			await this.checkAllPortlets();

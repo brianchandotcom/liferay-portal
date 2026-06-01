@@ -43,23 +43,23 @@ public class QueryCommand implements Command {
 		if (!qdrantClient.isReachable()) {
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl());
+					qdrantClient.getQdrantURL());
 
 			return 5;
 		}
 
-		if (!qdrantClient.collectionExists(QdrantClientWrapper.COLLECTION)) {
+		if (!qdrantClient.hasCollection(QdrantClientWrapper.COLLECTION)) {
 			System.err.println(
-				"search: index does not exist. Run ingest first.");
+				"search: index does not exist; run ingest first");
 
 			return 3;
 		}
 
 		String text = positional.get(0);
 
-		TextEmbeddingsClient teiClient = new TextEmbeddingsClient();
+		TextEmbeddingsClient textEmbeddingsClient = new TextEmbeddingsClient();
 
-		float[] vector = teiClient.embedQuery(text);
+		float[] vector = textEmbeddingsClient.embedQuery(text);
 
 		String path = parsed.path();
 

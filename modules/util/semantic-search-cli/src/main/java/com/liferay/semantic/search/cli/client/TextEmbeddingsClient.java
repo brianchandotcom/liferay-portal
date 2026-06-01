@@ -47,7 +47,7 @@ public class TextEmbeddingsClient {
 			url = "http://localhost:7997";
 		}
 
-		_baseUrl = url;
+		_baseURL = url;
 
 		_httpClient = HttpClient.newBuilder(
 		).connectTimeout(
@@ -80,7 +80,7 @@ public class TextEmbeddingsClient {
 
 	public int getDimension() throws IOException {
 		HttpRequest httpRequest = HttpRequest.newBuilder(
-			URI.create(_baseUrl + "/info")
+			URI.create(_baseURL + "/info")
 		).GET(
 		).timeout(
 			Duration.ofSeconds(5)
@@ -111,7 +111,7 @@ public class TextEmbeddingsClient {
 	public boolean isReachable() {
 		try {
 			HttpRequest httpRequest = HttpRequest.newBuilder(
-				URI.create(_baseUrl + "/health")
+				URI.create(_baseURL + "/health")
 			).GET(
 			).timeout(
 				Duration.ofSeconds(2)
@@ -141,7 +141,7 @@ public class TextEmbeddingsClient {
 		);
 
 		HttpRequest httpRequest = HttpRequest.newBuilder(
-			URI.create(_baseUrl + "/embed")
+			URI.create(_baseURL + "/embed")
 		).header(
 			"Content-Type", "application/json"
 		).POST(
@@ -168,14 +168,18 @@ public class TextEmbeddingsClient {
 
 			JSONArray responseJSONArray = new JSONArray(httpResponse.body());
 
-			float[][] vectors = new float[responseJSONArray.length()][];
+			int responseLength = responseJSONArray.length();
 
-			for (int i = 0; i < responseJSONArray.length(); i++) {
+			float[][] vectors = new float[responseLength][];
+
+			for (int i = 0; i < responseLength; i++) {
 				JSONArray vectorJSONArray = responseJSONArray.getJSONArray(i);
 
-				vectors[i] = new float[vectorJSONArray.length()];
+				int vectorLength = vectorJSONArray.length();
 
-				for (int j = 0; j < vectorJSONArray.length(); j++) {
+				vectors[i] = new float[vectorLength];
+
+				for (int j = 0; j < vectorLength; j++) {
 					vectors[i][j] = (float)vectorJSONArray.getDouble(j);
 				}
 			}
@@ -191,7 +195,7 @@ public class TextEmbeddingsClient {
 		}
 	}
 
-	private final String _baseUrl;
+	private final String _baseURL;
 	private final HttpClient _httpClient;
 
 }

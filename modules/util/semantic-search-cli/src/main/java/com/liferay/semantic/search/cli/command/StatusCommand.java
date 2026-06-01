@@ -37,7 +37,7 @@ public class StatusCommand implements Command {
 		).put(
 			"qdrant_reachable", false
 		).put(
-			"qdrant_url", qdrantClient.getQdrantUrl()
+			"qdrant_url", qdrantClient.getQdrantURL()
 		).put(
 			"stale_days", JSONObject.NULL
 		);
@@ -47,20 +47,20 @@ public class StatusCommand implements Command {
 
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl() +
-						". Start it: docker compose up -d qdrant");
+					qdrantClient.getQdrantURL() +
+						". Start it: docker compose up --detach qdrant");
 
 			return 5;
 		}
 
 		statusJSONObject.put("qdrant_reachable", true);
 
-		boolean indexExists = qdrantClient.collectionExists(
+		boolean indexExists = qdrantClient.hasCollection(
 			QdrantClientWrapper.COLLECTION);
 
 		statusJSONObject.put("index_exists", indexExists);
 
-		boolean metaExists = qdrantClient.collectionExists(
+		boolean metaExists = qdrantClient.hasCollection(
 			QdrantClientWrapper.META_COLLECTION);
 
 		QdrantClientWrapper.MetaState metaState =
@@ -76,11 +76,13 @@ public class StatusCommand implements Command {
 			String lastIngest = metaState.lastIngest();
 
 			if (lastIngest != null) {
-				OffsetDateTime when = OffsetDateTime.parse(lastIngest);
+				OffsetDateTime offsetDateTime = OffsetDateTime.parse(
+					lastIngest);
 
-				Duration elapsed = Duration.between(when, OffsetDateTime.now());
+				Duration duration = Duration.between(
+					offsetDateTime, OffsetDateTime.now());
 
-				double elapsedSeconds = elapsed.toSeconds();
+				double elapsedSeconds = duration.toSeconds();
 
 				double days = elapsedSeconds / 86400.0;
 

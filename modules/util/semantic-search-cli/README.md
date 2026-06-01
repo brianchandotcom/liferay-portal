@@ -144,7 +144,7 @@ the stack up:
 | AMD ROCm | not supported by TEI today | — |
 
 ```bash
-TEI_IMAGE_TAG=cpu-ipex-1.6 docker compose up -d
+TEI_IMAGE_TAG=cpu-ipex-1.6 docker compose up --detach
 ```
 
 Intel Arc and Apple Silicon GPU acceleration would require switching
@@ -164,7 +164,7 @@ writing or reviewing.
 
 ```bash
 cd ~/projects/liferay-learn
-search ingest docs/dxp/latest/en/                            # ~14 min first run, seconds incremental
+search ingest docs/dxp/latest/en                            # ~14 min first run, seconds incremental
 search query "client extension deployment"                   # natural-language → article
 search similar docs/dxp/latest/en/some-article.md            # related-article surface
 ```
@@ -178,7 +178,7 @@ intent or by example.
 
 ```bash
 cd ~/projects/liferay-portal
-SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery/
+SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery
 
 search query "REST endpoint that lists comments for a blog posting"
 search similar modules/apps/headless/headless-delivery/headless-delivery-impl/src/main/java/com/liferay/headless/delivery/internal/resource/v1_0/CommentResourceImpl.java
@@ -201,11 +201,11 @@ directory, the two indices stay isolated automatically.
 ```bash
 # Index 1: liferay-learn docs (default extension)
 cd ~/projects/liferay-learn
-search ingest docs/dxp/latest/en/
+search ingest docs/dxp/latest/en
 
 # Index 2: liferay-portal Java for the same feature area
 cd ~/projects/liferay-portal
-SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery/
+SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery
 
 # Query each in its own checkout
 ( cd ~/projects/liferay-learn   && search query "client extension manifest" )
@@ -214,5 +214,5 @@ SEARCH_FILE_EXTS=.java search ingest modules/apps/headless/headless-delivery/
 
 The pattern generalizes to any number of repos: cd into the
 checkout that contains the corpus you want to search, run the same
-CLI. The data-home resolution handles separation; you don't need to
+CLI. The data-home resolution handles separation; you do not need to
 juggle collection names.

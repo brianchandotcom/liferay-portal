@@ -371,7 +371,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 							classNameId -> {
 								ClassName classNameObject =
 									_classNameLocalService.fetchByClassNameId(
-										companyId);
+										classNameId);
 
 								if (classNameObject == null) {
 									return null;

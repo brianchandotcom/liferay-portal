@@ -269,7 +269,8 @@ public class TomcatNode {
 			_syncExecute(
 				() -> {
 					try {
-						URI uri = new URI("http://localhost:" + connectorPort);
+						URI uri = new URI(
+							"http://localhost:" + connectorPort + "/web/guest");
 
 						URL url = uri.toURL();
 

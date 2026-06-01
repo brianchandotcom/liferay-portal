@@ -3849,7 +3849,7 @@ components:
                     enum: [
                         None,
                         Numeric,
-                        # "Deprecated as of Cavanaugh (7.4.x), replaced by Numeric"
+                        # Deprecated as of Cavanaugh (7.4.x), replaced by Numeric
                         Regular,
                         Simple]
                     type: string

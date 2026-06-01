@@ -394,6 +394,32 @@ describe('TopAssets', () => {
 				screen.queryByRole('link', {name: 'Web Content One'})
 			).toBeNull();
 		});
+
+		it('should not render the View All button while loading', () => {
+			mockUseRequestWith({loading: true});
+
+			render(<TopAssets />);
+
+			expect(screen.queryByRole('button', {name: 'View All'})).toBeNull();
+		});
+	});
+
+	describe('view all visibility', () => {
+		it('should not render the View All button when there are no assets', () => {
+			mockUseRequestWith({data: {items: []}});
+
+			render(<TopAssets />);
+
+			expect(screen.queryByRole('button', {name: 'View All'})).toBeNull();
+		});
+
+		it('should render the View All button when assets are returned', () => {
+			render(<TopAssets />);
+
+			expect(
+				screen.getByRole('button', {name: 'View All'})
+			).toBeInTheDocument();
+		});
 	});
 
 	describe('empty state', () => {

@@ -22,6 +22,8 @@ import java.io.OutputStream;
 
 import java.net.InetSocketAddress;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -149,7 +151,7 @@ public class VIESClientTest {
 
 		httpContext.setHandler(
 			httpExchange -> {
-				byte[] bytes = response.getBytes();
+				byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
 
 				httpExchange.sendResponseHeaders(200, bytes.length);
 

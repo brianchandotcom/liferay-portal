@@ -443,6 +443,89 @@ test(
 	}
 );
 
+test(
+	'Performance by Assignee table is updated after a completed task is deleted',
+	{tag: '@LPD-90169'},
+	async ({
+		apiHelpers,
+		metricsPage,
+		page,
+		site,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		let blogId: number;
+
+		await test.step('assign the Single Approver workflow to Blogs Entry', async () => {
+			await workflowPage.goto(site.friendlyUrlPath);
+
+			await workflowPage.changeWorkflow('Blogs Entry', 'Single Approver');
+		});
+
+		await test.step('create a blog entry and approve the workflow task', async () => {
+			const blogTitle = `Blog ${getRandomString()}`;
+
+			const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
+				headline: blogTitle,
+			});
+
+			blogId = blog.id;
+
+			await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+			await workflowTasksPage.assignToMe(blogTitle);
+
+			await workflowTasksPage.assignedToMeLink.click();
+
+			await workflowTasksPage.approve(blogTitle);
+		});
+
+		await test.step('assert the admin appears with one completed task', async () => {
+			await metricsPage.goTo(site.friendlyUrlPath);
+
+			await metricsPage.chooseProcess('Single Approver');
+
+			await workflowTasksPage.performanceTab.click();
+
+			const adminRow = page.getByRole('row').filter({
+				has: page.getByRole('cell', {exact: true, name: 'Test Test'}),
+			});
+
+			await expect(async () => {
+				await page.reload();
+
+				await expect(
+					adminRow.getByText('1', {exact: true})
+				).toBeVisible();
+			}).toPass();
+		});
+
+		await test.step('delete the blog entry and assert the empty state', async () => {
+			await apiHelpers.headlessDelivery.deleteBlog(blogId);
+
+			await metricsPage.goTo(site.friendlyUrlPath);
+
+			await metricsPage.chooseProcess('Single Approver');
+
+			await workflowTasksPage.performanceTab.click();
+
+			await expect(async () => {
+				await page.reload();
+
+				await expect(
+					page
+						.locator('.panel', {
+							hasText: 'Performance by Assignee',
+						})
+						.getByText('There is no data at the moment.', {
+							exact: true,
+						})
+				).toBeVisible();
+			}).toPass();
+		});
+	}
+);
+
 test('Selecting a date range in the Completed Items panel deselects the previous one', async ({
 	metricsPage,
 	page,

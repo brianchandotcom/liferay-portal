@@ -109,7 +109,7 @@ public class TestrayProject {
 	public TestrayCase getTestrayCase(
 		String testCaseName, TestrayCaseType testrayCaseType) {
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"name eq '", testCaseName, "' and ",
 			"r_caseTypeToCases_c_caseTypeId eq '",
 			String.valueOf(testrayCaseType.getID()), "' and ",
@@ -117,7 +117,7 @@ public class TestrayProject {
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES, filter, null, 1, 1);
+				"cases", TestrayCase.FIELD_NAMES, filterString, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -167,7 +167,7 @@ public class TestrayProject {
 				return testrayComponent;
 			}
 
-			String filter = JenkinsResultsParserUtil.combine(
+			String filterString = JenkinsResultsParserUtil.combine(
 				"id eq '", String.valueOf(componentID),
 				"' and r_projectToComponents_c_projectId eq '",
 				String.valueOf(getID()), "'");
@@ -175,8 +175,8 @@ public class TestrayProject {
 			try {
 				Set<JSONObject> entityJSONObjects =
 					_testrayServer.requestGraphQL(
-						"components", TestrayComponent.FIELD_NAMES, filter,
-						null, 1, 1);
+						"components", TestrayComponent.FIELD_NAMES,
+						filterString, null, 1, 1);
 
 				for (JSONObject entityJSONObject : entityJSONObjects) {
 					testrayComponent = TestrayFactory.newTestrayComponent(
@@ -211,7 +211,7 @@ public class TestrayProject {
 				return testrayComponent;
 			}
 
-			String filter = JenkinsResultsParserUtil.combine(
+			String filterString = JenkinsResultsParserUtil.combine(
 				"name eq '", componentName,
 				"' and r_projectToComponents_c_projectId eq '",
 				String.valueOf(getID()), "'");
@@ -219,8 +219,8 @@ public class TestrayProject {
 			try {
 				Set<JSONObject> entityJSONObjects =
 					_testrayServer.requestGraphQL(
-						"components", TestrayComponent.FIELD_NAMES, filter,
-						null, 1, 1);
+						"components", TestrayComponent.FIELD_NAMES,
+						filterString, null, 1, 1);
 
 				for (JSONObject entityJSONObject : entityJSONObjects) {
 					testrayComponent = TestrayFactory.newTestrayComponent(
@@ -244,15 +244,15 @@ public class TestrayProject {
 	public TestrayProductVersion getTestrayProductVersionByID(
 		long productVersionID) {
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"id eq '", String.valueOf(productVersionID), "' and ",
 			"r_projectToProductVersions_c_projectId eq '",
 			String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"productVersions", TestrayProductVersion.FIELD_NAMES, filter,
-				null, 1, 1);
+				"productVersions", TestrayProductVersion.FIELD_NAMES,
+				filterString, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -271,15 +271,15 @@ public class TestrayProject {
 	public TestrayProductVersion getTestrayProductVersionByName(
 		String productVersionName) {
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"name eq '", productVersionName, "' and ",
 			"r_projectToProductVersions_c_projectId eq '",
 			String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"productVersions", TestrayProductVersion.FIELD_NAMES, filter,
-				null, 1, 1);
+				"productVersions", TestrayProductVersion.FIELD_NAMES,
+				filterString, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -303,12 +303,13 @@ public class TestrayProject {
 			return testrayRoutine;
 		}
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"id eq '", String.valueOf(routineID), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
+				"routines", TestrayRoutine.FIELD_NAMES, filterString, null, 1,
+				1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -324,14 +325,15 @@ public class TestrayProject {
 	}
 
 	public TestrayRoutine getTestrayRoutineByName(String routineName) {
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"name eq '", routineName, "' and ",
 			"r_routineToProjects_c_projectId eq '", String.valueOf(getID()),
 			"'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
+				"routines", TestrayRoutine.FIELD_NAMES, filterString, null, 1,
+				1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -377,12 +379,12 @@ public class TestrayProject {
 
 		_testrayTeams = new ArrayList<>();
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"r_projectToTeams_c_projectId eq '", String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"teams", TestrayTeam.FIELD_NAMES, filter, null);
+				"teams", TestrayTeam.FIELD_NAMES, filterString, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				_testrayTeams.add(
@@ -429,12 +431,12 @@ public class TestrayProject {
 
 		_testrayCases = new HashMap<>();
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES_CASE_IDS, filter, null);
+				"cases", TestrayCase.FIELD_NAMES_CASE_IDS, filterString, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				_testrayCaseIDs.put(
@@ -470,12 +472,12 @@ public class TestrayProject {
 
 		_testrayCases = new HashMap<>();
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES, filter, null, 0, 50);
+				"cases", TestrayCase.FIELD_NAMES, filterString, null, 0, 50);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				TestrayCase testrayCase = TestrayFactory.newTestrayCase(

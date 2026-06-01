@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -74,20 +74,18 @@ public class ModelNameSelectionFDSFilter
 			return Collections.emptyList();
 		}
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			modelNameLanguageKeys,
+			key -> {
+				if (Validator.isBlank((String)key)) {
+					return null;
+				}
 
-		for (Object key : modelNameLanguageKeys) {
-			if (Validator.isNotNull(key) && !Validator.isBlank((String)key)) {
 				String translatedModelName = _language.get(locale, (String)key);
 
-				selectionFDSFilterItems.add(
-					new SelectionFDSFilterItem(
-						translatedModelName, translatedModelName));
-			}
-		}
-
-		return selectionFDSFilterItems;
+				return new SelectionFDSFilterItem(
+					translatedModelName, translatedModelName);
+			});
 	}
 
 	@Override

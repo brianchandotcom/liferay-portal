@@ -10,10 +10,13 @@ import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.constants.WorkflowInstanceDestinationNames;
 
 import dev.langchain4j.guardrail.GuardrailResult;
 
@@ -28,6 +31,21 @@ public abstract class BaseGuardrailExecutedListener {
 
 	public BaseGuardrailExecutedListener(ExecutionContext executionContext) {
 		_executionContext = executionContext;
+	}
+
+	protected void completeExceptionally() {
+		Message message = new Message();
+
+		message.put("exception", new IllegalArgumentException());
+
+		KaleoInstanceToken kaleoInstanceToken =
+			_executionContext.getKaleoInstanceToken();
+
+		message.put(
+			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
+
+		MessageBusUtil.sendMessage(
+			WorkflowInstanceDestinationNames.WORKFLOW_INSTANCE, message);
 	}
 
 	protected void route(

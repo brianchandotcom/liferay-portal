@@ -35,6 +35,8 @@ public class OutputGuardrailExecutedListenerImpl
 			return;
 		}
 
+		completeExceptionally();
+
 		route(
 			null, outputGuardrailExecutedEvent.duration(),
 			outputGuardrailResult, "output");

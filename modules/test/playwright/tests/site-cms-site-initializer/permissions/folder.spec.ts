@@ -257,7 +257,9 @@ test(
 
 			await copyFolderModalPage.selectButton.click();
 
-			await waitForAlert(page, `was successfully copied to`);
+			await waitForAlert(page, `was successfully copied to`, {
+				first: true,
+			});
 
 			await assetsPage.gotoContents();
 

@@ -587,6 +587,7 @@ public class LayoutTestUtil {
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryERC",
 				layoutPageTemplateEntry.getExternalReferenceCode());
+
 			serviceContext.setAttribute(
 				"portletLayoutPageTemplateEntryLinkEnabled", linkEnabled);
 			serviceContext.setAttribute(

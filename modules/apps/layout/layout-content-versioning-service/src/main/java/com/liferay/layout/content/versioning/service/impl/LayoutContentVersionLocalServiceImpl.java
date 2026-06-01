@@ -8,8 +8,10 @@ package com.liferay.layout.content.versioning.service.impl;
 import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionNameException;
+import com.liferay.layout.content.versioning.exception.RequiredLayoutContentVersionException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.base.LayoutContentVersionLocalServiceBaseImpl;
+import com.liferay.layout.content.versioning.util.comparator.LayoutContentVersionVersionComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -71,12 +74,10 @@ public class LayoutContentVersionLocalServiceImpl
 			}
 		}
 
-		User user = _userLocalService.getUser(userId);
-
-		long layoutContentVersionId = counterLocalService.increment();
-
 		LayoutContentVersion layoutContentVersion =
-			layoutContentVersionPersistence.create(layoutContentVersionId);
+			layoutContentVersionPersistence.create(
+				counterLocalService.increment(
+					LayoutContentVersion.class.getName()));
 
 		int version = _generateVersion(plid);
 
@@ -98,6 +99,9 @@ public class LayoutContentVersionLocalServiceImpl
 		layoutContentVersion.setGroupId(layout.getGroupId());
 		layoutContentVersion.setCompanyId(layout.getCompanyId());
 		layoutContentVersion.setUserId(userId);
+
+		User user = _userLocalService.getUser(userId);
+
 		layoutContentVersion.setUserName(user.getFullName());
 
 		Date date = new Date();
@@ -137,6 +141,23 @@ public class LayoutContentVersionLocalServiceImpl
 
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
+
+		if (layoutContentVersion.getStatus() ==
+				WorkflowConstants.STATUS_APPROVED) {
+
+			LayoutContentVersion latestApprovedLayoutContentVersion =
+				layoutContentVersionPersistence.fetchByP_S_First(
+					layoutContentVersion.getPlid(),
+					WorkflowConstants.STATUS_APPROVED,
+					LayoutContentVersionVersionComparator.getInstance(false));
+
+			if (layoutContentVersion.getLayoutContentVersionId() ==
+					latestApprovedLayoutContentVersion.
+						getLayoutContentVersionId()) {
+
+				throw new RequiredLayoutContentVersionException();
+			}
+		}
 
 		return layoutContentVersionPersistence.remove(layoutContentVersionId);
 	}

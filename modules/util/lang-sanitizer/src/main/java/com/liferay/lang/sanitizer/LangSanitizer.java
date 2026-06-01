@@ -64,7 +64,11 @@ public class LangSanitizer {
 		}
 
 		if (_sanitizedMessage.isEmpty()) {
-			System.out.println("No violations were found.");
+			System.out.println("There are no violations");
+		}
+		else {
+			System.out.println(
+				"There are " + _sanitizedMessage.size() + " violations");
 		}
 
 		System.out.println(
@@ -91,8 +95,7 @@ public class LangSanitizer {
 				fileName.equals("bundle.properties")) {
 
 				System.out.println(
-					"Scanning translations of " +
-						_getModuleName(file.getParentFile()));
+					"Scanning " + _getModuleName(file.getParentFile()));
 			}
 
 			Future<List<SanitizedMessage>> future = executorService.submit(

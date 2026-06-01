@@ -1,0 +1,11 @@
+@import 'atlas-variables';
+
+.page-version-history {
+	&__side-panel {
+		@include media-breakpoint-up(lg) {
+			.close {
+				display: none;
+			}
+		}
+	}
+}

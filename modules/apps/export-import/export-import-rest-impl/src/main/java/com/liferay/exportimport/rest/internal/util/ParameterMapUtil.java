@@ -30,6 +30,14 @@ public class ParameterMapUtil {
 		_addRequestPortletDataHandlers(
 			exportProcessRequest.getRequestPortletDataHandlers(), parameterMap);
 
+		Boolean comments = exportProcessRequest.getComments();
+
+		if (comments != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.COMMENTS,
+				new String[] {comments.toString()});
+		}
+
 		Boolean deletions = exportProcessRequest.getDeletions();
 
 		if (deletions != null) {
@@ -38,12 +46,52 @@ public class ParameterMapUtil {
 				new String[] {deletions.toString()});
 		}
 
+		Boolean logo = exportProcessRequest.getLogo();
+
+		if (logo != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LOGO, new String[] {logo.toString()});
+		}
+
 		Boolean permissions = exportProcessRequest.getPermissions();
 
 		if (permissions != null) {
 			parameterMap.put(
 				PortletDataHandlerKeys.PERMISSIONS,
 				new String[] {permissions.toString()});
+		}
+
+		Boolean ratings = exportProcessRequest.getRatings();
+
+		if (ratings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.RATINGS,
+				new String[] {ratings.toString()});
+		}
+
+		Boolean sitePagesSettings = exportProcessRequest.getSitePagesSettings();
+
+		if (sitePagesSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+				new String[] {sitePagesSettings.toString()});
+		}
+
+		Boolean siteTemplateSettings =
+			exportProcessRequest.getSiteTemplateSettings();
+
+		if (siteTemplateSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+				new String[] {siteTemplateSettings.toString()});
+		}
+
+		Boolean themeSettings = exportProcessRequest.getThemeSettings();
+
+		if (themeSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.THEME_REFERENCE,
+				new String[] {themeSettings.toString()});
 		}
 
 		return parameterMap;
@@ -66,6 +114,14 @@ public class ParameterMapUtil {
 				new String[] {"DATA_STRATEGY_" + dataStrategy});
 		}
 
+		Boolean comments = importProcessRequest.getComments();
+
+		if (comments != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.COMMENTS,
+				new String[] {comments.toString()});
+		}
+
 		Boolean deletions = importProcessRequest.getDeletions();
 
 		if (deletions != null) {
@@ -74,12 +130,52 @@ public class ParameterMapUtil {
 				new String[] {deletions.toString()});
 		}
 
+		Boolean logo = importProcessRequest.getLogo();
+
+		if (logo != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LOGO, new String[] {logo.toString()});
+		}
+
 		Boolean permissions = importProcessRequest.getPermissions();
 
 		if (permissions != null) {
 			parameterMap.put(
 				PortletDataHandlerKeys.PERMISSIONS,
 				new String[] {permissions.toString()});
+		}
+
+		Boolean ratings = importProcessRequest.getRatings();
+
+		if (ratings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.RATINGS,
+				new String[] {ratings.toString()});
+		}
+
+		Boolean sitePagesSettings = importProcessRequest.getSitePagesSettings();
+
+		if (sitePagesSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+				new String[] {sitePagesSettings.toString()});
+		}
+
+		Boolean siteTemplateSettings =
+			importProcessRequest.getSiteTemplateSettings();
+
+		if (siteTemplateSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+				new String[] {siteTemplateSettings.toString()});
+		}
+
+		Boolean themeSettings = importProcessRequest.getThemeSettings();
+
+		if (themeSettings != null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.THEME_REFERENCE,
+				new String[] {themeSettings.toString()});
 		}
 
 		ImportProcessRequest.UserIdStrategy userIdStrategy =

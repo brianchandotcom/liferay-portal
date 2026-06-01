@@ -2674,45 +2674,33 @@ public class GitWorkingDirectory {
 			return localGitBranch;
 		}
 
-		String rebaseCommand = JenkinsResultsParserUtil.combine(
-			"git rebase ", baseLocalGitBranch.getName(), " ",
-			localGitBranch.getName());
+		getMergeBaseCommitSHA(baseLocalGitBranch, localGitBranch);
 
-		for (int deepenAttempt = 0;; deepenAttempt++) {
-			checkoutLocalGitBranch(baseLocalGitBranch);
+		checkoutLocalGitBranch(baseLocalGitBranch);
 
-			reset("--hard " + baseLocalGitBranch.getSHA());
+		reset("--hard " + baseLocalGitBranch.getSHA());
 
-			GitUtil.ExecutionResult executionResult = executeBashCommands(
-				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-				1000 * 60 * 10, rebaseCommand);
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			1000 * 60 * 10,
+			JenkinsResultsParserUtil.combine(
+				"git rebase ", baseLocalGitBranch.getName(), " ",
+				localGitBranch.getName()));
 
-			if (executionResult.getExitValue() == 0) {
-				return getCurrentLocalGitBranch();
-			}
-
-			if (abortOnFail) {
-				rebaseAbort();
-			}
-
-			long deepenStepSizeMillis =
-				_DEEPEN_STEP_SIZE_MILLIS << deepenAttempt;
-
-			Date shallowSinceDate = new Date(
-				JenkinsResultsParserUtil.getCurrentTimeMillis() -
-					deepenStepSizeMillis);
-
-			if (!abortOnFail || (deepenAttempt >= _DEEPEN_MAX_ATTEMPTS) ||
-				!deepenLocalGitBranch(baseLocalGitBranch, shallowSinceDate)) {
-
-				throw new GitWorkingDirectoryRuntimeException(
-					this,
-					JenkinsResultsParserUtil.combine(
-						"Unable to rebase ", localGitBranch.getName(), " to ",
-						baseLocalGitBranch.getName(), "\n",
-						executionResult.getStandardError()));
-			}
+		if (executionResult.getExitValue() == 0) {
+			return getCurrentLocalGitBranch();
 		}
+
+		if (abortOnFail) {
+			rebaseAbort();
+		}
+
+		throw new GitWorkingDirectoryRuntimeException(
+			this,
+			JenkinsResultsParserUtil.combine(
+				"Unable to rebase ", localGitBranch.getName(), " to ",
+				baseLocalGitBranch.getName(), "\n",
+				executionResult.getStandardError()));
 	}
 
 	public void rebaseAbort() {

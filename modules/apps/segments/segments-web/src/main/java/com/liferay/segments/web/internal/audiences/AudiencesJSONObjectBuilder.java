@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.criteria.Criteria;
-import com.liferay.segments.criteria.CriteriaSerializer;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 
 /**
@@ -22,29 +19,17 @@ import com.liferay.segments.model.SegmentsEntry;
 public class AudiencesJSONObjectBuilder {
 
 	public static JSONObject toAudienceJSONObject(
-			JSONFactory jsonFactory,
-			SegmentsCriteriaContributor contextContributor,
-			SegmentsEntry segmentsEntry)
+			JSONFactory jsonFactory, SegmentsEntry segmentsEntry)
 		throws Exception {
 
-		Criteria criteria = CriteriaSerializer.deserialize(
-			segmentsEntry.getCriteria());
+		String criteria = segmentsEntry.getCriteria();
 
-		Criteria.Criterion criterion = criteria.getCriterion(
-			contextContributor.getKey());
-
-		if (criterion == null) {
-			return null;
-		}
-
-		String filterString = criterion.getFilterString();
-
-		if (Validator.isNull(filterString)) {
+		if (Validator.isNull(criteria)) {
 			return null;
 		}
 
 		JSONObject audienceJSONObject = _toAudienceJSONObject(
-			jsonFactory, jsonFactory.createJSONObject(filterString));
+			jsonFactory, jsonFactory.createJSONObject(criteria));
 
 		if (!audienceJSONObject.has("rules")) {
 			audienceJSONObject = JSONUtil.put(

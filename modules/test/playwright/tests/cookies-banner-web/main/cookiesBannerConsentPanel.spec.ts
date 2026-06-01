@@ -223,6 +223,40 @@ test(
 );
 
 test(
+	'Verify optional cookie toggles default to unchecked in the Consent Panel',
+	{tag: '@LPD-92457'},
+	async ({page}) => {
+		await page.goto('/');
+
+		const cookiesBanner = page.locator(
+			'div[role="dialog"][aria-modal="true"]'
+		);
+
+		await cookiesBanner.waitFor();
+
+		await cookiesBanner.getByRole('button', {name: 'Configuration'}).click();
+
+		const configurationFrame = page.frameLocator(
+			'#cookiesBannerConfiguration iframe'
+		);
+
+		for (const cookieKey of cookieKeys) {
+			const toggle = configurationFrame.locator(
+				`[data-cookie-key="${cookieKey}"]`
+			);
+
+			await expect(toggle).not.toBeChecked();
+		}
+
+		// Dismiss the Configuration modal so afterEach can navigate
+
+		await page
+			.getByRole('button', {name: 'Use Necessary Cookies Only'})
+			.click();
+	}
+);
+
+test(
 	'Verify Cookie Preferences can be saved from the new Consent Manager page',
 	{tag: '@LPD-60007'},
 	async ({accountSettingsPage, page}) => {

@@ -7,6 +7,7 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.constants.ProductConstants;
+import com.liferay.customer.constants.RoleConstants;
 import com.liferay.customer.model.ExperienceUsageStrategy;
 import com.liferay.customer.model.SaaSUsageStrategy;
 import com.liferay.customer.model.UsageStrategy;
@@ -15,7 +16,10 @@ import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringPool;
@@ -145,6 +149,30 @@ public class AccountsRestController extends BaseRestController {
 
 	private void _checkPermissions(Jwt jwt, String externalReferenceCode)
 		throws Exception {
+
+		UserAccountResource userAccountResource = UserAccountResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).build();
+
+		UserAccount userAccount = userAccountResource.getMyUserAccount();
+
+		if ((userAccount != null) &&
+			(userAccount.getRoleBriefs() != null)) {
+
+			for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+				String name = roleBrief.getName();
+
+				if (name.equals(RoleConstants.NAME_ADMINISTRATOR) ||
+					name.equals(RoleConstants.NAME_LIFERAY_STAFF) ||
+					name.equals(RoleConstants.NAME_PARTNER)) {
+
+					return;
+				}
+			}
+		}
 
 		AccountResource accountResource = AccountResource.builder(
 		).header(

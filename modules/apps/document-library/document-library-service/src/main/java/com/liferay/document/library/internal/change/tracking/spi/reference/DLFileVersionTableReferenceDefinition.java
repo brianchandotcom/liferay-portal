@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassNameTable;
+import com.liferay.portal.kernel.model.WorkflowInstanceLinkTable;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.trash.model.TrashVersionTable;
@@ -216,6 +217,22 @@ public class DLFileVersionTableReferenceDefinition
 				ClassNameTable.INSTANCE,
 				ClassNameTable.INSTANCE.classNameId.eq(
 					TrashVersionTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(
+						DLFileEntry.class.getName())
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				WorkflowInstanceLinkTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileVersionId.eq(
+					WorkflowInstanceLinkTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					WorkflowInstanceLinkTable.INSTANCE.classNameId
 				).and(
 					ClassNameTable.INSTANCE.value.eq(
 						DLFileEntry.class.getName())

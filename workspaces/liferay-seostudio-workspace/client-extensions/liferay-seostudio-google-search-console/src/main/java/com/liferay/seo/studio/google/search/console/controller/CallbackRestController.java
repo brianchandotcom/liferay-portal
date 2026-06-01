@@ -93,8 +93,8 @@ public class CallbackRestController extends BaseRestController {
 
 			GoogleTokenResponse googleTokenResponse =
 				_googleOAuth2Service.exchangeCode(
-					credentialEntry.getClientId(),
-					credentialEntry.getClientSecret(), code, callbackURL);
+					callbackURL, credentialEntry.getClientId(),
+					credentialEntry.getClientSecret(), code);
 
 			String emailAddress = _googleOAuth2Service.fetchUserEmail(
 				googleTokenResponse.getAccessToken());

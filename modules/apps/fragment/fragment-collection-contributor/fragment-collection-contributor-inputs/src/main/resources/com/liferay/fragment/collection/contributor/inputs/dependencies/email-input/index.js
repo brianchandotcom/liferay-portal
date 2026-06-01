@@ -23,60 +23,20 @@ function main() {
 
 	import('@liferay/fragment-impl/api').then(
 		({
-			focusInput,
-			handleInputLengthError,
 			registerInputFeedback,
 			registerLocalizedInput,
 			registerUnlocalizedInput,
-			showInputError,
 		}) => {
 			registerInputFeedback({
+				currentLengthContainer: currentLength,
 				errorContainer: error,
 				errorMessageContainer: errorMessage,
 				formGroup,
 				fragmentElement,
+				input,
 				inputElement,
+				lengthInfoContainer: lengthInfo,
 			});
-
-			const hasError = formGroup.classList.contains('has-error');
-
-			if (hasError) {
-				focusInput(inputElement);
-			}
-
-			if (currentLength) {
-				currentLength.innerText = inputElement.value.length;
-			}
-
-			if (
-				!hasError &&
-				inputElement.value.length > input.attributes.maxLength
-			) {
-				const lengthFeedback = errorMessage.getAttribute(
-					'data-length-feedback'
-				);
-
-				showInputError({
-					errorContainer: error,
-					errorMessageContainer: errorMessage,
-					formGroup,
-					lengthInfoContainer: lengthInfo,
-					message: `${lengthFeedback}: ${inputElement.value.length} / ${input.attributes.maxLength}`,
-				});
-			}
-
-			const onKeyup = (event) =>
-				handleInputLengthError({
-					currentLength,
-					errorContainer: error,
-					errorMessageContainer: errorMessage,
-					event,
-					formGroup,
-					input,
-					lengthInfoContainer: lengthInfo,
-				});
-
-			inputElement.addEventListener('keyup', onKeyup);
 
 			const defaultLanguageId = input.attributes.defaultLanguageId;
 

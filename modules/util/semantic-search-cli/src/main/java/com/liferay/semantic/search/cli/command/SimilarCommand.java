@@ -61,7 +61,7 @@ public class SimilarCommand implements Command {
 
 		if (chunks.isEmpty()) {
 			System.err.println(
-				"search: target file has no extractable content.");
+				"search: target file has no extractable content");
 
 			return 4;
 		}
@@ -71,14 +71,14 @@ public class SimilarCommand implements Command {
 		if (!qdrantClient.isReachable()) {
 			System.err.println(
 				"search: cannot reach Qdrant at " +
-					qdrantClient.getQdrantUrl());
+					qdrantClient.getQdrantURL());
 
 			return 5;
 		}
 
-		if (!qdrantClient.collectionExists(QdrantClientWrapper.COLLECTION)) {
+		if (!qdrantClient.hasCollection(QdrantClientWrapper.COLLECTION)) {
 			System.err.println(
-				"search: index does not exist. Run ingest first.");
+				"search: index does not exist; run ingest first");
 
 			return 3;
 		}
@@ -88,12 +88,13 @@ public class SimilarCommand implements Command {
 		String queryText =
 			String.join(" > ", seed.headingPath()) + "\n\n" + seed.text();
 
-		TextEmbeddingsClient teiClient = new TextEmbeddingsClient();
+		TextEmbeddingsClient textEmbeddingsClient = new TextEmbeddingsClient();
 
-		// similar is code-to-code: embed the seed as a document (no query
+		// Similar is code-to-code: embed the seed as a document (no query
 		// instruction prefix), matching the document side of the model.
 
-		float[] vector = teiClient.embedDocuments(List.of(queryText))[0];
+		float[] vector =
+			textEmbeddingsClient.embedDocuments(List.of(queryText))[0];
 
 		List<QdrantClientWrapper.Hit> rawHits = qdrantClient.search(
 			vector, (parsed.top() * 3) + 10, parsed.path());

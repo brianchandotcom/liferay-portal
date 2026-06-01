@@ -163,12 +163,12 @@ public class MarkdownChunker {
 
 		int step = Math.max(window - overlap, 1);
 
+		List<String> wordList = Arrays.asList(words);
+
 		for (int start = 0; start < words.length; start += step) {
 			int end = Math.min(start + window, words.length);
 
-			List<String> sub = Arrays.asList(words);
-
-			result.add(String.join(" ", sub.subList(start, end)));
+			result.add(String.join(" ", wordList.subList(start, end)));
 
 			if ((start + window) >= words.length) {
 				break;

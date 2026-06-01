@@ -42,15 +42,6 @@ public class QdrantClientWrapper {
 
 	public static final String META_COLLECTION = "meta";
 
-	public boolean collectionExists(String name) throws Exception {
-		QdrantClient qdrantClient = _client();
-
-		List<String> names = qdrantClient.listCollectionsAsync(
-		).get();
-
-		return names.contains(name);
-	}
-
 	public void deleteByRelPaths(List<String> relPaths) throws Exception {
 		if (relPaths.isEmpty()) {
 			return;
@@ -200,8 +191,17 @@ public class QdrantClientWrapper {
 		return (int)info.getPointsCount();
 	}
 
-	public String getQdrantUrl() {
+	public String getQdrantURL() {
 		return StringBundler.concat("http://", _host(), ":", _port());
+	}
+
+	public boolean hasCollection(String name) throws Exception {
+		QdrantClient qdrantClient = _client();
+
+		List<String> names = qdrantClient.listCollectionsAsync(
+		).get();
+
+		return names.contains(name);
 	}
 
 	public boolean isReachable() {
@@ -554,6 +554,8 @@ public class QdrantClientWrapper {
 	public void writeMetaState(String rootPath, int docCount) throws Exception {
 		QdrantClient qdrantClient = _client();
 
+		UUID pointId = _metaStateRecordId();
+
 		qdrantClient.upsertAsync(
 			META_COLLECTION,
 			Arrays.asList(
@@ -561,7 +563,7 @@ public class QdrantClientWrapper {
 				).setId(
 					Points.PointId.newBuilder(
 					).setUuid(
-						_metaStateRecordId().toString()
+						pointId.toString()
 					).build()
 				).setVectors(
 					Points.Vectors.newBuilder(

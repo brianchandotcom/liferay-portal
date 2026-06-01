@@ -66,6 +66,8 @@ public class JournalConverterImplTest {
 		_originalSAXReader = SAXReaderUtil.getSAXReader();
 		_originalUnsecureSAXReader = UnsecureSAXReaderUtil.getSAXReader();
 
+		LanguageUtil languageUtil = new LanguageUtil();
+
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
@@ -80,15 +82,13 @@ public class JournalConverterImplTest {
 			true
 		);
 
-		LanguageUtil languageUtil = new LanguageUtil();
-
 		languageUtil.setLanguage(language);
+
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();
 
 		secureSAXReaderImpl.setSecure(true);
-
-		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		saxReaderUtil.setSAXReader(secureSAXReaderImpl);
 
@@ -215,10 +215,7 @@ public class JournalConverterImplTest {
 			"option-reference");
 
 		if (ListUtil.isEmpty(expectedReferences)) {
-			Assert.assertTrue(
-				"Expected no option references, but found: " +
-					optionReferenceElements,
-				optionReferenceElements.isEmpty());
+			Assert.assertTrue(optionReferenceElements.isEmpty());
 
 			return;
 		}

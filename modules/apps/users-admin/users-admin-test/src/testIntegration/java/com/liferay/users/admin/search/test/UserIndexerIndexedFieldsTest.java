@@ -6,6 +6,13 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -18,7 +25,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -35,6 +44,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.rule.SearchTestRule;
+import com.liferay.portal.search.test.util.ExpandoTableSearchFixture;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -56,6 +66,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -79,6 +90,8 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpExpandoTableSearchFixture();
+
 		setUpIndexedFieldsFixture();
 
 		setUpIndexerFixture();
@@ -109,6 +122,33 @@ public class UserIndexerIndexedFieldsTest {
 			name ->
 				!name.contains(StringPool.PERIOD) && !name.equals("timestamp"),
 			searchTerm);
+	}
+
+	@Test
+	public void testCustomField() throws Exception {
+		expandoTableSearchFixture.addExpandoColumn(
+			User.class, ExpandoColumnConstants.INDEX_TYPE_KEYWORD,
+			"customField");
+
+		User user = addUser();
+
+		ExpandoBridge expandoBridge = user.getExpandoBridge();
+
+		String customFieldValue = RandomTestUtil.randomString();
+
+		expandoBridge.setAttribute("customField", customFieldValue);
+
+		try (SafeCloseable safeCloseable =
+				ReindexCacheThreadLocal.openReindexMode()) {
+
+			indexerFixture.reindexCompany(user.getCompanyId());
+		}
+
+		Document document = indexerFixture.searchOnlyOne(user.getFirstName());
+
+		Assert.assertEquals(
+			customFieldValue,
+			document.get("expando__keyword__custom_fields__customField"));
 	}
 
 	@Test
@@ -245,6 +285,16 @@ public class UserIndexerIndexedFieldsTest {
 		group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
+	@Inject
+	protected ClassNameLocalService classNameLocalService;
+
+	@Inject
+	protected ExpandoColumnLocalService expandoColumnLocalService;
+
+	@Inject
+	protected ExpandoTableLocalService expandoTableLocalService;
+
+	protected ExpandoTableSearchFixture expandoTableSearchFixture;
 	protected Group group;
 	protected IndexedFieldsFixture indexedFieldsFixture;
 	protected IndexerFixture<User> indexerFixture;
@@ -471,8 +521,23 @@ public class UserIndexerIndexedFieldsTest {
 		}
 	}
 
+	private void _setUpExpandoTableSearchFixture() {
+		expandoTableSearchFixture = new ExpandoTableSearchFixture(
+			classNameLocalService, expandoColumnLocalService,
+			expandoTableLocalService);
+
+		_expandoColumns = expandoTableSearchFixture.getExpandoColumns();
+		_expandoTables = expandoTableSearchFixture.getExpandoTables();
+	}
+
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private List<ExpandoColumn> _expandoColumns;
+
+	@DeleteAfterTestRun
+	private List<ExpandoTable> _expandoTables;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;

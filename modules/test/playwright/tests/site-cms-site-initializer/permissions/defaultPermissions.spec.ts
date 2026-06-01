@@ -663,7 +663,7 @@ test(
 
 			await waitForAlert(
 				page,
-				`Success:${contentName} was published successfully.`
+				`Success:${contentName} was created successfully.`
 			);
 
 			await clickMenuItem('Permissions', page, contentName);

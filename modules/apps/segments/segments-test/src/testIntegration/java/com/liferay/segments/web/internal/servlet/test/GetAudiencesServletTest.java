@@ -71,10 +71,8 @@ public class GetAudiencesServletTest {
 	@Test
 	@TestInfo("LPD-91094")
 	public void testGetAudiences() throws Exception {
-		String segmentsEntryKey = RandomTestUtil.randomString();
-
-		_addSegmentsEntry(
-			segmentsEntryKey, "(url eq '/pricing')",
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			RandomTestUtil.randomString(), "(url eq '/pricing')",
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -84,7 +82,8 @@ public class GetAudiencesServletTest {
 		JSONObject audienceJSONObject = audiencesJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			segmentsEntryKey, audienceJSONObject.getString("id"));
+			segmentsEntry.getSegmentsEntryKey(),
+			audienceJSONObject.getString("id"));
 		Assert.assertEquals("AND", audienceJSONObject.getString("conjunction"));
 		Assert.assertEquals(
 			"SESSION", audienceJSONObject.getString("retentionType"));
@@ -127,10 +126,8 @@ public class GetAudiencesServletTest {
 			RandomTestUtil.randomString(), "(url eq '/decoy')",
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
-		String segmentsEntryKey = RandomTestUtil.randomString();
-
-		_addSegmentsEntry(
-			segmentsEntryKey, "(url eq '/pricing')",
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			RandomTestUtil.randomString(), "(url eq '/pricing')",
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -140,7 +137,8 @@ public class GetAudiencesServletTest {
 
 		JSONObject jsonObject = audiencesJSONArray.getJSONObject(0);
 
-		Assert.assertEquals(segmentsEntryKey, jsonObject.getString("id"));
+		Assert.assertEquals(
+			segmentsEntry.getSegmentsEntryKey(), jsonObject.getString("id"));
 	}
 
 	@Test
@@ -220,7 +218,7 @@ public class GetAudiencesServletTest {
 		Assert.assertTrue(rulesByValue.containsKey("twitter.com"));
 	}
 
-	private void _addSegmentsEntry(
+	private SegmentsEntry _addSegmentsEntry(
 			String segmentsEntryKey, String filterString, String source)
 		throws Exception {
 
@@ -229,12 +227,15 @@ public class GetAudiencesServletTest {
 		_contextSegmentsCriteriaContributor.contribute(
 			criteria, filterString, Criteria.Conjunction.AND);
 
-		_segmentsEntries.add(
-			SegmentsTestUtil.addSegmentsEntry(
-				segmentsEntryKey, segmentsEntryKey, segmentsEntryKey,
-				CriteriaSerializer.serialize(criteria), source,
-				ServiceContextTestUtil.getServiceContext(
-					_companyGroup.getGroupId(), TestPropsValues.getUserId())));
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			segmentsEntryKey, segmentsEntryKey, segmentsEntryKey,
+			CriteriaSerializer.serialize(criteria), source,
+			ServiceContextTestUtil.getServiceContext(
+				_companyGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		_segmentsEntries.add(segmentsEntry);
+
+		return segmentsEntry;
 	}
 
 	private JSONArray _getAudiencesJSONArray() throws Exception {

@@ -234,10 +234,12 @@ public class EditSegmentsEntryDisplayContext {
 			SegmentsCriteriaContributor segmentsCriteriaContributor)
 		throws Exception {
 
-		Criteria.Criterion criterion = _getCriteria().getCriterion(
-			segmentsCriteriaContributor.getKey());
+		SegmentsEntry segmentsEntry = _getSegmentsEntry();
 
-		if (criterion == null) {
+		if ((segmentsEntry == null) ||
+			(segmentsCriteriaContributor.getType() != Criteria.Type.CONTEXT) ||
+			Validator.isNull(segmentsEntry.getCriteria())) {
+
 			return JSONUtil.put(
 				"conjunctionName", StringPool.BLANK
 			).put(
@@ -245,20 +247,13 @@ public class EditSegmentsEntryDisplayContext {
 			);
 		}
 
-		String filterString = criterion.getFilterString();
-
-		if (Validator.isNull(filterString)) {
-			return JSONUtil.put(
-				"conjunctionName", StringPool.BLANK
-			).put(
-				"query", (JSONObject)null
-			);
-		}
+		JSONObject queryJSONObject = JSONFactoryUtil.createJSONObject(
+			segmentsEntry.getCriteria());
 
 		return JSONUtil.put(
-			"conjunctionName", criterion.getConjunction()
+			"conjunctionName", queryJSONObject.getString("conjunctionName")
 		).put(
-			"query", JSONFactoryUtil.createJSONObject(filterString)
+			"query", queryJSONObject
 		);
 	}
 

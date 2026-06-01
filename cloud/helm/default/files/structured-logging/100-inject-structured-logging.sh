@@ -48,7 +48,7 @@ function main {
 
 		_log INFO "Structured-logging configuration injected."
 	else
-		_log WARNING "Skipping log4j2 patch because Maven Central fetch failed. Tomcat JUL output will still be JSON; Liferay log4j2 output will use the default text layout."
+		_log WARNING "Skipping log4j2 patch because Maven Central fetch failed."
 	fi
 }
 

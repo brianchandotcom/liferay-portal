@@ -32,8 +32,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
 			className,
-			description,
 			component = 'input',
+			description,
 			errorMessage,
 			helpMessage,
 			hideFeedback,

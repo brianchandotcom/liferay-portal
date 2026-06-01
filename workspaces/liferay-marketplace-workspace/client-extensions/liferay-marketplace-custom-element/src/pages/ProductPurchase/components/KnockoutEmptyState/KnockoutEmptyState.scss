@@ -1,13 +1,21 @@
 #knockout-empty-state {
 	.alert {
 		align-items: center;
-		background-color: #e6edfb;
+		border: none !important;
 		border-radius: 5px;
 		display: flex;
 		height: 80px;
 		justify-content: center;
 		margin: 20px 0;
 		width: 80px;
+	}
+
+	.alert-info {
+		background-color: #e6edfb;
+	}
+
+	.alert-warning {
+		background-color: #f7eae0;
 	}
 
 	h3 {

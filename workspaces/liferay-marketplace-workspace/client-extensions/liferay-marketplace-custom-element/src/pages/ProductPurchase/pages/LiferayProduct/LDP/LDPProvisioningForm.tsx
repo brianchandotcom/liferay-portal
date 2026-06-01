@@ -21,7 +21,7 @@ import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema from '../../../../../schema/zod';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
-import ProductPurchaseLDP from '../../../services/ProductPurchaseLDP';
+import ProductPurchaseAnalytics from '../../../services/ProductPurchaseAnalytics';
 
 type MultiSelectValue = {
 	key: string;
@@ -35,8 +35,8 @@ const LDPProvisioning = () => {
 
 	const {
 		actions: {previousStep},
-		product,
 		handlePurchase,
+		product,
 		selectedAccount,
 		setForm,
 	} = useProductPurchaseOutletContext();
@@ -69,21 +69,14 @@ const LDPProvisioning = () => {
 	) => {
 		setForm(form);
 
-		const productPurchase = new ProductPurchaseLDP(
+		const productPurchase = new ProductPurchaseAnalytics(
 			selectedAccount,
 			product
 		);
 
-		productPurchase.setForm(form);
+		productPurchase.setForm(form as any);
 
 		await handlePurchase(productPurchase);
-
-		console.log(form);
-
-		// productPurchaseCart.addCart(Number(product.id), product.skus[0].id);
-
-		// nextStep();
-
 	};
 
 	if (!selectedAccount) {
@@ -159,7 +152,7 @@ const LDPProvisioning = () => {
 				<div className="d-flex flex-column">
 					<div>
 						<label
-							className="required mr-1"
+							className="mr-1 required"
 							htmlFor="incident-report-contacts"
 						>
 							Add Incident Report Contacts{' '}

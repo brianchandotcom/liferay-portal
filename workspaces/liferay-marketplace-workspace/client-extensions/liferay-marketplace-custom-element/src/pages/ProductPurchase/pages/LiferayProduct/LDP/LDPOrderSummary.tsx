@@ -13,7 +13,7 @@ import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
 import {formatCurrency} from '../../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
-import ProductPurchaseLDP from '../../../services/ProductPurchaseLDP';
+import ProductPurchaseAnalytics from '../../../services/ProductPurchaseAnalytics';
 import {productPurchaseStore} from '../../../store';
 import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
 
@@ -46,7 +46,7 @@ const LDPOrderSummary = () => {
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.ldpProvisioning>
 	) => {
-		const productPurchase = new ProductPurchaseLDP(
+		const productPurchase = new ProductPurchaseAnalytics(
 			selectedAccount,
 			product
 		);
@@ -55,7 +55,7 @@ const LDPOrderSummary = () => {
 			...form,
 			salesforceProjectId:
 				salesforceProject?.externalReferenceCode as string,
-		});
+		} as any);
 
 		await handlePurchase(productPurchase, {
 			...productPurchaseCart.cart,

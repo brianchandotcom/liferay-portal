@@ -163,18 +163,18 @@ public class FragmentEntryVersionUpgradeProcessTest {
 
 	private void _testUpgradeDeletesFragmentEntryVersions() throws Exception {
 		_testUpgrade(
-			0, 11, 0, FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT);
+			0, 11, 0, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
 		_testUpgrade(
-			0, 20, 0, FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT);
+			0, 20, 0, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
 	}
 
 	private void _testUpgradeDeletesFragmentEntryVersionsPerCtCollection()
 		throws Exception {
 
 		_testUpgrade(
-			11, 1, FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT, 1);
+			11, 1, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX, 1);
 		_testUpgrade(
-			20, 10, FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT, 10);
+			20, 10, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX, 10);
 	}
 
 	private void _testUpgradePreservesFragmentEntryVersions() throws Exception {

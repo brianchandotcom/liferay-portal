@@ -120,7 +120,7 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			).limit(
 				Math.max(
 					0,
-					FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT -
+					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX -
 						fragmentEntryVersionCount),
 				Integer.MAX_VALUE
 			));

@@ -67,7 +67,7 @@ public class FragmentEntryVersionModelListenerTest {
 		Assert.assertTrue(oldestVersion > 0);
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT - 2,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 2,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
@@ -75,7 +75,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT - 1,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
 			versions.size());
 		Assert.assertTrue(versions.contains(oldestVersion));
 
@@ -86,7 +86,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			versions.size());
 		Assert.assertTrue(versions.contains(oldestVersion));
 
@@ -97,7 +97,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			versions.size());
 		Assert.assertFalse(versions.contains(oldestVersion));
 	}
@@ -108,11 +108,11 @@ public class FragmentEntryVersionModelListenerTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT - 1,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		Assert.assertEquals(
-			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				fragmentEntry));
 
@@ -127,7 +127,7 @@ public class FragmentEntryVersionModelListenerTest {
 			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
 
 			Assert.assertEquals(
-				FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT + 1,
+				FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
 				FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 					fragmentEntry));
 		}

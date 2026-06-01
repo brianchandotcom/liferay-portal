@@ -2,7 +2,8 @@
 	{
 		"allowedServiceSignatures": [
 			"com.liferay.ai.hub.rest.internal.resource.v1_0.ChatResourceImpl#getChatSubscribe",
-			"com.liferay.ai.hub.rest.internal.resource.v1_0.MessageResourceImpl#postChatByExternalReferenceCodeMessage"
+			"com.liferay.ai.hub.rest.internal.resource.v1_0.MessageResourceImpl#postChatByExternalReferenceCodeMessage",
+			"com.liferay.ai.hub.rest.internal.resource.v1_0.ReportResourceImpl#postReport"
 		],
 		"defaultSAPEntry": true,
 		"enabled": true,

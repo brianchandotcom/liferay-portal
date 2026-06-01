@@ -2951,14 +2951,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					_getRandomSitePage(
 						serviceContext, SitePage.Type.WIDGET_PAGE));
 
-			Assert.assertEquals(
-				httpResponse.getContent(), 400, httpResponse.getStatusCode());
+			String content = httpResponse.getContent();
+
+			Assert.assertEquals(content, 400, httpResponse.getStatusCode());
 			Assert.assertTrue(
-				httpResponse.getContent(),
-				httpResponse.getContent(
-				).contains(
-					"Feature flag LPD-76864 is disabled for company"
-				));
+				content,
+				content.contains(
+					"Feature flag LPD-76864 is disabled for company"));
 		}
 		finally {
 			PropsUtil.set("feature.flag.LPD-76864", "true");

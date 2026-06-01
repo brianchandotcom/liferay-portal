@@ -73,7 +73,7 @@ public class AuthorizeRestController extends BaseRestController {
 		return ResponseEntity.ok(
 			new JSONObject(
 			).put(
-				"authorizationUrl", authorizationURL
+				"authorizationURL", authorizationURL
 			).toString());
 	}
 

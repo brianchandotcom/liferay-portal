@@ -40,7 +40,7 @@ public class StateTokenService {
 	}
 
 	public String generateState(String redirectURL, long seoStudioInstanceId) {
-		Date nowDate = new Date();
+		Date date = new Date();
 
 		return Jwts.builder(
 		).claim(
@@ -48,9 +48,9 @@ public class StateTokenService {
 		).claim(
 			"seoStudioInstanceId", seoStudioInstanceId
 		).expiration(
-			new Date(nowDate.getTime() + 3600000)
+			new Date(date.getTime() + 3600000)
 		).issuedAt(
-			nowDate
+			date
 		).signWith(
 			_secretKey
 		).compact();

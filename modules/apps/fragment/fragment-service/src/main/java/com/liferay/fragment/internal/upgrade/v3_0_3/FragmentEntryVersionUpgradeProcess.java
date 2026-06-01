@@ -44,13 +44,10 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 						fragmentEntryVersionIds.size());
 
 				int oracleInClauseLimit = 1000;
+				int size = fragmentEntryVersionIdsToDelete.size();
 
-				for (int i = 0; i < fragmentEntryVersionIdsToDelete.size();
-					 i += oracleInClauseLimit) {
-
-					int end = Math.min(
-						i + oracleInClauseLimit,
-						fragmentEntryVersionIdsToDelete.size());
+				for (int i = 0; i < size; i += oracleInClauseLimit) {
+					int end = Math.min(i + oracleInClauseLimit, size);
 
 					runSQL(
 						StringBundler.concat(

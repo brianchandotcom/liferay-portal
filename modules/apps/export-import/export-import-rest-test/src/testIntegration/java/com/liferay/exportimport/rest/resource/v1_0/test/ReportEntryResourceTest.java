@@ -165,22 +165,20 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			Long... expectedReportEntryIds)
 		throws Exception {
 
-		List<ReportEntry> items =
-			(List<ReportEntry>)
-				reportEntryResource.getImportProcessReportEntriesPage(
-					_backgroundTask.getBackgroundTaskId(), null, filterString,
-					Pagination.of(1, 10), sortString
-				).getItems();
+		Page<ReportEntry> page =
+			reportEntryResource.getImportProcessReportEntriesPage(
+				_backgroundTask.getBackgroundTaskId(), null, filterString,
+				Pagination.of(1, 10), sortString);
+
+		List<ReportEntry> items = (List<ReportEntry>)page.getItems();
 
 		Assert.assertEquals(
 			items.toString(), expectedReportEntryIds.length, items.size());
 
 		for (int i = 0; i < expectedReportEntryIds.length; i++) {
-			Assert.assertEquals(
-				expectedReportEntryIds[i],
-				items.get(
-					i
-				).getId());
+			ReportEntry reportEntry = items.get(i);
+
+			Assert.assertEquals(expectedReportEntryIds[i], reportEntry.getId());
 		}
 	}
 

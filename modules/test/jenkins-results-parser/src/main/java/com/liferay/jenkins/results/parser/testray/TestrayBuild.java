@@ -508,12 +508,12 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_testrayRoutine = _testrayServer.getTestrayRoutineByID(
 			Long.parseLong(matcher.group("routineID")));
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"id eq '", matcher.group("buildID"), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"builds", FIELD_NAMES, filter, null, 1, 1);
+				"builds", FIELD_NAMES, filterString, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				throw new RuntimeException("Unable to find entity JSON object");
@@ -594,13 +594,13 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		TestrayServer testrayServer = getTestrayServer();
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"name eq '", runIDString, "' and r_buildToRuns_c_buildId eq '",
 			String.valueOf(getID()), "'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
-				"runs", TestrayRun.FIELD_NAMES, filter, null, 1, 1);
+				"runs", TestrayRun.FIELD_NAMES, filterString, null, 1, 1);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				if (entityJSONObject == null) {

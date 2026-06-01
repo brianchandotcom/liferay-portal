@@ -268,7 +268,10 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 	);
 
 	return (
-		<Card className={classNames(className)} minHeight={260}>
+		<Card
+			className={classNames('top-categories-and-tags', className)}
+			minHeight={260}
+		>
 			<Card.Title className='p-3'>
 				<Text weight='semi-bold'>
 					{Liferay.Language.get(

@@ -13,3 +13,22 @@
 		margin-bottom: 0;
 	}
 }
+
+.top-assets,
+.top-categories-and-tags {
+	.tab-content,
+	.tab-pane.active {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+	}
+
+	.c-empty-state {
+		margin-bottom: auto;
+		margin-top: auto;
+	}
+
+	.c-empty-state-title {
+		margin-top: 0;
+	}
+}

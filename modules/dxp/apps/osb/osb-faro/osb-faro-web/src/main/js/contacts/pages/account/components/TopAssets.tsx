@@ -325,20 +325,22 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>
 
-				<div className='d-flex p-3'>
-					<ClayButton
-						borderless
-						className='ml-auto rounded-lg'
-						onClick={() =>
-							history.push(
-								toRoute(Routes.ASSETS, {channelId, groupId})
-							)
-						}
-						size='sm'
-					>
-						{Liferay.Language.get('view-all')}
-					</ClayButton>
-				</div>
+				{assets.length > 0 && (
+					<div className='d-flex p-3'>
+						<ClayButton
+							borderless
+							className='ml-auto rounded-lg'
+							onClick={() =>
+								history.push(
+									toRoute(Routes.ASSETS, {channelId, groupId})
+								)
+							}
+							size='sm'
+						>
+							{Liferay.Language.get('view-all')}
+						</ClayButton>
+					</div>
+				)}
 			</Card.Body>
 		</Card>
 	);

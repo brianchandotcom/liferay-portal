@@ -3,12 +3,208 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentSettings": {
-						"unallowedFragments": [
-						]
+					"fragmentStyle": {
+						"borderColor": "colorBrandPrimaryLighten6",
+						"borderRadius": "",
+						"borderWidth": "0",
+						"shadow": "",
+						"textAlign": "",
+						"width": "100%"
+					},
+					"indexed": true,
+					"layout": {
+						"borderColor": "colorBrandPrimaryLighten6"
 					}
 				},
-				"type": "DropZone"
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "public-sites-navigation",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+								"accountMenuId": 0,
+								"darkNav": false,
+								"navigationDDMTemplateKey": "NAVIGATION_PRIMARY",
+								"searchBlueprintId": 0,
+								"showAccountMenu": true,
+								"showCta": false,
+								"showLanguageMenu": true,
+								"showSearch": false,
+								"showSiteName": true,
+								"siteNavigationMenuId": 0
+							},
+							"fragmentFields": [
+								{
+									"id": "link_okta",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"value": "https://login.liferay.com/enduser/settings"
+												}
+											}
+										}
+									}
+								},
+								{
+									"id": "siteName",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "One Liferay",
+												"es_ES": "One Liferay",
+												"ja_JP": "One Liferay",
+												"pt_BR": "One Liferay"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "https://liferay.com"
+															}
+														},
+														"target": "Blank"
+													},
+													"indexed": true
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"textType": "text-link-md",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Liferay.com",
+																				"es_ES": "Liferay.com",
+																				"ja_JP": "Liferay.com",
+																				"pt_BR": "Liferay.com"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "https://learn.liferay.com"
+															}
+														},
+														"target": "Blank"
+													},
+													"indexed": true
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"textType": "text-link-md",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Learn",
+																				"es_ES": "Aprender",
+																				"ja_JP": "学ぶ",
+																				"pt_BR": "Aprender"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderRadius": "",
+								"borderWidth": "0",
+								"paddingLeft": "0",
+								"shadow": "",
+								"textAlign": ""
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"type": "DropZone"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"
@@ -24,6 +220,12 @@
 		"styleBook": {
 			"key": "liferay-one",
 			"name": "Liferay One"
+		},
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	}
 }

@@ -9,9 +9,176 @@
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/support",
-				"name": "Support",
-				"type": "layout"
+				"externalReferenceCode": "LO_NAV_SUPPORT",
+				"menuItems": [
+					{
+						"externalReferenceCode": "LO_NAV_SUPPORT_SUPPORT",
+						"menuItems": [
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_TOOLS",
+								"name_i18n": {
+									"en_US": "Support Tools",
+									"es_ES": "Herramientas de Soporte",
+									"ja_JP": "サポートツール",
+									"pt_BR": "Ferramentas de Suporte"
+								},
+								"type": "url",
+								"url": "https://liferay.atlassian.net/servicedesk/customer/portals",
+								"useNewTab": true
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_BUSINESS_EVENTS",
+								"name_i18n": {
+									"en_US": "Business Events",
+									"es_ES": "Eventos de Negocio",
+									"ja_JP": "ビジネスイベント",
+									"pt_BR": "Eventos de Negócios"
+								},
+								"type": "url",
+								"url": "/support/business-events",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_DOWNLOADS",
+								"name_i18n": {
+									"en_US": "Downloads",
+									"es_ES": "Descargas",
+									"ja_JP": "ダウンロード",
+									"pt_BR": "Downloads"
+								},
+								"type": "url",
+								"url": "https://learn.liferay.com/downloads",
+								"useNewTab": true
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_TICKETS_ATTACHMENTS",
+								"name_i18n": {
+									"en_US": "Tickets Attachments",
+									"es_ES": "Adjuntos de Tickets",
+									"ja_JP": "チケット添付ファイル",
+									"pt_BR": "Anexos de Tickets"
+								},
+								"type": "url",
+								"url": "/support/tickets-attachments",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Support",
+							"es_ES": "Soporte",
+							"ja_JP": "サポート",
+							"pt_BR": "Suporte"
+						},
+						"title": "Support",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "LO_NAV_SUPPORT_LEARN_NAVIGATE",
+						"menuItems": [
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_LIFERAY_LEARN",
+								"name_i18n": {
+									"en_US": "Liferay Learn",
+									"es_ES": "Liferay Learn",
+									"ja_JP": "Liferay Learn",
+									"pt_BR": "Liferay Learn"
+								},
+								"type": "url",
+								"url": "https://learn.liferay.com/",
+								"useNewTab": true
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP",
+								"name_i18n": {
+									"en_US": "Customer Portal Help",
+									"es_ES": "Ayuda del Portal del Cliente",
+									"ja_JP": "カスタマーポータルヘルプ",
+									"pt_BR": "Ajuda do Portal do Cliente"
+								},
+								"type": "url",
+								"url": "/support/customer-portal-help",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_POLICIES",
+								"name_i18n": {
+									"en_US": "Support Policies",
+									"es_ES": "Políticas de Soporte",
+									"ja_JP": "サポートポリシー",
+									"pt_BR": "Políticas de Suporte"
+								},
+								"type": "url",
+								"url": "/support/support-policies",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Learn & Navigate",
+							"es_ES": "Aprender y Navegar",
+							"ja_JP": "学習＆ナビゲート",
+							"pt_BR": "Aprender e Navegar"
+						},
+						"title": "Learn & Navigate",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "LO_NAV_SUPPORT_STAY_UPDATED",
+						"menuItems": [
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_ANNOUNCEMENTS",
+								"name_i18n": {
+									"en_US": "Announcements",
+									"es_ES": "Anuncios",
+									"ja_JP": "アナウンスメント",
+									"pt_BR": "Avisos"
+								},
+								"type": "url",
+								"url": "/support/announcements",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_RELEASE_NOTES",
+								"name_i18n": {
+									"en_US": "Release Notes",
+									"es_ES": "Notas de la Versión",
+									"ja_JP": "リリースノート",
+									"pt_BR": "Notas de Versão"
+								},
+								"type": "url",
+								"url": "https://learn.liferay.com/release-notes",
+								"useNewTab": true
+							},
+							{
+								"externalReferenceCode": "LO_NAV_SUPPORT_SECURITY_VULNERABILITIES",
+								"name_i18n": {
+									"en_US": "Security Vulnerabilities",
+									"es_ES": "Vulnerabilidades de Seguridad",
+									"ja_JP": "セキュリティ脆弱性",
+									"pt_BR": "Vulnerabilidades de Segurança"
+								},
+								"type": "url",
+								"url": "https://learn.liferay.com/security-vulnerabilities",
+								"useNewTab": true
+							}
+						],
+						"name_i18n": {
+							"en_US": "Stay Updated",
+							"es_ES": "Mantente Actualizado",
+							"ja_JP": "最新情報を入手",
+							"pt_BR": "Mantenha-se Atualizado"
+						},
+						"title": "Stay Updated",
+						"type": "node"
+					}
+				],
+				"name_i18n": {
+					"en_US": "Support",
+					"es_ES": "Soporte",
+					"ja_JP": "サポート",
+					"pt_BR": "Suporte"
+				},
+				"title": "Support",
+				"type": "node"
 			},
 			{
 				"friendlyURL": "/marketplace",
@@ -74,30 +241,5 @@
 			"en_US": "Admin Navigation"
 		},
 		"title": "Admin Navigation"
-	},
-	{
-		"externalReferenceCode": "LO_SUPPORT_NAV",
-		"menuItems": [
-			{
-				"friendlyURL": "/support/getting-started",
-				"name": "Getting Started",
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/support/customer-portal-help",
-				"name": "Customer Portal Help",
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/support/announcements",
-				"name": "Announcements",
-				"type": "layout"
-			}
-		],
-		"name": "Support Navigation",
-		"name_i18n": {
-			"en_US": "Support Navigation"
-		},
-		"title": "Support Navigation"
 	}
 ]

@@ -1,0 +1,318 @@
+[
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Stay informed on the latest updates and changes from Liferay.",
+			"es_ES": "Mantente al día con las últimas novedades y cambios de Liferay.",
+			"ja_JP": "Liferayの最新のアップデートと変更情報をご確認ください。",
+			"pt_BR": "Mantenha-se informado sobre as últimas atualizações e mudanças da Liferay."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/announcements-svg",
+			"es_ES": "/documents/d/one/announcements-svg",
+			"ja_JP": "/documents/d/one/announcements-svg",
+			"pt_BR": "/documents/d/one/announcements-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Record your upcoming business events.",
+			"es_ES": "Registra tus próximos eventos de negocio.",
+			"ja_JP": "今後のビジネスイベントを記録します。",
+			"pt_BR": "Registre seus próximos eventos de negócio."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/business_events-svg",
+			"es_ES": "/documents/d/one/business_events-svg",
+			"ja_JP": "/documents/d/one/business_events-svg",
+			"pt_BR": "/documents/d/one/business_events-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LEARN_NAVIGATE#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LEARN_NAVIGATE#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_STAY_UPDATED#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_STAY_UPDATED#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUPPORT#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUPPORT#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Get assistance with using the Liferay Customer Portal.",
+			"es_ES": "Obtén ayuda para usar el Liferay Customer Portal.",
+			"ja_JP": "Liferay Customer Portalの利用に関するサポートをご案内します。",
+			"pt_BR": "Obtenha ajuda para usar o Liferay Customer Portal."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/customer_portal_help-svg",
+			"es_ES": "/documents/d/one/customer_portal_help-svg",
+			"ja_JP": "/documents/d/one/customer_portal_help-svg",
+			"pt_BR": "/documents/d/one/customer_portal_help-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Products, service packs, fix pack and security fixes.",
+			"es_ES": "Productos, service packs, fix packs y correcciones de seguridad.",
+			"ja_JP": "製品、サービスパック、フィックスパック、セキュリティ修正。",
+			"pt_BR": "Produtos, service packs, fix packs e correções de segurança."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/downloads-svg",
+			"es_ES": "/documents/d/one/downloads-svg",
+			"ja_JP": "/documents/d/one/downloads-svg",
+			"pt_BR": "/documents/d/one/downloads-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "The best way to learn Liferay with all the resources in one spot.",
+			"es_ES": "La mejor forma de aprender Liferay con todos los recursos en un solo lugar.",
+			"ja_JP": "Liferayを学ぶための最良の方法、すべてのリソースを一箇所に。",
+			"pt_BR": "A melhor maneira de aprender Liferay com todos os recursos em um só lugar."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/liferay_learn-svg",
+			"es_ES": "/documents/d/one/liferay_learn-svg",
+			"ja_JP": "/documents/d/one/liferay_learn-svg",
+			"pt_BR": "/documents/d/one/liferay_learn-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Review Liferay's support service-level policies and coverage.",
+			"es_ES": "Consulta las políticas y la cobertura del nivel de servicio de soporte de Liferay.",
+			"ja_JP": "Liferayのサポートサービスレベルポリシーとカバレッジをご確認ください。",
+			"pt_BR": "Consulte as políticas de nível de serviço e a cobertura do suporte da Liferay."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/support_policies-svg",
+			"es_ES": "/documents/d/one/support_policies-svg",
+			"ja_JP": "/documents/d/one/support_policies-svg",
+			"pt_BR": "/documents/d/one/support_policies-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Reference the latest changes for Liferay DXP.",
+			"es_ES": "Consulta los últimos cambios de Liferay DXP.",
+			"ja_JP": "Liferay DXPの最新の変更点を参照してください。",
+			"pt_BR": "Consulte as alterações mais recentes do Liferay DXP."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/release_notes-svg",
+			"es_ES": "/documents/d/one/release_notes-svg",
+			"ja_JP": "/documents/d/one/release_notes-svg",
+			"pt_BR": "/documents/d/one/release_notes-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Information and fixes for known vulnerabilities.",
+			"es_ES": "Información y correcciones para vulnerabilidades conocidas.",
+			"ja_JP": "既知の脆弱性に関する情報と修正。",
+			"pt_BR": "Informações e correções para vulnerabilidades conhecidas."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/security_vulnerabilities-svg",
+			"es_ES": "/documents/d/one/security_vulnerabilities-svg",
+			"ja_JP": "/documents/d/one/security_vulnerabilities-svg",
+			"pt_BR": "/documents/d/one/security_vulnerabilities-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Manage your attachments uploaded via the large file uploader.",
+			"es_ES": "Gestiona los archivos adjuntos subidos a través del cargador de archivos grandes.",
+			"ja_JP": "大容量ファイルアップローダーでアップロードされた添付ファイルを管理します。",
+			"pt_BR": "Gerencie seus anexos enviados pelo carregador de arquivos grandes."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/tickets_attachments-svg",
+			"es_ES": "/documents/d/one/tickets_attachments-svg",
+			"ja_JP": "/documents/d/one/tickets_attachments-svg",
+			"pt_BR": "/documents/d/one/tickets_attachments-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TOOLS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Access your support tools: view your tickets, submit a new request, request a callback, and more.",
+			"es_ES": "Accede a tus herramientas de soporte: consulta tus tickets, envía una nueva solicitud, solicita una llamada y más.",
+			"ja_JP": "サポートツールにアクセス：チケットの確認、新規リクエストの送信、コールバックのリクエストなどが可能です。",
+			"pt_BR": "Acesse suas ferramentas de suporte: veja seus tickets, envie uma nova solicitação, solicite um retorno e mais."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TOOLS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/support_tools-svg",
+			"es_ES": "/documents/d/one/support_tools-svg",
+			"ja_JP": "/documents/d/one/support_tools-svg",
+			"pt_BR": "/documents/d/one/support_tools-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TOOLS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	}
+]

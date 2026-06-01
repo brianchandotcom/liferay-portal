@@ -128,9 +128,10 @@ public class FragmentEntryVersionTestUtil {
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			String className = FragmentEntryVersion.class.getName();
+			int startVersion = _getStartVersion(connection, fragmentEntry);
 
 			for (int i = 0; i < count; i++) {
-				int version = _START_VERSION + i;
+				int version = startVersion + i;
 
 				versions.add(version);
 
@@ -167,7 +168,23 @@ public class FragmentEntryVersionTestUtil {
 		FragmentEntryLocalServiceUtil.updateFragmentEntry(fragmentEntry);
 	}
 
-	private static final int _START_VERSION = 1000;
+	private static int _getStartVersion(
+			Connection connection, FragmentEntry fragmentEntry)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select max(version) as maxVersion from FragmentEntryVersion " +
+					"where fragmentEntryId = ?")) {
+
+			preparedStatement.setLong(1, fragmentEntry.getFragmentEntryId());
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				resultSet.next();
+
+				return resultSet.getInt("maxVersion") + 1;
+			}
+		}
+	}
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

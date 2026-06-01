@@ -37,6 +37,11 @@ public class StateTokenService {
 
 		_secretKey = Keys.hmacShaKeyFor(
 			stateSecret.getBytes(StandardCharsets.UTF_8));
+
+		_jwtParser = Jwts.parser(
+		).verifyWith(
+			_secretKey
+		).build();
 	}
 
 	public String generateState(String redirectURL, long seoStudioDomainId) {
@@ -57,16 +62,12 @@ public class StateTokenService {
 	}
 
 	public Claims verifyState(String state) {
-		JwtParser jwtParser = Jwts.parser(
-		).verifyWith(
-			_secretKey
-		).build();
-
-		Jws<Claims> jws = jwtParser.parseSignedClaims(state);
+		Jws<Claims> jws = _jwtParser.parseSignedClaims(state);
 
 		return jws.getPayload();
 	}
 
+	private final JwtParser _jwtParser;
 	private final SecretKey _secretKey;
 
 }

@@ -3615,7 +3615,7 @@ components:
                         -   LinkToPagePage
                         -   LinkToURLPage
                         -   PageSetPage
-                        # "Deprecated as of Cavanaugh (7.4.x), replaced by ContentPage"
+                        # Deprecated as of Cavanaugh (7.4.x), replaced by ContentPage
                         -   WidgetPage
                     type: string
                 uuid:

@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"@clayui/core": "^3.163.0",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"main": "js/index.ts",
+	"name": "@liferay/layout-content-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
+		"test": "node-scripts test"
+	},
+	"version": "1.0.0"
+}

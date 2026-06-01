@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.ws.rs.core.UriInfo;
 
@@ -84,6 +85,18 @@ public class ConnectedSiteDTOConverter
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
 				setSearchable(depotEntryGroupRel::isSearchable);
+				setStagingType(
+					() -> {
+						if (_stagingGroupHelper.isStagingGroup(group)) {
+							return ConnectedSite.StagingType.STAGING;
+						}
+
+						if (_stagingGroupHelper.isLiveGroup(group)) {
+							return ConnectedSite.StagingType.LIVE;
+						}
+
+						return null;
+					});
 				setType(
 					() -> {
 						if (group.isLayoutSetPrototype()) {
@@ -107,5 +120,8 @@ public class ConnectedSiteDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

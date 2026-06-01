@@ -225,6 +225,8 @@ public class JournalContentDisplayContextTest {
 					"com.liferay.journal.content.web.internal.configuration." +
 						"JournalContentPortletInstanceConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId", String.valueOf(childGroup.getCompanyId())
+					).put(
 						"groupId", String.valueOf(childGroup.getGroupId())
 					).build())) {
 

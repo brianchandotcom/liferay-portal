@@ -72,10 +72,12 @@ public class CommentUtil {
 			"edited", !createDate.equals(modifiedDate)
 		).put(
 			"hasDeletePermission",
+			(themeDisplay.getUserId() == comment.getUserId()) ||
 			discussionPermission.hasDeletePermission(
 				themeDisplay.getPermissionChecker(), comment.getCommentId())
 		).put(
 			"hasUpdatePermission",
+			(themeDisplay.getUserId() == comment.getUserId()) ||
 			discussionPermission.hasUpdatePermission(
 				themeDisplay.getPermissionChecker(), comment.getCommentId())
 		).put(

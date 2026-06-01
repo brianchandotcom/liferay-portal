@@ -296,7 +296,9 @@ test(
 
 		await cookiesBanner.waitFor();
 
-		await cookiesBanner.getByRole('button', {name: 'Configuration'}).click();
+		await cookiesBanner
+			.getByRole('button', {name: 'Configuration'})
+			.click();
 
 		const configurationFrame = page.frameLocator(
 			'#cookiesBannerConfiguration iframe'

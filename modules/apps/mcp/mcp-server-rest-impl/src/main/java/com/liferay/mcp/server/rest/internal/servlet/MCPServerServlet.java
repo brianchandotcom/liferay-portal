@@ -165,13 +165,13 @@ public class MCPServerServlet extends HttpServlet {
 			return false;
 		}
 
-		String[] parts = authorization.trim(
-		).split(
-			"\\s+"
-		);
+		String trimmedAuthorization = authorization.trim();
 
-		if ((parts.length != 2) ||
-			!StringUtil.equalsIgnoreCase(parts[0], "Bearer")) {
+		int spaceIndex = trimmedAuthorization.indexOf(' ');
+
+		if ((spaceIndex == -1) ||
+			!StringUtil.equalsIgnoreCase(
+				trimmedAuthorization.substring(0, spaceIndex), "Bearer")) {
 
 			_sendInvalidTokenChallenge(
 				httpServletRequest, httpServletResponse,
@@ -180,7 +180,9 @@ public class MCPServerServlet extends HttpServlet {
 			return false;
 		}
 
-		String accessToken = parts[1];
+		String accessToken = trimmedAuthorization.substring(
+			spaceIndex + 1
+		).trim();
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.

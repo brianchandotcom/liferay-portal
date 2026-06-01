@@ -4,7 +4,6 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
@@ -23,8 +22,8 @@ import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
-import ProductPurchaseAnalytics from '../../services/ProductPurchaseAnalytics';
 import KnockoutEmptyState from '../../components/KnockoutEmptyState';
+import ProductPurchaseAnalytics from '../../services/ProductPurchaseAnalytics';
 
 type MultiSelectValue = {
 	key: string;

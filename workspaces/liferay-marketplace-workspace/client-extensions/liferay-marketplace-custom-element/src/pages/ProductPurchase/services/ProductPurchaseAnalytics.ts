@@ -4,6 +4,7 @@
  */
 
 import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
+import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {getSiteURL} from '../../../utils/site';
@@ -48,7 +49,9 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 						incidentReportEmailAddresses:
 							this.form?.incidentReportContacts,
 						name: this.form?.workspaceName,
-						ownerEmailAddress: this.form?.workspaceOwnerEmail,
+						ownerEmailAddress:
+							this.form?.workspaceOwnerEmail ??
+							Liferay.ThemeDisplay.getUserEmailAddress(),
 						serverLocation: this.form?.dataCenterLocation,
 					},
 					productKey,

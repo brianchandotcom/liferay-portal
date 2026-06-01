@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+
 import {NavbarProps} from '../../../../components/Navbar';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {
@@ -77,8 +78,6 @@ const LiferayProductsOutlet = () => {
 							analyticsProject: {groupId: 0},
 						}
 					);
-
-					console.log({orderMetadata});
 
 					groupId = orderMetadata?.analyticsProject?.groupId;
 				}

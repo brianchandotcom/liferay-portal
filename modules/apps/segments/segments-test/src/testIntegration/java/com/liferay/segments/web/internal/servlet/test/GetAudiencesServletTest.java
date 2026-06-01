@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -32,6 +33,7 @@ import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,63 @@ public class GetAudiencesServletTest {
 		Assert.assertEquals("url", ruleJSONObject.getString("attribute"));
 		Assert.assertEquals("eq", ruleJSONObject.getString("operation"));
 		Assert.assertEquals("/pricing", ruleJSONObject.getString("value"));
+	}
+
+	@Test
+	@TestInfo("LPD-91094")
+	public void testGetAudiencesMapsAttributeNames() throws Exception {
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			RandomTestUtil.randomString(),
+			_createGroupJSONObject(
+				"and",
+				_createRuleJSONObject(
+					"customContext/ipGeocoderCountry",
+					RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"languageId", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"lastSignInDateTime", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"localDate", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"referrerURL", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"requestParameters", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"signedIn", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"url", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					"userAgent", RandomTestUtil.randomString())),
+			SegmentsEntryConstants.SOURCE_AUDIENCE);
+
+		JSONObject audienceJSONObject = _getAudienceJSONObject(
+			_getAudiencesJSONArray(), segmentsEntry.getSegmentsEntryKey());
+
+		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
+
+		String[] attributes = new String[rulesJSONArray.length()];
+
+		for (int i = 0; i < rulesJSONArray.length(); i++) {
+			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
+
+			attributes[i] = ruleJSONObject.getString("attribute");
+		}
+
+		String[] expectedAttributes = {
+			"browser_name", "ip_geocoder_country", "language",
+			"last_sign_in_date", "local_date", "referrer", "request_parameters",
+			"signed_in", "url", "user_agent"
+		};
+
+		Assert.assertEquals(
+			Arrays.toString(attributes), expectedAttributes.length,
+			attributes.length);
+
+		for (String expectedAttribute : expectedAttributes) {
+			Assert.assertTrue(
+				ArrayUtil.contains(attributes, expectedAttribute));
+		}
 	}
 
 	@Test

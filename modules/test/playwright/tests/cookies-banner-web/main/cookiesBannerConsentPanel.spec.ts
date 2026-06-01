@@ -83,6 +83,68 @@ test(
 );
 
 test(
+	'Verify Force Re-Consent request succeeds when saving Cookie Banner configuration',
+	{tag: '@LPD-92457'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Banner');
+
+		// Wait for the DDM form to mount before submitting
+
+		await page.getByLabel('Title', {exact: true}).waitFor();
+
+		// Mark the form as dirty so the save triggers the confirmation modal.
+		// A direct input event on the SystemSettingsPortlet form is the
+		// simplest way to flip the formChanged flag the dynamic include
+		// listens for; DDM-rendered inputs do not always bubble input events
+		// out of the React form when driven by Playwright.
+
+		await page.evaluate(() => {
+			const form = document.querySelector<HTMLFormElement>(
+				'form[name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]'
+			);
+
+			form?.dispatchEvent(new Event('input', {bubbles: true}));
+		});
+
+		const saveButton = page.getByRole('button', {name: 'Save'});
+
+		if (await saveButton.isVisible()) {
+			await saveButton.dispatchEvent('click');
+		}
+		else {
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
+		}
+
+		// The confirmation modal opens; check the Force Re-Consent box so the
+		// dynamic include fires the force-reconsent fetch before submitting
+
+		const modal = page.getByRole('alertdialog');
+
+		await modal.waitFor({state: 'visible', timeout: 10000});
+
+		await modal.getByLabel('Force re-consent for all users.').check();
+
+		// Catch the force-reconsent fetch the OK button triggers. On the
+		// original bug the URL fell back to "" and the browser resolved it to
+		// /o/ with a 404; the fix populates the resource URL so this returns
+		// 200.
+
+		const reconsentResponsePromise = page.waitForResponse(
+			(response) => response.url().includes('force_reconsent'),
+			{timeout: 10000}
+		);
+
+		await modal.getByRole('button', {name: 'OK'}).click();
+
+		const reconsentResponse = await reconsentResponsePromise;
+
+		expect(reconsentResponse.status()).toBe(200);
+	}
+);
+
+test(
 	'Escape texts in Cookie Panel to avoid XSS injections',
 	{tag: '@LPD-69399'},
 	async ({page, systemSettingsPage}) => {

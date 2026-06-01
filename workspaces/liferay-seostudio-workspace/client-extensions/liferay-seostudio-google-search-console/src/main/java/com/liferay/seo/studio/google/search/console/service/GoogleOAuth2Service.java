@@ -53,10 +53,13 @@ public class GoogleOAuth2Service {
 			String callbackURI)
 		throws IOException {
 
-		return new GoogleAuthorizationCodeTokenRequest(
-			_netHttpTransport, GsonFactory.getDefaultInstance(), clientId,
-			clientSecret, code, callbackURI
-		).execute();
+		GoogleAuthorizationCodeTokenRequest
+			googleAuthorizationCodeTokenRequest =
+				new GoogleAuthorizationCodeTokenRequest(
+					_netHttpTransport, GsonFactory.getDefaultInstance(),
+					clientId, clientSecret, code, callbackURI);
+
+		return googleAuthorizationCodeTokenRequest.execute();
 	}
 
 	public String fetchUserEmail(String accessToken)

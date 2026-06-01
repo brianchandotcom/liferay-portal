@@ -106,10 +106,10 @@ public class CallbackRestController extends BaseRestController {
 			Instant accessTokenExpirationTime = null;
 
 			if (expiresInSeconds != null) {
-				accessTokenExpirationTime = Instant.now(
-				).plusSeconds(
-					expiresInSeconds
-				);
+				Instant instant = Instant.now();
+
+				accessTokenExpirationTime = instant.plusSeconds(
+					expiresInSeconds);
 			}
 
 			_liferayObjectService.updateTokens(

@@ -38,7 +38,7 @@ export class OnPagePage {
 		this.noScansEmptyStateTitle = this.page.getByText('No Scans Yet');
 		this.onPageHeading = this.page.getByRole('heading', {
 			level: 2,
-			name: 'On-Page',
+			name: 'On Page',
 		});
 		this.runScanNowButton = this.page.getByRole('button', {
 			name: 'Run scan now',
@@ -60,6 +60,10 @@ export class OnPagePage {
 		return this.page.getByRole('row', {
 			name: new RegExp(`(^|\\s)${name}(\\s|$)`),
 		});
+	}
+
+	async selectInsight(name: string) {
+		await this.getInsightRow(name).getByText(name, {exact: true}).click();
 	}
 
 	async goto(siteFriendlyUrlPath: string) {

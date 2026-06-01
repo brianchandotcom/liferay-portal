@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {InsightDetailPage} from '../pages/InsightDetailPage';
 import {OnPagePage} from '../pages/OnPagePage';
 import {SEOStudioSitePage} from '../pages/SEOStudioSitePage';
 
 const seoStudioPagesTest = test.extend<{
+	insightDetailPage: InsightDetailPage;
 	onPagePage: OnPagePage;
 	seoStudioSitePage: SEOStudioSitePage;
 }>({
+	insightDetailPage: async ({page}, use) => {
+		await use(new InsightDetailPage(page));
+	},
 	onPagePage: async ({page}, use) => {
 		await use(new OnPagePage(page));
 	},

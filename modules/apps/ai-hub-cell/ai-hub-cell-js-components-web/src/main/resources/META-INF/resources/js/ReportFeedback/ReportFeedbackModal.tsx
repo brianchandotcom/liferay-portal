@@ -15,34 +15,33 @@ import {REASON_OPTIONS} from './constants';
 import useReportFeedback from './useReportFeedback';
 
 interface ReportFeedbackModalProps {
-	agentId: string;
-	agentVersion?: string | null;
+	agentDefinitionExternalReferenceCodes: string[];
 	onClose: () => void;
 	onSubmitted?: () => void;
 	surface: ReportFeedbackSurface;
-	traceId: string;
 }
 
 const ReportFeedbackModal: React.FC<ReportFeedbackModalProps> = ({
-	agentId,
-	agentVersion,
+	agentDefinitionExternalReferenceCodes,
 	onClose,
 	onSubmitted,
 	surface,
-	traceId,
 }) => {
 	const {observer, onClose: closeModal} = useModal({onClose});
 
 	const {
 		canSubmit,
-		comment,
 		error,
 		reason,
-		setComment,
 		setReason,
+		setUserMessage,
 		submit,
 		submitting,
-	} = useReportFeedback({agentId, agentVersion, surface, traceId});
+		userMessage,
+	} = useReportFeedback({
+		agentDefinitionExternalReferenceCodes,
+		surface,
+	});
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -95,17 +94,19 @@ const ReportFeedbackModal: React.FC<ReportFeedbackModalProps> = ({
 					</ClayForm.Group>
 
 					<ClayForm.Group>
-						<label htmlFor="reportFeedbackComment">
+						<label htmlFor="reportFeedbackUserMessage">
 							{Liferay.Language.get('comment-optional')}
 						</label>
 
 						<ClayInput
 							component="textarea"
 							disabled={submitting}
-							id="reportFeedbackComment"
-							onChange={(event) => setComment(event.target.value)}
+							id="reportFeedbackUserMessage"
+							onChange={(event) =>
+								setUserMessage(event.target.value)
+							}
 							style={{minHeight: '5rem'}}
-							value={comment}
+							value={userMessage}
 						/>
 					</ClayForm.Group>
 				</ClayModal.Body>

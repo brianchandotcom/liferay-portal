@@ -13,20 +13,16 @@ import {
 } from './api';
 
 interface UseReportFeedbackOptions {
-	agentId: string;
-	agentVersion?: string | null;
+	agentDefinitionExternalReferenceCodes: string[];
 	surface: ReportFeedbackSurface;
-	traceId: string;
 }
 
 export default function useReportFeedback({
-	agentId,
-	agentVersion,
+	agentDefinitionExternalReferenceCodes,
 	surface,
-	traceId,
 }: UseReportFeedbackOptions) {
 	const [reason, setReason] = useState<ReportFeedbackReason | ''>('');
-	const [comment, setComment] = useState<string>('');
+	const [userMessage, setUserMessage] = useState<string>('');
 	const [submitting, setSubmitting] = useState<boolean>(false);
 	const [error, setError] = useState<string>('');
 
@@ -38,12 +34,10 @@ export default function useReportFeedback({
 		}
 
 		const payload: ReportFeedbackPayload = {
-			agentId,
-			agentVersion,
+			agentDefinitionExternalReferenceCodes,
 			reason,
 			surface,
-			traceId,
-			...(comment.trim() ? {comment: comment.trim()} : {}),
+			...(userMessage.trim() ? {userMessage: userMessage.trim()} : {}),
 		};
 
 		setError('');
@@ -69,12 +63,12 @@ export default function useReportFeedback({
 
 	return {
 		canSubmit,
-		comment,
 		error,
 		reason,
-		setComment,
 		setReason,
+		setUserMessage,
 		submit,
 		submitting,
+		userMessage,
 	};
 }

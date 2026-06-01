@@ -3,33 +3,44 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
+
+const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
+
 export type ReportFeedbackReason =
-	| 'AGENT_ERROR_OR_MALFUNCTION'
-	| 'INAPPROPRIATE_OR_HARMFUL_CONTENT'
-	| 'INCORRECT_OR_INACCURATE_RESPONSE'
-	| 'OTHER'
-	| 'PII_EXPOSURE';
+	| 'agentError'
+	| 'harmfulContent'
+	| 'incorrect'
+	| 'other'
+	| 'piiExposure';
 
 export type ReportFeedbackSurface =
-	| 'AI_ASSISTANT'
-	| 'CLICK_TO_CHAT'
-	| 'CMS_ASSISTANT';
+	| 'aiAssistant'
+	| 'clickToChat'
+	| 'writingAssistant';
 
 export interface ReportFeedbackPayload {
-	agentId: string;
-	agentVersion?: string | null;
-	comment?: string;
+	agentDefinitionExternalReferenceCodes: string[];
 	reason: ReportFeedbackReason;
 	surface: ReportFeedbackSurface;
-	traceId: string;
+	userMessage?: string;
 }
 
-// TODO LPD-91817 swap for a real POST once the backend endpoint lands
-// (planned: POST /o/ai-hub-cell/v1.0/ai-issue-reports).
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function postAIIssueReport(payload: ReportFeedbackPayload) {
-	await new Promise((resolve) => setTimeout(resolve, 400));
+	const response = await fetch(`${AI_HUB_ENDPOINT}/agent-issue-reports`, {
+		body: JSON.stringify(payload),
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'POST',
+	});
 
-	return {id: `mock-${Date.now()}`};
+	if (!response.ok) {
+		throw new Error(
+			`Unable to send feedback (${response.status} ${response.statusText})`
+		);
+	}
+
+	return response.json();
 }

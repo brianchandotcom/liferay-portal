@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Layout Content Versioning API
+Bundle-SymbolicName: com.liferay.layout.content.versioning.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.layout.content.versioning.exception,\
+	com.liferay.layout.content.versioning.model,\
+	com.liferay.layout.content.versioning.service,\
+	com.liferay.layout.content.versioning.service.persistence

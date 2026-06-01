@@ -10,7 +10,7 @@ package com.liferay.frontend.editor.ckeditor4.sample.web.internal.constants;
  */
 public class CKEditor4SampleWebKeys {
 
-	public static final String CKEDITOR4_SAMPLE_DISPLAY_CONTEXT =
-		"CKEDITOR4_SAMPLE_DISPLAY_CONTEXT";
+	public static final String CKEDITOR_4_SAMPLE_DISPLAY_CONTEXT =
+		"CKEDITOR_4_SAMPLE_DISPLAY_CONTEXT";
 
 }

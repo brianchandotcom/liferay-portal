@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CKEditor4SampleDisplayContext ckEditor4SampleDisplayContext = (CKEditor4SampleDisplayContext)request.getAttribute(CKEditor4SampleWebKeys.CKEDITOR4_SAMPLE_DISPLAY_CONTEXT);
+CKEditor4SampleDisplayContext ckEditor4SampleDisplayContext = (CKEditor4SampleDisplayContext)request.getAttribute(CKEditor4SampleWebKeys.CKEDITOR_4_SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <react:component

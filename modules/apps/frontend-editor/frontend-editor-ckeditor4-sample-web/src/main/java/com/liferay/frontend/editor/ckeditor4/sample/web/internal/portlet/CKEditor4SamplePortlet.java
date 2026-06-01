@@ -53,7 +53,7 @@ public class CKEditor4SamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			CKEditor4SampleWebKeys.CKEDITOR4_SAMPLE_DISPLAY_CONTEXT,
+			CKEditor4SampleWebKeys.CKEDITOR_4_SAMPLE_DISPLAY_CONTEXT,
 			new CKEditor4SampleDisplayContext(_cetManager, renderRequest));
 
 		super.doDispatch(renderRequest, renderResponse);

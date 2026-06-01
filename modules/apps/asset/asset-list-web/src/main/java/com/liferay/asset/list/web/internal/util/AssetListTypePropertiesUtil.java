@@ -65,6 +65,10 @@ public class AssetListTypePropertiesUtil {
 					ObjectFieldLocalServiceUtil.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
 
+				if (objectField.isMetadata()) {
+					continue;
+				}
+
 				String type = _toFilterType(objectField.getBusinessType());
 
 				if (type == null) {
@@ -157,6 +161,27 @@ public class AssetListTypePropertiesUtil {
 				"label", LanguageUtil.get(locale, "view-count")
 			).put(
 				"name", "viewCount"
+			).put(
+				"type", "integer"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "external-reference-code")
+			).put(
+				"name", "externalReferenceCode"
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "review-date")
+			).put(
+				"name", Field.REVIEW_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "status")
+			).put(
+				"name", Field.STATUS
 			).put(
 				"type", "integer"
 			));

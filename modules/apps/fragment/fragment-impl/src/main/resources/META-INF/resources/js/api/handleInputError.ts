@@ -11,6 +11,22 @@ type ErrorArgs = {
 	message?: string | null;
 };
 
+export function getLengthErrorMessage({
+	errorMessageContainer,
+	length,
+	maxLength,
+}: {
+	errorMessageContainer: HTMLSpanElement;
+	length: number;
+	maxLength: number;
+}): string {
+	const lengthFeedback = errorMessageContainer.getAttribute(
+		'data-length-feedback'
+	);
+
+	return `${lengthFeedback}: ${length} / ${maxLength}`;
+}
+
 export function handleInputLengthError({
 	currentLength,
 	errorContainer,
@@ -23,9 +39,10 @@ export function handleInputLengthError({
 	currentLength?: HTMLElement;
 	event: KeyboardEvent;
 	input: {attributes: {maxLength: number}};
-	lengthInfoContainer: HTMLParagraphElement;
+	lengthInfoContainer?: HTMLParagraphElement;
 } & ErrorArgs) {
 	const length = (event.target as HTMLInputElement).value.length;
+	const {maxLength} = input.attributes;
 
 	if (currentLength) {
 		currentLength.innerText = String(length);
@@ -38,14 +55,14 @@ export function handleInputLengthError({
 		lengthInfoContainer,
 	};
 
-	if (length > input.attributes.maxLength) {
-		const lengthFeedback = errorMessageContainer.getAttribute(
-			'data-length-feedback'
-		);
-
+	if (length > maxLength) {
 		showInputError({
 			...params,
-			message: `${lengthFeedback}: ${length} / ${input.attributes.maxLength}`,
+			message: getLengthErrorMessage({
+				errorMessageContainer,
+				length,
+				maxLength,
+			}),
 		});
 	}
 	else if (formGroup.classList.contains('has-error')) {

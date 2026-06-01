@@ -4,25 +4,36 @@
  */
 
 import {focusInput} from './focusInput';
-import {hideInputError, showInputError} from './handleInputError';
+import {
+	getLengthErrorMessage,
+	handleInputLengthError,
+	hideInputError,
+	showInputError,
+} from './handleInputError';
 
 type Args = {
+	currentLengthContainer?: HTMLSpanElement;
 	errorContainer: HTMLSpanElement;
 	errorMessageContainer: HTMLSpanElement;
 	formGroup: HTMLDivElement;
 	fragmentElement: HTMLElement;
 	input?: {attributes: {maxLength: number}};
 	inputElement: HTMLInputElement;
+	lengthInfoContainer?: HTMLParagraphElement;
 };
 
 export function registerInputFeedback({
+	currentLengthContainer,
 	errorContainer,
 	errorMessageContainer,
 	formGroup,
 	fragmentElement,
+	input,
 	inputElement,
+	lengthInfoContainer,
 }: Args) {
 	const errorContainers = {errorContainer, errorMessageContainer, formGroup};
+	const maxLength = input?.attributes?.maxLength;
 
 	if (formGroup.classList.contains('has-error')) {
 		focusInput(inputElement);
@@ -65,6 +76,36 @@ export function registerInputFeedback({
 			}
 
 			updateValidityError();
+		});
+	}
+
+	if (maxLength) {
+		const length = inputElement.value.length;
+
+		if (currentLengthContainer) {
+			currentLengthContainer.innerText = length.toString();
+		}
+
+		if (!formGroup.classList.contains('has-error') && length > maxLength) {
+			showInputError({
+				...errorContainers,
+				lengthInfoContainer,
+				message: getLengthErrorMessage({
+					errorMessageContainer,
+					length,
+					maxLength,
+				}),
+			});
+		}
+
+		inputElement.addEventListener('keyup', (event: KeyboardEvent) => {
+			handleInputLengthError({
+				...errorContainers,
+				currentLength: currentLengthContainer,
+				event,
+				input,
+				lengthInfoContainer,
+			});
 		});
 	}
 }

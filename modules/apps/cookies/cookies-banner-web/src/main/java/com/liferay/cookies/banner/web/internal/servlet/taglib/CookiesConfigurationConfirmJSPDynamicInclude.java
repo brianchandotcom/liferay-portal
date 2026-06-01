@@ -6,6 +6,8 @@
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
+import com.liferay.cookies.banner.web.internal.display.context.CookiesPreferenceHandlingConfigurationDisplayContext;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
@@ -73,6 +75,12 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 
 			return;
 		}
+
+		httpServletRequest.setAttribute(
+			CookiesBannerWebKeys.
+				COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT,
+			new CookiesPreferenceHandlingConfigurationDisplayContext(
+				_cookiesConfigurationProvider, scope, scopePK));
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}

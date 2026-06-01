@@ -25,8 +25,6 @@ public class LiferayHeadlessClientTest {
 
 	@Test
 	public void testGetPageURLs() throws Exception {
-		String sitemapXML = _SITEMAP_XML;
-
 		HttpClient httpClient = Mockito.mock(HttpClient.class);
 
 		HttpResponse<String> httpResponse = Mockito.mock(HttpResponse.class);
@@ -40,7 +38,9 @@ public class LiferayHeadlessClientTest {
 		Mockito.when(
 			httpResponse.body()
 		).thenReturn(
-			sitemapXML
+			StringBundler.concat(
+				_SITEMAP_XML_HEADER, "<url><loc>https://a.co/1</loc></url>",
+				"<url><loc>https://a.co/2</loc></url></urlset>")
 		);
 
 		Mockito.when(
@@ -61,15 +61,8 @@ public class LiferayHeadlessClientTest {
 		Assertions.assertEquals("https://a.co/2", urls.get(1));
 	}
 
-	private static final String _SITEMAP_BODY =
-		"<url><loc>https://a.co/1</loc></url>" +
-			"<url><loc>https://a.co/2</loc></url>";
-
-	private static final String _SITEMAP_NS =
-		"http://www.sitemaps.org/schemas/sitemap/0.9";
-
-	private static final String _SITEMAP_XML = StringBundler.concat(
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"",
-		_SITEMAP_NS, "\">", _SITEMAP_BODY, "</urlset>");
+	private static final String _SITEMAP_XML_HEADER =
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=" +
+			"\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
 
 }

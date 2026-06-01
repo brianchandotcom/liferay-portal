@@ -35,12 +35,12 @@ public class ObjectActionPageSpeedScanRestController
 	extends BaseRestController {
 
 	@PostMapping
-	public ResponseEntity<String> post(@RequestBody String json) {
+	public ResponseEntity<String> post(@RequestBody String jsonString) {
 		if (_log.isDebugEnabled()) {
-			_log.debug(json);
+			_log.debug(jsonString);
 		}
 
-		JSONObject jsonObject = new JSONObject(json);
+		JSONObject jsonObject = new JSONObject(jsonString);
 
 		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
 			"objectEntry");
@@ -56,33 +56,28 @@ public class ObjectActionPageSpeedScanRestController
 				"Scan is missing a domain", HttpStatus.BAD_REQUEST);
 		}
 
-		String portalURL = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
-
 		try {
-			String authToken = _liferayOAuth2AccessTokenManager.getTokenValue(
-				PageSpeedConstants.OAHS_EXTERNAL_REFERENCE_CODE);
+			String portalBaseURL =
+				lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 
 			LiferayHeadlessClient liferayHeadlessClient =
-				new LiferayHeadlessClient(authToken, _httpClient, portalURL);
+				new LiferayHeadlessClient(
+					_liferayOAuth2AccessTokenManager.getTokenValue(
+						PageSpeedConstants.OAHS_EXTERNAL_REFERENCE_CODE),
+					_httpClient, portalBaseURL);
 
 			String[] domainInfo = liferayHeadlessClient.getDomainInfo(domainId);
 
-			String hostname = domainInfo[0];
-			String apiKey = domainInfo[1];
-
-			// Dispatch scan to background thread so the object action
-			// does not timeout waiting for the full scan to complete
-
 			_pageSpeedScanner.scanAsync(
-				apiKey, hostname, _httpClient, _liferayOAuth2AccessTokenManager,
-				portalURL, () -> null, _DEFAULT_STRATEGY,
-				() -> {
+				domainInfo[0], _httpClient, _liferayOAuth2AccessTokenManager,
+				pageSpeedScanResult -> {
 					if (_log.isInfoEnabled()) {
 						_log.info("PageSpeed scan completed");
 					}
 				},
 				errorMessage -> _log.error(
-					"PageSpeed scan failed: " + errorMessage));
+					"PageSpeed scan failed: " + errorMessage),
+				domainInfo[1], portalBaseURL, () -> null, "DESKTOP");
 
 			return ResponseEntity.ok(
 			).build();
@@ -100,8 +95,6 @@ public class ObjectActionPageSpeedScanRestController
 				HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	private static final String _DEFAULT_STRATEGY = "DESKTOP";
 
 	private static final Log _log = LogFactory.getLog(
 		ObjectActionPageSpeedScanRestController.class);

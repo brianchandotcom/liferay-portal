@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.json.JSONObject;
 
@@ -38,11 +39,11 @@ public class PageSpeedScannerTest {
 			pageSpeedScoreProvider, _createURLs(3));
 
 		Assertions.assertEquals(
-			PageSpeedScanResult.STATUS_FAILED, pageSpeedScanResult.getStatus());
-		Assertions.assertEquals(0, pageSpeedScanResult.getPagesScanned());
-		Assertions.assertEquals(3, pageSpeedScanResult.getPagesErrored());
-		Assertions.assertEquals(
 			"All pages failed to scan", pageSpeedScanResult.getErrorMessage());
+		Assertions.assertEquals(3, pageSpeedScanResult.getPagesErrored());
+		Assertions.assertEquals(0, pageSpeedScanResult.getPagesScanned());
+		Assertions.assertEquals(
+			PageSpeedScanResult.STATUS_FAILED, pageSpeedScanResult.getStatus());
 	}
 
 	@Test
@@ -72,12 +73,12 @@ public class PageSpeedScannerTest {
 		PageSpeedScanResult pageSpeedScanResult = _scanURLs(
 			pageSpeedScoreProvider, _createURLs(3));
 
+		Assertions.assertNull(pageSpeedScanResult.getErrorMessage());
+		Assertions.assertEquals(1, pageSpeedScanResult.getPagesErrored());
+		Assertions.assertEquals(2, pageSpeedScanResult.getPagesScanned());
 		Assertions.assertEquals(
 			PageSpeedScanResult.STATUS_COMPLETED,
 			pageSpeedScanResult.getStatus());
-		Assertions.assertEquals(2, pageSpeedScanResult.getPagesScanned());
-		Assertions.assertEquals(1, pageSpeedScanResult.getPagesErrored());
-		Assertions.assertNull(pageSpeedScanResult.getErrorMessage());
 
 		PageSpeedScores pageSpeedScores =
 			pageSpeedScanResult.getAverageScores();
@@ -124,13 +125,13 @@ public class PageSpeedScannerTest {
 		PageSpeedScanResult pageSpeedScanResult = _scanURLs(
 			pageSpeedScoreProvider, _createURLs(3));
 
-		Assertions.assertEquals(
-			PageSpeedScanResult.STATUS_FAILED, pageSpeedScanResult.getStatus());
 		Assertions.assertTrue(
 			pageSpeedScanResult.getErrorMessage(
 			).contains(
 				"quota exceeded"
 			));
+		Assertions.assertEquals(
+			PageSpeedScanResult.STATUS_FAILED, pageSpeedScanResult.getStatus());
 	}
 
 	@Test
@@ -147,13 +148,13 @@ public class PageSpeedScannerTest {
 		PageSpeedScanResult pageSpeedScanResult = _scanURLs(
 			pageSpeedScoreProvider, _createURLs(5));
 
+		Assertions.assertNull(pageSpeedScanResult.getErrorMessage());
+		Assertions.assertEquals(0, pageSpeedScanResult.getPagesErrored());
+		Assertions.assertEquals(5, pageSpeedScanResult.getPagesScanned());
+		Assertions.assertEquals(5, pageSpeedScanResult.getPagesTotal());
 		Assertions.assertEquals(
 			PageSpeedScanResult.STATUS_COMPLETED,
 			pageSpeedScanResult.getStatus());
-		Assertions.assertEquals(5, pageSpeedScanResult.getPagesScanned());
-		Assertions.assertEquals(5, pageSpeedScanResult.getPagesTotal());
-		Assertions.assertEquals(0, pageSpeedScanResult.getPagesErrored());
-		Assertions.assertNull(pageSpeedScanResult.getErrorMessage());
 
 		PageSpeedScores pageSpeedScores =
 			pageSpeedScanResult.getAverageScores();
@@ -181,12 +182,13 @@ public class PageSpeedScannerTest {
 		PageSpeedScanner pageSpeedScanner = new PageSpeedScanner();
 
 		Method method = PageSpeedScanner.class.getDeclaredMethod(
-			"_scanURLs", PageSpeedScoreProvider.class, List.class);
+			"_scanURLs", PageSpeedScoreProvider.class, Consumer.class,
+			String.class, List.class);
 
 		method.setAccessible(true);
 
 		return (PageSpeedScanResult)method.invoke(
-			pageSpeedScanner, pageSpeedScoreProvider, urls);
+			pageSpeedScanner, pageSpeedScoreProvider, null, "DESKTOP", urls);
 	}
 
 }

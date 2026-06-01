@@ -43,11 +43,11 @@ import org.xml.sax.InputSource;
 public class LiferayHeadlessClient {
 
 	public LiferayHeadlessClient(
-		String authToken, HttpClient httpClient, String portalURL) {
+		String authToken, HttpClient httpClient, String portalBaseURL) {
 
 		_authToken = authToken;
 		_httpClient = httpClient;
-		_portalURL = portalURL;
+		_portalBaseURL = portalBaseURL;
 	}
 
 	public String[] getDomainInfo(long domainId) {
@@ -58,27 +58,28 @@ public class LiferayHeadlessClient {
 				return new String[2];
 			}
 
-			String hostname = domainJSONObject.optString("hostname", null);
+			String domainHostname = domainJSONObject.optString(
+				"domainHostname", null);
 
-			String apiKey = null;
+			String pageSpeedAPIKey = null;
 
 			long instanceId = domainJSONObject.optLong(
 				"r_seoStudioInstanceToSEOStudioDomains_seoStudioInstanceId", 0);
 
 			if (instanceId > 0) {
 				String instanceJSON = _makeRequest(
-					_portalURL + "/o/seo-studio/instances/" + instanceId);
+					_portalBaseURL + "/o/seo-studio/instances/" + instanceId);
 
 				if (Validator.isNotNull(instanceJSON)) {
 					JSONObject instanceJSONObject = new JSONObject(
 						instanceJSON);
 
-					apiKey = instanceJSONObject.optString(
+					pageSpeedAPIKey = instanceJSONObject.optString(
 						"googlePageSpeedApiKey", null);
 				}
 			}
 
-			return new String[] {hostname, apiKey};
+			return new String[] {domainHostname, pageSpeedAPIKey};
 		}
 		catch (Exception exception) {
 			if (exception instanceof InterruptedException) {
@@ -96,14 +97,14 @@ public class LiferayHeadlessClient {
 		}
 	}
 
-	public List<String> getPageURLs(String hostname, int maxPages)
+	public List<String> getPageURLs(String domainHostname, int maxPages)
 		throws Exception {
 
-		if ((maxPages <= 0) || Validator.isNull(hostname)) {
+		if ((maxPages <= 0) || Validator.isNull(domainHostname)) {
 			return new ArrayList<>();
 		}
 
-		String sitemapURL = "https://" + hostname + "/sitemap.xml";
+		String sitemapURL = "https://" + domainHostname + "/sitemap.xml";
 
 		LinkedHashSet<String> urlSet = new LinkedHashSet<>();
 
@@ -170,7 +171,7 @@ public class LiferayHeadlessClient {
 
 	private JSONObject _getDomainJSONObject(long domainId) {
 		String domainJSON = _makeRequest(
-			_portalURL + "/o/seo-studio/domains/" + domainId);
+			_portalBaseURL + "/o/seo-studio/domains/" + domainId);
 
 		if (Validator.isNull(domainJSON)) {
 			return null;
@@ -228,7 +229,7 @@ public class LiferayHeadlessClient {
 	private List<String> _parseSitemapURLs(int depth, int maxPages, String xml)
 		throws Exception {
 
-		if (depth > _MAX_SITEMAP_DEPTH) {
+		if (depth > 3) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Maximum sitemap recursion depth exceeded");
 			}
@@ -239,6 +240,10 @@ public class LiferayHeadlessClient {
 		Document document = _parseXML(xml);
 
 		Element rootElement = document.getDocumentElement();
+
+		if (rootElement == null) {
+			return new ArrayList<>();
+		}
 
 		List<String> urls = new ArrayList<>();
 
@@ -312,12 +317,12 @@ public class LiferayHeadlessClient {
 		documentBuilderFactory.setFeature(
 			"http://apache.org/xml/features/disallow-doctype-decl", true);
 		documentBuilderFactory.setFeature(
-			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
-			false);
-		documentBuilderFactory.setFeature(
 			"http://xml.org/sax/features/external-general-entities", false);
 		documentBuilderFactory.setFeature(
 			"http://xml.org/sax/features/external-parameter-entities", false);
+		documentBuilderFactory.setFeature(
+			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
+			false);
 		documentBuilderFactory.setNamespaceAware(false);
 		documentBuilderFactory.setXIncludeAware(false);
 
@@ -327,13 +332,11 @@ public class LiferayHeadlessClient {
 		return documentBuilder.parse(new InputSource(new StringReader(xml)));
 	}
 
-	private static final int _MAX_SITEMAP_DEPTH = 3;
-
 	private static final Log _log = LogFactory.getLog(
 		LiferayHeadlessClient.class);
 
 	private final String _authToken;
 	private final HttpClient _httpClient;
-	private final String _portalURL;
+	private final String _portalBaseURL;
 
 }

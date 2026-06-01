@@ -20,60 +20,7 @@ import org.mockito.Mockito;
 public class PageSpeedScoreProviderTest {
 
 	@Test
-	public void testIsValidConnection() {
-		PageSpeedScoreProvider pageSpeedScoreProvider =
-			new PageSpeedScoreProvider(
-				"apiKey", Mockito.mock(HttpClient.class), "DESKTOP");
-
-		Assertions.assertTrue(pageSpeedScoreProvider.isValidConnection());
-	}
-
-	@Test
-	public void testIsValidConnectionWithEmptyAPIKey() {
-		PageSpeedScoreProvider pageSpeedScoreProvider =
-			new PageSpeedScoreProvider(
-				"", Mockito.mock(HttpClient.class), "DESKTOP");
-
-		Assertions.assertFalse(pageSpeedScoreProvider.isValidConnection());
-	}
-
-	@Test
-	public void testIsValidConnectionWithNullAPIKey() {
-		PageSpeedScoreProvider pageSpeedScoreProvider =
-			new PageSpeedScoreProvider(
-				null, Mockito.mock(HttpClient.class), "DESKTOP");
-
-		Assertions.assertFalse(pageSpeedScoreProvider.isValidConnection());
-	}
-
-	@Test
-	public void testQuotaExceededExceptionWithErrorJSON() {
-		JSONObject errorJSONObject = new JSONObject();
-
-		errorJSONObject.put(
-			"error",
-			new JSONObject(
-			).put(
-				"code", 429
-			).put(
-				"message", "Quota exceeded"
-			));
-
-		PageSpeedScoreProvider.PageSpeedScoreProviderException
-			pageSpeedScoreProviderException =
-				new PageSpeedScoreProvider.PageSpeedScoreProviderException(
-					errorJSONObject, "Quota exceeded");
-
-		Assertions.assertTrue(
-			pageSpeedScoreProviderException.isQuotaExceeded());
-		Assertions.assertEquals(
-			errorJSONObject,
-			pageSpeedScoreProviderException.
-				getGooglePageSpeedErrorJSONObject());
-	}
-
-	@Test
-	public void testQuotaExceededExceptionWithNonquotaError() {
+	public void testIsQuotaExceededWhenErrorIsNonquota() {
 		JSONObject errorJSONObject = new JSONObject();
 
 		errorJSONObject.put(
@@ -95,7 +42,33 @@ public class PageSpeedScoreProviderTest {
 	}
 
 	@Test
-	public void testQuotaExceededExceptionWithNullJSON() {
+	public void testIsQuotaExceededWhenErrorJSONIsPresent() {
+		JSONObject errorJSONObject = new JSONObject();
+
+		errorJSONObject.put(
+			"error",
+			new JSONObject(
+			).put(
+				"code", 429
+			).put(
+				"message", "Quota exceeded"
+			));
+
+		PageSpeedScoreProvider.PageSpeedScoreProviderException
+			pageSpeedScoreProviderException =
+				new PageSpeedScoreProvider.PageSpeedScoreProviderException(
+					errorJSONObject, "Quota exceeded");
+
+		Assertions.assertEquals(
+			errorJSONObject,
+			pageSpeedScoreProviderException.
+				getGooglePageSpeedErrorJSONObject());
+		Assertions.assertTrue(
+			pageSpeedScoreProviderException.isQuotaExceeded());
+	}
+
+	@Test
+	public void testIsQuotaExceededWhenJSONIsNull() {
 		PageSpeedScoreProvider.PageSpeedScoreProviderException
 			pageSpeedScoreProviderException =
 				new PageSpeedScoreProvider.PageSpeedScoreProviderException(
@@ -103,6 +76,33 @@ public class PageSpeedScoreProviderTest {
 
 		Assertions.assertFalse(
 			pageSpeedScoreProviderException.isQuotaExceeded());
+	}
+
+	@Test
+	public void testIsValidConnection() {
+		PageSpeedScoreProvider pageSpeedScoreProvider =
+			new PageSpeedScoreProvider(
+				Mockito.mock(HttpClient.class), "apiKey", "DESKTOP");
+
+		Assertions.assertTrue(pageSpeedScoreProvider.isValidConnection());
+	}
+
+	@Test
+	public void testIsValidConnectionWithEmptyAPIKey() {
+		PageSpeedScoreProvider pageSpeedScoreProvider =
+			new PageSpeedScoreProvider(
+				Mockito.mock(HttpClient.class), "", "DESKTOP");
+
+		Assertions.assertFalse(pageSpeedScoreProvider.isValidConnection());
+	}
+
+	@Test
+	public void testIsValidConnectionWithNullAPIKey() {
+		PageSpeedScoreProvider pageSpeedScoreProvider =
+			new PageSpeedScoreProvider(
+				Mockito.mock(HttpClient.class), null, "DESKTOP");
+
+		Assertions.assertFalse(pageSpeedScoreProvider.isValidConnection());
 	}
 
 }

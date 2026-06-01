@@ -18,7 +18,7 @@ public class PageSpeedScanResult {
 
 	public PageSpeedScanResult(
 		PageSpeedScores averageScores, String errorMessage, int pagesErrored,
-		int pagesScanned, int pagesTotal, String status) {
+		int pagesScanned, int pagesTotal, String status, String strategy) {
 
 		_averageScores = averageScores;
 		_errorMessage = errorMessage;
@@ -26,6 +26,7 @@ public class PageSpeedScanResult {
 		_pagesScanned = pagesScanned;
 		_pagesTotal = pagesTotal;
 		_status = status;
+		_strategy = strategy;
 	}
 
 	public PageSpeedScores getAverageScores() {
@@ -52,11 +53,16 @@ public class PageSpeedScanResult {
 		return _status;
 	}
 
+	public String getStrategy() {
+		return _strategy;
+	}
+
 	private final PageSpeedScores _averageScores;
 	private final String _errorMessage;
 	private final int _pagesErrored;
 	private final int _pagesScanned;
 	private final int _pagesTotal;
 	private final String _status;
+	private final String _strategy;
 
 }

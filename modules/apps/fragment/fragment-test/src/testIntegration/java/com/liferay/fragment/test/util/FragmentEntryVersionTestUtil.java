@@ -109,11 +109,11 @@ public class FragmentEntryVersionTestUtil {
 			int count, long ctCollectionId, FragmentEntry fragmentEntry)
 		throws Exception {
 
+		List<Integer> versions = new ArrayList<>(count);
+
 		long now = System.currentTimeMillis();
 
 		Timestamp createDateTimestamp = new Timestamp(now);
-
-		List<Integer> versions = new ArrayList<>(count);
 
 		try (Connection connection = DataAccess.getConnection();
 

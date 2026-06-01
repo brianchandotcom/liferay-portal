@@ -15,7 +15,7 @@ alloy:
         cadvisor:
             enabled: true
             path: /metrics/cadvisor
-        cloudwatchRds:
+        cloudwatchRDS:
             discoveryInterval: 5m
             enabled: false
             metrics:
@@ -27,11 +27,11 @@ alloy:
                     statistics:
                         -   Average
                         -   Maximum
-                -   name: FreeableMemory
+                -   name: FreeStorageSpace
                     statistics:
                         -   Average
                         -   Minimum
-                -   name: FreeStorageSpace
+                -   name: FreeableMemory
                     statistics:
                         -   Average
                         -   Minimum

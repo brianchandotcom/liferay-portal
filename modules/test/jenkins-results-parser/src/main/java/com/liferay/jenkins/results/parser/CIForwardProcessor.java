@@ -800,9 +800,7 @@ public class CIForwardProcessor {
 
 			String message = gitWorkingDirectoryRuntimeException.getMessage();
 
-			if ((message != null) && message.contains("Unable to rebase ") &&
-				message.contains("CONFLICT (")) {
-
+			if ((message != null) && message.contains("Unable to rebase ")) {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Detected merge conflict between ",
@@ -815,8 +813,8 @@ public class CIForwardProcessor {
 			}
 
 			System.out.println(
-				"WARNING: Unable to detect merge conflict marker but rebase " +
-					"failed\n" + String.valueOf(message));
+				"WARNING: Unable to determine merge conflict status\n" +
+					String.valueOf(message));
 
 			return false;
 		}

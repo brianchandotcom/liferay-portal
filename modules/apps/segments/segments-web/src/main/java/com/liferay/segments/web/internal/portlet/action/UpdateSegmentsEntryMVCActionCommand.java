@@ -45,6 +45,7 @@ import jakarta.portlet.ActionResponse;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,6 +97,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_validateCriteria(criteria, dynamic);
 
+			String criteriaString = _getCriteriaString(actionRequest, criteria);
+
 			if (segmentsEntryId <= 0) {
 				serviceContext.setScopeGroupId(
 					_getGroupId(actionRequest, serviceContext));
@@ -108,14 +111,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					segmentsEntryKey, nameMap, descriptionMap, active,
-					CriteriaSerializer.serialize(criteria), source,
-					serviceContext);
+					criteriaString, source, serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(
 					segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap,
-					active, CriteriaSerializer.serialize(criteria),
-					serviceContext);
+					active, criteriaString, serviceContext);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -159,6 +160,26 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				throw exception;
 			}
 		}
+	}
+
+	private String _getCriteriaString(
+		ActionRequest actionRequest, Criteria criteria) {
+
+		if (!AudiencesPortletUtil.isAudiencesPortlet(actionRequest)) {
+			return CriteriaSerializer.serialize(criteria);
+		}
+
+		Map<String, Criteria.Criterion> criteriaMap = criteria.getCriteria();
+
+		String value = Criteria.Type.CONTEXT.getValue();
+
+		for (Criteria.Criterion criterion : criteriaMap.values()) {
+			if (Objects.equals(value, criterion.getTypeValue())) {
+				return criterion.getFilterString();
+			}
+		}
+
+		return CriteriaSerializer.serialize(criteria);
 	}
 
 	private long _getGroupId(

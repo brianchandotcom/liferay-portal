@@ -78,8 +78,8 @@ test.afterEach(async ({browser}, testInfo) => {
 
 	if (
 		new Set([
-			'Eligibility — admin UI hides ineligible shipping options',
-			'Eligibility — checkout cannot select an ineligible default shipping option',
+			'Eligibility - admin UI hides ineligible shipping options',
+			'Eligibility - checkout cannot select an ineligible default shipping option',
 		]).has(testInfo.title)
 	) {
 		const commerceAdminChannelsPage = new CommerceAdminChannelsPage(page);
@@ -104,7 +104,7 @@ test.afterEach(async ({browser}, testInfo) => {
 });
 
 test(
-	'Eligibility — admin UI hides ineligible shipping options',
+	'Eligibility - admin UI hides ineligible shipping options',
 	{tag: ['@COMMERCE-9130', '@LPD-85008']},
 	async ({
 		accountsPage,
@@ -186,7 +186,7 @@ test(
 );
 
 test(
-	'Eligibility — checkout cannot select an ineligible default shipping option',
+	'Eligibility - checkout cannot select an ineligible default shipping option',
 	{tag: ['@LPD-85008']},
 	async ({
 		accountsPage,
@@ -295,7 +295,7 @@ test(
 );
 
 test(
-	'Eligibility — priority fallback when default is not eligible for the order type',
+	'Eligibility - priority fallback when default is not eligible for the order type',
 	{tag: ['@LPD-85008']},
 	async ({
 		accountsPage,
@@ -303,7 +303,9 @@ test(
 		checkoutPage,
 		commerceAdminChannelDetailsPage,
 		commerceAdminChannelsPage,
+		commerceLayoutsPage,
 		commerceMiniCartPage,
+		commerceThemeMiniumCatalogPage,
 		editAccountChannelDefaultsPage,
 		editAccountPage,
 		page,
@@ -412,12 +414,32 @@ test(
 			).toHaveCount(0);
 		});
 
-		await test.step('Buyer checks out with Order Type 1 — falls back to Test Shipping Option', async () => {
+		await test.step('Buyer checks out with Order Type 1 - falls back to Test Shipping Option', async () => {
 			await performUserSwitch(page, buyerUser.alternateName);
+
+			await page.goto(`/web${site.friendlyUrlPath}`);
+
+			await commerceLayoutsPage
+				.accountSelectorButton('Account Selector')
+				.click();
+			await commerceLayoutsPage.createNewOrderButton.click();
+
+			await expect(
+				commerceLayoutsPage.orderTypeModalHeading
+			).toBeVisible();
+
+			await commerceLayoutsPage.orderTypeModalInput.selectOption({
+				label: orderType1.name.en_US,
+			});
+			await commerceLayoutsPage.orderTypeModalButton.click();
 
 			await page.goto(`/web${site.friendlyUrlPath}/catalog`);
 
-			await commerceMiniCartPage.quickAddToCart('MIN55861');
+			await commerceThemeMiniumCatalogPage
+				.productCardAddToCartButton('U-Joint')
+				.click();
+
+			await commerceMiniCartPage.miniCartButton.click();
 			await commerceMiniCartPage.submitButton.click();
 
 			await checkoutPage.addAddress({
@@ -440,7 +462,7 @@ test(
 );
 
 test(
-	'Lifecycle — set, edit, and revert the default account shipping option',
+	'Lifecycle - set, edit, and revert the default account shipping option',
 	{tag: ['@LPD-85008']},
 	async ({
 		accountsPage,
@@ -532,7 +554,7 @@ test(
 );
 
 test(
-	'UI presentation — list is sorted, "Use Priority Settings" is present, and default pre-fills at checkout',
+	'UI presentation - list is sorted, "Use Priority Settings" is present, and default pre-fills at checkout',
 	{tag: ['@LPD-85008']},
 	async ({
 		accountsPage,
@@ -791,7 +813,7 @@ test(
 		});
 
 		try {
-			await test.step('Disable Flat Rate at the channel — Active column flips to No', async () => {
+			await test.step('Disable Flat Rate at the channel - Active column flips to No', async () => {
 				await commerceAdminChannelsPage.goto();
 
 				await (
@@ -815,7 +837,7 @@ test(
 			});
 		}
 		finally {
-			await test.step('Re-enable Flat Rate at the channel — Active column flips back to Yes', async () => {
+			await test.step('Re-enable Flat Rate at the channel - Active column flips back to Yes', async () => {
 				await commerceAdminChannelsPage.goto();
 
 				await (

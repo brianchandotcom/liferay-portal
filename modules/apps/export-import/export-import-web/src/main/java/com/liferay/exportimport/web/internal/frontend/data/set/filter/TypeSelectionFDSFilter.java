@@ -52,11 +52,11 @@ public class TypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		return ListUtil.fromArray(
 			new SelectionFDSFilterItem(
-				LanguageUtil.get(locale, "error"),
-				ExportImportReportEntryConstants.TYPE_ERROR),
-			new SelectionFDSFilterItem(
 				LanguageUtil.get(locale, "empty"),
-				ExportImportReportEntryConstants.TYPE_EMPTY));
+				ExportImportReportEntryConstants.TYPE_EMPTY),
+			new SelectionFDSFilterItem(
+				LanguageUtil.get(locale, "error"),
+				ExportImportReportEntryConstants.TYPE_ERROR));
 	}
 
 }

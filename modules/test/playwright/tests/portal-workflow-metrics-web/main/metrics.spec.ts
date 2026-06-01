@@ -13,7 +13,11 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {performLoginViaApi, userData} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
@@ -341,6 +345,103 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 		).toBeVisible();
 	});
 });
+
+test(
+	'Performance by Assignee card includes inactive users',
+	{tag: '@LPD-90168'},
+	async ({
+		apiHelpers,
+		metricsPage,
+		page,
+		site,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		let user: TUserAccount;
+
+		await test.step('create a user with the Administrator role', async () => {
+			const role =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'Administrator'
+				);
+
+			user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user.id
+			);
+
+			apiHelpers.data.push({id: user.id, type: 'userAccount'});
+		});
+
+		await test.step('assign the Single Approver workflow to Blogs Entry', async () => {
+			await workflowPage.goto(site.friendlyUrlPath);
+
+			await workflowPage.changeWorkflow('Blogs Entry', 'Single Approver');
+		});
+
+		await test.step('create a blog entry and approve it as the new user', async () => {
+			const blogTitle = `Blog ${getRandomString()}`;
+
+			await apiHelpers.headlessDelivery.postBlog(site.id, {
+				headline: blogTitle,
+			});
+
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+			await workflowTasksPage.assignToMe(blogTitle);
+
+			await workflowTasksPage.assignedToMeLink.click();
+
+			await workflowTasksPage.approve(blogTitle);
+
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: 'test'});
+		});
+
+		const userName = `${user.givenName} ${user.familyName}`;
+
+		await test.step('assert the active user appears in Performance by Assignee', async () => {
+			await metricsPage.goTo(site.friendlyUrlPath);
+
+			await metricsPage.chooseProcess('Single Approver');
+
+			await workflowTasksPage.performanceTab.click();
+
+			await expect(
+				page.getByRole('cell', {name: userName})
+			).toBeVisible();
+		});
+
+		await test.step('deactivate user and assert it still appears in Performance by Assignee', async () => {
+			await apiHelpers.headlessAdminUser.patchUserAccount(user, {
+				status: 5,
+			});
+
+			await metricsPage.goTo(site.friendlyUrlPath);
+
+			await metricsPage.chooseProcess('Single Approver');
+
+			await workflowTasksPage.performanceTab.click();
+
+			await expect(
+				page.getByRole('cell', {name: userName})
+			).toBeVisible();
+		});
+	}
+);
 
 test('Selecting a date range in the Completed Items panel deselects the previous one', async ({
 	metricsPage,

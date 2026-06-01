@@ -85,7 +85,7 @@ public class GetAudiencesServlet extends HttpServlet {
 				for (SegmentsEntry segmentsEntry : segmentsEntries) {
 					JSONObject audienceJSONObject =
 						AudiencesJSONObjectBuilder.toAudienceJSONObject(
-							_jsonFactory, segmentsEntry);
+							segmentsEntry);
 
 					if (audienceJSONObject != null) {
 						audiencesJSONArray.put(audienceJSONObject);

@@ -6,7 +6,7 @@
 package com.liferay.segments.web.internal.audiences;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -21,8 +21,7 @@ import java.util.Map;
  */
 public class AudiencesJSONObjectBuilder {
 
-	public static JSONObject toAudienceJSONObject(
-			JSONFactory jsonFactory, SegmentsEntry segmentsEntry)
+	public static JSONObject toAudienceJSONObject(SegmentsEntry segmentsEntry)
 		throws Exception {
 
 		String criteria = segmentsEntry.getCriteria();
@@ -32,35 +31,17 @@ public class AudiencesJSONObjectBuilder {
 		}
 
 		JSONObject audienceJSONObject = _toAudienceJSONObject(
-			jsonFactory, jsonFactory.createJSONObject(criteria));
-
-		if (!audienceJSONObject.has("rules")) {
-			audienceJSONObject = JSONUtil.put(
-				"conjunction", "AND"
-			).put(
-				"rules", JSONUtil.putAll(audienceJSONObject)
-			);
-		}
+			JSONFactoryUtil.createJSONObject(criteria));
 
 		return audienceJSONObject.put(
 			"id", segmentsEntry.getSegmentsEntryKey()
 		).put(
-			"retentionType", _getRetentionType(segmentsEntry.getSource())
+			"retentionType", "BROWSER"
 		);
 	}
 
-	private static String _getRetentionType(String source) {
-		int index = source.indexOf(':');
-
-		if (index < 0) {
-			return "BROWSER";
-		}
-
-		return StringUtil.toUpperCase(source.substring(index + 1));
-	}
-
 	private static JSONObject _toAudienceJSONObject(
-		JSONFactory jsonFactory, JSONObject queryJSONObject) {
+		JSONObject queryJSONObject) {
 
 		if (!queryJSONObject.has("items")) {
 			String propertyName = queryJSONObject.getString("propertyName");
@@ -77,21 +58,24 @@ public class AudiencesJSONObjectBuilder {
 			);
 		}
 
-		JSONArray rulesJSONArray = jsonFactory.createJSONArray();
-
-		JSONArray itemsJSONArray = queryJSONObject.getJSONArray("items");
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			rulesJSONArray.put(
-				_toAudienceJSONObject(
-					jsonFactory, itemsJSONArray.getJSONObject(i)));
-		}
-
 		return JSONUtil.put(
 			"conjunction",
 			StringUtil.toUpperCase(queryJSONObject.getString("conjunctionName"))
 		).put(
-			"rules", rulesJSONArray
+			"rules",
+			() -> {
+				JSONArray rulesJSONArray = JSONFactoryUtil.createJSONArray();
+
+				JSONArray itemsJSONArray = queryJSONObject.getJSONArray(
+					"items");
+
+				for (int i = 0; i < itemsJSONArray.length(); i++) {
+					rulesJSONArray.put(
+						_toAudienceJSONObject(itemsJSONArray.getJSONObject(i)));
+				}
+
+				return rulesJSONArray;
+			}
 		);
 	}
 
@@ -110,7 +94,7 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			"localDate", "local_date"
 		).put(
-			"referrerURL", "referrer_url"
+			"referrerURL", "referrer"
 		).put(
 			"requestParameters", "request_parameters"
 		).put(

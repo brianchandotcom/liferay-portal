@@ -98,7 +98,7 @@ public class VIESClientTest {
 			_assertError("MS_UNAVAILABLE", jsonObject);
 
 			String countryCode = "IT";
-			long vatNumber = RandomTestUtil.randomLong();
+			String vatNumber = RandomTestUtil.randomString();
 
 			_startHttpServer(
 				JSONUtil.put(
@@ -115,7 +115,7 @@ public class VIESClientTest {
 				countryCode, jsonObject.getString("countryCode"));
 			Assert.assertNull(jsonObject.opt("errorWrappers"));
 			Assert.assertTrue(jsonObject.getBoolean("valid"));
-			Assert.assertEquals(vatNumber, jsonObject.getLong("vatNumber"));
+			Assert.assertEquals(vatNumber, jsonObject.getString("vatNumber"));
 		}
 	}
 
@@ -135,7 +135,7 @@ public class VIESClientTest {
 		return JSONUtil.put(
 			"countryCode", "IT"
 		).put(
-			"vatNumber", RandomTestUtil.randomLong()
+			"vatNumber", RandomTestUtil.randomString()
 		);
 	}
 

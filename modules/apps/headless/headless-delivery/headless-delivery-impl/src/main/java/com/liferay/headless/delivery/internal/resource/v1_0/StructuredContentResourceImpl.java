@@ -64,6 +64,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -464,13 +465,18 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		return DisplayPageRendererUtil.toHTML(
-			JournalArticle.class.getName(), ddmStructure.getStructureId(),
-			displayPageKey, journalArticle.getGroupId(),
-			contextHttpServletRequest, contextHttpServletResponse,
-			journalArticle, _infoItemServiceRegistry,
-			_layoutDisplayPageProviderRegistry, _layoutService,
-			_layoutPageTemplateEntryService);
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					contextCompany, contextUser)) {
+
+			return DisplayPageRendererUtil.toHTML(
+				JournalArticle.class.getName(), ddmStructure.getStructureId(),
+				displayPageKey, journalArticle.getGroupId(),
+				contextHttpServletRequest, contextHttpServletResponse,
+				journalArticle, _infoItemServiceRegistry,
+				_layoutDisplayPageProviderRegistry, _layoutService,
+				_layoutPageTemplateEntryService);
+		}
 	}
 
 	@Override
@@ -1664,6 +1670,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
 	private Portal _portal;

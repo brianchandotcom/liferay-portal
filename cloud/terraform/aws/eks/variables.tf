@@ -48,8 +48,8 @@ variable "observability_config" {
 	default={}
 	type=object(
 		{
-			alloy_namespace=optional(string, "alloy")
 			enabled=optional(bool, false)
+			namespace=optional(string, "observability")
 		}
 	)
 }

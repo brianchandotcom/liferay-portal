@@ -43,12 +43,10 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 						FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 						fragmentEntryVersionIds.size());
 
-				for (int i = 0; i < fragmentEntryVersionIdsToDelete.size();
-					 i += _BATCH_SIZE) {
+				int size = fragmentEntryVersionIdsToDelete.size();
 
-					int end = Math.min(
-						i + _BATCH_SIZE,
-						fragmentEntryVersionIdsToDelete.size());
+				for (int i = 0; i < size; i += _BATCH_SIZE) {
+					int end = Math.min(i + _BATCH_SIZE, size);
 
 					runSQL(
 						StringBundler.concat(

@@ -65,12 +65,9 @@ public class GroupModelListenerTest {
 	@Test
 	@TestInfo("LPD-92888")
 	public void testUpdateDepotEntry() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		_testSetTrashEnabled();
 
-		Group depotGroup = depotEntry.getGroup();
-
-		_testSetTrashEnabled(depotGroup);
-		_testUpdateExternalReferenceCode(depotEntry, depotGroup);
+		_testUpdateExternalReferenceCode();
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -108,27 +105,30 @@ public class GroupModelListenerTest {
 			group.getGroupId(), unicodeProperties.toString());
 	}
 
-	private void _testSetTrashEnabled(Group depotGroup) throws Exception {
+	private void _testSetTrashEnabled() throws Exception {
+		Group depotGroup = _addDepotEntry().getGroup();
+
 		Layout layout = _getRecycleBinLayout(_cmsGroup);
 
 		Assert.assertFalse(layout.isHidden());
-
-		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
 
 		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
 				depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
 	}
 
-	private void _testUpdateExternalReferenceCode(
-			DepotEntry depotEntry, Group depotGroup)
-		throws Exception {
+	private void _testUpdateExternalReferenceCode() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		Group depotGroup = depotEntry.getGroup();
 
 		String originalExternalReferenceCode =
 			depotGroup.getExternalReferenceCode();

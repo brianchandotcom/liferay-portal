@@ -64,7 +64,7 @@ export default function ({
 
 		toggleSwitch.addEventListener('click', notifyCookiePreferenceUpdate);
 
-		toggleSwitch.checked = toggleSwitch.dataset.prechecked;
+		toggleSwitch.checked = toggleSwitch.dataset.prechecked === 'true';
 
 		getCookie(userConfigCookieName).then((cookie) => {
 			if (cookie) {

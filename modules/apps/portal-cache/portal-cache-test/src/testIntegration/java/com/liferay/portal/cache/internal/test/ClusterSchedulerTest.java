@@ -6,16 +6,27 @@
 package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
 import com.liferay.portal.test.log.LogCapture;
@@ -24,6 +35,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
@@ -196,6 +209,103 @@ public class ClusterSchedulerTest implements Serializable {
 		}
 		finally {
 			masterTomcatNode.start(true);
+		}
+	}
+
+	@Test
+	public void testValidateScheduledPublishOnSeparateNodes() throws Exception {
+		long userId = TestPropsValues.getUserId();
+
+		TomcatNode masterTomcatNode = _tomcatNode2;
+		TomcatNode slaveTomcatNode = _tomcatNode1;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterTomcatNode = _tomcatNode1;
+			slaveTomcatNode = _tomcatNode2;
+		}
+
+		long groupId = masterTomcatNode.syncExecute(
+			() -> {
+				Group group = GroupTestUtil.addGroup();
+
+				return group.getGroupId();
+			});
+
+		String groupName = "PublishToLive_" + groupId;
+
+		Assert.assertEquals(
+			0,
+			(int)slaveTomcatNode.syncExecute(
+				() -> {
+					List<SchedulerResponse> schedulerResponses =
+						SchedulerEngineHelperUtil.getScheduledJobs(
+							groupName, StorageType.PERSISTED);
+
+					return schedulerResponses.size();
+				}));
+
+		try {
+			masterTomcatNode.syncExecute(
+				() -> {
+					PermissionThreadLocal.setPermissionChecker(
+						PermissionCheckerFactoryUtil.create(
+							TestPropsValues.getUser()));
+
+					String originalName = PrincipalThreadLocal.getName();
+
+					PrincipalThreadLocal.setName(userId);
+
+					try {
+						LayoutServiceUtil.schedulePublishToLive(
+							groupId, groupId, false, new long[0],
+							ExportImportConfigurationParameterMapFactoryUtil.
+								buildParameterMap(),
+							groupName, "0 0 0 * * ?",
+							new Date(System.currentTimeMillis() + Time.DAY),
+							null, "Staging Schedule Title");
+
+						return null;
+					}
+					finally {
+						PermissionThreadLocal.setPermissionChecker(null);
+						PrincipalThreadLocal.setName(originalName);
+					}
+				});
+
+			String[] scheduledJob = slaveTomcatNode.syncExecute(
+				() -> {
+					List<SchedulerResponse> schedulerResponses =
+						SchedulerEngineHelperUtil.getScheduledJobs(
+							groupName, StorageType.PERSISTED);
+
+					if (schedulerResponses.size() != 1) {
+						return new String[] {
+							String.valueOf(schedulerResponses.size())
+						};
+					}
+
+					SchedulerResponse schedulerResponse =
+						schedulerResponses.get(0);
+
+					return new String[] {
+						"1", schedulerResponse.getDescription(),
+						schedulerResponse.getDestinationName()
+					};
+				});
+
+			Assert.assertEquals("1", scheduledJob[0]);
+			Assert.assertEquals("Staging Schedule Title", scheduledJob[1]);
+			Assert.assertEquals(
+				DestinationNames.LAYOUTS_LOCAL_PUBLISHER, scheduledJob[2]);
+		}
+		finally {
+			masterTomcatNode.syncExecute(
+				() -> {
+					SchedulerEngineHelperUtil.delete(
+						groupName, StorageType.PERSISTED);
+
+					return null;
+				});
 		}
 	}
 

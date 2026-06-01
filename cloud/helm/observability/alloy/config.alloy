@@ -305,41 +305,6 @@ prometheus.scrape "node_exporter" {
 }
 {{- end }}
 
-{{- if .Values.alloy.scrape.pushgateway.enabled }}
-{{- $pgName := index .Values "prometheus-pushgateway" "nameOverride" | default "prometheus-pushgateway" }}
-discovery.kubernetes "pushgateway" {
-    role = "pod"
-    selectors {
-        label = "app.kubernetes.io/name={{ $pgName }}"
-        role = "pod"
-    }
-}
-
-discovery.relabel "pushgateway" {
-    rule {
-        action = "keep"
-        regex = "{{ .Values.alloy.scrape.pushgateway.port }}"
-        source_labels = ["__meta_kubernetes_pod_container_port_name"]
-    }
-    rule {
-        replacement = {{ .Values.alloy.scrape.pushgateway.path | quote }}
-        target_label = "__metrics_path__"
-    }
-    rule {
-        replacement = "pushgateway"
-        target_label = "job"
-    }
-    targets = discovery.kubernetes.pushgateway.targets
-}
-
-prometheus.scrape "pushgateway" {
-    forward_to = [prometheus.remote_write.default.receiver]
-    honor_labels = true
-    scrape_interval = {{ $interval | quote }}
-    targets = discovery.relabel.pushgateway.output
-}
-{{- end }}
-
 {{- if and (eq $cloud "aws") .Values.alloy.scrape.rdsExporter.enabled }}
 discovery.kubernetes "rds_exporter" {
     role = "service"

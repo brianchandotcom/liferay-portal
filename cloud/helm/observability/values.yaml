@@ -78,10 +78,6 @@ alloy:
             enabled: true
             path: /metrics
             port: metrics
-        pushgateway:
-            enabled: true
-            path: /metrics
-            port: http
         rdsExporter:
             enabled: false
             path: /metrics
@@ -196,54 +192,3 @@ prometheus-node-exporter:
     serviceAccount:
         automountServiceAccountToken: false
         create: true
-prometheus-pushgateway:
-    automountServiceAccountToken: false
-    containerSecurityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-            drop:
-                -   ALL
-        privileged: false
-        readOnlyRootFilesystem: false
-    enabled: true
-    extraArgs:
-        -   --log.format=json
-        -   --log.level=error
-        -   --persistence.file=/data/pushgateway.data
-        -   --persistence.interval=1m
-    extraContainers:
-        -   args:
-                -   --sync-period=1m
-                -   --ttl=1m
-            image: ghcr.io/abatilo/pushgateway-cleaner:v0.1.3
-            name: pushgateway-cleaner
-            resources:
-                limits:
-                    cpu: 40m
-                    memory: 16Mi
-                requests:
-                    cpu: 20m
-                    memory: 4Mi
-            securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                    drop:
-                        -   ALL
-                privileged: false
-                readOnlyRootFilesystem: false
-    networkPolicy:
-        allowAll: true
-    resources:
-        limits:
-            cpu: 100m
-            memory: 50Mi
-        requests:
-            cpu: 100m
-            memory: 30Mi
-    securityContext:
-        fsGroup: 65534
-        runAsGroup: 65534
-        runAsNonRoot: true
-        runAsUser: 65534
-        seccompProfile:
-            type: RuntimeDefault

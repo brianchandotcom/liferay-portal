@@ -14,10 +14,6 @@ dependencies:
         name: prometheus-node-exporter
         repository: https://prometheus-community.github.io/helm-charts
         version: 4.54.0
-    -   condition: prometheus-pushgateway.enabled
-        name: prometheus-pushgateway
-        repository: https://prometheus-community.github.io/helm-charts
-        version: 3.6.0
 description:
     Liferay is an all-in-one DXP, LCAP, and Commerce platform. This chart creates cloud agnostic observability resources to help monitor your Liferay stack.
 icon: https://www-cdn.liferay.com/documents/d/guest/liferay-logo

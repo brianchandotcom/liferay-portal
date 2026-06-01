@@ -95,24 +95,6 @@ const testWithDeprecationFF = mergeTests(
 	uiElementsPageTest
 );
 
-export const testWithExportImportAtInstanceLevelFF = mergeTests(
-	companyExportImportPageTest,
-	dataApiHelpersTest,
-	depotAdminPageTest,
-	exportImportPagesTest,
-	featureFlagsTest({
-		'LPD-17564': {enabled: true},
-		'LPD-35443': {enabled: true},
-		'LPD-44307': {enabled: true},
-		'LPD-44771': {enabled: true},
-		'LPD-45276': {enabled: true},
-	}),
-	isolatedSiteTest,
-	loginTest(),
-	styleBookPageTest,
-	uiElementsPageTest
-);
-
 const testWithObjectExportImportFF = mergeTests(
 	assetCategoriesPagesTest,
 	dataApiHelpersTest,

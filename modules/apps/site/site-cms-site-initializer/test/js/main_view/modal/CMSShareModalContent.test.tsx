@@ -125,15 +125,15 @@ describe('CMSShareModalContent', () => {
 		).toHaveTextContent(/owner/);
 	});
 
-	it('renders the cancel and save buttons', () => {
+	it('renders the cancel and share buttons', () => {
 		const {getByText} = renderComponent();
 
 		expect(getByText('cancel')).toBeInTheDocument();
 
-		const saveButton = getByText('save');
+		const shareButton = getByText('share');
 
-		expect(saveButton).toBeInTheDocument();
-		expect(saveButton).toBeDisabled();
+		expect(shareButton).toBeInTheDocument();
+		expect(shareButton).toBeDisabled();
 	});
 
 	it('calls search when the autocomplete input changes', async () => {
@@ -166,7 +166,7 @@ describe('CMSShareModalContent', () => {
 		});
 	});
 
-	it('calls submission when save is clicked', async () => {
+	it('calls submission when share is clicked', async () => {
 		const {getByLabelText, getByRole, getByText} = renderComponent();
 
 		fireEvent.click(getByLabelText('more-options'));
@@ -182,11 +182,11 @@ describe('CMSShareModalContent', () => {
 		});
 
 		waitFor(() => {
-			expect(getByText('save')).toBeEnabled();
+			expect(getByText('share')).toBeEnabled();
 		});
 
 		await act(async () => {
-			fireEvent.click(getByText('save'));
+			fireEvent.click(getByText('share'));
 		});
 
 		const fetchMock = global.fetch as jest.Mock;
@@ -457,7 +457,7 @@ describe('CMSShareModalContent', () => {
 		});
 
 		await act(async () => {
-			fireEvent.click(getByText('save'));
+			fireEvent.click(getByText('share'));
 		});
 
 		const fetchMock = global.fetch as jest.Mock;
@@ -514,7 +514,7 @@ describe('CMSShareModalContent', () => {
 		});
 
 		await act(async () => {
-			fireEvent.click(getByText('save'));
+			fireEvent.click(getByText('share'));
 		});
 
 		const fetchMock = global.fetch as jest.Mock;

@@ -6,11 +6,13 @@
 package com.liferay.layout.content.versioning.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.LayoutContentVersionLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -83,6 +85,8 @@ public class LayoutContentVersionLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED,
 			approvedLayoutContentVersion.getStatus());
 
+		_testAddLayoutContentVersionWithExternalReferenceCodeTooLong();
+		_testAddLayoutContentVersionWithNullExternalReferenceCode();
 		_testAddLayoutContentVersionWithSkipIfUnchanged();
 	}
 
@@ -105,6 +109,48 @@ public class LayoutContentVersionLocalServiceTest {
 
 		Assert.assertEquals(
 			layoutContentVersions.toString(), 2, layoutContentVersions.size());
+	}
+
+	private void _testAddLayoutContentVersionWithExternalReferenceCodeTooLong()
+		throws Exception {
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			LayoutContentVersion.class.getName(), "externalReferenceCode");
+
+		try {
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				RandomTestUtil.randomString(maxLength + 1),
+				TestPropsValues.getUserId(), _draftLayout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
+				false);
+
+			Assert.fail();
+		}
+		catch (LayoutContentVersionExternalReferenceCodeException
+					layoutContentVersionExternalReferenceCodeException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					layoutContentVersionExternalReferenceCodeException);
+			}
+		}
+	}
+
+	private void _testAddLayoutContentVersionWithNullExternalReferenceCode()
+		throws Exception {
+
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				null, TestPropsValues.getUserId(), _draftLayout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
+				false);
+
+		Assert.assertEquals(
+			_draftLayout.getExternalReferenceCode() + "_v_" +
+				layoutContentVersion.getVersion(),
+			layoutContentVersion.getExternalReferenceCode());
 	}
 
 	private void _testAddLayoutContentVersionWithSkipIfUnchanged()

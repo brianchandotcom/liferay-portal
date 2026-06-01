@@ -39,7 +39,11 @@ public class GoogleOAuth2Service {
 
 		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
 			new GoogleAuthorizationCodeRequestUrl(
-				clientId, callbackURI, _scopes);
+				clientId, callbackURI,
+				List.of(
+					"email",
+					"https://www.googleapis.com/auth/webmasters.readonly",
+					"openid"));
 
 		googleAuthorizationCodeRequestUrl.set("prompt", "consent");
 		googleAuthorizationCodeRequestUrl.setAccessType("offline");
@@ -69,7 +73,7 @@ public class GoogleOAuth2Service {
 		).header(
 			"Authorization", "Bearer " + accessToken
 		).uri(
-			URI.create(_USERINFO_URL)
+			URI.create("https://www.googleapis.com/oauth2/v1/userinfo?alt=json")
 		).build();
 
 		HttpResponse<String> httpResponse = _httpClient.send(
@@ -97,7 +101,7 @@ public class GoogleOAuth2Service {
 			HttpRequest.BodyPublishers.ofString(
 				"token=" + URLEncoder.encode(token, StandardCharsets.UTF_8))
 		).uri(
-			URI.create(_REVOKE_URL)
+			URI.create("https://oauth2.googleapis.com/revoke")
 		).build();
 
 		HttpResponse<Void> httpResponse = _httpClient.send(
@@ -111,16 +115,6 @@ public class GoogleOAuth2Service {
 			throw new IOException("Unable to revoke token, HTTP " + statusCode);
 		}
 	}
-
-	private static final String _REVOKE_URL =
-		"https://oauth2.googleapis.com/revoke";
-
-	private static final String _USERINFO_URL =
-		"https://www.googleapis.com/oauth2/v1/userinfo?alt=json";
-
-	private static final List<String> _scopes = List.of(
-		"email", "https://www.googleapis.com/auth/webmasters.readonly",
-		"openid");
 
 	private final HttpClient _httpClient = HttpClient.newHttpClient();
 	private final NetHttpTransport _netHttpTransport = new NetHttpTransport();

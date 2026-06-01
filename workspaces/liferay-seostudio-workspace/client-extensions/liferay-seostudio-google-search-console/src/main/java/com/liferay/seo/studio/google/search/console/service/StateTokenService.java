@@ -48,7 +48,7 @@ public class StateTokenService {
 		).claim(
 			"seoStudioInstanceId", seoStudioInstanceId
 		).expiration(
-			new Date(nowDate.getTime() + _ONE_HOUR_MS)
+			new Date(nowDate.getTime() + 3600000)
 		).issuedAt(
 			nowDate
 		).signWith(
@@ -64,7 +64,8 @@ public class StateTokenService {
 
 		Jws<Claims> jws = jwtParser.parseSignedClaims(state);
 
-	private static final long _ONE_HOUR_MS = 3600000;
+		return jws.getPayload();
+	}
 
 	private final SecretKey _secretKey;
 

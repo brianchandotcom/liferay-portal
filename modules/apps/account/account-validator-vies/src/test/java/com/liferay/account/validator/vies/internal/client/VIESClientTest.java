@@ -97,7 +97,7 @@ public class VIESClientTest {
 
 			_assertError("MS_UNAVAILABLE", jsonObject);
 
-			String countryCode = "IT";
+			String countryCode = RandomTestUtil.randomString();
 			String vatNumber = RandomTestUtil.randomString();
 
 			_startHttpServer(

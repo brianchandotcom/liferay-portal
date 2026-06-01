@@ -1,21 +1,20 @@
 alloy:
     enabled: false
     iam:
-        awsRoleARN: ""
+        awsRoleArn: ""
         gcpServiceAccount: ""
     remoteWrite:
         basicAuth:
             password: ""
             username: ""
         bearerToken: ""
-        externalLabels: {}
         headers: {}
         url: ""
     scrape:
         cadvisor:
             enabled: true
             path: /metrics/cadvisor
-        cloudwatchRds:
+        cloudwatchRDS:
             discoveryInterval: 5m
             enabled: false
             metrics:
@@ -27,11 +26,11 @@ alloy:
                     statistics:
                         -   Average
                         -   Maximum
-                -   name: FreeableMemory
+                -   name: FreeStorageSpace
                     statistics:
                         -   Average
                         -   Minimum
-                -   name: FreeStorageSpace
+                -   name: FreeableMemory
                     statistics:
                         -   Average
                         -   Minimum
@@ -145,7 +144,7 @@ grafana-alloy:
 kube-state-metrics:
     enabled: true
     extraArgs:
-        -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_statefulset_status_replicas_ready,kube_pod_container_status_restarts_total,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_info,kube_namespace_labels,kube_node_info,kube_node_status_condition
+        -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_namespace_labels,kube_node_info,kube_node_status_condition,kube_pod_container_info,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_status_restarts_total,kube_statefulset_status_replicas_ready
         -   --v=1
     metricLabelsAllowlist:
         -   namespaces=[liferay.com/observable]

@@ -42,8 +42,14 @@ public class InputGuardrailExecutedListenerImpl
 
 		UserMessage userMessage = inputGuardrailRequest.userMessage();
 
+		String content = userMessage.singleText();
+
+		if (content.length() > 200) {
+			content = content.substring(0, 200);
+		}
+
 		route(
-			userMessage.singleText(), inputGuardrailExecutedEvent.duration(),
+			content, inputGuardrailExecutedEvent.duration(),
 			inputGuardrailResult, "input");
 	}
 

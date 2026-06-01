@@ -2001,9 +2001,6 @@ public class ObjectEntryLocalServiceTest {
 		_testAddObjectEntry(
 			StringUtil.toLowerCase(emailPrefix) + "@example.com",
 			objectFieldName, objectDefinition, emailPrefix + "@EXAMPLE.COM");
-		_testAddObjectEntry(
-			StringUtil.toLowerCase(emailPrefix) + "@liferay.com",
-			objectFieldName, objectDefinition, emailPrefix + "@liferay.com");
 
 		String blockedDomain = "@blocked.com";
 

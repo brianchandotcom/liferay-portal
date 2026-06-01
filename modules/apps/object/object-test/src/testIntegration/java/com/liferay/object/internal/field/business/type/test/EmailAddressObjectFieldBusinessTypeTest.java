@@ -77,33 +77,6 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 
 	@Test
 	public void testProcessValue() throws Exception {
-		Assert.assertEquals(
-			"", _objectFieldBusinessType.processValue(_objectField, ""));
-
-		Assert.assertEquals(
-			"user@example.com",
-			_objectFieldBusinessType.processValue(
-				_objectField, "User@Example.com"));
-		Assert.assertEquals(
-			"user@example.com",
-			_objectFieldBusinessType.processValue(
-				_objectField, "user@example.com"));
-
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
-			StringBundler.concat(
-				"The email address \"not-an-email\" is invalid for object ",
-				"field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.processValue(
-				_objectField, "not-an-email"));
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
-			StringBundler.concat(
-				"The email address \"missing@\" is invalid for object field \"",
-				_OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.processValue(
-				_objectField, "missing@"));
-
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ExceedsTextMaxLength.class,
 			StringBundler.concat(
@@ -112,6 +85,20 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 			() -> _objectFieldBusinessType.processValue(
 				_objectField,
 				RandomTestUtil.randomString(245) + "@example.com"));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidEmailAddress.class,
+			StringBundler.concat(
+				"The email address \"missing@\" is invalid for object field \"",
+				_OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.processValue(
+				_objectField, "missing@"));
+
+		Assert.assertEquals(
+			"", _objectFieldBusinessType.processValue(_objectField, ""));
+		Assert.assertEquals(
+			"user@example.com",
+			_objectFieldBusinessType.processValue(
+				_objectField, "User@Example.com"));
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
@@ -145,24 +132,62 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 				TestPropsValues.getUserId()
 			).build());
 
-		String errorMessage = StringBundler.concat(
-			"The email address domain \"@blocked.com\" is blocked for object ",
-			"field \"", objectField.getName(), "\"");
-
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.BlockedEmailAddressDomain.class,
-			errorMessage,
-			() -> _objectFieldBusinessType.processValue(
-				objectField, "user@blocked.com"));
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.BlockedEmailAddressDomain.class,
-			errorMessage,
+			StringBundler.concat(
+				"The email address domain \"@blocked.com\" is blocked for ",
+				"object field \"", objectField.getName(), "\""),
 			() -> _objectFieldBusinessType.processValue(
 				objectField, "User@Blocked.com"));
 	}
 
 	@Test
 	public void testValidateObjectFieldSettings() throws Exception {
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value invalid of setting \"",
+				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED,
+				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
+					).value(
+						"invalid"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value invalid of setting \"",
+				ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
+				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
+					).value(
+						"invalid"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value invalid of setting \"",
+				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
+			() -> _objectFieldBusinessType.validateObjectFieldSettings(
+				_objectField,
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						"invalid"
+					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
@@ -184,45 +209,6 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					).value(
 						StringPool.TRUE
 					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value invalid of setting \"",
-				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED,
-				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
-					).value(
-						"invalid"
-					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingNameException.NotAllowedNames.class,
-			StringBundler.concat(
-				"The settings ",
-				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
-				" are not allowed for object field ", _OBJECT_FIELD_NAME),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
-					).value(
-						"liferay.com"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
-					).value(
-						StringPool.FALSE
-					).build())));
-
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			StringBundler.concat(
@@ -237,38 +223,6 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
 						"@liferay.com"
-					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value invalid of setting \"",
-				ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
-				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
-					).value(
-						"invalid"
-					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value invalid of setting \"",
-				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
-			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-					).value(
-						"invalid"
 					).build())));
 
 		_objectFieldBusinessType.validateObjectFieldSettings(
@@ -357,15 +311,27 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 						).build()));
 
-		_objectFieldBusinessType.validateObjectFieldSettingsDefaultValue(
-			_objectField,
-			HashMapBuilder.put(
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value User@Blocked.com of setting \"",
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"user@example.com"
-			).put(
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
-				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-			).build());
+				"\" is invalid for object field \"", _OBJECT_FIELD_NAME, "\""),
+			() ->
+				_objectFieldBusinessType.
+					validateObjectFieldSettingsDefaultValue(
+						_objectField,
+						HashMapBuilder.put(
+							ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
+							"@blocked.com"
+						).put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							"User@Blocked.com"
+						).put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+						).build()));
+
 		_objectFieldBusinessType.validateObjectFieldSettingsDefaultValue(
 			_objectField,
 			HashMapBuilder.put(

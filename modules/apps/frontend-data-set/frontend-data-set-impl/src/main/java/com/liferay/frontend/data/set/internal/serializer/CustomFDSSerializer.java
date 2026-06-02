@@ -1132,7 +1132,7 @@ public class CustomFDSSerializer
 			String fieldName, Map<String, Object> properties, String type)
 		throws Exception {
 
-		boolean dateTime = Objects.equals(type, FDSEntityFieldTypes.DATE_TIME);
+		boolean dateTime = !Objects.equals(type, FDSEntityFieldTypes.DATE);
 
 		JSONObject fromJSONObject = _getDateOrDateTimeJSONObject(
 			dateTime, properties.get("from"));

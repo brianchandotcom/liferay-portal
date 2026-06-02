@@ -348,6 +348,8 @@ test.describe('Management Toolbar Using Display Context', () => {
 
 			await test.step('Click on descending', async () => {
 				await page.getByRole('menuitem', {name: 'Descending'}).click();
+
+				await claySamplePage.waitFor();
 			});
 
 			await test.step('Navigate to management toolbar tab', async () => {

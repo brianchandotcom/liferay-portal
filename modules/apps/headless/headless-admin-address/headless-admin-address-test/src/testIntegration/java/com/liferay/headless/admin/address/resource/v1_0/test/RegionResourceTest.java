@@ -81,7 +81,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		String keywords = RandomTestUtil.randomString();
 
 		Page<Region> page = regionResource.getRegionsPage(
-			null, keywords, Pagination.of(1, 10), null);
+			null, keywords, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -89,13 +89,48 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		Region region2 = _addRegion(keywords);
 
 		page = regionResource.getRegionsPage(
-			null, keywords, Pagination.of(1, 10), null);
+			null, keywords, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(region1, (List<Region>)page.getItems());
 		assertContains(region2, (List<Region>)page.getItems());
 		assertValid(page);
+	}
+
+	@Override
+	@Test
+	public void testGetRegionsPageWithPagination() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		Region region1 = _addRegion(keywords);
+		Region region2 = _addRegion(keywords);
+		Region region3 = _addRegion(keywords);
+
+		Page<Region> page1 = regionResource.getRegionsPage(
+			null, keywords, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(3, page1.getTotalCount());
+
+		List<Region> page1Items = (List<Region>)page1.getItems();
+
+		Assert.assertEquals(page1Items.toString(), 2, page1Items.size());
+
+		Page<Region> page2 = regionResource.getRegionsPage(
+			null, keywords, null, Pagination.of(2, 2), null);
+
+		List<Region> page2Items = (List<Region>)page2.getItems();
+
+		Assert.assertEquals(page2Items.toString(), 1, page2Items.size());
+
+		Page<Region> page3 = regionResource.getRegionsPage(
+			null, keywords, null, Pagination.of(1, 3), null);
+
+		List<Region> page3Items = (List<Region>)page3.getItems();
+
+		assertContains(region1, page3Items);
+		assertContains(region2, page3Items);
+		assertContains(region3, page3Items);
 	}
 
 	@Override
@@ -188,11 +223,6 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name", "position", "regionCode"};
-	}
-
-	@Override
-	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"dateCreated", "dateModified"};
 	}
 
 	@Override
@@ -309,7 +339,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Region> ascPage = regionResource.getRegionsPage(
-				null, keywords, Pagination.of(1, 2),
+				null, keywords, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -317,7 +347,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 				(List<Region>)ascPage.getItems());
 
 			Page<Region> descPage = regionResource.getRegionsPage(
-				null, keywords, Pagination.of(1, 2),
+				null, keywords, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(

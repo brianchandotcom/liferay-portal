@@ -51,6 +51,7 @@ const getFieldDetails = ({
 	hasError,
 	label,
 	required,
+	requiredLabel,
 	text,
 	tip,
 	warningMessage,
@@ -77,7 +78,9 @@ const getFieldDetails = ({
 			fieldDetails.push(Liferay.Util.escape(warningMessage));
 		}
 		if (required) {
-			fieldDetails.push(Liferay.Language.get('required'));
+			fieldDetails.push(
+				requiredLabel ?? Liferay.Language.get('required')
+			);
 		}
 	}
 
@@ -203,7 +206,7 @@ export default function FieldBase({
 	visible,
 	warningMessage,
 }) {
-	const {disableFieldRepetition} = useConfig();
+	const {disableFieldRepetition, requiredLabel} = useConfig();
 	const {editingLanguageId, pages} = useFormState();
 	const [disabledRepeatableButton, setDisabledRepeatableButton] =
 		useState(false);
@@ -216,6 +219,7 @@ export default function FieldBase({
 		hasError,
 		label,
 		required,
+		requiredLabel,
 		text,
 		tip,
 		warningMessage,

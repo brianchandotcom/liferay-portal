@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.CIFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.CITestSuiteValidationFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.ClosedChannelExceptionFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.DownstreamFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
@@ -2483,6 +2484,7 @@ public abstract class BaseTopLevelBuild
 			new DownstreamFailureMessageGenerator(),
 			//
 			new CIFailureMessageGenerator(),
+			new ClosedChannelExceptionFailureMessageGenerator(),
 			//
 			new GenericFailureMessageGenerator()
 		};

@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.CIFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.ClosedChannelExceptionFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
@@ -1279,6 +1280,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		new LocalGitMirrorFailureMessageGenerator(),
 		//
 		new CIFailureMessageGenerator(),
+		new ClosedChannelExceptionFailureMessageGenerator(),
 		new GenericFailureMessageGenerator()
 	};
 

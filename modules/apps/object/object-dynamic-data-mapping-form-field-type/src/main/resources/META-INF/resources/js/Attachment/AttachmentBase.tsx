@@ -217,7 +217,7 @@ export default function AttachmentBase({
 		else if (isVisible) {
 			searchParams.set(
 				'filter',
-				"cmsRoot eq true and cmsSection eq 'files' and status in (0)"
+				"cmsRoot eq true and rootDescendantNode eq false and cmsSection eq 'files' and status in (0)"
 			);
 		}
 

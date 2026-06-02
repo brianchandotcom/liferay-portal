@@ -173,6 +173,8 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 			Subscription.Builder builder = Subscription.newBuilder(
 			).setAckDeadlineSeconds(
 				getAckDeadlineSeconds()
+			).setEnableMessageOrdering(
+				true
 			).setFilter(
 				getMessageFilter()
 			).setName(

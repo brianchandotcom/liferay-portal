@@ -213,7 +213,7 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion sizeGt(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeGe(propertyName, size));
+		return new CriterionImpl(Restrictions.sizeGt(propertyName, size));
 	}
 
 	@Override

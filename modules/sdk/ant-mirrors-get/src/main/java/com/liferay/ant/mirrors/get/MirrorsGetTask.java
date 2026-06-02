@@ -475,7 +475,18 @@ public class MirrorsGetTask extends Task {
 				File mirrorsMountFile = _getMirrorsMountFile();
 
 				if (mirrorsMountFile.isFile()) {
-					_copyFile(mirrorsMountFile, mirrorsCacheTempFile);
+					try {
+						_copyFile(mirrorsMountFile, mirrorsCacheTempFile);
+					}
+					catch (IOException ioException) {
+						_deleteFile(mirrorsCacheTempFile);
+
+						if (_verbose) {
+							System.out.println(
+								"Unable to copy from mirrors mount " +
+									mirrorsMountFile.getPath() + ".");
+						}
+					}
 				}
 			}
 

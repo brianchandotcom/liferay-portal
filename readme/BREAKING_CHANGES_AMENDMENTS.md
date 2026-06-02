@@ -749,3 +749,51 @@ With the removal of the Props interface and PropsUtil.setProps(), the test rule 
 
 Use PropsUtil.set(String, String) to set individual properties and PropsUtil.get(String) to read them back, instead of the former Props-based swapping pattern.
 ```
+
+----
+
+# 780cf785b969d493e8bc80ab19d9855abce13f52
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPD-71875 Stop returning fieldReference from name field for ContentStructureField
+
+# breaking
+
+## What modules/apps/headless/headless-delivery/headless-delivery-api/src/main/java/com/liferay/headless/delivery/dto/v1_0/util/ContentStructureUtil.java
+
+The name field of a ContentStructureField returned by ContentStructureUtil no longer contains the field's fieldReference. It now returns the field's actual name.
+
+## Why
+
+The name field was incorrectly populated with the fieldReference instead of the field's actual name. This change makes the name field return its actual value.
+
+## Alternatives
+
+Consumers that relied on the name field to obtain the fieldReference should read the dedicated fieldReference field of ContentStructureField instead.
+```
+
+----
+
+# 1efb89cecc2466d44328f11977ed5730753b26cc
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPD-71875 Stop returning fieldReference from name field for ContentField
+
+# breaking
+
+## What modules/apps/headless/headless-delivery/headless-delivery-api/src/main/java/com/liferay/headless/delivery/dto/v1_0/util/ContentFieldUtil.java
+
+The name field of a ContentField returned by ContentFieldUtil no longer contains the field's fieldReference. It now returns the field's actual name.
+
+## Why
+
+The name field was incorrectly populated with the fieldReference instead of the field's actual name. This change makes the name field return its actual value.
+
+## Alternatives
+
+Consumers that relied on the name field to obtain the fieldReference should read the dedicated fieldReference field of ContentField instead.
+```

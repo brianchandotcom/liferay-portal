@@ -85,7 +85,7 @@ public class FragmentEntryVersionModelListener
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to remove old fragment entry versions for " +
+					"Unable to delete old fragment entry versions for " +
 						"fragment entry ID " +
 							fragmentEntryVersion.getFragmentEntryId(),
 					exception);

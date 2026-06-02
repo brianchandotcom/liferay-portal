@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.related.models;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -21,6 +22,8 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Luis Miguel Barcos
@@ -42,8 +45,8 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 
 	@Override
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate,
-			ObjectDefinition relatedObjectDefinition)
+			Long[] groupIds, ObjectRelationship objectRelationship,
+			Predicate predicate, ObjectDefinition relatedObjectDefinition)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition1 = _getObjectDefinition1(
@@ -79,8 +82,8 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					objectDefinition2, objectFieldLocalService),
 				objectDefinition2DynamicObjectDefinitionTable,
 				objectDefinition2ExtensionDynamicObjectDefinitionTable,
-				DSLQueryFactoryUtil.select(objectRelationshipColumn),
-				predicate);
+				DSLQueryFactoryUtil.select(objectRelationshipColumn), groupIds,
+				objectDefinition2, predicate);
 		}
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
@@ -104,7 +107,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					DSLQueryFactoryUtil.select(
 						objectDefinition1DynamicObjectDefinitionTable.
 							getPrimaryKeyColumn()),
-					predicate)
+					groupIds, objectDefinition1, predicate)
 			));
 	}
 
@@ -163,7 +166,8 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 				dynamicObjectDefinitionLocalizationTable,
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
-			FromStep fromStep, Predicate predicate)
+			FromStep fromStep, Long[] groupIds,
+			ObjectDefinition objectDefinition, Predicate predicate)
 		throws PortalException {
 
 		return column.in(
@@ -185,7 +189,29 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					dynamicObjectDefinitionLocalizationTable,
 					dynamicObjectDefinitionTable, null)
 			).where(
-				predicate
+				ObjectEntryTable.INSTANCE.companyId.eq(
+					objectDefinition.getCompanyId()
+				).and(
+					() -> {
+						if (StringUtil.equals(
+								objectDefinition.getScope(),
+								ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+							return ObjectEntryTable.INSTANCE.groupId.eq(0L);
+						}
+
+						if (ArrayUtil.isEmpty(groupIds)) {
+							return null;
+						}
+
+						return ObjectEntryTable.INSTANCE.groupId.in(groupIds);
+					}
+				).and(
+					ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+						objectDefinition.getObjectDefinitionId())
+				).and(
+					predicate
+				)
 			));
 	}
 

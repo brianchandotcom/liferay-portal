@@ -19,6 +19,10 @@ public interface FilterFactory<T> {
 		ObjectDefinition objectDefinition);
 
 	public T create(
+		Expression filterExpression, Long[] groupIds,
+		ObjectDefinition objectDefinition);
+
+	public T create(
 		Expression filterExpression, ObjectDefinition objectDefinition);
 
 	public T create(String filterString, ObjectDefinition objectDefinition);

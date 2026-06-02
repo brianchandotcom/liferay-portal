@@ -77,6 +77,22 @@ public class PredicateExpressionVisitorImpl
 
 	public PredicateExpressionVisitorImpl(
 		EntityModel entityModel, EntityModelProvider entityModelProvider,
+		Long[] groupIds, ObjectDefinition objectDefinition,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelatedModelsPredicateProviderRegistry
+			objectRelatedModelsPredicateProviderRegistry,
+		ServiceTrackerMap<String, FieldPredicateProvider> serviceTrackerMap) {
+
+		this(
+			entityModel, entityModelProvider, groupIds, new HashMap<>(),
+			objectDefinition, objectFieldBusinessTypeRegistry,
+			objectFieldLocalService,
+			objectRelatedModelsPredicateProviderRegistry, serviceTrackerMap);
+	}
+
+	public PredicateExpressionVisitorImpl(
+		EntityModel entityModel, EntityModelProvider entityModelProvider,
 		ObjectDefinition objectDefinition,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -85,8 +101,9 @@ public class PredicateExpressionVisitorImpl
 		ServiceTrackerMap<String, FieldPredicateProvider> serviceTrackerMap) {
 
 		this(
-			entityModel, entityModelProvider, new HashMap<>(), objectDefinition,
-			objectFieldBusinessTypeRegistry, objectFieldLocalService,
+			entityModel, entityModelProvider, null, new HashMap<>(),
+			objectDefinition, objectFieldBusinessTypeRegistry,
+			objectFieldLocalService,
 			objectRelatedModelsPredicateProviderRegistry, serviceTrackerMap);
 	}
 
@@ -360,7 +377,7 @@ public class PredicateExpressionVisitorImpl
 
 	private PredicateExpressionVisitorImpl(
 		EntityModel entityModel, EntityModelProvider entityModelProvider,
-		Map<String, String> lambdaVariableExpressionFieldNames,
+		Long[] groupIds, Map<String, String> lambdaVariableExpressionFieldNames,
 		ObjectDefinition objectDefinition,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -371,6 +388,7 @@ public class PredicateExpressionVisitorImpl
 		_entityModels.put(
 			objectDefinition.getObjectDefinitionId(), entityModel);
 		_entityModelProvider = entityModelProvider;
+		_groupIds = groupIds;
 		_lambdaVariableExpressionFieldNames =
 			lambdaVariableExpressionFieldNames;
 		_objectDefinition = objectDefinition;
@@ -579,7 +597,7 @@ public class PredicateExpressionVisitorImpl
 
 		if (objectValuePairs.isEmpty()) {
 			return objectRelatedModelsPredicateProvider.getPredicate(
-				objectRelationship, predicate);
+				_groupIds, objectRelationship, predicate);
 		}
 
 		ObjectValuePair<ObjectRelationship, ObjectDefinition> objectValuePair =
@@ -589,7 +607,7 @@ public class PredicateExpressionVisitorImpl
 			objectValuePair.getValue(), objectValuePairs,
 			objectValuePair.getKey(),
 			objectRelatedModelsPredicateProvider.getPredicate(
-				objectRelationship, predicate));
+				_groupIds, objectRelationship, predicate));
 	}
 
 	private List<ObjectValuePair<ObjectRelationship, ObjectDefinition>>
@@ -824,7 +842,7 @@ public class PredicateExpressionVisitorImpl
 		return (Predicate)lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
 				_getObjectDefinitionEntityModel(objectDefinition),
-				_entityModelProvider,
+				_entityModelProvider, _groupIds,
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
 					collectionPropertyExpression.getName()),
@@ -853,6 +871,7 @@ public class PredicateExpressionVisitorImpl
 
 	private final EntityModelProvider _entityModelProvider;
 	private final Map<Long, EntityModel> _entityModels = new HashMap<>();
+	private final Long[] _groupIds;
 	private final Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldBusinessTypeRegistry

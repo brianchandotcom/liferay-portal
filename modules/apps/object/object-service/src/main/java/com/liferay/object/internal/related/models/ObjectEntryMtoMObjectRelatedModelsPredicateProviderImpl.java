@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.related.models;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
@@ -17,6 +18,8 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Luis Miguel Barcos
@@ -38,8 +41,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 
 	@Override
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate,
-			ObjectDefinition relatedObjectDefinition)
+			Long[] groupIds, ObjectRelationship objectRelationship,
+			Predicate predicate, ObjectDefinition relatedObjectDefinition)
 		throws PortalException {
 
 		Column<?, ?> dynamicObjectDefinitionTableColumn =
@@ -89,7 +92,32 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 								getPrimaryKeyColumn()
 						)
 					).where(
-						predicate
+						ObjectEntryTable.INSTANCE.companyId.eq(
+							relatedObjectDefinition.getCompanyId()
+						).and(
+							() -> {
+								if (StringUtil.equals(
+										relatedObjectDefinition.getScope(),
+										ObjectDefinitionConstants.
+											SCOPE_COMPANY)) {
+
+									return ObjectEntryTable.INSTANCE.groupId.eq(
+										0L);
+								}
+
+								if (ArrayUtil.isEmpty(groupIds)) {
+									return null;
+								}
+
+								return ObjectEntryTable.INSTANCE.groupId.in(
+									groupIds);
+							}
+						).and(
+							ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+								relatedObjectDefinition.getObjectDefinitionId())
+						).and(
+							predicate
+						)
 					))
 			));
 	}

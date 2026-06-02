@@ -32,6 +32,7 @@ import java.util.Locale;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,6 +49,21 @@ public class AssetListTypePropertiesUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		_setUpJSONFactoryUtil();
+
+		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+			FeatureFlagManagerUtil.class);
+		_listTypeEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ListTypeEntryLocalServiceUtil.class);
+		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ObjectDefinitionLocalServiceUtil.class);
+		_objectFieldLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ObjectFieldLocalServiceUtil.class);
+		_portalUtilMockedStatic = Mockito.mockStatic(PortalUtil.class);
+	}
 
 	@AfterClass
 	public static void tearDownClass() {
@@ -365,14 +381,10 @@ public class AssetListTypePropertiesUtilTest {
 		}
 	}
 
-	private static MockedStatic<FeatureFlagManagerUtil>
-		_createFeatureFlagManagerUtilMockedStatic() {
-
+	private static void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		return Mockito.mockStatic(FeatureFlagManagerUtil.class);
 	}
 
 	private ObjectField _mockObjectField(
@@ -475,19 +487,14 @@ public class AssetListTypePropertiesUtilTest {
 
 	private static final String _LABEL_2 = "Project";
 
-	private static final MockedStatic<FeatureFlagManagerUtil>
-		_featureFlagManagerUtilMockedStatic =
-			_createFeatureFlagManagerUtilMockedStatic();
-	private static final MockedStatic<ListTypeEntryLocalServiceUtil>
-		_listTypeEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			ListTypeEntryLocalServiceUtil.class);
-	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
-		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			ObjectDefinitionLocalServiceUtil.class);
-	private static final MockedStatic<ObjectFieldLocalServiceUtil>
-		_objectFieldLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			ObjectFieldLocalServiceUtil.class);
-	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
-		Mockito.mockStatic(PortalUtil.class);
+	private static MockedStatic<FeatureFlagManagerUtil>
+		_featureFlagManagerUtilMockedStatic;
+	private static MockedStatic<ListTypeEntryLocalServiceUtil>
+		_listTypeEntryLocalServiceUtilMockedStatic;
+	private static MockedStatic<ObjectDefinitionLocalServiceUtil>
+		_objectDefinitionLocalServiceUtilMockedStatic;
+	private static MockedStatic<ObjectFieldLocalServiceUtil>
+		_objectFieldLocalServiceUtilMockedStatic;
+	private static MockedStatic<PortalUtil> _portalUtilMockedStatic;
 
 }

@@ -89,9 +89,9 @@ public class WorkflowTaskManagerImplTest {
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertEquals(assigneeUserId1, principalException.resourceId);
 			Assert.assertEquals(
 				User.class.getName(), principalException.resourceName);
-			Assert.assertEquals(assigneeUserId1, principalException.resourceId);
 		}
 
 		// User from the same company

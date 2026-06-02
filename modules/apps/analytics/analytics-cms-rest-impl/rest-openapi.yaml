@@ -168,6 +168,44 @@ components:
                     $ref: "#/components/schemas/Metric"
                 viewsMetric:
                     $ref: "#/components/schemas/Metric"
+        PerformanceTopAsset:
+            properties:
+                lastPage:
+                    format: int64
+                    type: integer
+                page:
+                    format: int64
+                    type: integer
+                pageSize:
+                    format: int64
+                    type: integer
+                performanceTopAssetItems:
+                    items:
+                        $ref: "#/components/schemas/PerformanceTopAssetItem"
+                    type: array
+                totalCount:
+                    format: int64
+                    type: integer
+        PerformanceTopAssetItem:
+            properties:
+                downloads:
+                    format: double
+                    type: number
+                engagement:
+                    format: double
+                    type: number
+                impressions:
+                    format: double
+                    type: number
+                mimeType:
+                    type: string
+                title:
+                    type: string
+                trend:
+                    $ref: "#/components/schemas/Trend"
+                views:
+                    format: double
+                    type: number
         TopPage:
             properties:
                 canonicalUrl:
@@ -651,3 +689,46 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PerformanceOverviewMetric"
             tags: ["PerformanceOverviewMetric"]
+    "/performance-top-asset":
+        get:
+            operationId: getPerformanceTopAsset
+            parameters:
+                -   in: query
+                    name: assetFilter
+                    schema:
+                        type: string
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: page
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceTopAsset"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceTopAsset"
+            tags: ["PerformanceTopAsset"]

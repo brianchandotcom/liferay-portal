@@ -52,7 +52,7 @@ test.beforeEach(async ({site, styleBooksPage}) => {
 
 	await styleBooksPage.create(STYLE_BOOK_NAME);
 
-	await styleBooksPage.updateTokenInputColor('Brand Color 4', TEST_COLOR);
+	await styleBooksPage.updateTokenInput('Brand Color 4', TEST_COLOR);
 
 	await styleBooksPage.waitForAutoSave();
 

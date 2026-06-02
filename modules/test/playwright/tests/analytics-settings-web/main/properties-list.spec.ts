@@ -16,7 +16,7 @@ const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
 
 test(
 	'Deleted AC properties do not appear in the DXP Properties wizard step',
-	{tag: '@LRAC-11055'},
+	{tag: ['@LRAC-11055', '@LRAC-12572']},
 	async ({apiHelpers, page}) => {
 		const project = await getDefaultProject(apiHelpers);
 

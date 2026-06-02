@@ -4,7 +4,11 @@
  */
 
 import {act, fireEvent, render, screen} from '@testing-library/react';
-import {FormProvider, PageProvider} from 'data-engine-js-components-web';
+import {
+	ConfigProvider,
+	FormProvider,
+	PageProvider,
+} from 'data-engine-js-components-web';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -363,6 +367,29 @@ describe('ReactFieldBase', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('renders requiredLabel from config in the sr-only description when provided', () => {
+		const requiredLabel = 'Obrigatório';
+
+		const {container} = render(
+			<ConfigProvider initialConfig={{requiredLabel}}>
+				<FormProvider initialState={{pages: []}}>
+					<PageProvider value={{editingLanguageId: 'pt_BR'}}>
+						<FieldBase required spritemap={spritemap} />
+					</PageProvider>
+				</FormProvider>
+			</ConfigProvider>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const srOnlySpan = container.querySelector('.sr-only');
+
+		expect(srOnlySpan).not.toBeNull();
+		expect(srOnlySpan.innerHTML).toBe(requiredLabel);
 	});
 
 	it('renders the FieldBase with tooltip', () => {

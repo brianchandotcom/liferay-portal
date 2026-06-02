@@ -88,14 +88,6 @@ export class ObjectRelationshipsPage {
 		await modal.getByRole('button', {exact: true, name: 'Delete'}).click();
 	}
 
-	async saveObjectRelationship() {
-		await this.saveObjectRelationshipButton.click();
-
-		await this.saveObjectRelationshipButton.waitFor({state: 'hidden'});
-
-		await waitForPageToBeLoaded(this.page);
-	}
-
 	async goto(objectDefinitionLabel: string, objectFolderLabel?: string) {
 		await this.viewObjectDefinitionsPage.goto();
 
@@ -110,5 +102,13 @@ export class ObjectRelationshipsPage {
 		);
 
 		await this.relationshipTabItem.click();
+	}
+
+	async saveObjectRelationship() {
+		await this.saveObjectRelationshipButton.click();
+
+		await this.saveObjectRelationshipButton.waitFor({state: 'hidden'});
+
+		await waitForPageToBeLoaded(this.page);
 	}
 }

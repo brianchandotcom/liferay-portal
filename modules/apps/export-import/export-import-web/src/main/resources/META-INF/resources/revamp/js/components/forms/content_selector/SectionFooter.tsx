@@ -8,20 +8,28 @@ import React from 'react';
 import {HandlerSelection} from '../../../utils/contentSelection';
 import {FieldCheckbox} from '../FieldCheckbox';
 
-const FIELDS = [
-	{key: 'comments', label: Liferay.Language.get('comments')},
-	{key: 'ratings', label: Liferay.Language.get('ratings')},
-] as const;
+export interface SectionFooterField {
+	key: string;
+	label: string;
+}
 
-export default function CommentsAndRatings({
+interface SectionFooterProps {
+	fields: readonly SectionFooterField[];
+	name: string;
+	onChange: (value: HandlerSelection | undefined) => void;
+	subtitle?: string;
+	title: string;
+	value: HandlerSelection | undefined;
+}
+
+export default function SectionFooter({
+	fields,
+	name,
 	onChange,
 	subtitle,
+	title,
 	value,
-}: {
-	onChange: (commentsAndRatingsValue: HandlerSelection | undefined) => void;
-	subtitle?: string;
-	value: HandlerSelection | undefined;
-}) {
+}: SectionFooterProps) {
 	const selection = value && typeof value === 'object' ? value : undefined;
 
 	return (
@@ -29,35 +37,34 @@ export default function CommentsAndRatings({
 			<hr className="my-3" />
 
 			<div className="p-3">
-				<div className="font-weight-bold text-3">
-					{Liferay.Language.get('comments-and-ratings')}
-				</div>
+				<div className="font-weight-bold text-3">{title}</div>
 
-				<small className="d-block mb-3 text-secondary">
-					{subtitle ??
-						Liferay.Language.get(
-							'for-each-of-the-selected-content-types,-export-their'
-						)}
-				</small>
+				{subtitle ? (
+					<small className="d-block mb-3 text-secondary">
+						{subtitle}
+					</small>
+				) : null}
 
 				<div className="c-gap-1 d-flex flex-column pl-4">
-					{FIELDS.map(({key, label}) => (
+					{fields.map((field) => (
 						<FieldCheckbox
 							bordered={false}
-							checked={Boolean(selection?.[key])}
-							key={key}
-							label={label}
-							name={`commentsAndRatings.${key}`}
+							checked={Boolean(selection?.[field.key])}
+							key={field.key}
+							label={field.label}
+							name={`${name}.${field.key}`}
 							onChange={(checked) => {
 								const nextSelection: Record<string, true> = {};
 
-								FIELDS.forEach((other) => {
+								fields.forEach((otherField) => {
 									if (
-										other.key === key
+										otherField.key === field.key
 											? checked
-											: Boolean(selection?.[other.key])
+											: Boolean(
+													selection?.[otherField.key]
+												)
 									) {
-										nextSelection[other.key] = true;
+										nextSelection[otherField.key] = true;
 									}
 								});
 

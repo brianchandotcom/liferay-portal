@@ -6,6 +6,7 @@
 import {Page} from '@playwright/test';
 
 export type CapturedEvent = {
+	applicationId: string;
 	channelId: string;
 	context: Record<string, unknown>;
 	dataSourceId: string;
@@ -36,6 +37,7 @@ export function captureAnalyticsEvents(page: Page): CapturedEvent[] {
 
 			for (const event of eventBucket.events) {
 				capturedEvents.push({
+					applicationId: event.applicationId,
 					channelId: eventBucket.channelId,
 					context: eventBucket.context ?? {},
 					dataSourceId: eventBucket.dataSourceId,

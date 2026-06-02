@@ -7,7 +7,9 @@ package com.liferay.ai.hub.internal.messaging;
 
 import com.liferay.ai.hub.internal.audit.AuditRouterUtil;
 import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.ai.hub.internal.constants.AIHubDestinationNames;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -15,13 +17,13 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
-import com.liferay.portal.workflow.kaleo.definition.constants.WorkflowDefinitionDestinationNames;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.rag.content.Content;
 
 import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -34,17 +36,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	property = "destination.name=" + WorkflowDefinitionDestinationNames.WORKFLOW_DEFINITION,
+	property = "destination.name=" + AIHubDestinationNames.AI_HUB_CONTENT_RETRIEVER,
 	service = MessageListener.class
 )
-public class WorkflowDefinitionMessageListener extends BaseMessageListener {
+public class AIHubContentRetrieverMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				WorkflowDefinitionDestinationNames.WORKFLOW_DEFINITION));
+				AIHubDestinationNames.AI_HUB_CONTENT_RETRIEVER));
 
 		_destinationServiceRegistration = bundleContext.registerService(
 			Destination.class, destination,
@@ -59,50 +61,46 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		KaleoDefinition kaleoDefinition = (KaleoDefinition)message.get(
-			"kaleoDefinition");
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (!Objects.equals(
-				message.getString("scope"),
-				WorkflowDefinitionConstants.SCOPE_AI) ||
-			kaleoDefinition.isSystem()) {
+		for (Content content : (List<Content>)message.get("contents")) {
+			jsonArray.put(
+				_jsonFactory.createJSONObject(
+				).put(
+					"text",
+					() -> {
+						TextSegment textSegment = content.textSegment();
 
-			return;
+						return textSegment.text();
+					}
+				));
 		}
 
 		AuditRouterUtil.route(
-			KaleoDefinition.class.getName(),
-			kaleoDefinition.getKaleoDefinitionId(),
-			_eventTypes.get(message.getString("eventType")),
-			JSONUtil.put(
-				"content", kaleoDefinition.getContentAsXML()
+			WorkflowInstance.class.getName(),
+			message.getLong("workflowInstanceId"),
+			AIHubEventTypes.AI_HUB_RAG_CONTENT_RETRIEVE,
+			_jsonFactory.createJSONObject(
 			).put(
-				"name", kaleoDefinition.getName()
+				"contents", jsonArray.toString()
 			).put(
-				"originalContent",
-				() -> {
-					KaleoDefinition originalKaleoDefinition =
-						(KaleoDefinition)message.get("originalKaleoDefinition");
-
-					if (originalKaleoDefinition == null) {
-						return null;
-					}
-
-					return originalKaleoDefinition.getContentAsXML();
-				}
+				"contentsCount", jsonArray.length()
 			).put(
-				"version", kaleoDefinition.getVersion()
+				"query", message.getString("query")
+			).put(
+				"searchTarget", message.getString("searchTarget")
+			).put(
+				"workflowInstanceId", message.getLong("workflowInstanceId")
 			),
-			(Date)message.get("timestamp"), kaleoDefinition.getUserId());
+			(Date)message.get("timestamp"), message.getLong("userId"));
 	}
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
-	private final Map<String, String> _eventTypes = Map.of(
-		"ADD", AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_ADD, "DELETE",
-		AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_DELETE, "UPDATE",
-		AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_UPDATE);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -19,6 +19,8 @@ import dev.langchain4j.guardrail.GuardrailResult;
 
 import java.time.Duration;
 
+import java.util.Date;
+
 /**
  * @author Pedro Leite
  */
@@ -65,7 +67,7 @@ public abstract class BaseGuardrailExecutedListener {
 					"workflowInstanceId",
 					kaleoInstanceToken.getKaleoInstanceId()
 				),
-				kaleoInstanceToken.getUserId());
+				new Date(), kaleoInstanceToken.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

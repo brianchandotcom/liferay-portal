@@ -12,4 +12,6 @@ public class BackgroundTaskContextMapConstants {
 
 	public static final String DELETE_ON_SUCCESS = "deleteOnSuccess";
 
+	public static final String SKIP_NOTIFICATION = "skipNotification";
+
 }

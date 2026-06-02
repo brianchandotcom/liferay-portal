@@ -641,6 +641,8 @@ public class ExportImportLocalServiceImpl
 				BackgroundTaskExecutorNames.
 					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR,
 				HashMapBuilder.<String, Serializable>put(
+					BackgroundTaskContextMapConstants.SKIP_NOTIFICATION, true
+				).put(
 					"exportImportConfigurationId",
 					exportImportConfiguration.getExportImportConfigurationId()
 				).build(),

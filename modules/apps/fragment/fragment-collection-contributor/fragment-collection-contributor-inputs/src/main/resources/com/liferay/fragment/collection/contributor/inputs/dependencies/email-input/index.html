@@ -1,4 +1,4 @@
-[#assign preferredDomains=(input.attributes.preferredDomains)!["@gmail.com", "@hotmail.com", "@liferay.com", "@outlook.com"]/]
+[#assign preferredDomains=(input.attributes.preferredDomains)!["@gmail.com", "@hotmail.com", "@liferay.com", "@outlook.com"] /]
 
 <div class="email-input">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentElementId}-form-group">
@@ -38,7 +38,7 @@
 		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-email-input-error">
 			[@clay["icon"] symbol="info-circle" /]
 
-			<span data-invalid-feedback="${languageUtil.get(locale, "please-enter-a-valid-email-address")}" data-length-feedback="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-feedback="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-email-input-error-message" role="alert">
+			<span data-invalid-feedback="${languageUtil.get(locale, "please-enter-a-valid-email-address")}" data-valid-feedback="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-email-input-error-message" role="alert">
 				[#if input.errorMessage?has_content]
 					${input.errorMessage}
 				[/#if]

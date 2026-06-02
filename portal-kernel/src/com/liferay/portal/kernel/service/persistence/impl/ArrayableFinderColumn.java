@@ -31,7 +31,7 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 
 		_andOperator = andOperator;
 
-		_sqlInPrefix = StringBundler.concat(
+		_hqlInPrefix = StringBundler.concat(
 			"(", entityAlias, columnName, andOperator ? " NOT IN (" : " IN (");
 	}
 
@@ -66,7 +66,7 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 
 		StringBundler sb = new StringBundler(array.length + 1);
 
-		sb.append(_sqlInPrefix);
+		sb.append(_hqlInPrefix);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append("?,");
@@ -129,13 +129,13 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 			sb.append("(");
 
 			if (stringValue == null) {
-				sb.append(sqlIsNull);
+				sb.append(hqlIsNull);
 			}
 			else if (stringValue.isEmpty()) {
-				sb.append(sqlNull);
+				sb.append(hqlNull);
 			}
 			else {
-				sb.append(sqlBind);
+				sb.append(hqlBind);
 			}
 
 			sb.append(closeWithJoiner);
@@ -210,6 +210,6 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 	}
 
 	private final boolean _andOperator;
-	private final String _sqlInPrefix;
+	private final String _hqlInPrefix;
 
 }

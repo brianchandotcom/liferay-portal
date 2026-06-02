@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.workflow.kaleo.definition.constants.WorkflowDefinitionDestinationNames;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
+import java.util.Date;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,6 +87,7 @@ public class KaleoDefinitionModelListener
 
 					message.put("serviceContext", serviceContext);
 
+					message.put("timestamp", new Date());
 					message.put("version", kaleoDefinition.getVersion());
 
 					_messageBus.sendMessage(

@@ -7,6 +7,8 @@ package com.liferay.site.cmp.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -154,6 +156,34 @@ public class ViewAllTasksSectionDisplayContextTest
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
 			fdsActionDropdownItems.get(9));
+	}
+
+	@Override
+	@Test
+	public void testGetFDSFilters() throws Exception {
+		List<FDSFilter> fdsFilters = getFDSFilters(null);
+
+		Assert.assertEquals(fdsFilters.toString(), 7, fdsFilters.size());
+
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
+			fdsFilters.get(0));
+		assertFDSFilter(
+			FDSEntityFieldTypes.DATE_TIME, "dateCreated", "create-date",
+			fdsFilters.get(1));
+		assertFDSFilter(
+			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			fdsFilters.get(2));
+		assertFDSFilter(
+			FDSEntityFieldTypes.INTEGER, "cmpTaskCMPProjectId", "project",
+			fdsFilters.get(3));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(4));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "keywords", "tag", fdsFilters.get(5));
+		assertFDSFilter(
+			FDSEntityFieldTypes.INTEGER, "classNameId", "task-type",
+			fdsFilters.get(6));
 	}
 
 	@Override

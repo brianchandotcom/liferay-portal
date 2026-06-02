@@ -93,7 +93,7 @@ public class GetAudiencesServletTest {
 		JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(Context.URL, ruleJSONObject.getString("attribute"));
-		Assert.assertEquals("eq", ruleJSONObject.getString("operation"));
+		Assert.assertEquals("eq", ruleJSONObject.getString("operator"));
 		Assert.assertEquals("/pricing", ruleJSONObject.getString("value"));
 	}
 
@@ -227,7 +227,7 @@ public class GetAudiencesServletTest {
 		JSONObject leafJSONObject = rulesJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(Context.URL, leafJSONObject.getString("attribute"));
-		Assert.assertEquals("eq", leafJSONObject.getString("operation"));
+		Assert.assertEquals("eq", leafJSONObject.getString("operator"));
 		Assert.assertEquals("/pricing", leafJSONObject.getString("value"));
 
 		JSONObject groupJSONObject = rulesJSONArray.getJSONObject(1);

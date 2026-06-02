@@ -17,9 +17,15 @@ public class UpgradeJavaSchedulerEntryImplConstructorCheck
 	}
 
 	public UpgradeJavaSchedulerEntryImplConstructorCheck(
-			SchedulerEntryImpl schedulerEntry) {
+			SchedulerEntryImpl schedulerEntryImpl) {
 
 		super();
+	}
+
+	public UpgradeJavaSchedulerEntryImplConstructorCheck(
+			SchedulerEntryImpl schedulerEntryImpl, StorageType storageType) {
+
+		super(schedulerEntryImpl.getEventListenerClass(), schedulerEntryImpl.getTrigger(), schedulerEntryImpl.getDescription());
 	}
 
 	public UpgradeJavaSchedulerEntryImplConstructorCheck(

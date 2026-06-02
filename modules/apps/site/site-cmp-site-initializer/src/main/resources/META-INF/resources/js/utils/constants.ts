@@ -15,10 +15,10 @@ export const DISPLAY_TYPES = [
 ] as const;
 
 export const KANBAN_COLUMN_ORDER = [
+	'notStarted',
+	'inProgress',
 	'blocked',
 	'done',
-	'inProgress',
-	'notStarted',
 ] as const;
 
 export const WORKFLOW_TASK_ACTION_LINK_ID = 'actionLinkWorkflowTask';

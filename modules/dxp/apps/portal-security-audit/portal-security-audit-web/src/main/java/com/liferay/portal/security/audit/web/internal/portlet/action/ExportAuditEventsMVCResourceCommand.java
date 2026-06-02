@@ -112,7 +112,7 @@ public class ExportAuditEventsMVCResourceCommand
 
 		int total = auditEvents.size();
 
-		StringBundler sb = new StringBundler((total * 2) + 2);
+		StringBundler sb = new StringBundler((columns.length * total * 2) + 2);
 
 		sb.append(
 			StringUtil.merge(
@@ -123,20 +123,22 @@ public class ExportAuditEventsMVCResourceCommand
 		int count = 0;
 
 		for (AuditEvent auditEvent : auditEvents) {
-			sb.append(
-				StringUtil.merge(
-					TransformUtil.transform(
-						columns,
-						column -> {
-							Function<AuditEvent, String> function =
-								_functions.get(column);
+			for (String column : columns) {
+				Function<AuditEvent, String> function = _functions.get(column);
 
-							return CSVUtil.encode(
-								GetterUtil.getString(
-									function.apply(auditEvent)));
-						},
-						String.class),
-					StringPool.COMMA));
+				if (function != null) {
+					sb.append(
+						CSVUtil.encode(
+							GetterUtil.getString(function.apply(auditEvent))));
+				}
+				else {
+					sb.append(StringPool.BLANK);
+				}
+
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
 
 			sb.append(StringPool.NEW_LINE);
 

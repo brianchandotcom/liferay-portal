@@ -42,7 +42,7 @@ function getSpaceRootFilesURL(groupId: string) {
 
 	return `${ROOT_URL}?${new URLSearchParams({
 		...BASE_SEARCH_PARAMS,
-		filter: `cmsRoot eq true and cmsSection eq 'files' and status in (0) and scopeGroupId eq ${groupId}`,
+		filter: `cmsRoot eq true and cmsSection eq 'files' and rootDescendantNode eq false and status in (0) and scopeGroupId eq ${groupId}`,
 	}).toString()}`;
 }
 

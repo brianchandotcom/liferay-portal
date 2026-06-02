@@ -5,10 +5,17 @@
 
 package com.liferay.frontend.data.set.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+
 /**
  * @author Mikel Lorza
  */
 public abstract class BaseDateTimeRangeFDSFilter implements FDSFilter {
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.DATE_TIME;
+	}
 
 	public abstract DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem();
 

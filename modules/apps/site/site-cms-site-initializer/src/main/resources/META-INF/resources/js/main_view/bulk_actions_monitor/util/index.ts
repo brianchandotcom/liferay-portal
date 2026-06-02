@@ -63,7 +63,7 @@ export function composeCreateTaskURL(
 		const {folderId, groupIds} =
 			getFolderIdAndGroupIdsFromFilter(scopeFilter);
 
-		scopeFilter = `cmsRoot eq true and cmsSection eq 'contents' and status in (0, 2, 3)`;
+		scopeFilter = `cmsRoot eq true and cmsSection eq 'contents' and rootDescendantNode eq false and status in (0, 2, 3)`;
 
 		if (folderId) {
 			scopeFilter += ` and folderId eq ${folderId}`;

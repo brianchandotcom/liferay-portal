@@ -200,8 +200,8 @@ public class ViewRecycleBinSectionDisplayContext
 	@Override
 	protected String getCMSSectionFilterString() {
 		String filterString =
-			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
-				"'files')";
+			"cmsRoot eq true and rootDescendantNode eq false and (cmsSection " +
+				"eq 'contents' or cmsSection eq 'files')";
 
 		List<Long> groupIds = _getTrashEnabledDepotEntryGroupIds();
 

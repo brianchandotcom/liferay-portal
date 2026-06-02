@@ -10,7 +10,7 @@ import React from 'react';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 
 const CMS_RECYCLE_BIN_FILTER =
-	"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq 'files') and status eq 8";
+	"cmsRoot eq true and rootDescendantNode eq false and (cmsSection eq 'contents' or cmsSection eq 'files') and status eq 8";
 
 export default function EmptyRecycleBinModalContent({
 	closeModal,

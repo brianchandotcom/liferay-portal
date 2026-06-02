@@ -60,20 +60,6 @@
 	margin: 0;
 }
 
-.ai-hub h1 mark,
-.ai-hub h2 mark,
-.ai-hub h3 mark,
-.ai-hub h4 mark,
-.ai-hub h5 mark,
-.ai-hub h6 mark {
-	background-clip: text;
-	background-image: linear-gradient(to right, #e44f68 0%, #4150f0 100%);
-	background-repeat: repeat-x;
-	color: #4150f0;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
-
 .ai-hub .ai-hub-home-title {
 	font-size: 3.5rem;
 	font-weight: 800;

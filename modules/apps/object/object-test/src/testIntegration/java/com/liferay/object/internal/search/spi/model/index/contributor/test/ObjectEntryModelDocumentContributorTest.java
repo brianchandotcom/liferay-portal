@@ -181,45 +181,6 @@ public class ObjectEntryModelDocumentContributorTest {
 					ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT)));
 	}
 
-	private ObjectDefinition _addModifiableSystemObjectDefinition(
-			boolean localized, String objectFieldName)
-		throws Exception {
-
-		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			0, ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
-			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-			RandomTestUtil.randomString(), objectFieldName, false, true);
-
-		objectField.setLocalized(localized);
-
-		ObjectDefinition modifiableSystemObjectDefinition =
-			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test" + ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				Arrays.asList(objectField));
-
-		return _objectDefinitionLocalService.publishSystemObjectDefinition(
-			TestPropsValues.getUserId(),
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
-	}
-
-	private void _assertObjectEntryContentField(
-		Document document, String expectedValue, String fieldName,
-		String objectFieldName) {
-
-		Field field = document.getField(fieldName);
-
-		String value = field.getValue();
-
-		Assert.assertTrue(
-			value,
-			value.contains(
-				StringBundler.concat(objectFieldName, ": ", expectedValue)));
-	}
-
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testContributeWithAssigneeObjectField() throws Exception {
@@ -325,6 +286,45 @@ public class ObjectEntryModelDocumentContributorTest {
 			value.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", user.getFullName())));
+	}
+
+	private ObjectDefinition _addModifiableSystemObjectDefinition(
+			boolean localized, String objectFieldName)
+		throws Exception {
+
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			0, ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+			RandomTestUtil.randomString(), objectFieldName, false, true);
+
+		objectField.setLocalized(localized);
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test" + ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Arrays.asList(objectField));
+
+		return _objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+	}
+
+	private void _assertObjectEntryContentField(
+		Document document, String expectedValue, String fieldName,
+		String objectFieldName) {
+
+		Field field = document.getField(fieldName);
+
+		String value = field.getValue();
+
+		Assert.assertTrue(
+			value,
+			value.contains(
+				StringBundler.concat(objectFieldName, ": ", expectedValue)));
 	}
 
 	private ModelDocumentContributor<ObjectEntry>

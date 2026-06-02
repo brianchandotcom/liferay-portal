@@ -46,7 +46,7 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 		for (Map.Entry<Long, Integer> entry :
 				fragmentEntryVersionCountByFragmentEntryIdMap.entrySet()) {
 
-			_removeFragmentEntryVersions(entry.getKey(), entry.getValue());
+			_deleteFragmentEntryVersions(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -64,6 +64,56 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 
 		_fragmentEntryVersionCountByCtCollectionIdMap.put(
 			ctCollectionId, fragmentEntryVersionCountByFragmentEntryIdMap);
+	}
+
+	private void _deleteFragmentEntryVersions(
+		long fragmentEntryId, int fragmentEntryVersionCount) {
+
+		try {
+			List<FragmentEntryVersion> fragmentEntryVersions =
+				_getDeletableFragmentEntryVersions(
+					fragmentEntryId, fragmentEntryVersionCount);
+
+			for (FragmentEntryVersion fragmentEntryVersion :
+					fragmentEntryVersions) {
+
+				_fragmentEntryVersionPersistence.remove(fragmentEntryVersion);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to delete old fragment entry versions for " +
+						"fragment entry ID " + fragmentEntryId,
+					exception);
+			}
+		}
+	}
+
+	private List<FragmentEntryVersion> _getDeletableFragmentEntryVersions(
+		long fragmentEntryId, int fragmentEntryVersionCount) {
+
+		return _fragmentEntryVersionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentEntryVersionTable.INSTANCE
+			).from(
+				FragmentEntryVersionTable.INSTANCE
+			).where(
+				FragmentEntryVersionTable.INSTANCE.ctCollectionId.eq(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION
+				).and(
+					FragmentEntryVersionTable.INSTANCE.fragmentEntryId.eq(
+						fragmentEntryId)
+				)
+			).orderBy(
+				FragmentEntryVersionTable.INSTANCE.version.descending()
+			).limit(
+				Math.max(
+					0,
+					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX -
+						fragmentEntryVersionCount),
+				Integer.MAX_VALUE
+			));
 	}
 
 	private Map<Long, Integer>
@@ -99,56 +149,6 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 		}
 
 		return fragmentEntryVersionCountByFragmentEntryIdMap;
-	}
-
-	private List<FragmentEntryVersion> _getRemovableFragmentEntryVersions(
-		long fragmentEntryId, int fragmentEntryVersionCount) {
-
-		return _fragmentEntryVersionPersistence.dslQuery(
-			DSLQueryFactoryUtil.select(
-				FragmentEntryVersionTable.INSTANCE
-			).from(
-				FragmentEntryVersionTable.INSTANCE
-			).where(
-				FragmentEntryVersionTable.INSTANCE.ctCollectionId.eq(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION
-				).and(
-					FragmentEntryVersionTable.INSTANCE.fragmentEntryId.eq(
-						fragmentEntryId)
-				)
-			).orderBy(
-				FragmentEntryVersionTable.INSTANCE.version.descending()
-			).limit(
-				Math.max(
-					0,
-					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX -
-						fragmentEntryVersionCount),
-				Integer.MAX_VALUE
-			));
-	}
-
-	private void _removeFragmentEntryVersions(
-		long fragmentEntryId, int fragmentEntryVersionCount) {
-
-		try {
-			List<FragmentEntryVersion> fragmentEntryVersions =
-				_getRemovableFragmentEntryVersions(
-					fragmentEntryId, fragmentEntryVersionCount);
-
-			for (FragmentEntryVersion fragmentEntryVersion :
-					fragmentEntryVersions) {
-
-				_fragmentEntryVersionPersistence.remove(fragmentEntryVersion);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove old fragment entry versions for " +
-						"fragment entry ID " + fragmentEntryId,
-					exception);
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

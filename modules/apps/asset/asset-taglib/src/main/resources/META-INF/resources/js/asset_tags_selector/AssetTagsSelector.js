@@ -12,7 +12,7 @@ import {useId} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import {openItemSelectorModal} from 'item-selector-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 const noop = () => {};
 
@@ -75,6 +75,23 @@ function AssetTagsSelector({
 		// `useEffect` when the value changes.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [groupIds, inputValue, previousInputValue]);
+
+	const sourceItems = useMemo(() => {
+		if (!resource) {
+			return [];
+		}
+
+		const itemsByValue = new Map();
+
+		for (const tag of resource) {
+			itemsByValue.set(tag.value, {
+				label: tag.text,
+				value: tag.value,
+			});
+		}
+
+		return Array.from(itemsByValue.values());
+	}, [resource]);
 
 	const callGlobalCallback = (callback, item) => {
 		if (callback && typeof window[callback] === 'function') {
@@ -258,16 +275,7 @@ function AssetTagsSelector({
 							onBlur={handleInputBlur}
 							onChange={onInputValueChange}
 							onItemsChange={handleItemsChange}
-							sourceItems={
-								resource
-									? resource.map((tag) => {
-											return {
-												label: tag.text,
-												value: tag.value,
-											};
-										})
-									: []
-							}
+							sourceItems={sourceItems}
 							value={inputValue}
 						/>
 					</ClayInput.GroupItem>

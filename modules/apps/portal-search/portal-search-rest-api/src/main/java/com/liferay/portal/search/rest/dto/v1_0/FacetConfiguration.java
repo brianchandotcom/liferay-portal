@@ -234,7 +234,7 @@ public class FacetConfiguration implements Serializable {
 	private Supplier<Integer> _maxTermsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag, type, vocabulary, and user. The custom facet uses top-level index fields only; Object and Web Content Structure fields are indexed as nested fields, so use the nested facet for those entities. The server gracefully ignores unrecognized values - passing an unknown facet type does not return a 500 error; the facet is simply skipped."
+		description = "Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag, type, user, and vocabulary. The custom facet uses top-level index fields only; Object and Web Content Structure fields are indexed as nested fields, so use the nested facet for those entities. The server gracefully ignores unrecognized values - passing an unknown facet type does not return a 500 error; the facet is simply skipped."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -268,7 +268,7 @@ public class FacetConfiguration implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag, type, vocabulary, and user. The custom facet uses top-level index fields only; Object and Web Content Structure fields are indexed as nested fields, so use the nested facet for those entities. The server gracefully ignores unrecognized values - passing an unknown facet type does not return a 500 error; the facet is simply skipped."
+		description = "Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag, type, user, and vocabulary. The custom facet uses top-level index fields only; Object and Web Content Structure fields are indexed as nested fields, so use the nested facet for those entities. The server gracefully ignores unrecognized values - passing an unknown facet type does not return a 500 error; the facet is simply skipped."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
@@ -544,4 +544,4 @@ public class FacetConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1718221196
+// LIFERAY-REST-BUILDER-HASH:942718580

@@ -131,9 +131,7 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSegmentsExperienceCompactsPriority()
-		throws Exception {
-
+	public void testAddSegmentsExperienceCompactsPriority() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 

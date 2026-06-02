@@ -13,8 +13,7 @@ import java.net.URL;
  */
 public class PortalTopLevelBuild
 	extends DefaultTopLevelBuild
-	implements AnalyticsCloudBranchInformationBuild,
-			   PluginsBranchInformationBuild, PortalBranchInformationBuild,
+	implements PluginsBranchInformationBuild, PortalBranchInformationBuild,
 			   PortalFixpackReleaseBuild, PortalReleaseBuild {
 
 	public PortalTopLevelBuild(String buildURL, TopLevelBuild topLevelBuild) {
@@ -30,31 +29,6 @@ public class PortalTopLevelBuild
 		}
 
 		return "liferay-portal-ee";
-	}
-
-	@Override
-	public BranchInformation getOSBAsahBranchInformation() {
-		if (fromArchive || !(this instanceof PortalWorkspaceBuild)) {
-			return getBranchInformation("osb.asah");
-		}
-
-		PortalWorkspaceBuild portalWorkspaceBuild = (PortalWorkspaceBuild)this;
-
-		PortalWorkspace portalWorkspace =
-			portalWorkspaceBuild.getPortalWorkspace();
-
-		if (portalWorkspace == null) {
-			return null;
-		}
-
-		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getLiferayOSBAsahWorkspaceGitRepository();
-
-		if (workspaceGitRepository == null) {
-			return null;
-		}
-
-		return new WorkspaceBranchInformation(workspaceGitRepository);
 	}
 
 	@Override

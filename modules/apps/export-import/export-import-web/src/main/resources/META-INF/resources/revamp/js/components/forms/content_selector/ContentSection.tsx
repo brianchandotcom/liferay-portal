@@ -30,34 +30,6 @@ import SectionTags from './SectionTags';
 
 export type SectionSelection = Record<string, HandlerSelection>;
 
-const LOOK_AND_FEEL_CONTROL: PreviewPortletDataHandlerBoolean = {
-	label: Liferay.Language.get('look-and-feel'),
-	name: 'lookAndFeel',
-	previewPortletDataHandlerControls: [
-		{
-			label: Liferay.Language.get('theme-settings'),
-			name: 'themeSettings',
-			type: 'Boolean',
-		},
-		{
-			label: Liferay.Language.get('logo'),
-			name: 'logo',
-			type: 'Boolean',
-		},
-		{
-			label: Liferay.Language.get('site-pages-settings'),
-			name: 'sitePagesSettings',
-			type: 'Boolean',
-		},
-		{
-			label: Liferay.Language.get('site-template-settings'),
-			name: 'siteTemplateSettings',
-			type: 'Boolean',
-		},
-	],
-	type: 'Boolean',
-};
-
 interface ContentSectionProps {
 	commentsAndRatingsEnabled?: boolean;
 	commentsAndRatingsSubtitle?: string;
@@ -81,32 +53,63 @@ export default function ContentSection({
 }: ContentSectionProps) {
 	const checkboxId = useId();
 
-	const portletContextsValue = value || {};
-
-	const isSiteBuilderSection = section.name === SITE_BUILDER_SECTION_KEY;
-
-	const isContentSection = section.name === CONTENT_SECTION_KEY;
-
-	const lookAndFeelApplies = lookAndFeelEnabled && isSiteBuilderSection;
-
 	const commentsAndRatingsApplies =
-		commentsAndRatingsEnabled && isContentSection;
+		commentsAndRatingsEnabled && section.name === CONTENT_SECTION_KEY;
 
-	const portletControls =
+	const previewPortletDataHandlers =
 		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
 			(handler) => ({...handler, type: 'Boolean'})
 		);
 
-	const controls = lookAndFeelApplies
-		? [...portletControls, LOOK_AND_FEEL_CONTROL]
-		: portletControls;
+	const syntheticPreviewPortletDataHandlers = [
+		{
+			applies:
+				lookAndFeelEnabled && section.name === SITE_BUILDER_SECTION_KEY,
+			previewPortletDataHandler: {
+				label: Liferay.Language.get('look-and-feel'),
+				name: 'lookAndFeel',
+				previewPortletDataHandlerControls: [
+					{
+						label: Liferay.Language.get('theme-settings'),
+						name: 'themeSettings',
+						type: 'Boolean',
+					},
+					{
+						label: Liferay.Language.get('logo'),
+						name: 'logo',
+						type: 'Boolean',
+					},
+					{
+						label: Liferay.Language.get('site-pages-settings'),
+						name: 'sitePagesSettings',
+						type: 'Boolean',
+					},
+					{
+						label: Liferay.Language.get('site-template-settings'),
+						name: 'siteTemplateSettings',
+						type: 'Boolean',
+					},
+				],
+				type: 'Boolean',
+			} as PreviewPortletDataHandlerBoolean,
+		},
+	]
+		.filter(({applies}) => applies)
+		.map(({previewPortletDataHandler}) => previewPortletDataHandler);
 
-	const selected = controls.every((context) =>
-		isSelected(portletContextsValue[context.name], context)
+	const allPreviewPortletDataHandlers = [
+		...previewPortletDataHandlers,
+		...syntheticPreviewPortletDataHandlers,
+	];
+
+	const sectionSelection = value || {};
+
+	const allSelected = allPreviewPortletDataHandlers.every((context) =>
+		isSelected(sectionSelection[context.name], context)
 	);
 
-	const hasPortletSelection = portletControls.some((context) =>
-		isSelected(portletContextsValue[context.name], context)
+	const anySelected = allPreviewPortletDataHandlers.some((context) =>
+		isSelected(sectionSelection[context.name], context)
 	);
 
 	return (
@@ -134,21 +137,28 @@ export default function ContentSection({
 					/>
 				)}
 				indeterminate={
-					!selected &&
-					controls.some(
+					!allSelected &&
+					allPreviewPortletDataHandlers.some(
 						(context) =>
-							portletContextsValue[context.name] !== undefined
+							sectionSelection[context.name] !== undefined
 					)
 				}
 				label={section.label}
 				labelClassName="font-weight-bold h3"
 				onToggle={() =>
 					onChange(
-						selected ? undefined : getInitialSelections(controls)
+						allSelected
+							? undefined
+							: getInitialSelections(
+									allPreviewPortletDataHandlers
+								)
 					)
 				}
-				selected={selected}
-				summary={getSelectionSummary(controls, portletContextsValue)}
+				selected={allSelected}
+				summary={getSelectionSummary(
+					allPreviewPortletDataHandlers,
+					sectionSelection
+				)}
 				tags={
 					<SectionTags
 						additionCount={section.additionCount}
@@ -159,14 +169,14 @@ export default function ContentSection({
 				}
 			>
 				<div className="content-section-controls overflow-auto">
-					{controls.map((context) => (
+					{allPreviewPortletDataHandlers.map((context) => (
 						<PortletDataControl
 							control={context}
 							key={context.name}
 							onChange={(controlValue) =>
 								onChange(
 									updateSelection(
-										portletContextsValue,
+										sectionSelection,
 										context.name,
 										controlValue
 									)
@@ -177,24 +187,24 @@ export default function ContentSection({
 							}
 							showDeletions={showDeletions}
 							topLevel
-							value={portletContextsValue[context.name]}
+							value={sectionSelection[context.name]}
 						/>
 					))}
 				</div>
 
-				{commentsAndRatingsApplies && hasPortletSelection && (
+				{commentsAndRatingsApplies && anySelected && (
 					<CommentsAndRatings
 						onChange={(commentsAndRatingsValue) =>
 							onChange(
 								updateSelection(
-									portletContextsValue,
+									sectionSelection,
 									'commentsAndRatings',
 									commentsAndRatingsValue
 								)
 							)
 						}
 						subtitle={commentsAndRatingsSubtitle}
-						value={portletContextsValue.commentsAndRatings}
+						value={sectionSelection.commentsAndRatings}
 					/>
 				)}
 			</CollapsibleGroup>

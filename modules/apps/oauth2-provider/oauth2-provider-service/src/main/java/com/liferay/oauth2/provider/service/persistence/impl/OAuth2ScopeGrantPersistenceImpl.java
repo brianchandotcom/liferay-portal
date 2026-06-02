@@ -860,7 +860,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"",
 				new FinderColumn<>(
 					"oAuth2ScopeGrant.", "oAuth2ApplicationScopeAliasesId",
-					FinderColumn.Type.LONG, "=", true, true,
+					"oA2AScopeAliasesId", FinderColumn.Type.LONG, "=", true,
+					true,
 					OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId));
 
 		_uniquePersistenceFinderByC_O_A_B_S = new UniquePersistenceFinder<>(
@@ -887,7 +888,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 				true, true, OAuth2ScopeGrant::getCompanyId),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "oAuth2ApplicationScopeAliasesId",
-				FinderColumn.Type.LONG, "=", true, true,
+				"oA2AScopeAliasesId", FinderColumn.Type.LONG, "=", true, true,
 				OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "applicationName",
@@ -976,4 +977,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-120918251
+// LIFERAY-SERVICE-BUILDER-HASH:-1597666026

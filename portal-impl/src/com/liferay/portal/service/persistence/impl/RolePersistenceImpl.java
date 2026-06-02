@@ -2712,8 +2712,8 @@ public class RolePersistenceImpl
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					Role::getUuid));
+					"role_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Role::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -2737,8 +2737,8 @@ public class RolePersistenceImpl
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					Role::getUuid),
+					"role_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Role::getUuid),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
@@ -2815,8 +2815,8 @@ public class RolePersistenceImpl
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, Role::getType));
+					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					true, true, Role::getType));
 
 		_collectionPersistenceFinderBySubtype =
 			new FilterCollectionPersistenceFinder<>(
@@ -2887,8 +2887,8 @@ public class RolePersistenceImpl
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
 				new ArrayableFinderColumn<>(
-					"role_.", "type", FinderColumn.Type.INTEGER, "=", false,
-					true, true, Role::getType));
+					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					false, true, true, Role::getType));
 
 		_collectionPersistenceFinderByT_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -2916,8 +2916,8 @@ public class RolePersistenceImpl
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, Role::getType),
+					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					true, true, Role::getType),
 				new FinderColumn<>(
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
@@ -3030,8 +3030,8 @@ public class RolePersistenceImpl
 					"role_.", "classPK", FinderColumn.Type.LONG, "=", false,
 					true, true, Role::getClassPK),
 				new FinderColumn<>(
-					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, Role::getType));
+					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					true, true, Role::getType));
 
 		_uniquePersistenceFinderByC_C_C_T = new UniquePersistenceFinder<>(
 			this,
@@ -3055,8 +3055,8 @@ public class RolePersistenceImpl
 				"role_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Role::getClassPK),
 			new FinderColumn<>(
-				"role_.", "type", FinderColumn.Type.INTEGER, "=", true, true,
-				Role::getType));
+				"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=", true,
+				true, Role::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -3125,4 +3125,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1156088751
+// LIFERAY-SERVICE-BUILDER-HASH:1280995644

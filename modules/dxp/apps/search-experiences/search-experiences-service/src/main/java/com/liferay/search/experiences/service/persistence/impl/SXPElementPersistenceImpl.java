@@ -1243,8 +1243,8 @@ public class SXPElementPersistenceImpl
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, SXPElement::getUuid));
+					"sxpElement.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SXPElement::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1268,8 +1268,8 @@ public class SXPElementPersistenceImpl
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, SXPElement::getUuid),
+					"sxpElement.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SXPElement::getUuid),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
@@ -1360,8 +1360,8 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
 				new FinderColumn<>(
-					"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, SXPElement::getType));
+					"sxpElement.", "type", "type_", FinderColumn.Type.INTEGER,
+					"=", true, true, SXPElement::getType));
 
 		_collectionPersistenceFinderByC_T_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -1395,8 +1395,8 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
 				new FinderColumn<>(
-					"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, SXPElement::getType),
+					"sxpElement.", "type", "type_", FinderColumn.Type.INTEGER,
+					"=", true, true, SXPElement::getType),
 				new FinderColumn<>(
 					"sxpElement.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, SXPElement::getStatus));
@@ -1488,4 +1488,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1018310809
+// LIFERAY-SERVICE-BUILDER-HASH:808684812

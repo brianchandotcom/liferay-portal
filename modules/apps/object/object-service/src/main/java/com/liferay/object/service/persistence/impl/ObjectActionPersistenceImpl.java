@@ -1179,8 +1179,8 @@ public class ObjectActionPersistenceImpl
 			_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 			ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectAction.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectAction::getUuid));
+				"objectAction.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ObjectAction::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1204,8 +1204,8 @@ public class ObjectActionPersistenceImpl
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectAction.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ObjectAction::getUuid),
+					"objectAction.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, ObjectAction::getUuid),
 				new FinderColumn<>(
 					"objectAction.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectAction::getCompanyId));
@@ -1283,8 +1283,9 @@ public class ObjectActionPersistenceImpl
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, ObjectAction::isActive),
+					"objectAction.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionExecutorKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1359,8 +1360,9 @@ public class ObjectActionPersistenceImpl
 					"objectAction.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectAction::getCompanyId),
 				new FinderColumn<>(
-					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, ObjectAction::isActive),
+					"objectAction.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionTriggerKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1412,8 +1414,9 @@ public class ObjectActionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectAction::getObjectDefinitionId),
 				new FinderColumn<>(
-					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, ObjectAction::isActive),
+					"objectAction.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionTriggerKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1440,8 +1443,8 @@ public class ObjectActionPersistenceImpl
 				"objectAction.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectAction::getObjectDefinitionId),
 			new FinderColumn<>(
-				"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				true, ObjectAction::isActive),
+				"objectAction.", "active", "active_", FinderColumn.Type.BOOLEAN,
+				"=", true, true, ObjectAction::isActive),
 			new FinderColumn<>(
 				"objectAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ObjectAction::getName),
@@ -1519,4 +1522,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1464235914
+// LIFERAY-SERVICE-BUILDER-HASH:-276436234

@@ -1504,8 +1504,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			DEDataDefinitionFieldLinkModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"deDataDefinitionFieldLink.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, DEDataDefinitionFieldLink::getUuid));
+				"deDataDefinitionFieldLink.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				DEDataDefinitionFieldLink::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1517,8 +1518,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				DEDataDefinitionFieldLink::getGroupId),
 			_SQL_SELECT_DEDATADEFINITIONFIELDLINK_WHERE, "",
 			new FinderColumn<>(
-				"deDataDefinitionFieldLink.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, DEDataDefinitionFieldLink::getUuid),
+				"deDataDefinitionFieldLink.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				DEDataDefinitionFieldLink::getUuid),
 			new FinderColumn<>(
 				"deDataDefinitionFieldLink.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, DEDataDefinitionFieldLink::getGroupId));
@@ -1547,7 +1549,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				DEDataDefinitionFieldLinkModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"deDataDefinitionFieldLink.", "uuid",
+					"deDataDefinitionFieldLink.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					DEDataDefinitionFieldLink::getUuid),
 				new FinderColumn<>(
@@ -1843,4 +1845,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:117063824
+// LIFERAY-SERVICE-BUILDER-HASH:1311391270

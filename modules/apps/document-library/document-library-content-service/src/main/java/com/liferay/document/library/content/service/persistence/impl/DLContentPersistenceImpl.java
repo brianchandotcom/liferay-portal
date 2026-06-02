@@ -835,8 +835,8 @@ public class DLContentPersistenceImpl
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getRepositoryId),
 			new FinderColumn<>(
-				"dlContent.", "path", FinderColumn.Type.STRING, "=", true, true,
-				DLContent::getPath));
+				"dlContent.", "path", "path_", FinderColumn.Type.STRING, "=",
+				true, true, DLContent::getPath));
 
 		_collectionPersistenceFinderByC_R_LikeP =
 			new CollectionPersistenceFinder<>(
@@ -867,8 +867,8 @@ public class DLContentPersistenceImpl
 					"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, DLContent::getRepositoryId),
 				new FinderColumn<>(
-					"dlContent.", "path", FinderColumn.Type.STRING, "LIKE",
-					true, true, DLContent::getPath));
+					"dlContent.", "path", "path_", FinderColumn.Type.STRING,
+					"LIKE", true, true, DLContent::getPath));
 
 		_uniquePersistenceFinderByC_R_P_V = new UniquePersistenceFinder<>(
 			this,
@@ -891,8 +891,8 @@ public class DLContentPersistenceImpl
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getRepositoryId),
 			new FinderColumn<>(
-				"dlContent.", "path", FinderColumn.Type.STRING, "=", true, true,
-				DLContent::getPath),
+				"dlContent.", "path", "path_", FinderColumn.Type.STRING, "=",
+				true, true, DLContent::getPath),
 			new FinderColumn<>(
 				"dlContent.", "version", FinderColumn.Type.STRING, "=", true,
 				true, DLContent::getVersion));
@@ -969,4 +969,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1126737421
+// LIFERAY-SERVICE-BUILDER-HASH:897256232

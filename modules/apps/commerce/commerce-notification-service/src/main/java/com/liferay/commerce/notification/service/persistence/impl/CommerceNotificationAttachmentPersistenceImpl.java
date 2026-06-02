@@ -699,7 +699,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceNotificationAttachment.", "uuid",
+				"commerceNotificationAttachment.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationAttachment::getUuid));
 
@@ -713,7 +713,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				CommerceNotificationAttachment::getGroupId),
 			_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE, "",
 			new FinderColumn<>(
-				"commerceNotificationAttachment.", "uuid",
+				"commerceNotificationAttachment.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationAttachment::getUuid),
 			new FinderColumn<>(
@@ -745,7 +745,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceNotificationAttachment.", "uuid",
+					"commerceNotificationAttachment.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceNotificationAttachment::getUuid),
 				new FinderColumn<>(
@@ -781,8 +781,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceNotificationAttachment.",
-					"commerceNotificationQueueEntryId", FinderColumn.Type.LONG,
-					"=", true, true,
+					"commerceNotificationQueueEntryId",
+					"CNotificationQueueEntryId", FinderColumn.Type.LONG, "=",
+					true, true,
 					CommerceNotificationAttachment::
 						getCommerceNotificationQueueEntryId));
 
@@ -861,4 +862,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:262382236
+// LIFERAY-SERVICE-BUILDER-HASH:1372537671

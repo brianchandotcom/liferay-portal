@@ -1038,8 +1038,9 @@ public class OAuth2ApplicationPersistenceImpl
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, OAuth2Application::getUuid));
+					"oAuth2Application.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					OAuth2Application::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1065,8 +1066,9 @@ public class OAuth2ApplicationPersistenceImpl
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, OAuth2Application::getUuid),
+					"oAuth2Application.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					OAuth2Application::getUuid),
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
@@ -1237,4 +1239,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1178276902
+// LIFERAY-SERVICE-BUILDER-HASH:1327684006

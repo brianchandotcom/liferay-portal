@@ -870,8 +870,8 @@ public class MBThreadFlagPersistenceImpl
 			_SQL_SELECT_MBTHREADFLAG_WHERE, _SQL_COUNT_MBTHREADFLAG_WHERE,
 			MBThreadFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"mbThreadFlag.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBThreadFlag::getUuid));
+				"mbThreadFlag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBThreadFlag::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -883,8 +883,8 @@ public class MBThreadFlagPersistenceImpl
 				MBThreadFlag::getGroupId),
 			_SQL_SELECT_MBTHREADFLAG_WHERE, "",
 			new FinderColumn<>(
-				"mbThreadFlag.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBThreadFlag::getUuid),
+				"mbThreadFlag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBThreadFlag::getUuid),
 			new FinderColumn<>(
 				"mbThreadFlag.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBThreadFlag::getGroupId));
@@ -911,8 +911,8 @@ public class MBThreadFlagPersistenceImpl
 				_SQL_SELECT_MBTHREADFLAG_WHERE, _SQL_COUNT_MBTHREADFLAG_WHERE,
 				MBThreadFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbThreadFlag.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, MBThreadFlag::getUuid),
+					"mbThreadFlag.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, MBThreadFlag::getUuid),
 				new FinderColumn<>(
 					"mbThreadFlag.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBThreadFlag::getCompanyId));
@@ -1054,4 +1054,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:583916997
+// LIFERAY-SERVICE-BUILDER-HASH:1146915781

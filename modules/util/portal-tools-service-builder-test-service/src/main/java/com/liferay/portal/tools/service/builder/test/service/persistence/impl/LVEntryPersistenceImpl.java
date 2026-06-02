@@ -2537,8 +2537,8 @@ public class LVEntryPersistenceImpl
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				LVEntry::getUuid));
+				"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, LVEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
@@ -2568,8 +2568,8 @@ public class LVEntryPersistenceImpl
 				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, LVEntry::getUuid),
+					"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 					true, LVEntry::isHead));
@@ -2596,8 +2596,8 @@ public class LVEntryPersistenceImpl
 				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, LVEntry::getUuid),
+					"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getGroupId));
@@ -2615,8 +2615,8 @@ public class LVEntryPersistenceImpl
 				LVEntry::isHead),
 			_SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
-				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				LVEntry::getUuid),
+				"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, LVEntry::getUuid),
 			new FinderColumn<>(
 				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getGroupId),
@@ -2646,8 +2646,8 @@ public class LVEntryPersistenceImpl
 				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, LVEntry::getUuid),
+					"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getCompanyId));
@@ -2685,8 +2685,8 @@ public class LVEntryPersistenceImpl
 				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, LVEntry::getUuid),
+					"lvEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getCompanyId),
@@ -2857,4 +2857,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1654256443
+// LIFERAY-SERVICE-BUILDER-HASH:246317469

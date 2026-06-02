@@ -1602,8 +1602,9 @@ public class FragmentCompositionPersistenceImpl
 			FragmentCompositionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"fragmentComposition.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, FragmentComposition::getUuid));
+				"fragmentComposition.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				FragmentComposition::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1615,8 +1616,9 @@ public class FragmentCompositionPersistenceImpl
 				FragmentComposition::getGroupId),
 			_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE, "",
 			new FinderColumn<>(
-				"fragmentComposition.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, FragmentComposition::getUuid),
+				"fragmentComposition.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				FragmentComposition::getUuid),
 			new FinderColumn<>(
 				"fragmentComposition.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentComposition::getGroupId));
@@ -1645,8 +1647,9 @@ public class FragmentCompositionPersistenceImpl
 				FragmentCompositionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentComposition.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentComposition::getUuid),
+					"fragmentComposition.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentComposition::getUuid),
 				new FinderColumn<>(
 					"fragmentComposition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentComposition::getCompanyId));
@@ -1975,4 +1978,4 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1047747211
+// LIFERAY-SERVICE-BUILDER-HASH:1646108615

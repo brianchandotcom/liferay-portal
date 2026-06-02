@@ -1078,8 +1078,8 @@ public class DDLRecordPersistenceImpl
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				DDLRecord::getUuid));
+				"ddlRecord.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDLRecord::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1090,8 +1090,8 @@ public class DDLRecordPersistenceImpl
 				convertNullFunction(DDLRecord::getUuid), DDLRecord::getGroupId),
 			_SQL_SELECT_DDLRECORD_WHERE, "",
 			new FinderColumn<>(
-				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				DDLRecord::getUuid),
+				"ddlRecord.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDLRecord::getUuid),
 			new FinderColumn<>(
 				"ddlRecord.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getGroupId));
@@ -1118,8 +1118,8 @@ public class DDLRecordPersistenceImpl
 				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, DDLRecord::getUuid),
+					"ddlRecord.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DDLRecord::getUuid),
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
@@ -1329,4 +1329,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-40590516
+// LIFERAY-SERVICE-BUILDER-HASH:1694984844

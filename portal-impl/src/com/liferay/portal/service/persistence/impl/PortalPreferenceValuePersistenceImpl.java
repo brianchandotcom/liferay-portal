@@ -906,8 +906,9 @@ public class PortalPreferenceValuePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				PortalPreferenceValue::getPortalPreferencesId),
 			new FinderColumn<>(
-				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
-				true, true, PortalPreferenceValue::getKey),
+				"portalPreferenceValue.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				PortalPreferenceValue::getKey),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
@@ -933,11 +934,13 @@ public class PortalPreferenceValuePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				PortalPreferenceValue::getPortalPreferencesId),
 			new FinderColumn<>(
-				"portalPreferenceValue.", "index", FinderColumn.Type.INTEGER,
-				"=", true, true, PortalPreferenceValue::getIndex),
+				"portalPreferenceValue.", "index", "index_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				PortalPreferenceValue::getIndex),
 			new FinderColumn<>(
-				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
-				true, true, PortalPreferenceValue::getKey),
+				"portalPreferenceValue.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				PortalPreferenceValue::getKey),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
@@ -987,8 +990,9 @@ public class PortalPreferenceValuePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PortalPreferenceValue::getPortalPreferencesId),
 				new FinderColumn<>(
-					"portalPreferenceValue.", "key", FinderColumn.Type.STRING,
-					"=", true, true, PortalPreferenceValue::getKey),
+					"portalPreferenceValue.", "key", "key_",
+					FinderColumn.Type.STRING, "=", true, true,
+					PortalPreferenceValue::getKey),
 				new FinderColumn<>(
 					"portalPreferenceValue.", "namespace",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1034,4 +1038,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1751816539
+// LIFERAY-SERVICE-BUILDER-HASH:402200360

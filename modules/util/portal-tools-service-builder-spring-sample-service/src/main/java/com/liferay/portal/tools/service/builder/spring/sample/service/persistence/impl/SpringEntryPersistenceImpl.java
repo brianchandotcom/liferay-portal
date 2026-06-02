@@ -551,8 +551,8 @@ public class SpringEntryPersistenceImpl
 			_SQL_SELECT_SPRINGENTRY_WHERE, _SQL_COUNT_SPRINGENTRY_WHERE,
 			SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"springEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SpringEntry::getUuid));
+				"springEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, SpringEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -576,8 +576,8 @@ public class SpringEntryPersistenceImpl
 				_SQL_SELECT_SPRINGENTRY_WHERE, _SQL_COUNT_SPRINGENTRY_WHERE,
 				SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"springEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, SpringEntry::getUuid),
+					"springEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SpringEntry::getUuid),
 				new FinderColumn<>(
 					"springEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SpringEntry::getCompanyId));
@@ -646,4 +646,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:495192722
+// LIFERAY-SERVICE-BUILDER-HASH:-83427256

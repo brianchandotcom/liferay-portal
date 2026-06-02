@@ -1099,8 +1099,9 @@ public class ObjectValidationRulePersistenceImpl
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"objectValidationRule.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ObjectValidationRule::getUuid));
+				"objectValidationRule.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				ObjectValidationRule::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1126,8 +1127,9 @@ public class ObjectValidationRulePersistenceImpl
 				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectValidationRule.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, ObjectValidationRule::getUuid),
+					"objectValidationRule.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectValidationRule::getUuid),
 				new FinderColumn<>(
 					"objectValidationRule.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1191,8 +1193,9 @@ public class ObjectValidationRulePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ObjectValidationRule::getObjectDefinitionId),
 			new FinderColumn<>(
-				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
-				"=", true, true, ObjectValidationRule::isActive));
+				"objectValidationRule.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				ObjectValidationRule::isActive));
 
 		_collectionPersistenceFinderByODI_E = new CollectionPersistenceFinder<>(
 			this,
@@ -1281,8 +1284,9 @@ public class ObjectValidationRulePersistenceImpl
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
-				"=", true, true, ObjectValidationRule::isActive),
+				"objectValidationRule.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				ObjectValidationRule::isActive),
 			new FinderColumn<>(
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getEngine));
@@ -1385,4 +1389,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1995233235
+// LIFERAY-SERVICE-BUILDER-HASH:-1843287964

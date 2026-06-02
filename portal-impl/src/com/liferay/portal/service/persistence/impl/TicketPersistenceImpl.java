@@ -734,8 +734,8 @@ public class TicketPersistenceImpl
 				1, false, convertNullFunction(Ticket::getKey)),
 			_SQL_SELECT_TICKET_WHERE, "",
 			new FinderColumn<>(
-				"ticket.", "key", FinderColumn.Type.STRING, "=", true, true,
-				Ticket::getKey));
+				"ticket.", "key", "key_", FinderColumn.Type.STRING, "=", true,
+				true, Ticket::getKey));
 
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
 			this,
@@ -807,8 +807,8 @@ public class TicketPersistenceImpl
 					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Ticket::getCompanyId),
 				new FinderColumn<>(
-					"ticket.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, Ticket::getType),
+					"ticket.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					true, true, Ticket::getType),
 				new FinderColumn<>(
 					"ticket.", "emailAddress", FinderColumn.Type.STRING, "=",
 					true, true, Ticket::getEmailAddress));
@@ -846,8 +846,8 @@ public class TicketPersistenceImpl
 				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getClassPK),
 			new FinderColumn<>(
-				"ticket.", "type", FinderColumn.Type.INTEGER, "=", true, true,
-				Ticket::getType));
+				"ticket.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, Ticket::getType));
 
 		_collectionPersistenceFinderByC_C_C_T =
 			new CollectionPersistenceFinder<>(
@@ -896,8 +896,8 @@ public class TicketPersistenceImpl
 					"ticket.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, Ticket::getClassPK),
 				new FinderColumn<>(
-					"ticket.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, Ticket::getType));
+					"ticket.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+					true, true, Ticket::getType));
 
 		TicketUtil.setPersistence(this);
 	}
@@ -935,4 +935,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:951635519
+// LIFERAY-SERVICE-BUILDER-HASH:-254122763

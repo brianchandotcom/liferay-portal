@@ -1710,8 +1710,8 @@ public class SharingEntryPersistenceImpl
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
 			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SharingEntry::getUuid));
+				"sharingEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, SharingEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1723,8 +1723,8 @@ public class SharingEntryPersistenceImpl
 				SharingEntry::getGroupId),
 			_SQL_SELECT_SHARINGENTRY_WHERE, "",
 			new FinderColumn<>(
-				"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SharingEntry::getUuid),
+				"sharingEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, SharingEntry::getUuid),
 			new FinderColumn<>(
 				"sharingEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getGroupId));
@@ -1751,8 +1751,8 @@ public class SharingEntryPersistenceImpl
 				_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
 				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SharingEntry::getUuid),
+					"sharingEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SharingEntry::getUuid),
 				new FinderColumn<>(
 					"sharingEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getCompanyId));
@@ -2134,4 +2134,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1057496362
+// LIFERAY-SERVICE-BUILDER-HASH:1460462191

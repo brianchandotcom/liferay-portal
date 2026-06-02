@@ -1171,8 +1171,8 @@ public class PhonePersistenceImpl
 			_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"phone.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Phone::getUuid));
+				"phone.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Phone::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1196,8 +1196,8 @@ public class PhonePersistenceImpl
 				_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 				PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"phone.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					Phone::getUuid),
+					"phone.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Phone::getUuid),
 				new FinderColumn<>(
 					"phone.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Phone::getCompanyId));
@@ -1362,8 +1362,8 @@ public class PhonePersistenceImpl
 					"phone.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, Phone::getClassPK),
 				new FinderColumn<>(
-					"phone.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Phone::isPrimary));
+					"phone.", "primary", "primary_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Phone::isPrimary));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1417,4 +1417,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-945442220
+// LIFERAY-SERVICE-BUILDER-HASH:1180622161

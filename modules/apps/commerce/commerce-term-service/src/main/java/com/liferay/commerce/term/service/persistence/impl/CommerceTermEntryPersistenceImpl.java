@@ -1896,8 +1896,9 @@ public class CommerceTermEntryPersistenceImpl
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceTermEntry::getUuid));
+					"commerceTermEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceTermEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1923,8 +1924,9 @@ public class CommerceTermEntryPersistenceImpl
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceTermEntry::getUuid),
+					"commerceTermEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceTermEntry::getUuid),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId));
@@ -1960,8 +1962,9 @@ public class CommerceTermEntryPersistenceImpl
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
 				new FinderColumn<>(
-					"commerceTermEntry.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CommerceTermEntry::isActive));
+					"commerceTermEntry.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CommerceTermEntry::isActive));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this,
@@ -2003,8 +2006,9 @@ public class CommerceTermEntryPersistenceImpl
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
 				new FinderColumn<>(
-					"commerceTermEntry.", "type", FinderColumn.Type.STRING,
-					"LIKE", true, true, CommerceTermEntry::getType));
+					"commerceTermEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "LIKE", true, true,
+					CommerceTermEntry::getType));
 
 		_collectionPersistenceFinderByLtD_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -2095,11 +2099,13 @@ public class CommerceTermEntryPersistenceImpl
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
 				new FinderColumn<>(
-					"commerceTermEntry.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CommerceTermEntry::isActive),
+					"commerceTermEntry.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CommerceTermEntry::isActive),
 				new FinderColumn<>(
-					"commerceTermEntry.", "type", FinderColumn.Type.STRING,
-					"LIKE", true, true, CommerceTermEntry::getType));
+					"commerceTermEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "LIKE", true, true,
+					CommerceTermEntry::getType));
 
 		_uniquePersistenceFinderByC_P_T = new UniquePersistenceFinder<>(
 			this,
@@ -2120,8 +2126,8 @@ public class CommerceTermEntryPersistenceImpl
 				"commerceTermEntry.", "priority", FinderColumn.Type.DOUBLE, "=",
 				true, true, CommerceTermEntry::getPriority),
 			new FinderColumn<>(
-				"commerceTermEntry.", "type", FinderColumn.Type.STRING, "=",
-				true, true, CommerceTermEntry::getType));
+				"commerceTermEntry.", "type", "type_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceTermEntry::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -2215,4 +2221,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:847475961
+// LIFERAY-SERVICE-BUILDER-HASH:1631532366

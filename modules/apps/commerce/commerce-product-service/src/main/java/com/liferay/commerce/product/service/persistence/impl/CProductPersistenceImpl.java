@@ -848,8 +848,8 @@ public class CProductPersistenceImpl
 			_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
 			CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				CProduct::getUuid));
+				"cProduct.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, CProduct::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -860,8 +860,8 @@ public class CProductPersistenceImpl
 				convertNullFunction(CProduct::getUuid), CProduct::getGroupId),
 			_SQL_SELECT_CPRODUCT_WHERE, "",
 			new FinderColumn<>(
-				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				CProduct::getUuid),
+				"cProduct.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, CProduct::getUuid),
 			new FinderColumn<>(
 				"cProduct.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				CProduct::getGroupId));
@@ -888,8 +888,8 @@ public class CProductPersistenceImpl
 				_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
 				CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, CProduct::getUuid),
+					"cProduct.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, CProduct::getUuid),
 				new FinderColumn<>(
 					"cProduct.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CProduct::getCompanyId));
@@ -1007,4 +1007,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:494230861
+// LIFERAY-SERVICE-BUILDER-HASH:-999408944

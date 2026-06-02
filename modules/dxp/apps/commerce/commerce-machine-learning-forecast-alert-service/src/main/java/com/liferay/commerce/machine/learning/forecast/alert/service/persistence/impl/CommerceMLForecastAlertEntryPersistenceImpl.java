@@ -1491,7 +1491,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceMLForecastAlertEntry.", "uuid",
+				"commerceMLForecastAlertEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceMLForecastAlertEntry::getUuid));
 
@@ -1519,7 +1519,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceMLForecastAlertEntry.", "uuid",
+					"commerceMLForecastAlertEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceMLForecastAlertEntry::getUuid),
 				new FinderColumn<>(
@@ -1774,4 +1774,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-430824598
+// LIFERAY-SERVICE-BUILDER-HASH:1578784921

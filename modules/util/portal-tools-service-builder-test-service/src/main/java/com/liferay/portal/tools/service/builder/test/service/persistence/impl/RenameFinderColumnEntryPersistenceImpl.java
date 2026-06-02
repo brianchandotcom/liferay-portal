@@ -353,4 +353,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:334149941
+// LIFERAY-SERVICE-BUILDER-HASH:-819697562

@@ -1759,8 +1759,8 @@ public class AddressPersistenceImpl
 			_SQL_SELECT_ADDRESS_WHERE, _SQL_COUNT_ADDRESS_WHERE,
 			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"address.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Address::getUuid));
+				"address.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, Address::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1784,8 +1784,8 @@ public class AddressPersistenceImpl
 				_SQL_SELECT_ADDRESS_WHERE, _SQL_COUNT_ADDRESS_WHERE,
 				AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"address.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Address::getUuid),
+					"address.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Address::getUuid),
 				new FinderColumn<>(
 					"address.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getCompanyId));
@@ -2128,8 +2128,9 @@ public class AddressPersistenceImpl
 					"address.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, Address::getClassPK),
 				new FinderColumn<>(
-					"address.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Address::isPrimary));
+					"address.", "primary", "primary_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					Address::isPrimary));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -2183,4 +2184,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1781356374
+// LIFERAY-SERVICE-BUILDER-HASH:-1225142639

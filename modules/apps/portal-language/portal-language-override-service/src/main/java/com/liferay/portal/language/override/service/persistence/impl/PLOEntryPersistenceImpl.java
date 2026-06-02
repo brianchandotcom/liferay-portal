@@ -695,8 +695,8 @@ public class PLOEntryPersistenceImpl
 				"ploEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, PLOEntry::getCompanyId),
 			new FinderColumn<>(
-				"ploEntry.", "key", FinderColumn.Type.STRING, "=", true, true,
-				PLOEntry::getKey));
+				"ploEntry.", "key", "key_", FinderColumn.Type.STRING, "=", true,
+				true, PLOEntry::getKey));
 
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
 			this,
@@ -741,8 +741,8 @@ public class PLOEntryPersistenceImpl
 				"ploEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, PLOEntry::getCompanyId),
 			new FinderColumn<>(
-				"ploEntry.", "key", FinderColumn.Type.STRING, "=", true, true,
-				PLOEntry::getKey),
+				"ploEntry.", "key", "key_", FinderColumn.Type.STRING, "=", true,
+				true, PLOEntry::getKey),
 			new FinderColumn<>(
 				"ploEntry.", "languageId", FinderColumn.Type.STRING, "=", true,
 				true, PLOEntry::getLanguageId));
@@ -816,4 +816,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-284522794
+// LIFERAY-SERVICE-BUILDER-HASH:1956521859

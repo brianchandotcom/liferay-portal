@@ -1171,8 +1171,9 @@ public class CommerceCatalogPersistenceImpl
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceCatalog::getUuid));
+					"commerceCatalog.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceCatalog::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1198,8 +1199,9 @@ public class CommerceCatalogPersistenceImpl
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceCatalog::getUuid),
+					"commerceCatalog.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceCatalog::getUuid),
 				new FinderColumn<>(
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId));
@@ -1292,8 +1294,9 @@ public class CommerceCatalogPersistenceImpl
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId),
 				new FinderColumn<>(
-					"commerceCatalog.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CommerceCatalog::isSystem));
+					"commerceCatalog.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CommerceCatalog::isSystem));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1385,4 +1388,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1782236408
+// LIFERAY-SERVICE-BUILDER-HASH:-1415829913

@@ -904,8 +904,9 @@ public class LayoutPrototypePersistenceImpl
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"layoutPrototype.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, LayoutPrototype::getUuid));
+					"layoutPrototype.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					LayoutPrototype::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -931,8 +932,9 @@ public class LayoutPrototypePersistenceImpl
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"layoutPrototype.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, LayoutPrototype::getUuid),
+					"layoutPrototype.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					LayoutPrototype::getUuid),
 				new FinderColumn<>(
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId));
@@ -995,8 +997,9 @@ public class LayoutPrototypePersistenceImpl
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId),
 				new FinderColumn<>(
-					"layoutPrototype.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, LayoutPrototype::isActive));
+					"layoutPrototype.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					LayoutPrototype::isActive));
 
 		LayoutPrototypeUtil.setPersistence(this);
 	}
@@ -1031,4 +1034,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-926395034
+// LIFERAY-SERVICE-BUILDER-HASH:1305492585

@@ -1267,7 +1267,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"assetListEntryAssetEntryRel.", "uuid",
+				"assetListEntryAssetEntryRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				AssetListEntryAssetEntryRel::getUuid));
 
@@ -1281,7 +1281,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				AssetListEntryAssetEntryRel::getGroupId),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE, "",
 			new FinderColumn<>(
-				"assetListEntryAssetEntryRel.", "uuid",
+				"assetListEntryAssetEntryRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				AssetListEntryAssetEntryRel::getUuid),
 			new FinderColumn<>(
@@ -1313,7 +1313,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetListEntryAssetEntryRel.", "uuid",
+					"assetListEntryAssetEntryRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					AssetListEntryAssetEntryRel::getUuid),
 				new FinderColumn<>(
@@ -1556,4 +1556,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-549384162
+// LIFERAY-SERVICE-BUILDER-HASH:460574096

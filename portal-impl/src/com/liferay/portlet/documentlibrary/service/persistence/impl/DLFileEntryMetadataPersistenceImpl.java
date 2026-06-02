@@ -947,8 +947,9 @@ public class DLFileEntryMetadataPersistenceImpl
 			DLFileEntryMetadataModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"dlFileEntryMetadata.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, DLFileEntryMetadata::getUuid));
+				"dlFileEntryMetadata.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				DLFileEntryMetadata::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -974,8 +975,9 @@ public class DLFileEntryMetadataPersistenceImpl
 				DLFileEntryMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"dlFileEntryMetadata.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, DLFileEntryMetadata::getUuid),
+					"dlFileEntryMetadata.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DLFileEntryMetadata::getUuid),
 				new FinderColumn<>(
 					"dlFileEntryMetadata.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntryMetadata::getCompanyId));
@@ -1109,4 +1111,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1720836281
+// LIFERAY-SERVICE-BUILDER-HASH:203457126

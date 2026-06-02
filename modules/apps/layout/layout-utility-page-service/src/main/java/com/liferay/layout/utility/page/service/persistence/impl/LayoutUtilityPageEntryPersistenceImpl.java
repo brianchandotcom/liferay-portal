@@ -1903,8 +1903,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutUtilityPageEntry::getUuid));
+				"layoutUtilityPageEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutUtilityPageEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1916,8 +1917,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				LayoutUtilityPageEntry::getGroupId),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
-				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutUtilityPageEntry::getUuid),
+				"layoutUtilityPageEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutUtilityPageEntry::getUuid),
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutUtilityPageEntry::getGroupId));
@@ -1946,8 +1948,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, LayoutUtilityPageEntry::getUuid),
+					"layoutUtilityPageEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					LayoutUtilityPageEntry::getUuid),
 				new FinderColumn<>(
 					"layoutUtilityPageEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2020,8 +2023,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getGroupId),
 				new ArrayableFinderColumn<>(
-					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
-					"=", false, true, true, LayoutUtilityPageEntry::getType));
+					"layoutUtilityPageEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "=", false, true, true,
+					LayoutUtilityPageEntry::getType));
 
 		_collectionPersistenceFinderByG_D_T =
 			new FilterCollectionPersistenceFinder<>(
@@ -2071,8 +2075,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					LayoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry),
 				new FinderColumn<>(
-					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
-					"=", true, true, LayoutUtilityPageEntry::getType));
+					"layoutUtilityPageEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					LayoutUtilityPageEntry::getType));
 
 		_uniquePersistenceFinderByG_N_T = new UniquePersistenceFinder<>(
 			this,
@@ -2094,8 +2099,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "name", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getName),
 			new FinderColumn<>(
-				"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
-				"=", true, true, LayoutUtilityPageEntry::getType));
+				"layoutUtilityPageEntry.", "type", "type_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutUtilityPageEntry::getType));
 
 		_collectionPersistenceFinderByG_LikeN_T =
 			new FilterCollectionPersistenceFinder<>(
@@ -2129,8 +2135,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "name", FinderColumn.Type.STRING,
 					"LIKE", true, true, LayoutUtilityPageEntry::getName),
 				new ArrayableFinderColumn<>(
-					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
-					"=", false, true, true, LayoutUtilityPageEntry::getType));
+					"layoutUtilityPageEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "=", false, true, true,
+					LayoutUtilityPageEntry::getType));
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this,
@@ -2222,4 +2229,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1506140714
+// LIFERAY-SERVICE-BUILDER-HASH:-1204636348

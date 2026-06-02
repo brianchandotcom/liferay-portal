@@ -782,8 +782,8 @@ public class DepotEntryPersistenceImpl
 			_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
 			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DepotEntry::getUuid));
+				"depotEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DepotEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -795,8 +795,8 @@ public class DepotEntryPersistenceImpl
 				DepotEntry::getGroupId),
 			_SQL_SELECT_DEPOTENTRY_WHERE, "",
 			new FinderColumn<>(
-				"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DepotEntry::getUuid),
+				"depotEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DepotEntry::getUuid),
 			new FinderColumn<>(
 				"depotEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntry::getGroupId));
@@ -823,8 +823,8 @@ public class DepotEntryPersistenceImpl
 				_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
 				DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, DepotEntry::getUuid),
+					"depotEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DepotEntry::getUuid),
 				new FinderColumn<>(
 					"depotEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntry::getCompanyId));
@@ -864,8 +864,8 @@ public class DepotEntryPersistenceImpl
 				"depotEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntry::getCompanyId),
 			new FinderColumn<>(
-				"depotEntry.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, DepotEntry::getType));
+				"depotEntry.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, DepotEntry::getType));
 
 		DepotEntryUtil.setPersistence(this);
 	}
@@ -939,4 +939,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2007636878
+// LIFERAY-SERVICE-BUILDER-HASH:2107543980

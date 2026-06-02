@@ -1711,8 +1711,8 @@ public class COREntryPersistenceImpl
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, COREntry::getUuid));
+					"corEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, COREntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1736,8 +1736,8 @@ public class COREntryPersistenceImpl
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
 				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, COREntry::getUuid),
+					"corEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, COREntry::getUuid),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId));
@@ -1771,8 +1771,8 @@ public class COREntryPersistenceImpl
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
 				new FinderColumn<>(
-					"corEntry.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, COREntry::isActive));
+					"corEntry.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, COREntry::isActive));
 
 		_collectionPersistenceFinderByC_LikeType =
 			new FilterCollectionPersistenceFinder<>(
@@ -1796,8 +1796,8 @@ public class COREntryPersistenceImpl
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
 				new FinderColumn<>(
-					"corEntry.", "type", FinderColumn.Type.STRING, "LIKE", true,
-					true, COREntry::getType));
+					"corEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"LIKE", true, true, COREntry::getType));
 
 		_collectionPersistenceFinderByLtD_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -1881,11 +1881,11 @@ public class COREntryPersistenceImpl
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
 				new FinderColumn<>(
-					"corEntry.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, COREntry::isActive),
+					"corEntry.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, COREntry::isActive),
 				new FinderColumn<>(
-					"corEntry.", "type", FinderColumn.Type.STRING, "LIKE", true,
-					true, COREntry::getType));
+					"corEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"LIKE", true, true, COREntry::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1972,4 +1972,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-961447443
+// LIFERAY-SERVICE-BUILDER-HASH:1796039457

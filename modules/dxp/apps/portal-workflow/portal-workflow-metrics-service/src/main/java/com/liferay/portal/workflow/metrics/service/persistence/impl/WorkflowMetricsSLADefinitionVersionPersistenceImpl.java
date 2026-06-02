@@ -794,7 +794,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"workflowMetricsSLADefinitionVersion.", "uuid",
+				"workflowMetricsSLADefinitionVersion.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getUuid));
 
@@ -809,7 +809,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				WorkflowMetricsSLADefinitionVersion::getGroupId),
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
-				"workflowMetricsSLADefinitionVersion.", "uuid",
+				"workflowMetricsSLADefinitionVersion.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getUuid),
 			new FinderColumn<>(
@@ -841,7 +841,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"workflowMetricsSLADefinitionVersion.", "uuid",
+					"workflowMetricsSLADefinitionVersion.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					WorkflowMetricsSLADefinitionVersion::getUuid),
 				new FinderColumn<>(
@@ -877,8 +877,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinitionVersion.",
-					"workflowMetricsSLADefinitionId", FinderColumn.Type.LONG,
-					"=", true, true,
+					"workflowMetricsSLADefinitionId", "wmSLADefinitionId",
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinitionVersion::
 						getWorkflowMetricsSLADefinitionId));
 
@@ -899,8 +899,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				WorkflowMetricsSLADefinitionVersion::getVersion),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.",
-				"workflowMetricsSLADefinitionId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"workflowMetricsSLADefinitionId", "wmSLADefinitionId",
+				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::
 					getWorkflowMetricsSLADefinitionId));
 
@@ -980,4 +980,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:885645755
+// LIFERAY-SERVICE-BUILDER-HASH:489115379

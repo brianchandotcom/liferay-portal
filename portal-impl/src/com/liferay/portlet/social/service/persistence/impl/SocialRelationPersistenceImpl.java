@@ -1318,8 +1318,8 @@ public class SocialRelationPersistenceImpl
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"socialRelation.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SocialRelation::getUuid));
+				"socialRelation.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SocialRelation::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1344,8 +1344,9 @@ public class SocialRelationPersistenceImpl
 				_SQL_COUNT_SOCIALRELATION_WHERE,
 				SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"socialRelation.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SocialRelation::getUuid),
+					"socialRelation.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					SocialRelation::getUuid),
 				new FinderColumn<>(
 					"socialRelation.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRelation::getCompanyId));
@@ -1448,8 +1449,8 @@ public class SocialRelationPersistenceImpl
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRelation::getType));
+				"socialRelation.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRelation::getType));
 
 		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
 			this,
@@ -1475,8 +1476,8 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SocialRelation::getCompanyId),
 			new FinderColumn<>(
-				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRelation::getType));
+				"socialRelation.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRelation::getType));
 
 		_collectionPersistenceFinderByU1_U2 = new CollectionPersistenceFinder<>(
 			this,
@@ -1529,8 +1530,8 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "userId1", FinderColumn.Type.LONG, "=", true,
 				true, SocialRelation::getUserId1),
 			new FinderColumn<>(
-				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRelation::getType));
+				"socialRelation.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRelation::getType));
 
 		_collectionPersistenceFinderByU2_T = new CollectionPersistenceFinder<>(
 			this,
@@ -1556,8 +1557,8 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "userId2", FinderColumn.Type.LONG, "=", true,
 				true, SocialRelation::getUserId2),
 			new FinderColumn<>(
-				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRelation::getType));
+				"socialRelation.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRelation::getType));
 
 		_uniquePersistenceFinderByU1_U2_T = new UniquePersistenceFinder<>(
 			this,
@@ -1578,8 +1579,8 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "userId2", FinderColumn.Type.LONG, "=", true,
 				true, SocialRelation::getUserId2),
 			new FinderColumn<>(
-				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRelation::getType));
+				"socialRelation.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRelation::getType));
 
 		SocialRelationUtil.setPersistence(this);
 	}
@@ -1617,4 +1618,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-567659553
+// LIFERAY-SERVICE-BUILDER-HASH:705648667

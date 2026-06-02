@@ -739,8 +739,8 @@ public class KaleoProcessPersistenceImpl
 			_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 			KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KaleoProcess::getUuid));
+				"kaleoProcess.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KaleoProcess::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -752,8 +752,8 @@ public class KaleoProcessPersistenceImpl
 				KaleoProcess::getGroupId),
 			_SQL_SELECT_KALEOPROCESS_WHERE, "",
 			new FinderColumn<>(
-				"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KaleoProcess::getUuid),
+				"kaleoProcess.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KaleoProcess::getUuid),
 			new FinderColumn<>(
 				"kaleoProcess.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KaleoProcess::getGroupId));
@@ -780,8 +780,8 @@ public class KaleoProcessPersistenceImpl
 				_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 				KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, KaleoProcess::getUuid),
+					"kaleoProcess.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, KaleoProcess::getUuid),
 				new FinderColumn<>(
 					"kaleoProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoProcess::getCompanyId));
@@ -893,4 +893,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1244386715
+// LIFERAY-SERVICE-BUILDER-HASH:1941942681

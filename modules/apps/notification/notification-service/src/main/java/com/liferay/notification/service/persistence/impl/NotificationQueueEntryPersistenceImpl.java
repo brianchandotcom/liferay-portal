@@ -990,8 +990,9 @@ public class NotificationQueueEntryPersistenceImpl
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"notificationQueueEntry.", "type", FinderColumn.Type.STRING,
-					"=", true, true, NotificationQueueEntry::getType),
+					"notificationQueueEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					NotificationQueueEntry::getType),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -1063,4 +1064,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1162816896
+// LIFERAY-SERVICE-BUILDER-HASH:-855077012

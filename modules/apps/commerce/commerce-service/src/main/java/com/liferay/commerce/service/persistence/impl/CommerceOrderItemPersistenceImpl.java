@@ -1557,8 +1557,8 @@ public class CommerceOrderItemPersistenceImpl
 			_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 			CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceOrderItem.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommerceOrderItem::getUuid));
+				"commerceOrderItem.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceOrderItem::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1570,8 +1570,8 @@ public class CommerceOrderItemPersistenceImpl
 				CommerceOrderItem::getGroupId),
 			_SQL_SELECT_COMMERCEORDERITEM_WHERE, "",
 			new FinderColumn<>(
-				"commerceOrderItem.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommerceOrderItem::getUuid),
+				"commerceOrderItem.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceOrderItem::getUuid),
 			new FinderColumn<>(
 				"commerceOrderItem.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceOrderItem::getGroupId));
@@ -1600,8 +1600,9 @@ public class CommerceOrderItemPersistenceImpl
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceOrderItem.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceOrderItem::getUuid),
+					"commerceOrderItem.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceOrderItem::getUuid),
 				new FinderColumn<>(
 					"commerceOrderItem.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderItem::getCompanyId));
@@ -1634,7 +1635,8 @@ public class CommerceOrderItemPersistenceImpl
 				"",
 				new FinderColumn<>(
 					"commerceOrderItem.", "commerceInventoryBookedQuantityId",
-					FinderColumn.Type.LONG, "=", true, true,
+					"CIBookedQuantityId", FinderColumn.Type.LONG, "=", true,
+					true,
 					CommerceOrderItem::getCommerceInventoryBookedQuantityId));
 
 		_collectionPersistenceFinderByCommerceOrderId =
@@ -1979,4 +1981,4 @@ public class CommerceOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1544337246
+// LIFERAY-SERVICE-BUILDER-HASH:-155449348

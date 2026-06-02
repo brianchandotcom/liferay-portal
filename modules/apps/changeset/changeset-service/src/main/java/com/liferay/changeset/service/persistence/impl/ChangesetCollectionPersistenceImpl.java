@@ -894,4 +894,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-262705439
+// LIFERAY-SERVICE-BUILDER-HASH:1070974975

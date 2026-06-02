@@ -4820,8 +4820,8 @@ public class GroupPersistenceImpl
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"group_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Group::getUuid));
+				"group_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Group::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -4832,8 +4832,8 @@ public class GroupPersistenceImpl
 				convertNullFunction(Group::getUuid), Group::getGroupId),
 			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
-				"group_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Group::getUuid),
+				"group_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Group::getUuid),
 			new FinderColumn<>(
 				"group_.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getGroupId));
@@ -4860,8 +4860,8 @@ public class GroupPersistenceImpl
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"group_.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Group::getUuid),
+					"group_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Group::getUuid),
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId));
@@ -5079,8 +5079,8 @@ public class GroupPersistenceImpl
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
 			new FinderColumn<>(
-				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
-				Group::isActive));
+				"group_.", "active", "active_", FinderColumn.Type.BOOLEAN, "=",
+				true, true, Group::isActive));
 
 		_collectionPersistenceFinderByC_CPK = new CollectionPersistenceFinder<>(
 			this,
@@ -5130,11 +5130,11 @@ public class GroupPersistenceImpl
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"group_.", "type", FinderColumn.Type.INTEGER, "=", true, true,
-				Group::getType),
+				"group_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, Group::getType),
 			new FinderColumn<>(
-				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
-				Group::isActive));
+				"group_.", "active", "active_", FinderColumn.Type.BOOLEAN, "=",
+				true, true, Group::isActive));
 
 		_collectionPersistenceFinderByGtG_C_P =
 			new CollectionPersistenceFinder<>(
@@ -5422,8 +5422,8 @@ public class GroupPersistenceImpl
 				"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isSite),
 			new FinderColumn<>(
-				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
-				Group::isActive));
+				"group_.", "active", "active_", FinderColumn.Type.BOOLEAN, "=",
+				true, true, Group::isActive));
 
 		_collectionPersistenceFinderByGtG_C_C_P =
 			new CollectionPersistenceFinder<>(
@@ -5703,4 +5703,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-402649143
+// LIFERAY-SERVICE-BUILDER-HASH:-845703002

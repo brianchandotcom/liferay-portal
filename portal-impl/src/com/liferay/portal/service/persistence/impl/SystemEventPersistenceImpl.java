@@ -865,8 +865,8 @@ public class SystemEventPersistenceImpl
 					"systemEvent.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SystemEvent::getClassPK),
 				new FinderColumn<>(
-					"systemEvent.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, SystemEvent::getType));
+					"systemEvent.", "type", "type_", FinderColumn.Type.INTEGER,
+					"=", true, true, SystemEvent::getType));
 
 		SystemEventUtil.setPersistence(this);
 	}
@@ -901,4 +901,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102025633
+// LIFERAY-SERVICE-BUILDER-HASH:2137360182

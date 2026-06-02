@@ -1556,8 +1556,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, WorkflowDefinitionLink::getUuid));
+				"workflowDefinitionLink.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				WorkflowDefinitionLink::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1569,8 +1570,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				WorkflowDefinitionLink::getGroupId),
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
-				"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, WorkflowDefinitionLink::getUuid),
+				"workflowDefinitionLink.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				WorkflowDefinitionLink::getUuid),
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowDefinitionLink::getGroupId));
@@ -1599,8 +1601,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, WorkflowDefinitionLink::getUuid),
+					"workflowDefinitionLink.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					WorkflowDefinitionLink::getUuid),
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1975,4 +1978,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:615185120
+// LIFERAY-SERVICE-BUILDER-HASH:-2032759419

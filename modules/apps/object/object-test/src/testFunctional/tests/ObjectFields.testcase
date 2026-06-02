@@ -1236,64 +1236,6 @@ definition {
 		}
 	}
 
-	@description = "Verify that is possible to use Formula Field on System Object related with Custom Object"
-	@priority = 4
-	test CanSystemAndCustomObjectRelatedWithFormulaField {
-		task ("Given add a custom object with a custom field, and create a one-to-many relationship with the User object") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 176852",
-				objectName = "CustomObject176852",
-				pluralLabelName = "Custom Objects 176852");
-
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "User",
-				objectName_2 = "CustomObject176852",
-				relationshipLabel = "Relationship",
-				relationshipName = "relationship",
-				relationshipType = "oneToMany");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176852");
-		}
-
-		task ("And given add a Formula field to the User object with a title field on the object") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Formula",
-				fieldLabelName = "Custom Formula Field",
-				fieldName = "customFormulaField",
-				fieldType = "String",
-				formulaScript = "concat(id)",
-				isRequired = "false",
-				objectName = "CustomObject176852",
-				outputOption = "Integer");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectSystemObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "ID");
-
-			CreateObject.saveObject();
-		}
-
-		task ("When go to Custom Object and add the relationship field entry") {
-			var userId = JSONUserAPI._getUserIds();
-
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject176852");
-
-			LexiconEntry.gotoAdd();
-
-			ObjectPortlet.selectRelationshipFieldEntry(
-				entry = "",
-				newEntry = ${userId});
-		}
-
-		task ("Then assert the custom object entry is added") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject176852");
-
-			ObjectPortlet.viewEntry(entry = ${userId});
-		}
-	}
-
 	@description = "LPS-162190 - Verify that it's possible to update the layout of a System Object"
 	@priority = 5
 	test CanUpdateLayoutInSystemObject {

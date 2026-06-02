@@ -7,7 +7,9 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -40,29 +42,39 @@ public class DataCleanupPreupgradeProcessSuite {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
-				getSortedDataCleanupPreupgradeProcesses();
+			DBInspector.beginSchemaSnapshot();
 
-			for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
-					dataCleanupPreupgradeProcesses) {
+			try {
+				List<DataCleanupPreupgradeProcess>
+					dataCleanupPreupgradeProcesses =
+						getSortedDataCleanupPreupgradeProcesses();
 
-				Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
+				for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
+						dataCleanupPreupgradeProcesses) {
 
-				if (ArrayUtil.contains(
-						PropsValues.
-							UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
-						clazz.getName())) {
+					Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
 
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Skipping blacklisted data cleanup process: " +
-								clazz.getName());
+					if (ArrayUtil.contains(
+							PropsValues.
+								UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
+							clazz.getName())) {
+
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skipping blacklisted data cleanup process: " +
+									clazz.getName());
+						}
+
+						continue;
 					}
 
-					continue;
+					dataCleanupPreupgradeProcess.upgrade();
 				}
-
-				dataCleanupPreupgradeProcess.upgrade();
+			}
+			finally {
+				DataCleanupPreupgradeProcessUtil.clearCache();
+				DBInspector.clearSchemaSnapshot();
+				DBResourceUtil.clearLiferayTableNamesCache();
 			}
 		}
 	}

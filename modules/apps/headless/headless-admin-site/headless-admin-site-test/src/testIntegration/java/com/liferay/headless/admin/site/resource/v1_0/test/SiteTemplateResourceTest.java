@@ -6,24 +6,46 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.SiteTemplate;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
+import com.liferay.headless.admin.site.client.resource.v1_0.SiteTemplateResource;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,11 +55,29 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetSiteTemplatesPage() throws Exception {
 		super.testGetSiteTemplatesPage();
 
+		_testGetSiteTemplatesPageWithUser(
+			_addUserWithRegularRole(RoleConstants.CMS_ADMINISTRATOR));
+		_testGetSiteTemplatesPageWithUser(
+			_addUserWithDepotRole(
+				_addDepotEntry(),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR));
+		_testGetSiteTemplatesPageWithAssetLibraryMember();
+		_testGetSiteTemplatesPageWithUser(
+			_addUserWithDepotRole(
+				_addDepotEntry(), DepotRolesConstants.ASSET_LIBRARY_OWNER));
 		_testGetSiteTemplatesPageWithExcludedSiteExternalReferenceCodes();
 	}
 
@@ -92,6 +132,75 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 			siteTemplate.getPagesUpdateable(), new ServiceContext());
 
 		return siteTemplate;
+	}
+
+	private DepotEntry _addDepotEntry() throws Exception {
+		return DepotEntryLocalServiceUtil.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private User _addUserWithDepotRole(DepotEntry depotEntry, String roleName)
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			testCompany, RandomTestUtil.randomString());
+
+		Role role = _roleLocalService.getRole(
+			testCompany.getCompanyId(), roleName);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), depotEntry.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		return user;
+	}
+
+	private User _addUserWithRegularRole(String roleName) throws Exception {
+		User user = UserTestUtil.addUser(
+			testCompany, RandomTestUtil.randomString());
+
+		Role role = _roleLocalService.getRole(
+			testCompany.getCompanyId(), roleName);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		return user;
+	}
+
+	private SiteTemplateResource _getSiteTemplateResource(User user) {
+		return SiteTemplateResource.builder(
+		).authentication(
+			user.getEmailAddress(), user.getPasswordUnencrypted()
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
+
+	private void _testGetSiteTemplatesPageWithAssetLibraryMember()
+		throws Exception {
+
+		testGetSiteTemplatesPage_addSiteTemplate(randomSiteTemplate());
+
+		SiteTemplateResource siteTemplateResource = _getSiteTemplateResource(
+			_addUserWithDepotRole(
+				_addDepotEntry(), DepotRolesConstants.ASSET_LIBRARY_MEMBER));
+
+		Page<SiteTemplate> page = siteTemplateResource.getSiteTemplatesPage(
+			null, null, Pagination.of(1, 500));
+
+		Collection<SiteTemplate> items = page.getItems();
+
+		Assert.assertTrue(items.isEmpty());
 	}
 
 	private void _testGetSiteTemplatesPageWithExcludedSiteExternalReferenceCodes()
@@ -158,7 +267,29 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 		Assert.assertTrue(includedSiteTemplateFound);
 	}
 
+	private void _testGetSiteTemplatesPageWithUser(User user) throws Exception {
+		SiteTemplate siteTemplate = testGetSiteTemplatesPage_addSiteTemplate(
+			randomSiteTemplate());
+
+		SiteTemplateResource siteTemplateResource = _getSiteTemplateResource(
+			user);
+
+		Page<SiteTemplate> page = siteTemplateResource.getSiteTemplatesPage(
+			null, null, Pagination.of(1, 500));
+
+		assertContains(siteTemplate, (List<SiteTemplate>)page.getItems());
+	}
+
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

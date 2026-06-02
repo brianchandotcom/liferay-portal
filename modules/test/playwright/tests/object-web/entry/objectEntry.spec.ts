@@ -2845,7 +2845,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 	);
 
 	test(
-		'can create an object entry with email addressfield and autocomplete enabled',
+		'can create an object entry with email address field and autocomplete enabled',
 		{tag: ['@LPD-70673']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const autocompleteDomain = '@liferay.com';
@@ -5501,7 +5501,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 	);
 
 	test(
-		'shows an error when entering an email addresswith a blocked domain',
+		'shows an error when entering an email address with a blocked domain',
 		{tag: ['@LPD-70673']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const blockedDomain = '@yahoo.com';

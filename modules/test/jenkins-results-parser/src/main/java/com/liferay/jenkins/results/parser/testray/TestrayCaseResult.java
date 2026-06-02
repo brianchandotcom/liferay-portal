@@ -281,7 +281,7 @@ public class TestrayCaseResult {
 			return _testrayCaseResultURL;
 		}
 
-		_testrayCaseResultURL = _getCachedTestrayCaseResultURL();
+		_testrayCaseResultURL = _fetchTestrayCaseResultURL();
 
 		return _testrayCaseResultURL;
 	}
@@ -547,7 +547,7 @@ public class TestrayCaseResult {
 
 	protected Map<String, TestrayAttachment> testrayAttachments;
 
-	private URL _getCachedTestrayCaseResultURL() {
+	private URL _fetchTestrayCaseResultURL() {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
 		if (testrayBuild == null) {

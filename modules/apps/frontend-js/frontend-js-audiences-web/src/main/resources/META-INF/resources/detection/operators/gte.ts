@@ -6,7 +6,7 @@
 import {checkTypes} from '../util';
 
 export function gte(value: any, expected: any): boolean {
-	checkTypes(value, ['number', 'string'], 'Operator value');
+	checkTypes(value, ['number', 'string'], `Operator 'gte' value`);
 
 	return value >= expected;
 }

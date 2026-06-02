@@ -9,7 +9,7 @@ export function notIncludes(
 	value: Set<string> | string,
 	expected: any
 ): boolean {
-	checkTypes(value, ['string', 'Set'], `Operator value`);
+	checkTypes(value, ['string', 'Set'], `Operator 'not_includes' value`);
 
 	if (value instanceof Set) {
 		return !value.has(expected);

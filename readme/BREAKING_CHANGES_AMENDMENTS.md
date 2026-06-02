@@ -749,3 +749,51 @@ With the removal of the Props interface and PropsUtil.setProps(), the test rule 
 
 Use PropsUtil.set(String, String) to set individual properties and PropsUtil.get(String) to read them back, instead of the former Props-based swapping pattern.
 ```
+
+----
+
+# 780cf785b969d493e8bc80ab19d9855abce13f52
+
+The commit message is missing a breaking change. The correct message is:
+
+```
+LPD-71875 Stop returning fieldReference from name field for ContentStructureField
+
+# breaking
+
+## What modules/apps/headless/headless-delivery/headless-delivery-api/src/main/java/com/liferay/headless/delivery/dto/v1_0/util/ContentStructureUtil.java
+
+The name field of the ContentStructureField returned by the headless-delivery REST API now contains the field's actual name instead of its fieldReference.
+
+## Why
+
+The name field was populated with the fieldReference rather than the field's name. It now returns the actual name, while the fieldReference remains available through the dedicated fieldReference field.
+
+## Alternatives
+
+Consumers that relied on the name field to obtain the fieldReference should read the fieldReference field of ContentStructureField instead.
+```
+
+----
+
+# 1efb89cecc2466d44328f11977ed5730753b26cc
+
+The commit message is missing a breaking change. The correct message is:
+
+```
+LPD-71875 Stop returning fieldReference from name field for ContentField
+
+# breaking
+
+## What modules/apps/headless/headless-delivery/headless-delivery-api/src/main/java/com/liferay/headless/delivery/dto/v1_0/util/ContentFieldUtil.java
+
+The name field of the ContentField returned by the headless-delivery REST API now contains the field's actual name instead of its fieldReference.
+
+## Why
+
+The name field was populated with the fieldReference rather than the field's name. It now returns the actual name, while the fieldReference remains available through the dedicated fieldReference field.
+
+## Alternatives
+
+Consumers that relied on the name field to obtain the fieldReference should read the fieldReference field of ContentField instead.
+```

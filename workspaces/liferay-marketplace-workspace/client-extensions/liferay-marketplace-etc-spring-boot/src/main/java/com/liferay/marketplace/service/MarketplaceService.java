@@ -12,6 +12,7 @@ import com.liferay.headless.admin.address.client.resource.v1_0.CountryResource;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
@@ -180,6 +181,17 @@ public class MarketplaceService extends BaseService {
 			"cloud-provisioning", cloudProvisioningJSONArray.toString());
 
 		updateOrder(customFields, order.getId(), order.getOrderStatus());
+	}
+
+	public AccountGroupResource getAccountGroupResource() throws Exception {
+		return AccountGroupResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	public AccountResource getAccountResource() throws Exception {

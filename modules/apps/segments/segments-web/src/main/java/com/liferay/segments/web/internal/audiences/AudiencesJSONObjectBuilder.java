@@ -9,13 +9,21 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntry;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -41,6 +49,29 @@ public class AudiencesJSONObjectBuilder {
 		);
 	}
 
+	private static String _getValue(String propertyName, String value) {
+		if (Objects.equals(propertyName, Context.LANGUAGE_ID)) {
+			return LocaleUtil.toBCP47LanguageId(value);
+		}
+		else if (Objects.equals(propertyName, Context.LOCAL_DATE)) {
+			try {
+				LocalDate localDate = LocalDate.parse(
+					value, _dateTimeFormatter);
+
+				return localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+			}
+			catch (DateTimeParseException dateTimeParseException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(dateTimeParseException);
+				}
+
+				return value;
+			}
+		}
+
+		return value;
+	}
+
 	private static JSONObject _toAudienceJSONObject(
 		JSONObject queryJSONObject) {
 
@@ -55,7 +86,8 @@ public class AudiencesJSONObjectBuilder {
 				StringUtil.replace(
 					queryJSONObject.getString("operatorName"), '-', '_')
 			).put(
-				"value", queryJSONObject.getString("value")
+				"value",
+				_getValue(propertyName, queryJSONObject.getString("value"))
 			);
 		}
 
@@ -83,6 +115,9 @@ public class AudiencesJSONObjectBuilder {
 	private AudiencesJSONObjectBuilder() {
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AudiencesJSONObjectBuilder.class);
+
 	private static final Map<String, String> _attributeNames =
 		HashMapBuilder.put(
 			Context.BROWSER, "browser_name"
@@ -103,5 +138,7 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			"customContext/ipGeocoderCountry", "ip_geocoder_country"
 		).build();
+	private static final DateTimeFormatter _dateTimeFormatter =
+		DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
 }

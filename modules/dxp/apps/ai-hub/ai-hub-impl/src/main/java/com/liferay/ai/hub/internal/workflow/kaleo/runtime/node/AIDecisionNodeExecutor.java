@@ -19,6 +19,7 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
+import com.liferay.ai.hub.langchain4j.model.chat.listener.ChatModelListenerFactory;
 import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -184,7 +185,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
-				serviceContext.getCompanyId());
+				_chatModelListenerFactory, serviceContext);
 
 		String sseEventSinkKey = GetterUtil.getString(
 			workflowContext.get("sseEventSinkKey"));
@@ -221,9 +222,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						GetterUtil.getString(workflowContext.get("reason")),
 						prompt, executionContext.getServiceContext(),
 						userMessage);
-
-					QuotaUtil.updateUsage(
-						response, _quotaManager, serviceContext);
 				}
 			).onErrorConsumer(
 				throwable -> {
@@ -288,6 +286,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AIDecisionNodeExecutor.class);
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private ChatModelListenerFactory _chatModelListenerFactory;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

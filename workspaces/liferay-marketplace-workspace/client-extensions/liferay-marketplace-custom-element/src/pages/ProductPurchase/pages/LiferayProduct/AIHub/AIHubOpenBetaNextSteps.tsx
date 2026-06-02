@@ -126,27 +126,41 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 					</div>
 				</div>
 
-				<div className="d-flex justify-content-center mt-4 next-step-page-footer-button-container w-100">
-					<ClayButton
-						className="mr-3 next-step-page-footer-button-secondary"
-						displayType="secondary"
-						onClick={() => {
-							Liferay.Util.navigate(`${getSiteURL()}/products`);
-						}}
-					>
-						{i18n.translate('browse-products')}
-					</ClayButton>
-					<ClayButton
-						className="mr-3 next-step-page-footer-button-primary"
-						displayType="primary"
-						onClick={() => {
-							Liferay.Util.navigate(
-								`${getSiteURL()}/customer-dashboard/#/products`
-							);
-						}}
-					>
-						{i18n.translate('go-to-dashboard')}
-					</ClayButton>
+				<div className="flex-column d-flex justify-content-center mt-4 next-step-page-footer-button-container w-100">
+					<div>
+						<ClayButton
+							className="mr-5 next-step-page-footer-button-secondary"
+							displayType="secondary"
+							onClick={() => {
+								Liferay.Util.navigate(
+									`${getSiteURL()}/products`
+								);
+							}}
+						>
+							{i18n.translate('browse-products')}
+						</ClayButton>
+						<ClayButton
+							className="mr-3 next-step-page-footer-button-primary"
+							displayType="primary"
+							onClick={() => {
+								Liferay.Util.navigate(
+									`${getSiteURL()}/customer-dashboard/#/products`
+								);
+							}}
+						>
+							{i18n.translate('go-to-dashboard')}
+						</ClayButton>
+					</div>
+
+					<span className="font-weight-semi-bold ">
+						Didn't receive the email?{' '}
+						<a
+							className="font-weight-bold"
+							href="mailto:support@liferay.com"
+						>
+							support@liferay.com
+						</a>
+					</span>
 				</div>
 			</div>
 		</PageRenderer>

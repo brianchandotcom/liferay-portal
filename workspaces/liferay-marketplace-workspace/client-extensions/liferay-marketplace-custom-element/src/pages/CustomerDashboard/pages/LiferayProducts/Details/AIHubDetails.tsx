@@ -13,7 +13,9 @@ import QATable, {Orientation} from '../../../../../components/QATable';
 import SearchBuilder from '../../../../../core/SearchBuilder';
 import {
 	OrderCustomFields,
+	OrderTypes,
 	OrderWorkflowStatusCode,
+	PaymentStatus,
 } from '../../../../../enums/Order';
 import {useFetch} from '../../../../../hooks/useFetch';
 import i18n from '../../../../../i18n';
@@ -21,78 +23,102 @@ import {Liferay} from '../../../../../liferay/liferay';
 import {safeJSONParse} from '../../../../../utils/util';
 import ActivationKeyAlert from '../Licenses/LicenseAlert';
 
+const activationKeyAlertStatuses = {
+	completed: {
+		description:
+			'Provisioning is complete and your subscription is now active. Access your hub via the URL below to start using your monthly token allowance.',
+		title: 'Your AI Hub is Ready',
+	},
+	pending: {
+		description:
+			'Our team is currently reviewing your request. An administrator will approve your access, and you will receive a notification via email as soon as your account is activated.',
+		dismissable: false,
+		title: 'Your Beta Access Request is Pending',
+		type: 'info',
+	},
+};
+
 const AIHubDetails = () => {
-	const {placedOrder, product, selectedAccount} = useOutletContext<any>();
+	const {placedOrder, selectedAccount} = useOutletContext<any>();
 	const [searchParams] = useSearchParams();
 
-	const {data: tokenOrdersData} = useFetch<any>(
-		selectedAccount?.id && product?.id
-			? `o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${selectedAccount?.id}/placed-orders`
-			: null,
+	const orderStatusCode = placedOrder?.orderStatusInfo
+		?.code as OrderWorkflowStatusCode;
+
+	const {data: tokenOrdersData} = useFetch<APIResponse<PlacedOrder>>(
+		`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders`,
 		{
 			params: {
-				filter: `orderTypeExternalReferenceCode eq 'AI_HUB_TOKEN' and orderStatusInfo/code eq 0`,
+				filter: new SearchBuilder()
+					.eq(
+						'orderTypeExternalReferenceCode',
+						OrderTypes.AI_HUB_TOKEN
+					)
+					.and()
+					.eq(
+						'orderStatusInfo/code',
+						OrderWorkflowStatusCode.COMPLETED,
+						{unquote: true}
+					)
+					.build(),
 				nestedFields: 'placedOrderItems',
 				pageSize: 100,
 			},
 		}
 	);
 
-	const hasCompletedTokenOrders = useMemo(() => {
-		const tokens = tokenOrdersData?.items;
+	const activationKeyAlertStatus = useMemo(() => {
+		if (orderStatusCode !== OrderWorkflowStatusCode.COMPLETED) {
+			return activationKeyAlertStatuses.pending;
+		}
 
-		if (!tokens || !tokens.length) {
+		if (
+			orderStatusCode === OrderWorkflowStatusCode.COMPLETED &&
+			searchParams.has('next-steps')
+		) {
+			return activationKeyAlertStatuses.completed;
+		}
+
+		return null;
+	}, []);
+
+	const hasCompletedTokenOrders = useMemo(() => {
+		const tokens = tokenOrdersData?.items ?? [];
+
+		if (!tokens.length) {
 			return false;
 		}
 
-		return tokens.some((order: any) => {
-			const isCompleted = order.orderStatusInfo?.code === 0;
+		return tokens.some((order) => {
+			const isCompleted =
+				order.orderStatusInfo?.code ===
+				OrderWorkflowStatusCode.COMPLETED;
+
 			const isPaid =
-				order.paymentStatus === 0 ||
-				order.paymentStatusInfo?.code === 0;
+				order.paymentStatus === PaymentStatus.PAID ||
+				order.paymentStatusInfo?.code === PaymentStatus.PAID;
 
 			return isCompleted && isPaid;
 		});
 	}, [tokenOrdersData]);
 
-	const orderStatusCode = placedOrder?.orderStatusInfo
-		?.code as OrderWorkflowStatusCode;
-
 	const orderMetadata = placedOrder
 		? JSON.parse(placedOrder.customFields[OrderCustomFields.ORDER_METADATA])
 		: {};
 
-	const orderAdditionalInformation = orderMetadata?.aiHubForm || {};
+	const aiHubForm = orderMetadata?.aiHubForm || {};
 
 	return (
 		<div>
-			{orderStatusCode !== OrderWorkflowStatusCode.COMPLETED && (
+			{activationKeyAlertStatus && (
 				<ActivationKeyAlert
+					{...activationKeyAlertStatus}
 					className="license-alert"
-					dismissible={false}
 					symbol="check-circle"
-					title="Your Beta Access Request is Pending"
-					type="info"
 				>
-					Our team is currently reviewing your request. An
-					administrator will approve your access, and you will receive
-					a notification via email as soon as your account is
-					activated.
+					{activationKeyAlertStatus.description}
 				</ActivationKeyAlert>
 			)}
-
-			{orderStatusCode === OrderWorkflowStatusCode.COMPLETED &&
-				searchParams.has('next-steps') && (
-					<ActivationKeyAlert
-						className="license-alert"
-						symbol="check-circle"
-						title="Your AI Hub is Ready"
-					>
-						Provisioning is complete and your subscription is now
-						active. Access your hub via the URL below to start using
-						your monthly token allowance.
-					</ActivationKeyAlert>
-				)}
 
 			<DetailedCard
 				cardIconAltText="Profile Icon"
@@ -106,34 +132,32 @@ const AIHubDetails = () => {
 						{
 							className: 'mt-4',
 							title: i18n.translate('ai-hub-account-name'),
-							value: orderAdditionalInformation.fullName,
+							value: aiHubForm.fullName,
 						},
 						{
 							className: 'mt-4',
 							title: i18n.translate('ai-administration-email'),
-							value: orderAdditionalInformation.businessEmailAddress,
+							value: aiHubForm.businessEmailAddress,
 						},
 						{
 							className: 'mt-4',
 							title: i18n.translate('token-monthly-allowance'),
-							value: orderAdditionalInformation.tokenMonthlyAllowance,
+							value: aiHubForm.tokenMonthlyAllowance,
 						},
 						{
 							className: 'mt-4',
 							title: i18n.translate('ai-hub-url'),
-							value: orderAdditionalInformation.aiHubUrl ? (
+							value: aiHubForm.aiHubURL ? (
 								<a
 									href={
-										orderAdditionalInformation.aiHubUrl.startsWith(
-											'http'
-										)
-											? orderAdditionalInformation.aiHubUrl
-											: `https://${orderAdditionalInformation.aiHubUrl}`
+										aiHubForm.aiHubURL.startsWith('http')
+											? aiHubForm.aiHubURL
+											: `https://${aiHubForm.aiHubURL}`
 									}
 									rel="noopener noreferrer"
 									target="_blank"
 								>
-									{orderAdditionalInformation.aiHubUrl}
+									{aiHubForm.aiHubURL}
 								</a>
 							) : (
 								'-'
@@ -162,7 +186,7 @@ const AIHubDetails = () => {
 							pageSize: 5,
 							paginationDeltaOptions: [5, 10, 20],
 						}}
-						resource={`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${selectedAccount?.id}/placed-orders?filter=${SearchBuilder.eq('orderTypeExternalReferenceCode', 'AI_HUB_TOKEN')}&nestedFields=placedOrderItems&sort=createDate:desc`}
+						resource={`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders?filter=${SearchBuilder.eq('orderTypeExternalReferenceCode', OrderTypes.AI_HUB_TOKEN)}&nestedFields=placedOrderItems&sort=createDate:desc`}
 						tableProps={{
 							actions: [
 								{
@@ -198,11 +222,16 @@ const AIHubDetails = () => {
 									name: i18n.translate('tokens'),
 									render: (placedOrderItems) => {
 										const item = placedOrderItems?.[0];
-										if (!item) {return '-';}
+
+										if (!item) {
+											return '-';
+										}
+
 										const options = safeJSONParse<any[]>(
 											item.options,
 											[]
 										);
+
 										const optionValue =
 											options[0]
 												?.skuOptionValueNames?.[0] ||

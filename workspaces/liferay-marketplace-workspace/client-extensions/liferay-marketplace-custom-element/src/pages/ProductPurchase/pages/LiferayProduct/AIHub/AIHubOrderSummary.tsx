@@ -4,8 +4,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayBadge from '@clayui/badge';
+import ClayButton from '@clayui/button';
 import {useSelector} from '@xstate/store/react';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Navigate, useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
@@ -18,9 +20,13 @@ import {formatCurrency} from '../../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHubOpenBeta} from '../../../services/ProductPurchaseAIHubOpenBeta';
 import {productPurchaseStore} from '../../../store';
-import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
+
+import {ClayCheckbox} from '@clayui/form';
+import {RequiredMask} from '../../../../../components/FieldBase';
+import {productAgreements} from '../../../../../utils/agreements';
 
 import './AIHubOrderSummary.scss';
+import {Label} from '../../../../../components/MarketplaceForm/Label';
 
 const AIHubOrderSummary = () => {
 	const navigate = useNavigate();
@@ -34,6 +40,9 @@ const AIHubOrderSummary = () => {
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
+	const [userAgreement, setUserAgreement] = useState(false);
+	const [termsAndConditions, setTermsAndConditions] = useState(false);
+
 	const {payment: paymentStore} = useSelector(
 		productPurchaseStore,
 		(state) => state.context
@@ -42,15 +51,15 @@ const AIHubOrderSummary = () => {
 	const {data: addressResponse} = useAccountAddresses(selectedAccount?.id);
 	const addresses = addressResponse?.items;
 
-	useEffect(() => {
-		if (selectedAccount?.id) {
-			const result = zodSchema.aiHubOpenBetaForm.safeParse(form);
+	// useEffect(() => {
+	// 	if (selectedAccount?.id) {
+	// 		const result = zodSchema.aiHubOpenBetaForm.safeParse(form);
 
-			if (!result.success) {
-				navigate('/ai-hub-open-beta-form');
-			}
-		}
-	}, [form, navigate, selectedAccount?.id]);
+	// 		if (!result.success) {
+	// 			navigate('/ai-hub-open-beta-form');
+	// 		}
+	// 	}
+	// }, [form, navigate, selectedAccount?.id]);
 
 	useEffect(() => {
 		if (
@@ -78,9 +87,9 @@ const AIHubOrderSummary = () => {
 		}
 	}, [addresses, paymentStore.billingAddress?.name]);
 
-	if (!selectedAccount || !selectedAccount.id) {
-		return <Navigate to="/" />;
-	}
+	// if (!selectedAccount || !selectedAccount.id) {
+	// 	return <Navigate to="/" />;
+	// }
 
 	const summary = productPurchaseCart.cart.summary;
 	const currencyCode = Liferay.CommerceContext.currency.currencyCode;
@@ -114,19 +123,6 @@ const AIHubOrderSummary = () => {
 	return (
 		<ProductPurchase.Shell
 			className="ai-hub-order-summary product-purchase-summary select-payment-step"
-			footerProps={{
-				backButtonProps: {
-					onClick: previousStep,
-				},
-				continueButtonProps: {
-					children: i18n.translate('get-started'),
-					disabled: !paymentStore.eulaAgreement,
-					onClick: () =>
-						onSubmit(
-							form as z.infer<typeof zodSchema.aiHubOpenBetaForm>
-						),
-				},
-			}}
 			subtitle={
 				<small className="text-black-50">
 					{i18n.translate(
@@ -213,13 +209,125 @@ const AIHubOrderSummary = () => {
 					<div className="col-1 d-flex justify-content-end m-0 p-0">
 						{i18n.translate('total')}:
 					</div>
-					<span className="font-weight-bold ml-2">
-						{valueFallBack(summary?.totalFormatted)}
+					<span className="font-weight-bold ml-2 d-flex">
+						{valueFallBack(summary?.totalFormatted)}{' '}
+						<ClayBadge
+							className="ml-4 px-2 text-2 rounded font-weight-normal montly-badge"
+							label="Montly"
+						/>
 					</span>
 				</div>
 			</Section>
 
-			<LicenseTermsCheckbox />
+			<p className="liferay-ai-hub-form-aggreements-text">
+				<span>Please read</span>
+
+				<a
+					className="ml-1"
+					href={productAgreements.links.aiHub.agreement}
+					target="_blank"
+				>
+					this agreement
+				</a>
+
+				<span className="ml-1">
+					carefully before accessing or in any way using the AI Hub
+					experience.
+				</span>
+			</p>
+
+			<div className="d-flex flex-row mb-3 text-justify">
+				<ClayCheckbox
+					checked={termsAndConditions}
+					className="liferay-ai-hub-form-fail"
+					id="terms-and-conditions"
+					onChange={() => {
+						setTermsAndConditions(!termsAndConditions);
+					}}
+					required
+				/>
+
+				<label
+					className="font-weight-normal px-1"
+					htmlFor="terms-and-conditions"
+				>
+					I signify my assent to and acceptance of this agreement and
+					acknowledge that I have read and you understand the terms.
+					If I am an individual acting on behalf of an entity, I
+					represent that I have the authority to enter into this
+					agreement on behalf of that entity.
+				</label>
+			</div>
+
+			<div className="d-flex flex-row text-justify">
+				<ClayCheckbox
+					checked={userAgreement}
+					id="user-agreement"
+					onChange={() => {
+						setUserAgreement(!userAgreement);
+					}}
+					required
+				/>
+
+				<label
+					className="font-weight-normal px-1"
+					htmlFor="user-agreement"
+				>
+					<span>
+						{i18n.translate(
+							'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with'
+						)}
+						<a
+							className="ml-1"
+							href={productAgreements.links.privacyPolicy}
+							target="_blank"
+						>
+							{i18n.translate('liferay-s-privacy-policy')}
+						</a>
+					</span>
+				</label>
+			</div>
+
+			<p className="liferay-ai-hub-form-aggreements-text text-justify mt-2">
+				<span>
+					You can stop receiving marketing emails by clicking the
+					unsubscribe link in each email or withdraw your consent at
+					any time by either using opt-out functionality accessible
+					through the messages you receive or via email to
+				</span>
+
+				<a className="ml-1" href="mailto:dataprotection@liferay.com">
+					dataprotection@liferay.com
+				</a>
+
+				<span className="ml-1">See</span>
+
+				<a
+					className="ml-1"
+					href={productAgreements.links.privacyPolicy}
+					target="_blank"
+				>
+					privacy policy
+				</a>
+
+				<span className="ml-1">for details.</span>
+			</p>
+
+			<div className="d-flex flex-column mt-4 w-100">
+				<ClayButton
+					displayType="primary"
+					disabled={!userAgreement || !termsAndConditions}
+					onClick={() =>
+						onSubmit(
+							form as z.infer<typeof zodSchema.aiHubOpenBetaForm>
+						)
+					}
+					className="w-100 font-weight-bold"
+					size="regular"
+				>
+					{i18n.translate('purchase')}
+				</ClayButton>
+			</div>
 		</ProductPurchase.Shell>
 	);
 };

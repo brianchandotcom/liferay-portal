@@ -72,8 +72,6 @@ const AIHubOpenBetaForm = () => {
 			},
 			jobTitle: (form?.jobTitle as string) || '',
 			phoneNumber: (form?.phoneNumber as string) || '',
-			termsAndConditions: (form?.termsAndConditions as boolean) || false,
-			userAgreement: (form?.userAgreement as boolean) || false,
 		},
 		mode: 'all',
 		reValidateMode: 'onChange',
@@ -82,7 +80,7 @@ const AIHubOpenBetaForm = () => {
 
 	const watchedValues = watch();
 
-	const {intlCode, termsAndConditions, userAgreement} = watchedValues;
+	const {intlCode} = watchedValues;
 
 	const {data: regionsResponse} = useCommerceRegions();
 
@@ -116,7 +114,7 @@ const AIHubOpenBetaForm = () => {
 	return (
 		<ProductPurchase.Shell
 			className="liferay-ai-hub-form"
-			title={i18n.translate('account-details')}
+			title={i18n.translate('ai-hub-account-details')}
 		>
 			<p className="mb-6 text-black-50">
 				{i18n.translate(
@@ -303,117 +301,7 @@ const AIHubOpenBetaForm = () => {
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-
-				<p className="liferay-ai-hub-form-aggreements-text">
-					<span>Please read</span>
-
-					<span className="ml-1">
-						carefully before accessing or in any way using the AI
-						Hub Private Beta experience.
-					</span>
-				</p>
-
-				<div className="d-flex flex-row mb-3 text-justify">
-					<ClayCheckbox
-						checked={termsAndConditions}
-						className="liferay-ai-hub-form-fail"
-						id="terms-and-conditions"
-						onChange={(event) => {
-							setValue(
-								'termsAndConditions',
-								event.target.checked,
-								setValuesOptions
-							);
-						}}
-						required
-					/>
-
-					<label
-						className={classNames('font-weight-normal px-1', {
-							'text-red': isValid && !termsAndConditions,
-						})}
-						htmlFor="terms-and-conditions"
-					>
-						I signify my assent to and acceptance of
-						<a
-							className="mx-1"
-							href={productAgreements.links.aiHub.agreement}
-							target="_blank"
-						>
-							this agreement
-						</a>
-						and acknowledge that I have read and you understand the
-						terms. If I am an individual acting on behalf of an
-						entity, I represent that I have the authority to enter
-						into this agreement on behalf of that entity.
-						<RequiredMask />
-					</label>
-				</div>
-
-				<div className="d-flex flex-row text-justify">
-					<ClayCheckbox
-						checked={userAgreement}
-						id="user-agreement"
-						onChange={(event) => {
-							setValue(
-								'userAgreement',
-								event.target.checked,
-								setValuesOptions
-							);
-						}}
-						required
-					/>
-
-					<label
-						className={classNames('font-weight-normal px-1', {
-							'text-red': isValid && !userAgreement,
-						})}
-						htmlFor="user-agreement"
-					>
-						<span>
-							{i18n.translate(
-								'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with'
-							)}
-							<a
-								className="ml-1"
-								href={productAgreements.links.privacyPolicy}
-								target="_blank"
-							>
-								{i18n.translate('liferay-s-privacy-policy')}
-							</a>
-						</span>
-						<RequiredMask />
-					</label>
-				</div>
 			</ClayForm.Group>
-
-			<p className="liferay-ai-hub-form-aggreements-text text-justify">
-				<span>
-					You can stop receiving marketing emails by clicking the
-					unsubscribe link in each email or withdraw your consent at
-					any time by either using opt-out functionality accessible
-					through the messages you receive or via email to
-				</span>
-
-				<a className="ml-1" href="mailto:dataprotection@liferay.com">
-					dataprotection@liferay.com
-				</a>
-
-				<span className="ml-1">See</span>
-
-				<a
-					className="ml-1"
-					href={productAgreements.links.privacyPolicy}
-					target="_blank"
-				>
-					privacy policy for details.
-				</a>
-
-				<span className="ml-1">
-					carefully before accessing or in any way using the AI Hub
-					Private Beta experience.
-				</span>
-			</p>
 
 			<ClayButton
 				className="w-100"

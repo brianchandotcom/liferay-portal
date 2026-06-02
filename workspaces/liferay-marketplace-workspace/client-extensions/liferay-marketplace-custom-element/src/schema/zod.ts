@@ -203,8 +203,6 @@ const zodSchema = {
 			.string()
 			.email('Please fill in valid email'),
 		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
-		termsAndConditions: z.boolean().refine((value) => value === true),
-		userAgreement: z.boolean().refine((value) => value === true),
 	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),

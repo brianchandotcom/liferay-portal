@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import RadioCardList from '../../../../../components/RadioCardList/RadioCardList';
@@ -35,7 +35,7 @@ const AIHubTokenSelection = () => {
 		});
 	}, []);
 
-	const tokens = getAiHubTokenSKUs(product);
+	const aiHubTokens = useMemo(() => getAiHubTokenSKUs(product), [product]);
 
 	const [selectedSkuId, setSelectedSkuId] = useState<number | undefined>();
 	const [isCartLoading, setIsCartLoading] = useState(true);
@@ -55,13 +55,16 @@ const AIHubTokenSelection = () => {
 		(async () => {
 			try {
 				const channelId = Liferay.CommerceContext.commerceChannelId;
+
 				const {items: carts} =
 					await HeadlessCommerceDeliveryCart.getAccountCarts(
 						selectedAccount.id,
 						channelId
 					);
 
-				if (!active) {return;}
+				if (!active) {
+					return;
+				}
 
 				if (carts?.length > 0) {
 					const [cart] = carts;
@@ -99,7 +102,7 @@ const AIHubTokenSelection = () => {
 			const cartSkuIds = productPurchaseCart.cartItems.map(
 				(item) => item.skuId
 			);
-			const tokensInCart = tokens.filter((token: DeliverySKU) =>
+			const tokensInCart = aiHubTokens.filter((token: DeliverySKU) =>
 				cartSkuIds.includes(token.id)
 			);
 
@@ -108,7 +111,9 @@ const AIHubTokenSelection = () => {
 				setSelectedSkuId(activeToken.id);
 
 				if (tokensInCart.length > 1) {
-					const tokenSkuIds = tokens.map((token: any) => token.id);
+					const tokenSkuIds = aiHubTokens.map(
+						(token: any) => token.id
+					);
 					const filteredItems = productPurchaseCart.cartItems.filter(
 						(item) =>
 							!tokenSkuIds.includes(item.skuId) ||
@@ -124,12 +129,17 @@ const AIHubTokenSelection = () => {
 			}
 		}
 
-		if (!selectedSkuId && !!tokens.length) {
-			const defaultSkuId = tokens[0].id;
+		if (!selectedSkuId && !!aiHubTokens.length) {
+			const defaultSkuId = aiHubTokens[0].id;
 			setSelectedSkuId(defaultSkuId);
 			productPurchaseCart.addCart(product.id, defaultSkuId);
 		}
-	}, [isCartLoading, productPurchaseCart.cartItems, selectedSkuId, tokens]);
+	}, [
+		isCartLoading,
+		productPurchaseCart.cartItems,
+		selectedSkuId,
+		aiHubTokens,
+	]);
 
 	const handleSelectToken = async (token: any) => {
 		const tokenValue = token?.value;
@@ -139,7 +149,7 @@ const AIHubTokenSelection = () => {
 			return;
 		}
 
-		const tokenSkuIds = tokens.map((token: any) => token.id);
+		const tokenSkuIds = aiHubTokens.map((token: any) => token.id);
 		const filteredItems = productPurchaseCart.cartItems.filter(
 			(item) => !tokenSkuIds.includes(item.skuId)
 		);
@@ -168,14 +178,10 @@ const AIHubTokenSelection = () => {
 				)}
 			</p>
 
-			<p className="h4 mb-0">{i18n.translate('personal-information')}</p>
-
-			<hr className="mb-5 mt-3" />
-
 			<div>
-				{tokens.length ? (
+				{aiHubTokens.length ? (
 					<RadioCardList
-						contentList={tokens.map((token: any) => ({
+						contentList={aiHubTokens.map((token: any) => ({
 							...token,
 							selected: selectedSkuId === token?.id,
 							title: (

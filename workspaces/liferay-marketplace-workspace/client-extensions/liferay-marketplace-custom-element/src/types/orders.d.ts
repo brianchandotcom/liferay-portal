@@ -163,6 +163,11 @@ type PlacedOrder = {
 	orderTypeExternalReferenceCode: string;
 	paymentMethod: string;
 	paymentStatus: number;
+	paymentStatusInfo: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
 	placedOrderBillingAddress: any;
 	placedOrderBillingAddressId: number;
 	placedOrderItems: PlacedOrderItems[];

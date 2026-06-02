@@ -9,8 +9,9 @@ import ClayIcon from '@clayui/icon';
 import {NavbarProps} from '../../../../components/Navbar';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {
-	OrderCustomFields,
+	OrderStatus,
 	OrderTypes,
+	OrderWorkflowStatusCode,
 	orderTypeDocumentationURL,
 } from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
@@ -66,6 +67,11 @@ const LiferayProductsOutlet = () => {
 					props?.marketplaceDeliveryProduct?.specificationValues
 						?.APP_BETA;
 
+				const orderType = props?.placedOrder
+					?.orderTypeExternalReferenceCode as OrderTypes;
+
+				const orderStatus = props?.placedOrder?.orderStatusInfo?.code;
+
 				if (
 					props?.marketplaceDeliveryProduct?.specificationValues
 						?.SOLUTION_TYPE === 'liferay-data-platform'
@@ -89,10 +95,7 @@ const LiferayProductsOutlet = () => {
 						OrderTypes.CMP,
 						OrderTypes.DSR,
 						OrderTypes.DXP,
-					].includes(
-						props?.placedOrder
-							?.orderTypeExternalReferenceCode as OrderTypes
-					)
+					].includes(orderType)
 				) {
 					return (
 						<div className="mt-6">
@@ -106,14 +109,31 @@ const LiferayProductsOutlet = () => {
 										);
 									}}
 									outline
+									size="regular"
 								>
 									{i18n.translate('share-beta-feedback')}
 								</ClayButton>
 							)}
 
+							{orderType === OrderTypes.AI_HUB &&
+								orderStatus ===
+									OrderWorkflowStatusCode.COMPLETED && (
+									<ClayButton
+										className="mr-2"
+										displayType="primary"
+										onClick={() => {
+											Liferay.Util.navigate(
+												`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}&aiHubTokens#/`
+											);
+										}}
+										size="regular"
+									>
+										{i18n.translate('buy-extra-token')}
+									</ClayButton>
+								)}
+
 							{[OrderTypes.CMP, OrderTypes.DXP].includes(
-								props?.placedOrder
-									?.orderTypeExternalReferenceCode as OrderTypes
+								orderType
 							) && (
 								<ClayButton
 									displayType="primary"
@@ -123,7 +143,7 @@ const LiferayProductsOutlet = () => {
 										);
 									}}
 									outline
-									size={appBeta ? 'sm' : 'regular'}
+									size="regular"
 								>
 									{i18n.translate('new-activation-key')}
 								</ClayButton>
@@ -148,6 +168,35 @@ const LiferayProductsOutlet = () => {
 								</ClayButton>
 							)}
 						</div>
+					);
+				}
+
+				if (
+					props?.marketplaceDeliveryProduct?.specificationValues
+						?.SOLUTION_TYPE === 'liferay-data-platform'
+				) {
+					const orderMetadata = safeJSONParse(
+						props.placedOrder?.customFields?.ORDER_METADATA || '{}',
+						{
+							analyticsProject: {groupId: 0},
+						}
+					);
+
+					const groupId = orderMetadata?.analyticsProject?.groupId;
+
+					return (
+						<ClayButton
+							displayType="primary"
+							onClick={() => {
+								window.open(
+									`${properties.analyticsCloudURL}/workspace/${groupId}`
+								);
+							}}
+							outline
+							size="regular"
+						>
+							{i18n.translate('go-to-liferay-data-platform')}
+						</ClayButton>
 					);
 				}
 			}}

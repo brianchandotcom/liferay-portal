@@ -9,9 +9,9 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {performUserSwitchViaApi} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {addRoleMemberAndSwitch} from '../main/spaces/helpers/roleMembership';
+import {registerUserCredentials} from '../main/spaces/helpers/roleMembership';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -26,23 +26,32 @@ const test = mergeTests(
 
 test(
 	'A Space Content Reviewer cannot access the Vocabularies admin page',
-	{tag: '@LPD-89497'},
-	async ({apiHelpers, page, spaceSummaryPage}) => {
+	{tag: ['@LPD-89497', '@LPD-93287']},
+	async ({apiHelpers, page}) => {
 		const spaceName = getRandomString();
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
 
-		await addRoleMemberAndSwitch({
-			apiHelpers,
-			page,
-			role: 'Space Content Reviewer',
-			spaceName,
-			spaceSummaryPage,
-		});
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		registerUserCredentials(user);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode
+		);
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode,
+			['Asset Library Content Reviewer']
+		);
+
+		await performUserSwitchViaApi(page, user.alternateName);
 
 		await page.goto(PORTLET_URLS.cmsVocabularies);
 
@@ -54,23 +63,32 @@ test(
 
 test(
 	'A Space Content Reviewer does not see the Vocabulary Quick Action on the CMS Home Page',
-	{tag: '@LPD-90072'},
-	async ({apiHelpers, homePage, page, spaceSummaryPage}) => {
+	{tag: ['@LPD-90072', '@LPD-93287']},
+	async ({apiHelpers, homePage, page}) => {
 		const spaceName = getRandomString();
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
 
-		await addRoleMemberAndSwitch({
-			apiHelpers,
-			page,
-			role: 'Space Content Reviewer',
-			spaceName,
-			spaceSummaryPage,
-		});
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		registerUserCredentials(user);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode
+		);
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode,
+			['Asset Library Content Reviewer']
+		);
+
+		await performUserSwitchViaApi(page, user.alternateName);
 
 		await homePage.goto();
 
@@ -84,23 +102,20 @@ test(
 
 test(
 	'A CMS Administrator sees the Vocabulary Quick Action on the CMS Home Page',
-	{tag: '@LPD-90072'},
-	async ({apiHelpers, homePage, page, spaceSummaryPage}) => {
+	{tag: ['@LPD-90072', '@LPD-93287']},
+	async ({apiHelpers, homePage, page}) => {
 		const spaceName = getRandomString();
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
+		registerUserCredentials(user);
 
 		const cmsAdministratorRole =
 			await apiHelpers.headlessAdminUser.getRoleByName(
@@ -112,11 +127,12 @@ test(
 			Number(user.id)
 		);
 
-		await spaceSummaryPage.goto(spaceName);
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode
+		);
 
-		await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
-
-		await performUserSwitch(page, user.alternateName);
+		await performUserSwitchViaApi(page, user.alternateName);
 
 		await homePage.goto();
 

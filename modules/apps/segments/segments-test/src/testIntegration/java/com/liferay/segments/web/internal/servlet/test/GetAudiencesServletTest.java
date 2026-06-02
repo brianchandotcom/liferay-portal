@@ -74,9 +74,9 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiences() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"and", _createRuleJSONObject(Context.URL, "/pricing")),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -101,7 +101,6 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesMapsAttributeNames() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"and",
 				_createRuleJSONObject(
@@ -126,6 +125,7 @@ public class GetAudiencesServletTest {
 				_createRuleJSONObject(
 					"customContext/ipGeocoderCountry",
 					RandomTestUtil.randomString())),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -181,15 +181,15 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesReturnsOnlyAudienceSources() throws Exception {
 		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"and", _createRuleJSONObject(Context.URL, "/decoy")),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"and", _createRuleJSONObject(Context.URL, "/pricing")),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -207,12 +207,12 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesWithNestedRules() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"and", _createRuleJSONObject(Context.URL, "/pricing"),
 				_createGroupJSONObject(
 					"or", _createRuleJSONObject(Context.URL, "/features"),
 					_createRuleJSONObject(Context.URL, "/billing"))),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -252,10 +252,10 @@ public class GetAudiencesServletTest {
 	@TestInfo("LPD-91094")
 	public void testGetAudiencesWithOrRule() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
 				"or", _createRuleJSONObject(Context.URL, "facebook.com"),
 				_createRuleJSONObject(Context.URL, "twitter.com")),
+			RandomTestUtil.randomString(),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -280,7 +280,7 @@ public class GetAudiencesServletTest {
 	}
 
 	private SegmentsEntry _addSegmentsEntry(
-			String segmentsEntryKey, JSONObject queryJSONObject, String source)
+			JSONObject queryJSONObject, String segmentsEntryKey, String source)
 		throws Exception {
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(

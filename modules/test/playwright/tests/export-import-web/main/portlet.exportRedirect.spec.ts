@@ -39,8 +39,9 @@ test(
 
 		await expect(cancelLink).toBeVisible();
 
-		const href = await cancelLink.getAttribute('href');
-
-		expect(href ?? '').not.toMatch(/^\s*javascript:/i);
+		await expect(cancelLink).toHaveAttribute(
+			'href',
+			/^(?!\s*javascript:)/i
+		);
 	}
 );

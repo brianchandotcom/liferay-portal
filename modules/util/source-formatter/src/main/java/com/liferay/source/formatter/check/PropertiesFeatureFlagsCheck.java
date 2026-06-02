@@ -123,8 +123,11 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern5));
 				featureFlagKeys.addAll(
-					_getFeatureFlagKeysByFeatureFlagManagerUtilIsEnabledCall(
-						fileContent, true));
+					_getFeatureFlagKeysByFeatureFlagManagerUtilCall(
+						fileContent, true, "checkEnabled"));
+				featureFlagKeys.addAll(
+					_getFeatureFlagKeysByFeatureFlagManagerUtilCall(
+						fileContent, true, "isEnabled"));
 				featureFlagKeys.addAll(
 					_getFeatureFlagKeysByMapUtilSingletonDictionaryCall(
 						fileContent));
@@ -137,8 +140,11 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern2));
 				featureFlagKeys.addAll(
-					_getFeatureFlagKeysByFeatureFlagManagerUtilIsEnabledCall(
-						fileContent, false));
+					_getFeatureFlagKeysByFeatureFlagManagerUtilCall(
+						fileContent, false, "checkEnabled"));
+				featureFlagKeys.addAll(
+					_getFeatureFlagKeysByFeatureFlagManagerUtilCall(
+						fileContent, false, "isEnabled"));
 			}
 			else {
 				featureFlagKeys.addAll(
@@ -339,16 +345,16 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlagKeys;
 	}
 
-	private List<String>
-		_getFeatureFlagKeysByFeatureFlagManagerUtilIsEnabledCall(
-			String content, boolean javaSource) {
+	private List<String> _getFeatureFlagKeysByFeatureFlagManagerUtilCall(
+		String content, boolean javaSource, String methodName) {
 
 		List<String> featureFlagKeys = new ArrayList<>();
 
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf("FeatureFlagManagerUtil.isEnabled(", x + 1);
+			x = content.indexOf(
+				"FeatureFlagManagerUtil." + methodName + "(", x + 1);
 
 			if (x == -1) {
 				return featureFlagKeys;

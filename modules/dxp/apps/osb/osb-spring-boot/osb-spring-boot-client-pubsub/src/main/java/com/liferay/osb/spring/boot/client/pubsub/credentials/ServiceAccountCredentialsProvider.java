@@ -15,6 +15,9 @@ import java.io.IOException;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -30,6 +33,12 @@ public class ServiceAccountCredentialsProvider {
 		if (!_clientEmailAddress.isEmpty() && !_clientId.isEmpty() &&
 			!_privateKeyId.isEmpty() && !_privateKeyPkcs8.isEmpty()) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using service account credentials for " +
+						_clientEmailAddress);
+			}
+
 			Credentials serviceAccountCredentials =
 				ServiceAccountCredentials.fromPkcs8(
 					_clientId, _clientEmailAddress, _privateKeyPkcs8,
@@ -38,12 +47,19 @@ public class ServiceAccountCredentialsProvider {
 			return FixedCredentialsProvider.create(serviceAccountCredentials);
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Using application default credentials");
+		}
+
 		GoogleCredentials googleCredentials =
 			GoogleCredentials.getApplicationDefault();
 
 		return FixedCredentialsProvider.create(
 			googleCredentials.createScoped(Arrays.asList(SCOPE)));
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger(
+		ServiceAccountCredentialsProvider.class);
 
 	@Value("${pubsub.service.account.credentials.client.email.address:}")
 	private String _clientEmailAddress;

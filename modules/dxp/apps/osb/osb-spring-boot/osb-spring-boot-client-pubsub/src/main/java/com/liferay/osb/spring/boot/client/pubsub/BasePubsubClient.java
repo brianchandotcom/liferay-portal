@@ -14,9 +14,6 @@ import com.google.pubsub.v1.TopicName;
 
 import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,39 +33,10 @@ public abstract class BasePubsubClient {
 		try (TopicAdminClient topicAdminClient = TopicAdminClient.create(
 				topicAdminSettings)) {
 
-			List<String> names = new ArrayList<>();
+			_ensureTopicExists(topicAdminClient, topic);
 
-			names.add(topic);
-
-			if (isDeadLetterEnabled()) {
-				names.add(getDeadLetterTopic(topic));
-			}
-
-			for (String name : names) {
-				TopicName topicName = TopicName.ofProjectTopicName(
-					getProjectId(), getNamespace() + name);
-
-				try {
-					topicAdminClient.getTopic(topicName);
-				}
-				catch (NotFoundException notFoundException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to find topic. Creating topic " + topicName,
-							notFoundException);
-					}
-
-					try {
-						topicAdminClient.createTopic(topicName);
-					}
-					catch (AlreadyExistsException alreadyExistsException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Topic already exists " + topicName,
-								alreadyExistsException);
-						}
-					}
-				}
+			if (isDeadLetterTopicEnabled()) {
+				_ensureTopicExists(topicAdminClient, getDeadLetterTopic(topic));
 			}
 		}
 	}
@@ -91,8 +59,37 @@ public abstract class BasePubsubClient {
 		return true;
 	}
 
-	protected boolean isDeadLetterEnabled() {
+	protected boolean isDeadLetterTopicEnabled() {
 		return true;
+	}
+
+	private void _ensureTopicExists(
+		TopicAdminClient topicAdminClient, String name) {
+
+		TopicName topicName = TopicName.ofProjectTopicName(
+			getProjectId(), getNamespace() + name);
+
+		try {
+			topicAdminClient.getTopic(topicName);
+		}
+		catch (NotFoundException notFoundException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find topic. Creating topic " + topicName,
+					notFoundException);
+			}
+
+			try {
+				topicAdminClient.createTopic(topicName);
+			}
+			catch (AlreadyExistsException alreadyExistsException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Topic already exists " + topicName,
+						alreadyExistsException);
+				}
+			}
+		}
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

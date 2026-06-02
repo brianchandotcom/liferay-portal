@@ -15,8 +15,8 @@ import com.google.pubsub.v1.TopicName;
 import com.liferay.osb.spring.boot.client.pubsub.BasePubsubClient;
 import com.liferay.osb.spring.boot.client.pubsub.Message;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +40,14 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 			doPublish(message);
 		}
 		catch (Exception exception) {
-			handleError(message, exception);
+			if ((exception instanceof ExecutionException) &&
+				(exception.getCause() instanceof Exception)) {
+
+				handleError(message, (Exception)exception.getCause());
+			}
+			else {
+				handleError(message, exception);
+			}
 		}
 	}
 
@@ -82,21 +89,10 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 
 		ApiFuture<String> apiFuture = publisher.publish(pubsubMessage);
 
-		try {
-			apiFuture.get(getPublishTimeoutSeconds(), TimeUnit.SECONDS);
+		apiFuture.get(getPublishTimeoutSeconds(), TimeUnit.SECONDS);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Published message " + message);
-			}
-		}
-		catch (ExecutionException executionException) {
-			Throwable throwable = executionException.getCause();
-
-			if (throwable instanceof Exception) {
-				throw (Exception)throwable;
-			}
-
-			throw executionException;
+		if (_log.isDebugEnabled()) {
+			_log.debug("Published message " + message);
 		}
 	}
 
@@ -143,7 +139,6 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 	private static final Logger _log = LoggerFactory.getLogger(
 		BasePubsubPublisher.class);
 
-	private final Map<String, Publisher> _publisherMap =
-		new ConcurrentHashMap<>();
+	private final Map<String, Publisher> _publisherMap = new HashMap<>();
 
 }

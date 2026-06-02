@@ -133,7 +133,7 @@ describe('MetricCard', () => {
 		expect(getByTestId('custom-value')).toBeTruthy();
 	});
 
-	it('should round the percentage to two decimals', () => {
+	it('should round the percentage to one decimal', () => {
 		const {getByText} = render(
 			<MetricCard
 				{...defaultProps}
@@ -144,6 +144,6 @@ describe('MetricCard', () => {
 			/>
 		);
 
-		expect(getByText('12.35%')).toBeTruthy();
+		expect(getByText('12.3%')).toBeTruthy();
 	});
 });

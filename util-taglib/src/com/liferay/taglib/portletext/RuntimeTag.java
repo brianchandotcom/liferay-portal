@@ -243,7 +243,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Portlet portlet = getPortlet(
+			Portlet portlet = _getPortlet(
 				themeDisplay.getCompanyId(), portletInstanceKey);
 
 			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
@@ -459,7 +459,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	public void setSettingsScope(String settingsScope) {
 	}
 
-	protected static Portlet getPortlet(long companyId, String portletId)
+	private static Portlet _getPortlet(long companyId, String portletId)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

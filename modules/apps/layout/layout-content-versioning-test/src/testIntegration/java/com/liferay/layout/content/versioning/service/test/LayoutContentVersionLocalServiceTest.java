@@ -7,6 +7,7 @@ package com.liferay.layout.content.versioning.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.versioning.exception.LayoutContentVersionNameException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.LayoutContentVersionLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -87,6 +89,7 @@ public class LayoutContentVersionLocalServiceTest {
 
 		_testAddLayoutContentVersionWithExternalReferenceCodeTooLong();
 		_testAddLayoutContentVersionWithNullExternalReferenceCode();
+		_testAddLayoutContentVersionWithNullNameMap();
 		_testAddLayoutContentVersionWithSkipIfUnchanged();
 	}
 
@@ -111,6 +114,12 @@ public class LayoutContentVersionLocalServiceTest {
 			layoutContentVersions.toString(), 2, layoutContentVersions.size());
 	}
 
+	@Test
+	public void testUpdateLayoutContentVersion() throws Exception {
+		_testUpdateLayoutContentVersionWithEmptyNameMap();
+		_testUpdateLayoutContentVersionWithNullNameMap();
+	}
+
 	private void _testAddLayoutContentVersionWithExternalReferenceCodeTooLong()
 		throws Exception {
 
@@ -131,8 +140,7 @@ public class LayoutContentVersionLocalServiceTest {
 					layoutContentVersionExternalReferenceCodeException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					layoutContentVersionExternalReferenceCodeException);
+				_log.debug(layoutContentVersionExternalReferenceCodeException);
 			}
 		}
 	}
@@ -151,6 +159,19 @@ public class LayoutContentVersionLocalServiceTest {
 			_draftLayout.getExternalReferenceCode() + "_v_" +
 				layoutContentVersion.getVersion(),
 			layoutContentVersion.getExternalReferenceCode());
+	}
+
+	private void _testAddLayoutContentVersionWithNullNameMap()
+		throws Exception {
+
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_draftLayout.getPlid(), null, RandomTestUtil.randomString(),
+				WorkflowConstants.STATUS_DRAFT, false);
+
+		Assert.assertEquals(
+			_draftLayout.getNameMap(), layoutContentVersion.getNameMap());
 	}
 
 	private void _testAddLayoutContentVersionWithSkipIfUnchanged()
@@ -189,6 +210,57 @@ public class LayoutContentVersionLocalServiceTest {
 		Assert.assertEquals(
 			layoutContentVersion3.getLayoutContentVersionId(),
 			layoutContentVersion4.getLayoutContentVersionId());
+	}
+
+	private void _testUpdateLayoutContentVersionWithEmptyNameMap()
+		throws Exception {
+
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
+				false);
+
+		try {
+			_layoutContentVersionLocalService.updateLayoutContentVersion(
+				layoutContentVersion.getLayoutContentVersionId(),
+				new HashMap<>());
+
+			Assert.fail();
+		}
+		catch (LayoutContentVersionNameException
+					layoutContentVersionNameException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutContentVersionNameException);
+			}
+		}
+	}
+
+	private void _testUpdateLayoutContentVersionWithNullNameMap()
+		throws Exception {
+
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
+				false);
+
+		try {
+			_layoutContentVersionLocalService.updateLayoutContentVersion(
+				layoutContentVersion.getLayoutContentVersionId(), null);
+
+			Assert.fail();
+		}
+		catch (LayoutContentVersionNameException
+					layoutContentVersionNameException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutContentVersionNameException);
+			}
+		}
 	}
 
 	private Layout _draftLayout;

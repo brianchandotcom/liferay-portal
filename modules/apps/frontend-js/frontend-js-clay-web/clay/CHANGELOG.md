@@ -2,6 +2,162 @@
 
 All notable changes to Clay packages are documented in this file.
 
+# [3.164.0] (2026-06-02)
+
+## @clayui/autocomplete
+
+### Commits
+
+- LPD-88727 Wire KeyboardArrowsIndicator into Autocomplete ([92158ce](https://github.com/liferay/liferay-portal/commit/92158ceb82013386c9fae3d75d30ada66a28edbf))
+- LPD-39987 Make KeyboardArrowsIndicator purely visual (aria-hidden) ([32442e9](https://github.com/liferay/liferay-portal/commit/32442e98739cfe6ccbba503159df55d8a61440c9))
+- LPD-39987 Await userEvent in keyboard arrows indicator tests ([4759391](https://github.com/liferay/liferay-portal/commit/47593914f62fa2e0b68ba80cf26ac251a7b067a4))
+- LPD-74696 Improve Enter key handling in Clay autocomplete ([1db5b27](https://github.com/liferay/liferay-portal/commit/1db5b274c0ecec12156ce7ed21af53e2619be8bc))
+
+## @clayui/card
+
+### Commits
+
+- LPD-79840 Add disabled class to Clay Card component ([49cc884](https://github.com/liferay/liferay-portal/commit/49cc884d66d34b1af78fda8e6877946f11946732))
+- LPD-91533 Add taller card example to ensure checkbox is centered ([082d73f](https://github.com/liferay/liferay-portal/commit/082d73f9d89a32f7af05ed1c6459210b585500f0))
+- LPD-91533 Extract shared actions array in card stories ([c24dcca](https://github.com/liferay/liferay-portal/commit/c24dcca2ddf534bdd9903867675bbed232137520))
+
+## @clayui/core
+
+### Commits
+
+- LPD-89790 @clayui/core use composite icons in KeyboardArrowsIndicator ([4dda27f](https://github.com/liferay/liferay-portal/commit/4dda27f21ba2877e1b6f8ca5f06ddb4f149712d5))
+- LPD-89790 Move arrows-all colors from SVG to CSS for dark-mode parity ([a47512c](https://github.com/liferay/liferay-portal/commit/a47512cca39cc7ec6f1aa5682ae48b680bf8e76b))
+- LPD-90345 Require aria-controls on ResizeHandle ([b1e0cc6](https://github.com/liferay/liferay-portal/commit/b1e0cc68fe834342f3ca9e69bbaa811f2becf836))
+- LPD-90345 Set aria-label by default ([758cce6](https://github.com/liferay/liferay-portal/commit/758cce6ca7833cd7c537382822b7cb311a8fa644))
+- LPD-90345 Set aria-valuetext by default ([f7fb48b](https://github.com/liferay/liferay-portal/commit/f7fb48be1d1788443be25e55161b7fffd3746f4a))
+- LPD-90345 Adapt the documentation ([2b71242](https://github.com/liferay/liferay-portal/commit/2b71242cc5b10985ea92e21e3fbafa762cea7fc4))
+- LPD-90345 Prevent className override on ResizeHandle ([a294a28](https://github.com/liferay/liferay-portal/commit/a294a281c6fd99d670a4e56d1651e3a3932b861b))
+- LPD-90345 Resolve SidePanel id in render for ResizeHandle aria-controls ([a7e7dcb](https://github.com/liferay/liferay-portal/commit/a7e7dcb322c99859568fb47ea902c4e38497d075))
+- LPD-90345 Adapt snapshots ([f9f979b](https://github.com/liferay/liferay-portal/commit/f9f979b2b80ced0f3e7afd2f921f1c720b23f3d1))
+- LPD-39987 Add tooltip-style anchored placement to KeyboardArrowsIndicator ([847d600](https://github.com/liferay/liferay-portal/commit/847d600a9dcd49d999a0fcbd575a101ec4e5cfa5))
+- LPD-88716 Wire KeyboardArrowsIndicator into Picker ([74ae0fa](https://github.com/liferay/liferay-portal/commit/74ae0facfbd51441c5642e73921d1f0fbf30edad))
+- LPD-88725 Wire KeyboardArrowsIndicator into IconSelector ([af0ef9c](https://github.com/liferay/liferay-portal/commit/af0ef9c7ef687343905500acc371079042684409))
+- LPD-88730 Wire KeyboardArrowsIndicator into VerticalBar ([134f2d2](https://github.com/liferay/liferay-portal/commit/134f2d2472848c983a41ef80dcba663c4e8f06a1))
+- LPD-88732 Wire KeyboardArrowsIndicator into VerticalNav ([2ca6383](https://github.com/liferay/liferay-portal/commit/2ca638379dfea77325dffff596ff3b82c2df80d7))
+- LPD-91699 Wire KeyboardArrowsIndicator into ResizeHandle ([2f6f6a0](https://github.com/liferay/liferay-portal/commit/2f6f6a02c0a977910fc11107454a69788f7842bc))
+- LPD-39987 Make KeyboardArrowsIndicator purely visual (aria-hidden) ([32442e9](https://github.com/liferay/liferay-portal/commit/32442e98739cfe6ccbba503159df55d8a61440c9))
+- LPD-39987 Scope the indicator's focus listener to the anchor element ([c932951](https://github.com/liferay/liferay-portal/commit/c93295144e73643c45b3979db01fb9829fa0e06d))
+- LPD-88739 Wire KeyboardArrowsIndicator into Table ([f8165ec](https://github.com/liferay/liferay-portal/commit/f8165ece71a331f89f4a794cb25581382345a316))
+- LPD-39987 Add Center alignment and tooltip-top indicator placement ([d89b5a9](https://github.com/liferay/liferay-portal/commit/d89b5a9b126bcd6da58e2fc0c6ac91eefa26534a))
+- LPD-39987 Await userEvent in keyboard arrows indicator tests ([4759391](https://github.com/liferay/liferay-portal/commit/47593914f62fa2e0b68ba80cf26ac251a7b067a4))
+- LPD-39987 Fix Picker indicator assertion when no img role is in the DOM ([52c62b9](https://github.com/liferay/liferay-portal/commit/52c62b9c2b7952b5c511266ffcc84696d38f7ad2))
+- LPD-39987 Mock fetch per-test in IconSelector indicator suite ([bdeccb7](https://github.com/liferay/liferay-portal/commit/bdeccb704d6155666f13d4c1c5ddad80dee3dba3))
+- LPD-39987 Query portaled indicator from document.body in VerticalNav tests ([732245c](https://github.com/liferay/liferay-portal/commit/732245c359646a0ef729f57693c477c14a0f15d6))
+- LPD-31376 TreeViewGroup switched from implicit findDOMNode lookup to the explicit nodeRef opt-in ([0c44546](https://github.com/liferay/liferay-portal/commit/0c445468eacf46799621134ae04d5523d8bae9b5))
+- LPD-31376 Refactor functions declarations ([944d8ef](https://github.com/liferay/liferay-portal/commit/944d8efa224dcee27fa34128009a033403774850))
+
+## @clayui/css
+
+### Commits
+
+- LPD-89790 @clayui/css replace arrow-key-* with arrows-* icons ([a273124](https://github.com/liferay/liferay-portal/commit/a27312488a14c74f3f274d72fac4047d4b69b721))
+- LPD-89790 SF ([5185c59](https://github.com/liferay/liferay-portal/commit/5185c590694d52031b7f0b6a24feb7f973da8eb6))
+- LPD-89790 Move arrows-all colors from SVG to CSS for dark-mode parity ([a47512c](https://github.com/liferay/liferay-portal/commit/a47512cca39cc7ec6f1aa5682ae48b680bf8e76b))
+- LPD-89790 SF ([5f18e93](https://github.com/liferay/liferay-portal/commit/5f18e93f9704669f24602eb74c8780e6f73ef6bc))
+- LPD-89790 Move lexicon-icon size utilities below .clay-keyboard-arrows-indicator ([0ef588f](https://github.com/liferay/liferay-portal/commit/0ef588fbd82e18f7548280d47363ed72e2a68b28))
+- LPD-89790 Wrap hsl(from ...) in unquote for liferay-theme-tasks Sass ([5c657ab](https://github.com/liferay/liferay-portal/commit/5c657abc52cbcd18cd5dcbfaa5eae6296a043362))
+- LPD-79840 Apply quick-win visual improvements to the existing Clay Card component ([7730ec2](https://github.com/liferay/liferay-portal/commit/7730ec20b16f9ba33c5f96d9f70f2d7821138597))
+- LPD-79840 Add disabled class to Clay Card component ([49cc884](https://github.com/liferay/liferay-portal/commit/49cc884d66d34b1af78fda8e6877946f11946732))
+- LPD-89211 Exclude .ck from being affected by .cadmin CSS ([a4c64a0](https://github.com/liferay/liferay-portal/commit/a4c64a04fe11c6e64a5070dc648e6a87e0b81732))
+- LPD-88103 Update Clay label border-radius and text-transform ([1fa5890](https://github.com/liferay/liferay-portal/commit/1fa5890051a9c239bef0b3d80a0a39cb1d89bd4f))
+- LPD-88103 Restyle Clay label colors and font sizes ([4ec5e0c](https://github.com/liferay/liferay-portal/commit/4ec5e0ce7cc673496a90a687ae786565bb3d1d36))
+- LPD-88103 Apply color-d2 level to the text of Clay inverse labels ([de07090](https://github.com/liferay/liferay-portal/commit/de07090b1a42ac826d0ccfa48187c931e8fb415c))
+- LPD-88103 Prevent unexpected changes for existing themes that extend styled by default ([328fe19](https://github.com/liferay/liferay-portal/commit/328fe19f8949aad0535898da0f9cf01472182b36))
+- LPD-88103 Fix Atlas colors after removing from base ([7ae219a](https://github.com/liferay/liferay-portal/commit/7ae219a115b6bab7897ffcd75d11c6363ec8afac))
+- LPD-90345 Add active and focus-visible styles to the resizer ([b08a245](https://github.com/liferay/liferay-portal/commit/b08a2450003323c3e093c7d9b7950eb84b889998))
+- LPD-90345 Preserve horizontal resizer placement under c-prefers-focus-ring ([36ac1eb](https://github.com/liferay/liferay-portal/commit/36ac1eb27cf6fa8ef4e8b18b31b5948f308a161c))
+- LPD-91067 Selected state of Cards not applying the primary stroke correctly ([8e8ccc7](https://github.com/liferay/liferay-portal/commit/8e8ccc7e27c077410144ed4e2b8c680110b62cc7))
+- LPD-91067 Remove form-check-card when it's disabled ([0171777](https://github.com/liferay/liferay-portal/commit/017177766d886f1b0b22684bc03e22b9c86d7dc9))
+- LPD-90973 Add Content Label variants to Clay ([69271a3](https://github.com/liferay/liferay-portal/commit/69271a3795e2ae19949251d0da3d6eb2324c0019))
+- LPD-90973 Make border transparent for inverse ClayLabel component ([6a7f2cd](https://github.com/liferay/liferay-portal/commit/6a7f2cd65122211a81e855d8952fc7e0847b7e5e))
+- LPD-39987 Add tooltip-style anchored placement to KeyboardArrowsIndicator ([847d600](https://github.com/liferay/liferay-portal/commit/847d600a9dcd49d999a0fcbd575a101ec4e5cfa5))
+- LPD-92126 Decouple tabindex and type label styling from href ([33387a9](https://github.com/liferay/liferay-portal/commit/33387a9056ac7959b395ea6101eea40e9922ccaf))
+- LPD-87424 Set $mark-bg to $yellow-l3 across atlas and cadmin ([fd36852](https://github.com/liferay/liferay-portal/commit/fd36852a3d33be059ccef03d13f0098e9670323c))
+- LPD-92129 This rule should apply only to Safari and be avoided in any other browser ([67b2e5b](https://github.com/liferay/liferay-portal/commit/67b2e5b6884f2dc862fcab39e7c82ca10d0c4ba8))
+- LPD-91533 Checkbox and Radio buttons should be vertically centered in horizontal cards ([9d2fe7f](https://github.com/liferay/liferay-portal/commit/9d2fe7f6d523b1859f3ddab398d32befc1399b24))
+- LPD-92478 Use secondary-l2 for Clay Table borders ([c56359f](https://github.com/liferay/liferay-portal/commit/c56359f7ac49d8f76c60031da2bd167ab6f21068))
+- LPD-92478 Use gray-400 for Clay Table borders ([482b12d](https://github.com/liferay/liferay-portal/commit/482b12d15a57598f04e39285293d0d2ce9a05c9c))
+- LPD-90766 @clayui/css add Analytics Cloud and chart icons ([15745da](https://github.com/liferay/liferay-portal/commit/15745dad9b080cd95c5e604fdc5427d9f40b91c1))
+- LPD-90766 SF ([e5fcc00](https://github.com/liferay/liferay-portal/commit/e5fcc00c05147e56e5cb82f81ab8e083b057f149))
+- LPD-85958 Convert Cadmin to use CSS custom properties and add color schemes for dark/light mode ([22d2180](https://github.com/liferay/liferay-portal/commit/22d218049cd912fb7b6b5f87fc9cbdbce167a93c))
+- LPD-85958 Atlas Custom Properties adds light, dark, dark-high-contrast color schemes     - Use `unquote('hsl()')` pattern to prevent Sass from using Sass color functions instead of CSS color functions     - Source Formatting ([52b1f2d](https://github.com/liferay/liferay-portal/commit/52b1f2d747499294b017905244a8c55a330b0c69))
+- LPD-85958 Clay Atlas / Base convert hardcoded colors to use global color variables ([3b1a916](https://github.com/liferay/liferay-portal/commit/3b1a91689764c2932286337cbc75b34c43751b89))
+- LPD-85958 Update Clay dark and dark high contrast to newer values ([b2f2bbb](https://github.com/liferay/liferay-portal/commit/b2f2bbb4e4e066ac892fe0f1966053e327566673))
+
+## @clayui/date-picker
+
+### Commits
+
+- LPD-91601 Support min and max in ClayDatePicker ([beaeb2e](https://github.com/liferay/liferay-portal/commit/beaeb2e5120791b39b77fd8dd8b08df8e44264b5))
+- LPD-91601 Use aria-disabled for out-of-range days ([4350906](https://github.com/liferay/liferay-portal/commit/435090652097b708620dac46b1e5ae0e28a88ab9))
+- LPD-91601 Announce out-of-range rejections to assistive technology ([8fe1760](https://github.com/liferay/liferay-portal/commit/8fe1760bec5e047a697881052f22e7df2d0d31d8))
+- LPD-91601 Clone returned date in clamp to avoid mutation aliasing ([056ce31](https://github.com/liferay/liferay-portal/commit/056ce317bd4d93c23c0361dc8c6fbc21dcd1c38e))
+- LPD-91601 Route disabled-day clicks through the parent guard ([8e04396](https://github.com/liferay/liferay-portal/commit/8e043967ee6b4b90aeb8df5c985ad4f1548aa912))
+- LPD-91601 Tighten min/max tests with userEvent and jest-dom matchers ([e33ad92](https://github.com/liferay/liferay-portal/commit/e33ad928d81b5a65fdb2804b9d0b0d650bfc91f8))
+- LPD-91601 Replace classList.toContain with toHaveClass in date-picker tests ([aab1bb6](https://github.com/liferay/liferay-portal/commit/aab1bb69312aa22ba0a9c98a80a1ce6d30a3e9ec))
+- LPD-91601 Narrow filter predicate to keep forEach callback typed as string ([b3d7a9d](https://github.com/liferay/liferay-portal/commit/b3d7a9d43f35d7af9dd6592fa12575d83a54cf84))
+- LPD-91601 Type the input variable as HTMLInputElement in min/max tests ([42f73a0](https://github.com/liferay/liferay-portal/commit/42f73a075413a039ff58e1480168c998684a15a0))
+- LPD-88738 Wire KeyboardArrowsIndicator into DatePicker ([8926099](https://github.com/liferay/liferay-portal/commit/8926099961144f406799bd55e0dc5db694eba369))
+- LPD-39987 Make KeyboardArrowsIndicator purely visual (aria-hidden) ([32442e9](https://github.com/liferay/liferay-portal/commit/32442e98739cfe6ccbba503159df55d8a61440c9))
+
+## @clayui/drop-down
+
+### Commits
+
+- LPD-44313 Forward other props on ClayDropDownWithItems ([f961f21](https://github.com/liferay/liferay-portal/commit/f961f2150ee61a0e3ee1943cccac2ccef1e584b2))
+- LPD-44313 Forward other props on ClayDropDownWithDrilldown ([cd67bd9](https://github.com/liferay/liferay-portal/commit/cd67bd97cc3152ab2e8cdd737d1e3d9431dea1b3))
+- LPD-44313 Extract shared DropDownHTMLAttributes type ([992cc26](https://github.com/liferay/liferay-portal/commit/992cc2625eaf8f053d8fdbe7c802f9a94701e945))
+- LPD-44313 Stop spreading messages prop into nested DropDown JSX ([1d447cd](https://github.com/liferay/liferay-portal/commit/1d447cd0a529975a55fc29aea8d6b75fd91c3bd9))
+- LPD-88711 Wire KeyboardArrowsIndicator into DropDown ([2e63df8](https://github.com/liferay/liferay-portal/commit/2e63df85ecb58fe2b87933419c5f4b48bccdf5de))
+- LPD-39987 Make KeyboardArrowsIndicator purely visual (aria-hidden) ([32442e9](https://github.com/liferay/liferay-portal/commit/32442e98739cfe6ccbba503159df55d8a61440c9))
+- LPD-34943 Keep parent overlay accessible when nested overlay opens ([2f70757](https://github.com/liferay/liferay-portal/commit/2f7075735c83bd653bb1ea7650c5c9143cfef2ff))
+- LPD-34943 Tighten overlay accessibility test and Overlay filter ([40bc7a8](https://github.com/liferay/liferay-portal/commit/40bc7a8c40d5aeae2dba0c1da89f1c36e24486b2))
+
+## @clayui/icon
+
+### Commits
+
+- LPD-89790 clayui.com replace arrow-key-* with arrows-* and aliases ([b281edd](https://github.com/liferay/liferay-portal/commit/b281edd325a06a39e80cb5cf3c958036acc5ec81))
+- LPD-90766 clayui.com add aliases for Analytics Cloud and chart icons ([b350410](https://github.com/liferay/liferay-portal/commit/b350410d75ecef5286745f94414d9bc8f21e9d31))
+
+## @clayui/label
+
+### Commits
+
+- LPD-88103 Add inverse variant to the Clay Label component ([dc876ae](https://github.com/liferay/liferay-portal/commit/dc876ae88674304b023d8c78dab56f1e096fb7c0))
+- LPD-88103 Restyle Clay label colors and font sizes ([4ec5e0c](https://github.com/liferay/liferay-portal/commit/4ec5e0ce7cc673496a90a687ae786565bb3d1d36))
+- LPD-88103 Prevent inverse for unstyled display type ([979adc7](https://github.com/liferay/liferay-portal/commit/979adc7c1d2a2d02b7ae817b41c7493e5b2b6e05))
+- LPD-88103 Refactor css classes assignment ([a4e1598](https://github.com/liferay/liferay-portal/commit/a4e159853165e84a515409914d5cb83b2568fcb8))
+- LPD-90973 Add Content Label variants to Clay ([69271a3](https://github.com/liferay/liferay-portal/commit/69271a3795e2ae19949251d0da3d6eb2324c0019))
+- LPD-90973 Add ContentLabel React component ([17ddab9](https://github.com/liferay/liferay-portal/commit/17ddab94c90c6d08ee363d80a3f7ab299b0233af))
+- LPD-90973 Make displayType only optional for ClayLabel component ([460e4ff](https://github.com/liferay/liferay-portal/commit/460e4ff6a66079adc1dc19624fcb3ebd83b570b1))
+- LPD-90973 Split Default and SeeAll stories for ClayLabel component ([ee04483](https://github.com/liferay/liferay-portal/commit/ee044832d7448770dd980ca907334c6bfd1e47e6))
+
+## @clayui/multi-select
+
+### Commits
+
+- LPD-88735 Wire KeyboardArrowsIndicator into MultiSelect ([cd1ac5c](https://github.com/liferay/liferay-portal/commit/cd1ac5cf55019889705d9e01f584597cb7123c10))
+- LPD-39987 Make KeyboardArrowsIndicator purely visual (aria-hidden) ([32442e9](https://github.com/liferay/liferay-portal/commit/32442e98739cfe6ccbba503159df55d8a61440c9))
+- LPD-39987 SF ([8d4739e](https://github.com/liferay/liferay-portal/commit/8d4739e95a07b6065ea3970837b40c52bc3b0f1e))
+- LPD-39987 Move MultiSelect indicator portal outside Container ([7f7918a](https://github.com/liferay/liferay-portal/commit/7f7918ab30ce3b2e64205257497e7cb0a912fea9))
+- LPD-39987 Await userEvent in keyboard arrows indicator tests ([4759391](https://github.com/liferay/liferay-portal/commit/47593914f62fa2e0b68ba80cf26ac251a7b067a4))
+- LPD-74696 Improve Enter key handling in Clay autocomplete ([1db5b27](https://github.com/liferay/liferay-portal/commit/1db5b274c0ecec12156ce7ed21af53e2619be8bc))
+- LPD-74696 Add an allowsCustomLabel story to the MultiSelect storybook ([858ae94](https://github.com/liferay/liferay-portal/commit/858ae944333e08abceb041524e9e86d52bb24f61))
+
+## @clayui/shared
+
+### Commits
+
+- LPD-39987 Add Center alignment and tooltip-top indicator placement ([d89b5a9](https://github.com/liferay/liferay-portal/commit/d89b5a9b126bcd6da58e2fc0c6ac91eefa26534a))
+- LPD-34943 Keep parent overlay accessible when nested overlay opens ([2f70757](https://github.com/liferay/liferay-portal/commit/2f7075735c83bd653bb1ea7650c5c9143cfef2ff))
+- LPD-34943 Tighten overlay accessibility test and Overlay filter ([40bc7a8](https://github.com/liferay/liferay-portal/commit/40bc7a8c40d5aeae2dba0c1da89f1c36e24486b2))
+
 # [3.163.0] (2026-05-13)
 
 ## @clayui/alert

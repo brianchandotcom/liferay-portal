@@ -1197,9 +1197,9 @@ definition {
 
 			AssetCategorization.gotoSelectCategory();
 
-			for (var vocabularyName : list "Language (Test Site Name),Region (Test Site Name)") {
+			for (var categoryName : list "Category Name 1,Category Name 2") {
 				AssertElementPresent(
-					key_nodeName = ${vocabularyName},
+					key_nodeName = ${categoryName},
 					locator1 = "Treeview#NODE_ITEM");
 			}
 		}

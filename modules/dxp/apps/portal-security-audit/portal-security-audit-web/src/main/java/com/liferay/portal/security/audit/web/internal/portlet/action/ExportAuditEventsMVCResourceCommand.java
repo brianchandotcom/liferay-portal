@@ -213,6 +213,10 @@ public class ExportAuditEventsMVCResourceCommand
 	}
 
 	private String _getUserEmailAddress(AuditEvent auditEvent) {
+		if (auditEvent.getUserId() <= 0) {
+			return StringPool.BLANK;
+		}
+
 		User user = _userLocalService.fetchUser(auditEvent.getUserId());
 
 		if (user == null) {
@@ -223,6 +227,10 @@ public class ExportAuditEventsMVCResourceCommand
 	}
 
 	private String _getUserScreenName(AuditEvent auditEvent) {
+		if (auditEvent.getUserId() <= 0) {
+			return StringPool.BLANK;
+		}
+
 		User user = _userLocalService.fetchUser(auditEvent.getUserId());
 
 		if (user == null) {

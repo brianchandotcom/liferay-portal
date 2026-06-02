@@ -479,7 +479,7 @@ $label-font-size: 0.75rem;
 $label-lg: () !default;
 $label-lg: map-deep-merge(
 	(
-		border-radius: $border-radius-lg,
+		border-radius: $label-border-radius,
 	),
 	$label-lg
 );

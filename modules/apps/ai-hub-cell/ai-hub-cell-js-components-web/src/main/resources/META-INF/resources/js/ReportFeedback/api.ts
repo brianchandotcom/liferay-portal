@@ -42,5 +42,7 @@ export async function postAIIssueReport(payload: ReportFeedbackPayload) {
 		);
 	}
 
-	return response.json();
+	const responseText = await response.text();
+
+	return responseText ? JSON.parse(responseText) : null;
 }

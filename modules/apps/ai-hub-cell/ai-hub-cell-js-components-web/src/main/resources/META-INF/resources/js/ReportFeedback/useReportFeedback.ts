@@ -55,9 +55,11 @@ export default function useReportFeedback({
 						'unable-to-send-feedback-please-try-again'
 					)
 			);
-			setSubmitting(false);
 
 			return false;
+		}
+		finally {
+			setSubmitting(false);
 		}
 	}
 

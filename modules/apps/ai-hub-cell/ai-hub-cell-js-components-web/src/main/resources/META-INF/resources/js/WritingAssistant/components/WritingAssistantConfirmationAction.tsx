@@ -6,6 +6,7 @@
 import React, {useEffect, useState} from 'react';
 
 import FeedbackActionsRow from '../../ReportFeedback/FeedbackActionsRow';
+import showThanksForFeedbackToast from '../../ReportFeedback/showThanksForFeedbackToast';
 import ConfirmationBalloon from './ConfirmationBalloon';
 
 export default function WritingAssistantConfirmationAction({
@@ -81,14 +82,7 @@ export default function WritingAssistantConfirmationAction({
 							onReport();
 						}
 					}}
-					onThumbsUp={() =>
-						Liferay.Util.openToast({
-							message: Liferay.Language.get(
-								'thanks-for-your-feedback'
-							),
-							type: 'success',
-						})
-					}
+					onThumbsUp={showThanksForFeedbackToast}
 					regenerateDisabled
 					showRegenerate
 				/>

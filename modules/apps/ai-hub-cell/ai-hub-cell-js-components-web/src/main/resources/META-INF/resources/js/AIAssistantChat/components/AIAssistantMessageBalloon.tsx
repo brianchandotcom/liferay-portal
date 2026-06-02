@@ -13,6 +13,7 @@ import renderAIAssistantMessageMarkdown from '../utils/renderAIAssistantMessageM
 
 interface AssistantMessageBalloonProps {
 	error: boolean;
+	feedbackGiven?: boolean;
 	message: string;
 	onReport?: () => void;
 	onThumbsUp?: () => void;
@@ -20,6 +21,7 @@ interface AssistantMessageBalloonProps {
 
 const AssistantMessageBalloon: React.FC<AssistantMessageBalloonProps> = ({
 	error,
+	feedbackGiven,
 	message,
 	onReport,
 	onThumbsUp,
@@ -41,7 +43,8 @@ const AssistantMessageBalloon: React.FC<AssistantMessageBalloonProps> = ({
 
 				{error ? (
 					<span className="m-2">
-						{Liferay.Language.get('generating-content-failed')}
+						{message ||
+							Liferay.Language.get('generating-content-failed')}
 					</span>
 				) : (
 					<div
@@ -56,11 +59,9 @@ const AssistantMessageBalloon: React.FC<AssistantMessageBalloonProps> = ({
 			{onReport && !error && (
 				<FeedbackActionsRow
 					className="mb-1 ml-2"
-					onRegenerate={() => {}}
+					feedbackGiven={feedbackGiven}
 					onReport={onReport}
 					onThumbsUp={onThumbsUp}
-					regenerateDisabled
-					showRegenerate
 				/>
 			)}
 		</div>

@@ -13,6 +13,7 @@ import {EventSource} from 'eventsource';
 import React, {useEffect, useRef, useState} from 'react';
 
 import ReportFeedbackModal from '../ReportFeedback/ReportFeedbackModal';
+import showThanksForFeedbackToast from '../ReportFeedback/showThanksForFeedbackToast';
 import {
 	ChatContext,
 	createEventSource,
@@ -25,6 +26,7 @@ import UserMessageBalloon from './components/UserMessageBalloon';
 import './chat.scss';
 
 interface message {
+	agentDefinitionExternalReferenceCodes?: string[];
 	error?: boolean;
 	messageId?: string;
 	sender: string;
@@ -51,10 +53,8 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	const [reportContext, setReportContext] = useState<ReportContext | null>(
 		null
 	);
-	const currentMessageIdRef = useRef<string | null>(null);
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
-	const messageAgentsRef = useRef<Map<string, string[]>>(new Map());
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
 	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -64,10 +64,6 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 		if (!message.trim()) {
 			return;
 		}
-
-		currentMessageIdRef.current = crypto.randomUUID();
-
-		messageAgentsRef.current.set(currentMessageIdRef.current, []);
 
 		setMessages((previousMessages) => {
 			setTimeout(() => {
@@ -158,38 +154,44 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			eventSourceRef.current.addEventListener(
 				'Chat Message Sent',
 				(event) => {
-					const dataJSON = JSON.parse(event.data);
+					try {
+						const dataJSON = JSON.parse(event.data);
 
-					const messageId = currentMessageIdRef.current;
+						setMessages((previousMessages) => {
+							setTimeout(() => {
+								messagesEndRef.current?.scrollIntoView({
+									behavior: 'smooth',
+								});
+							}, 0);
 
-					if (messageId) {
-						messageAgentsRef.current.set(
-							messageId,
-							dataJSON['agentDefinitionExternalReferenceCodes'] ??
-								[]
-						);
+							return [
+								...previousMessages,
+								{
+									agentDefinitionExternalReferenceCodes:
+										dataJSON[
+											'agentDefinitionExternalReferenceCodes'
+										] ?? [],
+									messageId:
+										typeof crypto !== 'undefined' &&
+										crypto.randomUUID
+											? crypto.randomUUID()
+											: Math.random()
+													.toString(36)
+													.substring(2, 15),
+									sender: 'assistant',
+									text: dataJSON['data'],
+								},
+							];
+						});
+
+						setMessage('');
 					}
-
-					currentMessageIdRef.current = null;
-
-					setMessages((previousMessages) => {
-						setTimeout(() => {
-							messagesEndRef.current?.scrollIntoView({
-								behavior: 'smooth',
-							});
-						}, 0);
-
-						return [
+					catch {
+						setMessages((previousMessages) => [
 							...previousMessages,
-							{
-								messageId: messageId ?? undefined,
-								sender: 'assistant',
-								text: dataJSON['data'],
-							},
-						];
-					});
-
-					setMessage('');
+							{error: true, sender: 'assistant', text: ''},
+						]);
+					}
 
 					setIsGenerating(false);
 				}
@@ -324,22 +326,14 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 										? () =>
 												setReportContext({
 													agentDefinitionExternalReferenceCodes:
-														messageAgentsRef.current.get(
-															item.messageId!
-														) ?? [],
+														item.agentDefinitionExternalReferenceCodes ??
+														[],
 												})
 										: undefined
 								}
 								onThumbsUp={
 									item.messageId
-										? () =>
-												Liferay.Util.openToast({
-													message:
-														Liferay.Language.get(
-															'thanks-for-your-feedback'
-														),
-													type: 'success',
-												})
+										? showThanksForFeedbackToast
 										: undefined
 								}
 							/>

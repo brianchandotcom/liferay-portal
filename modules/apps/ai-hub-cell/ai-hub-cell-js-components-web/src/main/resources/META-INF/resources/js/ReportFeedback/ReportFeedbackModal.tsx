@@ -12,7 +12,10 @@ import React from 'react';
 
 import {ReportFeedbackReason, ReportFeedbackSurface} from './api';
 import {REASON_OPTIONS} from './constants';
+import showThanksForFeedbackToast from './showThanksForFeedbackToast';
 import useReportFeedback from './useReportFeedback';
+
+import './ReportFeedbackModal.scss';
 
 interface ReportFeedbackModalProps {
 	agentDefinitionExternalReferenceCodes: string[];
@@ -47,10 +50,7 @@ const ReportFeedbackModal: React.FC<ReportFeedbackModalProps> = ({
 		event.preventDefault();
 
 		if (await submit()) {
-			Liferay.Util.openToast({
-				message: Liferay.Language.get('thanks-for-your-feedback'),
-				type: 'success',
-			});
+			showThanksForFeedbackToast();
 
 			onSubmitted?.();
 			closeModal();
@@ -99,13 +99,13 @@ const ReportFeedbackModal: React.FC<ReportFeedbackModalProps> = ({
 						</label>
 
 						<ClayInput
+							className="report-feedback-modal__comment"
 							component="textarea"
 							disabled={submitting}
 							id="reportFeedbackUserMessage"
 							onChange={(event) =>
 								setUserMessage(event.target.value)
 							}
-							style={{minHeight: '5rem'}}
 							value={userMessage}
 						/>
 					</ClayForm.Group>

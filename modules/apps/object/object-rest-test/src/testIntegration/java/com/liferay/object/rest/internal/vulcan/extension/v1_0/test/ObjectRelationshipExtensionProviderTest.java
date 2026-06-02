@@ -134,8 +134,8 @@ public class ObjectRelationshipExtensionProviderTest {
 
 	@Test
 	public void testGetExtendedProperties() throws Exception {
-		_testGetExtendedPropertiesWithUserAccount();
 		_testGetExtendedPropertiesWithCommerceProduct();
+		_testGetExtendedPropertiesWithUserAccount();
 	}
 
 	@Test
@@ -217,10 +217,6 @@ public class ObjectRelationshipExtensionProviderTest {
 	private void _testGetExtendedPropertiesWithCommerceProduct()
 		throws Exception {
 
-		ObjectDefinition cpDefinitionObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
-
 		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
 			TestPropsValues.getCompanyId());
 
@@ -233,6 +229,10 @@ public class ObjectRelationshipExtensionProviderTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+
+		ObjectDefinition cpDefinitionObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
@@ -273,9 +273,7 @@ public class ObjectRelationshipExtensionProviderTest {
 			};
 
 			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				new NestedFieldsContext(
-					1,
-					Collections.singletonList(objectRelationship.getName())));
+				_getNestedFieldsContext(objectRelationship.getName()));
 
 			Map<String, Serializable> extendedProperties =
 				_extensionProvider.getExtendedProperties(

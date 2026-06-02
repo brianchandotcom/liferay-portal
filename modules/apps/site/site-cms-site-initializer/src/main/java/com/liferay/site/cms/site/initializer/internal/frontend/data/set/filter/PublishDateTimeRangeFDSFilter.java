@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
-import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseDateTimeRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.DateTimeFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
@@ -31,11 +30,6 @@ import org.osgi.service.component.annotations.Component;
 	service = FDSFilter.class
 )
 public class PublishDateTimeRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
-
-	@Override
-	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.DATE_TIME;
-	}
 
 	@Override
 	public String getId() {

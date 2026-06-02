@@ -1113,8 +1113,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpInstanceOptionValueRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPInstanceOptionValueRel::getUuid));
+				"cpInstanceOptionValueRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPInstanceOptionValueRel::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1126,8 +1127,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				CPInstanceOptionValueRel::getGroupId),
 			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE, "",
 			new FinderColumn<>(
-				"cpInstanceOptionValueRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPInstanceOptionValueRel::getUuid),
+				"cpInstanceOptionValueRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPInstanceOptionValueRel::getUuid),
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPInstanceOptionValueRel::getGroupId));
@@ -1156,7 +1158,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpInstanceOptionValueRel.", "uuid",
+					"cpInstanceOptionValueRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPInstanceOptionValueRel::getUuid),
 				new FinderColumn<>(
@@ -1383,4 +1385,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1250369451
+// LIFERAY-SERVICE-BUILDER-HASH:-1239887618

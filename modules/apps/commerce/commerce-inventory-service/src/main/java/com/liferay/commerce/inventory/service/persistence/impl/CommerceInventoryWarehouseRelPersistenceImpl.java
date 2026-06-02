@@ -621,8 +621,8 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouseRel.",
-					"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
-					true, true,
+					"commerceInventoryWarehouseId", "CIWarehouseId",
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryWarehouseRel::
 						getCommerceInventoryWarehouseId));
 
@@ -654,8 +654,8 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				CommerceInventoryWarehouseRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.",
-				"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"commerceInventoryWarehouseId", "CIWarehouseId",
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouseRel::
 					getCommerceInventoryWarehouseId));
 
@@ -682,8 +682,8 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				CommerceInventoryWarehouseRel::getClassPK),
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.",
-				"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"commerceInventoryWarehouseId", "CIWarehouseId",
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouseRel::
 					getCommerceInventoryWarehouseId));
 
@@ -760,4 +760,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:939596570
+// LIFERAY-SERVICE-BUILDER-HASH:1538668945

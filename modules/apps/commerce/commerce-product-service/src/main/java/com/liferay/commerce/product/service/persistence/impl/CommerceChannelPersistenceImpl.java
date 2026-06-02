@@ -1167,8 +1167,9 @@ public class CommerceChannelPersistenceImpl
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceChannel::getUuid));
+					"commerceChannel.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceChannel::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1194,8 +1195,9 @@ public class CommerceChannelPersistenceImpl
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceChannel::getUuid),
+					"commerceChannel.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceChannel::getUuid),
 				new FinderColumn<>(
 					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getCompanyId));
@@ -1374,4 +1376,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:412933977
+// LIFERAY-SERVICE-BUILDER-HASH:-778495973

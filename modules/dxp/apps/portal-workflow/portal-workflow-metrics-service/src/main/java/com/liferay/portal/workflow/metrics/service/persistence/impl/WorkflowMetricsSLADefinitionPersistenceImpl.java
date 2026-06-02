@@ -1272,7 +1272,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"workflowMetricsSLADefinition.", "uuid",
+				"workflowMetricsSLADefinition.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinition::getUuid));
 
@@ -1286,7 +1286,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				WorkflowMetricsSLADefinition::getGroupId),
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE, "",
 			new FinderColumn<>(
-				"workflowMetricsSLADefinition.", "uuid",
+				"workflowMetricsSLADefinition.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinition::getUuid),
 			new FinderColumn<>(
@@ -1318,7 +1318,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"workflowMetricsSLADefinition.", "uuid",
+					"workflowMetricsSLADefinition.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					WorkflowMetricsSLADefinition::getUuid),
 				new FinderColumn<>(
@@ -1337,12 +1337,12 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.",
-				"workflowMetricsSLADefinitionId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"workflowMetricsSLADefinitionId", "wmSLADefinitionId",
+				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinition::
 					getWorkflowMetricsSLADefinitionId),
 			new FinderColumn<>(
-				"workflowMetricsSLADefinition.", "active",
+				"workflowMetricsSLADefinition.", "active", "active_",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				WorkflowMetricsSLADefinition::isActive));
 
@@ -1410,7 +1410,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinition::getCompanyId),
 			new FinderColumn<>(
-				"workflowMetricsSLADefinition.", "active",
+				"workflowMetricsSLADefinition.", "active", "active_",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				WorkflowMetricsSLADefinition::isActive),
 			new FinderColumn<>(
@@ -1456,7 +1456,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
-					"workflowMetricsSLADefinition.", "active",
+					"workflowMetricsSLADefinition.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
@@ -1512,7 +1512,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
-					"workflowMetricsSLADefinition.", "active",
+					"workflowMetricsSLADefinition.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
@@ -1565,7 +1565,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
-					"workflowMetricsSLADefinition.", "active",
+					"workflowMetricsSLADefinition.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
@@ -1651,4 +1651,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:512044546
+// LIFERAY-SERVICE-BUILDER-HASH:-1021089427

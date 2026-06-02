@@ -559,8 +559,8 @@ public class ObjectStateFlowPersistenceImpl
 			_SQL_SELECT_OBJECTSTATEFLOW_WHERE, _SQL_COUNT_OBJECTSTATEFLOW_WHERE,
 			ObjectStateFlowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectStateFlow.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectStateFlow::getUuid));
+				"objectStateFlow.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ObjectStateFlow::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -586,8 +586,9 @@ public class ObjectStateFlowPersistenceImpl
 				ObjectStateFlowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectStateFlow.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ObjectStateFlow::getUuid),
+					"objectStateFlow.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectStateFlow::getUuid),
 				new FinderColumn<>(
 					"objectStateFlow.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectStateFlow::getCompanyId));
@@ -673,4 +674,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:387336112
+// LIFERAY-SERVICE-BUILDER-HASH:352619950

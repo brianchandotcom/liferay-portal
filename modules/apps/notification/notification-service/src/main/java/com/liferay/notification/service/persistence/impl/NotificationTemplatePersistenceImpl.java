@@ -848,8 +848,9 @@ public class NotificationTemplatePersistenceImpl
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, NotificationTemplate::getUuid));
+					"notificationTemplate.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					NotificationTemplate::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -875,8 +876,9 @@ public class NotificationTemplatePersistenceImpl
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, NotificationTemplate::getUuid),
+					"notificationTemplate.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					NotificationTemplate::getUuid),
 				new FinderColumn<>(
 					"notificationTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -998,4 +1000,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:82613853
+// LIFERAY-SERVICE-BUILDER-HASH:384642251

@@ -1089,8 +1089,8 @@ public class WebsitePersistenceImpl
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"website.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Website::getUuid));
+				"website.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, Website::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1114,8 +1114,8 @@ public class WebsitePersistenceImpl
 				_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 				WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"website.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Website::getUuid),
+					"website.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Website::getUuid),
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getCompanyId));
@@ -1280,8 +1280,9 @@ public class WebsitePersistenceImpl
 					"website.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, Website::getClassPK),
 				new FinderColumn<>(
-					"website.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Website::isPrimary));
+					"website.", "primary", "primary_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					Website::isPrimary));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1335,4 +1336,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-840380013
+// LIFERAY-SERVICE-BUILDER-HASH:-1782298180

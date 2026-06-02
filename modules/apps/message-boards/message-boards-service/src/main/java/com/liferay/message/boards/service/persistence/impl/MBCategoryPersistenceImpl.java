@@ -3269,8 +3269,8 @@ public class MBCategoryPersistenceImpl
 			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBCategory::getUuid));
+				"mbCategory.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBCategory::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3282,8 +3282,8 @@ public class MBCategoryPersistenceImpl
 				MBCategory::getGroupId),
 			_SQL_SELECT_MBCATEGORY_WHERE, "",
 			new FinderColumn<>(
-				"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBCategory::getUuid),
+				"mbCategory.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBCategory::getUuid),
 			new FinderColumn<>(
 				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBCategory::getGroupId));
@@ -3310,8 +3310,8 @@ public class MBCategoryPersistenceImpl
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, MBCategory::getUuid),
+					"mbCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, MBCategory::getUuid),
 				new FinderColumn<>(
 					"mbCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBCategory::getCompanyId));
@@ -3708,4 +3708,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1973937456
+// LIFERAY-SERVICE-BUILDER-HASH:-1105841879

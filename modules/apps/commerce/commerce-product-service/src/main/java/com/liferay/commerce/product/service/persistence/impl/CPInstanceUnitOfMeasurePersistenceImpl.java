@@ -1134,8 +1134,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			CPInstanceUnitOfMeasureModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpInstanceUnitOfMeasure.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPInstanceUnitOfMeasure::getUuid));
+				"cpInstanceUnitOfMeasure.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPInstanceUnitOfMeasure::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1161,7 +1162,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				CPInstanceUnitOfMeasureModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpInstanceUnitOfMeasure.", "uuid",
+					"cpInstanceUnitOfMeasure.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPInstanceUnitOfMeasure::getUuid),
 				new FinderColumn<>(
@@ -1254,8 +1255,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPInstanceUnitOfMeasure::getCPInstanceId),
 			new FinderColumn<>(
-				"cpInstanceUnitOfMeasure.", "active", FinderColumn.Type.BOOLEAN,
-				"=", true, true, CPInstanceUnitOfMeasure::isActive));
+				"cpInstanceUnitOfMeasure.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CPInstanceUnitOfMeasure::isActive));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this,
@@ -1271,8 +1273,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPInstanceUnitOfMeasure::getCPInstanceId),
 			new FinderColumn<>(
-				"cpInstanceUnitOfMeasure.", "key", FinderColumn.Type.STRING,
-				"=", true, true, CPInstanceUnitOfMeasure::getKey));
+				"cpInstanceUnitOfMeasure.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPInstanceUnitOfMeasure::getKey));
 
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
 			this,
@@ -1301,7 +1304,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPInstanceUnitOfMeasure::getCPInstanceId),
 			new FinderColumn<>(
-				"cpInstanceUnitOfMeasure.", "primary",
+				"cpInstanceUnitOfMeasure.", "primary", "primary_",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				CPInstanceUnitOfMeasure::isPrimary));
 
@@ -1337,8 +1340,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				"cpInstanceUnitOfMeasure.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, CPInstanceUnitOfMeasure::getCompanyId),
 			new FinderColumn<>(
-				"cpInstanceUnitOfMeasure.", "key", FinderColumn.Type.STRING,
-				"=", true, true, CPInstanceUnitOfMeasure::getKey),
+				"cpInstanceUnitOfMeasure.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPInstanceUnitOfMeasure::getKey),
 			new FinderColumn<>(
 				"cpInstanceUnitOfMeasure.", "sku", FinderColumn.Type.STRING,
 				"=", true, true, CPInstanceUnitOfMeasure::getSku));
@@ -1418,4 +1422,4 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-968137325
+// LIFERAY-SERVICE-BUILDER-HASH:1751959181

@@ -955,8 +955,8 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId1),
 			new FinderColumn<>(
-				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, AssetLink::getType));
+				"assetLink.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, AssetLink::getType));
 
 		_collectionPersistenceFinderByE2_T = new CollectionPersistenceFinder<>(
 			this,
@@ -982,8 +982,8 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId2),
 			new FinderColumn<>(
-				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, AssetLink::getType));
+				"assetLink.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, AssetLink::getType));
 
 		_uniquePersistenceFinderByE_E_T = new UniquePersistenceFinder<>(
 			this,
@@ -1004,8 +1004,8 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId2),
 			new FinderColumn<>(
-				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, AssetLink::getType));
+				"assetLink.", "type", "type_", FinderColumn.Type.INTEGER, "=",
+				true, true, AssetLink::getType));
 
 		AssetLinkUtil.setPersistence(this);
 	}
@@ -1079,4 +1079,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:191132173
+// LIFERAY-SERVICE-BUILDER-HASH:-1245326314

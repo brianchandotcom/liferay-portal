@@ -1074,8 +1074,8 @@ public class CommerceCurrencyPersistenceImpl
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceCurrency.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommerceCurrency::getUuid));
+				"commerceCurrency.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceCurrency::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1101,8 +1101,9 @@ public class CommerceCurrencyPersistenceImpl
 				CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceCurrency.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceCurrency::getUuid),
+					"commerceCurrency.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceCurrency::getUuid),
 				new FinderColumn<>(
 					"commerceCurrency.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCurrency::getCompanyId));
@@ -1147,8 +1148,8 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
 			new FinderColumn<>(
-				"commerceCurrency.", "code", FinderColumn.Type.STRING, "=",
-				true, true, CommerceCurrency::getCode));
+				"commerceCurrency.", "code", "code_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceCurrency::getCode));
 
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
 			this,
@@ -1175,8 +1176,9 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
 			new FinderColumn<>(
-				"commerceCurrency.", "primary", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceCurrency::isPrimary));
+				"commerceCurrency.", "primary", "primary_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceCurrency::isPrimary));
 
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
 			this,
@@ -1203,8 +1205,9 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
 			new FinderColumn<>(
-				"commerceCurrency.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceCurrency::isActive));
+				"commerceCurrency.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceCurrency::isActive));
 
 		_collectionPersistenceFinderByC_P_A = new CollectionPersistenceFinder<>(
 			this,
@@ -1237,11 +1240,13 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
 			new FinderColumn<>(
-				"commerceCurrency.", "primary", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceCurrency::isPrimary),
+				"commerceCurrency.", "primary", "primary_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceCurrency::isPrimary),
 			new FinderColumn<>(
-				"commerceCurrency.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceCurrency::isActive));
+				"commerceCurrency.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceCurrency::isActive));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1330,4 +1335,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1814771017
+// LIFERAY-SERVICE-BUILDER-HASH:1838681799

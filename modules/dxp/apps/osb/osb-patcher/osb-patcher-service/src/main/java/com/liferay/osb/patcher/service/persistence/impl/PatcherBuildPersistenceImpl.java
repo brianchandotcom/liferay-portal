@@ -3852,8 +3852,8 @@ public class PatcherBuildPersistenceImpl
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
 				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
-					true, PatcherBuild::getKey));
+					"patcherBuild.", "key", "key_", FinderColumn.Type.STRING,
+					"=", true, true, PatcherBuild::getKey));
 
 		_collectionPersistenceFinderByP_P =
 			new FilterCollectionPersistenceFinder<>(
@@ -3935,8 +3935,8 @@ public class PatcherBuildPersistenceImpl
 				PatcherBuild::getKeyVersion),
 			_SQL_SELECT_PATCHERBUILD_WHERE, "",
 			new FinderColumn<>(
-				"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
-				true, PatcherBuild::getKey),
+				"patcherBuild.", "key", "key_", FinderColumn.Type.STRING, "=",
+				true, true, PatcherBuild::getKey),
 			new FinderColumn<>(
 				"patcherBuild.", "keyVersion", FinderColumn.Type.DOUBLE, "=",
 				true, true, PatcherBuild::getKeyVersion));
@@ -3962,8 +3962,8 @@ public class PatcherBuildPersistenceImpl
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
 				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
-					true, PatcherBuild::getKey),
+					"patcherBuild.", "key", "key_", FinderColumn.Type.STRING,
+					"=", true, true, PatcherBuild::getKey),
 				new FinderColumn<>(
 					"patcherBuild.", "keyVersion", FinderColumn.Type.DOUBLE,
 					">", true, true, PatcherBuild::getKeyVersion));
@@ -3989,8 +3989,8 @@ public class PatcherBuildPersistenceImpl
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
 				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
-					true, PatcherBuild::getKey),
+					"patcherBuild.", "key", "key_", FinderColumn.Type.STRING,
+					"=", true, true, PatcherBuild::getKey),
 				new FinderColumn<>(
 					"patcherBuild.", "keyVersion", FinderColumn.Type.DOUBLE,
 					"<", true, true, PatcherBuild::getKeyVersion));
@@ -4021,8 +4021,8 @@ public class PatcherBuildPersistenceImpl
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
 				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
-					true, PatcherBuild::getKey),
+					"patcherBuild.", "key", "key_", FinderColumn.Type.STRING,
+					"=", true, true, PatcherBuild::getKey),
 				new FinderColumn<>(
 					"patcherBuild.", "latestKeyBuild",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -4199,8 +4199,8 @@ public class PatcherBuildPersistenceImpl
 					"patcherBuild.", "childBuild", FinderColumn.Type.BOOLEAN,
 					"=", true, true, PatcherBuild::isChildBuild),
 				new FinderColumn<>(
-					"patcherBuild.", "type", FinderColumn.Type.INTEGER, "!=",
-					true, true, PatcherBuild::getType));
+					"patcherBuild.", "type", "type_", FinderColumn.Type.INTEGER,
+					"!=", true, true, PatcherBuild::getType));
 
 		_collectionPersistenceFinderByP_N_L_A =
 			new FilterCollectionPersistenceFinder<>(
@@ -4345,4 +4345,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:97905805
+// LIFERAY-SERVICE-BUILDER-HASH:1170612101

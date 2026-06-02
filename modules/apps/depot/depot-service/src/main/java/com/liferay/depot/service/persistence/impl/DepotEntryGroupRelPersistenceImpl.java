@@ -1179,8 +1179,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, DepotEntryGroupRel::getUuid));
+				"depotEntryGroupRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				DepotEntryGroupRel::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1192,8 +1193,9 @@ public class DepotEntryGroupRelPersistenceImpl
 				DepotEntryGroupRel::getGroupId),
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE, "",
 			new FinderColumn<>(
-				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, DepotEntryGroupRel::getUuid),
+				"depotEntryGroupRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				DepotEntryGroupRel::getUuid),
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getGroupId));
@@ -1222,8 +1224,9 @@ public class DepotEntryGroupRelPersistenceImpl
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, DepotEntryGroupRel::getUuid),
+					"depotEntryGroupRel.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DepotEntryGroupRel::getUuid),
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getCompanyId));
@@ -1391,8 +1394,9 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getToGroupId),
 			new FinderColumn<>(
-				"depotEntryGroupRel.", "type", FinderColumn.Type.INTEGER, "=",
-				true, true, DepotEntryGroupRel::getType));
+				"depotEntryGroupRel.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				DepotEntryGroupRel::getType));
 
 		DepotEntryGroupRelUtil.setPersistence(this);
 	}
@@ -1466,4 +1470,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:404443653
+// LIFERAY-SERVICE-BUILDER-HASH:-177739684

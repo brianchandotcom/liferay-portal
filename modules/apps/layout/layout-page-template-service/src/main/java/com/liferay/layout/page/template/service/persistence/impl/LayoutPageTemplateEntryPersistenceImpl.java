@@ -5654,8 +5654,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"layoutPageTemplateEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutPageTemplateEntry::getUuid));
+				"layoutPageTemplateEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutPageTemplateEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -5667,8 +5668,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				LayoutPageTemplateEntry::getGroupId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
-				"layoutPageTemplateEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutPageTemplateEntry::getUuid),
+				"layoutPageTemplateEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutPageTemplateEntry::getUuid),
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutPageTemplateEntry::getGroupId));
@@ -5697,7 +5699,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "uuid",
+					"layoutPageTemplateEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateEntry::getUuid),
 				new FinderColumn<>(
@@ -5894,7 +5896,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getGroupId),
 				new ArrayableFinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6027,7 +6029,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					"=", true, true,
 					LayoutPageTemplateEntry::getLayoutPageTemplateCollectionId),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6125,7 +6127,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateEntry::getName),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6162,7 +6164,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateEntry::getName),
 				new ArrayableFinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6201,7 +6203,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getGroupId),
 				new ArrayableFinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6236,8 +6238,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"layoutPageTemplateEntry.", "name", FinderColumn.Type.STRING,
 				"=", true, true, LayoutPageTemplateEntry::getName),
 			new FinderColumn<>(
-				"layoutPageTemplateEntry.", "type", FinderColumn.Type.INTEGER,
-				"=", true, true, LayoutPageTemplateEntry::getType));
+				"layoutPageTemplateEntry.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				LayoutPageTemplateEntry::getType));
 
 		_collectionPersistenceFinderByG_L_LikeN_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -6342,7 +6345,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateEntry::getClassTypeKey),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6453,7 +6456,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getClassNameId),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6495,7 +6498,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateEntry::getName),
 				new ArrayableFinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6547,7 +6550,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getGroupId),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6612,7 +6615,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateEntry::getName),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
@@ -6676,7 +6679,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateEntry::getClassTypeKey),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6805,7 +6808,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateEntry::getName),
 				new FinderColumn<>(
-					"layoutPageTemplateEntry.", "type",
+					"layoutPageTemplateEntry.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType),
 				new FinderColumn<>(
@@ -6903,4 +6906,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:857180519
+// LIFERAY-SERVICE-BUILDER-HASH:-1866438589

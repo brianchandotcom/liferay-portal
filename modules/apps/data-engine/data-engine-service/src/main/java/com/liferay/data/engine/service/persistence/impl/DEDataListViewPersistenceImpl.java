@@ -834,8 +834,8 @@ public class DEDataListViewPersistenceImpl
 			_SQL_SELECT_DEDATALISTVIEW_WHERE, _SQL_COUNT_DEDATALISTVIEW_WHERE,
 			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DEDataListView::getUuid));
+				"deDataListView.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DEDataListView::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -847,8 +847,8 @@ public class DEDataListViewPersistenceImpl
 				DEDataListView::getGroupId),
 			_SQL_SELECT_DEDATALISTVIEW_WHERE, "",
 			new FinderColumn<>(
-				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DEDataListView::getUuid),
+				"deDataListView.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DEDataListView::getUuid),
 			new FinderColumn<>(
 				"deDataListView.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DEDataListView::getGroupId));
@@ -876,8 +876,9 @@ public class DEDataListViewPersistenceImpl
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"deDataListView.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DEDataListView::getUuid),
+					"deDataListView.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DEDataListView::getUuid),
 				new FinderColumn<>(
 					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DEDataListView::getCompanyId));
@@ -1026,4 +1027,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:365865592
+// LIFERAY-SERVICE-BUILDER-HASH:-1564433548

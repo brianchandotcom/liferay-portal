@@ -1052,7 +1052,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceInventoryWarehouseItem.", "uuid",
+				"commerceInventoryWarehouseItem.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUuid));
 
@@ -1080,7 +1080,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceInventoryWarehouseItem.", "uuid",
+					"commerceInventoryWarehouseItem.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryWarehouseItem::getUuid),
 				new FinderColumn<>(
@@ -1316,4 +1316,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-555986940
+// LIFERAY-SERVICE-BUILDER-HASH:917539909

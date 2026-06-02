@@ -1934,7 +1934,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"layoutPageTemplateCollection.", "uuid",
+				"layoutPageTemplateCollection.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateCollection::getUuid));
 
@@ -1948,7 +1948,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				LayoutPageTemplateCollection::getGroupId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE, "",
 			new FinderColumn<>(
-				"layoutPageTemplateCollection.", "uuid",
+				"layoutPageTemplateCollection.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateCollection::getUuid),
 			new FinderColumn<>(
@@ -1980,7 +1980,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"layoutPageTemplateCollection.", "uuid",
+					"layoutPageTemplateCollection.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateCollection::getUuid),
 				new FinderColumn<>(
@@ -2046,7 +2046,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.",
 					"parentLayoutPageTemplateCollectionId",
-					FinderColumn.Type.LONG, "=", true, true,
+					"parentLPTCollectionId", FinderColumn.Type.LONG, "=", true,
+					true,
 					LayoutPageTemplateCollection::
 						getParentLayoutPageTemplateCollectionId));
 
@@ -2082,7 +2083,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateCollection::getGroupId),
 				new FinderColumn<>(
-					"layoutPageTemplateCollection.", "type",
+					"layoutPageTemplateCollection.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateCollection::getType));
 
@@ -2126,11 +2127,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.",
 					"parentLayoutPageTemplateCollectionId",
-					FinderColumn.Type.LONG, "=", true, true,
+					"parentLPTCollectionId", FinderColumn.Type.LONG, "=", true,
+					true,
 					LayoutPageTemplateCollection::
 						getParentLayoutPageTemplateCollectionId),
 				new FinderColumn<>(
-					"layoutPageTemplateCollection.", "type",
+					"layoutPageTemplateCollection.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateCollection::getType));
 
@@ -2155,12 +2157,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				LayoutPageTemplateCollection::getGroupId),
 			new FinderColumn<>(
 				"layoutPageTemplateCollection.",
-				"layoutPageTemplateCollectionKey", FinderColumn.Type.STRING,
-				"=", true, true,
+				"layoutPageTemplateCollectionKey", "lptCollectionKey",
+				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateCollection::
 					getLayoutPageTemplateCollectionKey),
 			new FinderColumn<>(
-				"layoutPageTemplateCollection.", "type",
+				"layoutPageTemplateCollection.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				LayoutPageTemplateCollection::getType));
 
@@ -2205,7 +2207,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateCollection::getName),
 				new FinderColumn<>(
-					"layoutPageTemplateCollection.", "type",
+					"layoutPageTemplateCollection.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateCollection::getType));
 
@@ -2242,7 +2244,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateCollection::getName),
 				new FinderColumn<>(
-					"layoutPageTemplateCollection.", "type",
+					"layoutPageTemplateCollection.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateCollection::getType));
 
@@ -2269,8 +2271,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				LayoutPageTemplateCollection::getGroupId),
 			new FinderColumn<>(
 				"layoutPageTemplateCollection.",
-				"parentLayoutPageTemplateCollectionId", FinderColumn.Type.LONG,
-				"=", true, true,
+				"parentLayoutPageTemplateCollectionId", "parentLPTCollectionId",
+				FinderColumn.Type.LONG, "=", true, true,
 				LayoutPageTemplateCollection::
 					getParentLayoutPageTemplateCollectionId),
 			new FinderColumn<>(
@@ -2278,7 +2280,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateCollection::getName),
 			new FinderColumn<>(
-				"layoutPageTemplateCollection.", "type",
+				"layoutPageTemplateCollection.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				LayoutPageTemplateCollection::getType));
 
@@ -2377,4 +2379,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:467463114
+// LIFERAY-SERVICE-BUILDER-HASH:2025167763

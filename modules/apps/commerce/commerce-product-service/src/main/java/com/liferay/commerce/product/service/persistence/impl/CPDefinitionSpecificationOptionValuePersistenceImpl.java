@@ -1597,7 +1597,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDefinitionSpecificationOptionValue.", "uuid",
+				"cpDefinitionSpecificationOptionValue.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getUuid));
 
@@ -1612,7 +1612,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				CPDefinitionSpecificationOptionValue::getGroupId),
 			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
-				"cpDefinitionSpecificationOptionValue.", "uuid",
+				"cpDefinitionSpecificationOptionValue.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getUuid),
 			new FinderColumn<>(
@@ -1644,7 +1644,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpDefinitionSpecificationOptionValue.", "uuid",
+					"cpDefinitionSpecificationOptionValue.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPDefinitionSpecificationOptionValue::getUuid),
 				new FinderColumn<>(
@@ -1792,7 +1792,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.",
 				"CPDefinitionSpecificationOptionValueId",
-				FinderColumn.Type.LONG, "=", true, true,
+				"CPDSpecificationOptionValueId", FinderColumn.Type.LONG, "=",
+				true, true,
 				CPDefinitionSpecificationOptionValue::
 					getCPDefinitionSpecificationOptionValueId),
 			new FinderColumn<>(
@@ -1882,7 +1883,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getCPDefinitionId),
 			new FinderColumn<>(
-				"cpDefinitionSpecificationOptionValue.", "key",
+				"cpDefinitionSpecificationOptionValue.", "key", "key_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getKey));
 
@@ -1984,4 +1985,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1821603648
+// LIFERAY-SERVICE-BUILDER-HASH:-1933363275

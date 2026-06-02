@@ -929,8 +929,9 @@ public class ObjectEntryVersionPersistenceImpl
 			_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
 			ObjectEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ObjectEntryVersion::getUuid));
+				"objectEntryVersion.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				ObjectEntryVersion::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -956,8 +957,9 @@ public class ObjectEntryVersionPersistenceImpl
 				ObjectEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, ObjectEntryVersion::getUuid),
+					"objectEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectEntryVersion::getUuid),
 				new FinderColumn<>(
 					"objectEntryVersion.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryVersion::getCompanyId));
@@ -1163,4 +1165,4 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:861991697
+// LIFERAY-SERVICE-BUILDER-HASH:-292716498

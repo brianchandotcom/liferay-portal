@@ -580,4 +580,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1333385051
+// LIFERAY-SERVICE-BUILDER-HASH:1142760549

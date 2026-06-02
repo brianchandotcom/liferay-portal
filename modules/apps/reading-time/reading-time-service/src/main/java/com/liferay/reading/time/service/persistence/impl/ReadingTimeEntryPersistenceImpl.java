@@ -717,8 +717,8 @@ public class ReadingTimeEntryPersistenceImpl
 			_SQL_COUNT_READINGTIMEENTRY_WHERE,
 			ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ReadingTimeEntry::getUuid));
+				"readingTimeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ReadingTimeEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -730,8 +730,8 @@ public class ReadingTimeEntryPersistenceImpl
 				ReadingTimeEntry::getGroupId),
 			_SQL_SELECT_READINGTIMEENTRY_WHERE, "",
 			new FinderColumn<>(
-				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ReadingTimeEntry::getUuid),
+				"readingTimeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ReadingTimeEntry::getUuid),
 			new FinderColumn<>(
 				"readingTimeEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ReadingTimeEntry::getGroupId));
@@ -760,8 +760,9 @@ public class ReadingTimeEntryPersistenceImpl
 				ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ReadingTimeEntry::getUuid),
+					"readingTimeEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ReadingTimeEntry::getUuid),
 				new FinderColumn<>(
 					"readingTimeEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ReadingTimeEntry::getCompanyId));
@@ -860,4 +861,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-972392651
+// LIFERAY-SERVICE-BUILDER-HASH:-924187964

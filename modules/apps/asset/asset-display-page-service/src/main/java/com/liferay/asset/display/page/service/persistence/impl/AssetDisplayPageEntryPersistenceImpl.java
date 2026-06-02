@@ -1013,8 +1013,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 			AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, AssetDisplayPageEntry::getUuid));
+				"assetDisplayPageEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetDisplayPageEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1026,8 +1027,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 				AssetDisplayPageEntry::getGroupId),
 			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
-				"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, AssetDisplayPageEntry::getUuid),
+				"assetDisplayPageEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetDisplayPageEntry::getUuid),
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getGroupId));
@@ -1056,8 +1058,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, AssetDisplayPageEntry::getUuid),
+					"assetDisplayPageEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					AssetDisplayPageEntry::getUuid),
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1245,4 +1248,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2078543719
+// LIFERAY-SERVICE-BUILDER-HASH:1000231922

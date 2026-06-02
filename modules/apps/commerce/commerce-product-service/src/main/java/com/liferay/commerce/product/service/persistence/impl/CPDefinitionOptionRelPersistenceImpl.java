@@ -1342,8 +1342,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 			CPDefinitionOptionRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"cpDefinitionOptionRel.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionOptionRel::getUuid));
+				"cpDefinitionOptionRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionRel::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1355,8 +1356,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 				CPDefinitionOptionRel::getGroupId),
 			_SQL_SELECT_CPDEFINITIONOPTIONREL_WHERE, "",
 			new FinderColumn<>(
-				"cpDefinitionOptionRel.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionOptionRel::getUuid),
+				"cpDefinitionOptionRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionRel::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionOptionRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPDefinitionOptionRel::getGroupId));
@@ -1385,8 +1387,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 				CPDefinitionOptionRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpDefinitionOptionRel.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, CPDefinitionOptionRel::getUuid),
+					"cpDefinitionOptionRel.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPDefinitionOptionRel::getUuid),
 				new FinderColumn<>(
 					"cpDefinitionOptionRel.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1603,8 +1606,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionOptionRel::getCPDefinitionId),
 			new FinderColumn<>(
-				"cpDefinitionOptionRel.", "key", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionOptionRel::getKey));
+				"cpDefinitionOptionRel.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionRel::getKey));
 
 		CPDefinitionOptionRelUtil.setPersistence(this);
 	}
@@ -1678,4 +1682,4 @@ public class CPDefinitionOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:105330970
+// LIFERAY-SERVICE-BUILDER-HASH:1010888905

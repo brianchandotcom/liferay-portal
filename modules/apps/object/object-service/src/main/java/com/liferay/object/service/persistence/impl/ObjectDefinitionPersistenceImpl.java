@@ -2561,8 +2561,9 @@ public class ObjectDefinitionPersistenceImpl
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ObjectDefinition::getUuid));
+					"objectDefinition.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectDefinition::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -2588,8 +2589,9 @@ public class ObjectDefinitionPersistenceImpl
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ObjectDefinition::getUuid),
+					"objectDefinition.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectDefinition::getUuid),
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId));
@@ -2718,8 +2720,9 @@ public class ObjectDefinitionPersistenceImpl
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isSystem));
+					"objectDefinition.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isSystem));
 
 		_collectionPersistenceFinderByC_U =
 			new FilterCollectionPersistenceFinder<>(
@@ -2845,8 +2848,9 @@ public class ObjectDefinitionPersistenceImpl
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isSystem),
+					"objectDefinition.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isSystem),
 				new FinderColumn<>(
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
@@ -2885,8 +2889,9 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
 				new FinderColumn<>(
-					"objectDefinition.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isActive),
+					"objectDefinition.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isActive),
 				new FinderColumn<>(
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
@@ -2929,8 +2934,9 @@ public class ObjectDefinitionPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					ObjectDefinition::isModifiable),
 				new FinderColumn<>(
-					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isSystem));
+					"objectDefinition.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isSystem));
 
 		_collectionPersistenceFinderByC_A_S_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -2969,11 +2975,13 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
 				new FinderColumn<>(
-					"objectDefinition.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isActive),
+					"objectDefinition.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isActive),
 				new FinderColumn<>(
-					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isSystem),
+					"objectDefinition.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isSystem),
 				new FinderColumn<>(
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
@@ -3034,8 +3042,9 @@ public class ObjectDefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					ObjectDefinition::getObjectFolderId),
 				new FinderColumn<>(
-					"objectDefinition.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isActive),
+					"objectDefinition.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isActive),
 				new FinderColumn<>(
 					"objectDefinition.", "enableObjectEntryDraft",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -3136,4 +3145,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-801177311
+// LIFERAY-SERVICE-BUILDER-HASH:-25326354

@@ -1032,8 +1032,8 @@ public class RegionPersistenceImpl
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"region.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Region::getUuid));
+				"region.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Region::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1057,8 +1057,8 @@ public class RegionPersistenceImpl
 				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"region.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Region::getUuid),
+					"region.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Region::getUuid),
 				new FinderColumn<>(
 					"region.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCompanyId));
@@ -1110,8 +1110,8 @@ public class RegionPersistenceImpl
 				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"region.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Region::isActive));
+					"region.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Region::isActive));
 
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
 			this,
@@ -1137,8 +1137,8 @@ public class RegionPersistenceImpl
 				"region.", "countryId", FinderColumn.Type.LONG, "=", true, true,
 				Region::getCountryId),
 			new FinderColumn<>(
-				"region.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
-				Region::isActive));
+				"region.", "active", "active_", FinderColumn.Type.BOOLEAN, "=",
+				true, true, Region::isActive));
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
 			this,
@@ -1211,4 +1211,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:558102589
+// LIFERAY-SERVICE-BUILDER-HASH:-521795158

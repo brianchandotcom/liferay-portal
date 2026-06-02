@@ -1259,7 +1259,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getAccountEntryId),
 			new FinderColumn<>(
-				"commerceChannelAccountEntryRel.", "type",
+				"commerceChannelAccountEntryRel.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CommerceChannelAccountEntryRel::getType));
 
@@ -1321,7 +1321,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
-				"commerceChannelAccountEntryRel.", "type",
+				"commerceChannelAccountEntryRel.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CommerceChannelAccountEntryRel::getType));
 
@@ -1365,7 +1365,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
-				"commerceChannelAccountEntryRel.", "type",
+				"commerceChannelAccountEntryRel.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CommerceChannelAccountEntryRel::getType));
 
@@ -1421,7 +1421,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceChannelAccountEntryRel::getCommerceChannelId),
 				new FinderColumn<>(
-					"commerceChannelAccountEntryRel.", "type",
+					"commerceChannelAccountEntryRel.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CommerceChannelAccountEntryRel::getType));
 
@@ -1461,7 +1461,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
-				"commerceChannelAccountEntryRel.", "type",
+				"commerceChannelAccountEntryRel.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CommerceChannelAccountEntryRel::getType));
 
@@ -1540,4 +1540,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1345898813
+// LIFERAY-SERVICE-BUILDER-HASH:-543251631

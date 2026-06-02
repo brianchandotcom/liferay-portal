@@ -601,8 +601,9 @@ public class CommerceTaxMethodPersistenceImpl
 				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceTaxMethod::getGroupId),
 			new FinderColumn<>(
-				"commerceTaxMethod.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceTaxMethod::isActive));
+				"commerceTaxMethod.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceTaxMethod::isActive));
 
 		CommerceTaxMethodUtil.setPersistence(this);
 	}
@@ -673,4 +674,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1045600045
+// LIFERAY-SERVICE-BUILDER-HASH:362947519

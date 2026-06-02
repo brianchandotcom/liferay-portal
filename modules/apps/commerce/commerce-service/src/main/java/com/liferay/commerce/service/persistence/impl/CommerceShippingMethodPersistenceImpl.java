@@ -599,8 +599,9 @@ public class CommerceShippingMethodPersistenceImpl
 				"commerceShippingMethod.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceShippingMethod::getGroupId),
 			new FinderColumn<>(
-				"commerceShippingMethod.", "active", FinderColumn.Type.BOOLEAN,
-				"=", true, true, CommerceShippingMethod::isActive));
+				"commerceShippingMethod.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceShippingMethod::isActive));
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
 			this,
@@ -688,4 +689,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-575332313
+// LIFERAY-SERVICE-BUILDER-HASH:-55730207

@@ -700,8 +700,8 @@ public class AppPersistenceImpl
 			_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
 			AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"app.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				App::getUuid));
+				"app.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, App::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -725,8 +725,8 @@ public class AppPersistenceImpl
 				_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
 				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"app.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					App::getUuid),
+					"app.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, App::getUuid),
 				new FinderColumn<>(
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, App::getCompanyId));
@@ -860,4 +860,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-996276071
+// LIFERAY-SERVICE-BUILDER-HASH:-143997509

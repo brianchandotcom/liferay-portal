@@ -867,8 +867,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, AssetVocabularyGroupRel::getUuid));
+				"assetVocabularyGroupRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetVocabularyGroupRel::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -880,8 +881,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				AssetVocabularyGroupRel::getGroupId),
 			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE, "",
 			new FinderColumn<>(
-				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, AssetVocabularyGroupRel::getUuid),
+				"assetVocabularyGroupRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetVocabularyGroupRel::getUuid),
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetVocabularyGroupRel::getGroupId));
@@ -910,7 +912,7 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetVocabularyGroupRel.", "uuid",
+					"assetVocabularyGroupRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					AssetVocabularyGroupRel::getUuid),
 				new FinderColumn<>(
@@ -1029,4 +1031,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1830479047
+// LIFERAY-SERVICE-BUILDER-HASH:324599439

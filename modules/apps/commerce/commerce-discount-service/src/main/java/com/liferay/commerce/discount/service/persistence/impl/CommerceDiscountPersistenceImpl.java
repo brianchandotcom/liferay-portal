@@ -1633,8 +1633,9 @@ public class CommerceDiscountPersistenceImpl
 				CommerceDiscountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceDiscount.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceDiscount::getUuid));
+					"commerceDiscount.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceDiscount::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1660,8 +1661,9 @@ public class CommerceDiscountPersistenceImpl
 				CommerceDiscountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceDiscount.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceDiscount::getUuid),
+					"commerceDiscount.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceDiscount::getUuid),
 				new FinderColumn<>(
 					"commerceDiscount.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceDiscount::getCompanyId));
@@ -1803,8 +1805,9 @@ public class CommerceDiscountPersistenceImpl
 				"commerceDiscount.", "couponCode", FinderColumn.Type.STRING,
 				"=", false, true, CommerceDiscount::getCouponCode),
 			new FinderColumn<>(
-				"commerceDiscount.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CommerceDiscount::isActive));
+				"commerceDiscount.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceDiscount::isActive));
 
 		_collectionPersistenceFinderByC_L_A_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -1849,11 +1852,13 @@ public class CommerceDiscountPersistenceImpl
 					"commerceDiscount.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceDiscount::getCompanyId),
 				new FinderColumn<>(
-					"commerceDiscount.", "level", FinderColumn.Type.STRING, "=",
-					true, true, CommerceDiscount::getLevel),
+					"commerceDiscount.", "level", "levelType",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceDiscount::getLevel),
 				new FinderColumn<>(
-					"commerceDiscount.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CommerceDiscount::isActive),
+					"commerceDiscount.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CommerceDiscount::isActive),
 				new FinderColumn<>(
 					"commerceDiscount.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CommerceDiscount::getStatus));
@@ -1945,4 +1950,4 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1990201180
+// LIFERAY-SERVICE-BUILDER-HASH:228660160

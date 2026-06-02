@@ -2115,8 +2115,8 @@ public class DDMStructurePersistenceImpl
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DDMStructure::getUuid));
+				"ddmStructure.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDMStructure::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -2128,8 +2128,8 @@ public class DDMStructurePersistenceImpl
 				DDMStructure::getGroupId),
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, "",
 			new FinderColumn<>(
-				"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DDMStructure::getUuid),
+				"ddmStructure.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDMStructure::getUuid),
 			new FinderColumn<>(
 				"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMStructure::getGroupId));
@@ -2156,8 +2156,8 @@ public class DDMStructurePersistenceImpl
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DDMStructure::getUuid),
+					"ddmStructure.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DDMStructure::getUuid),
 				new FinderColumn<>(
 					"ddmStructure.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getCompanyId));
@@ -2537,4 +2537,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:90147684
+// LIFERAY-SERVICE-BUILDER-HASH:1493621106

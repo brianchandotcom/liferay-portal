@@ -507,8 +507,8 @@ public class UserIdMapperPersistenceImpl
 				"userIdMapper.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, UserIdMapper::getUserId),
 			new FinderColumn<>(
-				"userIdMapper.", "type", FinderColumn.Type.STRING, "=", true,
-				true, UserIdMapper::getType));
+				"userIdMapper.", "type", "type_", FinderColumn.Type.STRING, "=",
+				true, true, UserIdMapper::getType));
 
 		_uniquePersistenceFinderByT_E = new UniquePersistenceFinder<>(
 			this,
@@ -520,8 +520,8 @@ public class UserIdMapperPersistenceImpl
 				convertNullFunction(UserIdMapper::getExternalUserId)),
 			_SQL_SELECT_USERIDMAPPER_WHERE, "",
 			new FinderColumn<>(
-				"userIdMapper.", "type", FinderColumn.Type.STRING, "=", true,
-				true, UserIdMapper::getType),
+				"userIdMapper.", "type", "type_", FinderColumn.Type.STRING, "=",
+				true, true, UserIdMapper::getType),
 			new FinderColumn<>(
 				"userIdMapper.", "externalUserId", FinderColumn.Type.STRING,
 				"=", true, true, UserIdMapper::getExternalUserId));
@@ -562,4 +562,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:770262060
+// LIFERAY-SERVICE-BUILDER-HASH:-838152879

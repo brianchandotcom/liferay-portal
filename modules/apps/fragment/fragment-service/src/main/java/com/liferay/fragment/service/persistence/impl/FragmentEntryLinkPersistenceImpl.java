@@ -3052,8 +3052,8 @@ public class FragmentEntryLinkPersistenceImpl
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, FragmentEntryLink::getUuid));
+				"fragmentEntryLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, FragmentEntryLink::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3065,8 +3065,8 @@ public class FragmentEntryLinkPersistenceImpl
 				FragmentEntryLink::getGroupId),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE, "",
 			new FinderColumn<>(
-				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, FragmentEntryLink::getUuid),
+				"fragmentEntryLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, FragmentEntryLink::getUuid),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentEntryLink::getGroupId));
@@ -3095,8 +3095,9 @@ public class FragmentEntryLinkPersistenceImpl
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, FragmentEntryLink::getUuid),
+					"fragmentEntryLink.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryLink::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getCompanyId));
@@ -3177,8 +3178,9 @@ public class FragmentEntryLinkPersistenceImpl
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"fragmentEntryLink.", "type", FinderColumn.Type.INTEGER, "=",
-				true, true, FragmentEntryLink::getType));
+				"fragmentEntryLink.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				FragmentEntryLink::getType));
 
 		_collectionPersistenceFinderByG_P = new CollectionPersistenceFinder<>(
 			this,
@@ -4050,4 +4052,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2134099127
+// LIFERAY-SERVICE-BUILDER-HASH:-1988786336

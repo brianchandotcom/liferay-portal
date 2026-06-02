@@ -1017,8 +1017,9 @@ public class SocialActivitySetPersistenceImpl
 				"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivitySet::getUserId),
 			new FinderColumn<>(
-				"socialActivitySet.", "type", FinderColumn.Type.INTEGER, "=",
-				true, true, SocialActivitySet::getType));
+				"socialActivitySet.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				SocialActivitySet::getType));
 
 		_collectionPersistenceFinderByC_C_T = new CollectionPersistenceFinder<>(
 			this,
@@ -1054,8 +1055,9 @@ public class SocialActivitySetPersistenceImpl
 				"socialActivitySet.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivitySet::getClassPK),
 			new FinderColumn<>(
-				"socialActivitySet.", "type", FinderColumn.Type.INTEGER, "=",
-				true, true, SocialActivitySet::getType));
+				"socialActivitySet.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				SocialActivitySet::getType));
 
 		_collectionPersistenceFinderByG_U_C_T =
 			new CollectionPersistenceFinder<>(
@@ -1100,8 +1102,9 @@ public class SocialActivitySetPersistenceImpl
 					"socialActivitySet.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySet::getClassNameId),
 				new FinderColumn<>(
-					"socialActivitySet.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, SocialActivitySet::getType));
+					"socialActivitySet.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialActivitySet::getType));
 
 		_collectionPersistenceFinderByU_C_C_T =
 			new CollectionPersistenceFinder<>(
@@ -1146,8 +1149,9 @@ public class SocialActivitySetPersistenceImpl
 					"socialActivitySet.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySet::getClassPK),
 				new FinderColumn<>(
-					"socialActivitySet.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, SocialActivitySet::getType));
+					"socialActivitySet.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialActivitySet::getType));
 
 		SocialActivitySetUtil.setPersistence(this);
 	}
@@ -1182,4 +1186,4 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-234989888
+// LIFERAY-SERVICE-BUILDER-HASH:193019278

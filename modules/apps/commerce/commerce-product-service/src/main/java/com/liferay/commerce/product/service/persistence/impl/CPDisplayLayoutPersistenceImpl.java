@@ -1367,8 +1367,8 @@ public class CPDisplayLayoutPersistenceImpl
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, CPDisplayLayout::getUuid));
+				"cpDisplayLayout.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CPDisplayLayout::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1380,8 +1380,8 @@ public class CPDisplayLayoutPersistenceImpl
 				CPDisplayLayout::getGroupId),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, "",
 			new FinderColumn<>(
-				"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, CPDisplayLayout::getUuid),
+				"cpDisplayLayout.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CPDisplayLayout::getUuid),
 			new FinderColumn<>(
 				"cpDisplayLayout.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getGroupId));
@@ -1410,8 +1410,9 @@ public class CPDisplayLayoutPersistenceImpl
 				CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CPDisplayLayout::getUuid),
+					"cpDisplayLayout.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPDisplayLayout::getUuid),
 				new FinderColumn<>(
 					"cpDisplayLayout.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPDisplayLayout::getCompanyId));
@@ -1712,4 +1713,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2025422386
+// LIFERAY-SERVICE-BUILDER-HASH:-1551342938

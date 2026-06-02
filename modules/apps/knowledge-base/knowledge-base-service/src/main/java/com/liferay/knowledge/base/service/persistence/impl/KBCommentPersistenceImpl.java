@@ -1261,8 +1261,8 @@ public class KBCommentPersistenceImpl
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				KBComment::getUuid));
+				"kbComment.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBComment::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1273,8 +1273,8 @@ public class KBCommentPersistenceImpl
 				convertNullFunction(KBComment::getUuid), KBComment::getGroupId),
 			_SQL_SELECT_KBCOMMENT_WHERE, "",
 			new FinderColumn<>(
-				"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				KBComment::getUuid),
+				"kbComment.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBComment::getUuid),
 			new FinderColumn<>(
 				"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getGroupId));
@@ -1301,8 +1301,8 @@ public class KBCommentPersistenceImpl
 				_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 				KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, KBComment::getUuid),
+					"kbComment.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, KBComment::getUuid),
 				new FinderColumn<>(
 					"kbComment.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBComment::getCompanyId));
@@ -1557,4 +1557,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1065149521
+// LIFERAY-SERVICE-BUILDER-HASH:-2016842410

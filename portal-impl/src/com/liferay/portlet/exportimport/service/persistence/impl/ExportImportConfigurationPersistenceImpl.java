@@ -838,8 +838,9 @@ public class ExportImportConfigurationPersistenceImpl
 				"exportImportConfiguration.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, ExportImportConfiguration::getGroupId),
 			new FinderColumn<>(
-				"exportImportConfiguration.", "type", FinderColumn.Type.INTEGER,
-				"=", true, true, ExportImportConfiguration::getType));
+				"exportImportConfiguration.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				ExportImportConfiguration::getType));
 
 		_collectionPersistenceFinderByG_S = new CollectionPersistenceFinder<>(
 			this,
@@ -903,8 +904,9 @@ public class ExportImportConfigurationPersistenceImpl
 				"exportImportConfiguration.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, ExportImportConfiguration::getGroupId),
 			new FinderColumn<>(
-				"exportImportConfiguration.", "type", FinderColumn.Type.INTEGER,
-				"=", true, true, ExportImportConfiguration::getType),
+				"exportImportConfiguration.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				ExportImportConfiguration::getType),
 			new FinderColumn<>(
 				"exportImportConfiguration.", "status",
 				FinderColumn.Type.INTEGER, "=", true, true,
@@ -944,4 +946,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1167985332
+// LIFERAY-SERVICE-BUILDER-HASH:1207264999

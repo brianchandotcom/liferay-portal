@@ -655,8 +655,9 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePaymentMethodGroupRelQualifier.",
-					"commercePaymentMethodGroupRelId", FinderColumn.Type.LONG,
-					"=", true, true,
+					"commercePaymentMethodGroupRelId",
+					"CPaymentMethodGroupRelId", FinderColumn.Type.LONG, "=",
+					true, true,
 					CommercePaymentMethodGroupRelQualifier::
 						getCommercePaymentMethodGroupRelId));
 
@@ -689,8 +690,8 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				CommercePaymentMethodGroupRelQualifier::getClassNameId),
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.",
-				"commercePaymentMethodGroupRelId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"commercePaymentMethodGroupRelId", "CPaymentMethodGroupRelId",
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePaymentMethodGroupRelQualifier::
 					getCommercePaymentMethodGroupRelId));
 
@@ -721,8 +722,8 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				CommercePaymentMethodGroupRelQualifier::getClassPK),
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.",
-				"commercePaymentMethodGroupRelId", FinderColumn.Type.LONG, "=",
-				true, true,
+				"commercePaymentMethodGroupRelId", "CPaymentMethodGroupRelId",
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePaymentMethodGroupRelQualifier::
 					getCommercePaymentMethodGroupRelId));
 
@@ -802,4 +803,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1925351457
+// LIFERAY-SERVICE-BUILDER-HASH:-1492291939

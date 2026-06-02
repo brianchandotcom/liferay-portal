@@ -671,8 +671,9 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpdAvailabilityEstimate.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPDAvailabilityEstimate::getUuid));
+				"cpdAvailabilityEstimate.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDAvailabilityEstimate::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -698,7 +699,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpdAvailabilityEstimate.", "uuid",
+					"cpdAvailabilityEstimate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPDAvailabilityEstimate::getUuid),
 				new FinderColumn<>(
@@ -821,4 +822,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1837971381
+// LIFERAY-SERVICE-BUILDER-HASH:-1401249838

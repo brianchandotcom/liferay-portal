@@ -1300,8 +1300,8 @@ public class DDMStorageLinkPersistenceImpl
 			_SQL_SELECT_DDMSTORAGELINK_WHERE, _SQL_COUNT_DDMSTORAGELINK_WHERE,
 			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ddmStorageLink.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DDMStorageLink::getUuid));
+				"ddmStorageLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DDMStorageLink::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1326,8 +1326,9 @@ public class DDMStorageLinkPersistenceImpl
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
 				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ddmStorageLink.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DDMStorageLink::getUuid),
+					"ddmStorageLink.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DDMStorageLink::getUuid),
 				new FinderColumn<>(
 					"ddmStorageLink.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStorageLink::getCompanyId));
@@ -1464,4 +1465,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1256482250
+// LIFERAY-SERVICE-BUILDER-HASH:1322808537

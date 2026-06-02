@@ -838,7 +838,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpConfigurationEntrySetting.", "uuid",
+				"cpConfigurationEntrySetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CPConfigurationEntrySetting::getUuid));
 
@@ -852,7 +852,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				CPConfigurationEntrySetting::getGroupId),
 			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE, "",
 			new FinderColumn<>(
-				"cpConfigurationEntrySetting.", "uuid",
+				"cpConfigurationEntrySetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CPConfigurationEntrySetting::getUuid),
 			new FinderColumn<>(
@@ -884,7 +884,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpConfigurationEntrySetting.", "uuid",
+					"cpConfigurationEntrySetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPConfigurationEntrySetting::getUuid),
 				new FinderColumn<>(
@@ -934,7 +934,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationEntrySetting::getCPConfigurationEntryId),
 			new FinderColumn<>(
-				"cpConfigurationEntrySetting.", "type",
+				"cpConfigurationEntrySetting.", "type", "type_",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CPConfigurationEntrySetting::getType));
 
@@ -1011,4 +1011,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:484346384
+// LIFERAY-SERVICE-BUILDER-HASH:298906535

@@ -729,4 +729,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1394649415
+// LIFERAY-SERVICE-BUILDER-HASH:1788022558

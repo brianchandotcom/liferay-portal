@@ -2721,8 +2721,8 @@ public class AssetCategoryPersistenceImpl
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"assetCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, AssetCategory::getUuid));
+				"assetCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, AssetCategory::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -2734,8 +2734,8 @@ public class AssetCategoryPersistenceImpl
 				AssetCategory::getGroupId),
 			_SQL_SELECT_ASSETCATEGORY_WHERE, "",
 			new FinderColumn<>(
-				"assetCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, AssetCategory::getUuid),
+				"assetCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, AssetCategory::getUuid),
 			new FinderColumn<>(
 				"assetCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, AssetCategory::getGroupId));
@@ -2762,8 +2762,8 @@ public class AssetCategoryPersistenceImpl
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
 				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetCategory.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, AssetCategory::getUuid),
+					"assetCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, AssetCategory::getUuid),
 				new FinderColumn<>(
 					"assetCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getCompanyId));
@@ -3175,4 +3175,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1069916772
+// LIFERAY-SERVICE-BUILDER-HASH:-663155469

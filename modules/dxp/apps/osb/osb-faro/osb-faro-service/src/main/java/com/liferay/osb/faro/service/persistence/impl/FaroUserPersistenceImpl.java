@@ -1019,8 +1019,8 @@ public class FaroUserPersistenceImpl
 				1, false, convertNullFunction(FaroUser::getKey)),
 			_SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
-				"faroUser.", "key", FinderColumn.Type.STRING, "=", true, true,
-				FaroUser::getKey));
+				"faroUser.", "key", "key_", FinderColumn.Type.STRING, "=", true,
+				true, FaroUser::getKey));
 
 		_uniquePersistenceFinderByG_L = new UniquePersistenceFinder<>(
 			this,
@@ -1230,4 +1230,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-695124804
+// LIFERAY-SERVICE-BUILDER-HASH:824871910

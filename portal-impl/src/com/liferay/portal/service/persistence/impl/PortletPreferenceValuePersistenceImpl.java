@@ -939,8 +939,9 @@ public class PortletPreferenceValuePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				PortletPreferenceValue::getPortletPreferencesId),
 			new FinderColumn<>(
-				"portletPreferenceValue.", "index", FinderColumn.Type.INTEGER,
-				"=", true, true, PortletPreferenceValue::getIndex),
+				"portletPreferenceValue.", "index", "index_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				PortletPreferenceValue::getIndex),
 			new FinderColumn<>(
 				"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
 				"=", true, true, PortletPreferenceValue::getName));
@@ -1026,4 +1027,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1860165876
+// LIFERAY-SERVICE-BUILDER-HASH:1254627284

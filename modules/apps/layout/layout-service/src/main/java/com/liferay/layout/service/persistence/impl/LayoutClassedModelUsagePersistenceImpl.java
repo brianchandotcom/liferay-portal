@@ -1592,8 +1592,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"layoutClassedModelUsage.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutClassedModelUsage::getUuid));
+				"layoutClassedModelUsage.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutClassedModelUsage::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1605,8 +1606,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 				LayoutClassedModelUsage::getGroupId),
 			_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE, "",
 			new FinderColumn<>(
-				"layoutClassedModelUsage.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, LayoutClassedModelUsage::getUuid),
+				"layoutClassedModelUsage.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				LayoutClassedModelUsage::getUuid),
 			new FinderColumn<>(
 				"layoutClassedModelUsage.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutClassedModelUsage::getGroupId));
@@ -1635,7 +1637,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 				LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"layoutClassedModelUsage.", "uuid",
+					"layoutClassedModelUsage.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutClassedModelUsage::getUuid),
 				new FinderColumn<>(
@@ -1876,7 +1878,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutClassedModelUsage::getClassPK),
 				new FinderColumn<>(
-					"layoutClassedModelUsage.", "type",
+					"layoutClassedModelUsage.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutClassedModelUsage::getType));
 
@@ -1984,7 +1986,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutClassedModelUsage::getClassNameId),
 				new FinderColumn<>(
-					"layoutClassedModelUsage.", "type",
+					"layoutClassedModelUsage.", "type", "type_",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutClassedModelUsage::getType));
 
@@ -2113,4 +2115,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1519950679
+// LIFERAY-SERVICE-BUILDER-HASH:1993571013

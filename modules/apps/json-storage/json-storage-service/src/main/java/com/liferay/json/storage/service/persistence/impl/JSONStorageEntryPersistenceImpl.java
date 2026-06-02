@@ -862,11 +862,13 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getClassNameId),
 				new FinderColumn<>(
-					"jsonStorageEntry.", "index", FinderColumn.Type.INTEGER,
-					"=", true, true, JSONStorageEntry::getIndex),
+					"jsonStorageEntry.", "index", "index_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					JSONStorageEntry::getIndex),
 				new FinderColumn<>(
-					"jsonStorageEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, JSONStorageEntry::getType),
+					"jsonStorageEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					JSONStorageEntry::getType),
 				new FinderColumn<>(
 					"jsonStorageEntry.", "valueLong", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getValueLong));
@@ -922,11 +924,13 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getClassNameId),
 				new FinderColumn<>(
-					"jsonStorageEntry.", "key", FinderColumn.Type.STRING, "=",
-					true, true, JSONStorageEntry::getKey),
+					"jsonStorageEntry.", "key", "key_",
+					FinderColumn.Type.STRING, "=", true, true,
+					JSONStorageEntry::getKey),
 				new FinderColumn<>(
-					"jsonStorageEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, JSONStorageEntry::getType),
+					"jsonStorageEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					JSONStorageEntry::getType),
 				new FinderColumn<>(
 					"jsonStorageEntry.", "valueLong", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getValueLong));
@@ -961,11 +965,12 @@ public class JSONStorageEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				JSONStorageEntry::getParentJSONStorageEntryId),
 			new FinderColumn<>(
-				"jsonStorageEntry.", "index", FinderColumn.Type.INTEGER, "=",
-				true, true, JSONStorageEntry::getIndex),
+				"jsonStorageEntry.", "index", "index_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				JSONStorageEntry::getIndex),
 			new FinderColumn<>(
-				"jsonStorageEntry.", "key", FinderColumn.Type.STRING, "=", true,
-				true, JSONStorageEntry::getKey));
+				"jsonStorageEntry.", "key", "key_", FinderColumn.Type.STRING,
+				"=", true, true, JSONStorageEntry::getKey));
 
 		JSONStorageEntryUtil.setPersistence(this);
 	}
@@ -1039,4 +1044,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:660945077
+// LIFERAY-SERVICE-BUILDER-HASH:-888314202

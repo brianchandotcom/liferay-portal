@@ -2309,8 +2309,9 @@ public class ObjectRelationshipPersistenceImpl
 			_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 			ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectRelationship.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ObjectRelationship::getUuid));
+				"objectRelationship.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				ObjectRelationship::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2336,8 +2337,9 @@ public class ObjectRelationshipPersistenceImpl
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectRelationship.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getUuid),
+					"objectRelationship.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getUuid),
 				new FinderColumn<>(
 					"objectRelationship.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectRelationship::getCompanyId));
@@ -2772,8 +2774,9 @@ public class ObjectRelationshipPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getObjectDefinitionId2),
 				new FinderColumn<>(
-					"objectRelationship.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getType));
+					"objectRelationship.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getType));
 
 		_collectionPersistenceFinderByODI1_DT_R =
 			new CollectionPersistenceFinder<>(
@@ -2870,8 +2873,9 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse),
 				new FinderColumn<>(
-					"objectRelationship.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getType));
+					"objectRelationship.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getType));
 
 		_collectionPersistenceFinderByODI2_R_T =
 			new CollectionPersistenceFinder<>(
@@ -2915,8 +2919,9 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse),
 				new FinderColumn<>(
-					"objectRelationship.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getType));
+					"objectRelationship.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getType));
 
 		_collectionPersistenceFinderByODI1_ODI2_N_T =
 			new CollectionPersistenceFinder<>(
@@ -2975,8 +2980,9 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "name", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getName),
 				new FinderColumn<>(
-					"objectRelationship.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getType));
+					"objectRelationship.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getType));
 
 		_uniquePersistenceFinderByODI1_ODI2_N_R_T =
 			new UniquePersistenceFinder<>(
@@ -3013,8 +3019,9 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse),
 				new FinderColumn<>(
-					"objectRelationship.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ObjectRelationship::getType));
+					"objectRelationship.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectRelationship::getType));
 
 		ObjectRelationshipUtil.setPersistence(this);
 	}
@@ -3085,4 +3092,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1651721543
+// LIFERAY-SERVICE-BUILDER-HASH:639602395

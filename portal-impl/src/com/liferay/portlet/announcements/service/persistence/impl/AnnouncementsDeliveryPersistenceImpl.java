@@ -646,8 +646,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 				"announcementsDelivery.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, AnnouncementsDelivery::getUserId),
 			new FinderColumn<>(
-				"announcementsDelivery.", "type", FinderColumn.Type.STRING, "=",
-				true, true, AnnouncementsDelivery::getType));
+				"announcementsDelivery.", "type", "type_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AnnouncementsDelivery::getType));
 
 		AnnouncementsDeliveryUtil.setPersistence(this);
 	}
@@ -685,4 +686,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1322477903
+// LIFERAY-SERVICE-BUILDER-HASH:-1953286915

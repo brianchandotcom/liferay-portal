@@ -838,8 +838,8 @@ public class DepotEntryPinPersistenceImpl
 			_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 			DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DepotEntryPin::getUuid));
+				"depotEntryPin.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DepotEntryPin::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -851,8 +851,8 @@ public class DepotEntryPinPersistenceImpl
 				DepotEntryPin::getGroupId),
 			_SQL_SELECT_DEPOTENTRYPIN_WHERE, "",
 			new FinderColumn<>(
-				"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DepotEntryPin::getUuid),
+				"depotEntryPin.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DepotEntryPin::getUuid),
 			new FinderColumn<>(
 				"depotEntryPin.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntryPin::getGroupId));
@@ -879,8 +879,8 @@ public class DepotEntryPinPersistenceImpl
 				_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 				DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DepotEntryPin::getUuid),
+					"depotEntryPin.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DepotEntryPin::getUuid),
 				new FinderColumn<>(
 					"depotEntryPin.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntryPin::getCompanyId));
@@ -1023,4 +1023,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:869312218
+// LIFERAY-SERVICE-BUILDER-HASH:1817170866

@@ -1174,8 +1174,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CommerceSubscriptionEntry::getUuid));
+				"commerceSubscriptionEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceSubscriptionEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1187,8 +1188,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				CommerceSubscriptionEntry::getGroupId),
 			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE, "",
 			new FinderColumn<>(
-				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CommerceSubscriptionEntry::getUuid),
+				"commerceSubscriptionEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceSubscriptionEntry::getUuid),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceSubscriptionEntry::getGroupId));
@@ -1217,7 +1219,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceSubscriptionEntry.", "uuid",
+					"commerceSubscriptionEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceSubscriptionEntry::getUuid),
 				new FinderColumn<>(
@@ -1494,4 +1496,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:359514455
+// LIFERAY-SERVICE-BUILDER-HASH:1753955099

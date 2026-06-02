@@ -1509,8 +1509,9 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
 					false, true, true, FaroNotification::getOwnerId),
 				new FinderColumn<>(
-					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
-					true, true, FaroNotification::getType));
+					"faroNotification.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FaroNotification::getType));
 
 		_collectionPersistenceFinderByG_GtC_O_T_S =
 			new CollectionPersistenceFinder<>(
@@ -1555,8 +1556,9 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
 					false, true, true, FaroNotification::getOwnerId),
 				new FinderColumn<>(
-					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
-					true, true, FaroNotification::getType),
+					"faroNotification.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FaroNotification::getType),
 				new FinderColumn<>(
 					"faroNotification.", "subtype", FinderColumn.Type.STRING,
 					"=", true, true, FaroNotification::getSubtype));
@@ -1607,11 +1609,13 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
 					false, true, true, FaroNotification::getOwnerId),
 				new FinderColumn<>(
-					"faroNotification.", "read", FinderColumn.Type.BOOLEAN, "=",
-					true, true, FaroNotification::isRead),
+					"faroNotification.", "read", "read_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					FaroNotification::isRead),
 				new FinderColumn<>(
-					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
-					true, true, FaroNotification::getType),
+					"faroNotification.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FaroNotification::getType),
 				new FinderColumn<>(
 					"faroNotification.", "subtype", FinderColumn.Type.STRING,
 					"=", true, true, FaroNotification::getSubtype));
@@ -1682,4 +1686,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1217260303
+// LIFERAY-SERVICE-BUILDER-HASH:-348563823

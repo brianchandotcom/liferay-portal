@@ -1320,7 +1320,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"oAuthClientASLocalMetadata.", "uuid",
+					"oAuthClientASLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					OAuthClientASLocalMetadata::getUuid));
 
@@ -1348,7 +1348,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"oAuthClientASLocalMetadata.", "uuid",
+					"oAuthClientASLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					OAuthClientASLocalMetadata::getUuid),
 				new FinderColumn<>(
@@ -1593,4 +1593,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087153143
+// LIFERAY-SERVICE-BUILDER-HASH:-1920545116

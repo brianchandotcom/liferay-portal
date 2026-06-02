@@ -1072,8 +1072,8 @@ public class KaleoLogPersistenceImpl
 					"kaleoLog.", "kaleoInstanceTokenId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoLog::getKaleoInstanceTokenId),
 				new FinderColumn<>(
-					"kaleoLog.", "type", FinderColumn.Type.STRING, "=", true,
-					true, KaleoLog::getType));
+					"kaleoLog.", "type", "type_", FinderColumn.Type.STRING, "=",
+					true, true, KaleoLog::getType));
 
 		_collectionPersistenceFinderByKCN_KCPK_KITI_T =
 			new CollectionPersistenceFinder<>(
@@ -1128,8 +1128,8 @@ public class KaleoLogPersistenceImpl
 					"kaleoLog.", "kaleoInstanceTokenId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoLog::getKaleoInstanceTokenId),
 				new FinderColumn<>(
-					"kaleoLog.", "type", FinderColumn.Type.STRING, "=", true,
-					true, KaleoLog::getType));
+					"kaleoLog.", "type", "type_", FinderColumn.Type.STRING, "=",
+					true, true, KaleoLog::getType));
 
 		KaleoLogUtil.setPersistence(this);
 	}
@@ -1200,4 +1200,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1103345273
+// LIFERAY-SERVICE-BUILDER-HASH:81565223

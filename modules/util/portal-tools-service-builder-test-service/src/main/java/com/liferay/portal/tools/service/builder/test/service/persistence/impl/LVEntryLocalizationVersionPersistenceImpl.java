@@ -985,4 +985,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1573302869
+// LIFERAY-SERVICE-BUILDER-HASH:1856261392

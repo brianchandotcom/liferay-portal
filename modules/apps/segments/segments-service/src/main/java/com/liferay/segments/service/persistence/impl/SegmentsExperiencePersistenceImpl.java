@@ -2812,8 +2812,9 @@ public class SegmentsExperiencePersistenceImpl
 			_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"segmentsExperience.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, SegmentsExperience::getUuid));
+				"segmentsExperience.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SegmentsExperience::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -2825,8 +2826,9 @@ public class SegmentsExperiencePersistenceImpl
 				SegmentsExperience::getGroupId),
 			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE, "",
 			new FinderColumn<>(
-				"segmentsExperience.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, SegmentsExperience::getUuid),
+				"segmentsExperience.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SegmentsExperience::getUuid),
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SegmentsExperience::getGroupId));
@@ -2855,8 +2857,9 @@ public class SegmentsExperiencePersistenceImpl
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"segmentsExperience.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, SegmentsExperience::getUuid),
+					"segmentsExperience.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					SegmentsExperience::getUuid),
 				new FinderColumn<>(
 					"segmentsExperience.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SegmentsExperience::getCompanyId));
@@ -2949,8 +2952,9 @@ public class SegmentsExperiencePersistenceImpl
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, SegmentsExperience::getGroupId),
 				new FinderColumn<>(
-					"segmentsExperience.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, SegmentsExperience::isActive));
+					"segmentsExperience.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsExperience::isActive));
 
 		_collectionPersistenceFinderBySEERC_SESERC =
 			new CollectionPersistenceFinder<>(
@@ -3202,8 +3206,9 @@ public class SegmentsExperiencePersistenceImpl
 					"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsExperience::getPlid),
 				new FinderColumn<>(
-					"segmentsExperience.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, SegmentsExperience::isActive));
+					"segmentsExperience.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsExperience::isActive));
 
 		_collectionPersistenceFinderByG_SEERC_SESERC_P =
 			new FilterCollectionPersistenceFinder<>(
@@ -3328,8 +3333,9 @@ public class SegmentsExperiencePersistenceImpl
 					"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsExperience::getPlid),
 				new FinderColumn<>(
-					"segmentsExperience.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, SegmentsExperience::isActive));
+					"segmentsExperience.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsExperience::isActive));
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this,
@@ -3421,4 +3427,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:494888539
+// LIFERAY-SERVICE-BUILDER-HASH:-74272726

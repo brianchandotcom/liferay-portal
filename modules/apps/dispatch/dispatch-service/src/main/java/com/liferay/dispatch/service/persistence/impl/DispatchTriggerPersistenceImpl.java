@@ -1531,8 +1531,9 @@ public class DispatchTriggerPersistenceImpl
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DispatchTrigger::getUuid));
+					"dispatchTrigger.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DispatchTrigger::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1558,8 +1559,9 @@ public class DispatchTriggerPersistenceImpl
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DispatchTrigger::getUuid),
+					"dispatchTrigger.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DispatchTrigger::getUuid),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
@@ -1615,8 +1617,9 @@ public class DispatchTriggerPersistenceImpl
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, DispatchTrigger::isActive));
+					"dispatchTrigger.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					DispatchTrigger::isActive));
 
 		_collectionPersistenceFinderByC_U =
 			new FilterCollectionPersistenceFinder<>(
@@ -1726,8 +1729,9 @@ public class DispatchTriggerPersistenceImpl
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, DispatchTrigger::isActive),
+					"dispatchTrigger.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					DispatchTrigger::isActive),
 				new ArrayableFinderColumn<>(
 					"dispatchTrigger.", "dispatchTaskClusterMode",
 					FinderColumn.Type.INTEGER, "=", false, true, true,
@@ -1820,4 +1824,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1286656684
+// LIFERAY-SERVICE-BUILDER-HASH:-1292401829

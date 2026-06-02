@@ -2269,8 +2269,8 @@ public class CountryPersistenceImpl
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Country::getUuid));
+					"country.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Country::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -2294,8 +2294,8 @@ public class CountryPersistenceImpl
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Country::getUuid),
+					"country.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Country::getUuid),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -2347,8 +2347,8 @@ public class CountryPersistenceImpl
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive));
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive));
 
 		_uniquePersistenceFinderByC_A2 = new UniquePersistenceFinder<>(
 			this,
@@ -2410,8 +2410,8 @@ public class CountryPersistenceImpl
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive));
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive));
 
 		_uniquePersistenceFinderByC_Name = new UniquePersistenceFinder<>(
 			this,
@@ -2440,8 +2440,8 @@ public class CountryPersistenceImpl
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Country::getCompanyId),
 			new FinderColumn<>(
-				"country.", "number", FinderColumn.Type.STRING, "=", true, true,
-				Country::getNumber));
+				"country.", "number", "number_", FinderColumn.Type.STRING, "=",
+				true, true, Country::getNumber));
 
 		_collectionPersistenceFinderByC_A_B =
 			new FilterCollectionPersistenceFinder<>(
@@ -2478,8 +2478,8 @@ public class CountryPersistenceImpl
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive),
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isBillingAllowed));
@@ -2519,8 +2519,8 @@ public class CountryPersistenceImpl
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive),
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
@@ -2569,8 +2569,8 @@ public class CountryPersistenceImpl
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive),
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isBillingAllowed),
@@ -2622,8 +2622,8 @@ public class CountryPersistenceImpl
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive),
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "groupFilterEnabled", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isGroupFilterEnabled),
@@ -2680,8 +2680,8 @@ public class CountryPersistenceImpl
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
 				new FinderColumn<>(
-					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					true, Country::isActive),
+					"country.", "active", "active_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isBillingAllowed),
@@ -2747,4 +2747,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-983568933
+// LIFERAY-SERVICE-BUILDER-HASH:-651679933

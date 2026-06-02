@@ -945,8 +945,8 @@ public class LockPersistenceImpl
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
 			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lock_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Lock::getUuid));
+				"lock_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Lock::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -970,8 +970,8 @@ public class LockPersistenceImpl
 				_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
 				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lock_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					Lock::getUuid),
+					"lock_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Lock::getUuid),
 				new FinderColumn<>(
 					"lock_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Lock::getCompanyId));
@@ -1065,8 +1065,8 @@ public class LockPersistenceImpl
 				"lock_.", "className", FinderColumn.Type.STRING, "=", true,
 				true, Lock::getClassName),
 			new FinderColumn<>(
-				"lock_.", "key", FinderColumn.Type.STRING, "=", true, true,
-				Lock::getKey));
+				"lock_.", "key", "key_", FinderColumn.Type.STRING, "=", true,
+				true, Lock::getKey));
 
 		_collectionPersistenceFinderByC_U_C = new CollectionPersistenceFinder<>(
 			this,
@@ -1175,4 +1175,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524653070
+// LIFERAY-SERVICE-BUILDER-HASH:-1035685303

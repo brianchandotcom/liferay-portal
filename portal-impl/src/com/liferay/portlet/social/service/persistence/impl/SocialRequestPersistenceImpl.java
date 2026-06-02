@@ -1474,8 +1474,8 @@ public class SocialRequestPersistenceImpl
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"socialRequest.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SocialRequest::getUuid));
+				"socialRequest.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SocialRequest::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1487,8 +1487,8 @@ public class SocialRequestPersistenceImpl
 				SocialRequest::getGroupId),
 			_SQL_SELECT_SOCIALREQUEST_WHERE, "",
 			new FinderColumn<>(
-				"socialRequest.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SocialRequest::getUuid),
+				"socialRequest.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SocialRequest::getUuid),
 			new FinderColumn<>(
 				"socialRequest.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SocialRequest::getGroupId));
@@ -1515,8 +1515,8 @@ public class SocialRequestPersistenceImpl
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"socialRequest.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SocialRequest::getUuid),
+					"socialRequest.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SocialRequest::getUuid),
 				new FinderColumn<>(
 					"socialRequest.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getCompanyId));
@@ -1706,8 +1706,8 @@ public class SocialRequestPersistenceImpl
 				"socialRequest.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SocialRequest::getClassPK),
 			new FinderColumn<>(
-				"socialRequest.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialRequest::getType),
+				"socialRequest.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialRequest::getType),
 			new FinderColumn<>(
 				"socialRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
 				true, true, SocialRequest::getReceiverUserId));
@@ -1764,8 +1764,9 @@ public class SocialRequestPersistenceImpl
 					"socialRequest.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getClassPK),
 				new FinderColumn<>(
-					"socialRequest.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, SocialRequest::getType),
+					"socialRequest.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialRequest::getType),
 				new FinderColumn<>(
 					"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, SocialRequest::getStatus));
@@ -1822,8 +1823,9 @@ public class SocialRequestPersistenceImpl
 					"socialRequest.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getClassPK),
 				new FinderColumn<>(
-					"socialRequest.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, SocialRequest::getType),
+					"socialRequest.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialRequest::getType),
 				new FinderColumn<>(
 					"socialRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialRequest::getReceiverUserId),
@@ -1867,4 +1869,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1314867905
+// LIFERAY-SERVICE-BUILDER-HASH:-1709758225

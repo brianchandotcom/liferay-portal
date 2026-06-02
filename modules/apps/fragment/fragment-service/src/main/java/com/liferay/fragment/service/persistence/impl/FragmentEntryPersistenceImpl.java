@@ -3510,8 +3510,8 @@ public class FragmentEntryPersistenceImpl
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, FragmentEntry::getUuid));
+				"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, FragmentEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
@@ -3541,8 +3541,8 @@ public class FragmentEntryPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, FragmentEntry::getUuid),
+					"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -3569,8 +3569,8 @@ public class FragmentEntryPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, FragmentEntry::getUuid),
+					"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getGroupId));
@@ -3588,8 +3588,8 @@ public class FragmentEntryPersistenceImpl
 				FragmentEntry::getGroupId, FragmentEntry::isHead),
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, "",
 			new FinderColumn<>(
-				"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, FragmentEntry::getUuid),
+				"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, FragmentEntry::getUuid),
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntry::getGroupId),
@@ -3619,8 +3619,8 @@ public class FragmentEntryPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, FragmentEntry::getUuid),
+					"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getCompanyId));
@@ -3658,8 +3658,8 @@ public class FragmentEntryPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, FragmentEntry::getUuid),
+					"fragmentEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getCompanyId),
@@ -3812,8 +3812,8 @@ public class FragmentEntryPersistenceImpl
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, FragmentEntry::getType));
+				"fragmentEntry.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, FragmentEntry::getType));
 
 		_collectionPersistenceFinderByType_Head =
 			new CollectionPersistenceFinder<>(
@@ -3843,8 +3843,9 @@ public class FragmentEntryPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
 				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, FragmentEntry::getType),
+					"fragmentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -4091,8 +4092,9 @@ public class FragmentEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, FragmentEntry::getType));
+					"fragmentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntry::getType));
 
 		_collectionPersistenceFinderByG_FCI_T_Head =
 			new CollectionPersistenceFinder<>(
@@ -4142,8 +4144,9 @@ public class FragmentEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, FragmentEntry::getType),
+					"fragmentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -4386,8 +4389,9 @@ public class FragmentEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, FragmentEntry::getType),
+					"fragmentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, FragmentEntry::getStatus));
@@ -4446,8 +4450,9 @@ public class FragmentEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, FragmentEntry::getType),
+					"fragmentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, FragmentEntry::getStatus),
@@ -4592,4 +4597,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1953089196
+// LIFERAY-SERVICE-BUILDER-HASH:-1126821234

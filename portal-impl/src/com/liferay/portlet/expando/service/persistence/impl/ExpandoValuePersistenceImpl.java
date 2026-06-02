@@ -1262,8 +1262,8 @@ public class ExpandoValuePersistenceImpl
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
-				true, ExpandoValue::getRowId));
+				"expandoValue.", "rowId", "rowId_", FinderColumn.Type.LONG, "=",
+				true, true, ExpandoValue::getRowId));
 
 		_collectionPersistenceFinderByT_C = new CollectionPersistenceFinder<>(
 			this,
@@ -1316,8 +1316,8 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
-				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
-				true, ExpandoValue::getRowId));
+				"expandoValue.", "rowId", "rowId_", FinderColumn.Type.LONG, "=",
+				true, true, ExpandoValue::getRowId));
 
 		_collectionPersistenceFinderByT_CPK = new CollectionPersistenceFinder<>(
 			this,
@@ -1358,8 +1358,8 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId),
 			new FinderColumn<>(
-				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
-				true, ExpandoValue::getRowId));
+				"expandoValue.", "rowId", "rowId_", FinderColumn.Type.LONG, "=",
+				true, true, ExpandoValue::getRowId));
 
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
 			this,
@@ -1445,8 +1445,8 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId),
 			new FinderColumn<>(
-				"expandoValue.", "data", FinderColumn.Type.STRING, "=", true,
-				true, ExpandoValue::getData));
+				"expandoValue.", "data", "data_", FinderColumn.Type.STRING, "=",
+				true, true, ExpandoValue::getData));
 
 		ExpandoValueUtil.setPersistence(this);
 	}
@@ -1484,4 +1484,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1190780298
+// LIFERAY-SERVICE-BUILDER-HASH:1695005079

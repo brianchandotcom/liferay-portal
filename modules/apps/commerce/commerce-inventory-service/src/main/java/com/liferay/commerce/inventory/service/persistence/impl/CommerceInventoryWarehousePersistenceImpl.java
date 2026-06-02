@@ -1281,7 +1281,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceInventoryWarehouse.", "uuid",
+					"commerceInventoryWarehouse.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryWarehouse::getUuid));
 
@@ -1309,7 +1309,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceInventoryWarehouse.", "uuid",
+					"commerceInventoryWarehouse.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryWarehouse::getUuid),
 				new FinderColumn<>(
@@ -1377,7 +1377,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryWarehouse::getCompanyId),
 				new FinderColumn<>(
-					"commerceInventoryWarehouse.", "active",
+					"commerceInventoryWarehouse.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommerceInventoryWarehouse::isActive));
 
@@ -1460,7 +1460,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryWarehouse::getCompanyId),
 				new FinderColumn<>(
-					"commerceInventoryWarehouse.", "active",
+					"commerceInventoryWarehouse.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommerceInventoryWarehouse::isActive),
 				new FinderColumn<>(
@@ -1559,4 +1559,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1216075046
+// LIFERAY-SERVICE-BUILDER-HASH:-506697825

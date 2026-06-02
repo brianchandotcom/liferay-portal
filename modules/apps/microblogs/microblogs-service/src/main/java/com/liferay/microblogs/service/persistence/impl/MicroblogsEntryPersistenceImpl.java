@@ -2427,8 +2427,9 @@ public class MicroblogsEntryPersistenceImpl
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MicroblogsEntry::getUserId),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType));
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType));
 
 		_collectionPersistenceFinderByCCNI_CCPK =
 			new FilterCollectionPersistenceFinder<>(
@@ -2498,8 +2499,9 @@ public class MicroblogsEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MicroblogsEntry::getCreatorClassNameId),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType));
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType));
 
 		_collectionPersistenceFinderByT_P =
 			new FilterCollectionPersistenceFinder<>(
@@ -2529,8 +2531,9 @@ public class MicroblogsEntryPersistenceImpl
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType),
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType),
 				new FinderColumn<>(
 					"microblogsEntry.", "parentMicroblogsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2631,8 +2634,9 @@ public class MicroblogsEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MicroblogsEntry::getCreatorClassNameId),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType));
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType));
 
 		_collectionPersistenceFinderByCCNI_CCPK_T =
 			new FilterCollectionPersistenceFinder<>(
@@ -2684,8 +2688,9 @@ public class MicroblogsEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					MicroblogsEntry::getCreatorClassPK),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType));
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType));
 
 		_collectionPersistenceFinderByC_CCNI_CCPK_T =
 			new FilterCollectionPersistenceFinder<>(
@@ -2744,8 +2749,9 @@ public class MicroblogsEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					MicroblogsEntry::getCreatorClassPK),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType));
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType));
 
 		_collectionPersistenceFinderByU_C_T_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -2793,8 +2799,9 @@ public class MicroblogsEntryPersistenceImpl
 					"microblogsEntry.", "createDate", FinderColumn.Type.DATE,
 					"=", true, true, MicroblogsEntry::getCreateDate),
 				new FinderColumn<>(
-					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, MicroblogsEntry::getType),
+					"microblogsEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					MicroblogsEntry::getType),
 				new FinderColumn<>(
 					"microblogsEntry.", "socialRelationType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -2866,4 +2873,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-662080846
+// LIFERAY-SERVICE-BUILDER-HASH:-1206590542

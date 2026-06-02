@@ -1748,8 +1748,8 @@ public class AssetTagPersistenceImpl
 			_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
 			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"assetTag.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				AssetTag::getUuid));
+				"assetTag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, AssetTag::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1760,8 +1760,8 @@ public class AssetTagPersistenceImpl
 				convertNullFunction(AssetTag::getUuid), AssetTag::getGroupId),
 			_SQL_SELECT_ASSETTAG_WHERE, "",
 			new FinderColumn<>(
-				"assetTag.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				AssetTag::getUuid),
+				"assetTag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, AssetTag::getUuid),
 			new FinderColumn<>(
 				"assetTag.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				AssetTag::getGroupId));
@@ -1788,8 +1788,8 @@ public class AssetTagPersistenceImpl
 				_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
 				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetTag.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, AssetTag::getUuid),
+					"assetTag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, AssetTag::getUuid),
 				new FinderColumn<>(
 					"assetTag.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, AssetTag::getCompanyId));
@@ -1954,4 +1954,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1999114446
+// LIFERAY-SERVICE-BUILDER-HASH:1328301962

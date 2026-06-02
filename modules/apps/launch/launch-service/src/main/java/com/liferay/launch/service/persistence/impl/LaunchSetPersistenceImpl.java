@@ -949,8 +949,8 @@ public class LaunchSetPersistenceImpl
 			_SQL_SELECT_LAUNCHSET_WHERE, _SQL_COUNT_LAUNCHSET_WHERE,
 			LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"launchSet.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				LaunchSet::getUuid));
+				"launchSet.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, LaunchSet::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -974,8 +974,8 @@ public class LaunchSetPersistenceImpl
 				_SQL_SELECT_LAUNCHSET_WHERE, _SQL_COUNT_LAUNCHSET_WHERE,
 				LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"launchSet.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, LaunchSet::getUuid),
+					"launchSet.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, LaunchSet::getUuid),
 				new FinderColumn<>(
 					"launchSet.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchSet::getCompanyId));
@@ -1144,4 +1144,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602191436
+// LIFERAY-SERVICE-BUILDER-HASH:-859064190

@@ -2576,8 +2576,8 @@ public class UserGroupPersistenceImpl
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"userGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, UserGroup::getUuid));
+					"userGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, UserGroup::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -2601,8 +2601,8 @@ public class UserGroupPersistenceImpl
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"userGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, UserGroup::getUuid),
+					"userGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, UserGroup::getUuid),
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId));
@@ -2813,4 +2813,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1595171393
+// LIFERAY-SERVICE-BUILDER-HASH:1148000398

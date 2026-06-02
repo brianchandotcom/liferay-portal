@@ -1253,8 +1253,8 @@ public class WikiNodePersistenceImpl
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
 			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				WikiNode::getUuid));
+				"wikiNode.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, WikiNode::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1265,8 +1265,8 @@ public class WikiNodePersistenceImpl
 				convertNullFunction(WikiNode::getUuid), WikiNode::getGroupId),
 			_SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
-				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				WikiNode::getUuid),
+				"wikiNode.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, WikiNode::getUuid),
 			new FinderColumn<>(
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				WikiNode::getGroupId));
@@ -1293,8 +1293,8 @@ public class WikiNodePersistenceImpl
 				_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
 				WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, WikiNode::getUuid),
+					"wikiNode.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, WikiNode::getUuid),
 				new FinderColumn<>(
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
@@ -1511,4 +1511,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-224765386
+// LIFERAY-SERVICE-BUILDER-HASH:-1525563642

@@ -1443,8 +1443,8 @@ public class CalendarResourcePersistenceImpl
 			_SQL_COUNT_CALENDARRESOURCE_WHERE,
 			CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"calendarResource.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CalendarResource::getUuid));
+				"calendarResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CalendarResource::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1456,8 +1456,8 @@ public class CalendarResourcePersistenceImpl
 				CalendarResource::getGroupId),
 			_SQL_SELECT_CALENDARRESOURCE_WHERE, "",
 			new FinderColumn<>(
-				"calendarResource.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CalendarResource::getUuid),
+				"calendarResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CalendarResource::getUuid),
 			new FinderColumn<>(
 				"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarResource::getGroupId));
@@ -1486,8 +1486,9 @@ public class CalendarResourcePersistenceImpl
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"calendarResource.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CalendarResource::getUuid),
+					"calendarResource.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CalendarResource::getUuid),
 				new FinderColumn<>(
 					"calendarResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarResource::getCompanyId));
@@ -1543,8 +1544,9 @@ public class CalendarResourcePersistenceImpl
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"calendarResource.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CalendarResource::isActive));
+					"calendarResource.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CalendarResource::isActive));
 
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1573,8 +1575,9 @@ public class CalendarResourcePersistenceImpl
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CalendarResource::getGroupId),
 				new FinderColumn<>(
-					"calendarResource.", "code", FinderColumn.Type.STRING, "=",
-					true, true, CalendarResource::getCode));
+					"calendarResource.", "code", "code_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CalendarResource::getCode));
 
 		_collectionPersistenceFinderByG_A =
 			new FilterCollectionPersistenceFinder<>(
@@ -1607,8 +1610,9 @@ public class CalendarResourcePersistenceImpl
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId),
 				new FinderColumn<>(
-					"calendarResource.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CalendarResource::isActive));
+					"calendarResource.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CalendarResource::isActive));
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1653,11 +1657,13 @@ public class CalendarResourcePersistenceImpl
 					"calendarResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarResource::getCompanyId),
 				new FinderColumn<>(
-					"calendarResource.", "code", FinderColumn.Type.STRING,
-					"LIKE", true, true, CalendarResource::getCode),
+					"calendarResource.", "code", "code_",
+					FinderColumn.Type.STRING, "LIKE", true, true,
+					CalendarResource::getCode),
 				new FinderColumn<>(
-					"calendarResource.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, CalendarResource::isActive));
+					"calendarResource.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					CalendarResource::isActive));
 
 		CalendarResourceUtil.setPersistence(this);
 	}
@@ -1731,4 +1737,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2024190667
+// LIFERAY-SERVICE-BUILDER-HASH:-1312892661

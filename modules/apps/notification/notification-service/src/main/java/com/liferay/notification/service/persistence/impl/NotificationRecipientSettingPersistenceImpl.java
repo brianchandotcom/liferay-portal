@@ -686,7 +686,7 @@ public class NotificationRecipientSettingPersistenceImpl
 			NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"notificationRecipientSetting.", "uuid",
+				"notificationRecipientSetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				NotificationRecipientSetting::getUuid));
 
@@ -714,7 +714,7 @@ public class NotificationRecipientSettingPersistenceImpl
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"notificationRecipientSetting.", "uuid",
+					"notificationRecipientSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					NotificationRecipientSetting::getUuid),
 				new FinderColumn<>(
@@ -841,4 +841,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1449488909
+// LIFERAY-SERVICE-BUILDER-HASH:1034127723

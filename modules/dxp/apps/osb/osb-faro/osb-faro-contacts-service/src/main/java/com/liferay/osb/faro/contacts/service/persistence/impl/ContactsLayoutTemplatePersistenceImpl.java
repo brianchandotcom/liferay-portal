@@ -503,8 +503,9 @@ public class ContactsLayoutTemplatePersistenceImpl
 				"contactsLayoutTemplate.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, ContactsLayoutTemplate::getGroupId),
 			new FinderColumn<>(
-				"contactsLayoutTemplate.", "type", FinderColumn.Type.INTEGER,
-				"=", true, true, ContactsLayoutTemplate::getType));
+				"contactsLayoutTemplate.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				ContactsLayoutTemplate::getType));
 
 		ContactsLayoutTemplateUtil.setPersistence(this);
 	}
@@ -572,4 +573,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1441133665
+// LIFERAY-SERVICE-BUILDER-HASH:-1340891273

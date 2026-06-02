@@ -853,7 +853,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"calendarNotificationTemplate.", "uuid",
+				"calendarNotificationTemplate.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CalendarNotificationTemplate::getUuid));
 
@@ -867,7 +867,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				CalendarNotificationTemplate::getGroupId),
 			_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
-				"calendarNotificationTemplate.", "uuid",
+				"calendarNotificationTemplate.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				CalendarNotificationTemplate::getUuid),
 			new FinderColumn<>(
@@ -899,7 +899,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"calendarNotificationTemplate.", "uuid",
+					"calendarNotificationTemplate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CalendarNotificationTemplate::getUuid),
 				new FinderColumn<>(
@@ -1038,4 +1038,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2128560424
+// LIFERAY-SERVICE-BUILDER-HASH:56568770

@@ -1150,8 +1150,9 @@ public class CommercePaymentEntryPersistenceImpl
 					"commercePaymentEntry.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, CommercePaymentEntry::getClassPK),
 				new FinderColumn<>(
-					"commercePaymentEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CommercePaymentEntry::getType));
+					"commercePaymentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CommercePaymentEntry::getType));
 
 		_collectionPersistenceFinderByC_C_C_P_T =
 			new FilterCollectionPersistenceFinder<>(
@@ -1216,8 +1217,9 @@ public class CommercePaymentEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CommercePaymentEntry::getPaymentStatus),
 				new FinderColumn<>(
-					"commercePaymentEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CommercePaymentEntry::getType));
+					"commercePaymentEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CommercePaymentEntry::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1307,4 +1309,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2143216899
+// LIFERAY-SERVICE-BUILDER-HASH:542002586

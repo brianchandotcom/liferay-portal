@@ -1317,8 +1317,8 @@ public class CTCollectionPersistenceImpl
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ctCollection.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CTCollection::getUuid));
+					"ctCollection.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, CTCollection::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1342,8 +1342,8 @@ public class CTCollectionPersistenceImpl
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ctCollection.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CTCollection::getUuid),
+					"ctCollection.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, CTCollection::getUuid),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId));
@@ -1548,4 +1548,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1577199223
+// LIFERAY-SERVICE-BUILDER-HASH:1850667309

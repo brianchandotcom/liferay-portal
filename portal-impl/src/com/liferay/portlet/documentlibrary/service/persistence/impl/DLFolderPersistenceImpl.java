@@ -3582,8 +3582,8 @@ public class DLFolderPersistenceImpl
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				DLFolder::getUuid));
+				"dlFolder.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DLFolder::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3594,8 +3594,8 @@ public class DLFolderPersistenceImpl
 				convertNullFunction(DLFolder::getUuid), DLFolder::getGroupId),
 			_SQL_SELECT_DLFOLDER_WHERE, "",
 			new FinderColumn<>(
-				"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				DLFolder::getUuid),
+				"dlFolder.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DLFolder::getUuid),
 			new FinderColumn<>(
 				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				DLFolder::getGroupId));
@@ -3622,8 +3622,8 @@ public class DLFolderPersistenceImpl
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
 				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, DLFolder::getUuid),
+					"dlFolder.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, DLFolder::getUuid),
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getCompanyId));
@@ -4015,8 +4015,8 @@ public class DLFolderPersistenceImpl
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
-					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					true, DLFolder::isHidden));
+					"dlFolder.", "hidden", "hidden_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DLFolder::isHidden));
 
 		_collectionPersistenceFinderByG_M_LikeT_H =
 			new FilterCollectionPersistenceFinder<>(
@@ -4057,8 +4057,8 @@ public class DLFolderPersistenceImpl
 					"dlFolder.", "treePath", FinderColumn.Type.STRING, "LIKE",
 					true, true, DLFolder::getTreePath),
 				new FinderColumn<>(
-					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					true, DLFolder::isHidden));
+					"dlFolder.", "hidden", "hidden_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DLFolder::isHidden));
 
 		_collectionPersistenceFinderByG_P_H_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -4104,8 +4104,8 @@ public class DLFolderPersistenceImpl
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
-					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					true, DLFolder::isHidden),
+					"dlFolder.", "hidden", "hidden_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, DLFolder::getStatus));
@@ -4165,8 +4165,8 @@ public class DLFolderPersistenceImpl
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
-					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					true, DLFolder::isHidden),
+					"dlFolder.", "hidden", "hidden_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, DLFolder::getStatus));
@@ -4213,8 +4213,8 @@ public class DLFolderPersistenceImpl
 					"dlFolder.", "treePath", FinderColumn.Type.STRING, "LIKE",
 					true, true, DLFolder::getTreePath),
 				new FinderColumn<>(
-					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					true, DLFolder::isHidden),
+					"dlFolder.", "hidden", "hidden_", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, DLFolder::getStatus));
@@ -4280,4 +4280,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1095980817
+// LIFERAY-SERVICE-BUILDER-HASH:-1326807198

@@ -3733,8 +3733,8 @@ public class UserPersistenceImpl
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"user.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				User::getUuid));
+				"user.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, User::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -3758,8 +3758,8 @@ public class UserPersistenceImpl
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"user.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					User::getUuid),
+					"user.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, User::getUuid),
 				new FinderColumn<>(
 					"user.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, User::getCompanyId));
@@ -4026,8 +4026,8 @@ public class UserPersistenceImpl
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
 			new FinderColumn<>(
-				"user.", "type", FinderColumn.Type.INTEGER, "=", true, true,
-				User::getType));
+				"user.", "type", "type_", FinderColumn.Type.INTEGER, "=", true,
+				true, User::getType));
 
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
 			this,
@@ -4127,8 +4127,8 @@ public class UserPersistenceImpl
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
 			new FinderColumn<>(
-				"user.", "type", FinderColumn.Type.INTEGER, "=", true, true,
-				User::getType),
+				"user.", "type", "type_", FinderColumn.Type.INTEGER, "=", true,
+				true, User::getType),
 			new FinderColumn<>(
 				"user.", "status", FinderColumn.Type.INTEGER, "=", true, true,
 				User::getStatus));
@@ -4220,4 +4220,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:217105595
+// LIFERAY-SERVICE-BUILDER-HASH:965396212

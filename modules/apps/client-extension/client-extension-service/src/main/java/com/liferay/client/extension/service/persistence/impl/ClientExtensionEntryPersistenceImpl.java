@@ -1093,8 +1093,9 @@ public class ClientExtensionEntryPersistenceImpl
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, ClientExtensionEntry::getUuid));
+					"clientExtensionEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ClientExtensionEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1120,8 +1121,9 @@ public class ClientExtensionEntryPersistenceImpl
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, ClientExtensionEntry::getUuid),
+					"clientExtensionEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ClientExtensionEntry::getUuid),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1183,8 +1185,9 @@ public class ClientExtensionEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ClientExtensionEntry::getCompanyId),
 				new FinderColumn<>(
-					"clientExtensionEntry.", "type", FinderColumn.Type.STRING,
-					"=", true, true, ClientExtensionEntry::getType));
+					"clientExtensionEntry.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ClientExtensionEntry::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1277,4 +1280,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1639667820
+// LIFERAY-SERVICE-BUILDER-HASH:913098747

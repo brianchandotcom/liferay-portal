@@ -807,8 +807,8 @@ public class MBMailingListPersistenceImpl
 			_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
 			MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"mbMailingList.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBMailingList::getUuid));
+				"mbMailingList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, MBMailingList::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -820,8 +820,8 @@ public class MBMailingListPersistenceImpl
 				MBMailingList::getGroupId),
 			_SQL_SELECT_MBMAILINGLIST_WHERE, "",
 			new FinderColumn<>(
-				"mbMailingList.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, MBMailingList::getUuid),
+				"mbMailingList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, MBMailingList::getUuid),
 			new FinderColumn<>(
 				"mbMailingList.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBMailingList::getGroupId));
@@ -848,8 +848,8 @@ public class MBMailingListPersistenceImpl
 				_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
 				MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbMailingList.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, MBMailingList::getUuid),
+					"mbMailingList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, MBMailingList::getUuid),
 				new FinderColumn<>(
 					"mbMailingList.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBMailingList::getCompanyId));
@@ -876,8 +876,9 @@ public class MBMailingListPersistenceImpl
 				_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
 				MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbMailingList.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, MBMailingList::isActive));
+					"mbMailingList.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					MBMailingList::isActive));
 
 		_uniquePersistenceFinderByG_C = new UniquePersistenceFinder<>(
 			this,
@@ -966,4 +967,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2077492077
+// LIFERAY-SERVICE-BUILDER-HASH:1828019309

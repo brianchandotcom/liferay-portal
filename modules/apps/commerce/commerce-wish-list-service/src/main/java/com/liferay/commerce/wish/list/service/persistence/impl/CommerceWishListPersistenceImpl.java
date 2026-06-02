@@ -1072,8 +1072,8 @@ public class CommerceWishListPersistenceImpl
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommerceWishList::getUuid));
+				"commerceWishList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceWishList::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1085,8 +1085,8 @@ public class CommerceWishListPersistenceImpl
 				CommerceWishList::getGroupId),
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE, "",
 			new FinderColumn<>(
-				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommerceWishList::getUuid),
+				"commerceWishList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommerceWishList::getUuid),
 			new FinderColumn<>(
 				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getGroupId));
@@ -1115,8 +1115,9 @@ public class CommerceWishListPersistenceImpl
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommerceWishList::getUuid),
+					"commerceWishList.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceWishList::getUuid),
 				new FinderColumn<>(
 					"commerceWishList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceWishList::getCompanyId));
@@ -1335,4 +1336,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-155249314
+// LIFERAY-SERVICE-BUILDER-HASH:2124455153

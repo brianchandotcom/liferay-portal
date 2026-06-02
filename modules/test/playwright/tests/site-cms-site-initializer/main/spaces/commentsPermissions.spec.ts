@@ -29,7 +29,7 @@ const test = mergeTests(
 test(
 	'Comment actions are restricted to users with permission over the content',
 	{tag: ['@LPD-90003', '@LPD-93064']},
-	async ({apiHelpers, contentsPage, page, spaceSummaryPage}) => {
+	async ({apiHelpers, contentsPage, page}) => {
 		const spaceName = getRandomString();
 		const commentBody = getRandomString();
 		const contentTitle = 'Untitled Asset';
@@ -103,8 +103,6 @@ test(
 		await test.step('Space Administrator can edit and delete the admin comment', async () => {
 			await performUserSwitchViaApi(page, spaceAdmin.alternateName);
 
-			await spaceSummaryPage.goto(spaceName);
-
 			await contentsPage.goto();
 
 			await contentRow.getByRole('link', {name: contentTitle}).click();
@@ -117,8 +115,6 @@ test(
 
 		await test.step('Space Member cannot edit or delete the admin comment', async () => {
 			await performUserSwitchViaApi(page, spaceMember.alternateName);
-
-			await spaceSummaryPage.goto(spaceName);
 
 			await page.goto(PORTLET_URLS.cmsContents);
 

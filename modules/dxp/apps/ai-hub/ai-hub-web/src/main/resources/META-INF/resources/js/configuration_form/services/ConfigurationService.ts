@@ -15,7 +15,7 @@ const HEADERS = new Headers({
 
 async function getConfiguration(externalReferenceCode: string) {
 	const response = await fetch(
-		`/o/c/aihubconfigurations/by-external-reference-code/${externalReferenceCode}`,
+		`/o/ai-hub/configurations/by-external-reference-code/${externalReferenceCode}`,
 		{
 			headers: HEADERS,
 			method: 'GET',

@@ -306,9 +306,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public synchronized TestrayRun getTestrayRun(String name) {
 		for (TestrayRun testrayRun : getTestrayRuns()) {
-			String testrayRunIDString = testrayRun.getRunIDString();
+			String runIDString = testrayRun.getRunIDString();
 
-			if (testrayRunIDString.equals(name)) {
+			if (runIDString.equals(name)) {
 				return testrayRun;
 			}
 		}
@@ -317,9 +317,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public synchronized Long getTestrayRunID(TestrayRun testrayRun) {
-		String testrayRunIDString = testrayRun.getRunIDString();
+		String runIDString = testrayRun.getRunIDString();
 
-		Long testrayRunID = _testrayRunIDs.get(testrayRunIDString);
+		Long testrayRunID = _testrayRunIDs.get(runIDString);
 
 		if (testrayRunID != null) {
 			return testrayRunID;
@@ -337,7 +337,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			return null;
 		}
 
-		_testrayRunIDs.put(testrayRunIDString, testrayRunID);
+		_testrayRunIDs.put(runIDString, testrayRunID);
 
 		return testrayRunID;
 	}

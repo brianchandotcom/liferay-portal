@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.Map;
@@ -84,23 +85,23 @@ public class AudiencesJSONObjectBuilder {
 
 	private static final Map<String, String> _attributeNames =
 		HashMapBuilder.put(
-			"browser", "browser_name"
+			Context.BROWSER, "browser_name"
+		).put(
+			Context.LANGUAGE_ID, "language"
+		).put(
+			Context.LAST_SIGN_IN_DATE_TIME, "last_sign_in_date"
+		).put(
+			Context.LOCAL_DATE, "local_date"
+		).put(
+			Context.REFERRER_URL, "referrer"
+		).put(
+			Context.REQUEST_PARAMETERS, "request_parameters"
+		).put(
+			Context.SIGNED_IN, "signed_in"
+		).put(
+			Context.USER_AGENT, "user_agent"
 		).put(
 			"customContext/ipGeocoderCountry", "ip_geocoder_country"
-		).put(
-			"languageId", "language"
-		).put(
-			"lastSignInDateTime", "last_sign_in_date"
-		).put(
-			"localDate", "local_date"
-		).put(
-			"referrerURL", "referrer"
-		).put(
-			"requestParameters", "request_parameters"
-		).put(
-			"signedIn", "signed_in"
-		).put(
-			"userAgent", "user_agent"
 		).build();
 
 }

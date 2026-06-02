@@ -20,25 +20,25 @@ const REASON_OPTIONS: {label: string; value: ReportFeedbackReason | ''}[] = [
 		value: 'harmfulContent',
 	},
 	{
-		label: 'Exposure of personal / Sensitive Data (PII)',
+		label: 'Exposure of Personal or Sensitive Data (PII)',
 		value: 'piiExposure',
 	},
-	{label: 'Agent Error / Malfunction', value: 'agentError'},
+	{label: 'Agent Error or Malfunction', value: 'agentError'},
 	{label: 'Other', value: 'other'},
 ];
 
 interface SendFeedbackModalProps {
 	agentDefinitionExternalReferenceCodes: string[];
+	chatbotExternalReferenceCode: string;
 	onClose: () => void;
 	onSubmitted: () => void;
-	traceId: string;
 }
 
 export default function SendFeedbackModal({
 	agentDefinitionExternalReferenceCodes,
+	chatbotExternalReferenceCode,
 	onClose,
 	onSubmitted,
-	traceId,
 }: SendFeedbackModalProps) {
 	const {
 		canSubmit,
@@ -49,7 +49,22 @@ export default function SendFeedbackModal({
 		submit,
 		submitting,
 		userMessage,
-	} = useReportFeedback({agentDefinitionExternalReferenceCodes, traceId});
+	} = useReportFeedback({
+		agentDefinitionExternalReferenceCodes,
+		chatbotExternalReferenceCode,
+	});
+
+	React.useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				onClose();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [onClose]);
 
 	async function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -62,6 +77,7 @@ export default function SendFeedbackModal({
 	return (
 		<div className="aihub-modal-overlay" onMouseDown={onClose}>
 			<div
+				aria-labelledby="aihub-feedback-modal-title"
 				aria-modal="true"
 				className="aihub-modal"
 				onMouseDown={(event) => event.stopPropagation()}
@@ -69,7 +85,12 @@ export default function SendFeedbackModal({
 			>
 				<form onSubmit={handleSubmit}>
 					<div className="aihub-modal-header">
-						<h2 className="aihub-modal-title">Send Feedback</h2>
+						<h2
+							className="aihub-modal-title"
+							id="aihub-feedback-modal-title"
+						>
+							Send Feedback
+						</h2>
 
 						<button
 							aria-label="Close"

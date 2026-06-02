@@ -169,9 +169,9 @@ export type ReportFeedbackReason =
 
 export interface ReportFeedbackPayload {
 	agentDefinitionExternalReferenceCodes: string[];
+	chatbotExternalReferenceCode: string;
 	reason: ReportFeedbackReason;
 	surface: 'clickToChat';
-	traceId: string;
 	userMessage?: string;
 }
 

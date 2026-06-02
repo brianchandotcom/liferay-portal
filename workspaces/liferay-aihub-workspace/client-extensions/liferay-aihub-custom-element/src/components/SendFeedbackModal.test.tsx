@@ -21,7 +21,7 @@ function renderModal(
 		agentDefinitionExternalReferenceCodes: ['agent-1'],
 		onClose: vi.fn(),
 		onSubmitted: vi.fn(),
-		traceId: 'trace-1',
+		chatbotExternalReferenceCode: 'chatbot-1',
 		...overrides,
 	};
 

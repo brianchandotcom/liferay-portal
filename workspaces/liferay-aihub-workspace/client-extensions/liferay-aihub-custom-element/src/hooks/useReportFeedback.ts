@@ -13,12 +13,12 @@ import {
 
 interface UseReportFeedbackOptions {
 	agentDefinitionExternalReferenceCodes: string[];
-	traceId: string;
+	chatbotExternalReferenceCode: string;
 }
 
 export default function useReportFeedback({
 	agentDefinitionExternalReferenceCodes,
-	traceId,
+	chatbotExternalReferenceCode,
 }: UseReportFeedbackOptions) {
 	const [reason, setReason] = useState<ReportFeedbackReason | ''>('');
 	const [userMessage, setUserMessage] = useState('');
@@ -34,9 +34,9 @@ export default function useReportFeedback({
 
 		const payload: ReportFeedbackPayload = {
 			agentDefinitionExternalReferenceCodes,
+			chatbotExternalReferenceCode,
 			reason,
 			surface: 'clickToChat',
-			traceId,
 			...(userMessage.trim() ? {userMessage: userMessage.trim()} : {}),
 		};
 

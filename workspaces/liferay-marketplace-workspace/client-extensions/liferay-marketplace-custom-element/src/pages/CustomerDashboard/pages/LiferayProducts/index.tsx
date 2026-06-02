@@ -107,9 +107,7 @@ const LiferayProductsListView = () => {
 							},
 							{
 								hidden: (row: PlacedOrder) =>
-									![
-										OrderTypes.AI_HUB,
-									].includes(
+									![OrderTypes.AI_HUB].includes(
 										row.orderTypeExternalReferenceCode as OrderTypes
 									) || row.orderStatusInfo?.code !== 0,
 								name: i18n.translate('buy-extra-token'),

@@ -10,13 +10,14 @@ import {useEffect, useState} from 'react';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import RadioCardList from '../../../../../components/RadioCardList/RadioCardList';
 import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 import {getAiHubTokenSKUs} from '../../../../../utils/productUtils';
-import {Liferay} from '../../../../../liferay/liferay';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {cartStore, productPurchaseStore} from '../../../store';
 
 import './AIHubForm.scss';
+
 import '../index.scss';
 
 const AIHubTokenSelection = () => {
@@ -42,6 +43,7 @@ const AIHubTokenSelection = () => {
 	useEffect(() => {
 		if (!selectedAccount?.id) {
 			setIsCartLoading(true);
+
 			return;
 		}
 
@@ -53,24 +55,30 @@ const AIHubTokenSelection = () => {
 		(async () => {
 			try {
 				const channelId = Liferay.CommerceContext.commerceChannelId;
-				const {items: carts} = await HeadlessCommerceDeliveryCart.getAccountCarts(
-					selectedAccount.id,
-					channelId
-				);
-				
-				if (!active) return;
+				const {items: carts} =
+					await HeadlessCommerceDeliveryCart.getAccountCarts(
+						selectedAccount.id,
+						channelId
+					);
+
+				if (!active) {return;}
 
 				if (carts?.length > 0) {
 					const [cart] = carts;
-					const {items: cartItems} = await HeadlessCommerceDeliveryCart.getCartItems(cart.id);
+					const {items: cartItems} =
+						await HeadlessCommerceDeliveryCart.getCartItems(
+							cart.id
+						);
 					if (active) {
 						cartStore.send({cart, type: 'setCart'});
 						cartStore.send({cartItems, type: 'setCartItems'});
 					}
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(error);
-			} finally {
+			}
+			finally {
 				if (active) {
 					setIsCartLoading(false);
 				}
@@ -87,26 +95,36 @@ const AIHubTokenSelection = () => {
 			return;
 		}
 
-		if (productPurchaseCart.cartItems.length > 0) {
-			const cartSkuIds = productPurchaseCart.cartItems.map((item) => item.skuId);
-			const tokensInCart = tokens.filter((token: DeliverySKU) => cartSkuIds.includes(token.id));
-			
-			if (tokensInCart.length > 0) {
+		if (productPurchaseCart.cartItems.length) {
+			const cartSkuIds = productPurchaseCart.cartItems.map(
+				(item) => item.skuId
+			);
+			const tokensInCart = tokens.filter((token: DeliverySKU) =>
+				cartSkuIds.includes(token.id)
+			);
+
+			if (tokensInCart.length) {
 				const activeToken = tokensInCart[0];
 				setSelectedSkuId(activeToken.id);
 
 				if (tokensInCart.length > 1) {
 					const tokenSkuIds = tokens.map((token: any) => token.id);
 					const filteredItems = productPurchaseCart.cartItems.filter(
-						(item) => !tokenSkuIds.includes(item.skuId) || item.skuId === activeToken.id
+						(item) =>
+							!tokenSkuIds.includes(item.skuId) ||
+							item.skuId === activeToken.id
 					);
-					cartStore.send({cartItems: filteredItems, type: 'setCartItems'});
+					cartStore.send({
+						cartItems: filteredItems,
+						type: 'setCartItems',
+					});
 				}
+
 				return;
 			}
 		}
-		
-		if (!selectedSkuId && tokens.length > 0) {
+
+		if (!selectedSkuId && !!tokens.length) {
 			const defaultSkuId = tokens[0].id;
 			setSelectedSkuId(defaultSkuId);
 			productPurchaseCart.addCart(product.id, defaultSkuId);
@@ -116,7 +134,7 @@ const AIHubTokenSelection = () => {
 	const handleSelectToken = async (token: any) => {
 		const tokenValue = token?.value;
 		const newSkuId = tokenValue?.id;
-		
+
 		if (!newSkuId || selectedSkuId === newSkuId) {
 			return;
 		}
@@ -150,9 +168,7 @@ const AIHubTokenSelection = () => {
 				)}
 			</p>
 
-			<p className="h4 mb-0">
-				{i18n.translate('personal-information')}
-			</p>
+			<p className="h4 mb-0">{i18n.translate('personal-information')}</p>
 
 			<hr className="mb-5 mt-3" />
 
@@ -160,18 +176,33 @@ const AIHubTokenSelection = () => {
 				{tokens.length ? (
 					<RadioCardList
 						contentList={tokens.map((token: any) => ({
-								...token,
-								selected: selectedSkuId === token?.id,
-								title: (
-									<div className="d-flex justify-content-between align-items-center pt-2">
-										<div>
-										<p className="liferay-ai-hub-form-token-name mb-1">{token.skuOptions[0].skuOptionValueNames[0]}</p>
-										<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">{token.customFields?.find((field: any) => field.name === "Description")?.customValue.data}</p>
-										</div>
-									<p className="liferay-ai-hub-form-token-price mb-0">{token.price.priceFormatted}</p>
+							...token,
+							selected: selectedSkuId === token?.id,
+							title: (
+								<div className="align-items-center d-flex justify-content-between pt-2">
+									<div>
+										<p className="liferay-ai-hub-form-token-name mb-1">
+											{
+												token.skuOptions[0]
+													.skuOptionValueNames[0]
+											}
+										</p>
+										<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">
+											{
+												token.customFields?.find(
+													(field: any) =>
+														field.name ===
+														'Description'
+												)?.customValue.data
+											}
+										</p>
 									</div>
-								),
-								value: token,
+									<p className="liferay-ai-hub-form-token-price mb-0">
+										{token.price.priceFormatted}
+									</p>
+								</div>
+							),
+							value: token,
 						}))}
 						leftRadio
 						onSelect={handleSelectToken}
@@ -180,7 +211,7 @@ const AIHubTokenSelection = () => {
 				) : (
 					<p className="font-weight-bold my-5">No tokens available</p>
 				)}
-				
+
 				<span className="mr-1 secondary-text">
 					Need help calculating tokens usage?
 				</span>

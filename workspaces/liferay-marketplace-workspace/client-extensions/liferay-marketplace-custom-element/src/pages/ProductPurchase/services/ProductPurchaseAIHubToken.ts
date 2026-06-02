@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { OrderTypes } from '../../../enums/Order';
-import { Liferay } from '../../../liferay/liferay';
+import {OrderTypes} from '../../../enums/Order';
+import {Liferay} from '../../../liferay/liferay';
 import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
 import HeadlessCommerceDeliveryOrder from '../../../services/rest/HeadlessCommerceDeliveryOrder';
-import { getSiteURL } from '../../../utils/site';
+import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
 export class ProductPurchaseAIHubToken extends ProductPurchase {
@@ -49,17 +49,19 @@ export class ProductPurchaseAIHubToken extends ProductPurchase {
 					filter: "orderTypeExternalReferenceCode eq 'AI_HUB'",
 					pageSize: '1',
 				});
-				const response = await HeadlessCommerceDeliveryOrder.getPlacedOrders(
-					channelId,
-					accountId,
-					parameters
-				);
+				const response =
+					await HeadlessCommerceDeliveryOrder.getPlacedOrders(
+						channelId,
+						accountId,
+						parameters
+					);
 				const aiHubOrder = response?.items?.[0];
 				if (aiHubOrder?.id) {
 					return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${aiHubOrder.id}`;
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Failed to resolve AI Hub order ID:', error);
 		}
 

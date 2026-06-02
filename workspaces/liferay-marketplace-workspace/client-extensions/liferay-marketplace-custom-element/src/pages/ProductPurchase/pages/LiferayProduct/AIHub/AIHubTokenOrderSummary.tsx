@@ -14,15 +14,14 @@ import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
 import i18n from '../../../../../i18n';
 import {formatCurrency} from '../../../../../utils/currencies';
 import {getAiHubTokenSKUs} from '../../../../../utils/productUtils';
-import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHubToken} from '../../../services/ProductPurchaseAIHubToken';
 import {productPurchaseStore} from '../../../store';
+import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
 
 import './AIHubOrderSummary.scss';
 
 const AIHubTokenOrderSummary = () => {
-
 	const {
 		actions: {previousStep},
 		handlePurchase,
@@ -94,7 +93,10 @@ const AIHubTokenOrderSummary = () => {
 	};
 
 	const onSubmit = async () => {
-		const productPurchase = new ProductPurchaseAIHubToken(selectedAccount, product);
+		const productPurchase = new ProductPurchaseAIHubToken(
+			selectedAccount,
+			product
+		);
 
 		await handlePurchase(productPurchase, {
 			...productPurchaseCart.cart,
@@ -120,12 +122,26 @@ const AIHubTokenOrderSummary = () => {
 			{selectedSku && (
 				<Section className="ai-hub-summary" label="Tokens">
 					<div className="ai-hub-summary-infomation-card">
-						<div className="d-flex justify-content-between align-items-center w-100">
+						<div className="align-items-center d-flex justify-content-between w-100">
 							<div>
-								<p className="liferay-ai-hub-form-token-name mb-1">{selectedSku.skuOptions?.[0]?.skuOptionValueNames?.[0]}</p>
-								<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">{selectedSku.customFields?.find((field: any) => field.name === "Description")?.customValue.data}</p>
+								<p className="liferay-ai-hub-form-token-name mb-1">
+									{
+										selectedSku.skuOptions?.[0]
+											?.skuOptionValueNames?.[0]
+									}
+								</p>
+								<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">
+									{
+										selectedSku.customFields?.find(
+											(field: any) =>
+												field.name === 'Description'
+										)?.customValue.data
+									}
+								</p>
 							</div>
-							<p className="liferay-ai-hub-form-token-price mb-0">{selectedSku.price?.priceFormatted}</p>
+							<p className="liferay-ai-hub-form-token-price mb-0">
+								{selectedSku.price?.priceFormatted}
+							</p>
 						</div>
 					</div>
 				</Section>
@@ -218,10 +234,10 @@ const AIHubTokenOrderSummary = () => {
 
 			<div className="d-flex flex-column mt-4 w-100">
 				<ClayButton
-					displayType="primary"
+					className="font-weight-bold w-100"
 					disabled={!paymentStore.eulaAgreement}
+					displayType="primary"
 					onClick={onSubmit}
-					className="w-100 font-weight-bold"
 					size="regular"
 				>
 					{i18n.translate('buy-extra-token')}

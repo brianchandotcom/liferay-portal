@@ -144,12 +144,14 @@ html.dev body {
 }
 
 .btn-outline-secondary {
+	background-color: transparent !important;
 	border-color: var(--action-neutral-default, #2b3a4b) !important;
 	color: var(--action-neutral-default, #2b3a4b) !important;
-	background-color: transparent !important;
 	transition: all 0.2s ease-in-out;
 
-	&:hover, &:focus, &:active {
+	&:hover,
+	&:focus,
+	&:active {
 		background-color: #f1f2f4 !important;
 		border-color: var(--action-neutral-hover, #1d2834) !important;
 		color: var(--action-neutral-hover, #1d2834) !important;
@@ -157,12 +159,14 @@ html.dev body {
 }
 
 .btn-outline-primary {
+	background-color: transparent !important;
 	border-color: var(--primary, #0b5fff) !important;
 	color: var(--primary, #0b5fff) !important;
-	background-color: transparent !important;
 	transition: all 0.2s ease-in-out;
 
-	&:hover, &:focus, &:active {
+	&:hover,
+	&:focus,
+	&:active {
 		background-color: #e6f0ff !important;
 		border-color: var(--primary-hover, #004bdf) !important;
 		color: var(--primary-hover, #004bdf) !important;
@@ -182,15 +186,15 @@ html.dev body {
 		th {
 			font-size: 18px !important;
 			font-weight: 600 !important;
+			margin: 0 0 4px !important;
 			padding: 0 !important;
-			margin: 0 0 4px 0 !important;
 		}
 
 		td {
 			font-size: 16px !important;
 			font-weight: 400 !important;
-			padding: 0 !important;
 			margin: 0 !important;
+			padding: 0 !important;
 		}
 	}
 }

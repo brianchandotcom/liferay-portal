@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { z } from 'zod';
+import {z} from 'zod';
 
-import { OrderCustomFields, OrderTypes } from '../../../enums/Order';
+import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
+import {SkuOptions} from '../../../enums/Product';
 import zodSchema from '../../../schema/zod';
-import { getSiteURL } from '../../../utils/site';
+import {getSkuByOptionValueKey} from '../../../utils/productUtils';
+import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
-import { getSkuByOptionValueKey } from '../../../utils/productUtils';
-import { SkuOptions } from '../../../enums/Product';
 
 type AIHubOpenBetaForm = z.infer<typeof zodSchema.aiHubOpenBetaForm>;
 
@@ -23,7 +23,6 @@ export class ProductPurchaseAIHubOpenBeta extends ProductPurchase {
 	}
 
 	protected getCart() {
-
 		const sku = getSkuByOptionValueKey(this.product, SkuOptions.OPEN_BETA);
 
 		const baseCart = super.getCart();

@@ -41,13 +41,15 @@ const AIHubDetails = () => {
 	const hasCompletedTokenOrders = useMemo(() => {
 		const tokens = tokenOrdersData?.items;
 
-		if (!tokens || tokens.length === 0) {
+		if (!tokens || !tokens.length) {
 			return false;
 		}
 
 		return tokens.some((order: any) => {
 			const isCompleted = order.orderStatusInfo?.code === 0;
-			const isPaid = order.paymentStatus === 0 || order.paymentStatusInfo?.code === 0;
+			const isPaid =
+				order.paymentStatus === 0 ||
+				order.paymentStatusInfo?.code === 0;
 
 			return isCompleted && isPaid;
 		});
@@ -79,22 +81,24 @@ const AIHubDetails = () => {
 				</ActivationKeyAlert>
 			)}
 
-
-			{orderStatusCode === OrderWorkflowStatusCode.COMPLETED && searchParams.has('next-steps') && (
-				<ActivationKeyAlert
-					className="license-alert"
-					symbol="check-circle"
-					title="Your AI Hub is Ready"
-				>
-					Provisioning is complete and your subscription is now active. Access your hub via the URL below to start using your monthly token allowance.
-				</ActivationKeyAlert>
-			)}
+			{orderStatusCode === OrderWorkflowStatusCode.COMPLETED &&
+				searchParams.has('next-steps') && (
+					<ActivationKeyAlert
+						className="license-alert"
+						symbol="check-circle"
+						title="Your AI Hub is Ready"
+					>
+						Provisioning is complete and your subscription is now
+						active. Access your hub via the URL below to start using
+						your monthly token allowance.
+					</ActivationKeyAlert>
+				)}
 
 			<DetailedCard
 				cardIconAltText="Profile Icon"
 				cardTitle={i18n.translate('ai-hub-details')}
+				className="tokens-card"
 				clayIcon="order-form-tag"
-				className='tokens-card'
 			>
 				<QATable
 					columns={2}
@@ -134,7 +138,7 @@ const AIHubDetails = () => {
 							) : (
 								'-'
 							),
-						},	
+						},
 					]}
 					orientation={Orientation.VERTICAL}
 				/>
@@ -144,8 +148,8 @@ const AIHubDetails = () => {
 				<DetailedCard
 					cardIconAltText="Profile Icon"
 					cardTitle={i18n.translate('token-past-purchases')}
-					clayIcon="coin"
 					className="mt-4 pb-0 tokens-card"
+					clayIcon="coin"
 				>
 					<ListView<PlacedOrder>
 						emptyStateProps={{
@@ -175,13 +179,18 @@ const AIHubDetails = () => {
 									id: 'createDate',
 									name: i18n.translate('date'),
 									render: (createDate) => {
-										const date = new Date(createDate as string);
+										const date = new Date(
+											createDate as string
+										);
 
-										return date.toLocaleDateString('en-US', {
-											day: 'numeric',
-											month: 'short',
-											year: 'numeric',
-										});
+										return date.toLocaleDateString(
+											'en-US',
+											{
+												day: 'numeric',
+												month: 'short',
+												year: 'numeric',
+											}
+										);
 									},
 								},
 								{
@@ -189,21 +198,36 @@ const AIHubDetails = () => {
 									name: i18n.translate('tokens'),
 									render: (placedOrderItems) => {
 										const item = placedOrderItems?.[0];
-										if (!item) return '-';
-										const options = safeJSONParse<any[]>(item.options, []);
-										const optionValue = options[0]?.skuOptionValueNames?.[0] || options[0]?.skuOptionValueName || '';
-										return optionValue.replace(/[^\d]/g, '').trim() || '-';
+										if (!item) {return '-';}
+										const options = safeJSONParse<any[]>(
+											item.options,
+											[]
+										);
+										const optionValue =
+											options[0]
+												?.skuOptionValueNames?.[0] ||
+											options[0]?.skuOptionValueName ||
+											'';
+
+										return (
+											optionValue
+												.replace(/[^\d]/g, '')
+												.trim() || '-'
+										);
 									},
 								},
 								{
 									id: 'summary',
 									name: i18n.translate('amount'),
-									render: (summary) => summary?.totalFormatted || '',
+									render: (summary) =>
+										summary?.totalFormatted || '',
 								},
 								{
 									id: 'orderStatusInfo',
 									name: i18n.translate('status'),
-									render: (_, item) => <OrderStatus placedOrder={item} />,
+									render: (_, item) => (
+										<OrderStatus placedOrder={item} />
+									),
 								},
 							],
 						}}

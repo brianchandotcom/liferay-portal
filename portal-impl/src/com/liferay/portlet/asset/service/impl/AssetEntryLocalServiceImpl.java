@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -1315,13 +1316,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		AssetRenderer<?> assetRenderer = entry.getAssetRenderer();
 
-		if (assetRenderer == null) {
-			indexer.reindex(entry.getClassName(), entry.getClassPK());
+		if (assetRenderer != null) {
+			Object assetObject = assetRenderer.getAssetObject();
 
-			return;
+			if (assetObject instanceof BaseModel) {
+				indexer.reindex(assetObject);
+
+				return;
+			}
 		}
 
-		indexer.reindex(assetRenderer.getAssetObject());
+		indexer.reindex(entry.getClassName(), entry.getClassPK());
 	}
 
 	private AssetEntry _deleteEntry(

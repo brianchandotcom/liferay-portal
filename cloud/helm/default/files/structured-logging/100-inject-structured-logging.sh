@@ -37,16 +37,16 @@ function main {
 
 	if _fetch_jar "${work_dir}" "org/apache/logging/log4j" "log4j-layout-template-json" "${LOG4J_LAYOUT_TEMPLATE_JSON_VERSION}" "${LOG4J_LAYOUT_TEMPLATE_JSON_SHA256}"
 	then
-		_log INFO "Placing log4j2 config under ${WEBAPP_META_INF}/."
+		_log INFO "Placing log4j2 config under ${WEBAPP_META_INF}."
 
-		cp "${CONFIGS_DIR}/META-INF/cloud-native-layout.json" "${WEBAPP_META_INF}/"
-		cp "${CONFIGS_DIR}/META-INF/portal-log4j-ext.xml" "${WEBAPP_META_INF}/"
+		cp "${CONFIGS_DIR}/META-INF/cloud-native-layout.json" "${WEBAPP_META_INF}"
+		cp "${CONFIGS_DIR}/META-INF/portal-log4j-ext.xml" "${WEBAPP_META_INF}"
 
-		_log INFO "Copying log4j-layout-template-json JAR into ${SHIELDED_LIB}/."
+		_log INFO "Copying log4j-layout-template-json JAR into ${SHIELDED_LIB}."
 
-		cp "${work_dir}/log4j-layout-template-json-${LOG4J_LAYOUT_TEMPLATE_JSON_VERSION}.jar" "${SHIELDED_LIB}/"
+		cp "${work_dir}/log4j-layout-template-json-${LOG4J_LAYOUT_TEMPLATE_JSON_VERSION}.jar" "${SHIELDED_LIB}"
 
-		_log INFO "Structured-logging configuration injected."
+		_log INFO "Structured logging configuration injected."
 	else
 		_log WARNING "Skipping log4j2 patch because Maven Central fetch failed."
 	fi
@@ -55,9 +55,9 @@ function main {
 function _fetch_jar {
 	local artifact_id="${3}"
 	local group_path="${2}"
-	local work_dir="${1}"
 	local sha256="${5}"
 	local version="${4}"
+	local work_dir="${1}"
 
 	local jar_name="${artifact_id}-${version}.jar"
 	local jar_path="${work_dir}/${jar_name}"
@@ -98,7 +98,7 @@ function _log {
 	message="${message//$'\r'/\\r}"
 	message="${message//$'\t'/\\t}"
 
-	printf '{"message":"%s","script":"%s","severity":"%s","timestamp":"%s"}\n' \
+	printf '{"message": "%s", "script": "%s", "severity": "%s", "timestamp": "%s"}\n' \
 		"${message}" \
 		"${SCRIPT_NAME}" \
 		"${level}" \

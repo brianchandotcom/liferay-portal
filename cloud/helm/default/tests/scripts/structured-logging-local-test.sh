@@ -20,7 +20,8 @@ function main {
 
 	echo "Starting Liferay (${container})."
 
-	docker run --detach \
+	docker run \
+		--detach \
 		--env LIFERAY_TOMCAT_AJP_PORT= \
 		--env LIFERAY_TOMCAT_JVM_ROUTE= \
 		--name "${container}" \
@@ -80,7 +81,7 @@ function main {
 
 	echo "JVM-emitted non-empty log lines:              ${non_empty}"
 	echo "Lines with valid JSON + severity + timestamp: ${json_valid}"
-	echo "Structured-logging ratio:                     ${percent}%"
+	echo "Structured logging ratio:                     ${percent}%"
 
 	if [ "${percent}" -lt "${THRESHOLD_PERCENT}" ]
 	then

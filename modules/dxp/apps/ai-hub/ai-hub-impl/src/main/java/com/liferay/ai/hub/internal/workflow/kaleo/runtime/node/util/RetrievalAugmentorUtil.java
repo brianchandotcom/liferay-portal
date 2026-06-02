@@ -5,7 +5,8 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
-import com.liferay.ai.hub.internal.web.search.LiferayWebSearchEngine;
+import com.liferay.ai.hub.internal.rag.content.retriever.ElasticsearchContentRetriever;
+import com.liferay.ai.hub.internal.rag.content.retriever.LiferayWebSearchContentRetriever;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -20,31 +21,19 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
-import com.liferay.portal.search.highlight.HighlightField;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 
-import dev.langchain4j.data.document.Metadata;
-import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
-import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.rag.content.injector.DefaultContentInjector;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.rag.content.retriever.WebSearchContentRetriever;
-import dev.langchain4j.rag.query.Query;
 import dev.langchain4j.rag.query.router.DefaultQueryRouter;
 
 import java.io.Serializable;
@@ -67,7 +56,7 @@ public class RetrievalAugmentorUtil {
 		Map<String, String> kaleoNodeSettingValues, Locale locale,
 		ObjectEntryManager objectEntryManager,
 		SearchEngineAdapter searchEngineAdapter, long userId,
-		Map<String, Serializable> workflowContext) {
+		Map<String, Serializable> workflowContext, long workflowInstanceId) {
 
 		List<ContentRetriever> contentRetrievers = new ArrayList<>();
 
@@ -75,14 +64,16 @@ public class RetrievalAugmentorUtil {
 			_createElasticsearchContentRetriever(
 				companyId, dtoConverterRegistry, fieldConfigBuilderFactory,
 				highlightBuilderFactory, locale, objectEntryManager,
-				searchEngineAdapter, userId, workflowContext);
+				searchEngineAdapter, userId, workflowContext,
+				workflowInstanceId);
 
 		if (contentRetriever != null) {
 			contentRetrievers.add(contentRetriever);
 		}
 
 		contentRetriever = _createLiferayWebSearchContentRetriever(
-			companyId, kaleoNodeSettingValues, workflowContext);
+			companyId, kaleoNodeSettingValues, userId, workflowContext,
+			workflowInstanceId);
 
 		if (contentRetriever != null) {
 			contentRetrievers.add(contentRetriever);
@@ -109,7 +100,7 @@ public class RetrievalAugmentorUtil {
 		HighlightBuilderFactory highlightBuilderFactory, Locale locale,
 		ObjectEntryManager objectEntryManager,
 		SearchEngineAdapter searchEngineAdapter, long userId,
-		Map<String, Serializable> workflowContext) {
+		Map<String, Serializable> workflowContext, long workflowInstanceId) {
 
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
@@ -144,14 +135,14 @@ public class RetrievalAugmentorUtil {
 				return null;
 			}
 
-			return query -> _search(
+			return new ElasticsearchContentRetriever(
 				fieldConfigBuilderFactory, highlightBuilderFactory,
 				TransformUtil.transform(
 					contentRetrieversObjectEntries,
 					contentRetriever -> GetterUtil.getString(
 						contentRetriever.getPropertyValue("indexName")),
 					String.class),
-				query, searchEngineAdapter);
+				searchEngineAdapter, userId, workflowInstanceId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -165,8 +156,8 @@ public class RetrievalAugmentorUtil {
 	}
 
 	private static ContentRetriever _createLiferayWebSearchContentRetriever(
-		long companyId, Map<String, String> kaleoNodeSettingValues,
-		Map<String, Serializable> workflowContext) {
+		long companyId, Map<String, String> kaleoNodeSettingValues, long userId,
+		Map<String, Serializable> workflowContext, long workflowInstanceId) {
 
 		if (kaleoNodeSettingValues.get("rag") == null) {
 			return null;
@@ -184,17 +175,16 @@ public class RetrievalAugmentorUtil {
 
 				Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
-				return WebSearchContentRetriever.builder(
-				).webSearchEngine(
-					new LiferayWebSearchEngine(
-						contentRetrieverJSONObject.getString(
-							"blueprintExternalReferenceCode"),
-						GetterUtil.getLong(
-							workflowContext.get("oAuth2ApplicationId")),
-						EncryptorUtil.decrypt(
-							company.getKeyObj(),
-							(String)workflowContext.get("userToken")))
-				).build();
+				return new LiferayWebSearchContentRetriever(
+					contentRetrieverJSONObject.getString(
+						"blueprintExternalReferenceCode"),
+					GetterUtil.getLong(
+						workflowContext.get("oAuth2ApplicationId")),
+					userId,
+					EncryptorUtil.decrypt(
+						company.getKeyObj(),
+						(String)workflowContext.get("userToken")),
+					workflowInstanceId);
 			}
 		}
 		catch (Exception exception) {
@@ -204,62 +194,6 @@ public class RetrievalAugmentorUtil {
 		}
 
 		return null;
-	}
-
-	private static List<Content> _search(
-		FieldConfigBuilderFactory fieldConfigBuilderFactory,
-		HighlightBuilderFactory highlightBuilderFactory, String[] indexNames,
-		Query query, SearchEngineAdapter searchEngineAdapter) {
-
-		List<Content> contents = new ArrayList<>();
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setFetchSource(false);
-		searchSearchRequest.setHighlight(
-			highlightBuilderFactory.builder(
-			).addFieldConfig(
-				fieldConfigBuilderFactory.builder(
-					"text_embedding"
-				).build()
-			).build());
-		searchSearchRequest.setIndexNames(indexNames);
-		searchSearchRequest.setQuery(
-			QueriesUtil.wrapper(
-				JSONFactoryUtil.createJSONObject(
-				).put(
-					"semantic",
-					JSONFactoryUtil.createJSONObject(
-					).put(
-						"field", "text_embedding"
-					).put(
-						"query", query.text()
-					)
-				).toString()));
-		searchSearchRequest.setStoredFields("text_embedding");
-
-		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			Map<String, HighlightField> highlightFields =
-				searchHit.getHighlightFieldsMap();
-
-			HighlightField highlightField = highlightFields.get(
-				"text_embedding");
-
-			Metadata metadata = Metadata.from(
-				"url", MapUtil.getString(searchHit.getSourcesMap(), "url"));
-
-			for (String fragment : highlightField.getFragments()) {
-				contents.add(
-					Content.from(TextSegment.from(fragment, metadata)));
-			}
-		}
-
-		return contents;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1987,6 +1987,11 @@
 		},
 		{
 			"properties": {
+				"enableLog": {
+					"description": "If checked, the Audiences framework will print diagnostic messages to the browser console.",
+					"title": "Enable Log",
+					"type": "boolean"
+				},
 				"handlersURL": {
 					"description": "Provide the URL of the JavaScript personalization handlers file.",
 					"title": "Handlers URL",

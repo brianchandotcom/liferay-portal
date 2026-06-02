@@ -85,8 +85,7 @@ public class TrashEntryLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					StringUtil.toLowerCase(RandomTestUtil.randomString()),
-					StringUtil.toLowerCase(RandomTestUtil.randomString()))),
+					RandomTestUtil.randomString(), StringUtil.randomId())),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
@@ -97,7 +96,7 @@ public class TrashEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-89104")
+	@TestInfo({"LPD-89104", "LPD-93315"})
 	public void testCheckEntriesWithExpiredObjectEntry() throws Exception {
 		ObjectEntry expiredObjectEntry = CMSObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), _objectDefinition,
@@ -127,7 +126,7 @@ public class TrashEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-89104")
+	@TestInfo({"LPD-89104", "LPD-93315"})
 	public void testDeleteEntriesForGroup() throws Exception {
 		ObjectEntry objectEntry1 = CMSObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), _objectDefinition,

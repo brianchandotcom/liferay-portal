@@ -86,6 +86,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"defaultValue": "europe-west1",
 			"externalReferenceCode": "LOCATION",
 			"indexed": true,
 			"indexedLanguageId": "en_US",

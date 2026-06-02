@@ -138,7 +138,6 @@ describe('ModelArmorTemplateForm', () => {
 				active: true,
 				externalReferenceCode: 'TEMPLATE_X',
 				guardrailType: 'input',
-				location: '',
 				maliciousUriFilterEnabled: false,
 				multilanguageDetectionEnabled: false,
 				piAndJailbreakConfidenceLevel: 'mediumAndAbove',
@@ -222,8 +221,14 @@ describe('ModelArmorTemplateForm', () => {
 	});
 
 	describe('save', () => {
-		it('blocks the submit and surfaces required-field errors when title and ERC are empty', async () => {
+		it('blocks the submit and surfaces a required-field error when a required field is empty', async () => {
 			render(<ModelArmorTemplateForm {...defaultProps} />);
+
+			fireEvent.change(
+				screen.getByLabelText(/^external-reference-code/i),
+				{target: {value: ''}}
+			);
+			fireEvent.blur(screen.getByLabelText(/^external-reference-code/i));
 
 			fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
@@ -250,9 +255,6 @@ describe('ModelArmorTemplateForm', () => {
 				screen.getByLabelText(/^external-reference-code/i),
 				{target: {value: 'TEMPLATE-X'}}
 			);
-			fireEvent.change(screen.getByLabelText(/^location/i), {
-				target: {value: 'us-central1'},
-			});
 
 			fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
@@ -260,7 +262,6 @@ describe('ModelArmorTemplateForm', () => {
 				expect(mockPutModelArmorTemplate).toHaveBeenCalledWith(
 					expect.objectContaining({
 						externalReferenceCode: 'TEMPLATE-X',
-						location: 'us-central1',
 						title_i18n: {en_US: 'My Template'},
 					})
 				);

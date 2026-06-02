@@ -49,7 +49,6 @@ const baseValues: ModelArmorTemplate = {
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: 'input',
-	location: '',
 	maliciousUriFilterEnabled: false,
 	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',

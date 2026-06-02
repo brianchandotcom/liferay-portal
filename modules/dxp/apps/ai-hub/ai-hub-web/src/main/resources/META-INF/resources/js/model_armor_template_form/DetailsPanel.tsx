@@ -115,35 +115,6 @@ const DetailsPanel: React.FC<IProps> = ({
 					/>
 				</ClayForm.Group>
 
-				<FieldBase
-					errorMessage={
-						touched.location ? errors.location : undefined
-					}
-					helpMessage={Liferay.Language.get(
-						'guardrail-location-help'
-					)}
-					id="location"
-					label={Liferay.Language.get('location')}
-					required
-				>
-					<ClayInput
-						className={
-							touched.location && errors.location
-								? 'is-invalid'
-								: ''
-						}
-						id="location"
-						name="location"
-						onBlur={handleBlur}
-						onChange={(event) =>
-							setField('location', event.target.value)
-						}
-						required
-						type="text"
-						value={values.location || ''}
-					/>
-				</FieldBase>
-
 				<ClayForm.Group>
 					<label htmlFor="guardrailType">
 						{Liferay.Language.get('guardrail-type')}

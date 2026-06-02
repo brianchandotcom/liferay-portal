@@ -80,10 +80,6 @@ export function useModelArmorTemplateForm({
 					Liferay.Language.get('required');
 			}
 
-			if (!formValues.location) {
-				validationErrors.location = Liferay.Language.get('required');
-			}
-
 			return validationErrors;
 		},
 	});
@@ -115,7 +111,6 @@ export function useModelArmorTemplateForm({
 					externalReferenceCode:
 						modelArmorTemplate.externalReferenceCode,
 					guardrailType: modelArmorTemplate.guardrailType,
-					location: modelArmorTemplate.location,
 					maliciousUriFilterEnabled:
 						modelArmorTemplate.maliciousUriFilterEnabled,
 					multilanguageDetectionEnabled:

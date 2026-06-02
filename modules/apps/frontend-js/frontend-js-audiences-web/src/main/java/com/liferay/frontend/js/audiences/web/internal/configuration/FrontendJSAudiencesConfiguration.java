@@ -23,6 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FrontendJSAudiencesConfiguration {
 
+	@Meta.AD(
+		description = "enable-log-help", name = "enable-log", required = false
+	)
+	public boolean enableLog();
+
 	@Meta.AD(description = "handlers-url-help", name = "handlers-url")
 	public String handlersURL();
 

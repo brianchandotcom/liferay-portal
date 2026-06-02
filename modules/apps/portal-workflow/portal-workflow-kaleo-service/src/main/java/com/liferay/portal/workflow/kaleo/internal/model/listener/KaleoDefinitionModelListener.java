@@ -84,6 +84,7 @@ public class KaleoDefinitionModelListener
 					serviceContext.setUserId(kaleoDefinition.getUserId());
 
 					message.put("serviceContext", serviceContext);
+
 					message.put("version", kaleoDefinition.getVersion());
 
 					_messageBus.sendMessage(

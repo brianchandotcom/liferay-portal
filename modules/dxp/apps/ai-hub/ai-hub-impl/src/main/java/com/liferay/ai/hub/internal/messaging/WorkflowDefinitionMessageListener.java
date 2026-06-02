@@ -7,8 +7,8 @@ package com.liferay.ai.hub.internal.messaging;
 
 import com.liferay.ai.hub.internal.audit.AuditRouterUtil;
 import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -70,13 +70,11 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		AuditRouterUtil.route(
 			KaleoDefinition.class.getName(),
 			kaleoDefinition.getKaleoDefinitionId(),
 			_eventTypes.get(message.getString("eventType")),
-			jsonObject.put(
+			JSONUtil.put(
 				"content", kaleoDefinition.getContentAsXML()
 			).put(
 				"name", kaleoDefinition.getName()
@@ -106,8 +104,5 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 		"ADD", AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_ADD, "DELETE",
 		AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_DELETE, "UPDATE",
 		AIHubEventTypes.AI_HUB_WORKFLOW_DEFINITION_UPDATE);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

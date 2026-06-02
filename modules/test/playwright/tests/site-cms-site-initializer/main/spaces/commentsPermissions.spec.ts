@@ -34,11 +34,12 @@ test(
 		const commentBody = getRandomString();
 		const contentTitle = 'Untitled Asset';
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
 
 		await contentsPage.goto();
 
@@ -65,7 +66,6 @@ test(
 		await expect(comment.getByTitle('actions')).toBeVisible();
 
 		const spaceAdmin = await apiHelpers.headlessAdminUser.postUserAccount();
-		const spaceAdminFullName = `${spaceAdmin.givenName} ${spaceAdmin.familyName}`;
 
 		userData[spaceAdmin.alternateName] = {
 			name: spaceAdmin.givenName,
@@ -75,7 +75,6 @@ test(
 
 		const spaceMember =
 			await apiHelpers.headlessAdminUser.postUserAccount();
-		const spaceMemberFullName = `${spaceMember.givenName} ${spaceMember.familyName}`;
 
 		userData[spaceMember.alternateName] = {
 			name: spaceMember.givenName,
@@ -83,13 +82,19 @@ test(
 			surname: spaceMember.familyName,
 		};
 
-		await spaceSummaryPage.goto(spaceName);
-		await spaceSummaryPage.addUserOrUserGroup(spaceAdminFullName, 'users');
-		await spaceSummaryPage.addRoleToSpaceMember(
-			'Space Administrator',
-			spaceAdminFullName
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			assetLibrary.externalReferenceCode,
+			spaceAdmin.externalReferenceCode
 		);
-		await spaceSummaryPage.addUserOrUserGroup(spaceMemberFullName, 'users');
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			assetLibrary.externalReferenceCode,
+			spaceAdmin.externalReferenceCode,
+			['Asset Library Administrator']
+		);
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			assetLibrary.externalReferenceCode,
+			spaceMember.externalReferenceCode
+		);
 
 		const contentRow = page
 			.locator('.fds table tbody tr')

@@ -22,6 +22,8 @@ export function styleBulkActions(bulkActions: any[]) {
 			? {
 					...action,
 					className: 'text-danger',
+					displayType: 'danger',
+					symbol: 'trash',
 				}
 			: action
 	);

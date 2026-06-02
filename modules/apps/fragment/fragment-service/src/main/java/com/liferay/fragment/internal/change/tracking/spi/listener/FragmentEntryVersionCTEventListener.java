@@ -137,12 +137,12 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			FragmentEntryVersionTable.INSTANCE.fragmentEntryId
 		);
 
-		for (Object[] values :
+		for (Object[] array :
 				(List<Object[]>)_fragmentEntryVersionPersistence.dslQuery(
 					dslQuery)) {
 
-			long fragmentEntryId = GetterUtil.getLong(values[0]);
-			int fragmentEntryVersionCount = GetterUtil.getInteger(values[1]);
+			long fragmentEntryId = GetterUtil.getLong(array[0]);
+			int fragmentEntryVersionCount = GetterUtil.getInteger(array[1]);
 
 			fragmentEntryVersionCountByFragmentEntryIdMap.put(
 				fragmentEntryId, fragmentEntryVersionCount);

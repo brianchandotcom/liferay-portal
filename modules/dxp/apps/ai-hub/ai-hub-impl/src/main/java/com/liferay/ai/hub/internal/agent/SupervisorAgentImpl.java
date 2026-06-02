@@ -9,7 +9,6 @@ import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
-import com.liferay.ai.hub.langchain4j.model.chat.listener.ChatModelListenerFactory;
 import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -75,8 +74,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
 							VertexAiGeminiUtil.createVertexAiGeminiChatModel(
-								_chatModelListenerFactory,
-								agentContext.getServiceContext())) {
+								agentContext.getCompanyId())) {
 
 						PermissionThreadLocal.setPermissionChecker(
 							permissionChecker);
@@ -264,9 +262,6 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ChatModelListenerFactory _chatModelListenerFactory;
 
 	@Reference
 	private Language _language;

@@ -2722,8 +2722,10 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean refContainsSHA(LocalGitBranch localGitBranch, String sha) {
+		String name = localGitBranch.getName();
+
 		for (int deepenAttempt = 0;; deepenAttempt++) {
-			if (refContainsSHA(localGitBranch.getName(), sha)) {
+			if (refContainsSHA(name, sha)) {
 				return true;
 			}
 

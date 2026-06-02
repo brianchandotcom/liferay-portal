@@ -150,7 +150,7 @@ public class StyleBookEntryProviderUtilTest {
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
 			false, null, RandomTestUtil.randomString(), null,
-			"classic_WAR_classictheme", null);
+			RandomTestUtil.randomString(), null);
 	}
 
 	private StyleBookEntry _getDepotEntryStyleBookEntry() throws Exception {

@@ -1129,8 +1129,8 @@ public class ERCVersionedEntryPersistenceImpl
 			_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 			ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ERCVersionedEntry::getUuid));
+				"ercVersionedEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ERCVersionedEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
@@ -1162,8 +1162,9 @@ public class ERCVersionedEntryPersistenceImpl
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ERCVersionedEntry::getUuid),
+					"ercVersionedEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ERCVersionedEntry::getUuid),
 				new FinderColumn<>(
 					"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ERCVersionedEntry::isHead));
@@ -1192,8 +1193,9 @@ public class ERCVersionedEntryPersistenceImpl
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ERCVersionedEntry::getUuid),
+					"ercVersionedEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ERCVersionedEntry::getUuid),
 				new FinderColumn<>(
 					"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getGroupId));
@@ -1211,8 +1213,8 @@ public class ERCVersionedEntryPersistenceImpl
 				ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead),
 			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE, "",
 			new FinderColumn<>(
-				"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, ERCVersionedEntry::getUuid),
+				"ercVersionedEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ERCVersionedEntry::getUuid),
 			new FinderColumn<>(
 				"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ERCVersionedEntry::getGroupId),
@@ -1244,8 +1246,9 @@ public class ERCVersionedEntryPersistenceImpl
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ERCVersionedEntry::getUuid),
+					"ercVersionedEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ERCVersionedEntry::getUuid),
 				new FinderColumn<>(
 					"ercVersionedEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getCompanyId));
@@ -1285,8 +1288,9 @@ public class ERCVersionedEntryPersistenceImpl
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ERCVersionedEntry::getUuid),
+					"ercVersionedEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ERCVersionedEntry::getUuid),
 				new FinderColumn<>(
 					"ercVersionedEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getCompanyId),
@@ -1430,4 +1434,4 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-168676328
+// LIFERAY-SERVICE-BUILDER-HASH:1106678770

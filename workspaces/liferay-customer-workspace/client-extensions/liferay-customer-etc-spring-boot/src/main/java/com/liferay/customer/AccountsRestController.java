@@ -159,9 +159,7 @@ public class AccountsRestController extends BaseRestController {
 
 		UserAccount userAccount = userAccountResource.getMyUserAccount();
 
-		if ((userAccount != null) &&
-			(userAccount.getRoleBriefs() != null)) {
-
+		if ((userAccount != null) && (userAccount.getRoleBriefs() != null)) {
 			for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
 				String name = roleBrief.getName();
 

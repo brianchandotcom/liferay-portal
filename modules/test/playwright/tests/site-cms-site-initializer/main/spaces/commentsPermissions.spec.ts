@@ -28,7 +28,7 @@ const test = mergeTests(
 
 test(
 	'Comment actions are restricted to users with permission over the content',
-	{tag: '@LPD-90003'},
+	{tag: ['@LPD-90003', '@LPD-93064']},
 	async ({apiHelpers, contentsPage, page, spaceSummaryPage}) => {
 		const spaceName = getRandomString();
 		const commentBody = getRandomString();

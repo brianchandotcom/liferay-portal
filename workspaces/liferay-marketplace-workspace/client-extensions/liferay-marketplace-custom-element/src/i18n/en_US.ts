@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Liferay} from '../liferay/liferay';
+import { Liferay } from '../liferay/liferay';
 
 export default {
 	'a-license-key-for-the-entered-domain-already-exists':
@@ -44,9 +44,10 @@ export default {
 	'agreements': 'Agreements',
 	'ai-administration-email': 'AI Administration Email',
 	'ai-hub': 'AI Hub',
-	'ai-hub-account-details': 'AI Hub Account Details',
+	'ai-hub-details': 'AI Hub	 Details',
 	'ai-hub-account-name': 'AI Hub Account Name',
 	'ai-hub-information': 'AI Hub Information',
+	'ai-hub-url': 'AI Hub URL',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
@@ -125,6 +126,7 @@ export default {
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
 	'business-email-address': 'Business Email Address',
+	'buy-extra-token': 'Buy Extra Token',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -216,6 +218,7 @@ export default {
 		'Customize Storefront Solution Details',
 	'dashboard': 'Dashboard',
 	'data-center-location': 'Data Center Location',
+	'date': 'Date',
 	'date-created': 'Date Created',
 	'deactivate': 'Deactivate',
 	'deactivated': 'Deactivated',
@@ -250,6 +253,7 @@ export default {
 	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
+	'download-invoice': 'Download Invoice',
 	'download-key': 'Download Key',
 	'download-your-activation-key-file-below-and-upload-it-to-the-dedicated-portal-within-your-dxp-environment-to-get-started':
 		'Download your activation key file below and upload it to the dedicated portal within your DXP environment to get started.',
@@ -550,7 +554,7 @@ export default {
 	'order-info': 'Order Info',
 	'order-marked-as-paid': 'Order marked as paid.',
 	'order-received': 'Order Received',
-	'order-received-awaiting-signature': 'Order Received: Awaiting Signature',
+	'order-received-awaiting-signature': 'Order Received (Awaiting Signature)',
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',
@@ -575,6 +579,8 @@ export default {
 	'personal-information-purpose': 'Personal Information & Purpose',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
+	'pick-one-of-the-following-three-options-to-immediately-obtain-extra-tokens-to-foster-your-ai-hub-capabilities':
+		'Pick one of the following three options to immediately obtain extra tokens to foster your AI Hub capabilities.',
 	'please-be-aware-that-since-you-are-adding-a-new-version-of-the-app-the-only-section-visible-is-the-build':
 		'Please be aware that since you are adding a new version of the app, the only section visible is the "Build".',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
@@ -701,6 +707,7 @@ export default {
 	'select-categories': 'Select Categories',
 	'select-category': 'Select Category',
 	'select-compatible-versions': 'Select Compatible Versions',
+	'select-desired-amount-of-tokens': 'Select Desired Amount of Tokens',
 	'select-licensing-terms': 'Select Licensing Terms',
 	'select-purpose': 'Select Purpose',
 	'select-tags': 'Select Tags',
@@ -839,8 +846,11 @@ export default {
 		'To generate your unique activation key file, please provide the technical specifications required below. These details are used exclusively to configure the software for your environment and ensure hardware compatibility.',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
+	'token-monthly-allowance': 'Token Monthly Allowance',
+	'token-past-purchases': 'Token Past Purchases',
 	'token-unavailable': 'Token Unavailable',
 	'tokens': 'Tokens',
+	'tokens-amount': 'Tokens Amount',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
 	'transaction-id': 'Transaction ID',

@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {z} from 'zod';
+import { z } from 'zod';
 
-import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
+import { OrderCustomFields, OrderTypes } from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
-import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
-import {getSiteURL} from '../../../utils/site';
+import { getSiteURL } from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
+import { getSkuByOptionValueKey } from '../../../utils/productUtils';
+import { SkuOptions } from '../../../enums/Product';
 
 type AIHubOpenBetaForm = z.infer<typeof zodSchema.aiHubOpenBetaForm>;
 
@@ -22,8 +23,11 @@ export class ProductPurchaseAIHubOpenBeta extends ProductPurchase {
 	}
 
 	protected getCart() {
+
+		const sku = getSkuByOptionValueKey(this.product, SkuOptions.OPEN_BETA);
+
 		const baseCart = super.getCart();
-		const cartItems = super.getCartItems();
+		const cartItems = super.getCartItems(sku?.id);
 
 		return {
 			...baseCart,
@@ -45,11 +49,6 @@ export class ProductPurchaseAIHubOpenBeta extends ProductPurchase {
 		const cart = this.getCart();
 
 		const order = await super.createOrder(cart);
-
-		await HeadlessAIHubBetaRequestAccess.createAIHubBetaRequestAccess({
-			...this.form,
-			r_orderToAIHubBetaPrivateAccessRequest_commerceOrderId: order?.id,
-		}).catch(console.error);
 
 		return order;
 	}

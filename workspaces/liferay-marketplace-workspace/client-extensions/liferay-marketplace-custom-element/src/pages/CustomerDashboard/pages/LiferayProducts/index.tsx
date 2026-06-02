@@ -105,6 +105,19 @@ const LiferayProductsListView = () => {
 										`${getSiteURL()}/product-feedback?orderId=${row.id}`
 									),
 							},
+							{
+								hidden: (row: PlacedOrder) =>
+									![
+										OrderTypes.AI_HUB,
+									].includes(
+										row.orderTypeExternalReferenceCode as OrderTypes
+									) || row.orderStatusInfo?.code !== 0,
+								name: i18n.translate('buy-extra-token'),
+								onClick: (row: PlacedOrder) =>
+									Liferay.Util.navigate(
+										`${getSiteURL()}/product-purchase?productId=${row.placedOrderItems[0].productId}&aiHubTokens`
+									),
+							},
 						],
 						columns: [
 							{

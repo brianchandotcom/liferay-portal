@@ -24,6 +24,7 @@ import {productAgreements} from '../../../../../utils/agreements';
 import {phones} from '../../../../../utils/phones';
 import {getSkuByOptionValueKey} from '../../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
+import {useEffect} from 'react';
 
 import './AIHubForm.scss';
 
@@ -35,11 +36,13 @@ const setValuesOptions = {
 };
 
 const AIHubOpenBetaForm = () => {
+
 	const {
-		actions: {nextStep},
+		actions: {nextStep, previousStep},
 		form,
 		product,
 		productPurchaseCart,
+		selectedAccount,
 		setForm,
 	} = useProductPurchaseOutletContext();
 
@@ -85,6 +88,12 @@ const AIHubOpenBetaForm = () => {
 	const {data: regionsResponse} = useCommerceRegions();
 
 	const countries = regionsResponse?.items ?? [];
+
+	useEffect(() => {
+		if (!selectedAccount) {
+			previousStep();
+		}
+	}, [selectedAccount, previousStep]);
 
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.aiHubOpenBetaForm>

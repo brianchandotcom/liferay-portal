@@ -37,7 +37,7 @@ type DeliveryProduct = {
 	shortDescription: string;
 	skus: DeliverySKU[];
 	urlImage: string;
-	urls: {en_US: string};
+	urls: { en_US: string };
 };
 
 type DeliveryProductAttachment = {
@@ -68,7 +68,7 @@ type DeliverySKU = {
 	externalReferenceCode: string;
 	id: number;
 	neverExpire?: boolean;
-	price: {price: number; priceFormatted: string};
+	price: { price: number; priceFormatted: string };
 	purchasable: boolean;
 	sku: string;
 	skuOptions: DeliverySKUOption[];
@@ -78,14 +78,15 @@ type DeliverySKU = {
 type DeliverySKUOption = {
 	skuOptionKey: string;
 	skuOptionValueKey: string;
+	skuOptionValueNames: string;
 };
 
 type OptionCategory = {
-	description?: {[key: string]: string};
+	description?: { [key: string]: string };
 	id?: number;
 	key?: string;
 	priority?: number;
-	title?: {[key: string]: string};
+	title?: { [key: string]: string };
 };
 
 type PriceEntry = {
@@ -120,13 +121,13 @@ type Product = {
 	categories: ProductCategories[];
 	createDate: string;
 	customFields?: CustomField[];
-	description: {[key: string]: string};
+	description: { [key: string]: string };
 	externalReferenceCode: string;
 	finalPrice?: number;
 	id: number;
 	images: ProductImages[];
 	modifiedDate: string;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 	price?: number;
 	productId: number;
 	productOptions: ProductOption[];
@@ -143,7 +144,7 @@ type Product = {
 	skus: SKU[];
 	thumbnail: string;
 	urlImage: string;
-	urls: {en_US: string};
+	urls: { en_US: string };
 	version: number;
 	workflowStatusInfo: {
 		code: number;
@@ -161,7 +162,7 @@ type ProductAttachment = {
 	priority: number;
 	src: string;
 	tags?: string[];
-	title: {[key: string]: string};
+	title: { [key: string]: string };
 };
 
 type ProductCategories = {
@@ -175,19 +176,19 @@ type ProductImages = ProductAttachment;
 
 type ProductOption = {
 	customFields: any[];
-	description: {[key: string]: string};
+	description: { [key: string]: string };
 	facetable: boolean;
 	fieldType: string;
 	id: number;
 	key: string;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 	optionExternalReferenceCode: string;
 	optionId: number;
 	priceType: string;
 	productOptionValues: {
 		id: number;
 		key: string;
-		name: {en_US: string};
+		name: { en_US: string };
 	}[];
 	required: boolean;
 	skuContributor: boolean;
@@ -208,7 +209,7 @@ type ProductSpecification = {
 	productId?: number;
 	specificationId?: number;
 	specificationKey: string;
-	value: {[key: string]: string};
+	value: { [key: string]: string };
 };
 
 type SKU = {
@@ -219,15 +220,15 @@ type SKU = {
 	price: number;
 	productId: number;
 	sku: string;
-	skuOptions: {key: string; value: string}[];
+	skuOptions: { key: string; value: string }[];
 };
 
 type Specification = {
-	description?: {[key: string]: string};
+	description?: { [key: string]: string };
 	id?: number;
 	key?: string;
 	optionCategory?: OptionCategory;
-	title?: {[key: string]: string};
+	title?: { [key: string]: string };
 };
 
 type TierPrice = {

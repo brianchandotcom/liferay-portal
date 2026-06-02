@@ -14,7 +14,22 @@ import {
 	SkuOptions,
 } from '../enums/Product';
 import i18n from '../i18n';
-import {getValueFromDeliverySpecifications} from './util';
+import { getValueFromDeliverySpecifications } from './util';
+
+export function getAiHubTokenSKUs(
+	product: DeliveryProduct,
+) {
+	return product.skus.filter(
+		({ purchasable, skuOptions }) =>
+			purchasable &&
+			skuOptions.some(
+				(skuOption) =>
+					[ProductLicense.CLOUD, ProductLicense.DXP].includes(
+						skuOption.skuOptionKey as ProductLicense
+					) && skuOption.skuOptionValueKey.includes("liferay-tokens")
+			)
+	);
+}
 
 export function getProductFallback(): DeliveryProduct {
 	return {
@@ -34,7 +49,7 @@ export function getProductFallback(): DeliveryProduct {
 		shortDescription: i18n.translate('this-product-is-no-longer-available'),
 		skus: [],
 		urlImage: '',
-		urls: {en_US: ''},
+		urls: { en_US: '' },
 	};
 }
 
@@ -52,7 +67,7 @@ export function getProductSpecification(
 	product: DeliveryProduct
 ) {
 	return product?.productSpecifications?.find(
-		({specificationKey}) => specificationKey === key
+		({ specificationKey }) => specificationKey === key
 	);
 }
 
@@ -67,7 +82,7 @@ export function getProductSpecificationValue<T = string>(
 export function isCloudProduct(product?: DeliveryProduct) {
 	return (
 		product?.productSpecifications?.some(
-			({specificationKey, value}) =>
+			({ specificationKey, value }) =>
 				specificationKey === ProductSpecificationKey.APP_TYPE &&
 				value === ProductType.CLOUD
 		) || false
@@ -119,7 +134,7 @@ export function getProductCategoriesByVocabularyName(
 					category.vocabulary.replaceAll(' ', '-').toLowerCase()
 				)
 		)
-		.map(({name}) => name);
+		.map(({ name }) => name);
 }
 
 export function getSkuByOptionValueKey(
@@ -127,7 +142,7 @@ export function getSkuByOptionValueKey(
 	skuOptionValueKey: SkuOptions
 ) {
 	return product.skus.find(
-		({purchasable, skuOptions}) =>
+		({ purchasable, skuOptions }) =>
 			purchasable &&
 			skuOptions.find(
 				(skuOption) =>
@@ -139,7 +154,7 @@ export function getSkuByOptionValueKey(
 }
 
 export function getProductPrice(product: DeliveryProduct) {
-	const {isFreeApp} = getProductPriceModel(product);
+	const { isFreeApp } = getProductPriceModel(product);
 
 	if (isFreeApp) {
 		return 'Free';

@@ -74,6 +74,11 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			"<script data-senna-track=\"temporary\" type=\"module\">");
 		printWriter.println(
 			"import {audiences} from '@liferay/frontend-js-audiences-web';");
+
+		if (frontendJSAudiencesConfiguration.enableLog()) {
+			printWriter.println("audiences.setLogEnabled(true);");
+		}
+
 		printWriter.println("audiences.clear('PAGE');");
 		printWriter.print("await audiences.runDetection('");
 

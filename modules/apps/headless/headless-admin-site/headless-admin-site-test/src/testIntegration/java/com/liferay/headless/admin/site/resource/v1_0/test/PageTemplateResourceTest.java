@@ -519,7 +519,26 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testPutSitePageTemplateWithPageTemplateSet();
 		_testPutSitePageTemplateWithThumbnail();
 
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		contentPageTemplate.setThumbnailURLReference(
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
+
+		pageTemplateResource.putSitePageTemplate(
+			testGroup.getExternalReferenceCode(),
+			contentPageTemplate.getExternalReferenceCode(),
+			contentPageTemplate);
+
 		_enableLocalStaging();
+
+		_assertStagingGroupPageTemplateThumbnail(
+			fileEntry, contentPageTemplate);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
@@ -738,6 +757,28 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			Assert.assertEquals(expectedStatus, problem.getStatus());
 			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
+	}
+
+	private void _assertStagingGroupPageTemplateThumbnail(
+			FileEntry liveGroupFileEntry, PageTemplate pageTemplate)
+		throws Exception {
+
+		Group stagingGroup = testGroup.getStagingGroup();
+
+		FileEntry stagingGroupFileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				liveGroupFileEntry.getExternalReferenceCode(),
+				stagingGroup.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplate.getExternalReferenceCode(),
+					stagingGroup.getGroupId());
+
+		Assert.assertEquals(
+			stagingGroupFileEntry.getFileEntryId(),
+			layoutPageTemplateEntry.getPreviewFileEntryId());
 	}
 
 	private void _assertThumbnailFileEntryId(

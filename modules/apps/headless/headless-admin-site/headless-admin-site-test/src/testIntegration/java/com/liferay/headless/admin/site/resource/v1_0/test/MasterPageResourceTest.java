@@ -423,6 +423,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		_enableLocalStaging();
 
+		_assertStagingGroupMasterPageThumbnail(fileEntry, masterPage);
+
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() -> masterPageResource.putSiteMasterPage(
@@ -605,6 +607,28 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			Assert.assertEquals(expectedStatus, problem.getStatus());
 			Assert.assertEquals(expectedTitle, problem.getTitle());
 		}
+	}
+
+	private void _assertStagingGroupMasterPageThumbnail(
+			FileEntry liveGroupFileEntry, MasterPage masterPage)
+		throws Exception {
+
+		Group stagingGroup = testGroup.getStagingGroup();
+
+		FileEntry stagingGroupFileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				liveGroupFileEntry.getExternalReferenceCode(),
+				stagingGroup.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPage.getExternalReferenceCode(),
+					stagingGroup.getGroupId());
+
+		Assert.assertEquals(
+			stagingGroupFileEntry.getFileEntryId(),
+			layoutPageTemplateEntry.getPreviewFileEntryId());
 	}
 
 	private void _assertThumbnailFileEntryId(

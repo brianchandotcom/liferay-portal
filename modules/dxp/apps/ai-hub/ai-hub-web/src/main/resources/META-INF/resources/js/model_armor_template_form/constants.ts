@@ -10,7 +10,6 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: ModelArmorTemplate = {
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: '',
-	location: '',
 	maliciousUriFilterEnabled: false,
 	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',

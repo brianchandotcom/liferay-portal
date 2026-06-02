@@ -100,7 +100,6 @@ const baseValues: ModelArmorTemplate = {
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: 'input',
-	location: '',
 	maliciousUriFilterEnabled: false,
 	multilanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
@@ -133,7 +132,6 @@ function renderPanel(
 			touched={
 				overrides.touched ?? {
 					externalReferenceCode: true,
-					location: true,
 					title_i18n: true,
 				}
 			}
@@ -209,32 +207,6 @@ describe('DetailsPanel', () => {
 			renderPanel({errors: {externalReferenceCode: 'ERC required'}});
 
 			expect(screen.getByText('ERC required')).toBeInTheDocument();
-		});
-	});
-
-	describe('location input', () => {
-		it('calls setField on each keystroke', () => {
-			const {setField} = renderPanel();
-
-			fireEvent.change(screen.getByLabelText(/^location/i), {
-				target: {value: 'us-central1'},
-			});
-
-			expect(setField).toHaveBeenCalledWith('location', 'us-central1');
-		});
-
-		it('renders the help message below the field', () => {
-			renderPanel();
-
-			expect(
-				screen.getByText('guardrail-location-help')
-			).toBeInTheDocument();
-		});
-
-		it('surfaces the validation error when present', () => {
-			renderPanel({errors: {location: 'Location required'}});
-
-			expect(screen.getByText('Location required')).toBeInTheDocument();
 		});
 	});
 

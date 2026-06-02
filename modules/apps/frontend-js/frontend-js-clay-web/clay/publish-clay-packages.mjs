@@ -134,8 +134,10 @@ function isReleaseCommitSubject(subject) {
 	const normalizedSubject = subject.trim();
 
 	return (
-		/\bRelease clay v\d+\.\d+\.\d+\b/i.test(normalizedSubject) ||
-		/\bpublish\s+v?\d+\.\d+\.\d+\b/i.test(normalizedSubject)
+		/\bRelease Clay v\d+\.\d+\.\d+\b/i.test(normalizedSubject) ||
+		/\bpublish\s+v?\d+\.\d+\.\d+\b/i.test(normalizedSubject) ||
+		/\bUpdate Clay to \d+\.\d+\.\d+\b/i.test(normalizedSubject) ||
+		/\bBump Clay versions? to \d+\.\d+\.\d+\b/i.test(normalizedSubject)
 	);
 }
 
@@ -199,7 +201,7 @@ async function getClayReleaseBoundaryCommit() {
 	}
 
 	throw new Error(
-		'Unable to find prior Clay release commit in git history. Expected a commit subject containing "Release clay vX.Y.Z" or "publish X.Y.Z".'
+		'Unable to find prior Clay release commit in git history. Expected a commit subject containing \"Release Clay vX.Y.Z\", \"publish vX.Y.Z\", \"Update Clay to X.Y.Z\", or \"Bump Clay versions to X.Y.Z\".'
 	);
 }
 

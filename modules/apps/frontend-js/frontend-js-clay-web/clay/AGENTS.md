@@ -103,6 +103,12 @@ yarn run lint
     - internal `@clayui/*` dependency updates
     - package build/type generation (when applicable)
     - npm publish flow
+- The unified changelog boundary is derived from the most recent commit whose subject matches a recognized release phrasing. Recognized phrasings are:
+    - `Release Clay vX.Y.Z`
+    - `publish vX.Y.Z`
+    - `Update Clay to X.Y.Z`
+    - `Bump Clay versions to X.Y.Z` (also matches `Bump Clay version to X.Y.Z`)
+- Release commits must use one of these phrasings (case-insensitive) or changelog boundary detection will pick the wrong commit, causing stale commits to leak into the rendered changelog.
 
 ## DXP vs npm Consumption
 

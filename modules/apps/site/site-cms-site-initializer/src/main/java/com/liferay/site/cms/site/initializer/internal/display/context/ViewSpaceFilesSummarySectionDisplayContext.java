@@ -98,7 +98,7 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 	protected String getCMSSectionFilterString() {
 		return String.format(
 			"cmsRoot eq true and cmsSection eq 'files' and groupIds/any" +
-				"(g:g eq %s)",
+				"(g:g eq %s) and rootDescendantNode eq false",
 			_groupId);
 	}
 

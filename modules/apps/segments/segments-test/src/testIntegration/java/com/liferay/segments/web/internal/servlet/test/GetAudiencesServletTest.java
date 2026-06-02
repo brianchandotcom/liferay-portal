@@ -25,6 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -73,7 +74,7 @@ public class GetAudiencesServletTest {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("url", "eq", "/pricing")),
+				"and", _createRuleJSONObject(Context.URL, "eq", "/pricing")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -89,7 +90,7 @@ public class GetAudiencesServletTest {
 
 		JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(0);
 
-		Assert.assertEquals("url", ruleJSONObject.getString("attribute"));
+		Assert.assertEquals(Context.URL, ruleJSONObject.getString("attribute"));
 		Assert.assertEquals("eq", ruleJSONObject.getString("operation"));
 		Assert.assertEquals("/pricing", ruleJSONObject.getString("value"));
 	}
@@ -102,26 +103,28 @@ public class GetAudiencesServletTest {
 			_createGroupJSONObject(
 				"and",
 				_createRuleJSONObject(
-					"browser", "eq", RandomTestUtil.randomString()),
+					Context.BROWSER, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
 					"customContext/ipGeocoderCountry", "eq",
 					RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"languageId", "eq", RandomTestUtil.randomString()),
+					Context.LANGUAGE_ID, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"lastSignInDateTime", "eq", RandomTestUtil.randomString()),
+					Context.LAST_SIGN_IN_DATE_TIME, "eq",
+					RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"localDate", "eq", RandomTestUtil.randomString()),
+					Context.LOCAL_DATE, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"referrerURL", "eq", RandomTestUtil.randomString()),
+					Context.REFERRER_URL, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"requestParameters", "eq", RandomTestUtil.randomString()),
+					Context.REQUEST_PARAMETERS, "eq",
+					RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"signedIn", "eq", RandomTestUtil.randomString()),
+					Context.SIGNED_IN, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"url", "eq", RandomTestUtil.randomString()),
+					Context.URL, "eq", RandomTestUtil.randomString()),
 				_createRuleJSONObject(
-					"userAgent", "eq", RandomTestUtil.randomString())),
+					Context.USER_AGENT, "eq", RandomTestUtil.randomString())),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -171,13 +174,13 @@ public class GetAudiencesServletTest {
 		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("url", "eq", "/decoy")),
+				"and", _createRuleJSONObject(Context.URL, "eq", "/decoy")),
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("url", "eq", "/pricing")),
+				"and", _createRuleJSONObject(Context.URL, "eq", "/pricing")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONArray audiencesJSONArray = _getAudiencesJSONArray();
@@ -197,10 +200,10 @@ public class GetAudiencesServletTest {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"and", _createRuleJSONObject("url", "eq", "/pricing"),
+				"and", _createRuleJSONObject(Context.URL, "eq", "/pricing"),
 				_createGroupJSONObject(
-					"or", _createRuleJSONObject("url", "eq", "/features"),
-					_createRuleJSONObject("url", "eq", "/billing"))),
+					"or", _createRuleJSONObject(Context.URL, "eq", "/features"),
+					_createRuleJSONObject(Context.URL, "eq", "/billing"))),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(
@@ -214,7 +217,7 @@ public class GetAudiencesServletTest {
 
 		JSONObject leafJSONObject = rulesJSONArray.getJSONObject(0);
 
-		Assert.assertEquals("url", leafJSONObject.getString("attribute"));
+		Assert.assertEquals(Context.URL, leafJSONObject.getString("attribute"));
 		Assert.assertEquals("eq", leafJSONObject.getString("operation"));
 		Assert.assertEquals("/pricing", leafJSONObject.getString("value"));
 
@@ -242,8 +245,8 @@ public class GetAudiencesServletTest {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(
 			RandomTestUtil.randomString(),
 			_createGroupJSONObject(
-				"or", _createRuleJSONObject("url", "eq", "facebook.com"),
-				_createRuleJSONObject("url", "eq", "twitter.com")),
+				"or", _createRuleJSONObject(Context.URL, "eq", "facebook.com"),
+				_createRuleJSONObject(Context.URL, "eq", "twitter.com")),
 			SegmentsEntryConstants.SOURCE_AUDIENCE);
 
 		JSONObject audienceJSONObject = _getAudienceJSONObject(

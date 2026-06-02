@@ -14,6 +14,9 @@ public interface AIHubEventTypes {
 	public static final String AI_HUB_GUARDRAIL_VIOLATION =
 		"AI_HUB_GUARDRAIL_VIOLATION";
 
+	public static final String AI_HUB_RAG_CONTENT_RETRIEVE =
+		"AI_HUB_RAG_CONTENT_RETRIEVE";
+
 	public static final String AI_HUB_WORKFLOW_DEFINITION_ADD =
 		"AI_HUB_WORKFLOW_DEFINITION_ADD";
 

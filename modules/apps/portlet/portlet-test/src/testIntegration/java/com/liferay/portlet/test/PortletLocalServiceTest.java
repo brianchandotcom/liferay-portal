@@ -159,9 +159,9 @@ public class PortletLocalServiceTest {
 	private void _assertFetchPortletById(String portletName, String instanceId)
 		throws Exception {
 
-		String portletId = PortletIdCodec.encode(portletName, instanceId);
-
 		long companyId = TestPropsValues.getCompanyId();
+
+		String portletId = PortletIdCodec.encode(portletName, instanceId);
 
 		com.liferay.portal.kernel.model.Portlet portlet =
 			_portletLocalService.fetchPortletById(companyId, portletId);

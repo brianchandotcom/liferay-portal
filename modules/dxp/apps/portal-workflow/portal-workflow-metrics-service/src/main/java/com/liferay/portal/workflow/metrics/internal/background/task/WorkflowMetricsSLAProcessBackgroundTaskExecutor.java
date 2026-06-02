@@ -711,6 +711,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						")")),
 				indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE);
 
+		updateByQueryDocumentRequest.setProceedOnConflicts(true);
+
 		if (PortalRunMode.isTestMode()) {
 			updateByQueryDocumentRequest.setRefresh(true);
 		}

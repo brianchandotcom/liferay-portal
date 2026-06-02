@@ -16,6 +16,7 @@ import com.liferay.frontend.data.set.action.util.FDSActionUtil;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.filter.BaseClientExtensionFDSFilter;
 import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseDateTimeRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
@@ -581,7 +582,9 @@ public class ImportSystemDataSetMVCResourceCommand
 					"r_dataSetToDataSetClientExtensionFilters_l_dataSetId",
 					objectEntry.getObjectEntryId());
 			}
-			else if (fdsFilter instanceof BaseDateRangeFDSFilter) {
+			else if (fdsFilter instanceof BaseDateRangeFDSFilter ||
+					 fdsFilter instanceof BaseDateTimeRangeFDSFilter) {
+
 				externalReferenceCode = "L_DATA_SET_DATE_FILTER";
 
 				JSONObject jsonObject = JSONUtil.put(

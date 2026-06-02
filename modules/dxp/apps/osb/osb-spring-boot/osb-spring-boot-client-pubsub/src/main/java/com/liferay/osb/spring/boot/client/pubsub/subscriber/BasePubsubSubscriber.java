@@ -131,9 +131,7 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 		return "";
 	}
 
-	protected String getTopic() {
-		return "";
-	}
+	protected abstract String getTopic();
 
 	protected abstract void receive(Message message) throws Exception;
 
@@ -183,14 +181,14 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 				topicName.toString()
 			);
 
-			if (isDeadLetterEnabled()) {
-				TopicName dlqTopicName = TopicName.ofProjectTopicName(
+			if (isDeadLetterTopicEnabled()) {
+				TopicName deadLetterTopicName = TopicName.ofProjectTopicName(
 					getProjectId(), getNamespace() + getDeadLetterTopic(topic));
 
 				builder.setDeadLetterPolicy(
 					DeadLetterPolicy.newBuilder(
 					).setDeadLetterTopic(
-						dlqTopicName.toString()
+						deadLetterTopicName.toString()
 					).setMaxDeliveryAttempts(
 						getMaxDeliveryAttempts()
 					).build());

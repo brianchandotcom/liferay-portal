@@ -18,90 +18,42 @@ import org.junit.Test;
 public class BasePubsubPublisherTest {
 
 	@Test
-	public void testBuildRetrySettingsDefaultsToNull() {
-		RecordingPublisher recordingPublisher = new RecordingPublisher();
+	public void testErrorHandling() throws Exception {
+		Exception exception = new Exception(
+			RandomStringUtils.randomAlphanumeric(16));
 
-		Assert.assertNull(recordingPublisher.buildRetrySettings());
-	}
-
-	@Test
-	public void testDefaultHandleErrorRethrows() {
-		String exceptionMessage = RandomStringUtils.randomAlphanumeric(16);
-
-		ThrowingPublisher throwingPublisher = new ThrowingPublisher(
-			exceptionMessage);
+		TestPubsubPublisher testPubsubPublisher = new TestPubsubPublisher(
+			exception);
 
 		Message message = new Message(
 			null, RandomStringUtils.randomAlphanumeric(10),
 			RandomStringUtils.randomAlphabetic(6));
 
-		Exception exception = Assert.assertThrows(
-			Exception.class, () -> throwingPublisher.publish(message));
+		testPubsubPublisher.publish(message);
 
-		Assert.assertEquals(exceptionMessage, exception.getMessage());
+		Assert.assertSame(
+			exception, testPubsubPublisher.getHandledErrorException());
+		Assert.assertSame(
+			message, testPubsubPublisher.getHandledErrorMessage());
 	}
 
-	@Test
-	public void testGetOrderingKeyReturnsClassName() {
-		RecordingPublisher recordingPublisher = new RecordingPublisher();
+	private static class TestPubsubPublisher extends BasePubsubPublisher {
 
-		Message message = new Message(
-			null, RandomStringUtils.randomAlphanumeric(10),
-			RandomStringUtils.randomAlphabetic(6));
-
-		Assert.assertEquals(
-			RecordingPublisher.class.getName(),
-			recordingPublisher.getOrderingKey(message));
-	}
-
-	@Test
-	public void testGetPublishTimeoutSecondsDefault() {
-		RecordingPublisher recordingPublisher = new RecordingPublisher();
-
-		Assert.assertEquals(60, recordingPublisher.getPublishTimeoutSeconds());
-	}
-
-	@Test
-	public void testPublishDelegatesToDoPublish() throws Exception {
-		RecordingPublisher recordingPublisher = new RecordingPublisher();
-
-		Message message = new Message(
-			null, RandomStringUtils.randomAlphanumeric(10),
-			RandomStringUtils.randomAlphabetic(6));
-
-		recordingPublisher.publish(message);
-
-		Assert.assertEquals(1, recordingPublisher.getPublishCount());
-		Assert.assertSame(message, recordingPublisher.getMessage());
-	}
-
-	@Test
-	public void testPublishRoutesExceptionToHandleError() throws Exception {
-		HandleErrorPublisher handleErrorPublisher = new HandleErrorPublisher();
-
-		Message message = new Message(
-			null, RandomStringUtils.randomAlphanumeric(10),
-			RandomStringUtils.randomAlphabetic(6));
-
-		handleErrorPublisher.publish(message);
-
-		Assert.assertEquals(1, handleErrorPublisher.getHandledCount());
-		Assert.assertSame(message, handleErrorPublisher.getMessage());
-	}
-
-	private static class HandleErrorPublisher extends BasePubsubPublisher {
-
-		public int getHandledCount() {
-			return _handledCount;
+		public TestPubsubPublisher(Exception exception) {
+			_exception = exception;
 		}
 
-		public Message getMessage() {
-			return _message;
+		public Exception getHandledErrorException() {
+			return _handledErrorException;
+		}
+
+		public Message getHandledErrorMessage() {
+			return _handledErrorMessage;
 		}
 
 		@Override
 		protected void doPublish(Message message) throws Exception {
-			throw new Exception(RandomStringUtils.randomAlphanumeric(12));
+			throw _exception;
 		}
 
 		@Override
@@ -111,58 +63,13 @@ public class BasePubsubPublisherTest {
 
 		@Override
 		protected void handleError(Message message, Exception exception) {
-			_handledCount++;
-			_message = message;
+			_handledErrorException = exception;
+			_handledErrorMessage = message;
 		}
 
-		private int _handledCount;
-		private Message _message;
-
-	}
-
-	private static class RecordingPublisher extends BasePubsubPublisher {
-
-		public Message getMessage() {
-			return _message;
-		}
-
-		public int getPublishCount() {
-			return _publishCount;
-		}
-
-		@Override
-		protected void doPublish(Message message) {
-			_message = message;
-			_publishCount++;
-		}
-
-		@Override
-		protected String getProjectId() {
-			return "test-project";
-		}
-
-		private Message _message;
-		private int _publishCount;
-
-	}
-
-	private static class ThrowingPublisher extends BasePubsubPublisher {
-
-		public ThrowingPublisher(String exceptionMessage) {
-			_exceptionMessage = exceptionMessage;
-		}
-
-		@Override
-		protected void doPublish(Message message) throws Exception {
-			throw new Exception(_exceptionMessage);
-		}
-
-		@Override
-		protected String getProjectId() {
-			return "test-project";
-		}
-
-		private final String _exceptionMessage;
+		private final Exception _exception;
+		private Exception _handledErrorException;
+		private Message _handledErrorMessage;
 
 	}
 

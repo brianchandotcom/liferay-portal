@@ -1,0 +1,98 @@
+{{- if and (eq (include "observability.cloudProvider" .) "aws") .Values.rdsExporter.enabled -}}
+{{- $awsRegion := default .Values.aws.region .Values.rdsExporter.region -}}
+{{- $namespace := include "observability.namespace" . -}}
+{{- $name := printf "%s-rds-exporter" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" -}}
+apiVersion: v1
+automountServiceAccountToken: false
+kind: ServiceAccount
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        app.kubernetes.io/component: rds-exporter
+    name: liferay-rds-exporter
+    namespace: {{ $namespace | quote }}
+    {{- with .Values.rdsExporter.iam.awsRoleArn }}
+    annotations:
+        eks.amazonaws.com/role-arn: {{ . | quote }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        app.kubernetes.io/component: rds-exporter
+        app.kubernetes.io/name: liferay-rds-exporter
+    name: {{ $name | quote }}
+    namespace: {{ $namespace | quote }}
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: liferay-rds-exporter
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                {{- include "observability.labels" . | nindent 16 }}
+                app.kubernetes.io/component: rds-exporter
+                app.kubernetes.io/name: liferay-rds-exporter
+        spec:
+            containers:
+                -   args:
+                        -   --collect-logs-size=false
+                        -   --collect-maintenances=false
+                        -   --collect-quotas=false
+                        -   --collect-usages=false
+                        -   --log-format=json
+                    env:
+                        -   name: AWS_REGION
+                            value: {{ $awsRegion | quote }}
+                    image: {{ printf "%s:%s" .Values.rdsExporter.image.repository .Values.rdsExporter.image.tag | quote }}
+                    livenessProbe:
+                        httpGet:
+                            path: /metrics
+                            port: metrics
+                    name: exporter
+                    ports:
+                        -   containerPort: 9043
+                            name: metrics
+                    readinessProbe:
+                        httpGet:
+                            path: /metrics
+                            port: metrics
+                    resources:
+                        {{- toYaml .Values.rdsExporter.resources | nindent 24 }}
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        readOnlyRootFilesystem: true
+            securityContext:
+                fsGroup: 65534
+                runAsGroup: 65534
+                runAsNonRoot: true
+                runAsUser: 65534
+                seccompProfile:
+                    type: RuntimeDefault
+            serviceAccountName: liferay-rds-exporter
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        app.kubernetes.io/component: rds-exporter
+        app.kubernetes.io/name: liferay-rds-exporter
+    name: liferay-rds-exporter
+    namespace: {{ $namespace | quote }}
+spec:
+    ports:
+        -   name: http
+            port: 9043
+            targetPort: metrics
+    selector:
+        app.kubernetes.io/name: liferay-rds-exporter
+{{- end -}}

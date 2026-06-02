@@ -1,0 +1,24 @@
+{{- if eq (include "observability.cloudProvider" .) "gcp" -}}
+{{- $projectId := required "gcp.projectId must be set when cloudProvider=gcp" .Values.gcp.projectId -}}
+apiVersion: v1
+data:
+    gmp-datasource.yaml: |
+        apiVersion: 1
+        datasources:
+            -   editable: true
+                isDefault: true
+                jsonData:
+                    httpMethod: GET
+                    timeInterval: 30s
+                name: {{ .Values.datasource.name | quote }}
+                type: {{ .Values.datasource.type | quote }}
+                uid: {{ include "observability.datasourceUid" . | quote }}
+                url: {{ printf "https://monitoring.googleapis.com/v1/projects/%s/location/global/prometheus" $projectId | quote }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_datasource: "true"
+    name: {{ printf "%s-gmp-datasource" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
+{{- end -}}

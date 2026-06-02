@@ -200,3 +200,18 @@ prometheus-node-exporter:
     serviceAccount:
         automountServiceAccountToken: false
         create: true
+rdsExporter:
+    enabled: false
+    iam:
+        awsRoleArn: ""
+    image:
+        repository: public.ecr.aws/qonto/prometheus-rds-exporter
+        tag: 0.13.0
+    region: ""
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 25m
+            memory: 64Mi

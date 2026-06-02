@@ -40,28 +40,28 @@ public class FinderColumn<T extends BaseModel<T>> {
 		}
 
 		if ((type == Type.STRING) && !caseSensitive) {
-			sqlBind = StringBundler.concat(
+			hqlBind = StringBundler.concat(
 				"lower(", entityAlias, columnName, ") ", comparator, " ?");
 		}
 		else {
-			sqlBind = StringBundler.concat(
+			hqlBind = StringBundler.concat(
 				entityAlias, columnName, " ", comparator, " ?");
 		}
 
 		if (type == Type.STRING) {
-			sqlNull = StringBundler.concat(
+			hqlNull = StringBundler.concat(
 				"(", entityAlias, columnName, " IS NULL OR ", entityAlias,
 				columnName, " ", comparator, " '')");
 		}
 		else {
-			sqlNull = null;
+			hqlNull = null;
 		}
 
 		if (comparator.equals("<>") || comparator.equals("!=")) {
-			sqlIsNull = entityAlias + columnName + " IS NOT NULL";
+			hqlIsNull = entityAlias + columnName + " IS NOT NULL";
 		}
 		else {
-			sqlIsNull = entityAlias + columnName + " IS NULL";
+			hqlIsNull = entityAlias + columnName + " IS NULL";
 		}
 	}
 
@@ -109,24 +109,24 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	public String getSqlFragment(Object normalizedValue) {
 		if (type.isPrimitive()) {
-			return sqlBind;
+			return hqlBind;
 		}
 
 		if ((type == Type.STRING) && convertNull) {
 			String stringValue = (String)normalizedValue;
 
 			if (stringValue.isEmpty()) {
-				return sqlNull;
+				return hqlNull;
 			}
 
-			return sqlBind;
+			return hqlBind;
 		}
 
 		if (normalizedValue == null) {
-			return sqlIsNull;
+			return hqlIsNull;
 		}
 
-		return sqlBind;
+		return hqlBind;
 	}
 
 	public boolean matches(T entity, Object normalizedValue) {
@@ -236,9 +236,9 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	protected final boolean caseSensitive;
 	protected final boolean convertNull;
-	protected final String sqlBind;
-	protected final String sqlIsNull;
-	protected final String sqlNull;
+	protected final String hqlBind;
+	protected final String hqlIsNull;
+	protected final String hqlNull;
 	protected final Type type;
 	protected final Function<T, Object> valueExtractor;
 

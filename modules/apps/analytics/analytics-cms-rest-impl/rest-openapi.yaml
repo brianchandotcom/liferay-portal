@@ -129,6 +129,27 @@ components:
                 vocabulariesCount:
                     format: int64
                     type: integer
+        PerformanceAssetConsumption:
+            properties:
+                performanceAssetConsumptionItems:
+                    items:
+                        $ref: "#/components/schemas/PerformanceAssetConsumptionItem"
+                    type: array
+                performanceAssetConsumptionItemsCount:
+                    format: int64
+                    type: integer
+                totalCount:
+                    format: int64
+                    type: integer
+        PerformanceAssetConsumptionItem:
+            properties:
+                count:
+                    format: int64
+                    type: integer
+                key:
+                    type: string
+                title:
+                    type: string
         PerformanceOverviewMetric:
             properties:
                 downloadsMetric:
@@ -507,6 +528,63 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryTopPages"
             tags: ["ObjectEntryTopPages"]
+    "/performance-asset-consumption":
+        get:
+            operationId: getPerformanceAssetConsumption
+            parameters:
+                -   in: query
+                    name: categoryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: groupBy
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: structureId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: tagId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: vocabularyId
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceAssetConsumption"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceAssetConsumption"
+            tags: ["PerformanceAssetConsumption"]
     "/performance-overview-metric":
         get:
             operationId: getPerformanceOverviewMetric

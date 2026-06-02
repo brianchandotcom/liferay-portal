@@ -62,6 +62,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
@@ -6928,7 +6929,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		JSONObject objectEntryContentJSONObject =
 			JSONFactoryUtil.createJSONObject(
-				"{" + document.getString("objectEntryContent") + "}");
+				StringBundler.concat(
+					"{",
+					document.getString(
+						ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT),
+					"}"));
 
 		for (ObjectField objectField :
 				objectFieldLocalService.getObjectFields(

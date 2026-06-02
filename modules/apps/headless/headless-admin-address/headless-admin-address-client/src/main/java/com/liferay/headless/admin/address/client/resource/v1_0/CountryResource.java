@@ -56,13 +56,13 @@ public interface CountryResource {
 		throws Exception;
 
 	public Page<Country> getCountriesPage(
-			Boolean active, String search, Pagination pagination,
-			String sortString)
+			Boolean active, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCountriesPageHttpResponse(
-			Boolean active, String search, Pagination pagination,
-			String sortString)
+			Boolean active, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public Country getCountry(Long countryId) throws Exception;
@@ -117,13 +117,15 @@ public interface CountryResource {
 		throws Exception;
 
 	public void postCountriesPageExportBatch(
-			Boolean active, String search, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			Boolean active, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postCountriesPageExportBatchHttpResponse(
-			Boolean active, String search, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			Boolean active, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public Country postCountry(Country country) throws Exception;
@@ -579,13 +581,13 @@ public interface CountryResource {
 		}
 
 		public Page<Country> getCountriesPage(
-				Boolean active, String search, Pagination pagination,
-				String sortString)
+				Boolean active, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCountriesPageHttpResponse(
-					active, search, pagination, sortString);
+					active, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -647,8 +649,8 @@ public interface CountryResource {
 		}
 
 		public HttpInvoker.HttpResponse getCountriesPageHttpResponse(
-				Boolean active, String search, Pagination pagination,
-				String sortString)
+				Boolean active, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -678,6 +680,10 @@ public interface CountryResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -1542,14 +1548,15 @@ public interface CountryResource {
 		}
 
 		public void postCountriesPageExportBatch(
-				Boolean active, String search, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				Boolean active, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postCountriesPageExportBatchHttpResponse(
-					active, search, sortString, callbackURL, contentType,
-					fieldNames);
+					active, search, filterString, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1601,8 +1608,9 @@ public interface CountryResource {
 
 		public HttpInvoker.HttpResponse
 				postCountriesPageExportBatchHttpResponse(
-					Boolean active, String search, String sortString,
-					String callbackURL, String contentType, String fieldNames)
+					Boolean active, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1634,6 +1642,10 @@ public interface CountryResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (sortString != null) {
@@ -2196,4 +2208,4 @@ public interface CountryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:654881657
+// LIFERAY-REST-BUILDER-HASH:1523890077

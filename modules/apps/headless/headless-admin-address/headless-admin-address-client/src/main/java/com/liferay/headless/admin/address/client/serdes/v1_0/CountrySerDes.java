@@ -11,6 +11,9 @@ import com.liferay.headless.admin.address.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +47,9 @@ public class CountrySerDes {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("{");
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
 
 		if (country.getA2() != null) {
 			if (sb.length() > 1) {
@@ -101,6 +107,35 @@ public class CountrySerDes {
 			sb.append("\"creator\": ");
 
 			sb.append(String.valueOf(country.getCreator()));
+		}
+
+		if (country.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(country.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (country.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(country.getDateModified()));
+
+			sb.append("\"");
 		}
 
 		if (country.getExternalReferenceCode() != null) {
@@ -259,6 +294,9 @@ public class CountrySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (country.getA2() == null) {
 			map.put("a2", null);
 		}
@@ -293,6 +331,24 @@ public class CountrySerDes {
 		}
 		else {
 			map.put("creator", String.valueOf(country.getCreator()));
+		}
+
+		if (country.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(country.getDateCreated()));
+		}
+
+		if (country.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(country.getDateModified()));
 		}
 
 		if (country.getExternalReferenceCode() == null) {
@@ -417,6 +473,12 @@ public class CountrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -490,6 +552,18 @@ public class CountrySerDes {
 				if (jsonParserFieldValue != null) {
 					country.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					country.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					country.setDateModified(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -654,4 +728,4 @@ public class CountrySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:139584141
+// LIFERAY-REST-BUILDER-HASH:452815966

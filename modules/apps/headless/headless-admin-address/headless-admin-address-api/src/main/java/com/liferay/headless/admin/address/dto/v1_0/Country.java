@@ -26,6 +26,10 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -258,6 +262,92 @@ public class Country implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The country's creation date."
+	)
+	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The country's creation date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateCreated;
+
+	@JsonIgnore
+	private Supplier<Date> _dateCreatedSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The country's most recent modification date."
+	)
+	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The country's most recent modification date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateModified;
+
+	@JsonIgnore
+	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The country's external reference code.",
@@ -780,6 +870,9 @@ public class Country implements Serializable {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		String a2 = getA2();
 
 		if (a2 != null) {
@@ -846,6 +939,38 @@ public class Country implements Serializable {
 			sb.append("\"creator\": ");
 
 			sb.append(String.valueOf(creator));
+		}
+
+		Date dateCreated = getDateCreated();
+
+		if (dateCreated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
+
+			sb.append("\"");
+		}
+
+		Date dateModified = getDateModified();
+
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
 		}
 
 		String externalReferenceCode = getExternalReferenceCode();
@@ -1111,4 +1236,4 @@ public class Country implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1512346105
+// LIFERAY-REST-BUILDER-HASH:117224820

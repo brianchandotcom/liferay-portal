@@ -127,6 +127,7 @@ public class Mutation {
 	public Response createCountriesPageExportBatch(
 			@GraphQLName("active") Boolean active,
 			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
@@ -138,6 +139,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			countryResource -> countryResource.postCountriesPageExportBatch(
 				active, search,
+				_filterBiFunction.apply(countryResource, filterString),
 				_sortsBiFunction.apply(countryResource, sortsString),
 				callbackURL, contentType, fieldNames));
 	}
@@ -324,6 +326,7 @@ public class Mutation {
 	public Response createRegionsPageExportBatch(
 			@GraphQLName("active") Boolean active,
 			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
@@ -335,6 +338,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			regionResource -> regionResource.postRegionsPageExportBatch(
 				active, search,
+				_filterBiFunction.apply(regionResource, filterString),
 				_sortsBiFunction.apply(regionResource, sortsString),
 				callbackURL, contentType, fieldNames));
 	}
@@ -462,6 +466,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction
+		<Object, String, com.liferay.portal.kernel.search.filter.Filter>
+			_filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -476,4 +483,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:817528846
+// LIFERAY-REST-BUILDER-HASH:643611943

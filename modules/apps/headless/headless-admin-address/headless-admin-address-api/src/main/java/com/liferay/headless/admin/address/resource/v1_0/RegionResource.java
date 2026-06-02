@@ -71,7 +71,9 @@ public interface RegionResource {
 		throws Exception;
 
 	public Page<Region> getRegionsPage(
-			Boolean active, String search, Pagination pagination,
+			Boolean active, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -96,6 +98,7 @@ public interface RegionResource {
 
 	public Response postRegionsPageExportBatch(
 			Boolean active, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
@@ -205,4 +208,4 @@ public interface RegionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2016130918
+// LIFERAY-REST-BUILDER-HASH:1022143274

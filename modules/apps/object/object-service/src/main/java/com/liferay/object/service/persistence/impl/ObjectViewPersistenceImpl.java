@@ -670,8 +670,8 @@ public class ObjectViewPersistenceImpl
 			_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
 			ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectView.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectView::getUuid));
+				"objectView.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ObjectView::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -695,8 +695,8 @@ public class ObjectViewPersistenceImpl
 				_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
 				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectView.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, ObjectView::getUuid),
+					"objectView.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, ObjectView::getUuid),
 				new FinderColumn<>(
 					"objectView.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectView::getCompanyId));
@@ -831,4 +831,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1779219456
+// LIFERAY-SERVICE-BUILDER-HASH:-1983669632

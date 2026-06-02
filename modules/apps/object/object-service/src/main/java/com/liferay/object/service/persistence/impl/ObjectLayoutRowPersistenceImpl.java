@@ -581,8 +581,8 @@ public class ObjectLayoutRowPersistenceImpl
 			_SQL_SELECT_OBJECTLAYOUTROW_WHERE, _SQL_COUNT_OBJECTLAYOUTROW_WHERE,
 			ObjectLayoutRowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectLayoutRow.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectLayoutRow::getUuid));
+				"objectLayoutRow.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ObjectLayoutRow::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -608,8 +608,9 @@ public class ObjectLayoutRowPersistenceImpl
 				ObjectLayoutRowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"objectLayoutRow.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ObjectLayoutRow::getUuid),
+					"objectLayoutRow.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					ObjectLayoutRow::getUuid),
 				new FinderColumn<>(
 					"objectLayoutRow.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectLayoutRow::getCompanyId));
@@ -711,4 +712,4 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1061974144
+// LIFERAY-SERVICE-BUILDER-HASH:-1505953310

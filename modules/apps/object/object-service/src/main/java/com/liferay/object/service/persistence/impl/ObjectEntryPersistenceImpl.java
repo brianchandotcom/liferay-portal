@@ -1787,8 +1787,8 @@ public class ObjectEntryPersistenceImpl
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectEntry::getUuid));
+				"objectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ObjectEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1800,8 +1800,8 @@ public class ObjectEntryPersistenceImpl
 				ObjectEntry::getGroupId),
 			_SQL_SELECT_OBJECTENTRY_WHERE, "",
 			new FinderColumn<>(
-				"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectEntry::getUuid),
+				"objectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ObjectEntry::getUuid),
 			new FinderColumn<>(
 				"objectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, ObjectEntry::getGroupId));
@@ -1828,8 +1828,8 @@ public class ObjectEntryPersistenceImpl
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, ObjectEntry::getUuid),
+					"objectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, ObjectEntry::getUuid),
 				new FinderColumn<>(
 					"objectEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectEntry::getCompanyId));
@@ -2250,4 +2250,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1195628914
+// LIFERAY-SERVICE-BUILDER-HASH:971321103

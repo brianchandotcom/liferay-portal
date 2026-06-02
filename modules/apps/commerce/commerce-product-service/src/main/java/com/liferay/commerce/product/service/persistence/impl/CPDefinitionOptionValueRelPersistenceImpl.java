@@ -1277,8 +1277,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDefinitionOptionValueRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionOptionValueRel::getUuid));
+				"cpDefinitionOptionValueRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionValueRel::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1290,8 +1291,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				CPDefinitionOptionValueRel::getGroupId),
 			_SQL_SELECT_CPDEFINITIONOPTIONVALUEREL_WHERE, "",
 			new FinderColumn<>(
-				"cpDefinitionOptionValueRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionOptionValueRel::getUuid),
+				"cpDefinitionOptionValueRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionValueRel::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionOptionValueRel.", "groupId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1321,7 +1323,7 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				CPDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpDefinitionOptionValueRel.", "uuid",
+					"cpDefinitionOptionValueRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPDefinitionOptionValueRel::getUuid),
 				new FinderColumn<>(
@@ -1469,8 +1471,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDefinitionOptionValueRel.", "key", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionOptionValueRel::getKey));
+				"cpDefinitionOptionValueRel.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionValueRel::getKey));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this,
@@ -1486,8 +1489,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionOptionValueRel::getCPDefinitionOptionRelId),
 			new FinderColumn<>(
-				"cpDefinitionOptionValueRel.", "key", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionOptionValueRel::getKey));
+				"cpDefinitionOptionValueRel.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionOptionValueRel::getKey));
 
 		_collectionPersistenceFinderByCDORI_P =
 			new CollectionPersistenceFinder<>(
@@ -1600,4 +1604,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-761101622
+// LIFERAY-SERVICE-BUILDER-HASH:-287900386

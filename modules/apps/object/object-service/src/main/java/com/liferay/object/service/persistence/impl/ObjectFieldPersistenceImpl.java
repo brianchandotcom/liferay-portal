@@ -1880,8 +1880,8 @@ public class ObjectFieldPersistenceImpl
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
 			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectField.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ObjectField::getUuid));
+				"objectField.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ObjectField::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1905,8 +1905,8 @@ public class ObjectFieldPersistenceImpl
 				_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
 				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectField.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, ObjectField::getUuid),
+					"objectField.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, ObjectField::getUuid),
 				new FinderColumn<>(
 					"objectField.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectField::getCompanyId));
@@ -2078,8 +2078,9 @@ public class ObjectFieldPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getListTypeDefinitionId),
 				new FinderColumn<>(
-					"objectField.", "state", FinderColumn.Type.BOOLEAN, "=",
-					true, true, ObjectField::isState));
+					"objectField.", "state", "state_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectField::isState));
 
 		_collectionPersistenceFinderByODI_BT =
 			new CollectionPersistenceFinder<>(
@@ -2237,8 +2238,8 @@ public class ObjectFieldPersistenceImpl
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectField::getObjectDefinitionId),
 			new FinderColumn<>(
-				"objectField.", "system", FinderColumn.Type.BOOLEAN, "=", true,
-				true, ObjectField::isSystem));
+				"objectField.", "system", "system_", FinderColumn.Type.BOOLEAN,
+				"=", true, true, ObjectField::isSystem));
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this,
@@ -2349,8 +2350,9 @@ public class ObjectFieldPersistenceImpl
 					"objectField.", "localized", FinderColumn.Type.BOOLEAN, "=",
 					true, true, ObjectField::isLocalized),
 				new FinderColumn<>(
-					"objectField.", "system", FinderColumn.Type.BOOLEAN, "=",
-					true, true, ObjectField::isSystem));
+					"objectField.", "system", "system_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectField::isSystem));
 
 		ObjectFieldUtil.setPersistence(this);
 	}
@@ -2421,4 +2423,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:176268004
+// LIFERAY-SERVICE-BUILDER-HASH:934895091

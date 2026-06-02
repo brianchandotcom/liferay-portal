@@ -1468,8 +1468,8 @@ public class KaleoDefinitionPersistenceImpl
 			_SQL_SELECT_KALEODEFINITION_WHERE, _SQL_COUNT_KALEODEFINITION_WHERE,
 			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KaleoDefinition::getUuid));
+				"kaleoDefinition.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, KaleoDefinition::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1481,8 +1481,8 @@ public class KaleoDefinitionPersistenceImpl
 				KaleoDefinition::getGroupId),
 			_SQL_SELECT_KALEODEFINITION_WHERE, "",
 			new FinderColumn<>(
-				"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KaleoDefinition::getUuid),
+				"kaleoDefinition.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, KaleoDefinition::getUuid),
 			new FinderColumn<>(
 				"kaleoDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, KaleoDefinition::getGroupId));
@@ -1511,8 +1511,9 @@ public class KaleoDefinitionPersistenceImpl
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, KaleoDefinition::getUuid),
+					"kaleoDefinition.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					KaleoDefinition::getUuid),
 				new FinderColumn<>(
 					"kaleoDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoDefinition::getCompanyId));
@@ -1568,8 +1569,9 @@ public class KaleoDefinitionPersistenceImpl
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, KaleoDefinition::isActive));
+					"kaleoDefinition.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					KaleoDefinition::isActive));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this,
@@ -1611,8 +1613,9 @@ public class KaleoDefinitionPersistenceImpl
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
-				"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, KaleoDefinition::isActive));
+				"kaleoDefinition.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				KaleoDefinition::isActive));
 
 		_collectionPersistenceFinderByG_C_S = new CollectionPersistenceFinder<>(
 			this,
@@ -1695,8 +1698,9 @@ public class KaleoDefinitionPersistenceImpl
 				"kaleoDefinition.", "name", FinderColumn.Type.STRING, "=", true,
 				true, KaleoDefinition::getName),
 			new FinderColumn<>(
-				"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, KaleoDefinition::isActive));
+				"kaleoDefinition.", "active", "active_",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				KaleoDefinition::isActive));
 
 		_collectionPersistenceFinderByG_C_S_A =
 			new CollectionPersistenceFinder<>(
@@ -1741,8 +1745,9 @@ public class KaleoDefinitionPersistenceImpl
 					"kaleoDefinition.", "scope", FinderColumn.Type.STRING, "=",
 					true, true, KaleoDefinition::getScope),
 				new FinderColumn<>(
-					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, KaleoDefinition::isActive));
+					"kaleoDefinition.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					KaleoDefinition::isActive));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1834,4 +1839,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-74560889
+// LIFERAY-SERVICE-BUILDER-HASH:171119165

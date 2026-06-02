@@ -655,8 +655,9 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDefinitionVirtualSetting.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionVirtualSetting::getUuid));
+				"cpDefinitionVirtualSetting.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionVirtualSetting::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -668,8 +669,9 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				CPDefinitionVirtualSetting::getGroupId),
 			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE, "",
 			new FinderColumn<>(
-				"cpDefinitionVirtualSetting.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CPDefinitionVirtualSetting::getUuid),
+				"cpDefinitionVirtualSetting.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPDefinitionVirtualSetting::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "groupId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -699,7 +701,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpDefinitionVirtualSetting.", "uuid",
+					"cpDefinitionVirtualSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CPDefinitionVirtualSetting::getUuid),
 				new FinderColumn<>(
@@ -794,4 +796,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1562537496
+// LIFERAY-SERVICE-BUILDER-HASH:-844593638

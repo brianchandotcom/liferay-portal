@@ -3218,8 +3218,8 @@ public class CommercePriceListPersistenceImpl
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommercePriceList::getUuid));
+				"commercePriceList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommercePriceList::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3231,8 +3231,8 @@ public class CommercePriceListPersistenceImpl
 				CommercePriceList::getGroupId),
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE, "",
 			new FinderColumn<>(
-				"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CommercePriceList::getUuid),
+				"commercePriceList.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CommercePriceList::getUuid),
 			new FinderColumn<>(
 				"commercePriceList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommercePriceList::getGroupId));
@@ -3261,8 +3261,9 @@ public class CommercePriceListPersistenceImpl
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CommercePriceList::getUuid),
+					"commercePriceList.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommercePriceList::getUuid),
 				new FinderColumn<>(
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId));
@@ -3562,8 +3563,9 @@ public class CommercePriceListPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommercePriceList::isCatalogBasePriceList),
 				new FinderColumn<>(
-					"commercePriceList.", "type", FinderColumn.Type.STRING, "=",
-					true, true, CommercePriceList::getType));
+					"commercePriceList.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommercePriceList::getType));
 
 		_collectionPersistenceFinderByG_C_T_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -3605,8 +3607,9 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId),
 				new FinderColumn<>(
-					"commercePriceList.", "type", FinderColumn.Type.STRING, "=",
-					true, true, CommercePriceList::getType),
+					"commercePriceList.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommercePriceList::getType),
 				new FinderColumn<>(
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CommercePriceList::getStatus));
@@ -3644,8 +3647,9 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId),
 				new FinderColumn<>(
-					"commercePriceList.", "type", FinderColumn.Type.STRING, "=",
-					true, true, CommercePriceList::getType),
+					"commercePriceList.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommercePriceList::getType),
 				new FinderColumn<>(
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, CommercePriceList::getStatus));
@@ -3741,4 +3745,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:585435519
+// LIFERAY-SERVICE-BUILDER-HASH:-141409255

@@ -939,8 +939,8 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 				true, true, CTSContent::getRepositoryId),
 			new FinderColumn<>(
-				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
-				true, CTSContent::getPath));
+				"ctsContent.", "path", "path_", FinderColumn.Type.STRING, "=",
+				true, true, CTSContent::getPath));
 
 		_collectionPersistenceFinderByC_R_S = new CollectionPersistenceFinder<>(
 			this,
@@ -1024,8 +1024,8 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getRepositoryId),
 				new FinderColumn<>(
-					"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
-					true, CTSContent::getPath),
+					"ctsContent.", "path", "path_", FinderColumn.Type.STRING,
+					"=", true, true, CTSContent::getPath),
 				new FinderColumn<>(
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
@@ -1066,8 +1066,8 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getRepositoryId),
 				new FinderColumn<>(
-					"ctsContent.", "path", FinderColumn.Type.STRING, "LIKE",
-					true, true, CTSContent::getPath),
+					"ctsContent.", "path", "path_", FinderColumn.Type.STRING,
+					"LIKE", true, true, CTSContent::getPath),
 				new FinderColumn<>(
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
@@ -1097,8 +1097,8 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 				true, true, CTSContent::getRepositoryId),
 			new FinderColumn<>(
-				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
-				true, CTSContent::getPath),
+				"ctsContent.", "path", "path_", FinderColumn.Type.STRING, "=",
+				true, true, CTSContent::getPath),
 			new FinderColumn<>(
 				"ctsContent.", "version", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getVersion),
@@ -1178,4 +1178,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2134642421
+// LIFERAY-SERVICE-BUILDER-HASH:-33702926

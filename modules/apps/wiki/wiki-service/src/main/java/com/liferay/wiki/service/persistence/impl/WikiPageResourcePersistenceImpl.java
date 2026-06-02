@@ -678,8 +678,8 @@ public class WikiPageResourcePersistenceImpl
 			_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 			WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, WikiPageResource::getUuid));
+				"wikiPageResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, WikiPageResource::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -691,8 +691,8 @@ public class WikiPageResourcePersistenceImpl
 				WikiPageResource::getGroupId),
 			_SQL_SELECT_WIKIPAGERESOURCE_WHERE, "",
 			new FinderColumn<>(
-				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, WikiPageResource::getUuid),
+				"wikiPageResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, WikiPageResource::getUuid),
 			new FinderColumn<>(
 				"wikiPageResource.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, WikiPageResource::getGroupId));
@@ -721,8 +721,9 @@ public class WikiPageResourcePersistenceImpl
 				WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, WikiPageResource::getUuid),
+					"wikiPageResource.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					WikiPageResource::getUuid),
 				new FinderColumn<>(
 					"wikiPageResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, WikiPageResource::getCompanyId));
@@ -815,4 +816,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1954760415
+// LIFERAY-SERVICE-BUILDER-HASH:99493679

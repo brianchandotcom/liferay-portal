@@ -730,4 +730,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1045811471
+// LIFERAY-SERVICE-BUILDER-HASH:-157044145

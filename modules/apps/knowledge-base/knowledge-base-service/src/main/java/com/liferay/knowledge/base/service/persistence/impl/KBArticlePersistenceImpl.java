@@ -13301,8 +13301,8 @@ public class KBArticlePersistenceImpl
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				KBArticle::getUuid));
+				"kbArticle.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBArticle::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -13313,8 +13313,8 @@ public class KBArticlePersistenceImpl
 				convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId),
 			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
-				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				KBArticle::getUuid),
+				"kbArticle.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBArticle::getUuid),
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
@@ -13341,8 +13341,8 @@ public class KBArticlePersistenceImpl
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, KBArticle::getUuid),
+					"kbArticle.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, KBArticle::getUuid),
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId));
@@ -15182,4 +15182,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1770650340
+// LIFERAY-SERVICE-BUILDER-HASH:-1198777267

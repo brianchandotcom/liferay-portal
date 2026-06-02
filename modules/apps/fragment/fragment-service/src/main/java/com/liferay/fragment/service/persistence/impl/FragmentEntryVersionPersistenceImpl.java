@@ -3244,8 +3244,9 @@ public class FragmentEntryVersionPersistenceImpl
 			FragmentEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, FragmentEntryVersion::getUuid));
+				"fragmentEntryVersion.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				FragmentEntryVersion::getUuid));
 
 		_collectionPersistenceFinderByUuid_Version =
 			new CollectionPersistenceFinder<>(
@@ -3278,8 +3279,9 @@ public class FragmentEntryVersionPersistenceImpl
 				FragmentEntryVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentEntryVersion::getUuid),
+					"fragmentEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryVersion::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -3309,8 +3311,9 @@ public class FragmentEntryVersionPersistenceImpl
 				FragmentEntryVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentEntryVersion::getUuid),
+					"fragmentEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryVersion::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryVersion::getGroupId));
@@ -3330,8 +3333,9 @@ public class FragmentEntryVersionPersistenceImpl
 					FragmentEntryVersion::getVersion),
 				_SQL_SELECT_FRAGMENTENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentEntryVersion::getUuid),
+					"fragmentEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryVersion::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryVersion::getGroupId),
@@ -3364,8 +3368,9 @@ public class FragmentEntryVersionPersistenceImpl
 				FragmentEntryVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentEntryVersion::getUuid),
+					"fragmentEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryVersion::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3407,8 +3412,9 @@ public class FragmentEntryVersionPersistenceImpl
 				FragmentEntryVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, FragmentEntryVersion::getUuid),
+					"fragmentEntryVersion.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					FragmentEntryVersion::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3575,8 +3581,9 @@ public class FragmentEntryVersionPersistenceImpl
 			FragmentEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER, "=",
-				true, true, FragmentEntryVersion::getType));
+				"fragmentEntryVersion.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				FragmentEntryVersion::getType));
 
 		_collectionPersistenceFinderByType_Version =
 			new CollectionPersistenceFinder<>(
@@ -3609,8 +3616,9 @@ public class FragmentEntryVersionPersistenceImpl
 				FragmentEntryVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, FragmentEntryVersion::getType),
+					"fragmentEntryVersion.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntryVersion::getType),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -3893,8 +3901,9 @@ public class FragmentEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryVersion::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, FragmentEntryVersion::getType));
+					"fragmentEntryVersion.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntryVersion::getType));
 
 		_collectionPersistenceFinderByG_FCI_T_Version =
 			new CollectionPersistenceFinder<>(
@@ -3946,8 +3955,9 @@ public class FragmentEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryVersion::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, FragmentEntryVersion::getType),
+					"fragmentEntryVersion.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntryVersion::getType),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4229,8 +4239,9 @@ public class FragmentEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryVersion::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, FragmentEntryVersion::getType),
+					"fragmentEntryVersion.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntryVersion::getType),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4292,8 +4303,9 @@ public class FragmentEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryVersion::getFragmentCollectionId),
 				new FinderColumn<>(
-					"fragmentEntryVersion.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, FragmentEntryVersion::getType),
+					"fragmentEntryVersion.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					FragmentEntryVersion::getType),
 				new FinderColumn<>(
 					"fragmentEntryVersion.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4375,4 +4387,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-169852072
+// LIFERAY-SERVICE-BUILDER-HASH:594767909

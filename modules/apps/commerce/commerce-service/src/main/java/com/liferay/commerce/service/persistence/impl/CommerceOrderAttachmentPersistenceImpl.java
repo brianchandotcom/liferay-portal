@@ -909,8 +909,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 			CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceOrderAttachment.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CommerceOrderAttachment::getUuid));
+				"commerceOrderAttachment.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceOrderAttachment::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -922,8 +923,9 @@ public class CommerceOrderAttachmentPersistenceImpl
 				CommerceOrderAttachment::getGroupId),
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE, "",
 			new FinderColumn<>(
-				"commerceOrderAttachment.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CommerceOrderAttachment::getUuid),
+				"commerceOrderAttachment.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceOrderAttachment::getUuid),
 			new FinderColumn<>(
 				"commerceOrderAttachment.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceOrderAttachment::getGroupId));
@@ -952,7 +954,7 @@ public class CommerceOrderAttachmentPersistenceImpl
 				CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceOrderAttachment.", "uuid",
+					"commerceOrderAttachment.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceOrderAttachment::getUuid),
 				new FinderColumn<>(
@@ -1110,4 +1112,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1241384751
+// LIFERAY-SERVICE-BUILDER-HASH:1891196210

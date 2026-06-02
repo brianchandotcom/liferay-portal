@@ -2114,8 +2114,8 @@ public class SegmentsEntryPersistenceImpl
 			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SegmentsEntry::getUuid));
+				"segmentsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SegmentsEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -2127,8 +2127,8 @@ public class SegmentsEntryPersistenceImpl
 				SegmentsEntry::getGroupId),
 			_SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
-				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SegmentsEntry::getUuid),
+				"segmentsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SegmentsEntry::getUuid),
 			new FinderColumn<>(
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SegmentsEntry::getGroupId));
@@ -2155,8 +2155,8 @@ public class SegmentsEntryPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SegmentsEntry::getUuid),
+					"segmentsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SegmentsEntry::getUuid),
 				new FinderColumn<>(
 					"segmentsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntry::getCompanyId));
@@ -2236,8 +2236,9 @@ public class SegmentsEntryPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, SegmentsEntry::isActive));
+					"segmentsEntry.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsEntry::isActive));
 
 		_collectionPersistenceFinderBySource =
 			new CollectionPersistenceFinder<>(
@@ -2309,8 +2310,9 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, SegmentsEntry::getGroupId),
 				new FinderColumn<>(
-					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, SegmentsEntry::isActive));
+					"segmentsEntry.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsEntry::isActive));
 
 		_collectionPersistenceFinderByG_SRC =
 			new FilterCollectionPersistenceFinder<>(
@@ -2374,8 +2376,9 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, SegmentsEntry::getGroupId),
 				new FinderColumn<>(
-					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, SegmentsEntry::isActive),
+					"segmentsEntry.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SegmentsEntry::isActive),
 				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					false, true, true, SegmentsEntry::getSource));
@@ -2469,4 +2472,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1489234953
+// LIFERAY-SERVICE-BUILDER-HASH:1952987523

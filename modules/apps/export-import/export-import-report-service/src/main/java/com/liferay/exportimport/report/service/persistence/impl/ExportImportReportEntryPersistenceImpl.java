@@ -574,8 +574,9 @@ public class ExportImportReportEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ExportImportReportEntry::getExportImportConfigurationId),
 			new FinderColumn<>(
-				"exportImportReportEntry.", "type", FinderColumn.Type.INTEGER,
-				"=", true, true, ExportImportReportEntry::getType));
+				"exportImportReportEntry.", "type", "type_",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				ExportImportReportEntry::getType));
 
 		ExportImportReportEntryUtil.setPersistence(this);
 	}
@@ -646,4 +647,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1453895272
+// LIFERAY-SERVICE-BUILDER-HASH:303034154

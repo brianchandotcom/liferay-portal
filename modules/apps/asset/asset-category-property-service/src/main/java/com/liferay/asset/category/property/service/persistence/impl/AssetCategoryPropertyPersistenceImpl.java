@@ -943,8 +943,9 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AssetCategoryProperty::getCompanyId),
 			new FinderColumn<>(
-				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
-				true, true, AssetCategoryProperty::getKey));
+				"assetCategoryProperty.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetCategoryProperty::getKey));
 
 		_uniquePersistenceFinderByCA_K = new UniquePersistenceFinder<>(
 			this,
@@ -959,8 +960,9 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "categoryId", FinderColumn.Type.LONG,
 				"=", true, true, AssetCategoryProperty::getCategoryId),
 			new FinderColumn<>(
-				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
-				true, true, AssetCategoryProperty::getKey));
+				"assetCategoryProperty.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetCategoryProperty::getKey));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1053,4 +1055,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-776563295
+// LIFERAY-SERVICE-BUILDER-HASH:-974387628

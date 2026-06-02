@@ -1132,8 +1132,9 @@ public class CPSpecificationOptionPersistenceImpl
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpSpecificationOption.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, CPSpecificationOption::getUuid));
+					"cpSpecificationOption.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPSpecificationOption::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1159,8 +1160,9 @@ public class CPSpecificationOptionPersistenceImpl
 				CPSpecificationOptionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpSpecificationOption.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, CPSpecificationOption::getUuid),
+					"cpSpecificationOption.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPSpecificationOption::getUuid),
 				new FinderColumn<>(
 					"cpSpecificationOption.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1238,8 +1240,9 @@ public class CPSpecificationOptionPersistenceImpl
 				"cpSpecificationOption.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, CPSpecificationOption::getCompanyId),
 			new FinderColumn<>(
-				"cpSpecificationOption.", "key", FinderColumn.Type.STRING, "=",
-				true, true, CPSpecificationOption::getKey));
+				"cpSpecificationOption.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPSpecificationOption::getKey));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1332,4 +1335,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1430133158
+// LIFERAY-SERVICE-BUILDER-HASH:1411428630

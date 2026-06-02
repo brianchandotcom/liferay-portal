@@ -715,7 +715,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceAvailabilityEstimate.", "uuid",
+					"commerceAvailabilityEstimate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceAvailabilityEstimate::getUuid));
 
@@ -743,7 +743,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceAvailabilityEstimate.", "uuid",
+					"commerceAvailabilityEstimate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceAvailabilityEstimate::getUuid),
 				new FinderColumn<>(
@@ -846,4 +846,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:652947766
+// LIFERAY-SERVICE-BUILDER-HASH:-1290446634

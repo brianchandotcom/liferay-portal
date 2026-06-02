@@ -1198,8 +1198,8 @@ public class EmailAddressPersistenceImpl
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"emailAddress.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, EmailAddress::getUuid));
+				"emailAddress.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, EmailAddress::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1223,8 +1223,8 @@ public class EmailAddressPersistenceImpl
 				_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"emailAddress.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, EmailAddress::getUuid),
+					"emailAddress.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, EmailAddress::getUuid),
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getCompanyId));
@@ -1389,8 +1389,9 @@ public class EmailAddressPersistenceImpl
 					"emailAddress.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getClassPK),
 				new FinderColumn<>(
-					"emailAddress.", "primary", FinderColumn.Type.BOOLEAN, "=",
-					true, true, EmailAddress::isPrimary));
+					"emailAddress.", "primary", "primary_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					EmailAddress::isPrimary));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1446,4 +1447,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1604494861
+// LIFERAY-SERVICE-BUILDER-HASH:-1294586220

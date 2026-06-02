@@ -693,7 +693,7 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentMethodGroupRel::getGroupId),
 				new FinderColumn<>(
-					"commercePaymentMethodGroupRel.", "active",
+					"commercePaymentMethodGroupRel.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommercePaymentMethodGroupRel::isActive));
 
@@ -787,4 +787,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1755475288
+// LIFERAY-SERVICE-BUILDER-HASH:-1339036102

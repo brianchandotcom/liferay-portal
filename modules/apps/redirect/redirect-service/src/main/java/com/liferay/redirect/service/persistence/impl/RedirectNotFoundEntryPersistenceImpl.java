@@ -581,4 +581,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-303401106
+// LIFERAY-SERVICE-BUILDER-HASH:1573851067

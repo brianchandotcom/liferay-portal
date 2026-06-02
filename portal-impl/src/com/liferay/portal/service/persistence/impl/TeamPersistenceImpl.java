@@ -1565,8 +1565,8 @@ public class TeamPersistenceImpl
 			_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
 			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Team::getUuid));
+				"team.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Team::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1577,8 +1577,8 @@ public class TeamPersistenceImpl
 				convertNullFunction(Team::getUuid), Team::getGroupId),
 			_SQL_SELECT_TEAM_WHERE, "",
 			new FinderColumn<>(
-				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Team::getUuid),
+				"team.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Team::getUuid),
 			new FinderColumn<>(
 				"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Team::getGroupId));
@@ -1605,8 +1605,8 @@ public class TeamPersistenceImpl
 				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
 				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					Team::getUuid),
+					"team.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Team::getUuid),
 				new FinderColumn<>(
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Team::getCompanyId));
@@ -1726,4 +1726,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1768240435
+// LIFERAY-SERVICE-BUILDER-HASH:1614253093

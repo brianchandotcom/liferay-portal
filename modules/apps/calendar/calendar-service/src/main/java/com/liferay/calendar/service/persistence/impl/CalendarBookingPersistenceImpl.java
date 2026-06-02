@@ -1536,8 +1536,8 @@ public class CalendarBookingPersistenceImpl
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, CalendarBooking::getUuid));
+				"calendarBooking.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CalendarBooking::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1549,8 +1549,8 @@ public class CalendarBookingPersistenceImpl
 				CalendarBooking::getGroupId),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
-				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, CalendarBooking::getUuid),
+				"calendarBooking.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CalendarBooking::getUuid),
 			new FinderColumn<>(
 				"calendarBooking.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getGroupId));
@@ -1579,8 +1579,9 @@ public class CalendarBookingPersistenceImpl
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CalendarBooking::getUuid),
+					"calendarBooking.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CalendarBooking::getUuid),
 				new FinderColumn<>(
 					"calendarBooking.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCompanyId));
@@ -1882,4 +1883,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2134677023
+// LIFERAY-SERVICE-BUILDER-HASH:1914567609

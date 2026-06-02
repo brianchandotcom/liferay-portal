@@ -937,8 +937,8 @@ public class MBBanPersistenceImpl
 			_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 			MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				MBBan::getUuid));
+				"mbBan.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, MBBan::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -949,8 +949,8 @@ public class MBBanPersistenceImpl
 				convertNullFunction(MBBan::getUuid), MBBan::getGroupId),
 			_SQL_SELECT_MBBAN_WHERE, "",
 			new FinderColumn<>(
-				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				MBBan::getUuid),
+				"mbBan.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, MBBan::getUuid),
 			new FinderColumn<>(
 				"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				MBBan::getGroupId));
@@ -977,8 +977,8 @@ public class MBBanPersistenceImpl
 				_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 				MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-					MBBan::getUuid),
+					"mbBan.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, MBBan::getUuid),
 				new FinderColumn<>(
 					"mbBan.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getCompanyId));
@@ -1145,4 +1145,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1239784870
+// LIFERAY-SERVICE-BUILDER-HASH:-1214689131

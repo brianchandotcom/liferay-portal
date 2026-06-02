@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -59,6 +61,7 @@ import java.util.Map;
  */
 public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Country addCountry(
 			String externalReferenceCode, String a2, String a3, boolean active,
@@ -122,6 +125,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public Country deleteCountry(Country country) throws PortalException {
@@ -299,6 +303,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			start, end);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Country updateActive(long countryId, boolean active)
 		throws PortalException {
@@ -310,6 +315,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		return countryPersistence.update(country);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Country updateCountry(
 			String externalReferenceCode, long countryId, String a2, String a3,
@@ -355,6 +361,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		return super.updateCountryLocalizations(country, titleMap);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Country updateGroupFilterEnabled(
 			long countryId, boolean groupFilterEnabled)

@@ -6,17 +6,14 @@
 package com.liferay.ai.hub.internal.model;
 
 import com.liferay.ai.hub.configuration.VertexAIConfiguration;
-import com.liferay.ai.hub.langchain4j.model.chat.listener.ChatModelListenerFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import dev.langchain4j.model.vertexai.gemini.HarmCategory;
 import dev.langchain4j.model.vertexai.gemini.SafetyThreshold;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,13 +23,12 @@ import java.util.Objects;
 public class VertexAiGeminiUtil {
 
 	public static VertexAiGeminiChatModel createVertexAiGeminiChatModel(
-			ChatModelListenerFactory chatModelListenerFactory,
-			ServiceContext serviceContext)
+			long companyId)
 		throws ConfigurationException {
 
 		VertexAIConfiguration vertexAIConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				VertexAIConfiguration.class, serviceContext.getCompanyId());
+				VertexAIConfiguration.class, companyId);
 
 		VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder builder =
 			VertexAiGeminiChatModel.builder();
@@ -41,10 +37,7 @@ public class VertexAiGeminiUtil {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
-		return builder.listeners(
-			Collections.singletonList(
-				chatModelListenerFactory.create(serviceContext))
-		).location(
+		return builder.location(
 			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()
@@ -56,14 +49,12 @@ public class VertexAiGeminiUtil {
 	}
 
 	public static VertexAiGeminiStreamingChatModel
-			createVertexAiGeminiStreamingChatModel(
-				ChatModelListenerFactory chatModelListenerFactory,
-				ServiceContext serviceContext)
+			createVertexAiGeminiStreamingChatModel(long companyId)
 		throws ConfigurationException {
 
 		VertexAIConfiguration vertexAIConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				VertexAIConfiguration.class, serviceContext.getCompanyId());
+				VertexAIConfiguration.class, companyId);
 
 		VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder
 			builder = VertexAiGeminiStreamingChatModel.builder();
@@ -72,10 +63,7 @@ public class VertexAiGeminiUtil {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
-		return builder.listeners(
-			Collections.singletonList(
-				chatModelListenerFactory.create(serviceContext))
-		).location(
+		return builder.location(
 			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()

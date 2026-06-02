@@ -19,7 +19,6 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
-import com.liferay.ai.hub.langchain4j.model.chat.listener.ChatModelListenerFactory;
 import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -130,7 +129,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
-				_chatModelListenerFactory, serviceContext);
+				serviceContext.getCompanyId());
 
 		AtomicReference<ChatResponse> chatResponseAtomicReference =
 			new AtomicReference<>();
@@ -279,6 +278,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
 			executionContext.getServiceContext(), userMessage);
 
+		QuotaUtil.updateUsage(
+			chatResponse, _quotaManager, executionContext.getServiceContext());
+
 		List<KaleoTransition> kaleoTransitions =
 			kaleoNode.getKaleoTransitions();
 
@@ -298,9 +300,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LLMNodeExecutor.class);
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ChatModelListenerFactory _chatModelListenerFactory;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

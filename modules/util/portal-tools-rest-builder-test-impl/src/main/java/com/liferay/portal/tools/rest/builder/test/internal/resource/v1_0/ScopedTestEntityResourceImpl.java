@@ -82,8 +82,8 @@ public class ScopedTestEntityResourceImpl
 					StringBundler.concat(
 						"http://localhost:",
 						PortalUtil.getPortalServerPort(false),
-						"/o/test/v1.0/asset-libraries/",
-						depotEntry.getDepotEntryId(),
+						"/o/portal-tools-rest-builder-test/v1.0",
+						"/asset-libraries/", depotEntry.getDepotEntryId(),
 						"/scoped-test-entities/batch")
 				).put(
 					"method", "POST"
@@ -129,7 +129,7 @@ public class ScopedTestEntityResourceImpl
 					StringBundler.concat(
 						"http://localhost:",
 						PortalUtil.getPortalServerPort(false),
-						"/o/test/v1.0/sites/", siteId,
+						"/o/portal-tools-rest-builder-test/v1.0/sites/", siteId,
 						"/scoped-test-entities/batch")
 				).put(
 					"method", "POST"

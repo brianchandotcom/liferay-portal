@@ -310,7 +310,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -417,7 +417,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -524,7 +524,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -637,7 +637,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -750,7 +750,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -852,7 +852,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -967,7 +967,7 @@ public interface SharedInternalModelBatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -993,4 +993,4 @@ public interface SharedInternalModelBatchTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1894856671
+// LIFERAY-REST-BUILDER-HASH:1407866103

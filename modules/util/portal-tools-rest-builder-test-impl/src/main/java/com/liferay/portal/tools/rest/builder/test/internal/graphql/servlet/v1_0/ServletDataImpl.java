@@ -144,7 +144,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "/test-graphql/v1_0";
+		return "/portal-tools-rest-builder-test-graphql/v1_0";
 	}
 
 	@Override
@@ -940,4 +940,4 @@ public class ServletDataImpl implements ServletData {
 		_testEntityAddressResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2106682717
+// LIFERAY-REST-BUILDER-HASH:129083861

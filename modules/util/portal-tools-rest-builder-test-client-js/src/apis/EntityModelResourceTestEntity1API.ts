@@ -37,7 +37,7 @@ export class EntityModelResourceTestEntity1API {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/entity-model-resource-test-entities1"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities1"
 ;
 
 			const queryParameters: any = {};

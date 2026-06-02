@@ -303,7 +303,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BatchTestEntity batchTestEntity2 =
@@ -313,7 +313,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				invokeGraphQLMutation(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"deleteBatchTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
@@ -326,13 +326,13 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 													"\"");
 								}
 							}))),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"Object/deleteBatchTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
-					"test_v1_0",
+					"portalTools_v1_0",
 					new GraphQLField(
 						"batchTestEntityByExternalReferenceCode",
 						new HashMap<String, Object>() {
@@ -445,11 +445,12 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				BatchTestEntitySerDes.toDTOs(
 					batchTestEntitiesJSONObject.getString("items"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		batchTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/test_v1_0",
+			invokeGraphQLQuery(
+				new GraphQLField("portalTools_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/portalTools_v1_0",
 			"JSONObject/batchTestEntities");
 
 		Assert.assertEquals(
@@ -711,7 +712,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data", "Object/batchTestEntity"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -720,7 +721,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"batchTestEntity",
 									new HashMap<String, Object>() {
@@ -731,7 +732,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/batchTestEntity"))));
 	}
 
@@ -758,14 +759,14 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"batchTestEntity",
 							new HashMap<String, Object>() {
@@ -840,7 +841,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 						"JSONObject/data",
 						"Object/batchTestEntityByExternalReferenceCode"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -849,7 +850,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"batchTestEntityByExternalReferenceCode",
 									new HashMap<String, Object>() {
@@ -863,7 +864,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/batchTestEntityByExternalReferenceCode"))));
 	}
 
@@ -893,14 +894,14 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"batchTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
@@ -2130,4 +2131,4 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1171780144
+// LIFERAY-REST-BUILDER-HASH:-1993247939

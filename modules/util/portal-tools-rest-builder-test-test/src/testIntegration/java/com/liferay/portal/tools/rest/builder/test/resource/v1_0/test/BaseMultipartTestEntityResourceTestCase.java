@@ -461,7 +461,7 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data", "Object/multipartTestEntity"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -470,7 +470,7 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"multipartTestEntity",
 									new HashMap<String, Object>() {
@@ -481,7 +481,7 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/multipartTestEntity"))));
 	}
 
@@ -508,14 +508,14 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"multipartTestEntity",
 							new HashMap<String, Object>() {
@@ -1712,4 +1712,4 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-201179494
+// LIFERAY-REST-BUILDER-HASH:516592327

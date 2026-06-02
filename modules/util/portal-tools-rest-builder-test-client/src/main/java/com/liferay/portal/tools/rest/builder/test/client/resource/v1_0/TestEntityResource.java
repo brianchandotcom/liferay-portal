@@ -338,7 +338,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -445,7 +445,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -552,7 +552,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -653,7 +653,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -755,7 +755,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/count");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/count");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -868,7 +868,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -962,7 +962,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/reserved-word");
+						"/o/portal-tools-rest-builder-test/v1.0/reserved-word");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1079,7 +1079,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1184,7 +1184,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1283,7 +1283,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1385,7 +1385,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/multipart/bulk");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/multipart/bulk");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1488,7 +1488,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/multipart/image");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/multipart/image");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1601,7 +1601,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -1709,7 +1709,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1815,7 +1815,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}/status");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}/status");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -1839,4 +1839,4 @@ public interface TestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-956455216
+// LIFERAY-REST-BUILDER-HASH:-708346312

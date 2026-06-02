@@ -46,7 +46,7 @@ public abstract class BaseEntityModelResourceTestEntity2ResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieve a EntityModelResourceTestEntity2 item. (EntityModelResource and VulcanBatchEngineTaskItemDelegate interfaces will not be implemented automatically)"
@@ -154,7 +154,7 @@ public abstract class BaseEntityModelResourceTestEntity2ResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "test";
+		return "portal-tools-rest-builder-test";
 	}
 
 	protected Map<String, String> addAction(
@@ -529,4 +529,4 @@ public abstract class BaseEntityModelResourceTestEntity2ResourceImpl
 			BaseEntityModelResourceTestEntity2ResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:227065456
+// LIFERAY-REST-BUILDER-HASH:507882112

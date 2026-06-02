@@ -244,7 +244,7 @@ public interface SchemaResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/schemas");
+						"/o/portal-tools-rest-builder-test/v1.0/schemas");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -354,7 +354,7 @@ public interface SchemaResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/schemas/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/schemas/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -376,4 +376,4 @@ public interface SchemaResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-738278795
+// LIFERAY-REST-BUILDER-HASH:-1245580699

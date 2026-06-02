@@ -244,7 +244,7 @@ public interface FilterResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/filters");
+						"/o/portal-tools-rest-builder-test/v1.0/filters");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -354,7 +354,7 @@ public interface FilterResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/filters/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/filters/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -376,4 +376,4 @@ public interface FilterResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:733572798
+// LIFERAY-REST-BUILDER-HASH:-1593210450

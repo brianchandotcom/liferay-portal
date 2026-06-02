@@ -26,7 +26,9 @@ public class TestExtensionOpenAPIContributor implements OpenAPIContributor {
 	@Override
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext) {
 		if ((openAPIContext == null) ||
-			!Objects.equals(openAPIContext.getPath(), "/o/test/")) {
+			!Objects.equals(
+				openAPIContext.getPath(),
+				"/o/portal-tools-rest-builder-test/")) {
 
 			return;
 		}

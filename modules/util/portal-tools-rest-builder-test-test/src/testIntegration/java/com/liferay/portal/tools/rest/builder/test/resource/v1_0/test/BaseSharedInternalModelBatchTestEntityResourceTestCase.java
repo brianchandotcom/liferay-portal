@@ -296,7 +296,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SharedInternalModelBatchTestEntity sharedInternalModelBatchTestEntity2 =
@@ -306,7 +306,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				invokeGraphQLMutation(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"deleteSharedInternalModelBatchTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
@@ -319,13 +319,13 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 													"\"");
 								}
 							}))),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"Object/deleteSharedInternalModelBatchTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
-					"test_v1_0",
+					"portalTools_v1_0",
 					new GraphQLField(
 						"sharedInternalModelBatchTestEntityByExternalReferenceCode",
 						new HashMap<String, Object>() {
@@ -459,12 +459,13 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 					sharedInternalModelBatchTestEntitiesJSONObject.getString(
 						"items"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		sharedInternalModelBatchTestEntitiesJSONObject =
 			JSONUtil.getValueAsJSONObject(
-				invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				invokeGraphQLQuery(
+					new GraphQLField("portalTools_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"JSONObject/sharedInternalModelBatchTestEntities");
 
 		Assert.assertEquals(
@@ -546,7 +547,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 						"JSONObject/data",
 						"Object/sharedInternalModelBatchTestEntityByExternalReferenceCode"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -555,7 +556,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"sharedInternalModelBatchTestEntityByExternalReferenceCode",
 									new HashMap<String, Object>() {
@@ -569,7 +570,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/sharedInternalModelBatchTestEntityByExternalReferenceCode"))));
 	}
 
@@ -599,14 +600,14 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"sharedInternalModelBatchTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
@@ -1743,4 +1744,4 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 			_sharedInternalModelBatchTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:88348890
+// LIFERAY-REST-BUILDER-HASH:1365181772

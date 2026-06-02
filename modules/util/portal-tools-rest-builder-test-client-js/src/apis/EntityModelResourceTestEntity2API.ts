@@ -39,7 +39,7 @@ export class EntityModelResourceTestEntity2API {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}"
 						.replace("{entityModelResourceTestEntity2Id}",encodeURIComponent(entityModelResourceTestEntity2Id))
 				;
 

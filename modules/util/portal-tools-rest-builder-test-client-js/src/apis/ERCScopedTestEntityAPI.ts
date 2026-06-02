@@ -42,7 +42,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -100,7 +100,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
 
@@ -155,7 +155,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -213,7 +213,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 				;
 
@@ -268,7 +268,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -334,7 +334,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 																;
@@ -408,7 +408,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/erc-scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities"
 												;
 
 			const queryParameters: any = {};
@@ -474,7 +474,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 																;
 
@@ -539,7 +539,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 
@@ -594,7 +594,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -660,7 +660,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 																;
@@ -753,7 +753,7 @@ export class ERCScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCScopedTestEntity, "ERCScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 				;
 
@@ -855,7 +855,7 @@ export class ERCScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCScopedTestEntity, "ERCScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 
@@ -959,7 +959,7 @@ export class ERCScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCScopedTestEntity, "ERCScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -1048,7 +1048,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -1106,7 +1106,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
 
@@ -1184,7 +1184,7 @@ export class ERCScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCScopedTestEntity, "ERCScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;
@@ -1273,7 +1273,7 @@ export class ERCScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercScopedTestEntityExternalReferenceCode}",encodeURIComponent(ercScopedTestEntityExternalReferenceCode))
 				;

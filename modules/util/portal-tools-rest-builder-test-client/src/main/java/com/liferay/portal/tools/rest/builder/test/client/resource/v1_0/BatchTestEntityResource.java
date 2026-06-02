@@ -300,7 +300,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -404,7 +404,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -507,7 +507,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/{batchTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/{batchTestEntityId}");
 
 			httpInvoker.path("batchTestEntityId", batchTestEntityId);
 
@@ -615,7 +615,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -728,7 +728,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -834,7 +834,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -933,7 +933,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1042,7 +1042,7 @@ public interface BatchTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1066,4 +1066,4 @@ public interface BatchTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1826588345
+// LIFERAY-REST-BUILDER-HASH:427614455

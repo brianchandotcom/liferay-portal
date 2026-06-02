@@ -37,7 +37,7 @@ export class SchemaAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/schemas"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/schemas"
 ;
 
 			const queryParameters: any = {};

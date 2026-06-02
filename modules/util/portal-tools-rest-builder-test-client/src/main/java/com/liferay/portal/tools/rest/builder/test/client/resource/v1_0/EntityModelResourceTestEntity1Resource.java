@@ -245,7 +245,7 @@ public interface EntityModelResourceTestEntity1Resource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/entity-model-resource-test-entities1");
+						"/o/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities1");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -267,4 +267,4 @@ public interface EntityModelResourceTestEntity1Resource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2090173484
+// LIFERAY-REST-BUILDER-HASH:-2129223156

@@ -37,7 +37,7 @@ export class FilterAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/filters"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/filters"
 ;
 
 			const queryParameters: any = {};

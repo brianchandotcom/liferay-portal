@@ -109,7 +109,8 @@ public class CompanyTestEntityResourceImpl
 					StringBundler.concat(
 						"http://localhost:",
 						PortalUtil.getPortalServerPort(false),
-						"/o/test/v1.0/company-test-entities/batch")
+						"/o/portal-tools-rest-builder-test/v1.0",
+						"/company-test-entities/batch")
 				).put(
 					"method", "POST"
 				).build()

@@ -42,7 +42,7 @@ export class ERCSiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
 				;
@@ -100,7 +100,7 @@ export class ERCSiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 
@@ -155,7 +155,7 @@ export class ERCSiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
 				;
@@ -221,7 +221,7 @@ export class ERCSiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
 																;
@@ -314,7 +314,7 @@ export class ERCSiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 
@@ -418,7 +418,7 @@ export class ERCSiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
 				;
@@ -507,7 +507,7 @@ export class ERCSiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
 				;

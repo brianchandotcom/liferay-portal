@@ -9,7 +9,9 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -42,12 +44,21 @@ public class DataCleanupPreupgradeProcessSuite {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DataCleanupConcurrentExecutor dataCleanupConcurrentExecutor =
-				new DataCleanupConcurrentExecutor();
+			DBInspector.beginSchemaSnapshot();
 
-			dataCleanupConcurrentExecutor._execute(
-				_getLayeredDataCleanupPreupgradeProcesses(),
-				this::_runDataCleanupPreupgradeProcess);
+			try {
+				DataCleanupConcurrentExecutor dataCleanupConcurrentExecutor =
+					new DataCleanupConcurrentExecutor();
+
+				dataCleanupConcurrentExecutor._execute(
+					_getLayeredDataCleanupPreupgradeProcesses(),
+					this::_runDataCleanupPreupgradeProcess);
+			}
+			finally {
+				DataCleanupPreupgradeProcessUtil.clearCache();
+				DBInspector.clearSchemaSnapshot();
+				DBResourceUtil.clearLiferayTableNamesCache();
+			}
 		}
 	}
 

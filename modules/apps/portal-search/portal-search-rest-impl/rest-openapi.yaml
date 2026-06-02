@@ -73,7 +73,7 @@ components:
                 name:
                     description:
                         Type of facet. Supported values are category, custom, date-range, folder, nested, site, tag,
-                        type, vocabulary, and user. The custom facet uses top-level index fields only; Object and Web
+                        type, user, and vocabulary. The custom facet uses top-level index fields only; Object and Web
                         Content Structure fields are indexed as nested fields, so use the nested facet for those
                         entities. The server gracefully ignores unrecognized values - passing an unknown facet type does
                         not return a 500 error; the facet is simply skipped.
@@ -108,10 +108,10 @@ components:
                         results when the search parameter is omitted from the request - equivalent to the emptySearch
                         GET query parameter), search.experiences.blueprint.external.reference.code (External Reference
                         Code of a Search Blueprint controlling the query and configuration - preferred over passing the
-                        blueprint ID; Search Blueprints require DXP Enterprise-tier with the Liferay Enterprise Search
+                        blueprint ID; Search Blueprints require DXP Enterprise tier with the Liferay Enterprise Search
                         (LES) add-on subscription), search.experiences.blueprint.id (ID of a Search Blueprint - prefer
                         search.experiences.blueprint.external.reference.code when available),
-                        search.experiences.ip.address (overrides the auto-detected client IP for geolocation-aware
+                        search.experiences.ip.address (overrides the autodetected client IP for geolocation-aware
                         blueprint elements such as IP-based boosting or region targeting; defaults to the actual HTTP
                         request's client IP when omitted; LES-only since the consumers ship with Search Experiences),
                         search.experiences.scope.group.id (set when the blueprint contains elements that require a group
@@ -127,7 +127,8 @@ components:
                         alongside the results. The processed facet term buckets appear in the response's `searchFacets`
                         field - a map keyed by `aggregationName`, where each value is an array of term-bucket objects
                         with `displayName` (locale-dependent label), `term` (raw term value), and `frequency` (count of
-                        matching documents). Only present on POST responses when `facetConfigurations` are provided.
+                        matching documents). The `searchFacets` field is returned only when this property is provided in
+                        the request.
                     items:
                         $ref: "#/components/schemas/FacetConfiguration"
                     type: array
@@ -188,24 +189,25 @@ components:
                     type: string
                 dateReview:
                     description:
-                        The date when the content item is scheduled for editorial review. Part of the Liferay content
-                        lifecycle; populated by Web Content Article and other content types that support a review
-                        workflow. May be null when no review date is set for the item.
+                        The date when the content item is scheduled for editorial review. This field is part of the
+                        Liferay content lifecycle and is populated by Web Content Article and other content types that
+                        support a review workflow. The value may be null when no review date is set for the item.
                     format: date-time
                     type: string
                 description:
                     description:
-                        Free-text description of the item. Locale-dependent on the 'Accept-Language' request header where applicable.
+                        Free-text description of the item. The value depends on the locale specified by the 'Accept-Language' request header where applicable.
                     type: string
                 embedded:
                     description:
                         Asset-specific nested data. The shape depends on entryClassName - blog entries include
                         authorName and assetTagNames, documents include extension and size, custom Objects include their
-                        declared fields, and so on. Populated only when nestedFields=embedded is requested.
+                        declared fields, and so on. The embedded field is populated only when nestedFields=embedded is
+                        requested.
                     type: object
                 entryClassName:
                     description:
-                        Fully-qualified class name of the indexed entity (for example,
+                        Fully qualified class name of the indexed entity (for example,
                         com.liferay.blogs.model.BlogsEntry for a blog entry, com.liferay.journal.model.JournalArticle
                         for a Web Content Article). This value can be used directly as input to the entryClassNames
                         query parameter in subsequent /search requests to narrow searches to that type.
@@ -220,13 +222,14 @@ components:
                     description:
                         Relevance score assigned by the search engine. Higher values indicate stronger relevance to the
                         query. Typical values fall in the range 0.0 to ~10.0 depending on query complexity and blueprint
-                        configuration. Useful for threshold filtering (e.g., dropping results below a chosen score) or
-                        custom result ranking logic (combining `score` with other signals).
+                        configuration. This value is useful for threshold filtering (e.g., dropping results below a
+                        chosen score) or custom result ranking logic (combining `score` with other signals).
                     format: float
                     type: number
                 title:
                     description:
-                        Title of the item. Locale-dependent on the 'Accept-Language' request header where applicable.
+                        Title of the item. The value depends on the locale specified by the 'Accept-Language' request
+                        header where applicable.
                     type: string
         Suggestion:
             properties:
@@ -285,9 +288,9 @@ paths:
                 -   in: query
                     description:
                         Specify the External Reference Code (ERC) of a search blueprint to control the search query and
-                        configuration. Preferred over the blueprint ID. For POST /search requests, use the
+                        configuration. This is preferred over the blueprint ID. For POST /search requests, use the
                         `search.experiences.blueprint.external.reference.code` request body attribute instead. Search
-                        Blueprints is available on DXP Enterprise-tier with Liferay Enterprise Search (LES) add-on
+                        Blueprints is available on DXP Enterprise tier with Liferay Enterprise Search (LES) add-on
                         subscription.
                     example: PRODUCT_SEARCH
                     name: blueprintExternalReferenceCode
@@ -368,13 +371,13 @@ paths:
                         entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
                         be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
                         title on the locale specified by the 'Accept-Language' request header). Supported operators are
-                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multi-value collections use `any()`/`all()` (for example,
+                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multivalue collections use `any()`/`all()` (for example,
                         `groupIds/any(g:g eq 20121)`). Web content articles (JournalArticle) cannot be filtered by
                         status - for those, limit by site using `scope`/`groupIds` instead, which returns only approved
                         items by default. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
-                        use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
+                        use Search Blueprints (available on DXP Enterprise tier with Liferay Enterprise Search (LES)
                         add-on subscription), which can encapsulate more filters and operates directly with search index
                         fields. Learn more at
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints.
@@ -414,8 +417,8 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        Comma-separated list of fields to exclude from each result. Inverse of the fields parameter. Use
-                        either fields (allow-list) or restrictFields (block-list), not both.
+                        Comma-separated list of fields to exclude from each result. This is the inverse of the fields
+                        parameter. Use either fields (allow list) or restrictFields (block list), not both.
                     example: actions,embedded
                     name: restrictFields
                     required: false
@@ -455,7 +458,7 @@ paths:
                         for more information. Note - a search blueprint can also have sort configurations. See
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints/sorting-results-in-a-search-blueprint#search-blueprints-versus-the-headless-api
                         to understand how these blueprint-added sorts interact with the sort parameter if you plan to
-                        use both. Search Blueprints is available on DXP Enterprise-tier with Liferay Enterprise Search
+                        use both. Search Blueprints is available on DXP Enterprise tier with Liferay Enterprise Search
                         (LES) add-on subscription.
                     example: dateModified:desc
                     name: sort
@@ -549,13 +552,13 @@ paths:
                         entry was published in OData Edm.Date format YYYY-MM-DD), dateReview (the date the entry should
                         be reviewed in OData Edm.Date format YYYY-MM-DD), keywords (Asset tag names), and title (Asset
                         title on the locale specified by the 'Accept-Language' request header). Supported operators are
-                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multi-value collections use `any()`/`all()` (for example,
+                        `eq`, `ne`, `gt`, `ge`, `lt`, `le`; multivalue collections use `any()`/`all()` (for example,
                         `groupIds/any(g:g eq 20121)`). Web content articles (JournalArticle) cannot be filtered by
                         status - for those, limit by site using `scope`/`groupIds` instead, which returns only approved
                         items by default. See
                         https://learn.liferay.com/w/dxp/integration/headless-apis/using-liferay-as-a-headless-platform/consuming-apis/api-query-parameters
                         for more information on the standard API query parameters. For more robust filtering options,
-                        use Search Blueprints (available on DXP Enterprise-tier with Liferay Enterprise Search (LES)
+                        use Search Blueprints (available on DXP Enterprise tier with Liferay Enterprise Search (LES)
                         add-on subscription), which can encapsulate more filters and operates directly with search index
                         fields. Learn more at
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints.
@@ -595,8 +598,8 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        Comma-separated list of fields to exclude from each result. Inverse of the fields parameter. Use
-                        either fields (allow-list) or restrictFields (block-list), not both.
+                        Comma-separated list of fields to exclude from each result. This is the inverse of the fields
+                        parameter. Use either fields (allow list) or restrictFields (block list), not both.
                     example: actions,embedded
                     name: restrictFields
                     required: false
@@ -636,7 +639,7 @@ paths:
                         for more information. Note - a search blueprint can also have sort configurations. See
                         https://learn.liferay.com/w/dxp/search/liferay-enterprise-search/search-blueprints/sorting-results-in-a-search-blueprint#search-blueprints-versus-the-headless-api
                         to understand how these blueprint-added sorts interact with the sort parameter if you plan to
-                        use both. Search Blueprints is available on DXP Enterprise-tier with Liferay Enterprise Search
+                        use both. Search Blueprints is available on DXP Enterprise tier with Liferay Enterprise Search
                         (LES) add-on subscription.
                     example: dateModified:desc
                     name: sort

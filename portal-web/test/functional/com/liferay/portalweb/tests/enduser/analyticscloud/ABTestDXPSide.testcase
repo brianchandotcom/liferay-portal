@@ -63,7 +63,7 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-@description = "Story: LRAC-14101 | Automation ID: LRAC-14544 | Test Summary: Delete a terminated test in DXP"
+	@description = "Story: LRAC-14101 | Automation ID: LRAC-14544 | Test Summary: Delete a terminated test in DXP"
 	@priority = 4
 	test CanDeleteTerminatedTestOnDXP {
 		task ("Create AB test") {

@@ -13,6 +13,11 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {faroConfig} from './faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
+import {
+	selectPaginationItemsPerPage,
+	selectPaginationPageNumber,
+	viewPaginationResults,
+} from './utils/utils';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -674,6 +679,86 @@ test(
 
 		for (const email of emails) {
 			await expect(page.getByRole('cell', {name: email})).toHaveCount(0);
+		}
+	}
+);
+
+test(
+	'User Management list can be paginated',
+	{
+		tag: '@LRAC-9045',
+	},
+	async ({page, project}) => {
+		const emails = [
+			`paginated-1-${Date.now()}@liferay.com`,
+			`paginated-2-${Date.now()}@liferay.com`,
+		];
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		try {
+
+			// Invite two users so the list spans more than one page of four
+
+			await page.getByRole('button', {name: 'Invite Users'}).click();
+
+			for (const email of emails) {
+				await page.getByPlaceholder('Enter Email Address').fill(email);
+
+				await page.keyboard.press('Enter');
+			}
+
+			await page.getByRole('button', {name: 'Send'}).click();
+
+			await expect(
+				page.getByText('Success:Invitations have been sent.')
+			).toBeVisible();
+
+			// Four users per page leaves the rest on page two
+
+			await selectPaginationItemsPerPage({itemsPerPage: '4', page});
+
+			await expect(page.locator('.table-title')).toHaveCount(4);
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 4 of',
+			});
+
+			await selectPaginationPageNumber({page, paginationPageNumber: '2'});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 5 to',
+			});
+		}
+		finally {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.userManagementPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			for (const email of emails) {
+				await page.getByPlaceholder('Search').first().fill(email);
+
+				await page.keyboard.press('Enter');
+
+				await page
+					.getByRole('row', {name: email})
+					.getByLabel('Delete')
+					.click();
+
+				await page.getByRole('button', {name: 'Continue'}).click();
+
+				await expect(page.getByRole('cell', {name: email})).toHaveCount(
+					0
+				);
+			}
 		}
 	}
 );

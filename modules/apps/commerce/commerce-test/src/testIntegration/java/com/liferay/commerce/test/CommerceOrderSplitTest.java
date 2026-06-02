@@ -1078,9 +1078,7 @@ public class CommerceOrderSplitTest {
 			}
 		}
 
-		Assert.assertNotNull(
-			"No order item found for SKU " + cpInstance.getSku(),
-			commerceOrderItem);
+		Assert.assertNotNull(commerceOrderItem);
 
 		return commerceOrderItem;
 	}

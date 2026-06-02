@@ -13,7 +13,7 @@ import {
 } from '@liferay/site-cms-site-initializer';
 import React, {useState} from 'react';
 
-import {displayAssignSuccessToast} from '../../utils/toastUtil';
+import {displayBulkAssignSuccessToast} from '../../utils/toastUtil';
 import CustomAssignee from '../CustomAssignee';
 
 import './../AssigneeTrigger.scss';
@@ -65,13 +65,14 @@ export default function BulkEditAssigneeModalContent({
 
 					return;
 				}
-				displayAssignSuccessToast(
-					'Task',
-					(value as AssigneeValue).name
+				displayBulkAssignSuccessToast(
+					(value as AssigneeValue).name,
+					selectedData.items?.length ?? 0
 				);
 				closeModal();
 			},
 			overrideDefaultErrorToast: true,
+			overrideDefaultSuccessToast: true,
 			selectedData,
 			type: 'AssignToObjectBulkSelectionAction',
 		} as IBulkActionTaskStarterDTO<'AssignToObjectBulkSelectionAction'>);

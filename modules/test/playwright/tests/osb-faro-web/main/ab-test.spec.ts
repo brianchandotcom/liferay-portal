@@ -815,3 +815,110 @@ test(
 		await expect(page.locator('#segmentsExperimentSidebar')).toBeVisible();
 	}
 );
+
+test(
+	'Create, terminate, and delete an AB Test from the AC tests list',
+	{tag: ['@LRAC-11512', '@LRAC-11513']},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: 'MyPage-' + getRandomString(),
+		});
+
+		await syncAnalyticsCloudViaAPI({
+			apiHelpers,
+			channel,
+			project,
+			siteId: Number(site.id),
+		});
+
+		const abTestName = 'AB Test -' + getRandomString();
+
+		// Create and run an AB Test with a variant
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await page.waitForSelector('.segments-experiment-icon');
+
+		await openABTesSidebar(page);
+
+		await createABTest({name: abTestName, page});
+
+		await createVariant({name: 'Variant -' + getRandomString(), page});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator('.modal-footer').getByText('Run'),
+			trigger: page.getByText('Review and Run Test'),
+		});
+
+		await expect(page.getByText('Test is now running.')).toBeVisible();
+
+		await page.locator('.modal-footer').getByText('Ok').click();
+
+		// The test appears in the AC tests list with RUNNING status (LRAC-11512)
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.testPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(async () => {
+			await expect(
+				page.getByRole('link', {name: abTestName}).first()
+			).toBeVisible({timeout: 3000});
+
+			await page.reload();
+		}).toPass();
+
+		await expect(page.getByText('RUNNING').first()).toBeVisible();
+
+		// Terminate the test from AC; the action redirects to DXP and confirms
+
+		await navigateTo({page, pageName: abTestName});
+
+		await clickOnActionButton({name: 'Terminate', page});
+
+		await clickOnABTestModalButton({buttonName: 'Terminate', page});
+
+		await assertTerminatedABTest(page);
+
+		// The AC list reflects the TERMINATED status
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.testPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(page.getByText('TERMINATED').first()).toBeVisible();
+
+		// Delete the test from AC; verify empty state on both ends (LRAC-11513)
+
+		await navigateTo({page, pageName: abTestName});
+
+		await clickOnActionButton({name: 'Delete', page});
+
+		await clickOnABTestModalButton({buttonName: 'Delete', page});
+
+		await checkEmptyStateOnDXPSide(page);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.testPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await checkEmptyStateOnACSide(page);
+	}
+);

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.internal.rag.content.retriever;
 
-import com.liferay.ai.hub.internal.constants.ContentRetrieverDestinationNames;
+import com.liferay.ai.hub.internal.constants.AIHubDestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 
@@ -37,7 +37,7 @@ public abstract class BaseContentRetriever implements ContentRetriever {
 		message.put("workflowInstanceId", _workflowInstanceId);
 
 		MessageBusUtil.sendMessage(
-			ContentRetrieverDestinationNames.CONTENT_RETRIEVER, message);
+			AIHubDestinationNames.AI_HUB_CONTENT_RETRIEVER, message);
 
 		return contents;
 	}

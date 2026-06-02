@@ -7,7 +7,7 @@ package com.liferay.ai.hub.internal.messaging;
 
 import com.liferay.ai.hub.internal.audit.AuditRouterUtil;
 import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
-import com.liferay.ai.hub.internal.constants.ContentRetrieverDestinationNames;
+import com.liferay.ai.hub.internal.constants.AIHubDestinationNames;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	property = "destination.name=" + ContentRetrieverDestinationNames.CONTENT_RETRIEVER,
+	property = "destination.name=" + AIHubDestinationNames.AI_HUB_CONTENT_RETRIEVER,
 	service = MessageListener.class
 )
 public class ContentRetrieverMessageListener extends BaseMessageListener {
@@ -45,7 +45,7 @@ public class ContentRetrieverMessageListener extends BaseMessageListener {
 		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				ContentRetrieverDestinationNames.CONTENT_RETRIEVER));
+				AIHubDestinationNames.AI_HUB_CONTENT_RETRIEVER));
 
 		_destinationServiceRegistration = bundleContext.registerService(
 			Destination.class, destination,

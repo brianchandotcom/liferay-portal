@@ -8,8 +8,9 @@ package com.liferay.ai.hub.internal.constants;
 /**
  * @author Feliphe Marinho
  */
-public class ContentRetrieverDestinationNames {
+public class AIHubDestinationNames {
 
-	public static final String CONTENT_RETRIEVER = "liferay/content_retriever";
+	public static final String AI_HUB_CONTENT_RETRIEVER =
+		"liferay/ai_hub_content_retriever";
 
 }

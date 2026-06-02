@@ -67,6 +67,8 @@ export class Detection {
 		for (const audience of this._audiencesDefinition.audiences) {
 			const {conjunction, id, retentionType, rules} = audience;
 
+			log(`Checking rules for audience '${id}'...`);
+
 			const matched = await this._evaluateGroup(conjunction, rules);
 
 			if (matched) {
@@ -148,10 +150,24 @@ export class Detection {
 			return this._evaluateGroup(rule.conjunction, rule.rules);
 		}
 
-		const operator = this._getOperator(rule.operator);
-		const attribute = await this._getAttribute(rule.attribute);
+		const ruleDescription = `('${rule.attribute}' ${rule.operator} '${rule.value}')`;
 
-		return operator(attribute, rule.value);
+		try {
+			const operator = this._getOperator(rule.operator);
+			const attribute = await this._getAttribute(rule.attribute);
+
+			const result = operator(attribute, rule.value);
+
+			log(`Evaluation of rule ${ruleDescription}: ${result}`);
+
+			return result;
+		}
+		catch (error: any) {
+			throw new Error(
+				`An error was thrown when evaluating rule ${ruleDescription}: ` +
+					(error.message || error)
+			);
+		}
 	}
 
 	private _getOperator(operator: Operator): OperatorImpl {

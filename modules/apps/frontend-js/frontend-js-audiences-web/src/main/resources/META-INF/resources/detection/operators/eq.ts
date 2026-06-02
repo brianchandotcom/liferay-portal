@@ -6,7 +6,7 @@
 import {checkTypes} from '../util';
 
 export function eq(value: any, expected: any): boolean {
-	checkTypes(value, ['number', 'string'], 'Operator value');
+	checkTypes(value, ['number', 'string'], `Operator 'eq' value`);
 
 	return value === expected;
 }

@@ -242,7 +242,7 @@ public interface SortResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sorts");
+						"/o/portal-tools-rest-builder-test/v1.0/sorts");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -352,7 +352,7 @@ public interface SortResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sorts/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/sorts/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -374,4 +374,4 @@ public interface SortResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-558063848
+// LIFERAY-REST-BUILDER-HASH:487642120

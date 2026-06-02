@@ -46,7 +46,7 @@ public abstract class BaseTestEntityAddressResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}/test-entity-address'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}/test-entity-address'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -146,7 +146,7 @@ public abstract class BaseTestEntityAddressResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "test";
+		return "portal-tools-rest-builder-test";
 	}
 
 	protected Map<String, String> addAction(
@@ -520,4 +520,4 @@ public abstract class BaseTestEntityAddressResourceImpl
 		LogFactoryUtil.getLog(BaseTestEntityAddressResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1588449122
+// LIFERAY-REST-BUILDER-HASH:1989630754

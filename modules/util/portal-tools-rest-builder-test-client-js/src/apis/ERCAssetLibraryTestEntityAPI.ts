@@ -42,7 +42,7 @@ export class ERCAssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;
@@ -100,7 +100,7 @@ export class ERCAssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 				;
 
@@ -155,7 +155,7 @@ export class ERCAssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;
@@ -221,7 +221,7 @@ export class ERCAssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 																;
@@ -314,7 +314,7 @@ export class ERCAssetLibraryTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 				;
 
@@ -418,7 +418,7 @@ export class ERCAssetLibraryTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;
@@ -507,7 +507,7 @@ export class ERCAssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
 						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;

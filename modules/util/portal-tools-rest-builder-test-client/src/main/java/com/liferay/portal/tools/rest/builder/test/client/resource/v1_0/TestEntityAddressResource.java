@@ -242,7 +242,7 @@ public interface TestEntityAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/{testEntityId}/test-entity-address");
+						"/o/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}/test-entity-address");
 
 			httpInvoker.path("testEntityId", testEntityId);
 
@@ -266,4 +266,4 @@ public interface TestEntityAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1720555500
+// LIFERAY-REST-BUILDER-HASH:-1126401380

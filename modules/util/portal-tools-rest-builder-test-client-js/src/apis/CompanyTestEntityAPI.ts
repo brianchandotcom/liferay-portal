@@ -40,7 +40,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 
@@ -91,7 +91,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities"
 ;
 
 			const queryParameters: any = {};
@@ -139,7 +139,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}"
 						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
 				;
 
@@ -192,7 +192,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 
@@ -247,7 +247,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}/permissions"
 						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
 								;
 
@@ -327,7 +327,7 @@ export class CompanyTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}"
 						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
 				;
 
@@ -427,7 +427,7 @@ export class CompanyTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/company-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities"
 ;
 
 			const queryParameters: any = {};
@@ -521,7 +521,7 @@ export class CompanyTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}"
 						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
 				;
 
@@ -623,7 +623,7 @@ export class CompanyTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 
@@ -702,7 +702,7 @@ export class CompanyTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}/permissions"
 						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
 				;
 

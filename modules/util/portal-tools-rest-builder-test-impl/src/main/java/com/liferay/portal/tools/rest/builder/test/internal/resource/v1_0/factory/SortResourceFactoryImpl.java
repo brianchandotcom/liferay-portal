@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/v1.0/Sort",
+	property = "resource.locator.key=/portal-tools-rest-builder-test/v1.0/Sort",
 	service = SortResource.Factory.class
 )
 @Generated("")
@@ -323,4 +323,4 @@ public class SortResourceFactoryImpl implements SortResource.Factory {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1305936596
+// LIFERAY-REST-BUILDER-HASH:-1624209756

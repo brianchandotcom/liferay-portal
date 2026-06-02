@@ -317,7 +317,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
 			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
@@ -412,7 +412,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -525,7 +525,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
 			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
@@ -634,7 +634,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entity");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entity");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -752,7 +752,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entity");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entity");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -853,7 +853,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entity/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entity/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -972,7 +972,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
 			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
@@ -1079,7 +1079,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multipart-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/multipart-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1199,7 +1199,7 @@ public interface MultipartTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -1224,4 +1224,4 @@ public interface MultipartTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1007171414
+// LIFERAY-REST-BUILDER-HASH:1886289598

@@ -352,7 +352,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -458,7 +458,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -566,7 +566,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -672,7 +672,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/{siteTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}");
 
 			httpInvoker.path("siteTestEntityId", siteTestEntityId);
 
@@ -784,7 +784,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/{siteTestEntityId}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}/permissions");
 
 			httpInvoker.path("siteTestEntityId", siteTestEntityId);
 
@@ -893,7 +893,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/{siteTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}");
 
 			httpInvoker.path("siteTestEntityId", siteTestEntityId);
 
@@ -1008,7 +1008,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/export-batch");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -1116,7 +1116,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -1219,7 +1219,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/batch");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -1331,7 +1331,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1440,7 +1440,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/{siteTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}");
 
 			httpInvoker.path("siteTestEntityId", siteTestEntityId);
 
@@ -1541,7 +1541,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1655,7 +1655,7 @@ public interface SiteTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/site-test-entities/{siteTestEntityId}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}/permissions");
 
 			httpInvoker.path("siteTestEntityId", siteTestEntityId);
 
@@ -1679,4 +1679,4 @@ public interface SiteTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:330120503
+// LIFERAY-REST-BUILDER-HASH:2114559247

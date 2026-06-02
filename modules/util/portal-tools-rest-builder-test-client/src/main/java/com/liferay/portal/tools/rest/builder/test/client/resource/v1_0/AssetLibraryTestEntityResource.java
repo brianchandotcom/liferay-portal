@@ -268,7 +268,7 @@ public interface AssetLibraryTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -377,7 +377,7 @@ public interface AssetLibraryTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -492,7 +492,7 @@ public interface AssetLibraryTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/export-batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -516,4 +516,4 @@ public interface AssetLibraryTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1398748080
+// LIFERAY-REST-BUILDER-HASH:-1943511784

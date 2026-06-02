@@ -42,7 +42,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -102,7 +102,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -160,7 +160,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 				;
 
@@ -215,7 +215,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -273,7 +273,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities"
 						.replace("{siteId}",encodeURIComponent(siteId))
 				;
 
@@ -328,7 +328,7 @@ export class ScopedTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -411,7 +411,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -523,7 +523,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -633,7 +633,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 				;
 
@@ -735,7 +735,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities"
 						.replace("{siteId}",encodeURIComponent(siteId))
 				;
 
@@ -839,7 +839,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -951,7 +951,7 @@ export class ScopedTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.scopedTestEntity, "ScopedTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;

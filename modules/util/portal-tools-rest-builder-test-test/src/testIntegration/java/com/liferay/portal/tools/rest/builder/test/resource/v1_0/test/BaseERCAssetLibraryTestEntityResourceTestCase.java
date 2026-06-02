@@ -361,7 +361,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity2 =
@@ -371,7 +371,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				invokeGraphQLMutation(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"deleteAssetLibraryERCAssetLibraryTestEntity",
 							new HashMap<String, Object>() {
@@ -390,13 +390,13 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 													"\"");
 								}
 							}))),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"Object/deleteAssetLibraryERCAssetLibraryTestEntity"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
-					"test_v1_0",
+					"portalTools_v1_0",
 					new GraphQLField(
 						"assetLibraryERCAssetLibraryTestEntity",
 						new HashMap<String, Object>() {
@@ -523,7 +523,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		createBatchAction.put(
 			"href",
 			("http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/batch").
+				"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/batch").
 					replace(
 						"{assetLibraryExternalReferenceCode}",
 						String.valueOf(assetLibraryExternalReferenceCode)));
@@ -621,12 +621,13 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 					assetLibraryERCAssetLibraryTestEntitiesJSONObject.getString(
 						"items"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		assetLibraryERCAssetLibraryTestEntitiesJSONObject =
 			JSONUtil.getValueAsJSONObject(
-				invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				invokeGraphQLQuery(
+					new GraphQLField("portalTools_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"JSONObject/assetLibraryERCAssetLibraryTestEntities");
 
 		Assert.assertEquals(
@@ -725,7 +726,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 						"JSONObject/data",
 						"Object/assetLibraryERCAssetLibraryTestEntity"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -734,7 +735,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"assetLibraryERCAssetLibraryTestEntity",
 									new HashMap<String, Object>() {
@@ -754,7 +755,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/assetLibraryERCAssetLibraryTestEntity"))));
 	}
 
@@ -789,14 +790,14 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"assetLibraryERCAssetLibraryTestEntity",
 							new HashMap<String, Object>() {
@@ -2294,4 +2295,4 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntityResource _ercAssetLibraryTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1218758217
+// LIFERAY-REST-BUILDER-HASH:-2019162337

@@ -299,7 +299,7 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 				"JSONObject/data",
 				"Object/deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AssetLibraryTestEntity assetLibraryTestEntity2 =
@@ -309,7 +309,7 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				invokeGraphQLMutation(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
@@ -327,7 +327,7 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 													"\"");
 								}
 							}))),
-				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/data", "JSONObject/portalTools_v1_0",
 				"Object/deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode"));
 	}
 
@@ -1441,4 +1441,4 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 		AssetLibraryTestEntityResource _assetLibraryTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:650238122
+// LIFERAY-REST-BUILDER-HASH:-817688699

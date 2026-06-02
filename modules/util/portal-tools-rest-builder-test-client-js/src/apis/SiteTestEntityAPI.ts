@@ -42,7 +42,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -100,7 +100,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/site-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities"
 						.replace("{siteId}",encodeURIComponent(siteId))
 				;
 
@@ -155,7 +155,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -213,7 +213,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}"
 						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
 				;
 
@@ -268,7 +268,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}/permissions"
 						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
 								;
 
@@ -348,7 +348,7 @@ export class SiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}"
 						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
 				;
 
@@ -450,7 +450,7 @@ export class SiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/site-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities"
 						.replace("{siteId}",encodeURIComponent(siteId))
 				;
 
@@ -554,7 +554,7 @@ export class SiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{siteId}",encodeURIComponent(siteId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -664,7 +664,7 @@ export class SiteTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}"
 						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
 				;
 
@@ -743,7 +743,7 @@ export class SiteTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}/permissions"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/site-test-entities/{siteTestEntityId}/permissions"
 						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
 				;
 

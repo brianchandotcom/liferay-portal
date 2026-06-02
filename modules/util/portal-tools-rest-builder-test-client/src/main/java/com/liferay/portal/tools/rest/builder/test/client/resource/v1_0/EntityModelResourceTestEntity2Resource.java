@@ -248,7 +248,7 @@ public interface EntityModelResourceTestEntity2Resource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}");
+						"/o/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}");
 
 			httpInvoker.path(
 				"entityModelResourceTestEntity2Id",
@@ -274,4 +274,4 @@ public interface EntityModelResourceTestEntity2Resource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:927501084
+// LIFERAY-REST-BUILDER-HASH:846905044

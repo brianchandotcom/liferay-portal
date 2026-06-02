@@ -41,7 +41,7 @@ export class AssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 										.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
@@ -99,7 +99,7 @@ export class AssetLibraryTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryId}/asset-library-test-entities"
 						.replace("{assetLibraryId}",encodeURIComponent(assetLibraryId))
 				;
 

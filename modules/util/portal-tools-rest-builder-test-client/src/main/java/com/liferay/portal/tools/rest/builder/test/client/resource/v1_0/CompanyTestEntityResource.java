@@ -347,7 +347,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -451,7 +451,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -554,7 +554,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/{companyTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}");
 
 			httpInvoker.path("companyTestEntityId", companyTestEntityId);
 
@@ -662,7 +662,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -774,7 +774,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/{companyTestEntityId}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}/permissions");
 
 			httpInvoker.path("companyTestEntityId", companyTestEntityId);
 
@@ -883,7 +883,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/{companyTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}");
 
 			httpInvoker.path("companyTestEntityId", companyTestEntityId);
 
@@ -996,7 +996,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1102,7 +1102,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1202,7 +1202,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1309,7 +1309,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/{companyTestEntityId}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}");
 
 			httpInvoker.path("companyTestEntityId", companyTestEntityId);
 
@@ -1410,7 +1410,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1520,7 +1520,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1636,7 +1636,7 @@ public interface CompanyTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/company-test-entities/{companyTestEntityId}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/company-test-entities/{companyTestEntityId}/permissions");
 
 			httpInvoker.path("companyTestEntityId", companyTestEntityId);
 
@@ -1660,4 +1660,4 @@ public interface CompanyTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1870181878
+// LIFERAY-REST-BUILDER-HASH:1528613838

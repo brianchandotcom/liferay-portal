@@ -39,7 +39,7 @@ export class MultipartTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}"
 						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
@@ -92,7 +92,7 @@ export class MultipartTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 
@@ -168,7 +168,7 @@ export class MultipartTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.multipartTestEntity, "MultipartTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}"
 						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
@@ -280,7 +280,7 @@ export class MultipartTestEntityAPI {
 								body = formData;
 						}
 
-			const path = this._basePath + "/test/v1.0/multipart-test-entity"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/multipart-test-entity"
 ;
 
 			const queryParameters: any = {};
@@ -358,7 +358,7 @@ export class MultipartTestEntityAPI {
 								formData.append("multipartTestEntity", JSON.stringify(ObjectSerializer.serialize(multipartTestEntity, "MultipartTestEntity")));
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/multipart-test-entities/{multipartTestEntityId}"
 						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
@@ -418,7 +418,7 @@ export class MultipartTestEntityAPI {
 								formData.append("file", file);
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity"
 						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
 				;
 

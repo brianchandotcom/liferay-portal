@@ -42,7 +42,7 @@ export class TestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 								;
 
@@ -96,7 +96,7 @@ export class TestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities"
 				;
 
 			const queryParameters: any = {};
@@ -148,7 +148,7 @@ export class TestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 				;
 
@@ -199,7 +199,7 @@ export class TestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/test-entities/count"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/count"
 ;
 
 			const queryParameters: any = {};
@@ -272,7 +272,7 @@ export class TestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntity, "TestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 								;
 
@@ -379,7 +379,7 @@ export class TestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.body, "boolean"));
 						}
 
-			const path = this._basePath + "/test/v1.0/reserved-word"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/reserved-word"
 ;
 
 			const queryParameters: any = {};
@@ -468,7 +468,7 @@ export class TestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntity, "TestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities"
 ;
 
 			const queryParameters: any = {};
@@ -543,7 +543,7 @@ export class TestEntityAPI {
 								formData.append("testEntities", JSON.stringify(ObjectSerializer.serialize(testEntities, "Array<TestEntity>")));
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/test-entities/multipart/bulk"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/multipart/bulk"
 ;
 
 			const queryParameters: any = {};
@@ -596,7 +596,7 @@ export class TestEntityAPI {
 								formData.append("imageName", JSON.stringify(ObjectSerializer.serialize(imageName, "string")));
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/test-entities/multipart/image"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/multipart/image"
 ;
 
 			const queryParameters: any = {};
@@ -667,7 +667,7 @@ export class TestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntity, "TestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 								;
 
@@ -776,7 +776,7 @@ export class TestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntity, "TestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}/status"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}/status"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 				;
 

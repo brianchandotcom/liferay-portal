@@ -499,7 +499,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -611,7 +611,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"ercScopedTestEntityExternalReferenceCode",
@@ -716,7 +716,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -825,7 +825,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -938,7 +938,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -1051,7 +1051,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -1174,7 +1174,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -1289,7 +1289,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1401,7 +1401,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"ercScopedTestEntityExternalReferenceCode",
@@ -1511,7 +1511,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -1622,7 +1622,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -1743,7 +1743,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -1863,7 +1863,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/export-batch");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -1978,7 +1978,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -2086,7 +2086,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/batch");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -2207,7 +2207,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2321,7 +2321,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/export-batch");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/export-batch");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -2434,7 +2434,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -2541,7 +2541,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/batch");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/batch");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -2659,7 +2659,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -2786,7 +2786,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -2909,7 +2909,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"ercScopedTestEntityExternalReferenceCode",
@@ -3027,7 +3027,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -3152,7 +3152,7 @@ public interface ERCScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
+						"/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}/permissions");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
@@ -3180,4 +3180,4 @@ public interface ERCScopedTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1593855401
+// LIFERAY-REST-BUILDER-HASH:-1090588537

@@ -72,7 +72,7 @@ public abstract class BaseEntityModelResourceTestEntity1ResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/entity-model-resource-test-entities1'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-tools-rest-builder-test/v1.0/entity-model-resource-test-entities1'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieve all EntityModelResourceTestEntity1 items."
@@ -294,7 +294,7 @@ public abstract class BaseEntityModelResourceTestEntity1ResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "test";
+		return "portal-tools-rest-builder-test";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(
@@ -764,4 +764,4 @@ public abstract class BaseEntityModelResourceTestEntity1ResourceImpl
 			BaseEntityModelResourceTestEntity1ResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1392235090
+// LIFERAY-REST-BUILDER-HASH:-1060220654

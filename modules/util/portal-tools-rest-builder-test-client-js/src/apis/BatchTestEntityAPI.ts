@@ -40,7 +40,7 @@ export class BatchTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 
@@ -91,7 +91,7 @@ export class BatchTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities"
 ;
 
 			const queryParameters: any = {};
@@ -139,7 +139,7 @@ export class BatchTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities/{batchTestEntityId}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities/{batchTestEntityId}"
 						.replace("{batchTestEntityId}",encodeURIComponent(batchTestEntityId))
 				;
 
@@ -192,7 +192,7 @@ export class BatchTestEntityAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 
@@ -266,7 +266,7 @@ export class BatchTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.batchTestEntity, "BatchTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities"
 ;
 
 			const queryParameters: any = {};
@@ -360,7 +360,7 @@ export class BatchTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.batchTestEntity, "BatchTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
 						.replace("{externalReferenceCode}",encodeURIComponent(externalReferenceCode))
 				;
 

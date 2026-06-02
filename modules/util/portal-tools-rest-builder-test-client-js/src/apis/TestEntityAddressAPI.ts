@@ -39,7 +39,7 @@ export class TestEntityAddressAPI {
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/test-entities/{testEntityId}/test-entity-address"
+			const path = this._basePath + "/portal-tools-rest-builder-test/v1.0/test-entities/{testEntityId}/test-entity-address"
 						.replace("{testEntityId}",encodeURIComponent(testEntityId))
 				;
 

@@ -118,7 +118,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 					StringBundler.concat(
 						"http://localhost:",
 						PortalUtil.getPortalServerPort(false),
-						"/o/test/v1.0/sites/", siteId,
+						"/o/portal-tools-rest-builder-test/v1.0/sites/", siteId,
 						"/site-test-entities/batch")
 				).put(
 					"method", "POST"

@@ -238,7 +238,7 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 						"JSONObject/data",
 						"Object/testEntityTestEntityAddress"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -247,7 +247,7 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"testEntityTestEntityAddress",
 									new HashMap<String, Object>() {
@@ -258,7 +258,7 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 										}
 									},
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/testEntityTestEntityAddress"))));
 	}
 
@@ -292,14 +292,14 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"testEntityTestEntityAddress",
 							new HashMap<String, Object>() {
@@ -1254,4 +1254,4 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 		TestEntityAddressResource _testEntityAddressResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1820051977
+// LIFERAY-REST-BUILDER-HASH:185615214

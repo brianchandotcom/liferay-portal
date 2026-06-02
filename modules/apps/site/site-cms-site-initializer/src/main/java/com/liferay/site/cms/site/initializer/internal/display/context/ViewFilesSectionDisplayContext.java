@@ -78,7 +78,9 @@ public class ViewFilesSectionDisplayContext
 	@Override
 	protected String getCMSSectionFilterString() {
 		return appendStatus(
-			appendGroupIds("cmsRoot eq true and cmsSection eq 'files'"));
+			appendGroupIds(
+				"cmsRoot eq true and rootDescendantNode eq false and " +
+					"cmsSection eq 'files'"));
 	}
 
 	@Override

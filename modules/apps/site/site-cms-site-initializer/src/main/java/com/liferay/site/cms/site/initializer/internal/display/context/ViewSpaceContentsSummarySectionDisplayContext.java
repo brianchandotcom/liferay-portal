@@ -97,8 +97,8 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 	@Override
 	protected String getCMSSectionFilterString() {
 		return String.format(
-			"cmsRoot eq true and cmsSection eq 'contents' and groupIds/any" +
-				"(g:g eq %s)",
+			"cmsRoot eq true and rootDescendantNode eq false and cmsSection " +
+				"eq 'contents' and groupIds/any(g:g eq %s)",
 			_groupId);
 	}
 

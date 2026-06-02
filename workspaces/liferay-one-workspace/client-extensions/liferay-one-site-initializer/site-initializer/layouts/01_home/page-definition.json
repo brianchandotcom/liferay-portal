@@ -222,12 +222,14 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "BASIC_COMPONENT-button"
+																		"key": "conditional-button",
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"buttonSize": "nm",
 																		"buttonType": "outline-primary",
-																		"type": "link"
+																		"showForSignedInUsers": false,
+																		"showForSignedOutUsers": true
 																	},
 																	"fragmentFields": [
 																		{
@@ -251,6 +253,49 @@
 																						"es_ES": "Iniciar sesión",
 																						"ja_JP": "サインイン",
 																						"pt_BR": "Entrar"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "conditional-button",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"buttonSize": "nm",
+																		"buttonType": "outline-primary",
+																		"showForSignedInUsers": true,
+																		"showForSignedOutUsers": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "link",
+																			"value": {
+																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"value_i18n": {
+																								"en_US": "/my-account",
+																								"es_ES": "/my-account",
+																								"ja_JP": "/my-account",
+																								"pt_BR": "/my-account"
+																							}
+																						}
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "View Account",
+																						"es_ES": "Ver mi cuenta",
+																						"ja_JP": "アカウントを表示",
+																						"pt_BR": "Ver minha conta"
 																					}
 																				}
 																			}
@@ -1360,7 +1405,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "category-badges",
-																				"siteKey": "One"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																			},

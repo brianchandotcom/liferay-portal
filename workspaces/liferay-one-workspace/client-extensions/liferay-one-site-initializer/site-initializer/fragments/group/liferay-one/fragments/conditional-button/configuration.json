@@ -1,0 +1,74 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "Button Size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Small",
+								"value": "sm"
+							},
+							{
+								"label": "Regular",
+								"value": "nm"
+							},
+							{
+								"label": "Large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "outline-primary",
+					"label": "Button Type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Primary",
+								"value": "primary"
+							},
+							{
+								"label": "Secondary",
+								"value": "secondary"
+							},
+							{
+								"label": "Outline Primary",
+								"value": "outline-primary"
+							},
+							{
+								"label": "Outline Secondary",
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show For Signed In Users",
+					"label": "Show For Signed In Users",
+					"name": "showForSignedInUsers",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show For Signed Out Users",
+					"label": "Show For Signed Out Users",
+					"name": "showForSignedOutUsers",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

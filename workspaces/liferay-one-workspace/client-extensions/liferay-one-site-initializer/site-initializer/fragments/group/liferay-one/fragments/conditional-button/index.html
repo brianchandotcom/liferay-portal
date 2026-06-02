@@ -1,0 +1,18 @@
+[#assign
+	buttonSize = configuration.buttonSize!"nm"
+	buttonType = configuration.buttonType!"outline-primary"
+	editMode = (layoutMode!"") == "edit"
+	showForSignedInUsers = configuration.showForSignedInUsers!true
+	showForSignedOutUsers = configuration.showForSignedOutUsers!true
+	signedIn = themeDisplay.isSignedIn()
+/]
+
+[#assign
+	showButton = editMode || (signedIn && showForSignedInUsers) || (!signedIn && showForSignedOutUsers)
+/]
+
+[#if showButton]
+	<a class="btn btn-${buttonType} btn-${buttonSize}" data-lfr-editable-id="link" data-lfr-editable-type="link" href="/">
+		Button
+	</a>
+[/#if]

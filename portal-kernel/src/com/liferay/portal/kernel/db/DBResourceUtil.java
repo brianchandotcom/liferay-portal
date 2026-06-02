@@ -49,20 +49,37 @@ import org.osgi.framework.BundleContext;
  */
 public class DBResourceUtil {
 
+	public static void clearLiferayTableNamesCache() {
+		_liferayTableNames = null;
+		_moduleTableNames = null;
+	}
+
 	public static Set<String> getLiferayTableNames(Connection connection)
 		throws Exception {
 
-		Set<String> liferayTableNames = new TreeSet<>(
-			String.CASE_INSENSITIVE_ORDER);
+		if (_liferayTableNames != null) {
+			return _liferayTableNames;
+		}
 
-		liferayTableNames.addAll(getModuleTableNames());
-		liferayTableNames.addAll(getPortalTableNames());
-		liferayTableNames.addAll(
-			getServiceComponentModuleTableNames(connection));
-		liferayTableNames.addAll(
-			getServiceComponentPortalTableNames(connection));
+		synchronized (DBResourceUtil.class) {
+			if (_liferayTableNames != null) {
+				return _liferayTableNames;
+			}
 
-		return liferayTableNames;
+			Set<String> liferayTableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			liferayTableNames.addAll(getModuleTableNames());
+			liferayTableNames.addAll(getPortalTableNames());
+			liferayTableNames.addAll(
+				getServiceComponentModuleTableNames(connection));
+			liferayTableNames.addAll(
+				getServiceComponentPortalTableNames(connection));
+
+			_liferayTableNames = liferayTableNames;
+
+			return _liferayTableNames;
+		}
 	}
 
 	public static String getModuleIndexesSQL(Bundle bundle) {
@@ -74,29 +91,42 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getModuleTableNames() {
-		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			String symbolicName = bundle.getSymbolicName();
-
-			if (!symbolicName.startsWith("com.liferay") ||
-				!BundleUtil.isLiferayServiceBundle(bundle)) {
-
-				continue;
-			}
-
-			String tableSQL = getModuleTablesSQL(bundle);
-
-			if (tableSQL == null) {
-				continue;
-			}
-
-			tableNames.addAll(parseCreateTableSQL(tableSQL));
+		if (_moduleTableNames != null) {
+			return _moduleTableNames;
 		}
 
-		return tableNames;
+		synchronized (DBResourceUtil.class) {
+			if (_moduleTableNames != null) {
+				return _moduleTableNames;
+			}
+
+			Set<String> tableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				String symbolicName = bundle.getSymbolicName();
+
+				if (!symbolicName.startsWith("com.liferay") ||
+					!BundleUtil.isLiferayServiceBundle(bundle)) {
+
+					continue;
+				}
+
+				String tableSQL = getModuleTablesSQL(bundle);
+
+				if (tableSQL == null) {
+					continue;
+				}
+
+				tableNames.addAll(parseCreateTableSQL(tableSQL));
+			}
+
+			_moduleTableNames = tableNames;
+
+			return _moduleTableNames;
+		}
 	}
 
 	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
@@ -160,9 +190,15 @@ public class DBResourceUtil {
 			return _portalTableNames;
 		}
 
-		_portalTableNames = parseCreateTableSQL(getPortalTablesSQL());
+		synchronized (DBResourceUtil.class) {
+			if (_portalTableNames != null) {
+				return _portalTableNames;
+			}
 
-		return _portalTableNames;
+			_portalTableNames = parseCreateTableSQL(getPortalTablesSQL());
+
+			return _portalTableNames;
+		}
 	}
 
 	public static Map<String, String[]> getPortalTablesPrimaryKeyColumnNames() {
@@ -384,6 +420,8 @@ public class DBResourceUtil {
 		"create table\\s+(\\w+)\\s*\\([^;]*?(\\w+)\\s+\\w+(?:\\([^)]*\\))?" +
 			"(?:\\s+\\w+)*\\s+primary key\\b",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	private static volatile Set<String> _liferayTableNames;
+	private static volatile Set<String> _moduleTableNames;
 	private static volatile Set<String> _portalTableNames;
 	private static final DCLSingleton<ServiceTrackerList<DBResourceProvider>>
 		_serviceTrackerListDCLSingleton = new DCLSingleton<>();

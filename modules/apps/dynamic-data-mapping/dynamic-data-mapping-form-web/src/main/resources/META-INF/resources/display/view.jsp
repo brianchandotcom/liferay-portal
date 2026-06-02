@@ -302,6 +302,10 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 									).put(
 										"formReportDataURL", formReportDataURL.toString()
 									).put(
+										"indicatesRequiredFieldsLabel", LanguageUtil.get(displayLocale, "indicates-required-fields")
+									).put(
+										"requiredLabel", LanguageUtil.get(displayLocale, "required")
+									).put(
 										"title", formInstance.getName(displayLocale)
 									).put(
 										"validateCSRFTokenURL", validateCSRFTokenURL.toString()

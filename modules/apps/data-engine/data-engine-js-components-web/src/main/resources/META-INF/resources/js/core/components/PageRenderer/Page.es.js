@@ -13,6 +13,7 @@ import * as Paginated from '../../../custom/form/renderer/PaginatedVariant.es';
 import * as SuccessPage from '../../../custom/form/renderer/SuccessVariant.es';
 import * as Wizard from '../../../custom/form/renderer/WizardVariant.es';
 import {PagesVisitor} from '../../../utils/visitors.es';
+import {useConfig} from '../../hooks/useConfig.es';
 import {useForm, useFormState} from '../../hooks/useForm.es';
 import {PageProvider} from '../../hooks/usePage.es';
 import {mergeVariants} from '../../utils/merge-variants.es';
@@ -179,6 +180,7 @@ const Page = ({
 		DDM_FORM_PORTLET_NAMESPACE
 	);
 
+	const {indicatesRequiredFieldsLabel} = useConfig();
 	const {defaultLanguageId, history} = useFormState();
 
 	const dispatch = useForm();
@@ -258,7 +260,10 @@ const Page = ({
 								<ClayIcon symbol="asterisk" />
 							</span>
 
-							{Liferay.Language.get('indicates-required-fields')}
+							{indicatesRequiredFieldsLabel ??
+								Liferay.Language.get(
+									'indicates-required-fields'
+								)}
 						</p>
 					)}
 

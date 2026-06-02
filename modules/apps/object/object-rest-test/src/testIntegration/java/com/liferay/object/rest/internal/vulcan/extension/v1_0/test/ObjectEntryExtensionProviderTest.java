@@ -210,8 +210,8 @@ public class ObjectEntryExtensionProviderTest {
 
 	@Test
 	public void testSetAndGetExtendedProperties() throws Exception {
-		_testSetAndGetExtendedPropertiesWithUserAccount();
 		_testSetAndGetExtendedPropertiesWithCommerceProduct();
+		_testSetAndGetExtendedPropertiesWithUserAccount();
 	}
 
 	private void _assertPropertyDefinition(

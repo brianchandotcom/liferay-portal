@@ -10,7 +10,9 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {addSpaceUser} from '../../../utils/addSpaceUser';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
 import {cmpPagesTest} from './fixtures/cmpPagesTest';
@@ -385,11 +387,15 @@ test(
 			'Asset Library Administrator'
 		);
 
-		await addSpaceUser(
-			apiHelpers,
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
 			project.systemProperties.scope.externalReferenceCode,
-			'Asset Library Administrator',
-			user
+			user.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			project.systemProperties.scope.externalReferenceCode,
+			user.externalReferenceCode,
+			['Asset Library Administrator']
 		);
 
 		const assignedBlogTitle = getRandomString();

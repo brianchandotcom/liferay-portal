@@ -134,7 +134,8 @@ public class OpenAPIResourceTest {
 										)))))))
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
-				null, "test/v1.0/openapi.json", Http.Method.GET
+				null, "portal-tools-rest-builder-test/v1.0/openapi.json",
+				Http.Method.GET
 			).toString(),
 			false);
 	}

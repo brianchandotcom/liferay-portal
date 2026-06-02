@@ -165,7 +165,8 @@ export function useAgentDefinitionForm({
 					agentDefinition.agentDefinitionsToContentRetrievers || []
 				);
 				resetModelArmorTemplates(
-					agentDefinition.aiHubAgentDefinitionsToAIHubMATemplates || []
+					agentDefinition.aiHubAgentDefinitionsToAIHubMATemplates ||
+						[]
 				);
 			}
 			catch (error) {

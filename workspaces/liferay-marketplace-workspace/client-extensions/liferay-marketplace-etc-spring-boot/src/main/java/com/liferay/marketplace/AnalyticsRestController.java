@@ -40,6 +40,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -75,7 +76,9 @@ public class AnalyticsRestController extends BaseRestController {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 
 			return ResponseEntity.status(
 				HttpStatus.BAD_REQUEST
@@ -184,15 +187,19 @@ public class AnalyticsRestController extends BaseRestController {
 	@GetMapping("project/corpProjectUuid/{corpProjectUuid}")
 	public ResponseEntity<?> getProjectCorpProjectUuid(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable String corpProjectUuid)
+			@PathVariable String corpProjectUuid,
+			@RequestParam String environmentName)
 		throws Exception {
 
 		_accountMemberPermission.check(corpProjectUuid, jwt);
 
-		String analyticsProject = _analyticsService.getCorpProjectUuid(
-			corpProjectUuid);
+		JSONObject analyticsProjectJSONObject =
+			_analyticsService.getCorpProjectUuidJSONObject(
+				_analyticsService.getAnalyticsContextJSONObject(
+					environmentName),
+				corpProjectUuid);
 
-		if (analyticsProject == null) {
+		if (analyticsProjectJSONObject == null) {
 			return ResponseEntity.status(
 				HttpStatus.NOT_FOUND
 			).body(
@@ -203,7 +210,7 @@ public class AnalyticsRestController extends BaseRestController {
 		return ResponseEntity.status(
 			HttpStatus.OK
 		).body(
-			analyticsProject
+			analyticsProjectJSONObject
 		);
 	}
 

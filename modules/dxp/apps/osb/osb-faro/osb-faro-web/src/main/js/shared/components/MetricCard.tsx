@@ -97,7 +97,7 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 							>
 								{`${toRounded(
 									Math.abs(trend?.percentage ?? 0),
-									2
+									1
 								)}%`}
 							</span>
 						)}

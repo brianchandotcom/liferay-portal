@@ -72,6 +72,14 @@ export default function ({
 	const eventDelegates = [];
 
 	const refreshProperties = () => {
+
+		// Refetches the filterable properties using `propertiesURL` upon
+		// changes to the asset source (type / subtype selectors) and writes
+		// the result to `propertiesAtom`.
+		//
+		// CollectionFilterBuilder and CollectionOrdering React components
+		// subscribe to that atom via `useTypeProperties`.
+
 		if (!propertiesURL) {
 			return;
 		}
@@ -81,6 +89,10 @@ export default function ({
 		let classNameIds = [];
 
 		if (assetTypeValue === 'false') {
+
+			// Multi-selection: collect every option out of the hidden
+			// <select> the JSP populates with the user's picks.
+
 			classNameIds = Array.from(assetMultipleSelector?.options || []).map(
 				(option) => option.value
 			);
@@ -92,6 +104,10 @@ export default function ({
 		let classTypeIds = [];
 
 		if (classNameIds.length === 1) {
+
+			// Subtype selection: Subtypes only make sense when exactly one
+			// asset type is selected — the subtype UI is hidden otherwise.
+
 			const classType = classTypes.find(
 				(ct) => `${ct.classNameId}` === classNameIds[0]
 			);
@@ -101,6 +117,11 @@ export default function ({
 					subtypeSelector[classType.className]?.value;
 
 				if (subtypeValue === 'false') {
+
+					// Multi-subtype selection: same pattern as
+					// classNameIds above, but the element id is
+					// namespaced with the class name.
+
 					const multiSubtypeSelect = document.getElementById(
 						`${namespace}${classType.className}currentClassTypeIds`
 					);

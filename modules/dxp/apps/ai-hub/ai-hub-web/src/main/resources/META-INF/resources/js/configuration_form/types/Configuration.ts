@@ -6,5 +6,6 @@
 export type Configuration = {
 	environmentUrls: string;
 	externalReferenceCode: string;
+	r_accountToAIHubConfigurations_accountEntryId?: number;
 	recipientEmailAddress: string;
 };

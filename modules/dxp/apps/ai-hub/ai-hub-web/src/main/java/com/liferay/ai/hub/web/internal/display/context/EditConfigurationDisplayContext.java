@@ -33,6 +33,15 @@ public class EditConfigurationDisplayContext {
 			_themeDisplay.getUserId());
 
 		return HashMapBuilder.<String, Object>put(
+			"accountEntryId",
+			() -> {
+				if (accountEntry == null) {
+					return null;
+				}
+
+				return accountEntry.getAccountEntryId();
+			}
+		).put(
 			"backURL", DisplayContextUtil.getAIHubURL(_themeDisplay)
 		).put(
 			"externalReferenceCode",

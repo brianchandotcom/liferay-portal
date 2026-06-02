@@ -36,7 +36,6 @@ interface ChatbotWidgetProps {
 
 interface ReportContext {
 	agentDefinitionExternalReferenceCodes: string[];
-	messageId: string;
 }
 
 function generateMessageId(): string {
@@ -320,8 +319,6 @@ export default function ChatbotWidget({
 														agentDefinitionExternalReferenceCodes:
 															msg.agentDefinitionExternalReferenceCodes ??
 															[],
-														messageId:
-															msg.messageId!,
 													})
 											: undefined
 									}
@@ -393,12 +390,14 @@ export default function ChatbotWidget({
 					agentDefinitionExternalReferenceCodes={
 						reportContext.agentDefinitionExternalReferenceCodes
 					}
+					chatbotExternalReferenceCode={
+						widgetConfiguration.chatbotExternalReferenceCode
+					}
 					onClose={() => setReportContext(null)}
 					onSubmitted={() => {
 						setReportContext(null);
 						setToastMessage('Thanks for your feedback!');
 					}}
-					traceId={reportContext.messageId}
 				/>
 			)}
 

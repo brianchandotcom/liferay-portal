@@ -22,7 +22,7 @@ describe('useReportFeedback', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		})
 		);
 
@@ -37,7 +37,7 @@ describe('useReportFeedback', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		})
 		);
 
@@ -57,7 +57,7 @@ describe('useReportFeedback', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		})
 		);
 
@@ -77,7 +77,7 @@ describe('useReportFeedback', () => {
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
 			reason: 'piiExposure',
 			surface: 'clickToChat',
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 			userMessage: 'sensitive',
 		});
 	});
@@ -88,7 +88,7 @@ describe('useReportFeedback', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		})
 		);
 
@@ -102,7 +102,7 @@ describe('useReportFeedback', () => {
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
 			reason: 'other',
 			surface: 'clickToChat',
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		});
 	});
 
@@ -112,7 +112,7 @@ describe('useReportFeedback', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			traceId: 'trace-1',
+			chatbotExternalReferenceCode: 'chatbot-1',
 		})
 		);
 

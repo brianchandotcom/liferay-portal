@@ -1767,11 +1767,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		return new BaseDateRangeFDSFilter() {
 
 			@Override
-			public String getEntityFieldType() {
-				return FDSEntityFieldTypes.DATE;
-			}
-
-			@Override
 			public String getId() {
 				return id;
 			}

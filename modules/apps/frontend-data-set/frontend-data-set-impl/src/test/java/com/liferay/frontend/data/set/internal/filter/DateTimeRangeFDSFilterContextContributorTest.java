@@ -105,11 +105,6 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 		}
 
 		@Override
-		public String getEntityFieldType() {
-			return "date-time";
-		}
-
-		@Override
 		public String getId() {
 			return "testField";
 		}

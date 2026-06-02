@@ -62,13 +62,12 @@ public class PriceUtil {
 			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
-		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
-			price
-		).divide(
+		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(price);
+
+		pricingQuantityUnitPrice = pricingQuantityUnitPrice.divide(
 			commercePriceEntry.getQuantity(),
 			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
-		);
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 
 		return commerceMoneyFactory.create(
 			commerceCurrency,

@@ -19,11 +19,15 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -197,6 +201,10 @@ public class AIHubSiteInitializerTest {
 			"r_accountToAIHubModelArmorTemplates_accountEntryId",
 			"raiDangerousLevel", "raiHarassmentLevel", "raiHateSpeechLevel",
 			"raiSexuallyExplicitLevel", "sdpFilterEnabled", "title");
+
+		_assertObjectFieldDefaultValue(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "location", "europe-west1");
+
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
@@ -379,6 +387,29 @@ public class AIHubSiteInitializerTest {
 		Assert.assertTrue(objectDefinition.isSystem());
 	}
 
+	private void _assertObjectFieldDefaultValue(
+			String objectDefinitionExternalReferenceCode,
+			String objectFieldName, String expectedDefaultValue)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), objectFieldName);
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+
+		Assert.assertEquals(
+			expectedDefaultValue, objectFieldSetting.getValue());
+	}
+
 	private void _assertObjectFieldsExist(
 			String objectDefinitionExternalReferenceCode,
 			String... objectFieldNames)
@@ -464,6 +495,9 @@ public class AIHubSiteInitializerTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

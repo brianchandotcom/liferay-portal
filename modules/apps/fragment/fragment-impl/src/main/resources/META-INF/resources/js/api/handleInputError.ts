@@ -12,19 +12,19 @@ type ErrorArgs = {
 };
 
 export function getLengthErrorMessage({
-	errorMessageContainer,
 	length,
 	maxLength,
+	message: externalMessage,
 }: {
-	errorMessageContainer: HTMLSpanElement;
 	length: number;
 	maxLength: number;
+	message?: string | null;
 }): string {
-	const lengthFeedback = errorMessageContainer.getAttribute(
-		'data-length-feedback'
-	);
+	const message =
+		externalMessage ??
+		Liferay.Language.get('maximum-number-of-characters-exceeded');
 
-	return `${lengthFeedback}: ${length} / ${maxLength}`;
+	return `${message}: ${length} / ${maxLength}`;
 }
 
 export function handleInputLengthError({
@@ -59,9 +59,11 @@ export function handleInputLengthError({
 		showInputError({
 			...params,
 			message: getLengthErrorMessage({
-				errorMessageContainer,
 				length,
 				maxLength,
+				message: errorMessageContainer.getAttribute(
+					'data-length-feedback'
+				),
 			}),
 		});
 	}

@@ -108,6 +108,12 @@ public class UpgradeJavaSchedulerEntryImplConstructorCheck
 			}
 		}
 
+		if (constructorContent.contains(".getTrigger()")) {
+			return StringUtil.replace(
+				constructorContent, ".getTrigger()",
+				".getTriggerConfiguration()");
+		}
+
 		return constructorContent;
 	}
 

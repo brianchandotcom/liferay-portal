@@ -1,7 +1,7 @@
 apiDir: ../portal-tools-rest-builder-test-api/src/main/java
 apiPackagePath: com.liferay.portal.tools.rest.builder.test
 application:
-    baseURI: /test
+    baseURI: /portal-tools-rest-builder-test
     className: PortalToolsRESTBuilderTestApplication
     name: Liferay.Portal.Tools.REST.Builder.Test
 author: Alejandro Tardín

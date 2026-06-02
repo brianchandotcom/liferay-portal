@@ -6,7 +6,7 @@
 import {checkTypes} from '../util';
 
 export function includes(value: Set<string> | string, expected: any): boolean {
-	checkTypes(value, ['string', 'Set'], 'Operator value');
+	checkTypes(value, ['string', 'Set'], `Operator 'includes' value`);
 
 	if (value instanceof Set) {
 		return value.has(expected);

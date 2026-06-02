@@ -144,8 +144,18 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		writer.append(key);
 		writer.append("-control-group\">");
 
+		boolean singleItem = false;
+
+		if (productNavigationControlMenuEntries.size() <= 1) {
+			singleItem = true;
+		}
+
 		if (useList) {
 			writer.append("<ul ");
+
+			if (singleItem) {
+				writer.append("role=\"presentation\" ");
+			}
 		}
 		else {
 			writer.append("<div ");
@@ -158,7 +168,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 					productNavigationControlMenuEntries) {
 
 			_writeProductNavigationControlMenuEntry(
-				productNavigationControlMenuEntry, useList, writer);
+				productNavigationControlMenuEntry, useList, singleItem, writer);
 		}
 
 		if (useList) {
@@ -173,7 +183,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 
 	private void _writeProductNavigationControlMenuEntry(
 			ProductNavigationControlMenuEntry productNavigationControlMenuEntry,
-			boolean useList, Writer writer)
+			boolean useList, boolean singleItem, Writer writer)
 		throws Exception {
 
 		if (productNavigationControlMenuEntry.includeIcon(
@@ -184,6 +194,10 @@ public class ProductNavigationControlMenuTagDisplayContext {
 
 		if (useList) {
 			writer.append("<li ");
+
+			if (singleItem) {
+				writer.append("role=\"presentation\" ");
+			}
 		}
 		else {
 			writer.append("<div ");

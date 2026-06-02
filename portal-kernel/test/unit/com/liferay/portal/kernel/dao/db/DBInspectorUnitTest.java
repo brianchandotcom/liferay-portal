@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +26,11 @@ import org.mockito.Mockito;
  * @author Mariano Álvaro Sáiz
  */
 public class DBInspectorUnitTest {
+
+	@After
+	public void tearDown() {
+		DBInspector.clearSchemaSnapshot();
+	}
 
 	@Test
 	public void testArgumentMetaDataIsUsedToNormalizeName() throws Exception {
@@ -150,6 +156,64 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
+	public void testHasTableUsesSnapshotCache() throws Exception {
+		Mockito.when(
+			_connection.getCatalog()
+		).thenReturn(
+			_CATALOG_NAME
+		);
+
+		Mockito.when(
+			_connection.getMetaData()
+		).thenReturn(
+			_databaseMetaData
+		);
+
+		Mockito.when(
+			_databaseMetaData.storesLowerCaseIdentifiers()
+		).thenReturn(
+			true
+		);
+
+		ResultSet tablesResultSet = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			tablesResultSet.next()
+		).thenReturn(
+			true, false
+		);
+
+		Mockito.when(
+			tablesResultSet.getString("TABLE_NAME")
+		).thenReturn(
+			_TABLE_NAME
+		);
+
+		Mockito.when(
+			_databaseMetaData.getTables(
+				Mockito.eq(_CATALOG_NAME), Mockito.nullable(String.class),
+				Mockito.isNull(), Mockito.any(String[].class))
+		).thenReturn(
+			tablesResultSet
+		);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		DBInspector.beginSchemaSnapshot();
+
+		dbInspector.getTableNames(null);
+
+		dbInspector.hasTable(_TABLE_NAME);
+		dbInspector.hasTable(_TABLE_NAME);
+
+		Mockito.verify(
+			_databaseMetaData, Mockito.times(1)
+		).getTables(
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()
+		);
+	}
+
+	@Test
 	public void testIsObjectTable() {
 		DBInspector dbInspector = new DBInspector(_connection);
 
@@ -183,6 +247,57 @@ public class DBInspectorUnitTest {
 		Assert.assertTrue(
 			dbInspector.isObjectTable(companyIds, "l_1_tableName"));
 		Assert.assertTrue(dbInspector.isObjectTable(companyIds, "r_tableName"));
+	}
+
+	@Test
+	public void testSchemaSnapshotBeginEnablesCache() throws Exception {
+		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.when(
+			_connection.getCatalog()
+		).thenReturn(
+			_CATALOG_NAME
+		);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		DBInspector.beginSchemaSnapshot();
+
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.verify(
+			_databaseMetaData, Mockito.times(1)
+		).getColumns(
+			Mockito.nullable(String.class), Mockito.nullable(String.class),
+			Mockito.anyString(), Mockito.anyString()
+		);
+	}
+
+	@Test
+	public void testSchemaSnapshotClearDisablesCache() throws Exception {
+		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.when(
+			_connection.getCatalog()
+		).thenReturn(
+			_CATALOG_NAME
+		);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		DBInspector.beginSchemaSnapshot();
+		DBInspector.clearSchemaSnapshot();
+
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.verify(
+			_databaseMetaData, Mockito.times(2)
+		).getColumns(
+			Mockito.nullable(String.class), Mockito.nullable(String.class),
+			Mockito.anyString(), Mockito.anyString()
+		);
 	}
 
 	private void _mockTableWithColumn(String tableName, String columnName)
@@ -240,6 +355,8 @@ public class DBInspectorUnitTest {
 
 		_mockTableWithOrWithoutColumn(tableName, columnName, false);
 	}
+
+	private static final String _CATALOG_NAME = "test_catalog";
 
 	private static final String _COLUMN_NAME = "column_name";
 

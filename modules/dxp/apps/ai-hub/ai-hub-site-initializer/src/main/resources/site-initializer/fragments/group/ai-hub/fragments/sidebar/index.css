@@ -75,7 +75,10 @@
 		display: flex;
 		grid-area: sidebar;
 		overflow: hidden;
+		position: static;
+		transform: none;
 		transition: left 400ms ease-in-out;
+		width: unset;
 	}
 
 	.panel {

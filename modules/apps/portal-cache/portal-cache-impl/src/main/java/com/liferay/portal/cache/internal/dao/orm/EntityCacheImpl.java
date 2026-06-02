@@ -390,7 +390,8 @@ public class EntityCacheImpl
 		_notify(className, baseModel, updateByEntityCache);
 
 		if (!_clusterExecutor.isEnabled() ||
-			!ClusterInvokeThreadLocal.isEnabled()) {
+			!ClusterInvokeThreadLocal.isEnabled() ||
+			SkipReplicationThreadLocal.isEnabled()) {
 
 			return;
 		}

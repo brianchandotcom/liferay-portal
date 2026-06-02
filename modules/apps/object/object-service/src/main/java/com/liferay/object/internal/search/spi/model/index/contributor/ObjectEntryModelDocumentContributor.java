@@ -506,6 +506,9 @@ public class ObjectEntryModelDocumentContributor
 			"objectFolderExternalReferenceCode",
 			objectFolder.getExternalReferenceCode(), true);
 
+		document.addKeyword(
+			"rootDescendantNode", objectEntry.isRootDescendantNode());
+
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectEntry.getCompanyId(), "LPD-17564")) {
 

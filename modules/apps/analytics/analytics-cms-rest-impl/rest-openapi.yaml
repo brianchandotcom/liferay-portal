@@ -150,6 +150,14 @@ components:
                     type: string
                 title:
                     type: string
+        PerformanceMetric:
+            properties:
+                metricType:
+                    type: string
+                metrics:
+                    items:
+                        $ref: "#/components/schemas/Metric"
+                    type: array
         PerformanceOverviewMetric:
             properties:
                 downloadsMetric:
@@ -585,6 +593,39 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PerformanceAssetConsumption"
             tags: ["PerformanceAssetConsumption"]
+    "/performance-metric":
+        get:
+            operationId: getPerformanceMetric
+            parameters:
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: groupBy
+                    schema:
+                        type: string
+                -   in: query
+                    name: metricType
+                    schema:
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PerformanceMetric"
+            tags: ["PerformanceMetric"]
     "/performance-overview-metric":
         get:
             operationId: getPerformanceOverviewMetric

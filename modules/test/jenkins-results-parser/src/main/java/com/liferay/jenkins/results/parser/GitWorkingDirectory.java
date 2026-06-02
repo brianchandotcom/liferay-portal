@@ -1612,17 +1612,17 @@ public class GitWorkingDirectory {
 				continue;
 			}
 
-			RemoteGitBranch remoteGitBranch = null;
+			RemoteGitBranch upstreamRemoteGitBranch = null;
 
 			if (localGitBranchName.equals(upstreamBranchName)) {
-				remoteGitBranch = getUpstreamRemoteGitBranch();
+				upstreamRemoteGitBranch = getUpstreamRemoteGitBranch();
 			}
 
 			localGitBranches.add(
 				GitBranchFactory.newLocalGitBranch(
 					localGitRepository, localGitBranchName,
 					localGitBranchesShaMap.get(localGitBranchName),
-					remoteGitBranch));
+					upstreamRemoteGitBranch));
 		}
 
 		return localGitBranches;

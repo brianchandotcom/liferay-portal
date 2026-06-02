@@ -61,30 +61,30 @@ public class BaseBatchEngineTaskServiceTest {
 	}
 
 	protected void assertConcurrentRunnables(
-			CheckedRunnable runnable1, CheckedRunnable runnable2)
+			CheckedRunnable checkedRunnable1, CheckedRunnable checkedRunnable2)
 		throws Exception {
 
-		AtomicReference<Throwable> throwableReference = new AtomicReference<>();
+		AtomicReference<Throwable> atomicReference = new AtomicReference<>();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 		Future<?> future1 = executorService.submit(
 			() -> {
 				try {
-					runnable1.run();
+					checkedRunnable1.run();
 				}
 				catch (Throwable throwable) {
-					throwableReference.compareAndSet(null, throwable);
+					atomicReference.compareAndSet(null, throwable);
 				}
 			});
 
 		Future<?> future2 = executorService.submit(
 			() -> {
 				try {
-					runnable2.run();
+					checkedRunnable2.run();
 				}
 				catch (Throwable throwable) {
-					throwableReference.compareAndSet(null, throwable);
+					atomicReference.compareAndSet(null, throwable);
 				}
 			});
 
@@ -102,7 +102,7 @@ public class BaseBatchEngineTaskServiceTest {
 			executorService.shutdownNow();
 		}
 
-		Assert.assertNull(throwableReference.get());
+		Assert.assertNull(atomicReference.get());
 	}
 
 	protected static final TransactionConfig REQUIRED_TRANSACTION_CONFIG =

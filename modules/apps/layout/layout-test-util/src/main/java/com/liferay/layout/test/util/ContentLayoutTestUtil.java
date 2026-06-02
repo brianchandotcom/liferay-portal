@@ -61,6 +61,9 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collection;
@@ -522,7 +525,7 @@ public class ContentLayoutTestUtil {
 			new MockLiferayPortletActionResponse());
 
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+			_createMockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -711,6 +714,31 @@ public class ContentLayoutTestUtil {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	private static MockHttpServletRequest _createMockHttpServletRequest() {
+		return new MockHttpServletRequest() {
+
+			@Override
+			public RequestDispatcher getRequestDispatcher(String path) {
+				return new RequestDispatcher() {
+
+					@Override
+					public void forward(
+						ServletRequest servletRequest,
+						ServletResponse servletResponse) {
+					}
+
+					@Override
+					public void include(
+						ServletRequest servletRequest,
+						ServletResponse servletResponse) {
+					}
+
+				};
+			}
+
+		};
 	}
 
 	private static final String _INPUT_HTML = StringBundler.concat(

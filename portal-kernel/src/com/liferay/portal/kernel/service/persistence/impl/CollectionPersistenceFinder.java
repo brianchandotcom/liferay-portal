@@ -72,7 +72,7 @@ public class CollectionPersistenceFinder
 				_countFinderPath, finderArgs, basePersistenceImpl);
 
 			if (count == null) {
-				String sql = buildSQLWhere(_sqlCountWhere, values);
+				String sql = buildSQLWhere(_sqlCountWhere, values, false);
 
 				Session session = null;
 
@@ -237,7 +237,7 @@ public class CollectionPersistenceFinder
 		sb.append(sqlSelectWhere);
 
 		for (int i = 0; i < finderColumns.length; i++) {
-			String fragment = finderColumns[i].getSqlFragment(values[i]);
+			String fragment = finderColumns[i].getSqlFragment(values[i], false);
 
 			if (fragment.isEmpty()) {
 				continue;

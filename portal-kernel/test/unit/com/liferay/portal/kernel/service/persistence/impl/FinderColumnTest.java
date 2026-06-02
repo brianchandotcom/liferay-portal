@@ -19,6 +19,19 @@ import org.junit.Test;
 public class FinderColumnTest {
 
 	@Test
+	public void testGetSqlFragmentNative() {
+		FinderColumn<TestModel> finderColumn = new FinderColumn<>(
+			"t.", "active", "active_", FinderColumn.Type.BOOLEAN, "=", true,
+			true, entity -> true);
+
+		Assert.assertEquals(
+			"t.active = ?", finderColumn.getSqlFragment(true, false));
+
+		Assert.assertEquals(
+			"t.active_ = ?", finderColumn.getSqlFragment(true, true));
+	}
+
+	@Test
 	public void testMatchesEquals() {
 		FinderColumn<TestModel> finderColumn = new FinderColumn<>(
 			"t.", "value", FinderColumn.Type.LONG, "=", true, true,

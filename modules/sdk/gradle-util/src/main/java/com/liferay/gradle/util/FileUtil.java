@@ -107,9 +107,16 @@ public class FileUtil {
 	public static File get(Project project, String url, File destinationFile)
 		throws IOException {
 
-		return get(
-			project, url, destinationFile, false,
-			_isCINode() || (_getProperty(project, "mirrors.hostname") != null));
+		boolean tryLocalNetwork = false;
+
+		if (System.getenv("JENKINS_HOME") != null) {
+			tryLocalNetwork = true;
+		}
+		else if (_getProperty(project, "mirrors.hostname") != null) {
+			tryLocalNetwork = true;
+		}
+
+		return get(project, url, destinationFile, false, tryLocalNetwork);
 	}
 
 	public static File get(
@@ -151,27 +158,17 @@ public class FileUtil {
 			mirrorsCacheArtifactDir.mkdirs();
 
 			if (tryLocalNetwork) {
-				File mirrorsMountFile = _getMirrorsMountFile(url, fileName);
-
-				if (mirrorsMountFile.isFile()) {
-					Files.copy(
-						mirrorsMountFile.toPath(),
-						mirrorsCacheArtifactFile.toPath(),
-						StandardCopyOption.REPLACE_EXISTING);
+				try {
+					_get(
+						project, _getMirrorsURL(project, url),
+						_getProperty(project, "mirrors.username"),
+						_getProperty(project, "mirrors.password"),
+						mirrorsCacheArtifactFile, ignoreErrors);
 				}
-				else {
-					try {
-						_get(
-							project, _getMirrorsURL(project, url),
-							_getProperty(project, "mirrors.username"),
-							_getProperty(project, "mirrors.password"),
-							mirrorsCacheArtifactFile, ignoreErrors);
-					}
-					catch (Exception exception) {
-						_get(
-							project, url, username, password,
-							mirrorsCacheArtifactFile, ignoreErrors);
-					}
+				catch (Exception exception) {
+					_get(
+						project, url, username, password,
+						mirrorsCacheArtifactFile, ignoreErrors);
 				}
 			}
 			else {
@@ -581,12 +578,6 @@ public class FileUtil {
 		return new File(userHome, ".liferay/mirrors");
 	}
 
-	private static File _getMirrorsMountFile(String url, String fileName) {
-		String subdir = url.replaceFirst("https?:\\/\\/(.+\\/).+", "$1");
-
-		return new File(new File("/mnt/shared/mirrors", subdir), fileName);
-	}
-
 	private static String _getMirrorsURL(Project project, String url) {
 		String mirrorsHostname = _getProperty(project, "mirrors.hostname");
 
@@ -728,26 +719,6 @@ public class FileUtil {
 
 		antBuilder.invokeMethod(
 			"manifestclasspath", new Object[] {args, closure});
-	}
-
-	private static boolean _isCINode() {
-		if (_isNullOrEmpty(System.getenv("JENKINS_URL")) &&
-			_isNullOrEmpty(System.getenv("MASTER_NETWORK_NAME"))) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _isNullOrEmpty(String string) {
-		if (string == null) {
-			return true;
-		}
-
-		String trimmedString = string.trim();
-
-		return trimmedString.isEmpty();
 	}
 
 	private static final File _TMP_DIR = new File(

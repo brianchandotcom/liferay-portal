@@ -264,15 +264,10 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 			else if (actionId.equals(ActionKeys.VIEW) && group.isSite()) {
 				try {
-					if (PermissionUtil.hasCMSAdministratorRole(
-							group.getCompanyId()) ||
-						PermissionUtil.isDepotGroupAdminOrOwner(
-							group.getCompanyId())) {
-
-						return true;
-					}
-
-					return false;
+					return PermissionUtil.hasCMSAdministratorRole(
+						group.getCompanyId()) ||
+						   PermissionUtil.isDepotGroupAdminOrOwner(
+							   group.getCompanyId());
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);

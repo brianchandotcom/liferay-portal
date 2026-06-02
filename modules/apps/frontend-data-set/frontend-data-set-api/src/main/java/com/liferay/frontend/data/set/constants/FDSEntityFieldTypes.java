@@ -10,6 +10,8 @@ package com.liferay.frontend.data.set.constants;
  */
 public class FDSEntityFieldTypes {
 
+	public static final String BOOLEAN = "boolean";
+
 	public static final String COLLECTION = "collection";
 
 	public static final String COLLECTION_INTEGER = "collection-integer";

@@ -7,6 +7,7 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -23,18 +24,17 @@ public class EditConfigurationDisplayContext {
 	public EditConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_userId = themeDisplay.getUserId();
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-			_userId);
+			_themeDisplay.getUserId());
 
 		return HashMapBuilder.<String, Object>put(
+			"backURL", DisplayContextUtil.getAIHubURL(_themeDisplay)
+		).put(
 			"externalReferenceCode",
 			() -> {
 				if (accountEntry == null) {
@@ -47,6 +47,6 @@ public class EditConfigurationDisplayContext {
 		).build();
 	}
 
-	private final long _userId;
+	private final ThemeDisplay _themeDisplay;
 
 }

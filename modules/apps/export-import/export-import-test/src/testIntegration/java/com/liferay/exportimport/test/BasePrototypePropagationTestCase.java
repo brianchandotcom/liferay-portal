@@ -137,8 +137,10 @@ public abstract class BasePrototypePropagationTestCase {
 		prototypeLayout = LayoutTestUtil.updateLayoutTemplateId(
 			prototypeLayout, "1_column");
 
-		LayoutTestUtil.updateLayoutColumnCustomizable(
-			prototypeLayout, "column-1", true);
+		if (useColumnCustomizable()) {
+			LayoutTestUtil.updateLayoutColumnCustomizable(
+				prototypeLayout, "column-1", true);
+		}
 
 		addPortletToLayout(
 			TestPropsValues.getUserId(), prototypeLayout, globalJournalArticle,
@@ -168,7 +170,8 @@ public abstract class BasePrototypePropagationTestCase {
 			Assert.assertEquals(
 				"1_column", LayoutTestUtil.getLayoutTemplateId(layout));
 
-			Assert.assertTrue(
+			Assert.assertEquals(
+				useColumnCustomizable(),
 				LayoutTestUtil.isLayoutColumnCustomizable(layout, "column-1"));
 
 			portlets = LayoutTestUtil.getPortlets(layout);
@@ -271,6 +274,10 @@ public abstract class BasePrototypePropagationTestCase {
 		layout.setModifiedDate(date);
 
 		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
+	protected boolean useColumnCustomizable() {
+		return true;
 	}
 
 	protected long globalGroupId;

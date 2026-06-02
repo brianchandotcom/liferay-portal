@@ -605,8 +605,8 @@ public class MemberRequestPersistenceImpl
 				1, false, convertNullFunction(MemberRequest::getKey)),
 			_SQL_SELECT_MEMBERREQUEST_WHERE, "",
 			new FinderColumn<>(
-				"memberRequest.", "key", FinderColumn.Type.STRING, "=", true,
-				true, MemberRequest::getKey));
+				"memberRequest.", "key", "key_", FinderColumn.Type.STRING, "=",
+				true, true, MemberRequest::getKey));
 
 		_collectionPersistenceFinderByReceiverUserId =
 			new CollectionPersistenceFinder<>(
@@ -753,4 +753,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2078955117
+// LIFERAY-SERVICE-BUILDER-HASH:396987869

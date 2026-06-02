@@ -854,7 +854,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectValidationRuleSetting.", "uuid",
+				"objectValidationRuleSetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
 				ObjectValidationRuleSetting::getUuid));
 
@@ -882,7 +882,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectValidationRuleSetting.", "uuid",
+					"objectValidationRuleSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					ObjectValidationRuleSetting::getUuid),
 				new FinderColumn<>(
@@ -1069,4 +1069,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1803808963
+// LIFERAY-SERVICE-BUILDER-HASH:-467017358

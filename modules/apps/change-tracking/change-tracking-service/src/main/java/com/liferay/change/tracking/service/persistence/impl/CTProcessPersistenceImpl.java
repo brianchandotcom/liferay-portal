@@ -717,8 +717,8 @@ public class CTProcessPersistenceImpl
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId),
 				new FinderColumn<>(
-					"ctProcess.", "type", FinderColumn.Type.INTEGER, "=", true,
-					true, CTProcess::getType));
+					"ctProcess.", "type", "type_", FinderColumn.Type.INTEGER,
+					"=", true, true, CTProcess::getType));
 
 		CTProcessUtil.setPersistence(this);
 	}
@@ -786,4 +786,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-709389497
+// LIFERAY-SERVICE-BUILDER-HASH:-351457976

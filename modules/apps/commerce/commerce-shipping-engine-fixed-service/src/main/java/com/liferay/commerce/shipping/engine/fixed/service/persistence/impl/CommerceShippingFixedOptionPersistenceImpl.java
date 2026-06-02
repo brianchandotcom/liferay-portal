@@ -515,8 +515,9 @@ public class CommerceShippingFixedOptionPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShippingFixedOption::getCompanyId),
 			new FinderColumn<>(
-				"commerceShippingFixedOption.", "key", FinderColumn.Type.STRING,
-				"=", true, true, CommerceShippingFixedOption::getKey));
+				"commerceShippingFixedOption.", "key", "key_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceShippingFixedOption::getKey));
 
 		CommerceShippingFixedOptionUtil.setPersistence(this);
 	}
@@ -588,4 +589,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-661032861
+// LIFERAY-SERVICE-BUILDER-HASH:362795727

@@ -2235,8 +2235,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPAttachmentFileEntry::getUuid));
+				"cpAttachmentFileEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPAttachmentFileEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -2248,8 +2249,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 				CPAttachmentFileEntry::getGroupId),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE, "",
 			new FinderColumn<>(
-				"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPAttachmentFileEntry::getUuid),
+				"cpAttachmentFileEntry.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CPAttachmentFileEntry::getUuid),
 			new FinderColumn<>(
 				"cpAttachmentFileEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPAttachmentFileEntry::getGroupId));
@@ -2278,8 +2280,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, CPAttachmentFileEntry::getUuid),
+					"cpAttachmentFileEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPAttachmentFileEntry::getUuid),
 				new FinderColumn<>(
 					"cpAttachmentFileEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2572,8 +2575,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 					"cpAttachmentFileEntry.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, CPAttachmentFileEntry::getClassPK),
 				new FinderColumn<>(
-					"cpAttachmentFileEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CPAttachmentFileEntry::getType),
+					"cpAttachmentFileEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CPAttachmentFileEntry::getType),
 				new FinderColumn<>(
 					"cpAttachmentFileEntry.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -2614,8 +2618,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 					"cpAttachmentFileEntry.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, CPAttachmentFileEntry::getClassPK),
 				new FinderColumn<>(
-					"cpAttachmentFileEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CPAttachmentFileEntry::getType),
+					"cpAttachmentFileEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CPAttachmentFileEntry::getType),
 				new FinderColumn<>(
 					"cpAttachmentFileEntry.", "status",
 					FinderColumn.Type.INTEGER, "!=", true, true,
@@ -2680,8 +2685,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CPAttachmentFileEntry::isGalleryEnabled),
 				new FinderColumn<>(
-					"cpAttachmentFileEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CPAttachmentFileEntry::getType),
+					"cpAttachmentFileEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CPAttachmentFileEntry::getType),
 				new FinderColumn<>(
 					"cpAttachmentFileEntry.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -2735,8 +2741,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CPAttachmentFileEntry::isGalleryEnabled),
 				new FinderColumn<>(
-					"cpAttachmentFileEntry.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, CPAttachmentFileEntry::getType),
+					"cpAttachmentFileEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CPAttachmentFileEntry::getType),
 				new FinderColumn<>(
 					"cpAttachmentFileEntry.", "status",
 					FinderColumn.Type.INTEGER, "!=", true, true,
@@ -2833,4 +2840,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:120876200
+// LIFERAY-SERVICE-BUILDER-HASH:593130484

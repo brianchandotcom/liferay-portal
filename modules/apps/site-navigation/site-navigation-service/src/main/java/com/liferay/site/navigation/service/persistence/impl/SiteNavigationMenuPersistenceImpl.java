@@ -1838,8 +1838,9 @@ public class SiteNavigationMenuPersistenceImpl
 			_SQL_COUNT_SITENAVIGATIONMENU_WHERE,
 			SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"siteNavigationMenu.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, SiteNavigationMenu::getUuid));
+				"siteNavigationMenu.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SiteNavigationMenu::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1851,8 +1852,9 @@ public class SiteNavigationMenuPersistenceImpl
 				SiteNavigationMenu::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENU_WHERE, "",
 			new FinderColumn<>(
-				"siteNavigationMenu.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, SiteNavigationMenu::getUuid),
+				"siteNavigationMenu.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SiteNavigationMenu::getUuid),
 			new FinderColumn<>(
 				"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SiteNavigationMenu::getGroupId));
@@ -1881,8 +1883,9 @@ public class SiteNavigationMenuPersistenceImpl
 				SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"siteNavigationMenu.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, SiteNavigationMenu::getUuid),
+					"siteNavigationMenu.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					SiteNavigationMenu::getUuid),
 				new FinderColumn<>(
 					"siteNavigationMenu.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SiteNavigationMenu::getCompanyId));
@@ -2015,8 +2018,9 @@ public class SiteNavigationMenuPersistenceImpl
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SiteNavigationMenu::getGroupId),
 				new FinderColumn<>(
-					"siteNavigationMenu.", "type", FinderColumn.Type.INTEGER,
-					"=", true, true, SiteNavigationMenu::getType));
+					"siteNavigationMenu.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SiteNavigationMenu::getType));
 
 		_collectionPersistenceFinderByG_A =
 			new FilterCollectionPersistenceFinder<>(
@@ -2049,8 +2053,9 @@ public class SiteNavigationMenuPersistenceImpl
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SiteNavigationMenu::getGroupId),
 				new FinderColumn<>(
-					"siteNavigationMenu.", "auto", FinderColumn.Type.BOOLEAN,
-					"=", true, true, SiteNavigationMenu::isAuto));
+					"siteNavigationMenu.", "auto", "auto_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					SiteNavigationMenu::isAuto));
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this,
@@ -2142,4 +2147,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2036138103
+// LIFERAY-SERVICE-BUILDER-HASH:-1848746262

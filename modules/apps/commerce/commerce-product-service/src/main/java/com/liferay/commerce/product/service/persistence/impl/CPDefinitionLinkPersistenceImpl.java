@@ -1767,8 +1767,8 @@ public class CPDefinitionLinkPersistenceImpl
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionLink::getUuid));
+				"cpDefinitionLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionLink::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1780,8 +1780,8 @@ public class CPDefinitionLinkPersistenceImpl
 				CPDefinitionLink::getGroupId),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
-				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionLink::getUuid),
+				"cpDefinitionLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionLink::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPDefinitionLink::getGroupId));
@@ -1810,8 +1810,9 @@ public class CPDefinitionLinkPersistenceImpl
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CPDefinitionLink::getUuid),
+					"cpDefinitionLink.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPDefinitionLink::getUuid),
 				new FinderColumn<>(
 					"cpDefinitionLink.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinitionLink::getCompanyId));
@@ -1898,8 +1899,8 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "CPDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, CPDefinitionLink::getCPDefinitionId),
 			new FinderColumn<>(
-				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionLink::getType));
+				"cpDefinitionLink.", "type", "type_", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionLink::getType));
 
 		_collectionPersistenceFinderByCPD_S = new CollectionPersistenceFinder<>(
 			this,
@@ -1954,8 +1955,8 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG, "=",
 				true, true, CPDefinitionLink::getCProductId),
 			new FinderColumn<>(
-				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionLink::getType));
+				"cpDefinitionLink.", "type", "type_", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionLink::getType));
 
 		_collectionPersistenceFinderByCP_S = new CollectionPersistenceFinder<>(
 			this,
@@ -2055,8 +2056,8 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG, "=",
 				true, true, CPDefinitionLink::getCProductId),
 			new FinderColumn<>(
-				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
-				true, true, CPDefinitionLink::getType));
+				"cpDefinitionLink.", "type", "type_", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionLink::getType));
 
 		_collectionPersistenceFinderByCPD_T_S =
 			new CollectionPersistenceFinder<>(
@@ -2095,8 +2096,9 @@ public class CPDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionLink::getCPDefinitionId),
 				new FinderColumn<>(
-					"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
-					true, true, CPDefinitionLink::getType),
+					"cpDefinitionLink.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPDefinitionLink::getType),
 				new FinderColumn<>(
 					"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CPDefinitionLink::getStatus));
@@ -2137,8 +2139,9 @@ public class CPDefinitionLinkPersistenceImpl
 					"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinitionLink::getCProductId),
 				new FinderColumn<>(
-					"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
-					true, true, CPDefinitionLink::getType),
+					"cpDefinitionLink.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					CPDefinitionLink::getType),
 				new FinderColumn<>(
 					"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CPDefinitionLink::getStatus));
@@ -2215,4 +2218,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883015780
+// LIFERAY-SERVICE-BUILDER-HASH:-1929202007

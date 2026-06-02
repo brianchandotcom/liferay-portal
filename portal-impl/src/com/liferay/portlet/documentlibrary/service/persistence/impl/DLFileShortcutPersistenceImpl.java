@@ -1669,8 +1669,8 @@ public class DLFileShortcutPersistenceImpl
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
 			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DLFileShortcut::getUuid));
+				"dlFileShortcut.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DLFileShortcut::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1682,8 +1682,8 @@ public class DLFileShortcutPersistenceImpl
 				DLFileShortcut::getGroupId),
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, "",
 			new FinderColumn<>(
-				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DLFileShortcut::getUuid),
+				"dlFileShortcut.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DLFileShortcut::getUuid),
 			new FinderColumn<>(
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileShortcut::getGroupId));
@@ -1711,8 +1711,9 @@ public class DLFileShortcutPersistenceImpl
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DLFileShortcut::getUuid),
+					"dlFileShortcut.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					DLFileShortcut::getUuid),
 				new FinderColumn<>(
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getCompanyId));
@@ -1889,8 +1890,9 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getFolderId),
 				new FinderColumn<>(
-					"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, DLFileShortcut::isActive));
+					"dlFileShortcut.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					DLFileShortcut::isActive));
 
 		_collectionPersistenceFinderByG_F_A_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -1931,8 +1933,9 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getFolderId),
 				new FinderColumn<>(
-					"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, true, DLFileShortcut::isActive),
+					"dlFileShortcut.", "active", "active_",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					DLFileShortcut::isActive),
 				new FinderColumn<>(
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, DLFileShortcut::getStatus));
@@ -1990,4 +1993,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2027748784
+// LIFERAY-SERVICE-BUILDER-HASH:77585288

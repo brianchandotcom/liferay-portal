@@ -1068,8 +1068,8 @@ public class DDLRecordSetPersistenceImpl
 			_SQL_SELECT_DDLRECORDSET_WHERE, _SQL_COUNT_DDLRECORDSET_WHERE,
 			DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DDLRecordSet::getUuid));
+				"ddlRecordSet.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDLRecordSet::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1081,8 +1081,8 @@ public class DDLRecordSetPersistenceImpl
 				DDLRecordSet::getGroupId),
 			_SQL_SELECT_DDLRECORDSET_WHERE, "",
 			new FinderColumn<>(
-				"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DDLRecordSet::getUuid),
+				"ddlRecordSet.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, DDLRecordSet::getUuid),
 			new FinderColumn<>(
 				"ddlRecordSet.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecordSet::getGroupId));
@@ -1109,8 +1109,8 @@ public class DDLRecordSetPersistenceImpl
 				_SQL_SELECT_DDLRECORDSET_WHERE, _SQL_COUNT_DDLRECORDSET_WHERE,
 				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DDLRecordSet::getUuid),
+					"ddlRecordSet.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DDLRecordSet::getUuid),
 				new FinderColumn<>(
 					"ddlRecordSet.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecordSet::getCompanyId));
@@ -1255,4 +1255,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1235042077
+// LIFERAY-SERVICE-BUILDER-HASH:-273980737

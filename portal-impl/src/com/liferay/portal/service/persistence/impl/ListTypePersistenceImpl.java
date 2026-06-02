@@ -727,8 +727,8 @@ public class ListTypePersistenceImpl
 			_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
 			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"listType.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				ListType::getUuid));
+				"listType.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, ListType::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -752,8 +752,8 @@ public class ListTypePersistenceImpl
 				_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
 				ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"listType.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, ListType::getUuid),
+					"listType.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, ListType::getUuid),
 				new FinderColumn<>(
 					"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, ListType::getCompanyId));
@@ -807,8 +807,8 @@ public class ListTypePersistenceImpl
 				"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, ListType::getCompanyId),
 			new FinderColumn<>(
-				"listType.", "type", FinderColumn.Type.STRING, "=", true, true,
-				ListType::getType));
+				"listType.", "type", "type_", FinderColumn.Type.STRING, "=",
+				true, true, ListType::getType));
 
 		_uniquePersistenceFinderByC_N_T = new UniquePersistenceFinder<>(
 			this,
@@ -829,8 +829,8 @@ public class ListTypePersistenceImpl
 				"listType.", "name", FinderColumn.Type.STRING, "=", true, true,
 				ListType::getName),
 			new FinderColumn<>(
-				"listType.", "type", FinderColumn.Type.STRING, "=", true, true,
-				ListType::getType));
+				"listType.", "type", "type_", FinderColumn.Type.STRING, "=",
+				true, true, ListType::getType));
 
 		ListTypeUtil.setPersistence(this);
 	}
@@ -868,4 +868,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:524684758
+// LIFERAY-SERVICE-BUILDER-HASH:-941559796

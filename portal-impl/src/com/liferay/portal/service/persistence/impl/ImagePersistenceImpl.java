@@ -486,8 +486,8 @@ public class ImagePersistenceImpl
 				_SQL_SELECT_IMAGE_WHERE, _SQL_COUNT_IMAGE_WHERE,
 				ImageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"image.", "size", FinderColumn.Type.INTEGER, "<", true,
-					true, Image::getSize));
+					"image.", "size", "size_", FinderColumn.Type.INTEGER, "<",
+					true, true, Image::getSize));
 
 		ImageUtil.setPersistence(this);
 	}
@@ -522,4 +522,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-460896741
+// LIFERAY-SERVICE-BUILDER-HASH:-1038373264

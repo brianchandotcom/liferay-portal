@@ -1275,8 +1275,8 @@ public class CTEntryPersistenceImpl
 			_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
 			CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				CTEntry::getUuid));
+				"ctEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, CTEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1300,8 +1300,8 @@ public class CTEntryPersistenceImpl
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
 				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, CTEntry::getUuid),
+					"ctEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, CTEntry::getUuid),
 				new FinderColumn<>(
 					"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getCompanyId));
@@ -1535,4 +1535,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1015335163
+// LIFERAY-SERVICE-BUILDER-HASH:333364410

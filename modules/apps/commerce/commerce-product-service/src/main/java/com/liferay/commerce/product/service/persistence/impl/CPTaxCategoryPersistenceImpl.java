@@ -910,8 +910,8 @@ public class CPTaxCategoryPersistenceImpl
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CPTaxCategory::getUuid));
+					"cpTaxCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, CPTaxCategory::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -935,8 +935,8 @@ public class CPTaxCategoryPersistenceImpl
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, CPTaxCategory::getUuid),
+					"cpTaxCategory.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, CPTaxCategory::getUuid),
 				new FinderColumn<>(
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
@@ -1056,4 +1056,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-471371481
+// LIFERAY-SERVICE-BUILDER-HASH:-1624343201

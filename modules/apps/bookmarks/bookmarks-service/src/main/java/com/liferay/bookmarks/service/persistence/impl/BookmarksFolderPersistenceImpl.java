@@ -1693,8 +1693,8 @@ public class BookmarksFolderPersistenceImpl
 			_SQL_SELECT_BOOKMARKSFOLDER_WHERE, _SQL_COUNT_BOOKMARKSFOLDER_WHERE,
 			BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"bookmarksFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, BookmarksFolder::getUuid));
+				"bookmarksFolder.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, BookmarksFolder::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1706,8 +1706,8 @@ public class BookmarksFolderPersistenceImpl
 				BookmarksFolder::getGroupId),
 			_SQL_SELECT_BOOKMARKSFOLDER_WHERE, "",
 			new FinderColumn<>(
-				"bookmarksFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, BookmarksFolder::getUuid),
+				"bookmarksFolder.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, BookmarksFolder::getUuid),
 			new FinderColumn<>(
 				"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, BookmarksFolder::getGroupId));
@@ -1736,8 +1736,9 @@ public class BookmarksFolderPersistenceImpl
 				BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"bookmarksFolder.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, BookmarksFolder::getUuid),
+					"bookmarksFolder.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					BookmarksFolder::getUuid),
 				new FinderColumn<>(
 					"bookmarksFolder.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BookmarksFolder::getCompanyId));
@@ -2052,4 +2053,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1179633973
+// LIFERAY-SERVICE-BUILDER-HASH:-1686772483

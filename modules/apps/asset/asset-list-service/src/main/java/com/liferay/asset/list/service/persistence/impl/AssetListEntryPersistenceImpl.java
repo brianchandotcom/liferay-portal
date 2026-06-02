@@ -3249,8 +3249,8 @@ public class AssetListEntryPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRY_WHERE, _SQL_COUNT_ASSETLISTENTRY_WHERE,
 			AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"assetListEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, AssetListEntry::getUuid));
+				"assetListEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, AssetListEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3262,8 +3262,8 @@ public class AssetListEntryPersistenceImpl
 				AssetListEntry::getGroupId),
 			_SQL_SELECT_ASSETLISTENTRY_WHERE, "",
 			new FinderColumn<>(
-				"assetListEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, AssetListEntry::getUuid),
+				"assetListEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, AssetListEntry::getUuid),
 			new FinderColumn<>(
 				"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, AssetListEntry::getGroupId));
@@ -3291,8 +3291,9 @@ public class AssetListEntryPersistenceImpl
 				_SQL_COUNT_ASSETLISTENTRY_WHERE,
 				AssetListEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"assetListEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, AssetListEntry::getUuid),
+					"assetListEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					AssetListEntry::getUuid),
 				new FinderColumn<>(
 					"assetListEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AssetListEntry::getCompanyId));
@@ -3412,8 +3413,9 @@ public class AssetListEntryPersistenceImpl
 					"assetListEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetListEntry::getGroupId),
 				new FinderColumn<>(
-					"assetListEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, AssetListEntry::getType));
+					"assetListEntry.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					AssetListEntry::getType));
 
 		_collectionPersistenceFinderByG_AET =
 			new FilterCollectionPersistenceFinder<>(
@@ -3670,4 +3672,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:506278457
+// LIFERAY-SERVICE-BUILDER-HASH:1311483211

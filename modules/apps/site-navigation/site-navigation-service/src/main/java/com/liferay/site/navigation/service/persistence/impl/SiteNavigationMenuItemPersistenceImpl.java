@@ -1434,8 +1434,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, SiteNavigationMenuItem::getUuid));
+				"siteNavigationMenuItem.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SiteNavigationMenuItem::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1447,8 +1448,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				SiteNavigationMenuItem::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE, "",
 			new FinderColumn<>(
-				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, SiteNavigationMenuItem::getUuid),
+				"siteNavigationMenuItem.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SiteNavigationMenuItem::getUuid),
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SiteNavigationMenuItem::getGroupId));
@@ -1477,8 +1479,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, SiteNavigationMenuItem::getUuid),
+					"siteNavigationMenuItem.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					SiteNavigationMenuItem::getUuid),
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1596,8 +1599,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"siteNavigationMenuItem.", "type", FinderColumn.Type.STRING,
-				"=", true, true, SiteNavigationMenuItem::getType));
+				"siteNavigationMenuItem.", "type", "type_",
+				FinderColumn.Type.STRING, "=", true, true,
+				SiteNavigationMenuItem::getType));
 
 		_collectionPersistenceFinderByS_P = new CollectionPersistenceFinder<>(
 			this,
@@ -1757,4 +1761,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2022360367
+// LIFERAY-SERVICE-BUILDER-HASH:61857932

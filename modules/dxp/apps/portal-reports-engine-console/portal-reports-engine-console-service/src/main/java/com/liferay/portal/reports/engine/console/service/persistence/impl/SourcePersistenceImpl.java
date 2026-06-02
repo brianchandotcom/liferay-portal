@@ -748,8 +748,8 @@ public class SourcePersistenceImpl
 			_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
 			SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"source.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Source::getUuid));
+				"source.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Source::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -760,8 +760,8 @@ public class SourcePersistenceImpl
 				convertNullFunction(Source::getUuid), Source::getGroupId),
 			_SQL_SELECT_SOURCE_WHERE, "",
 			new FinderColumn<>(
-				"source.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Source::getUuid),
+				"source.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
+				true, Source::getUuid),
 			new FinderColumn<>(
 				"source.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Source::getGroupId));
@@ -788,8 +788,8 @@ public class SourcePersistenceImpl
 				_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
 				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"source.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, Source::getUuid),
+					"source.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+					true, true, Source::getUuid),
 				new FinderColumn<>(
 					"source.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getCompanyId));
@@ -913,4 +913,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1735840048
+// LIFERAY-SERVICE-BUILDER-HASH:1098410390

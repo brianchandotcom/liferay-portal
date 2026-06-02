@@ -1926,8 +1926,8 @@ public class DLFileVersionPersistenceImpl
 			_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
 			DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DLFileVersion::getUuid));
+				"dlFileVersion.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DLFileVersion::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -1939,8 +1939,8 @@ public class DLFileVersionPersistenceImpl
 				DLFileVersion::getGroupId),
 			_SQL_SELECT_DLFILEVERSION_WHERE, "",
 			new FinderColumn<>(
-				"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DLFileVersion::getUuid),
+				"dlFileVersion.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, DLFileVersion::getUuid),
 			new FinderColumn<>(
 				"dlFileVersion.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileVersion::getGroupId));
@@ -1967,8 +1967,8 @@ public class DLFileVersionPersistenceImpl
 				_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
 				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, DLFileVersion::getUuid),
+					"dlFileVersion.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, DLFileVersion::getUuid),
 				new FinderColumn<>(
 					"dlFileVersion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileVersion::getCompanyId));
@@ -2329,4 +2329,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1233105394
+// LIFERAY-SERVICE-BUILDER-HASH:-540292155

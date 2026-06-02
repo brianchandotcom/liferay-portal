@@ -818,8 +818,8 @@ public class TranslationEntryPersistenceImpl
 			_SQL_COUNT_TRANSLATIONENTRY_WHERE,
 			TranslationEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"translationEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, TranslationEntry::getUuid));
+				"translationEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, TranslationEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -831,8 +831,8 @@ public class TranslationEntryPersistenceImpl
 				TranslationEntry::getGroupId),
 			_SQL_SELECT_TRANSLATIONENTRY_WHERE, "",
 			new FinderColumn<>(
-				"translationEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, TranslationEntry::getUuid),
+				"translationEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, TranslationEntry::getUuid),
 			new FinderColumn<>(
 				"translationEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, TranslationEntry::getGroupId));
@@ -861,8 +861,9 @@ public class TranslationEntryPersistenceImpl
 				TranslationEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"translationEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, TranslationEntry::getUuid),
+					"translationEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					TranslationEntry::getUuid),
 				new FinderColumn<>(
 					"translationEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, TranslationEntry::getCompanyId));
@@ -990,4 +991,4 @@ public class TranslationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:324096342
+// LIFERAY-SERVICE-BUILDER-HASH:1531807937

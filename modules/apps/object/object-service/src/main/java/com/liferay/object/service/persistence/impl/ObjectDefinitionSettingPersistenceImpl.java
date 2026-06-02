@@ -858,8 +858,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"objectDefinitionSetting.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, ObjectDefinitionSetting::getUuid));
+				"objectDefinitionSetting.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				ObjectDefinitionSetting::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -885,7 +886,7 @@ public class ObjectDefinitionSettingPersistenceImpl
 				ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"objectDefinitionSetting.", "uuid",
+					"objectDefinitionSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					ObjectDefinitionSetting::getUuid),
 				new FinderColumn<>(
@@ -1077,4 +1078,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1833621685
+// LIFERAY-SERVICE-BUILDER-HASH:-808554468

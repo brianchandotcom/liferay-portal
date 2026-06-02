@@ -787,8 +787,8 @@ public class KBTemplatePersistenceImpl
 			_SQL_SELECT_KBTEMPLATE_WHERE, _SQL_COUNT_KBTEMPLATE_WHERE,
 			KBTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KBTemplate::getUuid));
+				"kbTemplate.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBTemplate::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -800,8 +800,8 @@ public class KBTemplatePersistenceImpl
 				KBTemplate::getGroupId),
 			_SQL_SELECT_KBTEMPLATE_WHERE, "",
 			new FinderColumn<>(
-				"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, KBTemplate::getUuid),
+				"kbTemplate.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, KBTemplate::getUuid),
 			new FinderColumn<>(
 				"kbTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBTemplate::getGroupId));
@@ -828,8 +828,8 @@ public class KBTemplatePersistenceImpl
 				_SQL_SELECT_KBTEMPLATE_WHERE, _SQL_COUNT_KBTEMPLATE_WHERE,
 				KBTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, KBTemplate::getUuid),
+					"kbTemplate.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, KBTemplate::getUuid),
 				new FinderColumn<>(
 					"kbTemplate.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBTemplate::getCompanyId));
@@ -931,4 +931,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-49961566
+// LIFERAY-SERVICE-BUILDER-HASH:-830611471

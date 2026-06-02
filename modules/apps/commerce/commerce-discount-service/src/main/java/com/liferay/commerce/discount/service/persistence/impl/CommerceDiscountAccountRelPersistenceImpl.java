@@ -762,8 +762,9 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
 			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"commerceDiscountAccountRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, CommerceDiscountAccountRel::getUuid));
+				"commerceDiscountAccountRel.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceDiscountAccountRel::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -789,7 +790,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"commerceDiscountAccountRel.", "uuid",
+					"commerceDiscountAccountRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceDiscountAccountRel::getUuid),
 				new FinderColumn<>(
@@ -946,4 +947,4 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1531215313
+// LIFERAY-SERVICE-BUILDER-HASH:236694266

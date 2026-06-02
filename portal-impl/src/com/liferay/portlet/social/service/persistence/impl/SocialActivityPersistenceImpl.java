@@ -1742,8 +1742,8 @@ public class SocialActivityPersistenceImpl
 				"socialActivity.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SocialActivity::getClassPK),
 			new FinderColumn<>(
-				"socialActivity.", "type", FinderColumn.Type.INTEGER, "=", true,
-				true, SocialActivity::getType));
+				"socialActivity.", "type", "type_", FinderColumn.Type.INTEGER,
+				"=", true, true, SocialActivity::getType));
 
 		_collectionPersistenceFinderByG_U_C_C_T_R =
 			new CollectionPersistenceFinder<>(
@@ -1804,8 +1804,9 @@ public class SocialActivityPersistenceImpl
 					"socialActivity.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getClassPK),
 				new FinderColumn<>(
-					"socialActivity.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, SocialActivity::getType),
+					"socialActivity.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialActivity::getType),
 				new FinderColumn<>(
 					"socialActivity.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getReceiverUserId));
@@ -1846,8 +1847,9 @@ public class SocialActivityPersistenceImpl
 					"socialActivity.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getClassPK),
 				new FinderColumn<>(
-					"socialActivity.", "type", FinderColumn.Type.INTEGER, "=",
-					true, true, SocialActivity::getType),
+					"socialActivity.", "type", "type_",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					SocialActivity::getType),
 				new FinderColumn<>(
 					"socialActivity.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getReceiverUserId));
@@ -1888,4 +1890,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:680974455
+// LIFERAY-SERVICE-BUILDER-HASH:-912665786

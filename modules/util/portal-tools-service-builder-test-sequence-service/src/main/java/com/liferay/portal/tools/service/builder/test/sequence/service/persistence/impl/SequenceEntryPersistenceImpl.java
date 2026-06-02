@@ -465,8 +465,8 @@ public class SequenceEntryPersistenceImpl
 			_SQL_SELECT_SEQUENCEENTRY_WHERE, _SQL_COUNT_SEQUENCEENTRY_WHERE,
 			SequenceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"sequenceEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SequenceEntry::getUuid));
+				"sequenceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SequenceEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -490,8 +490,8 @@ public class SequenceEntryPersistenceImpl
 				_SQL_SELECT_SEQUENCEENTRY_WHERE, _SQL_COUNT_SEQUENCEENTRY_WHERE,
 				SequenceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"sequenceEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SequenceEntry::getUuid),
+					"sequenceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, SequenceEntry::getUuid),
 				new FinderColumn<>(
 					"sequenceEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SequenceEntry::getCompanyId));
@@ -562,4 +562,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-820930783
+// LIFERAY-SERVICE-BUILDER-HASH:966114366

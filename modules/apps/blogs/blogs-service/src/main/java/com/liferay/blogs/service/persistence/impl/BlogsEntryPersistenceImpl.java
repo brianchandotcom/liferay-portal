@@ -4950,8 +4950,8 @@ public class BlogsEntryPersistenceImpl
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"blogsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, BlogsEntry::getUuid));
+				"blogsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, BlogsEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -4963,8 +4963,8 @@ public class BlogsEntryPersistenceImpl
 				BlogsEntry::getGroupId),
 			_SQL_SELECT_BLOGSENTRY_WHERE, "",
 			new FinderColumn<>(
-				"blogsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, BlogsEntry::getUuid),
+				"blogsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, BlogsEntry::getUuid),
 			new FinderColumn<>(
 				"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, BlogsEntry::getGroupId));
@@ -4991,8 +4991,8 @@ public class BlogsEntryPersistenceImpl
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"blogsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, BlogsEntry::getUuid),
+					"blogsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, BlogsEntry::getUuid),
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId));
@@ -5809,4 +5809,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2015417595
+// LIFERAY-SERVICE-BUILDER-HASH:-1834579760

@@ -1080,8 +1080,8 @@ public class AccountEntryPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRY_WHERE, _SQL_COUNT_ACCOUNTENTRY_WHERE,
 				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"accountEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, AccountEntry::getUuid));
+					"accountEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, AccountEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
@@ -1105,8 +1105,8 @@ public class AccountEntryPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRY_WHERE, _SQL_COUNT_ACCOUNTENTRY_WHERE,
 				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"accountEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, AccountEntry::getUuid),
+					"accountEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, AccountEntry::getUuid),
 				new FinderColumn<>(
 					"accountEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountEntry::getCompanyId));
@@ -1193,8 +1193,8 @@ public class AccountEntryPersistenceImpl
 					"accountEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, AccountEntry::getUserId),
 				new FinderColumn<>(
-					"accountEntry.", "type", FinderColumn.Type.STRING, "=",
-					true, true, AccountEntry::getType));
+					"accountEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"=", true, true, AccountEntry::getType));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1283,4 +1283,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:746446189
+// LIFERAY-SERVICE-BUILDER-HASH:1596102360

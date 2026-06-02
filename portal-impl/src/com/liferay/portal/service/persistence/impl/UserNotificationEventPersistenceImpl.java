@@ -2466,8 +2466,9 @@ public class UserNotificationEventPersistenceImpl
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"userNotificationEvent.", "uuid", FinderColumn.Type.STRING, "=",
-				true, true, UserNotificationEvent::getUuid));
+				"userNotificationEvent.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				UserNotificationEvent::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2493,8 +2494,9 @@ public class UserNotificationEventPersistenceImpl
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"userNotificationEvent.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, UserNotificationEvent::getUuid),
+					"userNotificationEvent.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					UserNotificationEvent::getUuid),
 				new FinderColumn<>(
 					"userNotificationEvent.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2549,8 +2551,9 @@ public class UserNotificationEventPersistenceImpl
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"userNotificationEvent.", "type", FinderColumn.Type.STRING, "=",
-				true, true, UserNotificationEvent::getType));
+				"userNotificationEvent.", "type", "type_",
+				FinderColumn.Type.STRING, "=", true, true,
+				UserNotificationEvent::getType));
 
 		_collectionPersistenceFinderByU_DT = new CollectionPersistenceFinder<>(
 			this,
@@ -2885,8 +2888,9 @@ public class UserNotificationEventPersistenceImpl
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
 				new FinderColumn<>(
-					"userNotificationEvent.", "type", FinderColumn.Type.STRING,
-					"=", true, true, UserNotificationEvent::getType),
+					"userNotificationEvent.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					UserNotificationEvent::getType),
 				new FinderColumn<>(
 					"userNotificationEvent.", "timestamp",
 					FinderColumn.Type.LONG, ">=", true, true,
@@ -2940,8 +2944,9 @@ public class UserNotificationEventPersistenceImpl
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
 				new FinderColumn<>(
-					"userNotificationEvent.", "type", FinderColumn.Type.STRING,
-					"=", true, true, UserNotificationEvent::getType),
+					"userNotificationEvent.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					UserNotificationEvent::getType),
 				new FinderColumn<>(
 					"userNotificationEvent.", "deliveryType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -3228,8 +3233,9 @@ public class UserNotificationEventPersistenceImpl
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
 				new FinderColumn<>(
-					"userNotificationEvent.", "type", FinderColumn.Type.STRING,
-					"=", true, true, UserNotificationEvent::getType),
+					"userNotificationEvent.", "type", "type_",
+					FinderColumn.Type.STRING, "=", true, true,
+					UserNotificationEvent::getType),
 				new FinderColumn<>(
 					"userNotificationEvent.", "deliveryType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -3343,4 +3349,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1932724492
+// LIFERAY-SERVICE-BUILDER-HASH:819265420

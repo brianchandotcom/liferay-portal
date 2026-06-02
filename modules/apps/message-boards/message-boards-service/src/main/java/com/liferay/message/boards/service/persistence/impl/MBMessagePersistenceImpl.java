@@ -3907,8 +3907,8 @@ public class MBMessagePersistenceImpl
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"mbMessage.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				MBMessage::getUuid));
+				"mbMessage.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBMessage::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -3919,8 +3919,8 @@ public class MBMessagePersistenceImpl
 				convertNullFunction(MBMessage::getUuid), MBMessage::getGroupId),
 			_SQL_SELECT_MBMESSAGE_WHERE, "",
 			new FinderColumn<>(
-				"mbMessage.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				MBMessage::getUuid),
+				"mbMessage.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
+				true, true, MBMessage::getUuid),
 			new FinderColumn<>(
 				"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getGroupId));
@@ -3947,8 +3947,8 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbMessage.", "uuid", FinderColumn.Type.STRING, "=", true,
-					true, MBMessage::getUuid),
+					"mbMessage.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, MBMessage::getUuid),
 				new FinderColumn<>(
 					"mbMessage.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBMessage::getCompanyId));
@@ -4919,4 +4919,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-300669003
+// LIFERAY-SERVICE-BUILDER-HASH:1342358461

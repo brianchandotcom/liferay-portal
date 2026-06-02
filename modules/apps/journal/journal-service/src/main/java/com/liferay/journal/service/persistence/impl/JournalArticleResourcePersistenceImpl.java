@@ -776,8 +776,9 @@ public class JournalArticleResourcePersistenceImpl
 			JournalArticleResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"",
 			new FinderColumn<>(
-				"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, JournalArticleResource::getUuid));
+				"journalArticleResource.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				JournalArticleResource::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -789,8 +790,9 @@ public class JournalArticleResourcePersistenceImpl
 				JournalArticleResource::getGroupId),
 			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE, "",
 			new FinderColumn<>(
-				"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
-				"=", true, true, JournalArticleResource::getUuid),
+				"journalArticleResource.", "uuid", "uuid_",
+				FinderColumn.Type.STRING, "=", true, true,
+				JournalArticleResource::getUuid),
 			new FinderColumn<>(
 				"journalArticleResource.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, JournalArticleResource::getGroupId));
@@ -819,8 +821,9 @@ public class JournalArticleResourcePersistenceImpl
 				JournalArticleResourceModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
-					"=", true, true, JournalArticleResource::getUuid),
+					"journalArticleResource.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					JournalArticleResource::getUuid),
 				new FinderColumn<>(
 					"journalArticleResource.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -943,4 +946,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1666031214
+// LIFERAY-SERVICE-BUILDER-HASH:596665935

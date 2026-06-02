@@ -865,8 +865,8 @@ public class SiteFriendlyURLPersistenceImpl
 			_SQL_SELECT_SITEFRIENDLYURL_WHERE, _SQL_COUNT_SITEFRIENDLYURL_WHERE,
 			SiteFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"siteFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SiteFriendlyURL::getUuid));
+				"siteFriendlyURL.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SiteFriendlyURL::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -878,8 +878,8 @@ public class SiteFriendlyURLPersistenceImpl
 				SiteFriendlyURL::getGroupId),
 			_SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
-				"siteFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, SiteFriendlyURL::getUuid),
+				"siteFriendlyURL.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, SiteFriendlyURL::getUuid),
 			new FinderColumn<>(
 				"siteFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getGroupId));
@@ -908,8 +908,9 @@ public class SiteFriendlyURLPersistenceImpl
 				SiteFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FinderColumn<>(
-					"siteFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, SiteFriendlyURL::getUuid),
+					"siteFriendlyURL.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					SiteFriendlyURL::getUuid),
 				new FinderColumn<>(
 					"siteFriendlyURL.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SiteFriendlyURL::getCompanyId));
@@ -1072,4 +1073,4 @@ public class SiteFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-700463019
+// LIFERAY-SERVICE-BUILDER-HASH:73458047

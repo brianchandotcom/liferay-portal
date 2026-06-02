@@ -1073,8 +1073,8 @@ public class ListTypeEntryPersistenceImpl
 			_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"listTypeEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, ListTypeEntry::getUuid));
+				"listTypeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, ListTypeEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1098,8 +1098,8 @@ public class ListTypeEntryPersistenceImpl
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"listTypeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, ListTypeEntry::getUuid),
+					"listTypeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, ListTypeEntry::getUuid),
 				new FinderColumn<>(
 					"listTypeEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ListTypeEntry::getCompanyId));
@@ -1202,8 +1202,8 @@ public class ListTypeEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ListTypeEntry::getListTypeDefinitionId),
 			new FinderColumn<>(
-				"listTypeEntry.", "key", FinderColumn.Type.STRING, "=", true,
-				true, ListTypeEntry::getKey));
+				"listTypeEntry.", "key", "key_", FinderColumn.Type.STRING, "=",
+				true, true, ListTypeEntry::getKey));
 
 		_uniquePersistenceFinderByERC_C_LTDI = new UniquePersistenceFinder<>(
 			this,
@@ -1302,4 +1302,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-306878094
+// LIFERAY-SERVICE-BUILDER-HASH:-1745131439

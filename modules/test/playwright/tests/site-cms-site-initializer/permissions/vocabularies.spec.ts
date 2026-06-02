@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitchViaApi} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -24,32 +25,44 @@ const test = mergeTests(
 	loginTest()
 );
 
+async function createSpaceMember(
+	apiHelpers: DataApiHelpers,
+	spaceRoleNames: string[] = []
+) {
+	const assetLibrary =
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: getRandomString(),
+			settings: {},
+			type: 'Space',
+		});
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	registerUserCredentials(user);
+
+	await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+		assetLibrary.externalReferenceCode,
+		user.externalReferenceCode
+	);
+
+	if (spaceRoleNames.length) {
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			assetLibrary.externalReferenceCode,
+			user.externalReferenceCode,
+			spaceRoleNames
+		);
+	}
+
+	return {assetLibrary, user};
+}
+
 test(
 	'A Space Content Reviewer cannot access the Vocabularies admin page',
 	{tag: ['@LPD-89497', '@LPD-93287']},
 	async ({apiHelpers, page}) => {
-		const spaceName = getRandomString();
-
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		registerUserCredentials(user);
-
-		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
-			assetLibrary.externalReferenceCode,
-			user.externalReferenceCode
-		);
-		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
-			assetLibrary.externalReferenceCode,
-			user.externalReferenceCode,
-			['Asset Library Content Reviewer']
-		);
+		const {user} = await createSpaceMember(apiHelpers, [
+			'Asset Library Content Reviewer',
+		]);
 
 		await performUserSwitchViaApi(page, user.alternateName);
 
@@ -65,28 +78,9 @@ test(
 	'A Space Content Reviewer does not see the Vocabulary Quick Action on the CMS Home Page',
 	{tag: ['@LPD-90072', '@LPD-93287']},
 	async ({apiHelpers, homePage, page}) => {
-		const spaceName = getRandomString();
-
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		registerUserCredentials(user);
-
-		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
-			assetLibrary.externalReferenceCode,
-			user.externalReferenceCode
-		);
-		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
-			assetLibrary.externalReferenceCode,
-			user.externalReferenceCode,
-			['Asset Library Content Reviewer']
-		);
+		const {user} = await createSpaceMember(apiHelpers, [
+			'Asset Library Content Reviewer',
+		]);
 
 		await performUserSwitchViaApi(page, user.alternateName);
 
@@ -104,18 +98,7 @@ test(
 	'A CMS Administrator sees the Vocabulary Quick Action on the CMS Home Page',
 	{tag: ['@LPD-90072', '@LPD-93287']},
 	async ({apiHelpers, homePage, page}) => {
-		const spaceName = getRandomString();
-
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		registerUserCredentials(user);
+		const {user} = await createSpaceMember(apiHelpers);
 
 		const cmsAdministratorRole =
 			await apiHelpers.headlessAdminUser.getRoleByName(
@@ -125,11 +108,6 @@ test(
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			cmsAdministratorRole.id,
 			Number(user.id)
-		);
-
-		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
-			assetLibrary.externalReferenceCode,
-			user.externalReferenceCode
 		);
 
 		await performUserSwitchViaApi(page, user.alternateName);

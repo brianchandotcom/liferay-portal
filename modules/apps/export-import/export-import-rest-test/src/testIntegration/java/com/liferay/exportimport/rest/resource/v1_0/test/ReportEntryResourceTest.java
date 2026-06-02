@@ -167,8 +167,8 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 
 		Page<ReportEntry> page =
 			reportEntryResource.getImportProcessReportEntriesPage(
-				_backgroundTask.getBackgroundTaskId(), null, filterString,
-				Pagination.of(1, 10), sortString);
+				testGetImportProcessReportEntriesPage_getImportProcessId(),
+				null, filterString, Pagination.of(1, 10), sortString);
 
 		List<ReportEntry> items = (List<ReportEntry>)page.getItems();
 

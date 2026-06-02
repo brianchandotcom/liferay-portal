@@ -1245,16 +1245,20 @@ public class StructuredContentResourceImpl
 		for (Map.Entry<String, List<ContentField>> entry :
 				contentFieldsMap.entrySet()) {
 
-			Field field = fields.get(entry.getKey());
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, entry.getKey());
+
+			if (ddmFormField == null) {
+				continue;
+			}
+
+			Field field = fields.get(ddmFormField.getName());
 
 			if (field == null) {
 				continue;
 			}
 
 			List<Serializable> fieldValues = new ArrayList<>();
-
-			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
-				_ddmStructureService, ddmStructure, entry.getKey());
 
 			for (ContentField contentField : entry.getValue()) {
 				Value value = DDMValueUtil.toDDMValue(
@@ -1315,14 +1319,18 @@ public class StructuredContentResourceImpl
 		for (Map.Entry<String, List<ContentField>> entry :
 				contentFieldsMap.entrySet()) {
 
-			Field field = fields.get(entry.getKey());
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, entry.getKey());
+
+			if (ddmFormField == null) {
+				continue;
+			}
+
+			Field field = fields.get(ddmFormField.getName());
 
 			if (field == null) {
 				continue;
 			}
-
-			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
-				_ddmStructureService, ddmStructure, entry.getKey());
 
 			for (ContentField contentField : entry.getValue()) {
 				Value value = DDMValueUtil.toDDMValue(

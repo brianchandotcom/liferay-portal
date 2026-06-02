@@ -19,6 +19,27 @@ const displayAssignSuccessToast = (title: string, value: string) => {
 	});
 };
 
+const displayBulkAssignSuccessToast = (assignee: string, count: number) => {
+	openToast({
+		message:
+			count === 1
+				? sub(
+						Liferay.Language.get(
+							'task-was-successfully-assigned-to-x'
+						),
+						assignee
+					)
+				: sub(
+						Liferay.Language.get(
+							'x-tasks-were-successfully-assigned-to-x'
+						),
+						String(count),
+						assignee
+					),
+		type: 'success',
+	});
+};
+
 const displayDeleteSuccessToast = (title: string) => {
 	openToast({
 		message: sub(
@@ -48,6 +69,7 @@ const displayStateSuccessToast = () => {
 
 export {
 	displayAssignSuccessToast,
+	displayBulkAssignSuccessToast,
 	displayDeleteSuccessToast,
 	displayErrorToast,
 	displayStateSuccessToast,

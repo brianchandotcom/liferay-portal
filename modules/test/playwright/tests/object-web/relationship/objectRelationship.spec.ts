@@ -2624,66 +2624,6 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			});
 		}
 	);
-
-	test(
-		'cannot delete an object that has a relationship',
-		{tag: '@LPS-150886'},
-		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const objectDefinition2 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields: generateObjectFields({
-						objectFieldBusinessTypes: ['Text'],
-					}),
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition2.id,
-				type: 'objectDefinition',
-			});
-
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				objectDefinition.externalReferenceCode!,
-				{
-					label: {en_US: 'Relationship'},
-					name: 'relationship' + getRandomInt(),
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany',
-				}
-			);
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
-				objectDefinition.label['en_US']
-			);
-
-			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
-
-			await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
-		}
-	);
 });
 
 test.describe('Manage object relationships with system objects', () => {

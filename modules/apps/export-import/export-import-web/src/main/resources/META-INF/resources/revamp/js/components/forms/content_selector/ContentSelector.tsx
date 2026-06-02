@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import React from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
+import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
 import {
 	updateSelection,
@@ -19,12 +20,12 @@ export type ContentSelection = Record<string, SectionSelection>;
 interface ContentSelectorProps {
 	'aria-labelledby'?: string;
 	'commentsAndRatingsEnabled'?: boolean;
-	'commentsAndRatingsSubtitle'?: string;
 	'errorMessage'?: string;
 	'lookAndFeelEnabled'?: boolean;
 	'name': string;
 	'onChange': (value: ContentSelection | undefined) => void;
 	'pageTreeModalConfiguration'?: PageTreeModalConfiguration;
+	'process'?: ExportImportProcess;
 	'sections': PreviewPortletDataHandlerSection[];
 	'showDeletions'?: boolean;
 	'value': ContentSelection | undefined;
@@ -33,12 +34,12 @@ interface ContentSelectorProps {
 export default function ContentSelector({
 	'aria-labelledby': ariaLabelledby,
 	commentsAndRatingsEnabled = false,
-	commentsAndRatingsSubtitle,
 	errorMessage,
 	lookAndFeelEnabled = false,
 	name,
 	onChange,
 	pageTreeModalConfiguration,
+	process = 'export',
 	sections,
 	showDeletions,
 	value,
@@ -70,7 +71,6 @@ export default function ContentSelector({
 				(section: PreviewPortletDataHandlerSection) => (
 					<ContentSection
 						commentsAndRatingsEnabled={commentsAndRatingsEnabled}
-						commentsAndRatingsSubtitle={commentsAndRatingsSubtitle}
 						key={section.name}
 						lookAndFeelEnabled={lookAndFeelEnabled}
 						onChange={(sectionValue) =>
@@ -83,6 +83,7 @@ export default function ContentSelector({
 							)
 						}
 						pageTreeModalConfiguration={pageTreeModalConfiguration}
+						process={process}
 						section={section}
 						showDeletions={showDeletions}
 						value={currentValue[section.name]}

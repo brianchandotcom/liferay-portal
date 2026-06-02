@@ -47,11 +47,9 @@ export default function DataSelectionStep({
 
 			<FormikFieldContentSelector
 				commentsAndRatingsEnabled={commentsAndRatingsEnabled}
-				commentsAndRatingsSubtitle={Liferay.Language.get(
-					'for-each-of-the-selected-content-types,-import-their'
-				)}
 				lookAndFeelEnabled={lookAndFeelEnabled}
 				name="contentSelection"
+				process="import"
 				sections={importPreview.previewPortletDataHandlerSections}
 			/>
 		</>

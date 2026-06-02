@@ -91,6 +91,7 @@ export default function DataSelection({
 						lookAndFeelEnabled={lookAndFeelEnabled}
 						name="contentSelection"
 						pageTreeModalConfiguration={pageTreeModalConfiguration}
+						process="export"
 						sections={sections}
 					/>
 				)}

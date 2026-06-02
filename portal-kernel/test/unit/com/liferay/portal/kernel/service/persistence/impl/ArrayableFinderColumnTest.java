@@ -27,9 +27,28 @@ public class ArrayableFinderColumnTest {
 		Object normalizedValue = arrayableFinderColumn.normalizeValue(null);
 
 		Assert.assertEquals(
-			"", arrayableFinderColumn.getSqlFragment(normalizedValue));
+			"", arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 		Assert.assertEquals(
 			"", arrayableFinderColumn.toFinderArg(normalizedValue));
+	}
+
+	@Test
+	public void testGetSqlFragmentNative() {
+		ArrayableFinderColumn<TestModel> arrayableFinderColumn =
+			new ArrayableFinderColumn<>(
+				"t.", "active", "active_", FinderColumn.Type.BOOLEAN, "=",
+				false, true, true, entity -> true);
+
+		Object normalizedValue = arrayableFinderColumn.normalizeValue(
+			new boolean[] {true, false});
+
+		Assert.assertEquals(
+			"(t.active IN (?,?))",
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
+
+		Assert.assertEquals(
+			"(t.active_ IN (?,?))",
+			arrayableFinderColumn.getSqlFragment(normalizedValue, true));
 	}
 
 	@Test
@@ -45,7 +64,7 @@ public class ArrayableFinderColumnTest {
 		Assert.assertTrue(normalizedValue instanceof Integer[]);
 		Assert.assertEquals(
 			"(t.col IN (?,?,?))",
-			arrayableFinderColumn.getSqlFragment(normalizedValue));
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 		Assert.assertTrue(
 			arrayableFinderColumn.matches(_TEST_MODEL, normalizedValue));
 		Assert.assertEquals(
@@ -62,7 +81,7 @@ public class ArrayableFinderColumnTest {
 
 		Assert.assertEquals(
 			"(t.col NOT IN (?,?,?))",
-			arrayableFinderColumn.getSqlFragment(normalizedValue));
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 	}
 
 	@Test
@@ -106,7 +125,7 @@ public class ArrayableFinderColumnTest {
 
 		Assert.assertEquals(
 			"(t.col IN (?,?,?))",
-			arrayableFinderColumn.getSqlFragment(normalizedValue));
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 	}
 
 	@Test
@@ -117,7 +136,7 @@ public class ArrayableFinderColumnTest {
 		Object normalizedValue = arrayableFinderColumn.normalizeValue(null);
 
 		Assert.assertEquals(
-			"", arrayableFinderColumn.getSqlFragment(normalizedValue));
+			"", arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 	}
 
 	@Test
@@ -142,7 +161,7 @@ public class ArrayableFinderColumnTest {
 
 		Assert.assertEquals(
 			"((t.col = ?) OR (t.col IS NULL))",
-			arrayableFinderColumn.getSqlFragment(normalizedValue));
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 	}
 
 	@Test
@@ -155,7 +174,7 @@ public class ArrayableFinderColumnTest {
 
 		Assert.assertEquals(
 			"((t.col = ?) OR (t.col = ?) OR (t.col = ?))",
-			arrayableFinderColumn.getSqlFragment(normalizedValue));
+			arrayableFinderColumn.getSqlFragment(normalizedValue, false));
 	}
 
 	@Test

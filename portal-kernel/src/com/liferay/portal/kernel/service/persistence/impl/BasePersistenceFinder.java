@@ -65,13 +65,16 @@ public abstract class BasePersistenceFinder
 		return finderArgs;
 	}
 
-	protected String buildSQLWhere(String sqlWhere, Object[] values) {
+	protected String buildSQLWhere(
+		String sqlWhere, Object[] values, boolean sqlQuery) {
+
 		StringBundler sb = new StringBundler((finderColumns.length * 2) + 2);
 
 		sb.append(sqlWhere);
 
 		for (int i = 0; i < finderColumns.length; i++) {
-			String fragment = finderColumns[i].getSqlFragment(values[i]);
+			String fragment = finderColumns[i].getSqlFragment(
+				values[i], sqlQuery);
 
 			if (fragment.isEmpty()) {
 				continue;

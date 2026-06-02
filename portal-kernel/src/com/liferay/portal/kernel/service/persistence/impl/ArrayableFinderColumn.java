@@ -21,18 +21,36 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 	extends FinderColumn<T> {
 
 	public ArrayableFinderColumn(
-		String entityAlias, String columnName, Type type, String comparator,
-		boolean andOperator, boolean caseSensitive, boolean convertNull,
-		Function<T, Object> valueExtractor) {
+		String entityAlias, String columnName, String dbColumnName, Type type,
+		String comparator, boolean andOperator, boolean caseSensitive,
+		boolean convertNull, Function<T, Object> valueExtractor) {
 
 		super(
-			entityAlias, columnName, type, comparator, caseSensitive,
-			convertNull, valueExtractor);
+			entityAlias, columnName, dbColumnName, type, comparator,
+			caseSensitive, convertNull, valueExtractor);
 
 		_andOperator = andOperator;
 
 		_hqlInPrefix = StringBundler.concat(
 			"(", entityAlias, columnName, andOperator ? " NOT IN (" : " IN (");
+
+		if (Objects.equals(columnName, dbColumnName)) {
+			_sqlInPrefix = _hqlInPrefix;
+		}
+		else {
+			_sqlInPrefix = StringUtil.replace(
+				_hqlInPrefix, columnName, dbColumnName);
+		}
+	}
+
+	public ArrayableFinderColumn(
+		String entityAlias, String columnName, Type type, String comparator,
+		boolean andOperator, boolean caseSensitive, boolean convertNull,
+		Function<T, Object> valueExtractor) {
+
+		this(
+			entityAlias, columnName, columnName, type, comparator, andOperator,
+			caseSensitive, convertNull, valueExtractor);
 	}
 
 	@Override
@@ -53,7 +71,7 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 	}
 
 	@Override
-	public String getSqlFragment(Object normalizedValue) {
+	public String getSqlFragment(Object normalizedValue, boolean sqlQuery) {
 		Object[] array = (Object[])normalizedValue;
 
 		if (array.length == 0) {
@@ -61,12 +79,12 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 		}
 
 		if (type == Type.STRING) {
-			return _buildStringSqlFragment((String[])normalizedValue);
+			return _buildStringSqlFragment((String[])normalizedValue, sqlQuery);
 		}
 
 		StringBundler sb = new StringBundler(array.length + 1);
 
-		sb.append(_hqlInPrefix);
+		sb.append(sqlQuery ? _sqlInPrefix : _hqlInPrefix);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append("?,");
@@ -118,7 +136,7 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 		return StringUtil.merge(array);
 	}
 
-	private String _buildStringSqlFragment(String[] strings) {
+	private String _buildStringSqlFragment(String[] strings, boolean sqlQuery) {
 		String closeWithJoiner = _andOperator ? ") AND " : ") OR ";
 
 		StringBundler sb = new StringBundler((strings.length * 3) + 1);
@@ -129,13 +147,13 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 			sb.append("(");
 
 			if (stringValue == null) {
-				sb.append(hqlIsNull);
+				sb.append(sqlQuery ? sqlIsNull : hqlIsNull);
 			}
 			else if (stringValue.isEmpty()) {
-				sb.append(hqlNull);
+				sb.append(sqlQuery ? sqlNull : hqlNull);
 			}
 			else {
-				sb.append(hqlBind);
+				sb.append(sqlQuery ? sqlBind : hqlBind);
 			}
 
 			sb.append(closeWithJoiner);
@@ -211,5 +229,6 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 
 	private final boolean _andOperator;
 	private final String _hqlInPrefix;
+	private final String _sqlInPrefix;
 
 }

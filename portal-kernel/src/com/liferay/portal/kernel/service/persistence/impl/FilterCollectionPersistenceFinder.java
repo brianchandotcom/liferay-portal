@@ -186,7 +186,7 @@ public class FilterCollectionPersistenceFinder
 		}
 
 		for (int i = 0; i < finderColumns.length; i++) {
-			String fragment = finderColumns[i].getSqlFragment(values[i]);
+			String fragment = finderColumns[i].getSqlFragment(values[i], true);
 
 			if (fragment.isEmpty()) {
 				continue;
@@ -240,7 +240,7 @@ public class FilterCollectionPersistenceFinder
 		normalizeValues(values);
 
 		String sql = _replacePermissionCheck(
-			buildSQLWhere(_filterSqlCountWhere, values), groupIds);
+			buildSQLWhere(_filterSqlCountWhere, values, true), groupIds);
 
 		Session session = null;
 

@@ -3208,13 +3208,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						_ENTITY_ALIAS_PREFIX,
 						"${entityFinder.where!}",
 						<#list entityColumns as entityColumn>
+							<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
+								<#assign columnName = "id." + entityColumn.name />
+							<#else>
+								<#assign columnName = entityColumn.name />
+							</#if>
+
 							<#if entityColumn.hasArrayableOperator()>
 								new ArrayableFinderColumn<>(
 									"${entity.alias}.",
-									<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
-										"id.${entityColumn.name}",
-									<#else>
-										"${entityColumn.name}",
+									"${columnName}",
+									<#if columnName != entityColumn.DBName>
+										"${entityColumn.DBName}",
 									</#if>
 									${entityColumn.finderColumnTypeName},
 									"${entityColumn.comparator}",
@@ -3230,10 +3235,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							<#else>
 								new FinderColumn<>(
 									"${entity.alias}.",
-									<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
-										"id.${entityColumn.name}",
-									<#else>
-										"${entityColumn.name}",
+									"${columnName}",
+									<#if columnName != entityColumn.DBName>
+										"${entityColumn.DBName}",
 									</#if>
 									${entityColumn.finderColumnTypeName},
 									"${entityColumn.comparator}",
@@ -3298,12 +3302,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						_SQL_SELECT_${entity.alias?upper_case}_WHERE,
 						"${entityFinder.where!}",
 						<#list entityColumns as entityColumn>
+							<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
+								<#assign columnName = "id." + entityColumn.name />
+							<#else>
+								<#assign columnName = entityColumn.name />
+							</#if>
+
 							new FinderColumn<>(
 								"${entity.alias}.",
-								<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
-									"id.${entityColumn.name}",
-								<#else>
-									"${entityColumn.name}",
+								"${columnName}",
+								<#if columnName != entityColumn.DBName>
+									"${entityColumn.DBName}",
 								</#if>
 								${entityColumn.finderColumnTypeName},
 								"${entityColumn.comparator}",

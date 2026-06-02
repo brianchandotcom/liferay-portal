@@ -20,8 +20,8 @@ import java.util.function.Function;
 public class FinderColumn<T extends BaseModel<T>> {
 
 	public FinderColumn(
-		String entityAlias, String columnName, Type type, String comparator,
-		boolean caseSensitive, boolean convertNull,
+		String entityAlias, String columnName, String dbColumnName, Type type,
+		String comparator, boolean caseSensitive, boolean convertNull,
 		Function<T, Object> valueExtractor) {
 
 		this.type = type;
@@ -63,6 +63,27 @@ public class FinderColumn<T extends BaseModel<T>> {
 		else {
 			hqlIsNull = entityAlias + columnName + " IS NULL";
 		}
+
+		if (Objects.equals(columnName, dbColumnName)) {
+			sqlBind = hqlBind;
+			sqlIsNull = hqlIsNull;
+			sqlNull = hqlNull;
+		}
+		else {
+			sqlBind = StringUtil.replace(hqlBind, columnName, dbColumnName);
+			sqlIsNull = StringUtil.replace(hqlIsNull, columnName, dbColumnName);
+			sqlNull = StringUtil.replace(hqlNull, columnName, dbColumnName);
+		}
+	}
+
+	public FinderColumn(
+		String entityAlias, String columnName, Type type, String comparator,
+		boolean caseSensitive, boolean convertNull,
+		Function<T, Object> valueExtractor) {
+
+		this(
+			entityAlias, columnName, columnName, type, comparator,
+			caseSensitive, convertNull, valueExtractor);
 	}
 
 	public void bindValue(QueryPos queryPos, Object normalizedValue) {
@@ -107,8 +128,12 @@ public class FinderColumn<T extends BaseModel<T>> {
 		return _keyFragment;
 	}
 
-	public String getSqlFragment(Object normalizedValue) {
+	public String getSqlFragment(Object normalizedValue, boolean sqlQuery) {
 		if (type.isPrimitive()) {
+			if (sqlQuery) {
+				return sqlBind;
+			}
+
 			return hqlBind;
 		}
 
@@ -116,14 +141,30 @@ public class FinderColumn<T extends BaseModel<T>> {
 			String stringValue = (String)normalizedValue;
 
 			if (stringValue.isEmpty()) {
+				if (sqlQuery) {
+					return sqlNull;
+				}
+
 				return hqlNull;
+			}
+
+			if (sqlQuery) {
+				return sqlBind;
 			}
 
 			return hqlBind;
 		}
 
 		if (normalizedValue == null) {
+			if (sqlQuery) {
+				return sqlIsNull;
+			}
+
 			return hqlIsNull;
+		}
+
+		if (sqlQuery) {
+			return sqlBind;
 		}
 
 		return hqlBind;
@@ -239,6 +280,9 @@ public class FinderColumn<T extends BaseModel<T>> {
 	protected final String hqlBind;
 	protected final String hqlIsNull;
 	protected final String hqlNull;
+	protected final String sqlBind;
+	protected final String sqlIsNull;
+	protected final String sqlNull;
 	protected final Type type;
 	protected final Function<T, Object> valueExtractor;
 

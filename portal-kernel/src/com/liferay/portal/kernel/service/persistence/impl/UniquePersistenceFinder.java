@@ -73,7 +73,7 @@ public class UniquePersistenceFinder
 				}
 			}
 
-			String sql = buildSQLWhere(sqlSelectWhere, values);
+			String sql = buildSQLWhere(sqlSelectWhere, values, false);
 
 			Session session = null;
 

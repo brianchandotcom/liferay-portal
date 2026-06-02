@@ -1,7 +1,7 @@
-[#assign appCategories = configuration.appCategories?eval_json /]
+[#assign appCategories = configuration.appCategories?eval_json]
 
 <div class="marketplace-hero-banner">
-	<img alt="" class="marketplace-hero-banner-image" src="[resources:hero_banner_gradient_boobles.png]" />
+	<img alt="" class="marketplace-hero-banner-image" src="[resources:hero_banner_gradient_bubbles.png]" />
 
 	<div class="container">
 		<div class="marketplace-hero-banner-content">
@@ -23,16 +23,16 @@
 				</div>
 
 				[#if appCategories?has_content]
-				<div class="marketplace-categories-list">
-					[#list appCategories as category]
-					<a class="marketplace-category-button" href="/web/one/marketplace/applications?Category=${category.id?url('UTF-8')}" target="_self">
-						<span class="marketplace-category-icon" style="--category-color:${category.color};">
-							[@clay["icon"] symbol="${category.icon}" /]
-						</span>
-						<span class="marketplace-category-name">${category.name}</span>
-					</a>
-					[/#list]
-				</div>
+					<div class="marketplace-categories-list">
+						[#list appCategories as category]
+							<a class="marketplace-category-button" href="/web/one/marketplace/applications?Category=${category.id?url('UTF-8')}" target="_self">
+								<span class="marketplace-category-icon" style="--category-color:${category.color};">
+									[@clay["icon"] symbol="${category.icon}" /]
+								</span>
+								<span class="marketplace-category-name">${category.name}</span>
+							</a>
+						[/#list]
+					</div>
 				[/#if]
 			</div>
 		</div>

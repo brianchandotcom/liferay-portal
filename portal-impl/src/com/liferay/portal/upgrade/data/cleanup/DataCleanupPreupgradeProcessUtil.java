@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -32,9 +34,24 @@ import org.osgi.framework.BundleContext;
  */
 public class DataCleanupPreupgradeProcessUtil {
 
+	public static void clearCache() {
+		_primaryKeyColumnNames.clear();
+		_tableNames.clear();
+	}
+
 	public static String getPrimaryKeyColumnName(
 			Connection connection, DBInspector dbInspector, String tableName)
 		throws Exception {
+
+		String primaryKeyColumnName = _primaryKeyColumnNames.get(tableName);
+
+		if (primaryKeyColumnName != null) {
+			if (primaryKeyColumnName == _NOT_FOUND) {
+				return null;
+			}
+
+			return primaryKeyColumnName;
+		}
 
 		DB db = DBManagerUtil.getDB();
 
@@ -45,15 +62,43 @@ public class DataCleanupPreupgradeProcessUtil {
 			dbInspector.normalizeName("ctCollectionId"));
 
 		if (primaryKeyColumnNames.size() != 1) {
+			_primaryKeyColumnNames.putIfAbsent(tableName, _NOT_FOUND);
+
 			return null;
 		}
 
-		return primaryKeyColumnNames.get(0);
+		primaryKeyColumnName = primaryKeyColumnNames.get(0);
+
+		_primaryKeyColumnNames.putIfAbsent(tableName, primaryKeyColumnName);
+
+		return primaryKeyColumnName;
 	}
 
 	public static String getTableName(
 			Connection connection, DBInspector dbInspector,
 			String fullyQualifiedName)
+		throws Exception {
+
+		String tableName = _tableNames.get(fullyQualifiedName);
+
+		if (tableName != null) {
+			if (tableName == _NOT_FOUND) {
+				return null;
+			}
+
+			return tableName;
+		}
+
+		tableName = _getTableName(connection, fullyQualifiedName);
+
+		_tableNames.putIfAbsent(
+			fullyQualifiedName, (tableName != null) ? tableName : _NOT_FOUND);
+
+		return tableName;
+	}
+
+	private static String _getTableName(
+			Connection connection, String fullyQualifiedName)
 		throws Exception {
 
 		if (StringUtil.startsWith(
@@ -86,15 +131,15 @@ public class DataCleanupPreupgradeProcessUtil {
 				ImplementationClassName implementationClassName =
 					clazz.getAnnotation(ImplementationClassName.class);
 
-				if (implementationClassName == null) {
-					return null;
+				if (implementationClassName != null) {
+					clazz = bundle.loadClass(implementationClassName.value());
+
+					Field field = clazz.getField("TABLE_NAME");
+
+					return (String)field.get(null);
 				}
 
-				clazz = bundle.loadClass(implementationClassName.value());
-
-				Field field = clazz.getField("TABLE_NAME");
-
-				return (String)field.get(null);
+				return null;
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -106,7 +151,14 @@ public class DataCleanupPreupgradeProcessUtil {
 		return null;
 	}
 
+	private static final String _NOT_FOUND = new String("");
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataCleanupPreupgradeProcessUtil.class);
+
+	private static final Map<String, String> _primaryKeyColumnNames =
+		new ConcurrentHashMap<>();
+	private static final Map<String, String> _tableNames =
+		new ConcurrentHashMap<>();
 
 }

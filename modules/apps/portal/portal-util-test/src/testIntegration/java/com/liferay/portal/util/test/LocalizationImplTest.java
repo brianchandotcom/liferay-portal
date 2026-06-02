@@ -152,7 +152,6 @@ public class LocalizationImplTest {
 		method.setAccessible(true);
 
 		Object object1 = method.invoke(null, LocaleUtil.BRAZIL);
-		Object object2 = method.invoke(null, new Locale("es"));
 
 		Class<?> class1 = object1.getClass();
 
@@ -162,6 +161,8 @@ public class LocalizationImplTest {
 
 		@SuppressWarnings("unchecked")
 		Map<String, String> fieldMap1 = (Map<String, String>)field.get(object1);
+
+		Object object2 = method.invoke(null, new Locale("es"));
 
 		@SuppressWarnings("unchecked")
 		Map<String, String> fieldMap2 = (Map<String, String>)field.get(object2);

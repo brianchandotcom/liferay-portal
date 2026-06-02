@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -180,13 +181,17 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		if (assetRenderer == null) {
-			indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
+		if (assetRenderer != null) {
+			Object assetObject = assetRenderer.getAssetObject();
 
-			return;
+			if (assetObject instanceof BaseModel) {
+				indexer.reindex(assetObject);
+
+				return;
+			}
 		}
 
-		indexer.reindex(assetRenderer.getAssetObject());
+		indexer.reindex(assetEntry.getClassName(), assetEntry.getClassPK());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

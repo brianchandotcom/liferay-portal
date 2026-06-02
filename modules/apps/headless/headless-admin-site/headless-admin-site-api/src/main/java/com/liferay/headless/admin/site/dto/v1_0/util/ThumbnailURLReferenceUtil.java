@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.processor.ImageProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -41,7 +42,8 @@ public class ThumbnailURLReferenceUtil {
 				setExternalReferenceCode(dlFileEntry::getExternalReferenceCode);
 				setUrl(
 					() -> {
-						if (!ImageProcessorUtil.hasImages(
+						if (!ExportImportThreadLocal.isExportInProcess() &&
+							!ImageProcessorUtil.hasImages(
 								fileEntry.getFileVersion())) {
 
 							return null;

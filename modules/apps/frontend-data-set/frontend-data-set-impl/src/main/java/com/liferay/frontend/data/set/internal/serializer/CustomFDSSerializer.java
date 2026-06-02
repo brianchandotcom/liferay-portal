@@ -896,6 +896,30 @@ public class CustomFDSSerializer
 		);
 	}
 
+	private JSONObject _getDateTimeJSONObject(Object object) {
+		if (object == null) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
+
+		return JSONUtil.put(
+			"day", calendar.get(Calendar.DATE)
+		).put(
+			"hour", calendar.get(Calendar.HOUR_OF_DAY)
+		).put(
+			"minute", calendar.get(Calendar.MINUTE)
+		).put(
+			"month", calendar.get(Calendar.MONTH) + 1
+		).put(
+			"second", calendar.get(Calendar.SECOND)
+		).put(
+			"year", calendar.get(Calendar.YEAR)
+		);
+	}
+
 	private Object _getListTypeEntryKey(
 		String entityFieldType, ListTypeEntry listTypeEntry) {
 
@@ -1118,17 +1142,21 @@ public class CustomFDSSerializer
 			String fieldName, Map<String, Object> properties, String type)
 		throws Exception {
 
-		JSONObject fromJSONObject = _getDateJSONObject(properties.get("from"));
-		JSONObject toJSONObject = _getDateJSONObject(properties.get("to"));
+		boolean isDate = Objects.equals(type, "date");
+
+		String entityFieldType =
+			isDate ? FDSEntityFieldTypes.DATE :
+				FDSEntityFieldTypes.DATE_TIME;
+
+		JSONObject fromJSONObject = isDate ? _getDateJSONObject(properties.get("from")) : _getDateTimeJSONObject(properties.get("from"));
+		JSONObject toJSONObject = isDate ? _getDateJSONObject(properties.get("to")) : _getDateTimeJSONObject(properties.get("to"));
 
 		boolean active = (fromJSONObject != null) || (toJSONObject != null);
 
 		return JSONUtil.put(
 			"active", active
 		).put(
-			"entityFieldType",
-			Objects.equals(type, "date") ? FDSEntityFieldTypes.DATE :
-				FDSEntityFieldTypes.DATE_TIME
+			"entityFieldType", entityFieldType
 		).put(
 			"id", fieldName
 		).put(
@@ -1148,7 +1176,9 @@ public class CustomFDSSerializer
 				);
 			}
 		).put(
-			"type", "dateRange"
+			"type",
+			isDate ? "dateRange" :
+				"dateTimeRange"
 		);
 	}
 

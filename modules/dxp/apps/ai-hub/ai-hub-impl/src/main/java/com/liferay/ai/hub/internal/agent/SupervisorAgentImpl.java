@@ -74,7 +74,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
 							VertexAiGeminiUtil.createVertexAiGeminiChatModel(
-								agentContext.getCompanyId())) {
+								_quotaManager,
+								agentContext.getServiceContext())) {
 
 						PermissionThreadLocal.setPermissionChecker(
 							permissionChecker);

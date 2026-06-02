@@ -184,7 +184,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
-				serviceContext.getCompanyId());
+				_quotaManager, serviceContext);
 
 		String sseEventSinkKey = GetterUtil.getString(
 			workflowContext.get("sseEventSinkKey"));
@@ -221,9 +221,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						GetterUtil.getString(workflowContext.get("reason")),
 						prompt, executionContext.getServiceContext(),
 						userMessage);
-
-					QuotaUtil.updateUsage(
-						response, _quotaManager, serviceContext);
 				}
 			).onErrorConsumer(
 				throwable -> {

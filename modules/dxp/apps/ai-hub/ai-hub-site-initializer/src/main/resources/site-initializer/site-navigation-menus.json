@@ -25,6 +25,12 @@
 				"friendlyURL": "/account-management",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION5",
+				"friendlyURL": "/configurations",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "AI Hub Navigation Menu"

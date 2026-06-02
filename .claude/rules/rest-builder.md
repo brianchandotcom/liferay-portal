@@ -22,10 +22,10 @@ Use this workflow to scaffold a brand-new REST Builder module bundle from scratc
 ### Files To Author Before `buildREST`
 
 ```
-<name>-rest-api/{bnd.bnd, build.gradle, .lfrbuild-portal}
-<name>-rest-impl/{bnd.bnd, build.gradle, .lfrbuild-portal, rest-config.yaml, rest-openapi.yaml}
-<name>-rest-client/{bnd.bnd, build.gradle, .lfrbuild-portal}
-<name>-rest-test/{bnd.bnd, build.gradle, .lfrbuild-portal}
+<name>-rest-api/{.lfrbuild-portal, bnd.bnd, build.gradle}
+<name>-rest-impl/{.lfrbuild-portal, bnd.bnd, build.gradle, rest-config.yaml, rest-openapi.yaml}
+<name>-rest-client/{.lfrbuild-portal, bnd.bnd, build.gradle}
+<name>-rest-test/{.lfrbuild-portal, bnd.bnd, build.gradle}
 ```
 
 `buildREST` discovers a module by finding `rest-config.yaml` next to `build.gradle` — a missing `build.gradle` silently skips the module. The `.lfrbuild-portal` files are empty marker files.

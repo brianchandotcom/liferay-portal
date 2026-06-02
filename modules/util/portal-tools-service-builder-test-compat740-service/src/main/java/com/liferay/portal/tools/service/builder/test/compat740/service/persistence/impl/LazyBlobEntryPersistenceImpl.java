@@ -444,8 +444,8 @@ public class LazyBlobEntryPersistenceImpl
 			_SQL_SELECT_LAZYBLOBENTRY_WHERE, _SQL_COUNT_LAZYBLOBENTRY_WHERE,
 			LazyBlobEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lazyBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, LazyBlobEntry::getUuid));
+				"lazyBlobEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, LazyBlobEntry::getUuid));
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this,
@@ -457,8 +457,8 @@ public class LazyBlobEntryPersistenceImpl
 				LazyBlobEntry::getGroupId),
 			_SQL_SELECT_LAZYBLOBENTRY_WHERE, "",
 			new FinderColumn<>(
-				"lazyBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, LazyBlobEntry::getUuid),
+				"lazyBlobEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, LazyBlobEntry::getUuid),
 			new FinderColumn<>(
 				"lazyBlobEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, LazyBlobEntry::getGroupId));
@@ -532,4 +532,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:461771986
+// LIFERAY-SERVICE-BUILDER-HASH:2132809462

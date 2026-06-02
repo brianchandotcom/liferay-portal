@@ -68,16 +68,13 @@ public class ExportAuditEventsMVCResourceCommand
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		String[] selectedColumns = GetterUtil.getStringValues(
-			properties.get("columns"));
+		_columns = GetterUtil.getStringValues(properties.get("columns"));
 
-		if (ArrayUtil.isEmpty(selectedColumns)) {
+		if (ArrayUtil.isEmpty(_columns)) {
 			Set<String> keys = _functions.keySet();
 
-			selectedColumns = keys.toArray(new String[0]);
+			_columns = keys.toArray(new String[0]);
 		}
-
-		_columns = selectedColumns;
 	}
 
 	@Override

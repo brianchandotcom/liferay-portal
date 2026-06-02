@@ -201,7 +201,7 @@ async function getClayReleaseBoundaryCommit() {
 	}
 
 	throw new Error(
-		'Unable to find prior Clay release commit in git history. Expected a commit subject containing \"Release Clay vX.Y.Z\", \"publish vX.Y.Z\", \"Update Clay to X.Y.Z\", or \"Bump Clay versions to X.Y.Z\".'
+		'Unable to find prior Clay release commit in git history. Expected a commit subject containing "Release Clay vX.Y.Z", "publish vX.Y.Z", "Update Clay to X.Y.Z", or "Bump Clay versions to X.Y.Z".'
 	);
 }
 

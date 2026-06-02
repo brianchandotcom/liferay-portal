@@ -46,12 +46,13 @@ public class OAuthClientEntryLocalServiceTest {
 		).put(
 			"scope", "openid email profile"
 		).toString();
+
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";
 
-		String customClaimsJSON = "{}";
-
 		String clientId = RandomTestUtil.randomString();
+
+		String customClaimsJSON = "{}";
 
 		String infoJSON = JSONUtil.put(
 			"client_id", clientId

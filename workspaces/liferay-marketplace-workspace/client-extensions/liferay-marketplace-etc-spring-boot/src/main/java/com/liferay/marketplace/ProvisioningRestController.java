@@ -12,6 +12,7 @@ import com.liferay.marketplace.service.AnalyticsService;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
+import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
@@ -185,10 +186,14 @@ public class ProvisioningRestController extends BaseRestController {
 
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
 
-		_postAppLicenseKey(
-			appLicenseKey, jwt,
-			_marketplaceService.getOrder(
-				GetterUtil.getLong(appLicenseKey.getOrderId())));
+		Order order = _marketplaceService.getOrder(
+			GetterUtil.getLong(appLicenseKey.getOrderId()));
+
+		_postAppLicenseKey(appLicenseKey, jwt, order);
+
+		_marketplaceService.completeOrder(
+			order.getId(),
+			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 	}
 
 	@PostMapping("dsr-beta-license-key")
@@ -208,7 +213,24 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_postAppLicenseKey(appLicenseKey, jwt, order);
 
-		_provisionAnalyticsWorkspace(new JSONObject(json), order);
+		JSONObject jsonObject = new JSONObject(json);
+
+		JSONObject analyticsProjectJSONObject =
+			_analyticsService.provisionAnalyticsProject(
+				jsonObject.getJSONObject("analyticsForm"), null,
+				order.getAccountExternalReferenceCode());
+
+		_marketplaceService.completeOrder(
+			HashMapBuilder.put(
+				"order-metadata",
+				MarketplaceUtil.getOrderMetadata(
+					order
+				).put(
+					"analyticsProject", analyticsProjectJSONObject
+				).toString()
+			).build(),
+			order.getId(),
+			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 	}
 
 	@PostMapping("license-key-type-free")
@@ -353,45 +375,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_provisioningService.postAppLicenseKey(
 			appLicenseKey, jwt, productPurchase);
-
-		_marketplaceService.completeOrder(
-			order.getId(),
-			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
-	}
-
-	private void _provisionAnalyticsWorkspace(
-			JSONObject jsonObject, Order order)
-		throws Exception {
-
-		String analyticsProject = _analyticsService.getCorpProjectUuid(
-			order.getAccountExternalReferenceCode());
-
-		if (analyticsProject == null) {
-			JSONObject analyticsFormJSONObject = jsonObject.getJSONObject(
-				"analyticsForm");
-
-			analyticsFormJSONObject.put(
-				"corpProjectUuid", order.getAccountExternalReferenceCode());
-
-			analyticsProject = _analyticsService.provision(
-				analyticsFormJSONObject);
-		}
-
-		_marketplaceService.updateOrder(
-			HashMapBuilder.put(
-				"order-metadata",
-				new JSONObject(
-					GetterUtil.get(
-						order.getCustomFields(
-						).get(
-							"order-metadata"
-						),
-						"{}")
-				).put(
-					"analyticsProject", new JSONObject(analyticsProject)
-				).toString()
-			).build(),
-			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
 	}
 
 	@Autowired

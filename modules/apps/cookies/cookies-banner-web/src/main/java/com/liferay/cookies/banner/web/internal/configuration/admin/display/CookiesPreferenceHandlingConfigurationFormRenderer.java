@@ -90,8 +90,12 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 						customFloatingIconImageId, bytes);
 				}
 				else {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
 					image = _imageLocalService.updateImage(
-						configurationScope.getScopePK(),
+						themeDisplay.getCompanyId(),
 						_counterLocalService.increment(), bytes);
 				}
 

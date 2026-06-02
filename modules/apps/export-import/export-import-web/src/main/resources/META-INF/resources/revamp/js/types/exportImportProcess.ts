@@ -6,6 +6,8 @@
 import {Range} from '../components/date_filter';
 import {RequestPortletDataHandler} from './portletDataHandler';
 
+export type ExportImportProcess = 'export' | 'import';
+
 export interface ExportProcess {
 	dateCreated?: string;
 	dateModified?: string;

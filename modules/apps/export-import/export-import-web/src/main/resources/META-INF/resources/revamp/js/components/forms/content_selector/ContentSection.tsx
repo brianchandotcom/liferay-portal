@@ -10,6 +10,7 @@ import React, {useId} from 'react';
 
 import '../../../../css/utilities.scss';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
+import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {
 	PreviewPortletDataHandlerBoolean,
 	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
@@ -32,10 +33,10 @@ export type SectionSelection = Record<string, HandlerSelection>;
 
 interface ContentSectionProps {
 	commentsAndRatingsEnabled?: boolean;
-	commentsAndRatingsSubtitle?: string;
 	lookAndFeelEnabled?: boolean;
 	onChange: (value: SectionSelection | undefined) => void;
 	pageTreeModalConfiguration?: PageTreeModalConfiguration;
+	process?: ExportImportProcess;
 	section: PortletDataHandlerSectionType;
 	showDeletions?: boolean;
 	value: SectionSelection | undefined;
@@ -43,10 +44,10 @@ interface ContentSectionProps {
 
 export default function ContentSection({
 	commentsAndRatingsEnabled = false,
-	commentsAndRatingsSubtitle,
 	lookAndFeelEnabled = false,
 	onChange,
 	pageTreeModalConfiguration,
+	process = 'export',
 	section,
 	showDeletions,
 	value,
@@ -121,10 +122,13 @@ export default function ContentSection({
 			],
 			name: 'commentsAndRatings',
 			subtitle:
-				commentsAndRatingsSubtitle ??
-				Liferay.Language.get(
-					'for-each-of-the-selected-content-types,-export-their'
-				),
+				process === 'import'
+					? Liferay.Language.get(
+							'for-each-of-the-selected-content-types,-import-their'
+						)
+					: Liferay.Language.get(
+							'for-each-of-the-selected-content-types,-export-their'
+						),
 			title: Liferay.Language.get('comments-and-ratings'),
 		},
 	].filter(({applies}) => applies);

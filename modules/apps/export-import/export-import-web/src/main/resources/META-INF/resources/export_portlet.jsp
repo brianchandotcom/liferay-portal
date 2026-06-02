@@ -513,7 +513,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 								<clay:link
 									cssClass="btn btn-secondary"
-									href="<%= PortalUtil.escapeRedirect(redirect) %>"
+									href="<%= GetterUtil.getString(PortalUtil.escapeRedirect(redirect), themeDisplay.getURLCurrent()) %>"
 									label='<%= LanguageUtil.get(request, "cancel") %>'
 									role="button"
 								/>

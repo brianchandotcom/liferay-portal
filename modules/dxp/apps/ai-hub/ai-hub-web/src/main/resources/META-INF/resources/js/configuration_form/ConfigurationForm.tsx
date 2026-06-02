@@ -16,14 +16,16 @@ import {useConfigurationForm} from './hooks/useConfigurationForm';
 const FORM_ID = 'configurationForm';
 
 export default function ConfigurationForm({
+	accountEntryId,
 	backURL,
 	externalReferenceCode,
 }: {
+	accountEntryId: number;
 	backURL: string;
 	externalReferenceCode: string;
 }) {
 	const {handleSubmit, isSubmitting, loading, setField, values} =
-		useConfigurationForm({externalReferenceCode});
+		useConfigurationForm({accountEntryId, externalReferenceCode});
 
 	if (loading) {
 		return null;

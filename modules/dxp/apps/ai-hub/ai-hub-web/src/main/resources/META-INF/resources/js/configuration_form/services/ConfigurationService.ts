@@ -34,7 +34,7 @@ async function putConfiguration(
 	configuration: Configuration
 ) {
 	const response = await fetch(
-		`/o/ai-hub/v1.0/configurations/by-external-reference-code/${externalReferenceCode}`,
+		`/o/ai-hub/configurations/by-external-reference-code/${externalReferenceCode}`,
 		{
 			body: JSON.stringify(configuration),
 			headers: HEADERS,

@@ -141,7 +141,7 @@ public class SiteTestEntityResourceTest
 								getGraphQLFields())),
 						"JSONObject/data", "Object/siteTestEntity"))));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertTrue(
 			equals(
@@ -150,7 +150,7 @@ public class SiteTestEntityResourceTest
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"test_v1_0",
+								"portalTools_v1_0",
 								new GraphQLField(
 									"siteTestEntity",
 									HashMapBuilder.<String, Object>put(
@@ -158,7 +158,7 @@ public class SiteTestEntityResourceTest
 										siteTestEntity.getId()
 									).build(),
 									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
+						"JSONObject/data", "JSONObject/portalTools_v1_0",
 						"Object/siteTestEntity"))));
 	}
 
@@ -182,14 +182,14 @@ public class SiteTestEntityResourceTest
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
-		// Using the namespace test_v1_0
+		// Using the namespace portalTools_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"test_v1_0",
+						"portalTools_v1_0",
 						new GraphQLField(
 							"siteTestEntity",
 							HashMapBuilder.<String, Object>put(
@@ -226,7 +226,9 @@ public class SiteTestEntityResourceTest
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "test/v1.0/sites/" + siteId + "/site-test-entities",
+			null,
+			"portal-tools-rest-builder-test/v1.0/sites/" + siteId +
+				"/site-test-entities",
 			Http.Method.GET);
 
 		Assert.assertEquals(totalCount, jsonObject.getInt("totalCount"));

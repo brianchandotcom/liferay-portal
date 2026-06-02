@@ -224,7 +224,8 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			).put(
 				"type", invalidTypeId
 			).toString(),
-			"test/v1.0/test-entities", Http.Method.POST);
+			"portal-tools-rest-builder-test/v1.0/test-entities",
+			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
 		Assert.assertTrue(
@@ -238,7 +239,8 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			JSONUtil.put(
 				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).toString(),
-			"test/v1.0/test-entities", Http.Method.POST);
+			"portal-tools-rest-builder-test/v1.0/test-entities",
+			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
 		Assert.assertTrue(

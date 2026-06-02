@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Retention} from './index';
+import {RetentionType} from './index';
 import {log} from './log';
 
 const STORAGE_KEY = 'com.liferay.frontend.js.audiences.web';
@@ -12,10 +12,10 @@ const STORAGE_SEPARATOR = '|';
 class Store {
 	private pageAudienceIds: Set<string> = new Set();
 
-	clear(retention?: Retention): void {
-		log(`Clearing audiences for scope: ${retention ?? 'ALL'}`);
+	clear(retentionType?: RetentionType): void {
+		log(`Clearing audiences for scope: ${retentionType ?? 'ALL'}`);
 
-		switch (retention) {
+		switch (retentionType) {
 			case 'BROWSER':
 				localStorage.removeItem(STORAGE_KEY);
 				break;

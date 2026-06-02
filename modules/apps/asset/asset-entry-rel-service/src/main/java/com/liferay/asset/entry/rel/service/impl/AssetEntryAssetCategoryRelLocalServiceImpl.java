@@ -18,6 +18,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
@@ -283,7 +284,15 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				return;
 			}
 
-			indexer.reindex(assetRenderer.getAssetObject());
+			Object assetObject = assetRenderer.getAssetObject();
+
+			if (assetObject instanceof BaseModel) {
+				indexer.reindex(assetObject);
+			}
+			else {
+				indexer.reindex(
+					assetEntry.getClassName(), assetEntry.getClassPK());
+			}
 		}
 		catch (SearchException searchException) {
 			_log.error("Unable to reindex asset entry", searchException);

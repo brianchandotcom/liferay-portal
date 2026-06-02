@@ -78,10 +78,6 @@ public class ViewAgentDefinitionsDisplayContextTest {
 			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
-		String href =
-			"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code" +
-				"/{externalReferenceCode}";
-
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
@@ -89,6 +85,11 @@ public class ViewAgentDefinitionsDisplayContextTest {
 				"/agent?externalReferenceCode=%7BexternalReferenceCode%7D",
 				"&workflowDefinitionName=%7BworkflowDefinitionName%7D"),
 			"view", "view", "view", "get", null);
+
+		String href =
+			"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code" +
+				"/{externalReferenceCode}";
+
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1), href + "/copy", "copy", "copy",
 			"duplicate", "post", "async");
@@ -101,6 +102,7 @@ public class ViewAgentDefinitionsDisplayContextTest {
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), href + "/update-active?active=true",
 			"logout", "activate", "activate", "patch", "async");
+
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",

@@ -28,6 +28,16 @@ export default {
 	component: ClayBadge,
 	title: 'Design System/Components/Badge',
 };
+
+const displayTypes = [
+	'danger',
+	'info',
+	'primary',
+	'secondary',
+	'success',
+	'warning',
+] as const;
+
 export function Default(args: any) {
 	return (
 		<ClayBadge
@@ -63,4 +73,47 @@ WithIcon.args = {
 	label: '100',
 	symbol: 'check',
 	translucent: false,
+};
+
+export function SeeAll(args: any) {
+	return (
+		<>
+			<div className="mb-4">
+				{displayTypes.map((displayType) => (
+					<ClayBadge
+						className="mr-2"
+						displayType={displayType}
+						key={displayType}
+						label={args.label}
+						spritemap={spritemap}
+						symbol={args.symbol}
+					/>
+				))}
+			</div>
+
+			<div className="bg-dark p-3">
+				{displayTypes.map((displayType) => (
+					<ClayBadge
+						className="mr-2"
+						dark
+						displayType={displayType}
+						key={displayType}
+						label={args.label}
+						spritemap={spritemap}
+						symbol={args.symbol}
+						translucent
+					/>
+				))}
+			</div>
+		</>
+	);
+}
+
+SeeAll.args = {
+	label: '100',
+	symbol: 'check',
+};
+
+SeeAll.argTypes = {
+	displayType: {table: {disable: true}},
 };

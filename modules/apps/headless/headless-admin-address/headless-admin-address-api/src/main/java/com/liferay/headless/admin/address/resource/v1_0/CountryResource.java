@@ -56,7 +56,9 @@ public interface CountryResource {
 		throws Exception;
 
 	public Page<Country> getCountriesPage(
-			Boolean active, String search, Pagination pagination,
+			Boolean active, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -83,6 +85,7 @@ public interface CountryResource {
 
 	public Response postCountriesPageExportBatch(
 			Boolean active, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
@@ -197,4 +200,4 @@ public interface CountryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-741736543
+// LIFERAY-REST-BUILDER-HASH:755968145

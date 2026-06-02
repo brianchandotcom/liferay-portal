@@ -188,6 +188,10 @@ public abstract class BaseCountryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -218,6 +222,8 @@ public abstract class BaseCountryResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
 			@jakarta.ws.rs.core.Context Pagination pagination,
 			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
@@ -616,6 +622,10 @@ public abstract class BaseCountryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -651,6 +661,8 @@ public abstract class BaseCountryResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
 			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -1011,8 +1023,8 @@ public abstract class BaseCountryResourceImpl
 		throws Exception {
 
 		return getCountriesPage(
-			_parseBoolean((String)parameters.get("active")), search, pagination,
-			sorts);
+			_parseBoolean((String)parameters.get("active")), search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -1663,4 +1675,4 @@ public abstract class BaseCountryResourceImpl
 		LogFactoryUtil.getLog(BaseCountryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-356974426
+// LIFERAY-REST-BUILDER-HASH:-265534735

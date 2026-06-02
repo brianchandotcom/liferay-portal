@@ -87,13 +87,13 @@ public interface RegionResource {
 		throws Exception;
 
 	public Page<Region> getRegionsPage(
-			Boolean active, String search, Pagination pagination,
-			String sortString)
+			Boolean active, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getRegionsPageHttpResponse(
-			Boolean active, String search, Pagination pagination,
-			String sortString)
+			Boolean active, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public Region patchRegion(Long regionId, Region region) throws Exception;
@@ -139,13 +139,15 @@ public interface RegionResource {
 		throws Exception;
 
 	public void postRegionsPageExportBatch(
-			Boolean active, String search, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			Boolean active, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postRegionsPageExportBatchHttpResponse(
-			Boolean active, String search, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			Boolean active, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public Region putRegion(Long regionId, Region region) throws Exception;
@@ -1034,12 +1036,12 @@ public interface RegionResource {
 		}
 
 		public Page<Region> getRegionsPage(
-				Boolean active, String search, Pagination pagination,
-				String sortString)
+				Boolean active, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getRegionsPageHttpResponse(
-				active, search, pagination, sortString);
+				active, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1101,8 +1103,8 @@ public interface RegionResource {
 		}
 
 		public HttpInvoker.HttpResponse getRegionsPageHttpResponse(
-				Boolean active, String search, Pagination pagination,
-				String sortString)
+				Boolean active, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1132,6 +1134,10 @@ public interface RegionResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -1716,14 +1722,15 @@ public interface RegionResource {
 		}
 
 		public void postRegionsPageExportBatch(
-				Boolean active, String search, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				Boolean active, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postRegionsPageExportBatchHttpResponse(
-					active, search, sortString, callbackURL, contentType,
-					fieldNames);
+					active, search, filterString, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1774,8 +1781,9 @@ public interface RegionResource {
 		}
 
 		public HttpInvoker.HttpResponse postRegionsPageExportBatchHttpResponse(
-				Boolean active, String search, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				Boolean active, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1807,6 +1815,10 @@ public interface RegionResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (sortString != null) {
@@ -2166,4 +2178,4 @@ public interface RegionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2006510644
+// LIFERAY-REST-BUILDER-HASH:-61643578

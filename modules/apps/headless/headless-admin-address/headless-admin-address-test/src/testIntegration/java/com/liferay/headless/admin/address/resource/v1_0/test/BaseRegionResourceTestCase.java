@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1446,7 +1447,7 @@ public abstract class BaseRegionResourceTestCase {
 	@Test
 	public void testGetRegionsPage() throws Exception {
 		Page<Region> page = regionResource.getRegionsPage(
-			null, null, Pagination.of(1, 10), null);
+			null, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1455,7 +1456,7 @@ public abstract class BaseRegionResourceTestCase {
 		Region region2 = testGetRegionsPage_addRegion(randomRegion());
 
 		page = regionResource.getRegionsPage(
-			null, null, Pagination.of(1, 10), null);
+			null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -1478,9 +1479,81 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testGetRegionsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Region region1 = randomRegion();
+
+		region1 = testGetRegionsPage_addRegion(region1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Region> page = regionResource.getRegionsPage(
+				null, null, getFilterString(entityField, "between", region1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(region1),
+				(List<Region>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetRegionsPageWithFilterDoubleEquals() throws Exception {
+		testGetRegionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetRegionsPageWithFilterStringContains() throws Exception {
+		testGetRegionsPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetRegionsPageWithFilterStringEquals() throws Exception {
+		testGetRegionsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetRegionsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetRegionsPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetRegionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Region region1 = testGetRegionsPage_addRegion(randomRegion());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region region2 = testGetRegionsPage_addRegion(randomRegion());
+
+		for (EntityField entityField : entityFields) {
+			Page<Region> page = regionResource.getRegionsPage(
+				null, null, getFilterString(entityField, operator, region1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(region1),
+				(List<Region>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetRegionsPageWithPagination() throws Exception {
 		Page<Region> regionsPage = regionResource.getRegionsPage(
-			null, null, null, null);
+			null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(regionsPage.getTotalCount());
 
@@ -1496,7 +1569,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Region> page1 = regionResource.getRegionsPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -1507,7 +1580,7 @@ public abstract class BaseRegionResourceTestCase {
 			assertContains(region1, (List<Region>)page1.getItems());
 
 			Page<Region> page2 = regionResource.getRegionsPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -1516,7 +1589,7 @@ public abstract class BaseRegionResourceTestCase {
 			assertContains(region2, (List<Region>)page2.getItems());
 
 			Page<Region> page3 = regionResource.getRegionsPage(
-				null, null,
+				null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -1526,7 +1599,7 @@ public abstract class BaseRegionResourceTestCase {
 		}
 		else {
 			Page<Region> page1 = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, totalCount + 2), null);
+				null, null, null, Pagination.of(1, totalCount + 2), null);
 
 			List<Region> regions1 = (List<Region>)page1.getItems();
 
@@ -1534,7 +1607,7 @@ public abstract class BaseRegionResourceTestCase {
 				regions1.toString(), totalCount + 2, regions1.size());
 
 			Page<Region> page2 = regionResource.getRegionsPage(
-				null, null, Pagination.of(2, totalCount + 2), null);
+				null, null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1543,7 +1616,7 @@ public abstract class BaseRegionResourceTestCase {
 			Assert.assertEquals(regions2.toString(), 1, regions2.size());
 
 			Page<Region> page3 = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, (int)totalCount + 3), null);
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(region1, (List<Region>)page3.getItems());
 			assertContains(region2, (List<Region>)page3.getItems());
@@ -1657,18 +1730,20 @@ public abstract class BaseRegionResourceTestCase {
 		region2 = testGetRegionsPage_addRegion(region2);
 
 		Page<Region> page = regionResource.getRegionsPage(
-			null, null, null, null);
+			null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<Region> ascPage = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
 			assertContains(region1, (List<Region>)ascPage.getItems());
 			assertContains(region2, (List<Region>)ascPage.getItems());
 
 			Page<Region> descPage = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
 			assertContains(region2, (List<Region>)descPage.getItems());
@@ -1921,6 +1996,9 @@ public abstract class BaseRegionResourceTestCase {
 		}
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -2113,6 +2191,14 @@ public abstract class BaseRegionResourceTestCase {
 
 	protected void assertValid(Region region) throws Exception {
 		boolean valid = true;
+
+		if (region.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (region.getDateModified() == null) {
+			valid = false;
+		}
 
 		if (region.getId() == null) {
 			valid = false;
@@ -2336,6 +2422,26 @@ public abstract class BaseRegionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						region1.getDateCreated(), region2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						region1.getDateModified(), region2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -2516,6 +2622,64 @@ public abstract class BaseRegionResourceTestCase {
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = region.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(region.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = region.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(region.getDateModified()));
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
@@ -2721,6 +2885,8 @@ public abstract class BaseRegionResourceTestCase {
 			{
 				active = RandomTestUtil.randomBoolean();
 				countryId = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
@@ -2997,4 +3163,4 @@ public abstract class BaseRegionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-467967665
+// LIFERAY-REST-BUILDER-HASH:1021205880

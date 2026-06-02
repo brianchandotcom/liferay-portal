@@ -6,9 +6,12 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -73,6 +76,57 @@ public class EntityCacheImplTest {
 		_classLoader = EntityCacheImplTest.class.getClassLoader();
 		_nullModel = ReflectionTestUtil.getFieldValue(
 			BasePersistenceImpl.class, "nullModel");
+	}
+
+	@Test
+	public void testNotifyFinderCacheWhenSkipReplicationIsEnabled() {
+		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
+
+		ClusterExecutor clusterExecutor = Mockito.mock(ClusterExecutor.class);
+
+		Mockito.when(
+			clusterExecutor.isEnabled()
+		).thenReturn(
+			true
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			entityCacheImpl, "_clusterExecutor", clusterExecutor);
+
+		ReflectionTestUtil.setFieldValue(
+			entityCacheImpl, "_multiVMPool",
+			ProxyUtil.newProxyInstance(
+				_classLoader, new Class<?>[] {MultiVMPool.class},
+				new MultiVMPoolInvocationHandler(_classLoader, true)));
+
+		entityCacheImpl.activate(_bundleContext);
+
+		// The finder cache notification is broadcast to the cluster by default
+
+		entityCacheImpl.clearCache();
+
+		Mockito.verify(
+			clusterExecutor, Mockito.times(1)
+		).execute(
+			Mockito.any(ClusterRequest.class)
+		);
+
+		Mockito.clearInvocations(clusterExecutor);
+
+		// The finder cache notification is not broadcast to the cluster when
+		// replication is skipped by an outer scope
+
+		try (SafeCloseable safeCloseable =
+				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			entityCacheImpl.clearCache();
+		}
+
+		Mockito.verify(
+			clusterExecutor, Mockito.never()
+		).execute(
+			Mockito.any(ClusterRequest.class)
+		);
 	}
 
 	@Test

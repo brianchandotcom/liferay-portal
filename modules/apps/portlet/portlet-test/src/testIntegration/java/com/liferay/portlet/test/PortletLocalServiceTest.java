@@ -76,8 +76,8 @@ public class PortletLocalServiceTest {
 					"jakarta.portlet.name", portletName
 				).build()));
 
-		_assertFetchPortletById(portletName, null);
-		_assertFetchPortletById(portletName, RandomTestUtil.randomString());
+		_assertFetchPortletById(null, portletName);
+		_assertFetchPortletById(RandomTestUtil.randomString(), portletName);
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class PortletLocalServiceTest {
 			customAttributesDisplays.size());
 	}
 
-	private void _assertFetchPortletById(String portletName, String instanceId)
+	private void _assertFetchPortletById(String instanceId, String portletName)
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();

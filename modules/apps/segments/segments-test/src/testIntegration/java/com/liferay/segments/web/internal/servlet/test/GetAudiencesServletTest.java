@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -32,6 +33,9 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,6 +159,43 @@ public class GetAudiencesServletTest {
 			Assert.assertTrue(
 				ArrayUtil.contains(attributes, expectedAttribute));
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-92872")
+	public void testGetAudiencesMapsValues() throws Exception {
+		LocalDate localDate = LocalDate.now();
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"MM/dd/yyyy");
+
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			_createGroupJSONObject(
+				"and",
+				_createRuleJSONObject(
+					Context.LANGUAGE_ID,
+					LocaleUtil.toLanguageId(LocaleUtil.US)),
+				_createRuleJSONObject(
+					Context.LOCAL_DATE, localDate.format(dateTimeFormatter))),
+			RandomTestUtil.randomString(),
+			SegmentsEntryConstants.SOURCE_AUDIENCE);
+
+		JSONObject audienceJSONObject = _getAudienceJSONObject(
+			_getAudiencesJSONArray(), segmentsEntry.getSegmentsEntryKey());
+
+		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
+
+		JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+			ruleJSONObject.get("value"));
+
+		ruleJSONObject = rulesJSONArray.getJSONObject(1);
+
+		Assert.assertEquals(
+			localDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+			ruleJSONObject.get("value"));
 	}
 
 	@Test

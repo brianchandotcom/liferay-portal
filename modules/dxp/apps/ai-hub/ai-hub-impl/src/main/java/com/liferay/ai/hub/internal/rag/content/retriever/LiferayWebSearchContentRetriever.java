@@ -1,16 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.web.search;
+package com.liferay.ai.hub.internal.rag.content.retriever;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -21,11 +21,9 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 
-import dev.langchain4j.web.search.WebSearchEngine;
-import dev.langchain4j.web.search.WebSearchInformationResult;
+import dev.langchain4j.rag.content.Content;
+import dev.langchain4j.rag.query.Query;
 import dev.langchain4j.web.search.WebSearchOrganicResult;
-import dev.langchain4j.web.search.WebSearchRequest;
-import dev.langchain4j.web.search.WebSearchResults;
 
 import java.net.URI;
 import java.net.URL;
@@ -33,58 +31,58 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * @author Feliphe Marinho
  */
-public class LiferayWebSearchEngine implements WebSearchEngine {
+public class LiferayWebSearchContentRetriever extends BaseContentRetriever {
 
-	public LiferayWebSearchEngine(
-		String blueprintExternalReferenceCode, long oAuth2ApplicationId,
-		String userToken) {
+	public LiferayWebSearchContentRetriever(
+			String blueprintExternalReferenceCode, long oAuth2ApplicationId,
+			long userId, String userToken, long workflowInstanceId)
+		throws PortalException {
+
+		super(userId, workflowInstanceId);
 
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
-		_oAuth2ApplicationId = oAuth2ApplicationId;
-		_userToken = userToken;
 
-		_searchCallable = new CompanyInheritableThreadLocalCallable<>(
-			() -> _search(_webSearchRequest));
+		if (oAuth2ApplicationId == 0L) {
+			throw new IllegalArgumentException(
+				"OAuth 2 application ID is required");
+		}
+
+		OAuth2Application oAuth2Application =
+			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(
+				oAuth2ApplicationId);
+
+		_homePageURL = oAuth2Application.getHomePageURL();
+
+		_userToken = userToken;
 	}
 
 	@Override
-	public WebSearchResults search(WebSearchRequest webSearchRequest) {
-		_webSearchRequest = webSearchRequest;
+	protected String getSearchTarget() {
+		return _homePageURL;
+	}
 
+	@Override
+	protected List<Content> search(Query query) {
 		try {
-			return _searchCallable.call();
+			return _search(query);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
 	}
 
-	private WebSearchResults _search(WebSearchRequest webSearchRequest)
-		throws Exception {
-
-		if (_oAuth2ApplicationId == 0L) {
-			throw new IllegalArgumentException(
-				"OAuth 2 application ID is required");
-		}
-
+	private List<Content> _search(Query query) throws Exception {
 		Http.Options options = new Http.Options();
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader("Liferay-AI-Hub-Cell-On-Behalf-Of", _userToken);
 
-		OAuth2Application oAuth2Application =
-			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(
-				_oAuth2ApplicationId);
-
-		String homePageURL = oAuth2Application.getHomePageURL();
-
-		URL urlObject = new URL(homePageURL);
+		URL urlObject = new URL(_homePageURL);
 
 		if (!PortalRunMode.isTestMode() &&
 			InetAddressUtil.isLocalInetAddress(
@@ -94,10 +92,9 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 				"Local links are not allowed: " + urlObject);
 		}
 
-		List<WebSearchOrganicResult> webSearchOrganicResults =
-			new ArrayList<>();
+		List<Content> contents = new ArrayList<>();
 
-		String location = homePageURL + "/o/search/v1.0/search";
+		String location = _homePageURL + "/o/search/v1.0/search";
 
 		if (!Validator.isBlank(_blueprintExternalReferenceCode)) {
 			location = HttpComponentsUtil.addParameter(
@@ -105,12 +102,10 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 				_blueprintExternalReferenceCode);
 		}
 
+		location = HttpComponentsUtil.addParameter(location, "page", 1);
+		location = HttpComponentsUtil.addParameter(location, "pageSize", 5);
 		location = HttpComponentsUtil.addParameter(
-			location, "page", webSearchRequest.startPage());
-		location = HttpComponentsUtil.addParameter(
-			location, "pageSize", webSearchRequest.maxResults());
-		location = HttpComponentsUtil.addParameter(
-			location, "search", webSearchRequest.searchTerms());
+			location, "search", query.text());
 
 		options.setLocation(location);
 
@@ -125,34 +120,30 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			SearchResult searchResult = SearchResult.toDTO(
 				itemJSONObject.toString());
 
-			float score = searchResult.getScore();
-
-			if (score < 5) {
+			if (searchResult.getScore() < 5) {
 				continue;
 			}
 
-			String itemURL = homePageURL;
+			String itemURL = _homePageURL;
 
 			if (searchResult.getItemURL() != null) {
 				itemURL = searchResult.getItemURL();
 			}
 
-			webSearchOrganicResults.add(
+			WebSearchOrganicResult webSearchOrganicResult =
 				WebSearchOrganicResult.from(
 					searchResult.getTitle(), URI.create(itemURL), null,
 					searchResult.getDescription(),
-					Map.of("score", String.valueOf(score))));
+					Map.of("score", String.valueOf(searchResult.getScore())));
+
+			contents.add(Content.from(webSearchOrganicResult.toTextSegment()));
 		}
 
-		return WebSearchResults.from(
-			WebSearchInformationResult.from(jsonObject.getLong("totalCount")),
-			webSearchOrganicResults);
+		return contents;
 	}
 
 	private final String _blueprintExternalReferenceCode;
-	private final long _oAuth2ApplicationId;
-	private final Callable<WebSearchResults> _searchCallable;
+	private final String _homePageURL;
 	private final String _userToken;
-	private WebSearchRequest _webSearchRequest;
 
 }

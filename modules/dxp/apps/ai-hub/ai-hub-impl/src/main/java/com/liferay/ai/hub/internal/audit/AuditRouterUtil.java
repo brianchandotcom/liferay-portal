@@ -22,18 +22,32 @@ public class AuditRouterUtil {
 
 	public static void route(
 			String className, long classPK, String eventType,
-			JSONObject jsonObject, long userId)
+			JSONObject jsonObject, Date timestamp, long userId)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			userId);
 
+		for (String key : jsonObject.keySet()) {
+			if (jsonObject.get(key) instanceof String value) {
+				jsonObject.put(key, _truncate(value));
+			}
+		}
+
 		com.liferay.portal.kernel.audit.AuditRouterUtil.route(
 			new AuditMessage(
 				0, accountEntry.getCompanyId(), userId,
-				PortalUtil.getUserName(userId, StringPool.BLANK), new Date(),
+				PortalUtil.getUserName(userId, StringPool.BLANK), timestamp,
 				accountEntry.getAccountEntryId(), jsonObject, className,
 				String.valueOf(classPK), null, eventType, null));
+	}
+
+	private static String _truncate(String string) {
+		if (string.length() > 200) {
+			return string.substring(0, 200);
+		}
+
+		return string;
 	}
 
 }

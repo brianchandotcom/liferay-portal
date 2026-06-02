@@ -6,7 +6,7 @@
 declare const Analytics: any;
 
 export async function getSegments(): Promise<Set<string>> {
-	if (Analytics === undefined) {
+	if (typeof Analytics === 'undefined') {
 		throw new Error(
 			`Unable to use 'segments' attribute because 'Analytics' global object is missing`
 		);

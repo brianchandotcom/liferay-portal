@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function matches(value: string, expected: string): boolean {
-	return new RegExp(expected).test(value);
+/**
+ * @returns the timezone in IANA format
+ */
+export function getTimezone(): string {
+	return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }

@@ -878,7 +878,9 @@ public class CustomFDSSerializer
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
 
-	private JSONObject _getDateJSONObject(Object object) {
+	private JSONObject _getDateOrDateTimeJSONObject(
+		boolean dateTime, Object object) {
+
 		if (object == null) {
 			return null;
 		}
@@ -887,37 +889,25 @@ public class CustomFDSSerializer
 
 		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"day", calendar.get(Calendar.DATE)
 		).put(
 			"month", calendar.get(Calendar.MONTH) + 1
 		).put(
 			"year", calendar.get(Calendar.YEAR)
 		);
-	}
 
-	private JSONObject _getDateTimeJSONObject(Object object) {
-		if (object == null) {
-			return null;
+		if (dateTime) {
+			jsonObject.put(
+				"hour", calendar.get(Calendar.HOUR_OF_DAY)
+			).put(
+				"minute", calendar.get(Calendar.MINUTE)
+			).put(
+				"second", calendar.get(Calendar.SECOND)
+			);
 		}
 
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
-
-		return JSONUtil.put(
-			"day", calendar.get(Calendar.DATE)
-		).put(
-			"hour", calendar.get(Calendar.HOUR_OF_DAY)
-		).put(
-			"minute", calendar.get(Calendar.MINUTE)
-		).put(
-			"month", calendar.get(Calendar.MONTH) + 1
-		).put(
-			"second", calendar.get(Calendar.SECOND)
-		).put(
-			"year", calendar.get(Calendar.YEAR)
-		);
+		return jsonObject;
 	}
 
 	private Object _getListTypeEntryKey(
@@ -1142,21 +1132,20 @@ public class CustomFDSSerializer
 			String fieldName, Map<String, Object> properties, String type)
 		throws Exception {
 
-		boolean isDate = Objects.equals(type, "date");
+		boolean dateTime = Objects.equals(type, FDSEntityFieldTypes.DATE_TIME);
 
-		String entityFieldType =
-			isDate ? FDSEntityFieldTypes.DATE :
-				FDSEntityFieldTypes.DATE_TIME;
-
-		JSONObject fromJSONObject = isDate ? _getDateJSONObject(properties.get("from")) : _getDateTimeJSONObject(properties.get("from"));
-		JSONObject toJSONObject = isDate ? _getDateJSONObject(properties.get("to")) : _getDateTimeJSONObject(properties.get("to"));
+		JSONObject fromJSONObject = _getDateOrDateTimeJSONObject(
+			dateTime, properties.get("from"));
+		JSONObject toJSONObject = _getDateOrDateTimeJSONObject(
+			dateTime, properties.get("to"));
 
 		boolean active = (fromJSONObject != null) || (toJSONObject != null);
 
 		return JSONUtil.put(
 			"active", active
 		).put(
-			"entityFieldType", entityFieldType
+			"entityFieldType",
+			dateTime ? FDSEntityFieldTypes.DATE_TIME : FDSEntityFieldTypes.DATE
 		).put(
 			"id", fieldName
 		).put(
@@ -1176,9 +1165,7 @@ public class CustomFDSSerializer
 				);
 			}
 		).put(
-			"type",
-			isDate ? "dateRange" :
-				"dateTimeRange"
+			"type", dateTime ? "dateTimeRange" : "dateRange"
 		);
 	}
 

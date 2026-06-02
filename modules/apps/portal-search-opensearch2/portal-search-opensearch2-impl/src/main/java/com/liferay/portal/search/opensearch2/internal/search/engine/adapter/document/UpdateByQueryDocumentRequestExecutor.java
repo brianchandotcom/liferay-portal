@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.Conflicts;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch.core.UpdateByQueryRequest;
 import org.opensearch.client.opensearch.core.UpdateByQueryResponse;
@@ -70,6 +71,10 @@ public class UpdateByQueryDocumentRequestExecutor {
 				new Query(
 					OpenSearchQueryVisitor.INSTANCE.translate(
 						updateByQueryDocumentRequest.getQuery())));
+		}
+
+		if (updateByQueryDocumentRequest.isProceedOnConflicts()) {
+			builder.conflicts(Conflicts.Proceed);
 		}
 
 		if (updateByQueryDocumentRequest.isRefresh()) {

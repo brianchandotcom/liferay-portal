@@ -5,26 +5,34 @@ set -o nounset
 set -o pipefail
 
 readonly CHART_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-readonly CONFIGS_DIR="${CHART_DIR}/files/structured-logging"
-readonly THRESHOLD_PERCENT=50
-readonly WAIT_SECONDS="${1:-90}"
 
-container=""
+readonly CONFIGS_DIR="${CHART_DIR}/files/structured-logging"
+readonly SETTLE_SECONDS=30
+readonly THRESHOLD_PERCENT=50
+
+if [ -z "${1:-}" ]
+then
+	readonly WAIT_SECONDS=90
+else
+	readonly WAIT_SECONDS="${1}"
+fi
+
+CONTAINER=""
 
 function main {
 	_require_cmd docker jq
 
-	container="liferay-structured-logging-test-${$}"
+	CONTAINER="liferay-structured-logging-test-${$}"
 
-	trap _cleanup EXIT
+	trap _clean_up EXIT
 
-	echo "Starting Liferay (${container})."
+	echo "Starting Liferay (${CONTAINER})."
 
 	docker run \
 		--detach \
 		--env LIFERAY_TOMCAT_AJP_PORT= \
 		--env LIFERAY_TOMCAT_JVM_ROUTE= \
-		--name "${container}" \
+		--name "${CONTAINER}" \
 		--volume "${CONFIGS_DIR}/100-inject-structured-logging.sh:/etc/liferay/mount/scripts/100-inject-structured-logging.sh:ro" \
 		--volume "${CONFIGS_DIR}/cloud-native-layout.json:/var/lib/structured-logging/configs/META-INF/cloud-native-layout.json:ro" \
 		--volume "${CONFIGS_DIR}/portal-log4j-ext.xml:/var/lib/structured-logging/configs/META-INF/portal-log4j-ext.xml:ro" \
@@ -36,8 +44,12 @@ function main {
 
 	while [ "${elapsed}" -lt "${WAIT_SECONDS}" ]
 	do
-		if docker logs "${container}" 2>&1 | grep --quiet "Starting Liferay DXP"
+		if docker logs "${CONTAINER}" 2>&1 | grep --quiet "Starting Liferay DXP"
 		then
+			echo "Liferay started; letting logs settle for ${SETTLE_SECONDS}s."
+
+			sleep "${SETTLE_SECONDS}"
+
 			break
 		fi
 
@@ -48,34 +60,43 @@ function main {
 
 	local logs
 
-	logs=$(docker logs "${container}" 2>&1)
+	logs=$(docker logs "${CONTAINER}" 2>&1)
 
 	local jvm_logs
 
 	jvm_logs=$(awk -v skip=1 '
-		/Starting Liferay DXP\. To stop/ { skip = 0; next }
-		skip { next }
-		{ print }
+		/Starting Liferay DXP\. To stop/ {
+			skip = 0
+
+			next
+		}
+		skip {
+			next
+		}
+		{
+			print
+		}
 	' <<< "${logs}")
 
 	local non_empty
 
 	non_empty=$(grep --count --invert-match '^$' <<< "${jvm_logs}" || true)
 
-	local json_valid
-
-	json_valid=$(jq --raw-input 'fromjson? | select((.severity? or .level?) and (.time? or .timestamp?))' 2> /dev/null <<< "${jvm_logs}" | jq --slurp 'length')
-
 	if [ "${non_empty}" -eq 0 ]
 	then
+		echo ""
 		echo "FAIL: container emitted no JVM log output."
 		echo ""
 		echo "Last 30 log lines for context:"
 
-		docker logs --tail 30 "${container}" 2>&1 || true
+		docker logs --tail 30 "${CONTAINER}" 2>&1 || true
 
 		exit 1
 	fi
+
+	local json_valid
+
+	json_valid=$(jq --raw-input 'fromjson? | select((.level? or .severity?) and (.time? or .timestamp?))' 2> /dev/null <<< "${jvm_logs}" | jq --slurp 'length')
 
 	local percent=$((json_valid * 100 / non_empty))
 
@@ -90,7 +111,7 @@ function main {
 		echo ""
 		echo "Last 30 log lines for context:"
 
-		docker logs --tail 30 "${container}" 2>&1 || true
+		docker logs --tail 30 "${CONTAINER}" 2>&1 || true
 
 		exit 1
 	fi
@@ -98,10 +119,10 @@ function main {
 	echo "PASS: structured logging is emitting JSON above the ${THRESHOLD_PERCENT}% threshold."
 }
 
-function _cleanup {
-	if [ -n "${container}" ]
+function _clean_up {
+	if [ -n "${CONTAINER}" ]
 	then
-		docker rm --force "${container}" > /dev/null 2>&1 || true
+		docker rm --force "${CONTAINER}" > /dev/null 2>&1 || true
 	fi
 }
 

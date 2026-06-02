@@ -52,7 +52,7 @@ public class AudiencesJSONObjectBuilder {
 				"attribute",
 				_attributeNames.getOrDefault(propertyName, propertyName)
 			).put(
-				"operation",
+				"operator",
 				StringUtil.replace(
 					queryJSONObject.getString("operatorName"), '-', '_')
 			).put(

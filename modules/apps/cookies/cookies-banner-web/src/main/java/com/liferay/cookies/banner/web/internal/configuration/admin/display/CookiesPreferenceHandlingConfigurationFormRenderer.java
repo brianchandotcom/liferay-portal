@@ -60,15 +60,14 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			return Map.of("active", false, "enabled", false);
 		}
 
-		ExtendedObjectClassDefinition.Scope scope = _getScope(
+		ConfigurationScope configurationScope = _getConfigurationScope(
 			httpServletRequest);
-
-		long scopePK = _getScopePK(httpServletRequest, scope);
 
 		long customFloatingIconImageId =
 			_cookiesConfigurationProvider.
 				getCookiesPreferenceHandlingCustomFloatingIconImageId(
-					scope, scopePK);
+					configurationScope.getScope(),
+					configurationScope.getScopePK());
 
 		long fileEntryId = ParamUtil.getLong(httpServletRequest, "fileEntryId");
 
@@ -92,7 +91,8 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 				}
 				else {
 					image = _imageLocalService.updateImage(
-						scopePK, _counterLocalService.increment(), bytes);
+						configurationScope.getScopePK(),
+						_counterLocalService.increment(), bytes);
 				}
 
 				customFloatingIconImageId = image.getImageId();
@@ -170,40 +170,30 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		}
 	}
 
-	private ExtendedObjectClassDefinition.Scope _getScope(
+	private ConfigurationScope _getConfigurationScope(
 		HttpServletRequest httpServletRequest) {
 
 		String portletId = PortalUtil.getPortletId(
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAKARTA_PORTLET_REQUEST));
-
-		if (ConfigurationAdminPortletKeys.INSTANCE_SETTINGS.equals(portletId)) {
-			return ExtendedObjectClassDefinition.Scope.COMPANY;
-		}
-
-		if (ConfigurationAdminPortletKeys.SITE_SETTINGS.equals(portletId)) {
-			return ExtendedObjectClassDefinition.Scope.GROUP;
-		}
-
-		return ExtendedObjectClassDefinition.Scope.SYSTEM;
-	}
-
-	private long _getScopePK(
-		HttpServletRequest httpServletRequest,
-		ExtendedObjectClassDefinition.Scope scope) {
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (scope == ExtendedObjectClassDefinition.Scope.COMPANY) {
-			return themeDisplay.getCompanyId();
-		}
-		else if (scope == ExtendedObjectClassDefinition.Scope.GROUP) {
-			return themeDisplay.getScopeGroupId();
+		if (ConfigurationAdminPortletKeys.INSTANCE_SETTINGS.equals(portletId)) {
+			return new ConfigurationScope(
+				ExtendedObjectClassDefinition.Scope.COMPANY,
+				themeDisplay.getCompanyId());
 		}
 
-		return 0;
+		if (ConfigurationAdminPortletKeys.SITE_SETTINGS.equals(portletId)) {
+			return new ConfigurationScope(
+				ExtendedObjectClassDefinition.Scope.GROUP,
+				themeDisplay.getScopeGroupId());
+		}
+
+		return new ConfigurationScope(
+			ExtendedObjectClassDefinition.Scope.SYSTEM, 0);
 	}
 
 	private void _render(
@@ -211,19 +201,18 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		ConfigurationScope configurationScope = _getConfigurationScope(
+			httpServletRequest);
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/cookies_preference_handling_configuration/view.jsp");
-
-		ExtendedObjectClassDefinition.Scope scope = _getScope(
-			httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CookiesBannerWebKeys.
 				COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT,
 			new CookiesPreferenceHandlingConfigurationDisplayContext(
-				_cookiesConfigurationProvider, scope,
-				_getScopePK(httpServletRequest, scope)));
+				_cookiesConfigurationProvider, configurationScope.getScope(),
+				configurationScope.getScopePK()));
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
@@ -244,5 +233,27 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"
 	)
 	private ServletContext _servletContext;
+
+	private static class ConfigurationScope {
+
+		public ExtendedObjectClassDefinition.Scope getScope() {
+			return _scope;
+		}
+
+		public long getScopePK() {
+			return _scopePK;
+		}
+
+		private ConfigurationScope(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+			_scope = scope;
+			_scopePK = scopePK;
+		}
+
+		private final ExtendedObjectClassDefinition.Scope _scope;
+		private final long _scopePK;
+
+	}
 
 }

@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -3318,18 +3319,22 @@ public class DefaultObjectEntryManagerImpl
 		for (Map.Entry<String, String> entry : aggregationTerms.entrySet()) {
 			String value = entry.getValue();
 
-			if (!value.startsWith("nestedFieldArray")) {
+			if (!value.startsWith(
+					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY)) {
+
 				continue;
 			}
 
 			NestedAggregation nestedAggregation = aggregations.nested(
-				entry.getKey(), "nestedFieldArray");
+				entry.getKey(), ObjectEntrySearchConstants.NESTED_FIELD_ARRAY);
 
 			String[] valueParts = value.split(StringPool.POUND);
 
 			FilterAggregation filterAggregation = aggregations.filter(
 				"filterAggregation",
-				QueriesUtil.term("nestedFieldArray.fieldName", valueParts[1]));
+				QueriesUtil.term(
+					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_FIELD_NAME,
+					valueParts[1]));
 
 			filterAggregation.addChildAggregation(
 				aggregations.terms(entry.getKey(), valueParts[0]));

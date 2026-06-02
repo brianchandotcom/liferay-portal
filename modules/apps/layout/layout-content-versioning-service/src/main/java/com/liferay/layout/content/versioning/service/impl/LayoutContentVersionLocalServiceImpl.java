@@ -7,6 +7,7 @@ package com.liferay.layout.content.versioning.service.impl;
 
 import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.versioning.exception.LayoutContentVersionNameException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.base.LayoutContentVersionLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -104,6 +106,10 @@ public class LayoutContentVersionLocalServiceImpl
 
 		layoutContentVersion.setPlid(plid);
 
+		if (MapUtil.isEmpty(nameMap)) {
+			nameMap = layout.getNameMap();
+		}
+
 		layoutContentVersion.setNameMap(nameMap);
 		layoutContentVersion.setVersion(version);
 		layoutContentVersion.setSpecSchemaVersion("v1.0");
@@ -184,6 +190,11 @@ public class LayoutContentVersionLocalServiceImpl
 
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
+
+		if (MapUtil.isEmpty(nameMap)) {
+			throw new LayoutContentVersionNameException(
+				"Name must not be null");
+		}
 
 		layoutContentVersion.setModifiedDate(new Date());
 		layoutContentVersion.setNameMap(nameMap);

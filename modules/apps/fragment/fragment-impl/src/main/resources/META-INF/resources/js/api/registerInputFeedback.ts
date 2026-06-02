@@ -91,9 +91,11 @@ export function registerInputFeedback({
 				...errorContainers,
 				lengthInfoContainer,
 				message: getLengthErrorMessage({
-					errorMessageContainer,
 					length,
 					maxLength,
+					message: errorMessageContainer.getAttribute(
+						'data-length-feedback'
+					),
 				}),
 			});
 		}

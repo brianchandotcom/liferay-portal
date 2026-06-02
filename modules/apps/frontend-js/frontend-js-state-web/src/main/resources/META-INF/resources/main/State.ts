@@ -59,6 +59,10 @@ const State = {
 			get selectors() {
 				return Array.from(selectors.values());
 			},
+
+			get subscribers() {
+				return subscribers;
+			},
 		},
 
 		reset() {

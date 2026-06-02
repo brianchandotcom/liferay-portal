@@ -5,21 +5,21 @@
 
 package com.liferay.object.internal.search.spi.model.result.contributor;
 
+import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Bryan Engler
+ * @author Joshua Cords
  */
 public class ObjectEntryModelSummaryContributor
 	implements ModelSummaryContributor {
@@ -28,82 +28,104 @@ public class ObjectEntryModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		return new Summary(
-			_getTitle(document, locale), _getContent(document, locale));
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			document.get(ObjectEntrySearchConstants.DEFAULT_LANGUAGE_ID));
+
+		Summary summary = new Summary(
+			_getTitle(defaultLocale, document, locale),
+			_getContent(defaultLocale, document, locale));
+
+		summary.setMaxContentLength(200);
+
+		return summary;
 	}
 
-	private String _getContent(Document document, Locale locale) {
-		StringBundler sb = new StringBundler();
+	private String _getContent(
+		Locale defaultLocale, Document document, Locale locale) {
 
-		Map<String, Field> fields = document.getFields();
+		String content = _getLocalizedHighlightedContent(document, locale);
 
-		for (Map.Entry<String, Field> entry : fields.entrySet()) {
-			String fieldName = entry.getKey();
-
-			if (fieldName.startsWith("snippet_nestedFieldArray.value")) {
-				Field field = entry.getValue();
-
-				sb.append(
-					StringUtil.merge(
-						field.getValues(), StringPool.TRIPLE_PERIOD));
-
-				sb.append(StringPool.TRIPLE_PERIOD);
-			}
+		if (!Validator.isBlank(content)) {
+			return content;
 		}
 
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
+		if ((defaultLocale != null) && !defaultLocale.equals(locale)) {
+			content = _getLocalizedHighlightedContent(document, defaultLocale);
 		}
 
-		String content = sb.toString();
-
-		if (Validator.isBlank(content)) {
-			String languageId = LanguageUtil.getLanguageId(locale);
-
-			String localizedContent = document.get(
-				"objectEntryContent_" + languageId);
-
-			if (Validator.isNotNull(localizedContent)) {
-				content = StringUtil.shorten(
-					localizedContent, 300, StringPool.TRIPLE_PERIOD);
-			}
+		if (!Validator.isBlank(content)) {
+			return content;
 		}
 
-		if (Validator.isBlank(content)) {
-			content = StringUtil.shorten(
-				document.get("objectEntryContent"), 300,
-				StringPool.TRIPLE_PERIOD);
-		}
-
-		return content;
+		return document.get(ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT);
 	}
 
-	private String _getTitle(Document document, Locale locale) {
+	private String _getLocalizedHighlightedContent(
+		Document document, Locale locale) {
+
+		if (locale == null) {
+			return StringPool.BLANK;
+		}
+
+		String localizedNestedValueSnippetName = StringBundler.concat(
+			Field.SNIPPET, StringPool.UNDERLINE,
+			Field.getLocalizedName(
+				locale, ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE));
+
+		String content = document.get(localizedNestedValueSnippetName);
+
+		if (!Validator.isBlank(content)) {
+			return content;
+		}
+
+		return document.get(
+			Field.getLocalizedName(
+				locale, ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT));
+	}
+
+	private String _getTitle(
+		Locale defaultLocale, Document document, Locale locale) {
+
 		String title = document.get(
-			"snippet_objectEntryTitle_" + LanguageUtil.getLanguageId(locale));
+			locale,
+			StringBundler.concat(
+				Field.SNIPPET, StringPool.UNDERLINE,
+				ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE),
+			ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE);
 
-		if (Validator.isBlank(title)) {
+		if (!Validator.isBlank(title)) {
+			return title;
+		}
+
+		if ((defaultLocale != null) && !defaultLocale.equals(locale)) {
 			title = document.get(
-				"objectEntryTitle_" + LanguageUtil.getLanguageId(locale));
+				defaultLocale,
+				StringBundler.concat(
+					Field.SNIPPET, StringPool.UNDERLINE,
+					ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE),
+				ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE);
+
+			if (!Validator.isBlank(title)) {
+				return title;
+			}
 		}
 
-		if (Validator.isBlank(title)) {
-			title = document.get("snippet_objectEntryTitle");
+		title = document.get(
+			StringBundler.concat(
+				Field.SNIPPET, StringPool.UNDERLINE,
+				ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE));
+
+		if (!Validator.isBlank(title)) {
+			return title;
 		}
 
-		if (Validator.isBlank(title)) {
-			title = document.get("objectEntryTitle");
+		title = document.get(ObjectEntrySearchConstants.OBJECT_ENTRY_TITLE);
+
+		if (!Validator.isBlank(title)) {
+			return title;
 		}
 
-		if (Validator.isBlank(title)) {
-			title = document.get("snippet_" + Field.ENTRY_CLASS_PK);
-		}
-
-		if (Validator.isBlank(title)) {
-			title = document.get(Field.ENTRY_CLASS_PK);
-		}
-
-		return title;
+		return document.get(Field.ENTRY_CLASS_PK);
 	}
 
 }

@@ -7,7 +7,7 @@ import {Detection} from './detection';
 import {log} from './log';
 import {store} from './store';
 
-import type {AudiencesDefinition, Handler, Retention} from './index';
+import type {AudiencesDefinition, Handler, RetentionType} from './index';
 
 interface HandlersMap {
 	[audienceId: string]: Handler[];
@@ -15,8 +15,8 @@ interface HandlersMap {
 
 const handlers: HandlersMap = {};
 
-export function clear(retention?: Retention): void {
-	store.clear(retention);
+export function clear(retentionType?: RetentionType): void {
+	store.clear(retentionType);
 }
 
 export function get(): Set<string> {
@@ -75,7 +75,7 @@ export async function runDetection(
 	const tabAudienceIds = store.getTabAudienceIds();
 
 	for (const match of matches) {
-		switch (match.retention) {
+		switch (match.retentionType) {
 			case 'BROWSER': {
 				browserAudienceIds.add(match.id);
 				break;
@@ -93,7 +93,7 @@ export async function runDetection(
 
 			default: {
 				throw new Error(
-					`Unsupported retention '${match.retention}' for audience '${match.id}'`
+					`Unsupported retention type '${match.retentionType}' for audience '${match.id}'`
 				);
 			}
 		}

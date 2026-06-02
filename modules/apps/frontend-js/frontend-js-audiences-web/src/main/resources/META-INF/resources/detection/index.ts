@@ -6,71 +6,75 @@
 import {UAParser} from 'ua-parser-js';
 
 import {log} from '../log';
-import {getBrowserLanguage} from './attributes/browser_language';
 import {getBrowserName} from './attributes/browser_name';
 import {getBrowserVersion} from './attributes/browser_version';
-import {getCookie} from './attributes/cookie';
+import {getCookies} from './attributes/cookies';
 import {getHostname} from './attributes/hostname';
+import {getLanguage} from './attributes/language';
 import {getLocalDate} from './attributes/local_date';
 import {getLocalHour} from './attributes/local_hour';
 import {getPathname} from './attributes/pathname';
 import {getReferrer} from './attributes/referrer';
-import {getSearchParam} from './attributes/search_param';
+import {getRequestParameters} from './attributes/request_parameters';
 import {getSegments} from './attributes/segments';
+import {getTimezone} from './attributes/timezone';
 import {getUrl} from './attributes/url';
 import {getUserAgent} from './attributes/user_agent';
 import {check} from './check';
-import {between} from './operators/between';
 import {eq} from './operators/eq';
-import {include} from './operators/include';
-import {matches} from './operators/matches';
+import {gt} from './operators/gt';
+import {gte} from './operators/gte';
+import {includes} from './operators/includes';
+import {lt} from './operators/lt';
+import {lte} from './operators/lte';
+import {notEq} from './operators/not_eq';
+import {notIncludes} from './operators/not_includes';
 
 import type {
 	Attribute,
 	AudiencesDefinition,
-	Combinator,
+	Conjunction,
 	Operator,
-	Retention,
+	RetentionType,
 	Rule,
 } from '../index';
 
 export interface AudienceMatch {
 	id: string;
-	retention: Retention;
+	retentionType: RetentionType;
 }
+
+type AttributeValue = Set<string> | number | string;
 
 interface OperatorImpl {
 	(actual: any, expected: any): boolean;
 }
 
-const COOKIE_PREFIX = 'cookie:';
-const SEARCH_PARAM_PREFIX = 'search_param:';
-
 export class Detection {
 	private _audiencesDefinition: AudiencesDefinition;
-	private _uaParser = new UAParser(navigator.userAgent);
-	private _urlSearchParams = new URLSearchParams(window.location.search);
+	private _uaParser: UAParser;
 
 	constructor(audiencesDefinition: AudiencesDefinition) {
 		check(audiencesDefinition);
 
 		this._audiencesDefinition = audiencesDefinition;
+		this._uaParser = new UAParser(navigator.userAgent);
 	}
 
 	async run(): Promise<AudienceMatch[]> {
 		const matches: {[key: string]: AudienceMatch} = {};
 
 		for (const audience of this._audiencesDefinition.audiences) {
-			const {combinator, id, retention, rules} = audience;
+			const {conjunction, id, retentionType, rules} = audience;
 
-			const matched = await this._evaluateGroup(combinator, rules);
+			const matched = await this._evaluateGroup(conjunction, rules);
 
 			if (matched) {
-				log(`Matched ${retention} audience: ${id}`);
+				log(`Matched ${retentionType} audience: ${id}`);
 
 				matches[id] = {
 					id,
-					retention,
+					retentionType,
 				};
 			}
 		}
@@ -78,21 +82,21 @@ export class Detection {
 		return Object.values(matches);
 	}
 
-	private async _getAttribute(attr: Attribute): Promise<any> {
-		if (attr === 'browser_language') {
-			return getBrowserLanguage();
-		}
-		else if (attr === 'browser_name') {
+	private async _getAttribute(attr: Attribute): Promise<AttributeValue> {
+		if (attr === 'browser_name') {
 			return getBrowserName(this._uaParser);
 		}
 		else if (attr === 'browser_version') {
 			return getBrowserVersion(this._uaParser);
 		}
-		else if (attr.startsWith(COOKIE_PREFIX)) {
-			return getCookie(attr.slice(COOKIE_PREFIX.length));
+		else if (attr === 'cookies') {
+			return getCookies();
 		}
 		else if (attr === 'hostname') {
 			return getHostname();
+		}
+		else if (attr === 'language') {
+			return getLanguage();
 		}
 		else if (attr === 'local_date') {
 			return getLocalDate();
@@ -106,14 +110,14 @@ export class Detection {
 		else if (attr === 'referrer') {
 			return getReferrer();
 		}
-		else if (attr.startsWith(SEARCH_PARAM_PREFIX)) {
-			return getSearchParam(
-				attr.slice(SEARCH_PARAM_PREFIX.length),
-				this._urlSearchParams
-			);
+		else if (attr === 'request_parameters') {
+			return getRequestParameters();
 		}
 		else if (attr === 'segments') {
 			return getSegments();
+		}
+		else if (attr === 'timezone') {
+			return getTimezone();
 		}
 		else if (attr === 'url') {
 			return getUrl();
@@ -127,44 +131,56 @@ export class Detection {
 	}
 
 	private async _evaluateGroup(
-		combinator: Combinator,
+		conjunction: Conjunction,
 		rules: Rule[]
 	): Promise<boolean> {
 		const results = await Promise.all(
 			rules.map((rule) => this._evaluateRule(rule))
 		);
 
-		return combinator === 'and'
+		return conjunction === 'AND'
 			? results.every(Boolean)
 			: results.some(Boolean);
 	}
 
 	private async _evaluateRule(rule: Rule): Promise<boolean> {
-		if ('combinator' in rule) {
-			return this._evaluateGroup(rule.combinator, rule.rules);
+		if ('conjunction' in rule) {
+			return this._evaluateGroup(rule.conjunction, rule.rules);
 		}
 
-		const attribute = await this._getAttribute(rule.attr);
-		const operator = this._getOperator(rule.op);
+		const operator = this._getOperator(rule.operator);
+		const attribute = await this._getAttribute(rule.attribute);
 
-		return operator(attribute, rule.val);
+		return operator(attribute, rule.value);
 	}
 
-	private _getOperator(op: Operator): OperatorImpl {
-		if (op === 'between') {
-			return between;
-		}
-		else if (op === 'eq') {
+	private _getOperator(operator: Operator): OperatorImpl {
+		if (operator === 'eq') {
 			return eq;
 		}
-		else if (op === 'include') {
-			return include;
+		else if (operator === 'gt') {
+			return gt;
 		}
-		else if (op === 'matches') {
-			return matches;
+		else if (operator === 'gte') {
+			return gte;
+		}
+		else if (operator === 'includes') {
+			return includes;
+		}
+		else if (operator === 'lt') {
+			return lt;
+		}
+		else if (operator === 'lte') {
+			return lte;
+		}
+		else if (operator === 'not_eq') {
+			return notEq;
+		}
+		else if (operator === 'not_includes') {
+			return notIncludes;
 		}
 		else {
-			throw new Error(`Unsupported operator: ${op}`);
+			throw new Error(`Unsupported operator: ${operator}`);
 		}
 	}
 }

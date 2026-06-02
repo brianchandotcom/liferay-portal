@@ -55,9 +55,15 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -489,6 +495,59 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	@Test
+	public void testExecuteUpdateByQueryDocumentRequestProceedsOnConflicts()
+		throws Exception {
+
+		for (int i = 0; i < _DOCUMENT_COUNT; i++) {
+			_indexDocument(
+				String.valueOf(i),
+				JsonData.of(
+					HashMapBuilder.<String, Object>put(
+						_FIELD_NAME, Boolean.TRUE
+					).build()));
+		}
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			_THREAD_COUNT);
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		List<Throwable> throwables = new CopyOnWriteArrayList<>();
+
+		try {
+			List<Future<?>> futures = new ArrayList<>();
+
+			for (int i = 0; i < _THREAD_COUNT; i++) {
+				futures.add(
+					executorService.submit(
+						() -> {
+							try {
+								countDownLatch.await();
+
+								for (int j = 0; j < _ITERATION_COUNT; j++) {
+									_updateByQueryProceedOnConflicts();
+								}
+							}
+							catch (Throwable throwable) {
+								throwables.add(throwable);
+							}
+						}));
+			}
+
+			countDownLatch.countDown();
+
+			for (Future<?> future : futures) {
+				future.get();
+			}
+		}
+		finally {
+			executorService.shutdownNow();
+		}
+
+		Assert.assertTrue(throwables.toString(), throwables.isEmpty());
+	}
+
+	@Test
 	public void testExecuteUpdateDocumentRequest() throws Exception {
 		Map<String, Object> documentFields = HashMapBuilder.<String, Object>put(
 			_FIELD_NAME, Boolean.TRUE
@@ -684,6 +743,20 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		}
 	}
 
+	private void _updateByQueryProceedOnConflicts() {
+		BooleanQuery booleanQuery = new BooleanQuery();
+
+		booleanQuery.addExactTerm(_FIELD_NAME, true);
+
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
+			new UpdateByQueryDocumentRequest(
+				booleanQuery, null, new String[] {_INDEX_NAME});
+
+		updateByQueryDocumentRequest.setProceedOnConflicts(true);
+
+		_searchEngineAdapter.execute(updateByQueryDocumentRequest);
+	}
+
 	private GetResponse _getDocument(String id) {
 		try {
 			return _elasticsearchClient.get(
@@ -770,9 +843,15 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		return _searchEngineAdapter.execute(updateDocumentRequest);
 	}
 
+	private static final int _DOCUMENT_COUNT = 50;
+
 	private static final String _FIELD_NAME = "matchDocument";
 
 	private static final String _INDEX_NAME = "test_request_index";
+
+	private static final int _ITERATION_COUNT = 30;
+
+	private static final int _THREAD_COUNT = 6;
 
 	private static ElasticsearchFixture _elasticsearchFixture;
 

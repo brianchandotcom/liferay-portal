@@ -411,6 +411,8 @@ public class TaskWorkflowMetricsIndexerImpl
 							WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 							updateTaskRequest.getCompanyId()));
 
+				updateByQueryDocumentRequest.setProceedOnConflicts(true);
+
 				updateByQueryDocumentRequest.setRefresh(true);
 
 				searchEngineAdapter.execute(updateByQueryDocumentRequest);
@@ -426,7 +428,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
-		searchEngineAdapter.execute(
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
 				QueriesUtil.nested(
 					"tasks", QueriesUtil.term("tasks.taskId", taskId)),
@@ -445,7 +447,11 @@ public class TaskWorkflowMetricsIndexerImpl
 				WorkflowMetricsIndex.getIndexName(
 					_indexNameBuilder,
 					WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
-					companyId)));
+					companyId));
+
+		updateByQueryDocumentRequest.setProceedOnConflicts(true);
+
+		searchEngineAdapter.execute(updateByQueryDocumentRequest);
 	}
 
 	private String _getAssigneeName(List<Assignment> assignments) {

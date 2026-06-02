@@ -24,8 +24,8 @@ import {
 	updateSelection,
 } from '../../../utils/contentSelection';
 import CollapsibleGroup from './CollapsibleGroup';
-import CommentsAndRatings from './CommentsAndRatings';
 import PortletDataControl from './PortletDataControl';
+import SectionFooter from './SectionFooter';
 import SectionTags from './SectionTags';
 
 export type SectionSelection = Record<string, HandlerSelection>;
@@ -52,9 +52,6 @@ export default function ContentSection({
 	value,
 }: ContentSectionProps) {
 	const checkboxId = useId();
-
-	const commentsAndRatingsApplies =
-		commentsAndRatingsEnabled && section.name === CONTENT_SECTION_KEY;
 
 	const previewPortletDataHandlers =
 		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
@@ -111,6 +108,26 @@ export default function ContentSection({
 	const anySelected = allPreviewPortletDataHandlers.some((context) =>
 		isSelected(sectionSelection[context.name], context)
 	);
+
+	const sectionFooters = [
+		{
+			applies:
+				commentsAndRatingsEnabled &&
+				section.name === CONTENT_SECTION_KEY &&
+				anySelected,
+			fields: [
+				{key: 'comments', label: Liferay.Language.get('comments')},
+				{key: 'ratings', label: Liferay.Language.get('ratings')},
+			],
+			name: 'commentsAndRatings',
+			subtitle:
+				commentsAndRatingsSubtitle ??
+				Liferay.Language.get(
+					'for-each-of-the-selected-content-types,-export-their'
+				),
+			title: Liferay.Language.get('comments-and-ratings'),
+		},
+	].filter(({applies}) => applies);
 
 	return (
 		<ClayLayout.Sheet className="mt-0">
@@ -192,21 +209,25 @@ export default function ContentSection({
 					))}
 				</div>
 
-				{commentsAndRatingsApplies && anySelected && (
-					<CommentsAndRatings
-						onChange={(commentsAndRatingsValue) =>
+				{sectionFooters.map((sectionFooter) => (
+					<SectionFooter
+						fields={sectionFooter.fields}
+						key={sectionFooter.name}
+						name={sectionFooter.name}
+						onChange={(sectionFooterValue) =>
 							onChange(
 								updateSelection(
 									sectionSelection,
-									'commentsAndRatings',
-									commentsAndRatingsValue
+									sectionFooter.name,
+									sectionFooterValue
 								)
 							)
 						}
-						subtitle={commentsAndRatingsSubtitle}
-						value={sectionSelection.commentsAndRatings}
+						subtitle={sectionFooter.subtitle}
+						title={sectionFooter.title}
+						value={sectionSelection[sectionFooter.name]}
 					/>
-				)}
+				))}
 			</CollapsibleGroup>
 		</ClayLayout.Sheet>
 	);

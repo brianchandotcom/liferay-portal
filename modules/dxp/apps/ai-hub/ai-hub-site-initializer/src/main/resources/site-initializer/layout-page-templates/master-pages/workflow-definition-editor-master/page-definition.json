@@ -5,7 +5,7 @@
 				"definition": {
 					"fragment": {
 						"key": "workflow-page-bar",
-						"siteKey": "AI Hub"
+						"siteKey": "ai-hub"
 					},
 					"fragmentConfig": {
 						"alt": "Site Logo",

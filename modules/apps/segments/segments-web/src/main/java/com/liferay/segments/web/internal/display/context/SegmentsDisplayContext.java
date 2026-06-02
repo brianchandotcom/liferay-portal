@@ -494,6 +494,13 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowDeleteAction(SegmentsEntry segmentsEntry) {
 		try {
+			if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest) &&
+				SegmentsEntryPermission.contains(
+					_permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
+
+				return true;
+			}
+
 			if ((segmentsEntry.getGroupId() ==
 					_themeDisplay.getScopeGroupId()) &&
 				SegmentsEntryPermission.contains(

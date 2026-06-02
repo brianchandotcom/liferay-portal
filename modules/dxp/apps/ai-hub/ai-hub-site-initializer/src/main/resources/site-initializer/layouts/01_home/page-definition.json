@@ -74,7 +74,7 @@
 															"value": {
 																"html": {
 																	"value_i18n": {
-																		"en_US": "\n<h1 class=\"ai-hub-home-title\">\nWelcome to AI Hub <mark>Beta</mark>\n</h1>\n"
+																		"en_US": "\n<h1 class=\"ai-hub-home-title\">\nWelcome to the AI Hub\n</h1>\n"
 																	}
 																}
 															}
@@ -103,7 +103,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Test our AI orchestration tools early and help shape the future"
+																		"en_US": "Deploy agents that improve your productivity, make decisions, and automate tasks."
 																	}
 																}
 															}
@@ -111,6 +111,7 @@
 													],
 													"fragmentStyle": {
 														"fontSize": "24px",
+														"maxWidth": "760px",
 														"textAlign": "center"
 													},
 													"indexed": true
@@ -213,7 +214,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Sign In"
+																				"en_US": "Start Now"
 																			}
 																		}
 																	}
@@ -230,7 +231,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Sign In"
+																				"en_US": "Start Now"
 																			}
 																		}
 																	}
@@ -444,7 +445,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Personalization"
+																						"en_US": "Personalized AI"
 																					}
 																				}
 																			}
@@ -513,7 +514,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Create and configure personalized AI workflows powered by Google Gemini services."
+																								"en_US": "Design personalized AI workflows, agents, and chatbot experiences."
 																							}
 																						}
 																					}
@@ -538,62 +539,6 @@
 																	}
 																],
 																"type": "Section"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "button",
-																		"siteKey": "ai-hub"
-																	},
-																	"fragmentConfig": {
-																		"buttonColor": "#0053F0",
-																		"buttonSize": "md",
-																		"buttonType": "primary",
-																		"fontColor": "#ffffff",
-																		"showIcon": true,
-																		"url": {
-																			"layout": {
-																				"groupId": "[$GROUP_ID$]",
-																				"layoutId": "[$LAYOUT_ID:Agents$]",
-																				"privateLayout": false,
-																				"title": "Agents"
-																			}
-																		}
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "icon-html",
-																			"value": {
-																				"html": {
-																					"value_i18n": {
-																					}
-																				}
-																			}
-																		},
-																		{
-																			"id": "button-text",
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		},
-																		{
-																			"id": "button-link",
-																			"value": {
-																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"value": "#"
-																						}
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"indexed": true
-																},
-																"id": "f386f7cb-fe3a-1c1b-3479-9ffdbbc41bb4",
-																"type": "Fragment"
 															}
 														],
 														"type": "Section"
@@ -838,7 +783,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Intelligence"
+																								"en_US": "Intelligent Productivity"
 																							}
 																						}
 																					}
@@ -1083,7 +1028,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Productivity"
+																						"en_US": "The Best Help Ever"
 																					}
 																				}
 																			}
@@ -1330,7 +1275,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "The primary goal of this private beta is to put our foundational AI orchestration tools into your hands early, allowing your direct feedback to help us shape and refine the product's evolution. Please be advised that this environment is intended strictly for the development of prototypes and Proofs of Concept (PoCs); it is not currently supported for use with real production data."
+																		"en_US": "By combining trusted governance, powerful AI capabilities, and flexible automation, Liferay AI Agents help organizations transform ideas into intelligent experiences that drive lasting business value."
 																	}
 																}
 															}
@@ -1361,7 +1306,7 @@
 													"value": {
 														"html": {
 															"value_i18n": {
-																"en_US": "<h4>\nLiferay AI Hub <mark>Beta</mark>, 2026\n</h4>"
+																"en_US": "<h4>\nLiferay AI Hub, 2026\n</h4>"
 															}
 														}
 													}

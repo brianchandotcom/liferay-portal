@@ -19,6 +19,18 @@ components:
                     description:
                         The user who created the country.
                     readOnly: true
+                dateCreated:
+                    description:
+                        The country's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The country's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
                 externalReferenceCode:
                     description:
                         The country's external reference code.
@@ -132,6 +144,18 @@ components:
                     description:
                         The user who created the region.
                     readOnly: true
+                dateCreated:
+                    description:
+                        The region's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The region's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
                 externalReferenceCode:
                     description:
                         The region's external reference code.
@@ -175,6 +199,10 @@ paths:
                     name: active
                     schema:
                         type: boolean
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
                 -   in: query
                     name: page
                     schema:
@@ -588,6 +616,10 @@ paths:
                     name: active
                     schema:
                         type: boolean
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
                 -   in: query
                     name: page
                     schema:

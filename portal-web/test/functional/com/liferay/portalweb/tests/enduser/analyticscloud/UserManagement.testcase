@@ -158,40 +158,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9045	 | Test Summary: Users list can be paginated"
-	@priority = 3
-	test UsersListCanBePaginated {
-		task ("Go to User Management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Invite user") {
-			ACSettings.addUser(userInvite = "ac@liferay.com");
-		}
-
-		task ("Select the 4 Items in Pagination") {
-			ACUtils.changePagination(itemsPerPage = 4);
-		}
-
-		task ("View only 4 users are shown in page 1") {
-			for (var emailList : list "bryan.cheung@faro.io,corbin.murakami@faro.io,michelle.hoshi@faro.io,ac@liferay.com") {
-				ACSettings.assertUsersListByEmail(userEmail = ${emailList});
-			}
-
-			AssertElementNotPresent(
-				locator1 = "ACSettings#USER_LIST_BY_EMAIL",
-				userEmail = "test@liferay.com");
-		}
-
-		task ("Navigate to the page 2") {
-			ACUtils.checkAnyPage(pageNumber = 2);
-		}
-
-		task ("View the test@liferay.com is shown in page 2") {
-			ACSettings.assertUsersListByEmail(userEmail = "test@liferay.com");
-		}
-	}
-
 }

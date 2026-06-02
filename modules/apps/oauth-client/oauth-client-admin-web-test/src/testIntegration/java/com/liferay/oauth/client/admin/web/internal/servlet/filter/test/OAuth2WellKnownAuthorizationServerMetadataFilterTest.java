@@ -84,15 +84,16 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilterTest {
 		String issuer =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 
+		String supported = RandomTestUtil.randomString();
+
 		String tokenEndpoint = issuer + "/o/oauth2/token";
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
 				addOAuthClientASLocalMetadata(
 					null, TestPropsValues.getUserId(), issuer, issuer, issuer,
-					false, issuer,
-					new String[] {"authorization_code", "client_credentials"},
-					new String[] {"openid"}, new String[] {"public"},
+					false, issuer, new String[] {supported},
+					new String[] {supported}, new String[] {"public"},
 					tokenEndpoint, issuer);
 
 		httpResponse = _send(urlString, "GET");
@@ -103,10 +104,9 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilterTest {
 		_oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
-				issuer, issuer, issuer, true, issuer,
-				new String[] {"authorization_code", "client_credentials"},
-				new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
-				issuer);
+				issuer, issuer, issuer, true, issuer, new String[] {supported},
+				new String[] {supported}, new String[] {"public"},
+				tokenEndpoint, issuer);
 
 		httpResponse = _send(urlString, "GET");
 

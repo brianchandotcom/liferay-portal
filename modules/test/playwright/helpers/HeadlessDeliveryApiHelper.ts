@@ -209,10 +209,12 @@ export class HeadlessDeliveryApiHelper {
 	async postMessageBoardSectionMessageBoardThread({
 		articleBody,
 		headline,
+		keywords,
 		messageBoardSectionId,
 	}: {
 		articleBody: string;
 		headline: string;
+		keywords?: string[];
 		messageBoardSectionId: string;
 	}): Promise<MessageBoardThread> {
 		return this.apiHelpers.post(
@@ -221,6 +223,7 @@ export class HeadlessDeliveryApiHelper {
 				data: {
 					articleBody,
 					headline,
+					keywords,
 				},
 				failOnStatusCode: true,
 			}

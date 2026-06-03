@@ -6,6 +6,11 @@
 package com.liferay.site.dsr.site.initializer.internal.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -23,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.dsr.site.initializer.constants.DSRFolderConstants;
 import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 
 import java.util.Objects;
@@ -49,7 +55,11 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 	}
 
 	private void _onBeforeCreate(DLFileEntry dlFileEntry) throws Exception {
-		if (dlFileEntry.getFolderId() != 0) {
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			MergeLayoutPrototypesThreadLocal.isInProgress() ||
+			(dlFileEntry.getFolderId() ==
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			return;
 		}
 
@@ -66,6 +76,17 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 
 		if (!Objects.equals(
 				group.getClassName(), objectDefinition.getClassName())) {
+
+			return;
+		}
+
+		DLFolder dlFolder =
+			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
+				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
+				dlFileEntry.getGroupId());
+
+		if ((dlFolder == null) ||
+			(dlFileEntry.getFolderId() != dlFolder.getFolderId())) {
 
 			return;
 		}
@@ -103,6 +124,9 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 				).build(),
 				DLFileEntry.class.getName()));
 	}
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

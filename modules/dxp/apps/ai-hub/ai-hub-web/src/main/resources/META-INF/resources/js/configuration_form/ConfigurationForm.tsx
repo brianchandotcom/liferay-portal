@@ -79,13 +79,13 @@ export default function ConfigurationForm({
 							/>
 						</FieldBase>
 
-						{clientId ? (
+						{clientId && (
 							<>
 								<hr className="my-4" />
 
 								<CredentialsPanel clientId={clientId} />
 							</>
-						) : null}
+						)}
 
 						<div className="mt-4">
 							<Button

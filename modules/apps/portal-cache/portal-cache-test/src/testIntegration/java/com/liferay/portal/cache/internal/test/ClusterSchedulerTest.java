@@ -10,7 +10,12 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationPa
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -18,6 +23,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -25,7 +31,11 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
@@ -37,6 +47,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
@@ -215,6 +227,36 @@ public class ClusterSchedulerTest implements Serializable {
 	}
 
 	@Test
+	public void testValidatePersistentAndMemoryJobs() throws Exception {
+		TomcatNode masterTomcatNode = _tomcatNode2;
+		TomcatNode slaveTomcatNode = _tomcatNode1;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterTomcatNode = _tomcatNode1;
+			slaveTomcatNode = _tomcatNode2;
+		}
+
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.PERSISTED, "persistent.1");
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.PERSISTED, "persistent.2");
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY, "memory.1");
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY, "memory.2");
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY_CLUSTERED, "memory.clustered.1");
+		_testValidatePersistentAndMemoryJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY_CLUSTERED, "memory.clustered.2");
+	}
+
+	@Test
 	public void testValidateScheduledPublishOnSeparateNodes() throws Exception {
 		long userId = TestPropsValues.getUserId();
 
@@ -311,6 +353,97 @@ public class ClusterSchedulerTest implements Serializable {
 		}
 	}
 
+	private void _testValidatePersistentAndMemoryJobs(
+			TomcatNode masterTomcatNode, TomcatNode mutatorTomcatNode,
+			TomcatNode slaveTomcatNode, StorageType storageType, String suffix)
+		throws Exception {
+
+		String destinationName = "liferay/test_fire_" + suffix;
+		String jobName = "test.job.name." + suffix;
+
+		TomcatNode observerTomcatNode = masterTomcatNode;
+
+		if (mutatorTomcatNode == masterTomcatNode) {
+			observerTomcatNode = slaveTomcatNode;
+		}
+
+		Assert.assertEquals(
+			0,
+			(int)observerTomcatNode.syncExecute(
+				() -> {
+					List<SchedulerResponse> schedulerResponses =
+						SchedulerEngineHelperUtil.getScheduledJobs(
+							jobName, storageType);
+
+					return schedulerResponses.size();
+				}));
+
+		slaveTomcatNode.syncExecute(
+			() -> {
+				TestSchedulerMessageListener.register(destinationName);
+
+				return null;
+			});
+
+		Future<?> future = masterTomcatNode.execute(
+			() -> {
+				TestSchedulerMessageListener.register(destinationName);
+
+				TestSchedulerMessageListener.await(destinationName);
+
+				return null;
+			});
+
+		try {
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					SchedulerEngineHelperUtil.schedule(
+						TriggerFactoryUtil.createTrigger(
+							jobName, jobName, 10, TimeUnit.SECOND),
+						storageType, RandomTestUtil.randomString(),
+						destinationName, new Message());
+
+					return null;
+				});
+
+			future.get();
+
+			String[] scheduledJob = observerTomcatNode.syncExecute(
+				() -> {
+					List<SchedulerResponse> schedulerResponses =
+						SchedulerEngineHelperUtil.getScheduledJobs(
+							jobName, storageType);
+
+					if (schedulerResponses.size() != 1) {
+						return new String[] {
+							String.valueOf(schedulerResponses.size())
+						};
+					}
+
+					SchedulerResponse schedulerResponse =
+						schedulerResponses.get(0);
+
+					return new String[] {
+						"1", schedulerResponse.getJobName(),
+						schedulerResponse.getDestinationName()
+					};
+				});
+
+			Assert.assertEquals("1", scheduledJob[0]);
+			Assert.assertEquals(jobName, scheduledJob[1]);
+			Assert.assertEquals(destinationName, scheduledJob[2]);
+		}
+		finally {
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					SchedulerEngineHelperUtil.delete(
+						jobName, jobName, storageType);
+
+					return null;
+				});
+		}
+	}
+
 	private static transient TomcatNode _tomcatNode1;
 	private static transient TomcatNode _tomcatNode2;
 
@@ -393,6 +526,72 @@ public class ClusterSchedulerTest implements Serializable {
 
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private final String _name;
+
+	}
+
+	private static class TestSchedulerMessageListener
+		implements MessageListener {
+
+		public static void await(String destinationName) throws Exception {
+			CountDownLatch countDownLatch = _getCountDownLatch(destinationName);
+
+			countDownLatch.await();
+		}
+
+		public static void countDown(String destinationName) {
+			CountDownLatch countDownLatch = _getCountDownLatch(destinationName);
+
+			countDownLatch.countDown();
+		}
+
+		public static void register(String destinationName) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			DestinationFactory destinationFactory = bundleContext.getService(
+				bundleContext.getServiceReference(DestinationFactory.class));
+
+			bundleContext.registerService(
+				Destination.class,
+				destinationFactory.createDestination(
+					DestinationConfiguration.
+						createSerialDestinationConfiguration(destinationName)),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destinationName
+				).build());
+
+			bundleContext.registerService(
+				MessageListener.class,
+				new TestSchedulerMessageListener(destinationName),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destinationName
+				).build());
+		}
+
+		@Override
+		public void receive(Message message) {
+			ClusterMasterExecutorUtil.executeOnMaster(
+				new MethodHandler(
+					new MethodKey(
+						TestSchedulerMessageListener.class, "countDown",
+						String.class),
+					_destinationName));
+		}
+
+		private static CountDownLatch _getCountDownLatch(
+			String destinationName) {
+
+			return _countDownLatches.computeIfAbsent(
+				destinationName, key -> new CountDownLatch(1));
+		}
+
+		private TestSchedulerMessageListener(String destinationName) {
+			_destinationName = destinationName;
+		}
+
+		private static final Map<String, CountDownLatch> _countDownLatches =
+			new ConcurrentHashMap<>();
+
+		private final String _destinationName;
 
 	}
 

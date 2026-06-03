@@ -1,6 +1,7 @@
 {
 	"options": {
 		"auto_approve": false,
+		"branch": "",
 		"parallelism": 10,
 		"provider": "aws",
 		"version": "1.0.6"

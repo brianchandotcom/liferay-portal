@@ -133,12 +133,12 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		boolean hideSpace = true;
-
 		String[] parts = StringUtil.split(
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		int firstAncestorIndex = 1;
+
+		boolean hideSpace = true;
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

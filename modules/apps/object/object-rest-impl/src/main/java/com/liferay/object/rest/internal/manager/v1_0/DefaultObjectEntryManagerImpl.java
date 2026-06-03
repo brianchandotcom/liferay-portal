@@ -786,7 +786,7 @@ public class DefaultObjectEntryManagerImpl
 		Long[] groupIds = groupIdsList.toArray(new Long[0]);
 
 		Predicate predicate = _filterFactory.create(
-			filterExpression, objectDefinition);
+			filterExpression, groupIds, objectDefinition);
 
 		int start = _getStartPosition(pagination);
 		int end = _getEndPosition(pagination);

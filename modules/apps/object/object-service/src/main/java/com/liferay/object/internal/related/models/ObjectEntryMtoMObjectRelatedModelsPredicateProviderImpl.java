@@ -6,6 +6,7 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectRelationship;
@@ -38,8 +39,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 
 	@Override
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate,
-			ObjectDefinition relatedObjectDefinition)
+			Long[] groupIds, ObjectRelationship objectRelationship,
+			Predicate predicate, ObjectDefinition relatedObjectDefinition)
 		throws PortalException {
 
 		Column<?, ?> dynamicObjectDefinitionTableColumn =
@@ -89,7 +90,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 								getPrimaryKeyColumn()
 						)
 					).where(
-						predicate
+						ObjectEntrySearchUtil.getObjectEntryIndexPredicate(
+							groupIds, relatedObjectDefinition, predicate)
 					))
 			));
 	}

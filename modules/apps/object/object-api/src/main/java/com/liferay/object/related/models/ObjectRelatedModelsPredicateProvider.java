@@ -19,7 +19,8 @@ public interface ObjectRelatedModelsPredicateProvider {
 	public String getObjectRelationshipType();
 
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate)
+			Long[] groupIds, ObjectRelationship objectRelationship,
+			Predicate predicate)
 		throws PortalException;
 
 }

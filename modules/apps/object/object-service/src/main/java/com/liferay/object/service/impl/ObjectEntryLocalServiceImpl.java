@@ -4746,26 +4746,12 @@ public class ObjectEntryLocalServiceImpl
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable, null)
 		).where(
-			ObjectEntryTable.INSTANCE.companyId.eq(
-				objectDefinition.getCompanyId()
-			).and(
-				() -> {
-					if (StringUtil.equals(
-							objectDefinition.getScope(),
-							ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
-						return ObjectEntryTable.INSTANCE.groupId.eq(0L);
-					}
-
-					if (ArrayUtil.isEmpty(groupIds)) {
-						return null;
-					}
-
-					return ObjectEntryTable.INSTANCE.groupId.in(groupIds);
-				}
-			).and(
-				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinition.getObjectDefinitionId())
+			ObjectEntrySearchUtil.getObjectEntryIndexPredicate(
+				groupIds, objectDefinition,
+				Predicate.withParentheses(
+					_fillPredicate(
+						objectDefinition.getObjectDefinitionId(), predicate,
+						search))
 			).and(
 				ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(
 					ObjectEntryTable.INSTANCE.objectEntryId
@@ -4775,11 +4761,6 @@ public class ObjectEntryLocalServiceImpl
 			).and(
 				ObjectEntryTable.INSTANCE.status.neq(
 					WorkflowConstants.STATUS_IN_TRASH)
-			).and(
-				Predicate.withParentheses(
-					_fillPredicate(
-						objectDefinition.getObjectDefinitionId(), predicate,
-						search))
 			).and(
 				_getHeadObjectEntryPredicate(preferApproved)
 			).and(

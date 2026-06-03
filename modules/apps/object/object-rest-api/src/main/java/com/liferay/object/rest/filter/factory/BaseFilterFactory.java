@@ -38,6 +38,20 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 			entityModel,
 			objectDefinitionFilterParser.parse(
 				entityModel, filterString, objectDefinition),
+			null, objectDefinition);
+	}
+
+	@Override
+	public final T create(
+		Expression filterExpression, Long[] groupIds,
+		ObjectDefinition objectDefinition) {
+
+		if (filterExpression == null) {
+			return null;
+		}
+
+		return _create(
+			getEntityModel(objectDefinition), filterExpression, groupIds,
 			objectDefinition);
 	}
 
@@ -50,7 +64,7 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 		}
 
 		return _create(
-			getEntityModel(objectDefinition), filterExpression,
+			getEntityModel(objectDefinition), filterExpression, null,
 			objectDefinition);
 	}
 
@@ -71,6 +85,13 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 		}
 	}
 
+	public ExpressionVisitor<?> getExpressionVisitor(
+		EntityModel entityModel, Long[] groupIds,
+		ObjectDefinition objectDefinition) {
+
+		return getExpressionVisitor(entityModel, objectDefinition);
+	}
+
 	public abstract ExpressionVisitor<?> getExpressionVisitor(
 		EntityModel entityModel, ObjectDefinition objectDefinition);
 
@@ -88,12 +109,12 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 	protected ObjectFieldLocalService objectFieldLocalService;
 
 	private T _create(
-		EntityModel entityModel, Expression filterExpression,
+		EntityModel entityModel, Expression filterExpression, Long[] groupIds,
 		ObjectDefinition objectDefinition) {
 
 		try {
 			return (T)filterExpression.accept(
-				getExpressionVisitor(entityModel, objectDefinition));
+				getExpressionVisitor(entityModel, groupIds, objectDefinition));
 		}
 		catch (ExpressionVisitException expressionVisitException) {
 			throw new InvalidFilterException(

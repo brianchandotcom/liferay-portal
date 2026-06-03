@@ -13,19 +13,6 @@ const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
-async function getCredential() {
-	const response = await fetch('/o/ai-hub/v1.0/credentials', {
-		headers: HEADERS,
-		method: 'GET',
-	});
-
-	if (!response.ok) {
-		throw new Error('Failed to fetch credential');
-	}
-
-	return response.json() as Promise<Credential>;
-}
-
 async function getConfiguration(externalReferenceCode: string) {
 	const response = await fetch(
 		`/o/ai-hub/configurations/by-external-reference-code/${externalReferenceCode}`,
@@ -40,6 +27,19 @@ async function getConfiguration(externalReferenceCode: string) {
 	}
 
 	return response.json() as Promise<Configuration>;
+}
+
+async function getCredential() {
+	const response = await fetch('/o/ai-hub/v1.0/credentials', {
+		headers: HEADERS,
+		method: 'GET',
+	});
+
+	if (!response.ok) {
+		throw new Error('Failed to fetch credential');
+	}
+
+	return response.json() as Promise<Credential>;
 }
 
 async function putConfiguration(

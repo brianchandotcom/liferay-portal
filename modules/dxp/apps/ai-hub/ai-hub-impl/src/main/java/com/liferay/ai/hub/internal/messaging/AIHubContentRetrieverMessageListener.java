@@ -86,7 +86,7 @@ public class AIHubContentRetrieverMessageListener extends BaseMessageListener {
 			).put(
 				"workflowInstanceId", message.getLong("workflowInstanceId")
 			),
-			(Date)message.get("timestamp"), message.getLong("userId"));
+			(Date)message.get("timestampDate"), message.getLong("userId"));
 	}
 
 	@Reference

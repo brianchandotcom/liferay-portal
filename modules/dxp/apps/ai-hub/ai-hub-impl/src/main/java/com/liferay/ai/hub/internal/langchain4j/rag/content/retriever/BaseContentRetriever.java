@@ -35,7 +35,7 @@ public abstract class BaseContentRetriever implements ContentRetriever {
 		message.put("contents", contents);
 		message.put("query", query.text());
 		message.put("searchTarget", getSearchTarget());
-		message.put("timestamp", new Date());
+		message.put("timestampDate", new Date());
 		message.put("userId", _userId);
 		message.put("workflowInstanceId", _workflowInstanceId);
 

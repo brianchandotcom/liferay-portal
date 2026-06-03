@@ -22,7 +22,7 @@ public class AuditRouterUtil {
 
 	public static void route(
 			String className, long classPK, String eventType,
-			JSONObject jsonObject, Date timestamp, long userId)
+			JSONObject jsonObject, Date timestampDate, long userId)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
@@ -37,7 +37,7 @@ public class AuditRouterUtil {
 		com.liferay.portal.kernel.audit.AuditRouterUtil.route(
 			new AuditMessage(
 				0, accountEntry.getCompanyId(), userId,
-				PortalUtil.getUserName(userId, StringPool.BLANK), timestamp,
+				PortalUtil.getUserName(userId, StringPool.BLANK), timestampDate,
 				accountEntry.getAccountEntryId(), jsonObject, className,
 				String.valueOf(classPK), null, eventType, null));
 	}

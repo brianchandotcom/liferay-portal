@@ -87,7 +87,7 @@ public class KaleoDefinitionModelListener
 
 					message.put("serviceContext", serviceContext);
 
-					message.put("timestamp", new Date());
+					message.put("timestampDate", new Date());
 					message.put("version", kaleoDefinition.getVersion());
 
 					_messageBus.sendMessage(

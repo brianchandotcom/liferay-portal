@@ -278,9 +278,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe a tag if they want to."
+	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe and unsubscribe a tag if they want to."
 	@priority = 5
-	test CanSubscribeATag {
+	test CanSubscribeAndUnsubscribeATag {
 		task ("Given there is a Created Question with a tag") {
 			JSONQuestions.addQuestionWithTag(
 				bodyField = "Content1",
@@ -308,6 +308,20 @@ definition {
 
 			Questions.viewSubscribedTag(subscribedTag = "new");
 		}
+
+		task ("When the user goes to Unsubscribe to Tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.unsubscribeFromTag();
+		}
+
+		task ("Then he can se that is possible unsubscribe on a tag") {
+			Questions.gotoTab(questionTabField = "Subscriptions");
+
+			Questions.viewSubscribedTag(noSubscribedTag = "true");
+		}
 	}
 
 	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
@@ -332,45 +346,6 @@ definition {
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
-		}
-	}
-
-	@description = "This is a test for LPS-159144. Verify if the user is able to unsubscribe a tag if they want to."
-	@priority = 5
-	test CanUnsubscribeATag {
-		task ("Given there are a category and a question with a tag created") {
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Content1",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				tagField = "new",
-				titleField = "Question1");
-		}
-
-		task ("And the user is Subscribed on a Tag") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.subscribeFromTag();
-
-			Questions.gotoTab(questionTabField = "Subscriptions");
-
-			Questions.viewSubscribedTag(subscribedTag = "new");
-		}
-
-		task ("When the user goes to Unsubscribe to Tag") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.unsubscribeFromTag();
-		}
-
-		task ("Then he can se that is possible unsubscribe on a tag") {
-			Questions.gotoTab(questionTabField = "Subscriptions");
-
-			Questions.viewSubscribedTag(noSubscribedTag = "true");
 		}
 	}
 

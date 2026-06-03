@@ -39,7 +39,7 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName("ProvisioningRequest")
 @io.swagger.v3.oas.annotations.media.Schema(
-	requiredProperties = {"accountEntryName", "liferayDXPURL", "userAccounts"}
+	requiredProperties = {"accountEntryName", "userAccounts"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProvisioningRequest")
@@ -184,48 +184,6 @@ public class ProvisioningRequest implements Serializable {
 	private Supplier<String> _accountEntryNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getLiferayDXPURL() {
-		if (_liferayDXPURLSupplier != null) {
-			liferayDXPURL = _liferayDXPURLSupplier.get();
-
-			_liferayDXPURLSupplier = null;
-		}
-
-		return liferayDXPURL;
-	}
-
-	public void setLiferayDXPURL(String liferayDXPURL) {
-		this.liferayDXPURL = liferayDXPURL;
-
-		_liferayDXPURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLiferayDXPURL(
-		UnsafeSupplier<String, Exception> liferayDXPURLUnsafeSupplier) {
-
-		_liferayDXPURLSupplier = () -> {
-			try {
-				return liferayDXPURLUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String liferayDXPURL;
-
-	@JsonIgnore
-	private Supplier<String> _liferayDXPURLSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public UserAccount[] getUserAccounts() {
 		if (_userAccountsSupplier != null) {
@@ -336,22 +294,6 @@ public class ProvisioningRequest implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(accountEntryName));
-
-			sb.append("\"");
-		}
-
-		String liferayDXPURL = getLiferayDXPURL();
-
-		if (liferayDXPURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"liferayDXPURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(liferayDXPURL));
 
 			sb.append("\"");
 		}
@@ -479,4 +421,4 @@ public class ProvisioningRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1760398742
+// LIFERAY-REST-BUILDER-HASH:958440568

@@ -145,7 +145,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
-			responseJSON, oAuthClientASLocalMetadata1.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata1.getOAuthASMetadataJSON(), responseJSON);
 
 		String issuer2 = RandomTestUtil.randomString() + ".com";
 
@@ -166,9 +166,9 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
-			responseJSON, oAuthClientASLocalMetadata1.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata1.getOAuthASMetadataJSON(), responseJSON);
 		Assert.assertNotEquals(
-			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata2.getOAuthASMetadataJSON(), responseJSON);
 
 		_oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
@@ -182,9 +182,9 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
-			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata2.getOAuthASMetadataJSON(), responseJSON);
 		Assert.assertNotEquals(
-			responseJSON, oAuthClientASLocalMetadata1.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata1.getOAuthASMetadataJSON(), responseJSON);
 
 		options.setFollowRedirects(false);
 		options.setLocation(
@@ -220,7 +220,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
-			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
+			oAuthClientASLocalMetadata2.getOAuthASMetadataJSON(), responseJSON);
 
 		String tokenEndpoint2 = url2 + "/o/oauth2/token";
 
@@ -242,15 +242,15 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
 			responseJSON);
 
-		Assert.assertEquals(
-			url2 + "/o/oauth2/introspect",
-			responseJSONObject.getString("introspection_endpoint"));
-
 		JSONArray codeChallengeMethodsJSONArray =
 			responseJSONObject.getJSONArray("code_challenge_methods_supported");
 
 		Assert.assertEquals(1, codeChallengeMethodsJSONArray.length());
 		Assert.assertEquals("S256", codeChallengeMethodsJSONArray.getString(0));
+
+		Assert.assertEquals(
+			url2 + "/o/oauth2/introspect",
+			responseJSONObject.getString("introspection_endpoint"));
 
 		JSONArray responseTypesJSONArray = responseJSONObject.getJSONArray(
 			"response_types_supported");

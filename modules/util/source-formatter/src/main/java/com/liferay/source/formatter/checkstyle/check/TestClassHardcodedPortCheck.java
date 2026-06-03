@@ -26,9 +26,7 @@ public class TestClassHardcodedPortCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (!absolutePath.contains("/test/") &&
-			!absolutePath.contains("/testIntegration/")) {
-
+		if (!absolutePath.contains("/testIntegration/")) {
 			return;
 		}
 

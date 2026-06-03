@@ -84,57 +84,6 @@ definition {
 		}
 	}
 
-	@description = "Validate that the user cannot post a question with a tag containing Java Script. It also covers LPS-137561 and LPS-137633."
-	@priority = 4
-	test CannotPostQuestionWithTagContainingJavaScript {
-		task ("Given a Questions category with JavaScript that is displayed on a page") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Questions Page");
-
-			ScrollWebElementIntoView(
-				key_text = "New Topic",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "New Topic");
-
-			Questions.addRootTopic(
-				invalidCharacters = "Topic",
-				rootTopicDescription = '''<script>alert(123);</script>''',
-				rootTopicName = '''<script>alert(123);</script>''');
-
-			Questions.viewDefault();
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Questions Test Category");
-		}
-
-		task ("When a Question that contains JavaScirpt is added") {
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Body AddQuestionWithMoreText",
-				invalidCharacters = "Tag",
-				tagLocatorList = '''<script>alert(123);</script>''',
-				titleField = "Title AddQuestion",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then the JavaScript alert should not pop up") {
-			AssertAlertNotPresent();
-		}
-	}
-
 	@description = "Validate if the user can subscribe from the tag."
 	@priority = 4
 	test CanSubscribeFromTag {
@@ -509,6 +458,78 @@ definition {
 			for (var tagName : list "tag1,tag2,tag3") {
 				Questions.viewTags(tagName = ${tagName});
 			}
+		}
+	}
+
+	@description = "Validate that the user cannot post a question with a tag containing Java Script and that JavaScript in the user name is not executed when viewing a question. It also covers LPS-137561 and LPS-137633."
+	@priority = 4
+	test XSSIsNotExecutedInQuestions {
+		task ("Given a Questions category with JavaScript that is displayed on a page") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Questions Page");
+
+			ScrollWebElementIntoView(
+				key_text = "New Topic",
+				locator1 = "Button#ANY");
+
+			Button.click(button = "New Topic");
+
+			Questions.addRootTopic(
+				invalidCharacters = "Topic",
+				rootTopicDescription = '''<script>alert(123);</script>''',
+				rootTopicName = '''<script>alert(123);</script>''');
+
+			Questions.viewDefault();
+
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+		}
+
+		task ("When a Question that contains JavaScirpt is added") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithMoreText",
+				invalidCharacters = "Tag",
+				tagLocatorList = '''<script>alert(123);</script>''',
+				titleField = "Title AddQuestion",
+				topicName = "questions-test-category");
+		}
+
+		task ("Then the JavaScript alert should not pop up") {
+			AssertAlertNotPresent();
+		}
+
+		task ("When the user configurates the user informations with JavaScript") {
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+		}
+
+		task ("And add a question") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				titleField = "Title AddQuestionWithUsername",
+				topicName = "questions-test-category");
+		}
+
+		task ("Then the script is not executed") {
+			AssertAlertNotPresent();
 		}
 	}
 

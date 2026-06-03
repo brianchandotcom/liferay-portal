@@ -1,0 +1,117 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    publish:
+        outputs:
+            object_name: ${{steps.vars.outputs.object_name}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 1
+                    sparse-checkout: |
+                        cloud/scripts
+                        cloud/terraform/${{inputs.provider}}
+            -   name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v3
+                with:
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+            -   name: Set up Google Cloud CLI
+                uses: google-github-actions/setup-gcloud@v2
+                with:
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
+            -   env:
+                    BOOTSTRAP_STORAGE_PATH_NONPRD: ${{vars.BOOTSTRAP_STORAGE_PATH_NONPRD}}
+                id: vars
+                name: Set up variables
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        local provider="${{inputs.provider}}"
+
+                        local version
+
+                        version=$(jq --raw-output ".\"liferay-${provider}-bootstrap\"" ./cloud/scripts/versions.json)
+
+                        local object_basename="liferay-${provider}-bootstrap-${version}.tar.gz"
+
+                        echo "OBJECT_BASENAME=${object_basename}" >> ${GITHUB_ENV}
+
+                        local object_name="${BOOTSTRAP_STORAGE_PATH_NONPRD}/$(echo "${GITHUB_REF_NAME}" | tr '/' '-')/liferay-${provider}-bootstrap/${object_basename}"
+
+                        echo "OBJECT_NAME=${object_name}" >> ${GITHUB_ENV}
+                        echo "object_name=${object_name}" >> ${GITHUB_OUTPUT}
+                    }
+
+                    main "${@}"
+            -   name: Package and push bootstrap tarball
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        local provider="${{inputs.provider}}"
+
+                        local files
+
+                        case "${provider}" in
+                            aws)
+                                files=(
+                                    cloud/scripts/setup_aws.sh
+                                    cloud/scripts/versions_aws.tfvars
+                                    cloud/terraform/aws/eks/*
+                                    cloud/terraform/aws/gitops/platform/*
+                                    cloud/terraform/aws/gitops/resources/*
+                                    cloud/terraform/aws/grafana/*
+                                )
+                                ;;
+                            gcp)
+                                files=(
+                                    cloud/scripts/setup_gcp.sh
+                                    cloud/scripts/versions_gcp.tfvars
+                                    cloud/terraform/gcp/gitops/platform/*
+                                    cloud/terraform/gcp/gitops/resources/*
+                                    cloud/terraform/gcp/gke/*
+                                )
+                                ;;
+                            *)
+                                echo "Provider ${provider} is unsupported." >&2
+
+                                exit 1
+                                ;;
+                        esac
+
+                        tar \
+                            --create \
+                            --file "/tmp/${OBJECT_BASENAME}" \
+                            --gzip \
+                            --verbose \
+                            "${files[@]}"
+
+                        gcloud \
+                            storage \
+                            cp \
+                            "/tmp/${OBJECT_BASENAME}" \
+                            "${OBJECT_NAME}"
+                    }
+
+                    main "${@}"
+on:
+    workflow_call:
+        inputs:
+            provider:
+                required: true
+                type: string
+        outputs:
+            object_name:
+                value: ${{jobs.publish.outputs.object_name}}
+permissions:
+    contents: read
+    id-token: write

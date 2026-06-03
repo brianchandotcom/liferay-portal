@@ -340,14 +340,19 @@ public class BatchEngineBrokerTest {
 			"TestObjectCSV", ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUser());
 
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(), dlFileEntry, _OBJECT_ENTRY_ERC_1,
+			TestPropsValues.getGroupId(), _objectDefinition1,
+			TestPropsValues.getUserId());
+
 		_addObjectEntryInDifferentCompany("TestObjectCSV");
 
 		try (FileInputStream fileInputStream = new FileInputStream(
 				_createCSVImportFile(
 					RandomTestUtil.nextDate(), dlFileEntry,
 					_objectDefinition1.getExternalReferenceCode(),
-					"object_entry.csv", null, RandomTestUtil.randomLong(),
-					RandomTestUtil.nextDate()))) {
+					_OBJECT_ENTRY_ERC_1, "object_entry.csv", null,
+					RandomTestUtil.randomLong(), RandomTestUtil.nextDate()))) {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -384,6 +389,13 @@ public class BatchEngineBrokerTest {
 		_objectDefinition1 = _publishObjectDefinition(
 			"TestObject", ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUser());
+
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(),
+			_addDLFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			_OBJECT_ENTRY_ERC_1, TestPropsValues.getGroupId(),
+			_objectDefinition1, TestPropsValues.getUserId());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			_OBJECT_ENTRY_ERC_1, ObjectDefinitionConstants.GROUP_ID_DEFAULT,
@@ -748,12 +760,18 @@ public class BatchEngineBrokerTest {
 
 	private File _createCSVImportFile(
 			Date createDate, DLFileEntry dlFileEntry,
-			String objectDefinitionERC, String fileName, Long groupId, long id,
-			Date modifiedDate)
+			String objectDefinitionERC, String objectEntryERC, String fileName,
+			Long groupId, long id, Date modifiedDate)
 		throws Exception {
 
+		long objectEntryGroupId = ObjectDefinitionConstants.GROUP_ID_DEFAULT;
+
+		if (groupId != null) {
+			objectEntryGroupId = groupId;
+		}
+
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			_OBJECT_ENTRY_ERC_1, ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+			objectEntryERC, objectEntryGroupId,
 			_objectDefinition1.getObjectDefinitionId());
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_OBJECT_FIELD_ERC, _objectDefinition1.getObjectDefinitionId());
@@ -1533,11 +1551,15 @@ public class BatchEngineBrokerTest {
 		DLFileEntry dlFileEntry = _addDLFileEntry(
 			groupId, TestPropsValues.getUserId());
 
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(), dlFileEntry, objectEntryERC,
+			groupId, _objectDefinition1, TestPropsValues.getUserId());
+
 		try (FileInputStream fileInputStream = new FileInputStream(
 				_createCSVImportFile(
 					RandomTestUtil.nextDate(), dlFileEntry, objectDefinitionERC,
-					"object_entry.csv", groupId, RandomTestUtil.randomLong(),
-					RandomTestUtil.nextDate()))) {
+					objectEntryERC, "object_entry.csv", groupId,
+					RandomTestUtil.randomLong(), RandomTestUtil.nextDate()))) {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -1572,6 +1594,12 @@ public class BatchEngineBrokerTest {
 	private void _testImportExportSiteScopeObjectEntryJSON(
 			long groupId, String objectEntryERC)
 		throws Exception {
+
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(),
+			_addDLFileEntry(groupId, TestPropsValues.getUserId()),
+			objectEntryERC, groupId, _objectDefinition1,
+			TestPropsValues.getUserId());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntryERC, groupId,

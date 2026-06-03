@@ -23,6 +23,7 @@ const mockGetModelArmorTemplates = jest.fn();
 const mockGetWorkflowDefinition = jest.fn();
 const mockGetWorkflowDefinitions = jest.fn();
 const mockOpenToast = jest.fn();
+const mockPostAgentDefinition = jest.fn();
 const mockPutAgentDefinition = jest.fn();
 const mockPutAgentDefinitionToContentRetrievers = jest.fn();
 const mockPutAgentDefinitionToModelArmorTemplates = jest.fn();
@@ -35,6 +36,8 @@ jest.mock(
 		deleteAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
 			mockDeleteAgentDefinitionToModelArmorTemplates(...args),
 		getAgentDefinition: (...args: any[]) => mockGetAgentDefinition(...args),
+		postAgentDefinition: (...args: any[]) =>
+			mockPostAgentDefinition(...args),
 		putAgentDefinition: (...args: any[]) => mockPutAgentDefinition(...args),
 		putAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockPutAgentDefinitionToContentRetrievers(...args),
@@ -173,6 +176,7 @@ describe('AgentDefinitionForm', () => {
 		mockGetWorkflowDefinition.mockReset();
 		mockGetWorkflowDefinitions.mockReset();
 		mockOpenToast.mockReset();
+		mockPostAgentDefinition.mockReset();
 		mockPutAgentDefinition.mockReset();
 		mockPutAgentDefinitionToContentRetrievers.mockReset();
 		mockPutAgentDefinitionToModelArmorTemplates.mockReset();
@@ -237,7 +241,7 @@ describe('AgentDefinitionForm', () => {
 				);
 			});
 
-			expect(mockPutAgentDefinition).not.toHaveBeenCalled();
+			expect(mockPostAgentDefinition).not.toHaveBeenCalled();
 		});
 
 		it('submits filled values and shows the success toast', async () => {
@@ -249,7 +253,7 @@ describe('AgentDefinitionForm', () => {
 					},
 				],
 			});
-			mockPutAgentDefinition.mockResolvedValueOnce({
+			mockPostAgentDefinition.mockResolvedValueOnce({
 				externalReferenceCode: 'AGENT_X',
 				status: {label: 'approved'},
 			});
@@ -284,7 +288,7 @@ describe('AgentDefinitionForm', () => {
 			fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
 			await waitFor(() => {
-				expect(mockPutAgentDefinition).toHaveBeenCalledWith(
+				expect(mockPostAgentDefinition).toHaveBeenCalledWith(
 					expect.objectContaining({
 						description: 'A description',
 						externalReferenceCode: 'AGENT_X',

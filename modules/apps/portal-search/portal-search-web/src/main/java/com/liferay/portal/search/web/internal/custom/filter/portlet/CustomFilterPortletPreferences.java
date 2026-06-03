@@ -5,11 +5,13 @@
 
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
+
 /**
  * @author Igor Nazar
  * @author Luan Maoski
  */
-public interface CustomFilterPortletPreferences {
+public interface CustomFilterPortletPreferences extends SEOPortletPreferences {
 
 	public static final String PREFERENCE_KEY_BOOST = "boost";
 

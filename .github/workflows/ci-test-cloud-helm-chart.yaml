@@ -89,6 +89,7 @@ jobs:
 on:
     pull_request:
         paths:
+            -   .github/workflows/ci-test-cloud-helm-chart.yaml
             -   cloud/helm/**
     push:
         branches:

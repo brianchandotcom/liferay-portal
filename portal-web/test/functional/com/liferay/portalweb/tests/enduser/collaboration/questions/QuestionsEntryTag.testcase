@@ -265,127 +265,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can sort the tags."
-	@priority = 4
-	@refactordone
-	@uitest
-	test QuestionsTagsCanBeSortedInTagsTab {
-		task ("Give a category and Questions with tags") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			for (var num : list "1,2") {
-				JSONQuestions.addQuestionWithTag(
-					bodyField = "Question Body ${num}",
-					categoryName = "Questions Test Category",
-					groupName = "Guest",
-					tagField = "tag1",
-					titleField = "Question ${num}");
-			}
-
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body 3",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				tagField = "tag2",
-				titleField = "Question 3");
-		}
-
-		task ("When the Tags are sorted by Latest Created date or Number of usages, Then the tags should be displayed accordingly") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Questions Test Category");
-
-			Questions.gotoTab(questionTabField = "Tags");
-
-			Questions.viewTagsFilterResults(
-				position = 1,
-				tagName = "tag1",
-				usedTimes = "Used 2 Times");
-
-			Questions.viewTagsFilterResults(
-				position = 2,
-				tagName = "tag2",
-				usedTimes = "Used 1 Times");
-
-			Questions.configureTagsFilter(filterBy = "Latest Created");
-
-			Questions.viewTagsFilterResults(
-				position = 1,
-				tagName = "tag2");
-
-			Questions.viewTagsFilterResults(
-				position = 2,
-				tagName = "tag1");
-
-			Questions.configureTagsFilter(filterBy = "Number of Usages");
-
-			Questions.viewTagsFilterResults(
-				position = 1,
-				tagName = "tag1",
-				usedTimes = "Used 2 Times");
-
-			Questions.viewTagsFilterResults(
-				position = 2,
-				tagName = "tag2",
-				usedTimes = "Used 1 Times");
-		}
-	}
-
-	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
-	@priority = 4
-	@refactordone
-	test QuestionTagsCanBeOrderedByOccurrenceInTagsTab {
-		task ("Given categories and Questions with tags") {
-			for (var num : list "1,2") {
-				JSONMBMessage.addCategory(
-					categoryDescription = "Description",
-					categoryName = "Question ValidateTagsOccurrences${num}",
-					userEmailAddress = "test@liferay.com");
-			}
-
-			for (var num : list "1,2") {
-				JSONQuestions.addQuestionWithTag(
-					bodyField = "Question Body ${num}",
-					categoryName = "Question ValidateTagsOccurrences1",
-					groupName = "Guest",
-					tagField = "tag1",
-					titleField = "Question ${num}");
-			}
-		}
-
-		task ("and tags are viewable by usage") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.viewTags(
-				amountOfUsedTimes = 2,
-				tagName = "tag1");
-		}
-
-		task ("When a new Question with a tag is added") {
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body 3",
-				categoryName = "Question ValidateTagsOccurrences2",
-				groupName = "Guest",
-				tagField = "tag1",
-				titleField = "Question 3");
-		}
-
-		task ("Then the number of times the tag is used is displayed") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.viewTags(
-				amountOfUsedTimes = 3,
-				tagName = "tag1");
-		}
-	}
-
 	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
 	@priority = 4
 	@refactordone
@@ -458,6 +337,99 @@ definition {
 			for (var tagName : list "tag1,tag2,tag3") {
 				Questions.viewTags(tagName = ${tagName});
 			}
+		}
+	}
+
+	@description = "Validate if the user can sort the tags and if the tags are ordered by occurrences in the Tags tab."
+	@priority = 4
+	@refactordone
+	@uitest
+	test QuestionTagsCanBeSortedAndOrderedInTagsTab {
+		task ("Give a category and Questions with tags") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestionWithTag(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Test Category",
+					groupName = "Guest",
+					tagField = "tag1",
+					titleField = "Question ${num}");
+			}
+
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Question Body 3",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				tagField = "tag2",
+				titleField = "Question 3");
+		}
+
+		task ("When the Tags are sorted by Latest Created date or Number of usages, Then the tags should be displayed accordingly") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.gotoTab(questionTabField = "Tags");
+
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag1",
+				usedTimes = "Used 2 Times");
+
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag2",
+				usedTimes = "Used 1 Times");
+
+			Questions.configureTagsFilter(filterBy = "Latest Created");
+
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag2");
+
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag1");
+
+			Questions.configureTagsFilter(filterBy = "Number of Usages");
+
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "tag1",
+				usedTimes = "Used 2 Times");
+
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "tag2",
+				usedTimes = "Used 1 Times");
+		}
+
+		task ("When a new Question with the tag is added in another topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Question ValidateTagsOccurrences",
+				userEmailAddress = "test@liferay.com");
+
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Question Body 4",
+				categoryName = "Question ValidateTagsOccurrences",
+				groupName = "Guest",
+				tagField = "tag1",
+				titleField = "Question 4");
+		}
+
+		task ("Then the number of times the tag is used is displayed") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.viewTags(
+				amountOfUsedTimes = 3,
+				tagName = "tag1");
 		}
 	}
 

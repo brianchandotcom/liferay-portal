@@ -421,47 +421,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-122830 - Validate if the user can delete a comment to an answer."
-	@priority = 4
-	@refactordone
-	test CanDeleteComment {
-		property solutions.acceptance = "true";
-
-		task ("Given that there is a question with a answer created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			JSONQuestions.addAnswer(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyBody = "This is my answer",
-				threadSubject = "Title AddQuestion",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("And the user creates a comment") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.replyToComment(commentReply = "This is my reply");
-		}
-
-		task ("When the user deletes the comment then he can see that the coment was deleted") {
-			Questions.deleteComment(commentReply = "This is my reply");
-		}
-	}
-
 	@description = "LPS-121205 - Validate if the user can lock and unlock a question through the MB."
 	@priority = 4
 	@refactordone

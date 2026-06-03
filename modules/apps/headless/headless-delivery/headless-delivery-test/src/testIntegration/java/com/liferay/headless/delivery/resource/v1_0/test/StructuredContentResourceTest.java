@@ -532,6 +532,7 @@ public class StructuredContentResourceTest
 	public void testPatchStructuredContent() throws Exception {
 		super.testPatchStructuredContent();
 
+		_testPatchStructuredContentWithContentFieldName();
 		_testPatchStructuredContentWithDateExpired();
 		_testPatchStructuredContentWithLocalizedContentFields();
 		_testPatchStructuredContentWithNestedContentFields();
@@ -688,6 +689,7 @@ public class StructuredContentResourceTest
 		assertValid(postStructuredContent4);
 
 		_testPostSiteStructuredContentBatch();
+		_testPostSiteStructuredContentWithContentFieldName();
 	}
 
 	@Override
@@ -779,6 +781,7 @@ public class StructuredContentResourceTest
 		_testPutStructuredContent(false);
 		_testPutStructuredContent(true);
 		_testPutStructuredContentWithComplexDDMStructure();
+		_testPutStructuredContentWithContentFieldName();
 	}
 
 	@Override
@@ -2749,6 +2752,46 @@ public class StructuredContentResourceTest
 		}
 	}
 
+	private void _testPatchStructuredContentWithContentFieldName()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		String randomString = RandomTestUtil.randomString(10);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						setContentFields(
+							new ContentField[] {
+								new ContentField() {
+									{
+										contentFieldValue =
+											new ContentFieldValue() {
+												{
+													data = randomString;
+												}
+											};
+										name = "Foo";
+									}
+								}
+							});
+					}
+				});
+
+		ContentField contentField =
+			patchStructuredContent.getContentFields()[0];
+
+		ContentFieldValue contentFieldValue =
+			contentField.getContentFieldValue();
+
+		Assert.assertEquals(randomString, contentFieldValue.getData());
+	}
+
 	private void _testPatchStructuredContentWithDateExpired() throws Exception {
 		_testPatchStructuredContentWithDateExpiredExpire1();
 		_testPatchStructuredContentWithDateExpiredExpire2();
@@ -3185,6 +3228,39 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1, jsonObject.getLong("processedItemsCount"));
 		Assert.assertEquals(1, jsonObject.getLong("totalItemsCount"));
+	}
+
+	private void _testPostSiteStructuredContentWithContentFieldName()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		String randomString = RandomTestUtil.randomString(10);
+
+		structuredContent.setContentFields(
+			new ContentField[] {
+				new ContentField() {
+					{
+						contentFieldValue = new ContentFieldValue() {
+							{
+								data = randomString;
+							}
+						};
+						name = "Foo";
+					}
+				}
+			});
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		ContentField contentField = postStructuredContent.getContentFields()[0];
+
+		ContentFieldValue contentFieldValue =
+			contentField.getContentFieldValue();
+
+		Assert.assertEquals(randomString, contentFieldValue.getData());
 	}
 
 	private void _testPostStructuredContentFolderStructuredContentWithDisplayPageTemplate()
@@ -3628,6 +3704,41 @@ public class StructuredContentResourceTest
 
 		assertEquals(structuredContent, putStructuredContent);
 		assertValid(putStructuredContent);
+	}
+
+	private void _testPutStructuredContentWithContentFieldName()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		String randomString = RandomTestUtil.randomString(10);
+
+		postStructuredContent.setContentFields(
+			new ContentField[] {
+				new ContentField() {
+					{
+						contentFieldValue = new ContentFieldValue() {
+							{
+								data = randomString;
+							}
+						};
+						name = "Foo";
+					}
+				}
+			});
+
+		StructuredContent putStructuredContent =
+			structuredContentResource.putStructuredContent(
+				postStructuredContent.getId(), postStructuredContent);
+
+		ContentField contentField = putStructuredContent.getContentFields()[0];
+
+		ContentFieldValue contentFieldValue =
+			contentField.getContentFieldValue();
+
+		Assert.assertEquals(randomString, contentFieldValue.getData());
 	}
 
 	private JSONObject _waitForFinish(

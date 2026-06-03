@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -362,6 +363,7 @@ public class DDMFormAdminDisplayContextTest {
 			Mockito.mock(DDMFormFieldTypesSerializer.class),
 			Mockito.mock(DDMFormInstanceLocalService.class),
 			Mockito.mock(DDMFormInstanceRecordLocalService.class),
+			Mockito.mock(DDMFormInstanceRecordService.class),
 			Mockito.mock(DDMFormInstanceRecordWriterRegistry.class),
 			_mockDDMFormInstanceService(),
 			Mockito.mock(DDMFormInstanceVersionLocalService.class),

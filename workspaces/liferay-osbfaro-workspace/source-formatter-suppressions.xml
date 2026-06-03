@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="GoogleFontsCheck" files=".*" />
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+		<suppress checks="GradleDependencyVersionCheck" files=".*" />
+		<suppress checks="GradleTestDependencyVersionCheck" files=".*" />
+		<suppress checks="GradleVersionCheck" files=".*" />
+		<suppress checks="JavaComponentAnnotationsCheck" files=".*/osb-faro-rest-impl/src/main/java/com/liferay/osb/faro/rest/internal/graphql/client/FaroGraphQLClient\.java" />
+		<suppress checks="JavaComponentAnnotationsCheck" files=".*/osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/activator/OAuth2AuthorizationExpandoPortalInstanceLifecycleListener\.java" />
+		<suppress checks="JavaComponentAnnotationsCheck" files=".*/osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/controller/.*" />
+		<suppress checks="JavaModuleTestCheck" files=".*/src/testIntegration/java/com/liferay/osb/faro/functional/test/steps/FaroHooks.java" />
+		<suppress checks="JavaModuleUniqueUpgradeStepRegistratorCheck" files=".*/osb-faro-contacts-service/src/main/java/com/liferay/osb/faro/contacts/internal/upgrade/registry/FaroContactsServiceUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaModuleUniqueUpgradeStepRegistratorCheck" files=".*/osb-faro-service/src/main/java/com/liferay/osb/faro/internal/upgrade/registry/FaroServiceUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/BaseMock.*.java" />
+		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/activator/OAuth2AuthorizationExpandoPortalInstanceLifecycleListener\.java" />
+		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/card/template/ContactsCardTemplateManagerHelper\.java" />
+		<suppress checks="JavaUpgradeCreateTableCheck" files=".*/osb-faro-service/src/main/java/com/liferay/osb/faro/internal/upgrade/registry/FaroServiceUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaUpgradeCreateTableCheck" files=".*/osb-faro-service/src/main/java/com/liferay/osb/faro/internal/upgrade/v11_0_0/UpgradeFaroNotificationUpgradeProcess\.java" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-contacts-service/src/main/java/.*/upgrade/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-service/src/main/java/.*/upgrade/.*" />
+		<suppress checks="JSONDeprecatedPackagesCheck" files=".*/osb-faro-web/package\.json" />
+
+		<!-- Begin LRAC-12941 -->
+
+		<suppress checks="JSONPackageJSONCheck" files=".*/osb-faro-theme/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files=".*/osb-faro-web/package\.json" />
+
+		<!-- End LRAC-12941 -->
+
+		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
+		<suppress checks="JSPImportsCheck" files=".*osb-faro-login-web-fragment/.*" />
+		<suppress checks="JSPLanguageKeysCheck" files=".*osb-faro-login-web-fragment/.*" />
+		<suppress checks="JSPTagAttributesCheck" files=".*osb-faro-login-web-fragment/.*" />
+		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
+		<suppress checks="PropertiesVerifyPropertiesCheck" files=".*configs/.*" />
+		<suppress checks="SHSubshellCheck" files=".*/set_nexus_credentials\.sh" />
+		<suppress checks="SQLLongNamesCheck" files=".*" />
+		<suppress checks="XMLIndentationCheck" files=".*/osb-faro-web/src/main/resources/META-INF/resources/dist/.*" />
+		<suppress checks="XMLTagAttributesCheck" files=".*/osb-faro-web/src/main/resources/META-INF/resources/dist/.*" />
+		<suppress checks="XMLWhitespaceCheck" files=".*/osb-faro-web/src/main/resources/META-INF/resources/dist/.*" />
+	</source-check>
+</suppressions>

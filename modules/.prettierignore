@@ -66,6 +66,11 @@
     dxp/apps/osb/osb-faro/osb-faro-theme/
 
     #
+    # LPD-93151 Ignore SF on the osb-faro-workspace files.
+    #
+    ../workspaces/osb-faro-workspace/
+
+    #
     # Ignore the copyright template files.
     #
     copyright.js

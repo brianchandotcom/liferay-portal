@@ -166,6 +166,8 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
+		_assertObjectFieldDefaultValue(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "location", "europe-west1");
 		_assertObjectFieldsExist(
 			"L_AI_HUB_AGENT_DEFINITION", "active", "description",
 			"inputVariables", "outputVariable",
@@ -201,10 +203,6 @@ public class AIHubSiteInitializerTest {
 			"r_accountToAIHubModelArmorTemplates_accountEntryId",
 			"raiDangerousLevel", "raiHarassmentLevel", "raiHateSpeechLevel",
 			"raiSexuallyExplicitLevel", "sdpFilterEnabled", "title");
-
-		_assertObjectFieldDefaultValue(
-			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "location", "europe-west1");
-
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
@@ -389,7 +387,7 @@ public class AIHubSiteInitializerTest {
 
 	private void _assertObjectFieldDefaultValue(
 			String objectDefinitionExternalReferenceCode,
-			String objectFieldName, String expectedDefaultValue)
+			String objectFieldName, String value)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -406,8 +404,7 @@ public class AIHubSiteInitializerTest {
 				objectField.getObjectFieldId(),
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 
-		Assert.assertEquals(
-			expectedDefaultValue, objectFieldSetting.getValue());
+		Assert.assertEquals(value, objectFieldSetting.getValue());
 	}
 
 	private void _assertObjectFieldsExist(

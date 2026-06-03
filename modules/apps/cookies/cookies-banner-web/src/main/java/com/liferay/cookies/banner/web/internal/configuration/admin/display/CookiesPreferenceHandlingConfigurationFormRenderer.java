@@ -205,11 +205,12 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ConfigurationScope configurationScope = _getConfigurationScope(
-			httpServletRequest);
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/cookies_preference_handling_configuration/view.jsp");
+
+		ConfigurationScope configurationScope = _getConfigurationScope(
+			httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CookiesBannerWebKeys.

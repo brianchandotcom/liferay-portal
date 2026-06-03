@@ -979,17 +979,21 @@ public class BatchEngineBrokerTest {
 			scopeKey = group.getGroupKey();
 		}
 
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry);
+
 		return StringUtil.replace(
 			StreamUtil.toString(_getInputStream(fileName)),
 			new String[] {
 				"[$ATTACHMENT_FIELD_ID$]", "[$ATTACHMENT_FIELD_LINK_HREF$]",
 				"[$ATTACHMENT_FIELD_LINK_LABEL$]", "[$ATTACHMENT_FIELD_NAME$]",
-				"[$DATE_CREATED$]", "[$DATE_MODIFIED$]",
+				"[$AUTO_INCREMENT$]", "[$DATE_CREATED$]", "[$DATE_MODIFIED$]",
 				"[$EXTERNAL_REFERENCE_CODE$]", "[$ID$]", "[$SCOPE_KEY$]"
 			},
 			new String[] {
 				String.valueOf(dlFileEntry.getFileEntryId()), link.getHref(),
 				link.getLabel(), dlFileEntry.getFileName(),
+				String.valueOf(values.get("testAutoIncrementField")),
 				_toDateString(createDate), _toDateString(modifiedDate),
 				objectEntry.getExternalReferenceCode(), String.valueOf(id),
 				scopeKey

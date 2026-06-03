@@ -4,4 +4,5 @@
  */
 
 export {default as SectionHeader} from './components/SectionHeader';
+export {default as HealthScanConfiguration} from './health_scan/components/HealthScanConfiguration';
 export {default as OnPage} from './on_page/OnPage';

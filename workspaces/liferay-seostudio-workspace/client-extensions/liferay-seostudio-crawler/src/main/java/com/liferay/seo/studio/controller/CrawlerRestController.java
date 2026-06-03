@@ -7,7 +7,7 @@ package com.liferay.seo.studio.controller;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.seo.studio.crawler.DetectOrphanPagesCrawler;
 import com.liferay.seo.studio.service.SEOStudioService;
 
@@ -68,7 +68,33 @@ public class CrawlerRestController extends BaseRestController {
 
 		Path path = null;
 
+		long seoStudioScanId = objectEntryJSONObject.getLong("objectEntryId");
+
 		try {
+			_updateScanState(seoStudioScanId, "running", null);
+
+			long seoStudioDomainId = valuesJSONObject.getLong(
+				"r_seoStudioDomainToSEOStudioScans_seoStudioDomainId");
+
+			String domainJSON = _seoStudioService.fetchDomain(
+				seoStudioDomainId);
+
+			if (domainJSON == null) {
+				String errorMessage =
+					"No domain was found for seoStudioDomainId " +
+						seoStudioDomainId;
+
+				_updateScanState(seoStudioScanId, "failed", errorMessage);
+
+				return new ResponseEntity<>(
+					errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			JSONObject domainJSONObject = new JSONObject(domainJSON);
+
+			URI hostname = SEOStudioService.toCrawlURI(
+				domainJSONObject.getString("hostname"));
+
 			path = Files.createTempFile("crawler-config", ".yml");
 
 			String crawlerConfig = null;
@@ -79,24 +105,6 @@ public class CrawlerRestController extends BaseRestController {
 				crawlerConfig = new String(
 					inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			}
-
-			long domainId = valuesJSONObject.getLong(
-				"r_seoStudioDomainToSEOStudioScans_seoStudioDomainId");
-
-			String domainJSON = _seoStudioService.fetchDomain(domainId);
-
-			if (domainJSON == null) {
-				_log.error("No domain found for domainId " + domainId);
-
-				return new ResponseEntity<>(
-					"No domain found for domainId " + domainId,
-					HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
-			JSONObject domainJSONObject = new JSONObject(domainJSON);
-
-			URI hostname = SEOStudioService.toCrawlURI(
-				domainJSONObject.getString("hostname"));
 
 			URI canonicalHostname = _resolveCanonicalHostname(hostname);
 
@@ -111,7 +119,7 @@ public class CrawlerRestController extends BaseRestController {
 				}
 
 				_seoStudioService.updateDomain(
-					domainId,
+					seoStudioDomainId,
 					new JSONObject(
 					).put(
 						"hostname", domainURL
@@ -121,12 +129,15 @@ public class CrawlerRestController extends BaseRestController {
 			String sitemapURL = domainURL + "/sitemap.xml";
 
 			if (!_isSitemapReachable(sitemapURL)) {
-				return new ResponseEntity<>(
-					"Sitemap unavailable at " + sitemapURL + " - aborting scan",
-					HttpStatus.UNPROCESSABLE_ENTITY);
-			}
+				String errorMessage =
+					"Sitemap is unavailable at " + sitemapURL +
+						" - aborting scan";
 
-			String indexName = SEOStudioService.toIndexName(domainId);
+				_updateScanState(seoStudioScanId, "failed", errorMessage);
+
+				return new ResponseEntity<>(
+					errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+			}
 
 			crawlerConfig = _replace(
 				Map.ofEntries(
@@ -151,7 +162,9 @@ public class CrawlerRestController extends BaseRestController {
 						"[$CRAWLER_MAX_DURATION$]",
 						String.valueOf(
 							valuesJSONObject.optInt("maxDuration", 30))),
-					Map.entry("[$CRAWLER_OUTPUT_INDEX$]", indexName),
+					Map.entry(
+						"[$CRAWLER_OUTPUT_INDEX$]",
+						SEOStudioService.toIndexName(seoStudioDomainId)),
 					Map.entry(
 						"[$CRAWLER_PRIVATE_NETWORKS_ALLOWED$]",
 						String.valueOf(_crawlerLocalNetworkAllowed)),
@@ -176,7 +189,7 @@ public class CrawlerRestController extends BaseRestController {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Launching crawler: " +
-						String.join(" ", processBuilder.command()));
+						StringUtil.merge(processBuilder.command(), " "));
 			}
 
 			Process process = processBuilder.start();
@@ -203,26 +216,31 @@ public class CrawlerRestController extends BaseRestController {
 			if (exitCode == 0) {
 				try {
 					_detectOrphanPagesCrawler.detect(
-						objectEntryJSONObject.getLong("objectEntryId"),
+						seoStudioScanId,
 						valuesJSONObject.getLong(
 							"r_accountToSEOStudioScans_accountEntryId"),
 						canonicalHostname, "orphan_page",
-						_seoStudioService.fetchCrawlHits(domainId));
+						_seoStudioService.fetchCrawlHits(seoStudioDomainId));
 				}
 				catch (Exception exception) {
 					_log.error(
 						"Orphan page detection failed for scan " +
-							objectEntryJSONObject.optLong("objectEntryId", -1),
+							seoStudioScanId,
 						exception);
 				}
+
+				_updateScanState(seoStudioScanId, "completed", null);
 
 				return ResponseEntity.ok(
 				).build();
 			}
 
+			String errorMessage = "Crawler finished with exit code " + exitCode;
+
+			_updateScanState(seoStudioScanId, "failed", errorMessage);
+
 			return new ResponseEntity<>(
-				"Crawler finished with exit code " + exitCode,
-				HttpStatus.INTERNAL_SERVER_ERROR);
+				errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		catch (Exception exception) {
 			if (exception instanceof InterruptedException) {
@@ -231,6 +249,9 @@ public class CrawlerRestController extends BaseRestController {
 			}
 
 			_log.error("Crawler execution failed", exception);
+
+			_updateScanState(
+				seoStudioScanId, "failed", "Crawler execution failed");
 
 			return new ResponseEntity<>(
 				"Crawler execution failed", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -312,8 +333,33 @@ public class CrawlerRestController extends BaseRestController {
 		}
 
 		return new URI(
-			finalURI.getScheme(), null, finalURI.getHost(), finalURI.getPort(),
+			StringUtil.toLowerCase(finalURI.getScheme()), null,
+			StringUtil.toLowerCase(finalURI.getHost()), finalURI.getPort(),
 			null, null, null);
+	}
+
+	private void _updateScanState(
+		long seoStudioScanId, String state, String errorMessage) {
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+			).put(
+				"state", state
+			);
+
+			if (errorMessage != null) {
+				jsonObject.put("errorMessage", errorMessage);
+			}
+
+			_seoStudioService.updateScan(seoStudioScanId, jsonObject);
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to update scan ", seoStudioScanId, " to state ",
+					state),
+				exception);
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(

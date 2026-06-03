@@ -31,6 +31,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
+import jakarta.ws.rs.BadRequestException;
+
 import java.io.IOException;
 
 import java.util.Arrays;
@@ -402,6 +404,19 @@ public class PerformanceAssetConsumptionResourceTest
 			ReflectionTestUtil.setFieldValue(
 				_performanceAssetConsumptionResource, "_http", _http);
 		}
+	}
+
+	@Test
+	public void testGetPerformanceAssetConsumptionWithInvalidGroupBy()
+		throws Exception {
+
+		Assert.assertThrows(
+			BadRequestException.class,
+			() ->
+				_performanceAssetConsumptionResource.
+					getPerformanceAssetConsumption(
+						null, null, RandomTestUtil.randomString(), 30, null,
+						null, null, Pagination.of(1, 10)));
 	}
 
 	private void _setUpMockHttp(String json) {

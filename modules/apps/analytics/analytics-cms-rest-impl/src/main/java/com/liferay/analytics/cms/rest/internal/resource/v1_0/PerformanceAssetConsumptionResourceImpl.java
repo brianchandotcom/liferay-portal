@@ -14,7 +14,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import jakarta.ws.rs.BadRequestException;
 
 import java.util.Arrays;
 
@@ -42,6 +45,8 @@ public class PerformanceAssetConsumptionResourceImpl
 
 		LicenseManagerUtil.checkFreeTier();
 
+		_validateGroupBy(groupBy);
+
 		Long[] groupIds = DepotEntryUtil.getGroupIds(
 			DepotEntryUtil.getDepotEntries(
 				contextCompany.getCompanyId(), depotEntryIds));
@@ -68,6 +73,16 @@ public class PerformanceAssetConsumptionResourceImpl
 			contextAcceptLanguage.getPreferredLocale(), "viewsMetric",
 			objectType, pagination.getPage(), rangeKey,
 			pagination.getPageSize(), tagId, vocabularyId);
+	}
+
+	private void _validateGroupBy(String groupBy) {
+		if (!StringUtil.equalsIgnoreCase(groupBy, "category") &&
+			!StringUtil.equalsIgnoreCase(groupBy, "structure") &&
+			!StringUtil.equalsIgnoreCase(groupBy, "tag") &&
+			!StringUtil.equalsIgnoreCase(groupBy, "vocabulary")) {
+
+			throw new BadRequestException("Invalid group by: " + groupBy);
+		}
 	}
 
 	@Reference

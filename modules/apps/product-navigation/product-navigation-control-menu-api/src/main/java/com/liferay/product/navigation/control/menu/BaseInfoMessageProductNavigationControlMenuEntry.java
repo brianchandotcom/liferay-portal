@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.constants.InfoMessageProductNavigationControlMenuEntryTypeConstants;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,6 +47,11 @@ public abstract class BaseInfoMessageProductNavigationControlMenuEntry
 		FeatureIndicatorTag featureIndicatorTag = new FeatureIndicatorTag();
 
 		featureIndicatorTag.setDark(isDark());
+		featureIndicatorTag.setIconOnly(
+			Objects.equals(
+				getType(),
+				InfoMessageProductNavigationControlMenuEntryTypeConstants.
+					MAINTENANCE));
 		featureIndicatorTag.setInteractive(true);
 		featureIndicatorTag.setPageContext(
 			PageContextFactoryUtil.create(

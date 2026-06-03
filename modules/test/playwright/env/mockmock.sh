@@ -8,19 +8,21 @@ function download_mockmock {
 	local max_attempts=5
 	local sleep_interval=20
 
-	while ! wget --no-check-certificate "${TEST_SMTP_SERVER_URL}" -O "${TEST_SMTP_SERVER_DIR}/MockMock.jar";
+	while ! wget --no-check-certificate "${TEST_SMTP_SERVER_URL}" -O "${TEST_SMTP_SERVER_DIR}/MockMock.jar"
 	do
-		if [ $attempt -ge $max_attempts ]; then
-			echo "Failed to download MockMock.jar after $max_attempts attempts."
+		if [ ${attempt} -ge ${max_attempts} ]
+		then
+			echo "Unable to download MockMock.jar after ${max_attempts} attempts."
+
 			exit 1
 		fi
 
-		echo "Download failed. Retrying in $sleep_interval seconds... (Attempt $((attempt+1))/$max_attempts)"
-		attempt=$((attempt+1))
+		((++attempt))
+
 		sleep ${sleep_interval}
 	done
 
-	echo "Download MockMock successful."
+	echo "Downloaded MockMock."
 }
 
 function mockmock_set_up {
@@ -38,8 +40,10 @@ function start_mockmock_server {
 
 	while ! curl --output /dev/null --silent --head --fail http://localhost:8282
 	do
-		if [ ${total_duration} -ge ${sleep_duration} ]; then
+		if [ ${total_duration} -ge ${sleep_duration} ]
+		then
 			echo "Unable to start MockMock smtp server."
+
 			exit 1
 		fi
 

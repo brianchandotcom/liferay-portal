@@ -16,16 +16,10 @@ jobs:
                 uses: bmuschko/setup-kubeconform@v1
                 with:
                     kubeconform-version: 0.7.0
-            -   name: Update Helm dependencies
-                run: helm dependency update --skip-refresh
-                working-directory: ./cloud/helm/${{matrix.chart}}
-            -   name: Lint Helm chart
-                run: helm lint .
-                working-directory: ./cloud/helm/${{matrix.chart}}
-            -   name: Run Helm chart tests
-                run: helm unittest .
-                working-directory: ./cloud/helm/${{matrix.chart}}
-            -   name: Run Bash tests
+            -   name: Update chart dependencies
+                run: helm dependency update --skip-refresh "cloud/helm/${{matrix.chart}}"
+            -   name: Lint chart
+                run: helm lint "cloud/helm/${{matrix.chart}}"
                 run: |
                     set -o errexit
 

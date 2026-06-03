@@ -67,18 +67,35 @@ describe('activities', () => {
 			]);
 		});
 
-		it('should not set subtitle for HubSpot events', () => {
-			const result = formatEvents([
-				{
-					applicationId: 'HubSpot',
-					assetTitle: null,
-					canonicalUrl: 'https://hubspot.com',
-					eventId: 'emailView',
-					name: 'emailView'
-				}
-			]);
+		it('should not set subtitle for webhook events regardless of provider', () => {
+			const hubSpotResult = formatEvents(
+				[
+					{
+						applicationId: 'HubSpot',
+						assetTitle: null,
+						canonicalUrl: 'https://hubspot.com',
+						eventId: 'emailView',
+						name: 'emailView'
+					}
+				],
+				'HubSpot Webhook'
+			);
 
-			expect(result[0].subtitle).toBeUndefined();
+			const marketoResult = formatEvents(
+				[
+					{
+						applicationId: 'Marketo',
+						assetTitle: null,
+						canonicalUrl: 'https://marketo.com',
+						eventId: 'emailView',
+						name: 'emailView'
+					}
+				],
+				'Marketo Webhook'
+			);
+
+			expect(hubSpotResult[0].subtitle).toBeUndefined();
+			expect(marketoResult[0].subtitle).toBeUndefined();
 		});
 
 		it('should transform properties array into an object in attributes', () => {

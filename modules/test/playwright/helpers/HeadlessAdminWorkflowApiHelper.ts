@@ -63,4 +63,18 @@ export class HeadlessAdminWorkflowApiHelper {
 			}
 		);
 	}
+
+	async postWorkflowTaskChangeTransition(
+		workflowTaskId: number,
+		transitionName: string
+	) {
+		return await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/workflow-tasks/${workflowTaskId}/change-transition`,
+			{
+				data: {
+					transitionName,
+				},
+			}
+		);
+	}
 }

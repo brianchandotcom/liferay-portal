@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(service = SnapshotDemoCreatorService.class)
+@Component(service = {})
 public class SnapshotDemoCreatorService extends DemoCreatorService {
 
 	@Override

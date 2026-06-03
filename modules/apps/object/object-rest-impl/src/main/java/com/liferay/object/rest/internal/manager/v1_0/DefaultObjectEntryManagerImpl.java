@@ -2947,7 +2947,8 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564") ||
 			!objectDefinition.isEnableObjectEntrySubscription() ||
 			ObjectEntryFolderSubscriptionUtil.isSubscribedToObjectEntryFolder(
 				serviceBuilderObjectEntry.getCompanyId(),
@@ -3644,7 +3645,8 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"restore",
 				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||
+					if (!FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-17564") ||
 						!serviceBuilderObjectEntry.isInTrash()) {
 
 						return null;

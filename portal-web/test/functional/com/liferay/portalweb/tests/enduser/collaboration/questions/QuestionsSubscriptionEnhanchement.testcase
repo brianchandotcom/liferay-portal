@@ -234,9 +234,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
+	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe and unsubscribe a question if they want to."
 	@priority = 5
-	test CanSubscribeAQuestion {
+	test CanSubscribeAndUnsubscribeAQuestion {
 		task ("Create a Question") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
@@ -256,6 +256,25 @@ definition {
 
 		task ("Validate the subcribed question") {
 			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
+		}
+
+		task ("When the user goes to Unsubsribes to the Question") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Question1");
+
+			Questions.unsubscribeFromQuestion(questionTitle = "Question1");
+		}
+
+		task ("Then the user can see that the question Unsubsribes to the Question") {
+			Questions.gotoTab(questionTabField = "Subscriptions");
+
+			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 		}
 	}
 
@@ -313,51 +332,6 @@ definition {
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
-		}
-	}
-
-	@description = "This is a test for LPS-159138. Verify if the user is able to unsubscribe a question if they want to."
-	@priority = 5
-	test CanUnsubscribeAQuestion {
-		task ("Given there are a Topic and a question created") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Body AddQuestion",
-				titleField = "Question1");
-		}
-
-		task ("And he can see that the question is subscribed by default") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.gotoTab(questionTabField = "Subscriptions");
-
-			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
-		}
-
-		task ("When the user goes to Unsubsribes to the Question") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Question1");
-
-			Questions.unsubscribeFromQuestion(questionTitle = "Question1");
-		}
-
-		task ("Then the user can see that the question Unsubsribes to the Question") {
-			Questions.gotoTab(questionTabField = "Subscriptions");
-
-			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 		}
 	}
 

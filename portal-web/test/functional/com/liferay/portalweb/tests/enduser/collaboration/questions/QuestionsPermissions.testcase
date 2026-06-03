@@ -94,17 +94,17 @@ definition {
 			value1 = "Title Anonymous User Ask questions");
 	}
 
-	@description = "LPS-118481 - Validate if the user can add root topic without permission."
+	@description = "LPS-116516 and LPS-118481 - Validate if the user can add topics or ask questions without permission, it also covers LPS-128823."
 	@priority = 4
 	@refactordone
-	test CannotAddRootTopicWithoutPermission {
+	test CannotManageQuestionsWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given that permissions is set on the created user ") {
 			Questions.definePermissionsToCreatedRole(roleTitle = "Test Regrole Name");
 		}
 
-		task ("And a Question is created") {
+		task ("And a topic is created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
 				categoryName = "Questions Test Category",
@@ -122,72 +122,18 @@ definition {
 		task ("Then he can not see the 'Add topic' button") {
 			Questions.viewNoPermissionsAddTopic();
 		}
-	}
 
-	@description = "LPS-116516 - Validate if the user can add subtopic without permission."
-	@priority = 4
-	@refactordone
-	test CannotAddSubTopicWithoutPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Given that permissions is set on the created user ") {
-			Questions.definePermissionsToCreatedRole(roleTitle = "Test Regrole Name");
-		}
-
-		task ("And a Question is created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When a user without permissions goes to Question topic page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
+		task ("When the user goes to the Question topic page") {
 			Questions.openToQuestionsTopic(
 				layoutName = "questions-page",
 				siteURLKey = "guest",
 				topicName = "questions-test-category");
 		}
 
-		task ("Then he can not Add a sub topic") {
-			Questions.viewNoPermissionsAddTopic();
-		}
-	}
-
-	@description = "LPS-118481 - Validate if the guest user cannot ask question, it also covers LPS-128823."
-	@priority = 4
-	@refactordone
-	test CannotAskQuestionAsGuest {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Given thata topic is created") {
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.addRootTopic(
-				rootTopicDescription = "Questions Test Category Description",
-				rootTopicName = "Questions Test Category");
-		}
-
-		task ("When a guest user is logged") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("And goes to questions topic page") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then he can see the 'This topic is empty' message and can not see the 'Ask Question' button") {
+		task ("Then he can see the 'This topic is empty' message and can not add a sub topic or ask a question") {
 			Questions.viewTopicDefault();
+
+			Questions.viewNoPermissionsAddTopic();
 
 			Questions.viewNoPermissionsAddQuestion();
 		}

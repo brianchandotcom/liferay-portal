@@ -1279,9 +1279,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-133798 - Validate if the guest can check the canonical URL for duplicated questions."
+	@description = "LPS-133798 - Validate if the guest can check the canonical URL for duplicated questions and with special characters."
 	@priority = 4
-	test CanViewCanonicalURLForDuplicatedQuestions {
+	test CanViewCanonicalURLs {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1299,80 +1299,7 @@ definition {
 			Questions.enableAnonymousRead();
 		}
 
-		task ("And there are duplicated questions") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Category",
-				groupName = "Guest",
-				titleField = "Question");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion Text",
-				categoryName = "Category",
-				groupName = "Guest",
-				titleField = "Question");
-		}
-
-		task ("When an anonymous goes to the fist question's detail page") {
-			User.logoutPG();
-
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Category");
-
-			Questions.gotoDetails(
-				duplicatedQuestions = "true",
-				questionTabField = "Questions",
-				questionTitle = "Question");
-		}
-
-		task ("Then a he can see the question title on url as 'question'") {
-			Questions.assertCanonicalURL(
-				category = "category",
-				pageName = "Questions Page",
-				portalURL = ${portalURL},
-				title = "question");
-		}
-
-		task ("When an anonymous user goes to the most recently created question's detail page") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question-1");
-		}
-
-		task ("Then a he can see the question title on url as 'question-1'") {
-			Questions.assertCanonicalURL(
-				category = "category",
-				pageName = "Questions Page",
-				portalURL = ${portalURL},
-				title = "question-1");
-		}
-	}
-
-	@description = "LPS-133798 - Validate if the guest can check the canonical URL with special characters."
-	@priority = 3
-	test CanViewCanonicalURLWithSpecialCharacters {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		task ("Given that the configuration is set and anonymous read is anable") {
-			Questions.openToConfigInSystemSettings(portlet = "Questions");
-
-			SystemSettings.editTextAreaSetting(
-				settingName = "Set Base Path for History Router",
-				settingValue = "/questions-page");
-
-			SystemSettings.saveConfiguration();
-
-			Questions.enableAnonymousRead();
-		}
-
-		task ("And there are a category and a question created") {
+		task ("And there are a category and a question with special characters created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
 				categoryName = "Category",
@@ -1403,6 +1330,51 @@ definition {
 				pageName = "Questions Page",
 				portalURL = ${portalURL},
 				title = "question-");
+		}
+
+		task ("And there are duplicated questions") {
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question");
+
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion Text",
+				categoryName = "Category",
+				groupName = "Guest",
+				titleField = "Question");
+		}
+
+		task ("When an anonymous goes to the fist question's detail page") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Category");
+
+			Questions.gotoDetails(
+				duplicatedQuestions = "true",
+				questionTabField = "Questions",
+				questionTitle = "Question");
+		}
+
+		task ("Then a he can see the question title on url as 'question'") {
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question");
+		}
+
+		task ("When an anonymous user goes to the most recently created question's detail page") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question-1");
+		}
+
+		task ("Then a he can see the question title on url as 'question-1'") {
+			Questions.assertCanonicalURL(
+				category = "category",
+				pageName = "Questions Page",
+				portalURL = ${portalURL},
+				title = "question-1");
 		}
 	}
 

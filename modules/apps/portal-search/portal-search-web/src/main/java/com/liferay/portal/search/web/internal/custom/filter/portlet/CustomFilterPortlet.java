@@ -5,9 +5,11 @@
 
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
+import com.liferay.layout.seo.provider.LayoutSEOMetaRobotsProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -61,6 +63,13 @@ public class CustomFilterPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		String metaRobotsContent = _layoutSEOMetaRobotsProvider.getContent(
+			renderRequest);
+
+		if (Validator.isNotNull(metaRobotsContent)) {
+			renderRequest.setAttribute(WebKeys.PAGE_ROBOTS, metaRobotsContent);
+		}
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(renderRequest);
@@ -166,5 +175,11 @@ public class CustomFilterPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference(
+		target = "(jakarta.portlet.name=" + CustomFilterPortletKeys.CUSTOM_FILTER + ")",
+		unbind = "-"
+	)
+	private LayoutSEOMetaRobotsProvider _layoutSEOMetaRobotsProvider;
 
 }

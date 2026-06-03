@@ -135,9 +135,9 @@ public class ProvisioningRequestResourceTest
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
 				"L_AI_HUB", TestPropsValues.getCompanyId());
 
-		_assetServiceAccountUsers(aiHubAccountEntry, customerAccountEntry);
+		_assertServiceAccountUsers(aiHubAccountEntry, customerAccountEntry);
 
-		_assetOAuth2Application(customerAccountEntry, provisioningRequest);
+		_assertOAuth2Application(customerAccountEntry, provisioningRequest);
 
 		_assertUserAccounts(
 			aiHubAccountEntry, customerAccountEntry,
@@ -177,6 +177,30 @@ public class ProvisioningRequestResourceTest
 			provisioningRequest.getAccountEntryName(), accountEntry.getName());
 	}
 
+	private void _assertOAuth2Application(
+			AccountEntry accountEntry, ProvisioningRequest provisioningRequest)
+		throws Exception {
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					accountEntry.getAccountEntryId() +
+						"-ai-hub-oauth2-application",
+					TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(oAuth2Application);
+
+		Assert.assertEquals(
+			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
+			oAuth2Application.getAllowedGrantTypesList());
+		Assert.assertEquals(
+			provisioningRequest.getLiferayDXPURL(),
+			oAuth2Application.getHomePageURL());
+		Assert.assertEquals(
+			provisioningRequest.getAccountEntryName(),
+			oAuth2Application.getName());
+	}
+
 	private void _assertServiceAccountUser(
 			AccountEntry aiHubAccountEntry, AccountEntry customerAccountEntry,
 			String screenName)
@@ -193,6 +217,19 @@ public class ProvisioningRequestResourceTest
 		Assert.assertNotNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				customerAccountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	private void _assertServiceAccountUsers(
+			AccountEntry aiHubAccountEntry, AccountEntry customerAccountEntry)
+		throws Exception {
+
+		_assertServiceAccountUser(
+			aiHubAccountEntry, customerAccountEntry,
+			customerAccountEntry.getAccountEntryId() + "-service-account");
+		_assertServiceAccountUser(
+			aiHubAccountEntry, customerAccountEntry,
+			customerAccountEntry.getAccountEntryId() +
+				"-guest-service-account");
 	}
 
 	private void _assertUserAccounts(
@@ -263,43 +300,6 @@ public class ProvisioningRequestResourceTest
 				_userLocalService.hasGroupUser(
 					_group.getGroupId(), user.getUserId()));
 		}
-	}
-
-	private void _assetOAuth2Application(
-			AccountEntry accountEntry, ProvisioningRequest provisioningRequest)
-		throws Exception {
-
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.
-				fetchOAuth2ApplicationByExternalReferenceCode(
-					accountEntry.getAccountEntryId() +
-						"-ai-hub-oauth2-application",
-					TestPropsValues.getCompanyId());
-
-		Assert.assertNotNull(oAuth2Application);
-
-		Assert.assertEquals(
-			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
-			oAuth2Application.getAllowedGrantTypesList());
-		Assert.assertEquals(
-			provisioningRequest.getLiferayDXPURL(),
-			oAuth2Application.getHomePageURL());
-		Assert.assertEquals(
-			provisioningRequest.getAccountEntryName(),
-			oAuth2Application.getName());
-	}
-
-	private void _assetServiceAccountUsers(
-			AccountEntry aiHubAccountEntry, AccountEntry customerAccountEntry)
-		throws Exception {
-
-		_assertServiceAccountUser(
-			aiHubAccountEntry, customerAccountEntry,
-			customerAccountEntry.getAccountEntryId() + "-service-account");
-		_assertServiceAccountUser(
-			aiHubAccountEntry, customerAccountEntry,
-			customerAccountEntry.getAccountEntryId() +
-				"-guest-service-account");
 	}
 
 	private static Group _group;

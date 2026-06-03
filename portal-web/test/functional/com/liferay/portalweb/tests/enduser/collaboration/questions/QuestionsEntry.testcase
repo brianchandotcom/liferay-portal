@@ -1430,62 +1430,103 @@ definition {
 		}
 	}
 
-	@description = "LPS-115724 - Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
-	@priority = 3
+	@description = "LPS-115724 and LPS-115725 - Validate if the users can view the questions from different topics via the breadcrumb, view a topic on home page after navigation via home icon and view a question via an edited topic."
+	@priority = 5
 	@refactordone
-	test CanViewQuestionAfterChangingSubTopic {
-		task ("Given there are a category and subcategories created") {
+	test CanViewQuestionsAcrossSubTopics {
+		task ("Given there are categories and questions created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
-				categoryName = "Questions Test Category1",
+				categoryName = "Questions Test Category",
 				userEmailAddress = "test@liferay.com");
 
-			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test Category1",
-				groupName = "Guest");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Subcategory Description",
-				categoryName = "Questions Test Category2",
-				groupName = "Guest",
-				parentCategoryId = ${parentCategoryId},
-				userEmailAddress = "test@liferay.com");
-
-			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test Category2",
-				groupName = "Guest");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Subcategory Description",
-				categoryName = "Questions Test Category3",
-				groupName = "Guest",
-				parentCategoryId = ${parentCategoryId},
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("And a question is created") {
 			JSONQuestions.addQuestion(
-				bodyField = "Question Body 2",
-				categoryName = "Questions Test Category2",
+				bodyField = "Content Question3",
+				categoryName = "Questions Test Category",
 				groupName = "Guest",
-				titleField = "Question 2");
+				titleField = "Question 3");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			for (var num : list "1,2") {
+				var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+					categoryName = "Questions Test Category",
+					groupName = "Guest");
+
+				JSONMBMessage.addCategory(
+					categoryDescription = "MB Subcategory Description",
+					categoryName = "Questions Subcategory${num}",
+					groupName = "Guest",
+					parentCategoryId = ${parentCategoryId},
+					userEmailAddress = "test@liferay.com");
+			}
+
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestion(
+					bodyField = "Question Body ${num}",
+					categoryName = "Questions Subcategory${num}",
+					groupName = "Guest",
+					titleField = "Question ${num}");
+			}
 		}
 
-		task ("When the user do to the main category and change topic to 'Questions Test Category2'") {
-			Navigator.gotoPage(pageName = "Questions Page");
+		task ("When the user goes the topic page") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-			Questions.gotoCategory(categoryName = "Questions Test Category1");
+		task ("And change topic through breadcrumb then he can see the question created in each category") {
+			Questions.changeTopic(
+				parentTopicName = "Questions Test Category",
+				subTopicName = "Questions Subcategory1");
+
+			Questions.viewList(
+				listedQuestions = "Question 1",
+				unlistedQuestions = "Question 2,Question 3");
 
 			Questions.changeTopic(
-				parentTopicName = "Questions Test Category1",
-				subTopicName = "Questions Test Category2");
+				parentTopicName = "Questions Test Category",
+				subTopicName = "Questions Subcategory2");
+
+			Questions.viewList(
+				listedQuestions = "Question 2",
+				unlistedQuestions = "Question 1,Question 3");
 
 			Questions.changeTopic(
-				parentTopicName = "Questions Test Category2",
-				subTopicName = "Questions Test Category3");
+				parentTopicName = "Questions Subcategory2",
+				subTopicName = "All Questions");
+
+			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+		}
+
+		task ("When the user navigates to a third level subtopic") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "Questions Subcategory2",
+				groupName = "Guest");
+
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "Questions Subcategory3",
+				groupName = "Guest",
+				parentCategoryId = ${parentCategoryId},
+				userEmailAddress = "test@liferay.com");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-subcategory2");
 
 			Questions.changeTopic(
-				gotoParentTopic = "Questions Test Category2",
+				parentTopicName = "Questions Subcategory2",
+				subTopicName = "Questions Subcategory3");
+
+			Questions.changeTopic(
+				gotoParentTopic = "Questions Subcategory2",
 				multipleSubTopics = "true");
 
 			Questions.viewNoBreadcrumbEllipsis();
@@ -1493,6 +1534,42 @@ definition {
 
 		task ("Then he can see the question created") {
 			Questions.viewList(listedQuestions = "Question 2");
+		}
+
+		task ("When the user clicks on the home icon") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
+
+			Refresh();
+		}
+
+		task ("Then he can see the topic name on home page through the home icon a") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
+		}
+
+		task ("When the user edit a topic") {
+			Questions.editRootTopic(
+				categoryName = "Questions Test Category",
+				categoryNameEdit = "Edit Questions Test Category",
+				groupName = "Guest",
+				siteURLKey = "guest");
+		}
+
+		task ("Then he can see the topic edited") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "question-3",
+				siteURLKey = "guest",
+				topicName = "edit-questions-test-category");
 		}
 	}
 
@@ -1597,81 +1674,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-115724 - Validate if the users can view the questions from different topics via the breadcrumb."
-	@priority = 4
-	@refactordone
-	test CanViewQuestionsFromDifferentSubTopics {
-		task ("Given there are categories and questions created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Content Question3",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question 3");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			for (var num : list "1,2") {
-				var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-					categoryName = "Questions Test Category",
-					groupName = "Guest");
-
-				JSONMBMessage.addCategory(
-					categoryDescription = "MB Subcategory Description",
-					categoryName = "Questions Subcategory${num}",
-					groupName = "Guest",
-					parentCategoryId = ${parentCategoryId},
-					userEmailAddress = "test@liferay.com");
-			}
-
-			for (var num : list "1,2") {
-				JSONQuestions.addQuestion(
-					bodyField = "Question Body ${num}",
-					categoryName = "Questions Subcategory${num}",
-					groupName = "Guest",
-					titleField = "Question ${num}");
-			}
-		}
-
-		task ("When the user goes the topic page") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("And change topic through breadcrumb then he can see the question created in each category") {
-			Questions.changeTopic(
-				parentTopicName = "Questions Test Category",
-				subTopicName = "Questions Subcategory1");
-
-			Questions.viewList(
-				listedQuestions = "Question 1",
-				unlistedQuestions = "Question 2,Question 3");
-
-			Questions.changeTopic(
-				parentTopicName = "Questions Test Category",
-				subTopicName = "Questions Subcategory2");
-
-			Questions.viewList(
-				listedQuestions = "Question 2",
-				unlistedQuestions = "Question 1,Question 3");
-
-			Questions.changeTopic(
-				parentTopicName = "Questions Subcategory2",
-				subTopicName = "All Questions");
-
-			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
-		}
-	}
-
 	@description = "LPS-112029 - Validate if the user can select the filter and view the related results."
 	@priority = 4
 	@refactordone
@@ -1752,39 +1754,6 @@ definition {
 
 		task ("Then the User can view a Topic Default") {
 			Questions.viewTopicDefault();
-		}
-	}
-
-	@description = "LPS-115725 - Validate if the user can view a topic on home page after navigation via home icon."
-	@priority = 4
-	test CanViewTopicOnHomePage {
-		task ("Given there is a category created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Question Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("And the user goes to topic page") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("When the user clicks on the home icon") {
-			Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
-
-			Refresh();
-		}
-
-		task ("Then he can see the topic name on home page through the home icon a") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
 		}
 	}
 
@@ -1967,40 +1936,6 @@ definition {
 
 		task ("Then he can see the details URL") {
 			AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
-		}
-	}
-
-	@description = "Validate if the user can view a question via an edited topic."
-	@priority = 5
-	@refactordone
-	test QuestionCanBeViewedAfterEditingTopic {
-		task ("Given there are a category and a question created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question Title");
-		}
-
-		task ("When the user edit a topic") {
-			Questions.editRootTopic(
-				categoryName = "Questions Test Category",
-				categoryNameEdit = "Edit Questions Test Category",
-				groupName = "Guest",
-				siteURLKey = "guest");
-		}
-
-		task ("Then he can see the topic edited") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "question-title",
-				siteURLKey = "guest",
-				topicName = "edit-questions-test-category");
 		}
 	}
 

@@ -107,6 +107,25 @@ public class LayoutLockManagerTest {
 		}
 	}
 
+	@Test
+	public void testGetLockedLayoutsWithDifferentGroups() throws Exception {
+		Layout draftLayout = _getDraftLayout(_group);
+
+		_lockLayout(draftLayout, _user);
+
+		_lockLayout(_getDraftLayout(GroupTestUtil.addGroup()), _user);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
+
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();
@@ -181,7 +200,11 @@ public class LayoutLockManagerTest {
 	}
 
 	private Layout _getDraftLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		return _getDraftLayout(_group);
+	}
+
+	private Layout _getDraftLayout(Group group) throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

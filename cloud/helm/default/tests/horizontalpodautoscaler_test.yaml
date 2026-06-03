@@ -1,0 +1,57 @@
+suite: horizontal pod autoscaler
+templates:
+    -   templates/horizontalpodautoscaler.yaml
+tests:
+    -   asserts:
+            -   equal:
+                    path: metadata.name
+                    value: my-portal
+            -   equal:
+                    path: spec.scaleTargetRef.name
+                    value: my-portal
+        it: should name the HorizontalPodAutoscaler after the chart name override
+        set:
+            autoscaling.enabled: true
+            autoscaling.type: hpa
+            nameOverride: my-portal
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the HorizontalPodAutoscaler when autoscaling is disabled
+        set:
+            autoscaling.enabled: false
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the HorizontalPodAutoscaler when the autoscaling type is keda
+        set:
+            autoscaling.enabled: true
+            autoscaling.type: keda
+    -   asserts:
+            -   equal:
+                    path: spec.maxReplicas
+                    value: 7
+            -   equal:
+                    path: spec.minReplicas
+                    value: 3
+        it: should reflect the configured replica bounds
+        set:
+            autoscaling.enabled: true
+            autoscaling.hpa.maxReplicas: 7
+            autoscaling.hpa.minReplicas: 3
+            autoscaling.type: hpa
+    -   asserts:
+            -   hasDocuments:
+                    count: 1
+            -   isKind:
+                    of: HorizontalPodAutoscaler
+            -   equal:
+                    path: spec.scaleTargetRef.kind
+                    value: StatefulSet
+            -   equal:
+                    path: spec.scaleTargetRef.name
+                    value: liferay-default
+        it: should render the HorizontalPodAutoscaler when autoscaling is enabled with type hpa
+        set:
+            autoscaling.enabled: true
+            autoscaling.type: hpa

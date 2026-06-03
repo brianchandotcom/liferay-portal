@@ -16,13 +16,17 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -51,6 +55,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ViewFolderSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
 		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
@@ -65,6 +70,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			httpServletRequest, language, objectDefinitionService, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_trashHelper = trashHelper;
@@ -134,10 +140,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.hasPermission(
-				group, DepotEntry.class.getName(), group.getClassPK(),
-				ActionKeys.VIEW)) {
-
+		if (_hasViewPermission(group, permissionChecker)) {
 			hideSpace = false;
 
 			addBreadcrumbItem(
@@ -376,12 +379,40 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return parts.length - 1;
 	}
 
+	private boolean _hasViewPermission(
+		Group group, PermissionChecker permissionChecker) {
+
+		DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
+			group.getClassPK());
+
+		if (depotEntry == null) {
+			return false;
+		}
+
+		try {
+			return _depotEntryModelResourcePermission.contains(
+				permissionChecker, depotEntry, ActionKeys.VIEW);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
+	}
+
 	private boolean _isContentsFolder() {
 		return Objects.equals(
 			getRootObjectEntryFolderExternalReferenceCode(),
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewFolderSectionDisplayContext.class);
+
+	private final ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private String _objectFolderExternalReferenceCode;
 	private String _rootObjectEntryFolderExternalReferenceCode;

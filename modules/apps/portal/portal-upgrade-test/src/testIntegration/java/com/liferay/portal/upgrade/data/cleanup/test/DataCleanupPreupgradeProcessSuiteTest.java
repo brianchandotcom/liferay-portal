@@ -104,9 +104,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	}
 
 	@Test
-	public void testCleanUpActivatesSchemaSnapshotDuringProcess()
-		throws Exception {
-
+	public void testCleanUp() throws Exception {
 		boolean[] snapshotEnabledDuringUpgrade = {false};
 
 		ReflectionTestUtil.setFieldValue(
@@ -129,10 +127,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		Assert.assertFalse(
 			(boolean)ReflectionTestUtil.getFieldValue(
 				DBInspector.class, "_schemaSnapshotEnabled"));
-	}
 
-	@Test
-	public void testCleanUpClearsSchemaSnapshotOnFailure() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcessesMap",
 			HashMapBuilder.

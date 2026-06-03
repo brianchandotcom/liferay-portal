@@ -537,3 +537,34 @@ test('Topper is properly aligned in small resolutions', async ({
 		})
 	).toBeInViewport();
 });
+
+test(
+	'Viewport size selector is wrapped in a presentation container',
+	{
+		tag: '@LPP-64278',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Open an empty page in Edit Mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// The single viewport selector item must not be announced as a list
+
+		const viewportButton = page.getByLabel('Desktop', {exact: true});
+
+		await expect(
+			page.locator('li.nav-item').filter({has: viewportButton})
+		).toHaveAttribute('role', 'presentation');
+
+		await expect(
+			page.locator('ul.navbar-nav').filter({has: viewportButton})
+		).toHaveAttribute('role', 'presentation');
+	}
+);

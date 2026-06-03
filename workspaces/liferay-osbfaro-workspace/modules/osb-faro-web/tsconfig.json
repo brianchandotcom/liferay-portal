@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": "./src/main/js",
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"jsx": "react-jsx",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"outDir": "build",
+		"paths": {
+			"@liferay/frontend-data-set-web": [
+				"../../../../../../../modules/apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
+			]
+		},
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "ES5"
+	},
+	"include": [
+		"./src/main/js/**/*",
+		"../../../../modules/global.d.ts"
+	]
+}

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountDisplay renders 1`] = `
+<div>
+  Account
+  <b>
+    description
+  </b>
+  <span>
+    is
+  </span>
+  <b>
+    "this is a description"
+  </b>
+</div>
+`;

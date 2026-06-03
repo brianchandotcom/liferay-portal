@@ -1,0 +1,15 @@
+.account-profile-cards {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 1fr;
+
+	@media (min-width: 1440px) {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.top-assets {
+	.table-responsive {
+		margin-bottom: 0;
+	}
+}

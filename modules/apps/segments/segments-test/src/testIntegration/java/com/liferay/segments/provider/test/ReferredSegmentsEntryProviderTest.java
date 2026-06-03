@@ -583,6 +583,47 @@ public class ReferredSegmentsEntryProviderTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryIdsWithOnlyReferredCriterionNotMatchedDynamically()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+
+		Criteria referencedCriteria = new Criteria();
+
+		_contextSegmentsCriteriaContributor.contribute(
+			referencedCriteria, "(signedIn eq true)", Criteria.Conjunction.AND);
+
+		SegmentsEntry referencedSegmentsEntry =
+			SegmentsTestUtil.addSegmentsEntry(
+				_group.getGroupId(),
+				CriteriaSerializer.serialize(referencedCriteria));
+
+		Criteria criteria = new Criteria();
+
+		_segmentsEntrySegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"(segmentsEntryIds eq '%s')",
+				referencedSegmentsEntry.getSegmentsEntryId()),
+			Criteria.Conjunction.AND);
+
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		Context context = new Context();
+
+		context.put(Context.SIGNED_IN, false);
+
+		long[] segmentsEntryIds =
+			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+				_group.getGroupId(), User.class.getName(), _user1.getUserId(),
+				context);
+
+		Assert.assertEquals(
+			Arrays.toString(segmentsEntryIds), 0, segmentsEntryIds.length);
+	}
+
+	@Test
 	public void testGetSegmentsEntryIdsWithOnlyUserCriterion()
 		throws Exception {
 

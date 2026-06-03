@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {QuestionsConfigurationPage} from '../pages/QuestionsConfigurationPage';
 import {QuestionsPage} from '../pages/QuestionsPage';
 import {QuestionsTopicsPage} from '../pages/QuestionsTopicsPage';
 
 const questionsPagesTest = test.extend<{
+	questionsConfigurationPage: QuestionsConfigurationPage;
 	questionsPage: QuestionsPage;
 	questionsTopicsPage: QuestionsTopicsPage;
 }>({
+	questionsConfigurationPage: async ({page}, use) => {
+		await use(new QuestionsConfigurationPage(page));
+	},
 	questionsPage: async ({page}, use) => {
 		await use(new QuestionsPage(page));
 	},

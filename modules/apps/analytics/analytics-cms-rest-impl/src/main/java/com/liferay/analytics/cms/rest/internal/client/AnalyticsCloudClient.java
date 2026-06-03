@@ -82,11 +82,10 @@ public class AnalyticsCloudClient {
 
 			options.setLocation(
 				_getUrl(
-					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					externalReferenceCode, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					null, null, null, "/acquisition-channels", rangeKey, null,
-					null, null, null));
+					"/acquisition-channels", rangeKey, null));
 
 			String content = _http.URLtoString(options);
 
@@ -144,11 +143,10 @@ public class AnalyticsCloudClient {
 
 			options.setLocation(
 				_getUrl(
-					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					externalReferenceCode, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					null, null, null, "/overview/histogram", rangeKey,
-					selectedMetrics, null, null, null));
+					"/overview/histogram", rangeKey, selectedMetrics));
 
 			String content = _http.URLtoString(options);
 
@@ -209,11 +207,10 @@ public class AnalyticsCloudClient {
 
 			options.setLocation(
 				_getUrl(
-					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					externalReferenceCode, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					null, null, null, "/overview", rangeKey, selectedMetrics,
-					null, null, null));
+					"/overview", rangeKey, selectedMetrics));
 
 			String content = _http.URLtoString(options);
 
@@ -273,11 +270,10 @@ public class AnalyticsCloudClient {
 
 			options.setLocation(
 				_getUrl(
-					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					externalReferenceCode, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					null, null, null, "/appears-on", rangeKey, null, null, null,
-					null));
+					"/appears-on", rangeKey, null));
 
 			String content = _http.URLtoString(options);
 
@@ -401,11 +397,10 @@ public class AnalyticsCloudClient {
 
 			options.setLocation(
 				_getUrl(
-					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					null, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(), null,
+					groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					null, null, null, "/performance-overview-metric", rangeKey,
-					null, null, null, null));
+					"/performance-overview-metric", rangeKey, null));
 
 			String content = _http.URLtoString(options);
 
@@ -508,8 +503,10 @@ public class AnalyticsCloudClient {
 				url, "categoryId", categoryId);
 		}
 
-		url = HttpComponentsUtil.addParameter(
-			url, "dataSourceId", dataSourceId);
+		if (Validator.isNotNull(dataSourceId)) {
+			url = HttpComponentsUtil.addParameter(
+				url, "dataSourceId", dataSourceId);
+		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			url = HttpComponentsUtil.addParameter(
@@ -563,6 +560,17 @@ public class AnalyticsCloudClient {
 		}
 
 		return url;
+	}
+
+	private String _getUrl(
+		String dataSourceId, String externalReferenceCode, List<Long> groupIds,
+		String liferayAnalyticsFaroBackendURL, String path, Integer rangeKey,
+		String[] selectedMetrics) {
+
+		return _getUrl(
+			null, dataSourceId, externalReferenceCode, null, groupIds,
+			liferayAnalyticsFaroBackendURL, null, null, null, path, rangeKey,
+			selectedMetrics, null, null, null);
 	}
 
 	private void _renameKey(JsonNode jsonNode, String newKey, String oldKey) {

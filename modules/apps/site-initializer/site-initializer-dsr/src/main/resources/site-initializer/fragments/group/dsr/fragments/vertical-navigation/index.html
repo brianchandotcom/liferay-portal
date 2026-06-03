@@ -42,6 +42,8 @@
 		[#assign navItemsJSONArray = navItemsJSONArray + "[" /]
 
 		[#list navItems as navItem]
+			[#assign navLayout = navItem.getLayout()! /]
+
 			[#assign navItemsJSONArray = navItemsJSONArray + "{" /]
 
 			[#assign
@@ -53,7 +55,7 @@
 				[#assign navItemCSSClass = "${navItemCSSClass} open" /]
 			[/#if]
 
-			[#if navItem.isChildSelected() || navItem.isSelected()]
+			[#if navItem.isChildSelected() || navItem.isSelected() || (navLayout?has_content && navLayout.isChildSelected(true, layout))!false]
 				[#assign
 					activeKey = navItem.getLayoutId()
 					navLinkCSSClass = "${navLinkCSSClass} active"

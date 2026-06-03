@@ -331,11 +331,11 @@ const LengthInput = forwardRef<LengthInputRef, Props>(
 
 					<Picker
 						as={TriggerButton}
-						defaultSelectedKey={defaultUnit || UNITS[0]}
 						defaultUnit={defaultUnit}
 						disabled={Boolean(defaultUnit)}
 						items={[...UNITS]}
 						onSelectionChange={(unit) => onSelectUnit(unit as Unit)}
+						selectedKey={defaultUnit || unit}
 						unit={unit}
 					>
 						{(item) => (

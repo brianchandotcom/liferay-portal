@@ -48,6 +48,7 @@ function _start_mockmock_server {
 		fi
 
 		sleep ${sleep_interval}
+
 		total_duration=$((total_duration + sleep_interval))
 	done
 

@@ -41,6 +41,34 @@ export class QuestionsPage {
 		await this.page.getByLabel('Post Your Question').click();
 	}
 
+	async addComment(commentBody: string) {
+		await this.page
+			.getByRole('button', {name: 'Add Comment'})
+			.first()
+			.click();
+		await this.page.getByLabel('Source').click();
+		await this.page
+			.getByLabel(/Rich Text Editor/)
+			.getByRole('textbox')
+			.fill(commentBody);
+		await this.page.getByLabel('Source').click();
+		await this.page
+			.getByRole('button', {name: 'Add Comment'})
+			.last()
+			.click();
+	}
+
+	async answerQuestion(answerBody: string) {
+		await this.page.getByRole('button', {name: 'Add Answer'}).click();
+		await this.page.getByLabel('Source').click();
+		await this.page
+			.getByLabel(/Rich Text Editor/)
+			.getByRole('textbox')
+			.fill(answerBody);
+		await this.page.getByLabel('Source').click();
+		await this.page.getByRole('button', {name: 'Post Answer'}).click();
+	}
+
 	async clickOnTag(tagName: string) {
 		await this.page.getByRole('link', {name: tagName}).click();
 	}

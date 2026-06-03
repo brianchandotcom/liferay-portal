@@ -619,6 +619,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			LAR.configureExportOptions();
+
 			LAR.exportWithAssertionOnSuccess();
 
 			LAR.downloadLar();

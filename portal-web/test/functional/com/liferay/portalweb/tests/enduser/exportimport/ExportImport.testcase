@@ -1093,6 +1093,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			LAR.configureExportOptions();
+
 			LAR.exportWithAssertionOnSuccess();
 
 			LAR.downloadLar();
@@ -1610,6 +1612,8 @@ definition {
 				portlet = "Export");
 
 			LexiconEntry.gotoAdd();
+
+			LAR.configureExportOptions();
 
 			LAR.exportWithAssertionOnSuccess();
 

@@ -13,6 +13,7 @@
 		{
 			"active": true,
 			"code": "HUF",
+			"externalReferenceCode": "HUF",
 			"name": {
 				"en_US": "Hungarian Forint"
 			},
@@ -21,6 +22,7 @@
 		{
 			"active": true,
 			"code": "NZD",
+			"externalReferenceCode": "NZD",
 			"name": {
 				"en_US": "New Zealand Dollar"
 			},
@@ -29,6 +31,7 @@
 		{
 			"active": true,
 			"code": "SGD",
+			"externalReferenceCode": "SGD",
 			"name": {
 				"en_US": "Singapore Dollar"
 			},

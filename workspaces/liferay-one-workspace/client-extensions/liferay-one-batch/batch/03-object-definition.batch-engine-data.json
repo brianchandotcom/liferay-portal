@@ -11,8 +11,6 @@
 	},
 	"items": [
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountNote_accountEntryId",
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#C_ACCOUNT_NOTE",
 			"enableCategorization": true,
@@ -1710,8 +1708,6 @@
 			"titleObjectFieldName": "name"
 		},
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountEntryToLicenseKey_accountEntryId",
 			"active": true,
 			"enableCategorization": false,
 			"enableComments": false,
@@ -2571,8 +2567,6 @@
 			"titleObjectFieldName": "bundleName"
 		},
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountToOAuth2DxpAuthorization_accountEntryId",
 			"active": true,
 			"enableCategorization": false,
 			"enableComments": false,
@@ -3209,8 +3203,6 @@
 			"titleObjectFieldName": "emailAddress"
 		},
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountEntryToPublisherAssets_accountEntryId",
 			"active": true,
 			"enableCategorization": false,
 			"enableComments": false,
@@ -3984,8 +3976,6 @@
 			"titleObjectFieldName": "classPK"
 		},
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountEntryToTicketAttachment_accountEntryId",
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#C_TICKET_ATTACHMENT",
 			"enableCategorization": false,
@@ -4201,8 +4191,6 @@
 			"titleObjectFieldName": "fileName"
 		},
 		{
-			"accountEntryRestricted": true,
-			"accountEntryRestrictedObjectFieldName": "r_accountToTrialExtensionRequest_accountEntryId",
 			"active": true,
 			"enableCategorization": false,
 			"enableComments": false,

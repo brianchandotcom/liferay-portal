@@ -137,27 +137,27 @@ public class GetAudiencesServletTest {
 
 		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
 
-		String[] attributes = new String[rulesJSONArray.length()];
+		String[] attributeNames = new String[rulesJSONArray.length()];
 
 		for (int i = 0; i < rulesJSONArray.length(); i++) {
 			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
 
-			attributes[i] = ruleJSONObject.getString("attribute");
+			attributeNames[i] = ruleJSONObject.getString("attribute");
 		}
 
-		String[] expectedAttributes = {
+		String[] expectedAttributeNames = {
 			"browser_name", "ip_geocoder_country", "language",
 			"last_sign_in_date", "local_date", "referrer", "request_parameters",
 			"signed_in", "url", "user_agent"
 		};
 
 		Assert.assertEquals(
-			Arrays.toString(attributes), expectedAttributes.length,
-			attributes.length);
+			Arrays.toString(attributeNames), expectedAttributeNames.length,
+			attributeNames.length);
 
-		for (String expectedAttribute : expectedAttributes) {
+		for (String expectedAttributeName : expectedAttributeNames) {
 			Assert.assertTrue(
-				ArrayUtil.contains(attributes, expectedAttribute));
+				ArrayUtil.contains(attributeNames, expectedAttributeName));
 		}
 	}
 

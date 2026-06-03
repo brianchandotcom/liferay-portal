@@ -6,139 +6,95 @@
 import Button from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {Provider} from '@clayui/provider';
-import {openToast} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import ClayLink from '@clayui/link';
+import ClayPanel from '@clayui/panel';
+import {FieldBase} from 'frontend-js-components-web';
+import React from 'react';
 
-import Toolbar from '../components/ToolBar';
-import {
-	getConfiguration,
-	putConfiguration,
-} from './services/ConfigurationService';
-import {Configuration} from './types/Configuration';
+import {useConfigurationForm} from './hooks/useConfigurationForm';
+
+const FORM_ID = 'configurationForm';
 
 export default function ConfigurationForm({
+	backURL,
 	externalReferenceCode,
 }: {
+	backURL: string;
 	externalReferenceCode: string;
 }) {
-	const [formData, setFormData] = useState({
-		environmentUrls: '',
-		recipientEmailAddress: '',
-	});
-	const [loading, setLoading] = useState(true);
-	const [saving, setSaving] = useState(false);
-
-	useEffect(() => {
-		if (!externalReferenceCode) {
-			setLoading(false);
-
-			return;
-		}
-
-		getConfiguration(externalReferenceCode)
-			.then((config) => {
-				setFormData({
-					environmentUrls: config.environmentUrls || '',
-					recipientEmailAddress: config.recipientEmailAddress || '',
-				});
-			})
-			.catch(() => {
-				openToast({
-					message: Liferay.Language.get(
-						'failed-to-load-configuration'
-					),
-					type: 'danger',
-				});
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [externalReferenceCode]);
-
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const {name, value} = event.target;
-
-		setFormData((prev) => ({...prev, [name]: value}));
-	};
-
-	const handleSave = async () => {
-		setSaving(true);
-
-		try {
-			await putConfiguration(externalReferenceCode, {
-				...formData,
-				externalReferenceCode,
-			} as Configuration);
-
-			openToast({
-				message: Liferay.Language.get('configuration-saved'),
-				type: 'success',
-			});
-		}
-		catch (error) {
-			openToast({
-				message:
-					error instanceof Error
-						? error.message
-						: Liferay.Language.get('failed-to-save-configuration'),
-				type: 'danger',
-			});
-		}
-		finally {
-			setSaving(false);
-		}
-	};
+	const {handleSubmit, isSubmitting, loading, setField, values} =
+		useConfigurationForm({externalReferenceCode});
 
 	if (loading) {
 		return null;
 	}
 
 	return (
-		<Provider spritemap={Liferay.Icons.spritemap}>
-			<Toolbar title={Liferay.Language.get('configuration')}>
-				<Toolbar.Item>
-					<Button
-						disabled={saving || !externalReferenceCode}
-						displayType="primary"
-						onClick={handleSave}
-					>
-						{Liferay.Language.get('save')}
-					</Button>
-				</Toolbar.Item>
-			</Toolbar>
+		<ClayLayout.ContainerFluid className="configuration-form p-4">
+			<ClayForm id={FORM_ID} onSubmit={handleSubmit}>
+				<ClayPanel collapsable={false}>
+					<ClayPanel.Body>
+						<h2 className="mb-4">
+							{Liferay.Language.get('account-configuration')}
+						</h2>
 
-			<ClayLayout.ContainerFluid className="p-4">
-				<ClayForm>
-					<ClayForm.Group>
-						<label htmlFor="environmentUrls">
-							{Liferay.Language.get('environment-urls')}
-						</label>
-
-						<ClayInput
+						<FieldBase
 							id="environmentUrls"
-							name="environmentUrls"
-							onChange={handleInputChange}
-							type="text"
-							value={formData.environmentUrls}
-						/>
-					</ClayForm.Group>
+							label={Liferay.Language.get('environment-url')}
+						>
+							<ClayInput
+								id="environmentUrls"
+								name="environmentUrls"
+								onChange={(event) =>
+									setField(
+										'environmentUrls',
+										event.target.value
+									)
+								}
+								type="text"
+								value={values.environmentUrls}
+							/>
+						</FieldBase>
 
-					<ClayForm.Group>
-						<label htmlFor="recipientEmailAddress">
-							{Liferay.Language.get('recipient-email-address')}
-						</label>
-
-						<ClayInput
+						<FieldBase
 							id="recipientEmailAddress"
-							name="recipientEmailAddress"
-							onChange={handleInputChange}
-							type="email"
-							value={formData.recipientEmailAddress}
-						/>
-					</ClayForm.Group>
-				</ClayForm>
-			</ClayLayout.ContainerFluid>
-		</Provider>
+							label={Liferay.Language.get('notification-email')}
+						>
+							<ClayInput
+								id="recipientEmailAddress"
+								name="recipientEmailAddress"
+								onChange={(event) =>
+									setField(
+										'recipientEmailAddress',
+										event.target.value
+									)
+								}
+								type="email"
+								value={values.recipientEmailAddress}
+							/>
+						</FieldBase>
+
+						<div className="mt-4">
+							<Button
+								disabled={isSubmitting}
+								displayType="primary"
+								type="submit"
+							>
+								{Liferay.Language.get('save')}
+							</Button>
+
+							<ClayLink
+								button
+								className="ml-2"
+								displayType="secondary"
+								href={backURL}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayLink>
+						</div>
+					</ClayPanel.Body>
+				</ClayPanel>
+			</ClayForm>
+		</ClayLayout.ContainerFluid>
 	);
 }

@@ -42,15 +42,22 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can access all questions by dropdown."
+	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can create a new topic and access all questions by dropdown."
 	@priority = 5
-	test CanAccessAllQuestionsOnDropdown {
-		task ("Given that the user adds two categories and questions") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
+	test CanViewAllQuestionsAcrossTopics {
+		task ("Given that the user creates a new topic") {
+			Navigator.openURL();
 
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.addRootTopic(
+				rootTopicDescription = "Topic Description",
+				rootTopicName = "Questions Test Topic");
+
+			LexiconCard.viewCardPresent(card = "Questions Test Topic");
+		}
+
+		task ("And adds another topic and questions in both topics") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
 				categoryName = "Questions Category",
@@ -91,26 +98,6 @@ definition {
 					key_questionTitle = ${questionsList},
 					locator1 = "Questions#QUESTIONS_TITLE");
 			}
-		}
-	}
-
-	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can create a new Topic."
-	@priority = 5
-	test CanCreateATopic {
-		task ("Given that the user goes to Questions Page") {
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Questions Page");
-		}
-
-		task ("When he adds a new topic") {
-			Questions.addRootTopic(
-				rootTopicDescription = "Topic Description",
-				rootTopicName = "Topic Name2");
-		}
-
-		task ("Then he can see the topic created card on the question page") {
-			LexiconCard.viewCardPresent(card = "Topic Name2");
 		}
 	}
 

@@ -8,6 +8,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet.shared.sea
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -80,11 +81,13 @@ public class SearchResultsPortletSharedSearchContributor
 		searchRequestBuilder.paginationStartParameterName(
 			paginationStartParameterName);
 
-		int paginationDelta = GetterUtil.getInteger(
-			portletSharedSearchSettings.getParameter(
-				searchResultsPortletPreferences.
-					getPaginationDeltaParameterName()),
-			searchResultsPortletPreferences.getPaginationDelta());
+		int paginationDelta = Math.min(
+			GetterUtil.getInteger(
+				portletSharedSearchSettings.getParameter(
+					searchResultsPortletPreferences.
+						getPaginationDeltaParameterName()),
+				searchResultsPortletPreferences.getPaginationDelta()),
+			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 		searchRequestBuilder.size(paginationDelta);

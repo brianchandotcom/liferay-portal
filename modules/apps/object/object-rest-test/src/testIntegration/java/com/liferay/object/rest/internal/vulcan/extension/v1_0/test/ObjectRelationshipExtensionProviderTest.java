@@ -217,9 +217,6 @@ public class ObjectRelationshipExtensionProviderTest {
 	private void _testGetExtendedPropertiesWithCommerceProduct()
 		throws Exception {
 
-		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
-			TestPropsValues.getCompanyId());
-
 		ObjectDefinition cpDefinitionObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
@@ -229,6 +226,19 @@ public class ObjectRelationshipExtensionProviderTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				cpDefinitionObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
+			TestPropsValues.getCompanyId());
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
@@ -244,16 +254,6 @@ public class ObjectRelationshipExtensionProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				cpDefinitionObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
-
 		ObjectRelationshipLocalServiceUtil.
 			addObjectRelationshipMappingTableValues(
 				TestPropsValues.getUserId(),
@@ -265,15 +265,15 @@ public class ObjectRelationshipExtensionProviderTest {
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
 		try {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				_getNestedFieldsContext(objectRelationship.getName()));
+
 			Product product = new Product() {
 				{
 					id = cpDefinition.getCPDefinitionId();
 					productId = cpDefinition.getCProductId();
 				}
 			};
-
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				_getNestedFieldsContext(objectRelationship.getName()));
 
 			Map<String, Serializable> extendedProperties =
 				_extensionProvider.getExtendedProperties(

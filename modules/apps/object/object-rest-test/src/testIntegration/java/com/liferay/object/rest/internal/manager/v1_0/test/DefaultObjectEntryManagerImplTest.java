@@ -7242,16 +7242,9 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
-			TestPropsValues.getCompanyId());
-
 		ObjectDefinition cpDefinitionObjectDefinition =
 			objectDefinitionLocalService.fetchSystemObjectDefinition(
 				companyId, "CPDefinition");
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			true);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -7262,6 +7255,13 @@ public class DefaultObjectEntryManagerImplTest
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
+			TestPropsValues.getCompanyId());
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
 
 		try {
 			ObjectField objectField = objectFieldLocalService.getObjectField(

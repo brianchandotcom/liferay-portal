@@ -79,7 +79,7 @@ public class EntityCacheImplTest {
 	}
 
 	@Test
-	public void testClearCacheWhenSkipReplicationEnabled() {
+	public void testClearCache() {
 		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
 
 		ClusterExecutor clusterExecutor = Mockito.mock(ClusterExecutor.class);
@@ -101,8 +101,6 @@ public class EntityCacheImplTest {
 
 		entityCacheImpl.activate(_bundleContext);
 
-		// The finder cache notification is broadcast to the cluster by default
-
 		entityCacheImpl.clearCache();
 
 		Mockito.verify(
@@ -112,9 +110,6 @@ public class EntityCacheImplTest {
 		);
 
 		Mockito.clearInvocations(clusterExecutor);
-
-		// The finder cache notification is not broadcast to the cluster when
-		// replication is skipped by an outer scope
 
 		try (SafeCloseable safeCloseable =
 				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {

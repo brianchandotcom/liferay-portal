@@ -1,0 +1,30 @@
+concurrency:
+    cancel-in-progress: true
+    group: publish-cloud-preview-bootstrap-tarballs-${{github.ref_name}}
+defaults:
+    run:
+        shell: bash
+jobs:
+    publish-aws-bootstrap:
+        if: github.repository == 'cloudnative-team/liferay-portal'
+        uses: ./.github/workflows/ci-reusable-push-bootstrap-tarball.yaml
+        with:
+            provider: aws
+    publish-gcp-bootstrap:
+        if: github.repository == 'cloudnative-team/liferay-portal'
+        uses: ./.github/workflows/ci-reusable-push-bootstrap-tarball.yaml
+        with:
+            provider: gcp
+on:
+    push:
+        branches:
+            -   LCD-*
+        paths:
+            -   .github/workflows/ci-push-cloud-preview-bootstrap-tarballs.yaml
+            -   .github/workflows/ci-reusable-push-bootstrap-tarball.yaml
+            -   cloud/scripts/**
+            -   cloud/terraform/aws/**
+            -   cloud/terraform/gcp/**
+permissions:
+    contents: read
+    id-token: write

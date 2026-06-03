@@ -94,8 +94,13 @@ export const buildLegendItems = ({
  * @param {Array} events Array of UserSessions events.
  * @returns {Array.<Object>} Array of objects for a vertical timeline.
  */
-export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
-	events.map(
+export const formatEvents = (
+	events: UserSessionEvent[],
+	userAgent?: string
+): Array<SessionEvent> => {
+	const isWebhook = userAgent?.toLowerCase().includes('webhook');
+
+	return events.map(
 		({
 			applicationId,
 			assetTitle,
@@ -120,14 +125,14 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 				})
 			},
 			description: assetTitle,
-			subtitle:
-				applicationId !== 'HubSpot'
-					? getSafeDecodedURIComponent(canonicalUrl)
-					: undefined,
+			subtitle: !isWebhook
+				? getSafeDecodedURIComponent(canonicalUrl)
+				: undefined,
 			time: moment(createDate),
 			title: name
 		})
 	);
+};
 
 /**
  * Formats datetime to today or the current date.
@@ -189,7 +194,8 @@ export const formatSessions = (
 					device: deviceType,
 					endTime: completeDate,
 					nestedItems: formatEvents(
-						events as unknown as UserSessionEvent[]
+						events as unknown as UserSessionEvent[],
+						userAgent
 					),
 					time: createDate,
 					userAgent

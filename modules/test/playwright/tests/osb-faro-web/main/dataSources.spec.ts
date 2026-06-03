@@ -125,3 +125,47 @@ test(
 		}
 	}
 );
+
+test(
+	'A DXP instance can reconnect to Analytics Cloud after disconnecting an existing data source',
+	{tag: '@LRAC-11475'},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		const connectionToken =
+			await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+				project.groupId
+			);
+
+		try {
+
+			// Connect, disconnect and reconnect reusing the same data source
+
+			await apiHelpers.analyticsSettingsRest.postDataSource(
+				connectionToken
+			);
+
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			await apiHelpers.analyticsSettingsRest.postDataSource(
+				connectionToken
+			);
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.dataSourcePage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(
+				page
+					.locator('table tbody tr')
+					.filter({hasNotText: 'DISCONNECTED'})
+					.filter({hasText: 'CONNECTED'})
+			).not.toHaveCount(0);
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+		}
+	}
+);

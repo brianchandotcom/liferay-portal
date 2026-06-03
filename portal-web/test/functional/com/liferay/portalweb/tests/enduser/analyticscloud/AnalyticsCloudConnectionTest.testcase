@@ -141,26 +141,4 @@ definition {
 		}
 	}
 
-	@description = "Bug: LRAC-11423 | Automation ID: LRAC-11475 | Test Summary: Check if it is possible to connect AC with DXP using an existing data source"
-	@priority = 4
-	test CheckIfIsPossibleToReconnectACWithDXP {
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-
-		task ("Disconnect the DXP to AC") {
-			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-		}
-
-		task ("Launch AC and copy the token from an existing data source") {
-			ACUtils.launchAC();
-
-			ACSettings.takeTokenFromExistingDataSource(dataSourceName = ${assignedPropertyName});
-		}
-
-		task ("Reconnect AC with DXP") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-	}
-
 }

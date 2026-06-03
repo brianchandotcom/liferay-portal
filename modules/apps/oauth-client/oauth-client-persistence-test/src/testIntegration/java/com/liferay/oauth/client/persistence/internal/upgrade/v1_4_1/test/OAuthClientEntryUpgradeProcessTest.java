@@ -8,6 +8,7 @@ package com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderServer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -57,83 +58,93 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		String clientId1 = RandomTestUtil.randomString();
-		String discoveryEndpoint =
-			"https://accounts.google.com/.well-known/openid-configuration";
+		try (OpenIdConnectProviderServer openIdConnectProviderServer =
+				new OpenIdConnectProviderServer()) {
 
-		_pid1 = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.portal.security.sso.openid.connect.internal." +
-				"configuration.OpenIdConnectProviderConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"discoveryEndpoint", discoveryEndpoint
-			).put(
-				"matcherField", "screenName"
-			).put(
-				"openIdConnectClientId", clientId1
-			).build());
+			String clientId1 = RandomTestUtil.randomString();
+			String discoveryEndpoint = openIdConnectProviderServer.getURL();
 
-		OAuthClientEntry oAuthClientEntry1 =
-			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
-				TestPropsValues.getCompanyId(), discoveryEndpoint, clientId1);
+			_pid1 = ConfigurationTestUtil.createFactoryConfiguration(
+				"com.liferay.portal.security.sso.openid.connect.internal." +
+					"configuration.OpenIdConnectProviderConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"discoveryEndpoint", discoveryEndpoint
+				).put(
+					"matcherField", "screenName"
+				).put(
+					"openIdConnectClientId", clientId1
+				).build());
 
-		oAuthClientEntry1.setMatcherField(null);
+			OAuthClientEntry oAuthClientEntry1 =
+				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+					TestPropsValues.getCompanyId(), discoveryEndpoint,
+					clientId1);
 
-		oAuthClientEntry1 =
-			_oAuthClientEntryLocalService.updateOAuthClientEntry(
-				oAuthClientEntry1);
+			oAuthClientEntry1.setMatcherField(null);
 
-		String clientId2 = RandomTestUtil.randomString();
-		String issuerURL = "http://test/openid-connect";
-		String tokenEndpoint = "http://test/openid-connect/token";
+			oAuthClientEntry1 =
+				_oAuthClientEntryLocalService.updateOAuthClientEntry(
+					oAuthClientEntry1);
 
-		_pid2 = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.portal.security.sso.openid.connect.internal." +
-				"configuration.OpenIdConnectProviderConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"authorizationEndpoint", "http://test/openid-connect/auth"
-			).put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"issuerURL", issuerURL
-			).put(
-				"jwksURI", "http://test/openid-connect/certs"
-			).put(
-				"matcherField", "screenName"
-			).put(
-				"openIdConnectClientId", clientId2
-			).put(
-				"subjectTypes", new String[] {"public"}
-			).put(
-				"tokenEndpoint", tokenEndpoint
-			).put(
-				"userInfoEndpoint", "http://test/openid-connect/userinfo"
-			).build());
+			String clientId2 = RandomTestUtil.randomString();
+			String issuerURL = "http://" + RandomTestUtil.randomString();
+			String tokenEndpoint = "http://" + RandomTestUtil.randomString();
 
-		OAuthClientEntry oAuthClientEntry2 =
-			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
-				TestPropsValues.getCompanyId(),
-				_generateLocalWellKnownURI(issuerURL, tokenEndpoint),
-				clientId2);
+			_pid2 = ConfigurationTestUtil.createFactoryConfiguration(
+				"com.liferay.portal.security.sso.openid.connect.internal." +
+					"configuration.OpenIdConnectProviderConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"authorizationEndpoint",
+					"http://" + RandomTestUtil.randomString()
+				).put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"issuerURL", issuerURL
+				).put(
+					"jwksURI", "http://" + RandomTestUtil.randomString()
+				).put(
+					"matcherField", "screenName"
+				).put(
+					"openIdConnectClientId", clientId2
+				).put(
+					"subjectTypes", new String[] {"public"}
+				).put(
+					"tokenEndpoint", tokenEndpoint
+				).put(
+					"userInfoEndpoint",
+					"http://" + RandomTestUtil.randomString()
+				).build());
 
-		oAuthClientEntry2.setMatcherField(null);
+			OAuthClientEntry oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+					TestPropsValues.getCompanyId(),
+					_generateLocalWellKnownURI(issuerURL, tokenEndpoint),
+					clientId2);
 
-		oAuthClientEntry2 =
-			_oAuthClientEntryLocalService.updateOAuthClientEntry(
-				oAuthClientEntry2);
+			oAuthClientEntry2.setMatcherField(null);
 
-		_runUpgrade();
+			oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.updateOAuthClientEntry(
+					oAuthClientEntry2);
 
-		oAuthClientEntry1 = _oAuthClientEntryLocalService.fetchOAuthClientEntry(
-			oAuthClientEntry1.getOAuthClientEntryId());
+			_runUpgrade();
 
-		Assert.assertEquals("screenName", oAuthClientEntry1.getMatcherField());
+			oAuthClientEntry1 =
+				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+					oAuthClientEntry1.getOAuthClientEntryId());
 
-		oAuthClientEntry2 = _oAuthClientEntryLocalService.fetchOAuthClientEntry(
-			oAuthClientEntry2.getOAuthClientEntryId());
+			Assert.assertEquals(
+				"screenName", oAuthClientEntry1.getMatcherField());
 
-		Assert.assertEquals("screenName", oAuthClientEntry2.getMatcherField());
+			oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+					oAuthClientEntry2.getOAuthClientEntryId());
+
+			Assert.assertEquals(
+				"screenName", oAuthClientEntry2.getMatcherField());
+		}
 	}
 
 	private String _generateLocalWellKnownURI(

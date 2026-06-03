@@ -8,11 +8,14 @@ package com.liferay.oauth.client.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.oauth.client.rest.client.dto.v1_0.OAuthClientEntry;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderServer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
@@ -23,6 +26,20 @@ import org.junit.runner.RunWith;
 public class OAuthClientEntryResourceTest
 	extends BaseOAuthClientEntryResourceTestCase {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseOAuthClientEntryResourceTestCase.setUpClass();
+
+		_openIdConnectProviderServer = new OpenIdConnectProviderServer();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_openIdConnectProviderServer != null) {
+			_openIdConnectProviderServer.close();
+		}
+	}
+
 	@Override
 	protected OAuthClientEntry randomOAuthClientEntry() throws Exception {
 		OAuthClientEntry oAuthClientEntry = super.randomOAuthClientEntry();
@@ -32,7 +49,7 @@ public class OAuthClientEntryResourceTest
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).toString());
 		oAuthClientEntry.setAuthServerWellKnownURI(
-			"https://accounts.google.com/.well-known/openid-configuration");
+			_openIdConnectProviderServer.getURL());
 		oAuthClientEntry.setCustomClaims(
 			JSONUtil.put(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
@@ -112,5 +129,7 @@ public class OAuthClientEntryResourceTest
 		return oAuthClientEntryResource.postOAuthClientEntry(
 			randomOAuthClientEntry());
 	}
+
+	private static OpenIdConnectProviderServer _openIdConnectProviderServer;
 
 }

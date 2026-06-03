@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderServer;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
@@ -93,47 +94,53 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 			preparedStatement.execute();
 		}
 
-		_oAuthClientEntry1 = _oAuthClientEntryLocalService.addOAuthClientEntry(
-			null, TestPropsValues.getUserId(), StringPool.BLANK,
-			"https://accounts.google.com/.well-known/openid-configuration",
-			null,
-			JSONUtil.put(
-				"client_id", _properties.get("openIdConnectClientId")
-			).put(
-				"client_name", RandomTestUtil.randomString()
-			).put(
-				"client_secret", RandomTestUtil.randomString()
-			).put(
-				"redirect_uris", JSONUtil.put("")
-			).put(
-				"scope", "openid email profile"
-			).put(
-				"subject_type", "public"
-			).toString(),
-			"email", 0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-			OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
-			StringPool.BLANK);
-		_oAuthClientEntry2 = _oAuthClientEntryLocalService.addOAuthClientEntry(
-			null, TestPropsValues.getUserId(), StringPool.BLANK,
-			"https://accounts.google.com/.well-known/openid-configuration",
-			null,
-			JSONUtil.put(
-				"client_id", RandomTestUtil.randomString()
-			).put(
-				"client_name", RandomTestUtil.randomString()
-			).put(
-				"client_secret", RandomTestUtil.randomString()
-			).put(
-				"redirect_uris", JSONUtil.put("")
-			).put(
-				"scope", "openid email profile"
-			).put(
-				"subject_type", "public"
-			).toString(),
-			"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-			OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
-			StringPool.BLANK);
+		try (OpenIdConnectProviderServer openIdConnectProviderServer =
+				new OpenIdConnectProviderServer()) {
+
+			_oAuthClientEntry1 =
+				_oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(), StringPool.BLANK,
+					openIdConnectProviderServer.getURL(), null,
+					JSONUtil.put(
+						"client_id", _properties.get("openIdConnectClientId")
+					).put(
+						"client_name", RandomTestUtil.randomString()
+					).put(
+						"client_secret", RandomTestUtil.randomString()
+					).put(
+						"redirect_uris", JSONUtil.put("")
+					).put(
+						"scope", "openid email profile"
+					).put(
+						"subject_type", "public"
+					).toString(),
+					"email", 0,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					StringPool.BLANK);
+			_oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(), StringPool.BLANK,
+					openIdConnectProviderServer.getURL(), null,
+					JSONUtil.put(
+						"client_id", RandomTestUtil.randomString()
+					).put(
+						"client_name", RandomTestUtil.randomString()
+					).put(
+						"client_secret", RandomTestUtil.randomString()
+					).put(
+						"redirect_uris", JSONUtil.put("")
+					).put(
+						"scope", "openid email profile"
+					).put(
+						"subject_type", "public"
+					).toString(),
+					"email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					StringPool.BLANK);
+		}
 	}
 
 	@After

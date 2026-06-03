@@ -48,23 +48,25 @@ public class SEOStudioFeatureFlagListener implements FeatureFlagListener {
 			Group group = _groupLocalService.fetchGroup(
 				companyId, GroupConstants.SEO_STUDIO);
 
-			if (group == null) {
-				String externalReferenceCode = TextFormatter.format(
-					GroupConstants.SEO_STUDIO, TextFormatter.A);
-
-				group = _groupLocalService.addGroup(
-					"L_" + externalReferenceCode,
-					_userLocalService.getGuestUserId(companyId),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
-					GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					HashMapBuilder.put(
-						LocaleUtil.getDefault(), GroupConstants.SEO_STUDIO
-					).build(),
-					null, GroupConstants.TYPE_SITE_RESTRICTED, null, true,
-					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-					GroupConstants.SEO_STUDIO_FRIENDLY_URL, false, false, true,
-					null);
+			if (group != null) {
+				return;
 			}
+
+			String externalReferenceCode = TextFormatter.format(
+				GroupConstants.SEO_STUDIO, TextFormatter.A);
+
+			group = _groupLocalService.addGroup(
+				"L_" + externalReferenceCode,
+				_userLocalService.getGuestUserId(companyId),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), GroupConstants.SEO_STUDIO
+				).build(),
+				null, GroupConstants.TYPE_SITE_RESTRICTED, null, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				GroupConstants.SEO_STUDIO_FRIENDLY_URL, false, false, true,
+				null);
 
 			SiteInitializerUtil.initialize(companyId, group, _siteInitializer);
 		}

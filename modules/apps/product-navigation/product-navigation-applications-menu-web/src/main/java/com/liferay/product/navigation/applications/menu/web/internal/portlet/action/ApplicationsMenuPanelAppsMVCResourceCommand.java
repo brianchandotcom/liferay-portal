@@ -68,6 +68,8 @@ import java.util.List;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -559,8 +561,11 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private RecentGroupManager _recentGroupManager;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile RecentGroupManager _recentGroupManager;
 
 	@Reference
 	private WebServerServletToken _webServerServletToken;

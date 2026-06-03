@@ -142,6 +142,10 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				"en_US", originalFriendlyURL);
 
+		Assert.assertEquals(
+			liveLayout.getPlid(),
+			liveFriendlyURLEntryLocalization2.getClassPK());
+
 		FriendlyURLEntryLocalization liveFriendlyURLEntryLocalization3 =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
 				liveGroup.getGroupId(), layoutClassNameId,
@@ -149,9 +153,6 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				"en_US", testFriendlyURL);
 
-		Assert.assertEquals(
-			liveLayout.getPlid(),
-			liveFriendlyURLEntryLocalization2.getClassPK());
 		Assert.assertEquals(
 			liveLayout2.getPlid(),
 			liveFriendlyURLEntryLocalization3.getClassPK());

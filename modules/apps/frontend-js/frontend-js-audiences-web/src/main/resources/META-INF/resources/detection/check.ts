@@ -21,6 +21,7 @@ const ATTRIBUTES: Attribute[] = [
 	'browser_name',
 	'browser_version',
 	'cookies',
+	'custom:*',
 	'hostname',
 	'language',
 	'local_date',
@@ -169,12 +170,23 @@ function checkObject(thing: any, what: string) {
 	}
 }
 
-function checkOneOf<T extends string>(value: any, allowed: T[], what: string) {
-	if (!allowed.includes(value)) {
-		throw new Error(
-			`${what} must be one of: ${allowed.map((v) => `'${v}'`).join(', ')}`
-		);
+function checkOneOf<T extends string>(value: any, alloweds: T[], what: string) {
+	for (const allowed of alloweds) {
+		if (allowed === value) {
+			return;
+		}
+
+		if (
+			allowed.endsWith('*') &&
+			value.startsWith(allowed.substring(0, allowed.length - 1))
+		) {
+			return;
+		}
 	}
+
+	throw new Error(
+		`${what} must be one of: ${alloweds.map((v) => `'${v}'`).join(', ')}`
+	);
 }
 
 function checkString(thing: any, what: string) {

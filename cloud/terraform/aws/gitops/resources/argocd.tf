@@ -108,7 +108,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 							selfHeal=true
 						}
 						managedNamespaceMetadata={
-							labels = {
+							labels={
 								"pod-security.kubernetes.io/enforce"="restricted"
 							}
 						}
@@ -168,6 +168,10 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 				},
 				{
 					namespace=var.gateway_namespace
+					server="https://kubernetes.default.svc"
+				},
+				{
+					namespace=var.observability_config.namespace
 					server="https://kubernetes.default.svc"
 				},
 			]
@@ -440,7 +444,8 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 							selfHeal=true
 						}
 						managedNamespaceMetadata={
-							labels = {
+							labels={
+								"liferay.com/observable"="true"
 								"pod-security.kubernetes.io/enforce"="restricted"
 							}
 						}
@@ -494,6 +499,148 @@ resource "kubernetes_manifest" "liferay_appproject" {
 				"${local.liferay_helm_chart_config.chart_url}/*",
 				var.liferay_git_repo_url,
 			]
+		}
+	}
+}
+resource "kubernetes_manifest" "observability_application" {
+	count=var.observability_config.enabled ? 1 : 0
+	depends_on=[
+		kubernetes_manifest.git_repo_credentials_external_secret,
+		kubernetes_manifest.infrastructure_appproject,
+	]
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
+	manifest={
+		apiVersion="argoproj.io/v1alpha1"
+		kind="Application"
+		metadata={
+			annotations={
+				"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+			}
+			finalizers=["resources-finalizer.argocd.argoproj.io"]
+			labels=merge(
+				local.common_labels,
+				{
+					"app.kubernetes.io/name"="liferay-observability"
+				})
+			name="liferay-observability"
+			namespace=var.argocd_namespace
+		}
+		spec={
+			destination={
+				namespace=var.observability_config.namespace
+				server="https://kubernetes.default.svc"
+			}
+			project=local.infrastructure_appproject_name
+			sources=[
+				merge(
+					{
+						helm={
+							parameters=[
+								{
+									name="alloy.enabled"
+									value="true"
+								},
+								{
+									name="alloy.iam.awsRoleArn"
+									value=try(data.aws_iam_role.alloy_role[0].arn, "")
+								},
+								{
+									name="alloy.namespace"
+									value=var.observability_config.namespace
+								},
+								{
+									name="alloy.scrape.cloudwatchRDS.enabled"
+									value="true"
+								},
+								{
+									name="alloy.scrape.rdsExporter.enabled"
+									value="true"
+								},
+								{
+									name="aws.ampWorkspaceURL"
+									value=try(data.aws_prometheus_workspace.amp[0].prometheus_endpoint, "")
+								},
+								{
+									name="aws.region"
+									value=var.region
+								},
+								{
+									name="centralHub.argocdURL"
+									value=local.argocd_external_url
+								},
+								{
+									name="centralHub.gitURL"
+									value=var.liferay_git_repo_url
+								},
+								{
+									name="cloudProvider"
+									value="aws"
+								},
+								{
+									name="grafana-alloy.namespaceOverride"
+									value=var.observability_config.namespace
+								},
+								{
+									name="grafana.namespaceOverride"
+									value=var.observability_config.namespace
+								},
+								{
+									name="grafana.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+									value=try(data.aws_iam_role.grafana_role[0].arn, "")
+								},
+								{
+									name="kube-state-metrics.namespaceOverride"
+									value=var.observability_config.namespace
+								},
+								{
+									name="namespaceOverride"
+									value=var.observability_config.namespace
+								},
+								{
+									name="prometheus-node-exporter.namespaceOverride"
+									value=var.observability_config.namespace
+								},
+								{
+									name="rdsExporter.enabled"
+									value="true"
+								},
+								{
+									name="rdsExporter.iam.awsRoleArn"
+									value=try(data.aws_iam_role.rds_exporter_role[0].arn, "")
+								},
+							]
+							valueFiles=[
+								"$values/${var.infrastructure_git_repo_config.source_paths.system}/${var.infrastructure_git_repo_config.source_paths.observability_values_filename}",
+							]
+						}
+						repoURL=var.observability_helm_chart_config.chart_url
+						targetRevision=var.observability_helm_chart_version
+					},
+					var.observability_helm_chart_config.path == null ? {
+						chart=var.observability_helm_chart_config.chart_name
+					} : {
+						path=var.observability_helm_chart_config.path
+					}
+				),
+				{
+					ref="values"
+					repoURL=local.infrastructure_git_repo_url
+					targetRevision=var.infrastructure_git_repo_config.revision
+				},
+			]
+			syncPolicy={
+				automated={
+					prune=true
+					selfHeal=true
+				}
+				syncOptions=[
+					"CreateNamespace=true",
+					"SkipDryRunOnMissingResource=true",
+				]
+			}
 		}
 	}
 }

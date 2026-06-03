@@ -68,6 +68,7 @@ variable "infrastructure_git_repo_config" {
 				base=optional(string, "liferay/projects/{{path[2]}}/base")
 				environments=optional(string, "liferay/projects/*/environments/*")
 				infrastructure_provider_values_filename=optional(string, "infrastructure-provider.yaml")
+				observability_values_filename=optional(string, "observability.yaml")
 				system=optional(string, "liferay/system")
 				values_filename=optional(string, "infrastructure.yaml")
 			})
@@ -181,6 +182,28 @@ variable "liferay_helm_chart_name" {
 	}
 }
 variable "liferay_helm_chart_version" {
+	type=string
+}
+variable "observability_config" {
+	default={}
+	type=object(
+		{
+			enabled=optional(bool, false)
+			namespace=optional(string, "observability")
+		}
+	)
+}
+variable "observability_helm_chart_config" {
+	default={}
+	type=object(
+		{
+			chart_name=optional(string, "observability")
+			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/observability")
+			path=optional(string, null)
+			version=optional(string, null)
+		})
+}
+variable "observability_helm_chart_version" {
 	type=string
 }
 variable "region" {

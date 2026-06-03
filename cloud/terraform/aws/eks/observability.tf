@@ -12,7 +12,7 @@ locals {
 	observability_values=yamldecode(file("${path.module}/../../../helm/observability/values.yaml"))
 }
 module "alloy_role" {
-	amazon_managed_service_prometheus_workspace_arns=[aws_prometheus_workspace.amp[0].arn]
+	amazon_managed_service_prometheus_workspace_arns=aws_prometheus_workspace.amp[*].arn
 	attach_amazon_managed_service_prometheus_policy=true
 	create=var.observability_config.enabled
 	name="${var.deployment_name}-alloy"

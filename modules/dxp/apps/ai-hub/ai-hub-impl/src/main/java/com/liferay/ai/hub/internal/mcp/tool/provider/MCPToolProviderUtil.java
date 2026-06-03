@@ -140,7 +140,7 @@ public class MCPToolProviderUtil {
 
 		return new StreamableHttpMcpTransport.Builder(
 		).customHeaders(
-			Map.of("Liferay-AI-Hub-Cell-On-Behalf-Of", userToken)
+			Map.of("Authorization", "Bearer " + userToken)
 		).url(
 			url
 		).build();

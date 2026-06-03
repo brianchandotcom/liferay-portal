@@ -1421,9 +1421,6 @@ public interface LayoutLocalService
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book
 	 entry
-	 * @param styleBookEntryScopeERC the external reference code of the group
-	 that owns the style book entry, or {@code null} when the entry
-	 lives in the layout's own group
 	 * @param faviconFileEntryERC the file entry external reference code of the
 	 layout's new favicon
 	 * @param faviconFileEntryScopeERC the file entry scope external reference
@@ -1709,4 +1706,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-970868377
+// LIFERAY-SERVICE-BUILDER-HASH:-2015291479

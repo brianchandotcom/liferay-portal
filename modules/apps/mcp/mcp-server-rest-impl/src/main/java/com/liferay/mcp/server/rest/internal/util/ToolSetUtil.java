@@ -251,15 +251,6 @@ public class ToolSetUtil {
 	private static Map<String, String> _getHeaders(
 		HttpServletRequest httpServletRequest) {
 
-		String liferayAIHubCellOnBehalfOf = httpServletRequest.getHeader(
-			"Liferay-AI-Hub-Cell-On-Behalf-Of");
-
-		if (liferayAIHubCellOnBehalfOf != null) {
-			return HashMapBuilder.put(
-				"Liferay-AI-Hub-Cell-On-Behalf-Of", liferayAIHubCellOnBehalfOf
-			).build();
-		}
-
 		String authorization = httpServletRequest.getHeader("Authorization");
 
 		if (authorization != null) {

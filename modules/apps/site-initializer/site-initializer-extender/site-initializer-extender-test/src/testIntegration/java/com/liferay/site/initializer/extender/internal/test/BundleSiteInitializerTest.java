@@ -199,7 +199,11 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -353,6 +357,7 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
+	@FeatureFlag("LPD-76864")
 	@Test
 	public void testInitializeFromBundle() throws Exception {
 		Bundle bundle1 = _getBundle(
@@ -360,13 +365,27 @@ public class BundleSiteInitializerTest {
 		Bundle bundle2 = _getBundle(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.site.initializer.extender.internal." +
+					"BundleSiteInitializer",
+				LoggerTestUtil.WARN)) {
+
 			_test1(
 				_siteInitializerRegistry.getSiteInitializer(
 					bundle1.getSymbolicName()));
 			_test2(
 				_siteInitializerRegistry.getSiteInitializer(
 					bundle2.getSymbolicName()));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(
+				logEntries.toString(),
+				_hasLogEntryMessage(
+					logEntries,
+					"Widget page with friendly URL " +
+						"/test-private-child-layout-1 is deprecated " +
+							"(LPD-76864)"));
 		}
 		finally {
 			bundle1.uninstall();
@@ -374,6 +393,58 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
+	@FeatureFlag(enable = false, value = "LPD-76864")
+	@Test
+	public void testInitializeFromBundleSkipsWidgetPages() throws Exception {
+		Bundle bundle = _getBundle(
+			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.site.initializer.extender.internal." +
+					"BundleSiteInitializer",
+				LoggerTestUtil.WARN)) {
+
+			SiteInitializer siteInitializer =
+				_siteInitializerRegistry.getSiteInitializer(
+					bundle.getSymbolicName());
+
+			siteInitializer.initialize(_group.getGroupId());
+
+			List<Layout> privateLayouts = _layoutLocalService.getLayouts(
+				_group.getGroupId(), true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			Assert.assertEquals(
+				privateLayouts.toString(), 1, privateLayouts.size());
+
+			Layout privateLayout = privateLayouts.get(0);
+
+			Assert.assertEquals(
+				LayoutConstants.TYPE_CONTENT, privateLayout.getType());
+
+			List<Layout> privateChildLayouts = privateLayout.getAllChildren();
+
+			Assert.assertEquals(
+				privateChildLayouts.toString(), 0, privateChildLayouts.size());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(
+				logEntries.toString(),
+				_hasLogEntryMessage(
+					logEntries,
+					StringBundler.concat(
+						"Skipping page with friendly URL ",
+						"/test-private-child-layout-1 and any associated ",
+						"child pages because widget pages are deprecated ",
+						"(LPD-76864)")));
+		}
+		finally {
+			bundle.uninstall();
+		}
+	}
+
+	@FeatureFlag("LPD-76864")
 	@Test
 	public void testInitializeFromFile() throws Exception {
 		File tempDir1 = _getTempDir(
@@ -395,7 +466,9 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
-	@FeatureFlag("LPD-19870")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-19870"), @FeatureFlag("LPD-76864")}
+	)
 	@Test
 	public void testSerialize() throws Exception {
 		File tempDir1 = _getTempDir(
@@ -3128,7 +3201,7 @@ public class BundleSiteInitializerTest {
 		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
 
 		Assert.assertEquals(
-			privateChildLayouts.toString(), 1, privateChildLayouts.size());
+			privateChildLayouts.toString(), 2, privateChildLayouts.size());
 
 		Layout privateChildLayout = privateChildLayouts.get(0);
 
@@ -3136,6 +3209,14 @@ public class BundleSiteInitializerTest {
 			"Test Private Child Layout 1",
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("portlet", privateChildLayout.getType());
+
+		privateChildLayout = privateChildLayouts.get(1);
+
+		Assert.assertEquals(
+			"Test Private Grandchild Layout 1",
+			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, privateChildLayout.getType());
 	}
 
 	private void _assertPrivateLayouts2() {
@@ -4579,6 +4660,18 @@ public class BundleSiteInitializerTest {
 		tempFile.delete();
 
 		return tempDir1;
+	}
+
+	private boolean _hasLogEntryMessage(
+		List<LogEntry> logEntries, String message) {
+
+		for (LogEntry logEntry : logEntries) {
+			if (Objects.equals(logEntry.getMessage(), message)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _test1(SiteInitializer siteInitializer) throws Exception {

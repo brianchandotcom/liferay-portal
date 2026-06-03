@@ -246,8 +246,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			contextHttpServletRequest, fragment.getDateModified(),
 			contextUser.getUserId());
 
-		long previewFileEntryId = _getPreviewFileEntryId(
-			fragment, groupId, serviceContext);
+		long previewFileEntryId = _getPreviewFileEntryId(fragment, groupId);
 
 		if (approvedFragmentVersion != null) {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
@@ -388,14 +387,12 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				fragmentSet.getDateModified(), contextUser.getUserId()));
 	}
 
-	private long _getPreviewFileEntryId(
-			Fragment fragment, long groupId, ServiceContext serviceContext)
+	private long _getPreviewFileEntryId(Fragment fragment, long groupId)
 		throws Exception {
 
 		return FileEntryUtil.getPreviewFileEntryId(
 			groupId, FragmentPortletKeys.FRAGMENT,
-			FragmentEntry.class.getSimpleName(), serviceContext,
-			fragment.getThumbnailURLReference());
+			fragment.getThumbnailURLReference(), contextUser.getUserId());
 	}
 
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {
@@ -466,12 +463,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			fragmentEntryId = draftFragmentEntry.getFragmentEntryId();
 		}
 
-		long previewFileEntryId = _getPreviewFileEntryId(
-			fragment, groupId,
-			ServiceContextUtil.getServiceContext(
-				contextCompany.getCompanyId(), fragment.getDateCreated(),
-				groupId, contextHttpServletRequest, fragment.getDateModified(),
-				contextUser.getUserId()));
+		long previewFileEntryId = _getPreviewFileEntryId(fragment, groupId);
 
 		if (approvedFragmentVersion != null) {
 			updatedFragmentEntry = _fragmentEntryService.updateFragmentEntry(

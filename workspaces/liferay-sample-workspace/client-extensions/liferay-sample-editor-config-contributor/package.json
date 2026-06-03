@@ -1,9 +1,8 @@
 {
-	"dependencies": {
-		"serve": "^14.2.0"
-	},
 	"description": "Liferay Sample Editor Config Contributor",
 	"devDependencies": {
+		"@liferay/js-api": "0.6.2",
+		"serve": "^14.2.0",
 		"typescript": "^5.0.4"
 	},
 	"main": "./src/index.ts",

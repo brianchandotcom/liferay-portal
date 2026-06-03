@@ -7,4 +7,5 @@ type MessageBoardThread = {
 	articleBody: string;
 	headline: string;
 	id: string;
+	status?: string;
 };

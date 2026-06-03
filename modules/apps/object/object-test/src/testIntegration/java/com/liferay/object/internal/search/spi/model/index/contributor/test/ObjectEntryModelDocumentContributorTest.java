@@ -7,14 +7,17 @@ package com.liferay.object.internal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -44,6 +48,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -140,6 +145,20 @@ public class ObjectEntryModelDocumentContributorTest {
 			value.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", objectFieldValue, "pt_BR")));
+
+		Assert.assertEquals("false", document.get("rootDescendantNode"));
+
+		objectEntry.setRootObjectEntryId(objectEntry.getObjectEntryId());
+
+		document = _getDocument(modifiableSystemObjectDefinition, objectEntry);
+
+		Assert.assertEquals("false", document.get("rootDescendantNode"));
+
+		objectEntry.setRootObjectEntryId(objectEntry.getObjectEntryId() + 1);
+
+		document = _getDocument(modifiableSystemObjectDefinition, objectEntry);
+
+		Assert.assertEquals("true", document.get("rootDescendantNode"));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -249,6 +268,52 @@ public class ObjectEntryModelDocumentContributorTest {
 					objectFieldName, ": ", user.getFullName())));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testContributeWithCMSAttributes() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, new HashMap<String, Serializable>());
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		objectEntry.setObjectEntryFolderId(
+			objectEntryFolder.getObjectEntryFolderId());
+
+		Document document = _getDocument(objectDefinition, objectEntry);
+
+		Assert.assertEquals("object", document.get("cms_kind"));
+		Assert.assertEquals("true", document.get("cms_root"));
+		Assert.assertEquals("contents", document.get("cms_section"));
+	}
+
+	private Document _getDocument(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		Document document = new DocumentImpl();
+
+		ModelDocumentContributor<ObjectEntry>
+			objectEntryModelDocumentContributor =
+				_getObjectEntryModelDocumentContributor(objectDefinition);
+
+		objectEntryModelDocumentContributor.contribute(document, objectEntry);
+
+		return document;
+	}
+
 	private ModelDocumentContributor<ObjectEntry>
 			_getObjectEntryModelDocumentContributor(
 				ObjectDefinition objectDefinition)
@@ -275,6 +340,9 @@ public class ObjectEntryModelDocumentContributorTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

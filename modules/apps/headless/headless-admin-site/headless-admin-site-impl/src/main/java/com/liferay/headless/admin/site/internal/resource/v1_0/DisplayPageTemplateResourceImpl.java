@@ -453,9 +453,9 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
-			groupId, LayoutAdminPortletKeys.GROUP_PAGES, getResourceName(),
-			_getServiceContext(displayPageTemplate, groupId),
-			displayPageTemplate.getThumbnailURLReference());
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+			displayPageTemplate.getThumbnailURLReference(),
+			contextUser.getUserId());
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -631,9 +631,8 @@ public class DisplayPageTemplateResourceImpl
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
-					getResourceName(),
-					_getServiceContext(displayPageTemplate, groupId),
-					displayPageTemplate.getThumbnailURLReference()),
+					displayPageTemplate.getThumbnailURLReference(),
+					contextUser.getUserId()),
 				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
 				0L, layout.getPlid(), 0L,
 				PageSpecificationUtil.getPublishedStatus(

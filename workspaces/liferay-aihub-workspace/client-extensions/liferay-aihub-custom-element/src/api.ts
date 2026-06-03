@@ -82,27 +82,26 @@ export async function getChatbotConfiguration(
 }
 
 export async function createEventSource(): Promise<EventSource | null> {
-	const headers = new Headers({Accept: 'text/event-stream'});
-
-	if ((window as any).Liferay) {
-		const authorizationToken = await postAuthorizationToken();
-
-		if (!authorizationToken) {
-			return null;
-		}
-
-		headers.set(
-			'Authorization',
-			`Bearer ${authorizationToken.accessToken}`
-		);
-	}
-
 	return new EventSource(`${aiHubURL}${AI_HUB_ENDPOINT}/chats/subscribe`, {
-		fetch: (input, init) =>
-			fetch(input as RequestInfo, {
+		fetch: async (input, init) => {
+			const headers = new Headers({Accept: 'text/event-stream'});
+
+			if ((window as any).Liferay) {
+				const authorizationToken = await postAuthorizationToken();
+
+				if (authorizationToken?.accessToken) {
+					headers.set(
+						'Authorization',
+						`Bearer ${authorizationToken.accessToken}`
+					);
+				}
+			}
+
+			return fetch(input as RequestInfo, {
 				...init,
 				headers,
-			}),
+			});
+		},
 		withCredentials: true,
 	});
 }

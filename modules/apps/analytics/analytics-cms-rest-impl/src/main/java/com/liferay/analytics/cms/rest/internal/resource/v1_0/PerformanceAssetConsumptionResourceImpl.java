@@ -7,6 +7,7 @@ package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumption;
 import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
+import com.liferay.analytics.cms.rest.internal.client.GroupBy;
 import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceAssetConsumptionResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -14,7 +15,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import jakarta.ws.rs.BadRequestException;
 
 import java.util.Arrays;
 
@@ -64,10 +68,24 @@ public class PerformanceAssetConsumptionResourceImpl
 		return analyticsCloudClient.getPerformanceAssetConsumption(
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId()),
-			categoryId, groupBy, Arrays.asList(groupIds),
+			categoryId, _getGroupBy(groupBy), Arrays.asList(groupIds),
 			contextAcceptLanguage.getPreferredLocale(), "viewsMetric",
 			objectType, pagination.getPage(), rangeKey,
 			pagination.getPageSize(), tagId, vocabularyId);
+	}
+
+	private GroupBy _getGroupBy(String groupBy) {
+		if (Validator.isNull(groupBy)) {
+			return null;
+		}
+
+		try {
+			return GroupBy.parse(groupBy);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			throw new BadRequestException(
+				"Invalid group by: " + groupBy, illegalArgumentException);
+		}
 	}
 
 	@Reference

@@ -1,0 +1,13 @@
+{
+	"private": true,
+	"workspaces": {
+		"nohoist": [
+			"**/osb-faro-web/@clayui/css",
+			"**/osb-faro-web/@clayui/css/**"
+		],
+		"packages": [
+			"modules/dxp/apps/osb/osb-faro/osb-faro-theme",
+			"modules/dxp/apps/osb/osb-faro/osb-faro-web"
+		]
+	}
+}

@@ -20,7 +20,8 @@ public class BusinessEvent extends JiraAssetObject {
 		String accountExternalReferenceCode,
 		JSONObject jiraAssetObjectJSONObject) {
 
-		_accountExternalKey = accountExternalReferenceCode;
+		_accountExternalReferenceCode = accountExternalReferenceCode;
+
 		_businessEventId = jiraAssetObjectJSONObject.optString("id");
 		_actualEventDate = getAttributeKey(
 			jiraAssetObjectJSONObject,
@@ -71,9 +72,9 @@ public class BusinessEvent extends JiraAssetObject {
 		String accountExternalReferenceCode, String authorEmailAddress,
 		String attributesJSON) {
 
+		_accountExternalReferenceCode = accountExternalReferenceCode;
 		_authorEmailAddress = authorEmailAddress;
 
-		_accountExternalKey = accountExternalReferenceCode;
 		_businessEventId = StringPool.BLANK;
 		_currentLiferayVersionName = StringPool.BLANK;
 		_lastUpdatedAuthorEmailAddress = authorEmailAddress;
@@ -95,8 +96,8 @@ public class BusinessEvent extends JiraAssetObject {
 		_timeZoneName = jsonObject.optString("timeZone");
 	}
 
-	public String getAccountExternalKey() {
-		return _accountExternalKey;
+	public String getAccountExternalReferenceCode() {
+		return _accountExternalReferenceCode;
 	}
 
 	public String getActivityHistoryURL(String onePortalURL) {
@@ -176,7 +177,7 @@ public class BusinessEvent extends JiraAssetObject {
 
 		sb.append(onePortalURL);
 		sb.append("/my-account/#/");
-		sb.append(_accountExternalKey);
+		sb.append(_accountExternalReferenceCode);
 		sb.append("/business-events/");
 		sb.append(_businessEventId);
 
@@ -243,7 +244,7 @@ public class BusinessEvent extends JiraAssetObject {
 		return jsonObject;
 	}
 
-	private final String _accountExternalKey;
+	private final String _accountExternalReferenceCode;
 	private final String _actualEventDate;
 	private final String _associatedTickets;
 	private final String _authorEmailAddress;

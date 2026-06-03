@@ -8,7 +8,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 
-import {TranslationOptionsContainer} from '../../components/ObjectField/Tabs/BasicInfo/TranslationOptionsContainer';
+import {TranslationOptionsContainer} from '../../../../components/ObjectField/Tabs/BasicInfo/TranslationOptionsContainer';
 
 const mockLearnResources = {
 	'object-web': {

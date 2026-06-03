@@ -56,9 +56,7 @@ export class ProtectedResourceLocalMetadatasPage {
 		await this.saveButton.click();
 
 		if (expectedMessage !== undefined) {
-			await expect(
-				await this.page.getByText(expectedMessage)
-			).toBeVisible();
+			await expect(this.page.getByText(expectedMessage)).toBeVisible();
 
 			if (
 				await this.page
@@ -75,7 +73,7 @@ export class ProtectedResourceLocalMetadatasPage {
 			await this.page.getByRole('button', {name: 'Cancel'}).click();
 		}
 		else {
-			await expect(await this.successMessage).toBeVisible();
+			await expect(this.successMessage).toBeVisible();
 			await this.page.locator('.alert').getByLabel('Close').click();
 		}
 	}
@@ -98,7 +96,7 @@ export class ProtectedResourceLocalMetadatasPage {
 				trigger: row.locator('.dropdown-toggle'),
 			});
 
-			await expect(await this.successMessage).toBeVisible();
+			await expect(this.successMessage).toBeVisible();
 
 			await this.page.locator('.alert').getByLabel('Close').click();
 		}
@@ -113,6 +111,6 @@ export class ProtectedResourceLocalMetadatasPage {
 
 		await this.oAuthClientPRLocalMetadataTab.click();
 
-		await expect(await this.addProtectedResourceButton).toBeVisible();
+		await expect(this.addProtectedResourceButton).toBeVisible();
 	}
 }

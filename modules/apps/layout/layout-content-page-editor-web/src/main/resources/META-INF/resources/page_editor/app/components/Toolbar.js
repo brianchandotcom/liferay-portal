@@ -180,8 +180,12 @@ function ToolbarBody({className}) {
 					)}
 			</ul>
 
-			<ul className="middle navbar-nav" onClick={deselectItem}>
-				<li className="nav-item">
+			<ul
+				className="middle navbar-nav"
+				onClick={deselectItem}
+				role="presentation"
+			>
+				<li className="nav-item" role="presentation">
 					<ViewportSizeSelector
 						onSizeSelected={(size) => {
 							if (size !== selectedViewportSize) {

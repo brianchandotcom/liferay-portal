@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = EmailReportHelper.class)
+@Component(service = {})
 public class EmailReportHelper {
 
 	public void sendEmail(

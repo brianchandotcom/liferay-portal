@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = ProjectHelper.class)
+@Component(service = {})
 public class ProjectHelper {
 
 	public void addGlobalState(

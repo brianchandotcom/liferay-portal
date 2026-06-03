@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Geyson Silva
  */
-@Component(service = NotificationActivator.class)
+@Component(service = {})
 public class NotificationActivator {
 
 	@Activate

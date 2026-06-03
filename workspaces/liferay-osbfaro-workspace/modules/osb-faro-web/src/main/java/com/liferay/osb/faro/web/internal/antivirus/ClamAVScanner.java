@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(service = ClamAVScanner.class)
+@Component(service = {})
 public class ClamAVScanner {
 
 	public void scan(InputStream inputStream) {

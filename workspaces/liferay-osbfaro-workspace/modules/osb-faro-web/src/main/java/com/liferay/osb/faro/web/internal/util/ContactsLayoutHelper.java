@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = ContactsLayoutHelper.class)
+@Component(service = {})
 public class ContactsLayoutHelper {
 
 	public String addContactsCardTemplateIds(long groupId, int type)

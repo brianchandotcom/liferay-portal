@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(service = ContactsHelper.class)
+@Component(service = {})
 public class ContactsHelper {
 
 	public FaroEntityDisplay getContactsEntityDisplay(

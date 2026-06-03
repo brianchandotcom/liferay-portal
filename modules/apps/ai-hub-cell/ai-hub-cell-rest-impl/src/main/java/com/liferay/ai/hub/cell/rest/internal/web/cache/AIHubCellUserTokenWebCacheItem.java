@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
  */
 public class AIHubCellUserTokenWebCacheItem implements WebCacheItem {
 
-	public static JSONObject get(
+	public static String get(
 		LocalOAuthClient localOAuthClient, OAuth2Application oAuth2Application,
 		long userId) {
 
-		return (JSONObject)WebCachePoolUtil.get(
+		return (String)WebCachePoolUtil.get(
 			StringBundler.concat(
 				AIHubCellUserTokenWebCacheItem.class.getName(),
 				StringPool.POUND, oAuth2Application.getCompanyId(),
@@ -67,7 +67,7 @@ public class AIHubCellUserTokenWebCacheItem implements WebCacheItem {
 			_refreshTime =
 				(long)(jsonObject.getLong("expires_in") * 0.8 * Time.SECOND);
 
-			return jsonObject;
+			return jsonObject.get("access_token");
 		}
 		catch (Throwable throwable) {
 			if (_log.isDebugEnabled()) {

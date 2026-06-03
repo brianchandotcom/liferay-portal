@@ -1788,87 +1788,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-122810 - Validate if the user can view the voting style from the answers list."
+	@description = "LPS-122810 - Validate if the user can view the voting style from the questions and answers lists."
 	@priority = 4
 	@refactordone
-	test CanViewVotingStyleFromAnswersList {
-		task ("Given there is a categoy and a question with an answer created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestionWithTheTestBody",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.answerQuestion(contentField = "This is my answer for voting");
-		}
-
-		task ("When the user votes in answers") {
-			Questions.voteAnswer(
-				currentVotedCount = 0,
-				voteUp = "true");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Title AddQuestion");
-
-			Questions.voteAnswer(
-				currentVotedCount = 1,
-				voteDown = "true");
-
-			Questions.voteAnswer(
-				currentVotedCount = 0,
-				voteDown = "true");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Title AddQuestion");
-
-			Questions.voteAnswer(
-				currentVotedCount = "-1",
-				voteUp = "true");
-		}
-
-		task ("Then he can see the voting style from the answers list") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Title AddQuestion");
-
-			Questions.viewVotedResult(
-				answersList = "true",
-				votedCount = 0);
-		}
-	}
-
-	@description = "LPS-122810 - Validate if the user can view the voting style from the questions list."
-	@priority = 4
-	@refactordone
-	test CanViewVotingStyleFromQuestionsList {
+	test CanViewVotingStyleFromQuestionsAndAnswersLists {
 		task ("Given there is a categoy and a question with an answer created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
@@ -1942,6 +1865,63 @@ definition {
 
 			Questions.viewVotedResult(
 				votedCaret = "top",
+				votedCount = 0);
+		}
+
+		task ("When the user creates an answer and votes in it") {
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+
+			Questions.answerQuestion(contentField = "This is my answer for voting");
+
+			Questions.voteAnswer(
+				currentVotedCount = 0,
+				voteUp = "true");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+
+			Questions.voteAnswer(
+				currentVotedCount = 1,
+				voteDown = "true");
+
+			Questions.voteAnswer(
+				currentVotedCount = 0,
+				voteDown = "true");
+
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+
+			Questions.voteAnswer(
+				currentVotedCount = "-1",
+				voteUp = "true");
+		}
+
+		task ("Then he can see the voting style from the answers list") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+
+			Questions.viewVotedResult(
+				answersList = "true",
 				votedCount = 0);
 		}
 	}

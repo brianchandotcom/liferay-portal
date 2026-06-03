@@ -36,8 +36,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Error")
+@GraphQLName(
+	description = "Standard error envelope returned by every non-success response. Carries the HTTP status, an internal error code, and a human-readable description.",
+	value = "Error"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Standard error envelope returned by every non-success response. Carries the HTTP status, an internal error code, and a human-readable description.",
 	requiredProperties = {"errorCode", "errorDescription", "message", "status"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -53,7 +57,8 @@ public class Error implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Internal error code mapping", example = "996"
+		description = "Internal numeric error code, distinct from the HTTP status. Mapped from the underlying exception that produced the response. Read-only.",
+		example = "996"
 	)
 	public Integer getErrorCode() {
 		if (_errorCodeSupplier != null) {
@@ -88,7 +93,9 @@ public class Error implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Internal error code mapping")
+	@GraphQLField(
+		description = "Internal numeric error code, distinct from the HTTP status. Mapped from the underlying exception that produced the response. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotNull
 	protected Integer errorCode;
@@ -97,6 +104,7 @@ public class Error implements Serializable {
 	private Supplier<Integer> _errorCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Human-readable description of the error, suitable for surfacing to operators. Read-only.",
 		example = "Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format."
 	)
 	public String getErrorDescription() {
@@ -132,7 +140,9 @@ public class Error implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Human-readable description of the error, suitable for surfacing to operators. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotEmpty
 	protected String errorDescription;
@@ -141,7 +151,8 @@ public class Error implements Serializable {
 	private Supplier<String> _errorDescriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}"
+		description = "Underlying exception message, often including the lookup keys that failed. Read-only.",
+		example = "No commerce currency exists with the key groupId=41811, code=US Dollar"
 	)
 	public String getMessage() {
 		if (_messageSupplier != null) {
@@ -176,7 +187,9 @@ public class Error implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Underlying exception message, often including the lookup keys that failed. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotEmpty
 	protected String message;
@@ -185,7 +198,8 @@ public class Error implements Serializable {
 	private Supplier<String> _messageSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "HTTP Status code", example = "404"
+		description = "HTTP status code returned with this error envelope. Read-only.",
+		example = "404"
 	)
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
@@ -220,7 +234,9 @@ public class Error implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "HTTP Status code")
+	@GraphQLField(
+		description = "HTTP status code returned with this error envelope. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotNull
 	protected Integer status;
@@ -412,4 +428,4 @@ public class Error implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1764504803
+// LIFERAY-REST-BUILDER-HASH:-46287430

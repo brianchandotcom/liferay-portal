@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountMember")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"email"})
+@GraphQLName(
+	description = "Membership relation between an account and a user. Carries the user's account-scoped roles and the identifiers needed to resolve the user on create. Returned as a sub-resource of the owning account.",
+	value = "AccountMember"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Membership relation between an account and a user. Carries the user's account-scoped roles and the identifiers needed to resolve the user on create. Returned as a sub-resource of the owning account.",
+	requiredProperties = {"email"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountMember")
 public class AccountMember implements Serializable {
@@ -52,7 +58,10 @@ public class AccountMember implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent account on which the membership is created (FK identifier). Read-only on this schema.",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -86,7 +95,9 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the parent account on which the membership is created (FK identifier). Read-only on this schema."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
@@ -94,6 +105,7 @@ public class AccountMember implements Serializable {
 	private Supplier<Long> _accountIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Account-scoped roles assigned to the user on this account. Each entry carries the localized title and description of the role.",
 		example = "[{description={en_US=Account Administrator Description US, hr_HR=Account Administrator Description HR, hu_HU=Account Administrator Description HU}}, {description={en_US=Order Manager Description US, hr_HR=Order Manager Description HR, hu_HU=Order Manager Description HU}}]"
 	)
 	@Valid
@@ -130,14 +142,19 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Account-scoped roles assigned to the user on this account. Each entry carries the localized title and description of the role."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AccountRole[] accountRoles;
 
 	@JsonIgnore
 	private Supplier<AccountRole[]> _accountRolesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "joe.1@commerce.com")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Email address of the user being attached as a member. Required on create; resolved against the platform user directory and rejected when no matching user exists.",
+		example = "joe.1@commerce.com"
+	)
 	public String getEmail() {
 		if (_emailSupplier != null) {
 			email = _emailSupplier.get();
@@ -171,7 +188,9 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Email address of the user being attached as a member. Required on create; resolved against the platform user directory and rejected when no matching user exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String email;
@@ -179,7 +198,10 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code field on the membership payload. Not returned on read.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -213,14 +235,19 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code field on the membership payload. Not returned on read."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "User Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the user attached as a member. Read-only; mirrored from the user record.",
+		example = "User Name"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -252,14 +279,19 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the user attached as a member. Read-only; mirrored from the user record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the user attached as a member. Alternative to `email` or `userId` on POST; resolved against the platform user directory and rejected when no matching user exists. Not returned on read.",
+		example = "AB-34098-789-N"
+	)
 	public String getUserExternalReferenceCode() {
 		if (_userExternalReferenceCodeSupplier != null) {
 			userExternalReferenceCode =
@@ -295,7 +327,9 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the user attached as a member. Alternative to `email` or `userId` on POST; resolved against the platform user directory and rejected when no matching user exists. Not returned on read."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userExternalReferenceCode;
 
@@ -303,7 +337,10 @@ public class AccountMember implements Serializable {
 	private Supplier<String> _userExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30002")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the user attached as a member (FK identifier). Alternative to `email` or `userExternalReferenceCode` on POST.",
+		example = "30002"
+	)
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -337,7 +374,9 @@ public class AccountMember implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the user attached as a member (FK identifier). Alternative to `email` or `userExternalReferenceCode` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
@@ -582,4 +621,4 @@ public class AccountMember implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2133153130
+// LIFERAY-REST-BUILDER-HASH:1098736781

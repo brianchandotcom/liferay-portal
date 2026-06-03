@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountRole")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
+@GraphQLName(
+	description = "Account-scoped role assigned to a user through their account membership. Carries the localized title and description that surface in the back-office.",
+	value = "AccountRole"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Account-scoped role assigned to a user through their account membership. Carries the localized title and description that surface in the back-office.",
+	requiredProperties = {"name"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountRole")
 public class AccountRole implements Serializable {
@@ -52,6 +58,7 @@ public class AccountRole implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized description of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record.",
 		example = "{en_US=Role Description US, hr_HR=Role Description HR, hu_HU=Role Description HU}"
 	)
 	@Valid
@@ -89,14 +96,19 @@ public class AccountRole implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized description of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Role Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal name of the role, used as its stable identifier in the role registry. Required on create.",
+		example = "Role Name"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -128,7 +140,9 @@ public class AccountRole implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal name of the role, used as its stable identifier in the role registry. Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -137,7 +151,10 @@ public class AccountRole implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the platform role record (FK identifier).",
+		example = "30130"
+	)
 	public Long getRoleId() {
 		if (_roleIdSupplier != null) {
 			roleId = _roleIdSupplier.get();
@@ -171,7 +188,9 @@ public class AccountRole implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the platform role record (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
@@ -179,6 +198,7 @@ public class AccountRole implements Serializable {
 	private Supplier<Long> _roleIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized title of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record.",
 		example = "{en_US=Role Title US, hr_HR=Role Title HR, hu_HU=Role Title HU}"
 	)
 	@Valid
@@ -215,7 +235,9 @@ public class AccountRole implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized title of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
@@ -402,4 +424,4 @@ public class AccountRole implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1734183349
+// LIFERAY-REST-BUILDER-HASH:-472038878

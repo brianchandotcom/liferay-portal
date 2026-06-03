@@ -165,7 +165,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields , then cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when the ID is unknown."
+		description = "Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields, then cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when the ID is unknown."
 	)
 	public Response patchDiscount(
 			@GraphQLName("id") Long id,
@@ -1275,4 +1275,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1295491604
+// LIFERAY-REST-BUILDER-HASH:-2037390900

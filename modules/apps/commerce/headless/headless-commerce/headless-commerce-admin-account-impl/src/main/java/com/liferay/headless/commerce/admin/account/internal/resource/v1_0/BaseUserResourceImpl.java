@@ -47,7 +47,10 @@ public abstract class BaseUserResourceImpl implements UserResource {
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser' -d $'{"email": ___, "externalReferenceCode": ___, "firstName": ___, "id": ___, "jobTitle": ___, "lastName": ___, "male": ___, "middleName": ___, "roles": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Creates a new User and immediately adds them as a member of the Account identified by external reference code. Useful for inviting buyers who do not yet exist in Liferay. The newly created user inherits the supplied accountRoles. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -522,4 +525,4 @@ public abstract class BaseUserResourceImpl implements UserResource {
 		LogFactoryUtil.getLog(BaseUserResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1263205439
+// LIFERAY-REST-BUILDER-HASH:-317362110

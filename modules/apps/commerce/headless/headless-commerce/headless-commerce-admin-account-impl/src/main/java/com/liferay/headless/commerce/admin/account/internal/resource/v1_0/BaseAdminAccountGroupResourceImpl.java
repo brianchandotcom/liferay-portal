@@ -74,7 +74,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Deletes an AccountGroup by its internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -110,7 +113,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Deletes an AccountGroup by its external reference code. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -148,7 +154,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Lists the AccountGroups the Account belongs to, addressed by Account external reference code. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -194,7 +203,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Reads an AccountGroup by its internal ID. Returns the account group. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -228,7 +240,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Reads an AccountGroup by its external reference code. Returns the account group. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -264,7 +279,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Lists AccountGroups with paging, search, filter, and sort. Filterable and sortable field -- name. Search corpus -- the account group's indexed name field. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -318,7 +336,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Lists the AccountGroups the Account belongs to, addressed by Account internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/account-groups` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -361,7 +382,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Partially updates an AccountGroup by its internal ID. JSON Merge Patch semantics; updates name, description, and custom fields. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -399,7 +423,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Partially updates an AccountGroup by its external reference code. JSON Merge Patch semantics; updates name, description, and custom fields. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -439,7 +466,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Operation(
+		deprecated = true,
+		description = "Creates or upserts an AccountGroup keyed by external reference code. When the supplied ERC matches an existing group, the group is updated; otherwise a new group is created. Returns 201 with the created group, or 204 when an existing group is updated. Deprecated. Use `POST /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead."
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
@@ -1118,4 +1148,4 @@ public abstract class BaseAdminAccountGroupResourceImpl
 		LogFactoryUtil.getLog(BaseAdminAccountGroupResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1288543184
+// LIFERAY-REST-BUILDER-HASH:-805405579

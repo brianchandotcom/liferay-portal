@@ -46,6 +46,9 @@ describe('getCMSItemSelectorFilters', () => {
 		) as ISelectionFilterConfig;
 
 		expect(spaceFilter?.apiURL).toContain("filter=type eq 'Space'");
+		expect(spaceFilter?.entityFieldType).toBe(
+			EEntityFieldType.COLLECTION_INTEGER
+		);
 
 		const typeFilter = filters.find(
 			(f) => f.id === 'objectDefinitionExternalReferenceCode'
@@ -61,7 +64,14 @@ describe('getCMSItemSelectorFilters', () => {
 			(f) => f.id === 'taxonomyCategoryIds'
 		) as ISelectionFilterConfig;
 		expect(categoryFilter?.entityFieldType).toBe(
-			EEntityFieldType.COLLECTION
+			EEntityFieldType.COLLECTION_INTEGER
+		);
+
+		const tagsFilter = filters.find(
+			(f) => f.id === 'keywords'
+		) as ISelectionFilterConfig;
+		expect(tagsFilter?.entityFieldType).toBe(
+			EEntityFieldType.COLLECTION_STRING
 		);
 
 		const authorFilter = filters.find(

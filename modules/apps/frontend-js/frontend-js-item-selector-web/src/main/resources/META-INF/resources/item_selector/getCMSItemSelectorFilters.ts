@@ -15,7 +15,7 @@ export function getCMSItemSelectorFilters(
 	return [
 		{
 			apiURL: "/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'",
-			entityFieldType: EEntityFieldType.COLLECTION,
+			entityFieldType: EEntityFieldType.COLLECTION_INTEGER,
 			id: 'groupIds',
 			itemKey: 'siteId',
 			itemLabel: 'name',
@@ -35,7 +35,7 @@ export function getCMSItemSelectorFilters(
 		},
 		{
 			apiURL: `/o/headless-admin-taxonomy/v1.0/sites/${groupId}/taxonomy-categories`,
-			entityFieldType: EEntityFieldType.COLLECTION,
+			entityFieldType: EEntityFieldType.COLLECTION_INTEGER,
 			id: 'taxonomyCategoryIds',
 			itemKey: 'id',
 			itemLabel: 'name',
@@ -45,7 +45,7 @@ export function getCMSItemSelectorFilters(
 		},
 		{
 			apiURL: `/o/headless-admin-taxonomy/v1.0/sites/${groupId}/keywords`,
-			entityFieldType: EEntityFieldType.COLLECTION,
+			entityFieldType: EEntityFieldType.COLLECTION_STRING,
 			id: 'keywords',
 			itemKey: 'name',
 			itemLabel: 'name',

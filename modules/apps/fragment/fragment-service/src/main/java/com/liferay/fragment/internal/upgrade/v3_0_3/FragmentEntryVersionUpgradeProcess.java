@@ -5,7 +5,7 @@
 
 package com.liferay.fragment.internal.upgrade.v3_0_3;
 
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,7 +40,8 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 
 				List<Long> fragmentEntryVersionIdsToDelete =
 					fragmentEntryVersionIds.subList(
-						FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+						FragmentEntryVersionConstants.
+							FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 						fragmentEntryVersionIds.size());
 
 				int size = fragmentEntryVersionIdsToDelete.size();
@@ -72,7 +73,8 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 					"select ctCollectionId, fragmentEntryId from ",
 					"FragmentEntryVersion group by ctCollectionId, ",
 					"fragmentEntryId having count(*) > ",
-					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX));
+					FragmentEntryVersionConstants.
+						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

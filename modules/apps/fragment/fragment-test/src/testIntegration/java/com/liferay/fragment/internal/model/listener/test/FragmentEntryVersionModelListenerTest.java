@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.test.util.FragmentEntryVersionTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -67,7 +67,7 @@ public class FragmentEntryVersionModelListenerTest {
 		Assert.assertTrue(oldestVersion > 0);
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 2,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 2,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
@@ -75,7 +75,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
 			versions.size());
 		Assert.assertTrue(versions.contains(oldestVersion));
 
@@ -86,7 +86,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			versions.size());
 		Assert.assertTrue(versions.contains(oldestVersion));
 
@@ -97,7 +97,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		Assert.assertEquals(
 			versions.toString(),
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			versions.size());
 		Assert.assertFalse(versions.contains(oldestVersion));
 	}
@@ -108,11 +108,11 @@ public class FragmentEntryVersionModelListenerTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		Assert.assertEquals(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				fragmentEntry));
 
@@ -127,7 +127,8 @@ public class FragmentEntryVersionModelListenerTest {
 			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
 
 			Assert.assertEquals(
-				FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
+				FragmentEntryVersionConstants.
+					FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
 				FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 					fragmentEntry));
 		}

@@ -32,7 +32,7 @@ public class StyleBookEntryProviderUtil {
 		throws PortalException {
 
 		return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-			_resolveGroupIds(companyId, groupId), QueryUtil.ALL_POS,
+			_getGroupIds(companyId, groupId), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -41,7 +41,7 @@ public class StyleBookEntryProviderUtil {
 		throws PortalException {
 
 		return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-			_resolveGroupIds(companyId, groupId), themeId);
+			_getGroupIds(companyId, groupId), themeId);
 	}
 
 	public static StyleBookEntry getStyleBookEntry(Layout layout) {
@@ -76,7 +76,7 @@ public class StyleBookEntryProviderUtil {
 		return styleBookEntry;
 	}
 
-	private static long[] _resolveGroupIds(long companyId, long groupId)
+	private static long[] _getGroupIds(long companyId, long groupId)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-57283")) {

@@ -48,9 +48,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-159147. Verify if the user is notified when a followed question has a new answer."
+	@description = "This is a test for LPS-159147, LPS-159156 and LPS-159158. Verify if the user is notified when a followed topic has a new answer, comment or question."
 	@priority = 3
-	test CanBeNotifiedByAnswer {
+	test CanBeNotifiedByTopicActivity {
 		task ("Given there are a question created") {
 			JSONQuestions.addQuestion(
 				bodyField = "Content AddQuestion",
@@ -107,54 +107,35 @@ definition {
 
 			Notifications.viewBadgeCount(notificationCount = 1);
 		}
-	}
 
-	@description = "This is a test for LPS-159156. Verify if the user is notified when a followed topic has a new comment."
-	@priority = 3
-	test CanBeNotifiedByComment {
-		task ("Given there are a question created") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				titleField = "Question1");
-		}
-
-		task ("And a user answer a question on a followed topic") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.subscribeTopic();
-
-			Questions.gotoDetails(questionTitle = "Question1");
-
-			Questions.answerQuestion(contentField = "This is my answer text.");
-		}
-
-		task ("When another user with admin role is logged") {
-			JSONUser.addUser(
-				userEmailAddress = "test1@liferay.com",
-				userFirstName = "test1",
-				userLastName = "test",
-				userScreenName = "test1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "test1@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "test1@liferay.com");
-
+		task ("When the other user asks a question on the followed topic") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test1@liferay.com",
 				userLoginFullName = "test1 test");
+
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Topic");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				titleField = "Question2",
+				topicName = "questions-test-topic");
 		}
 
-		task ("And Add a comment in an Answer ") {
+		task ("Then the user that was subscribed on the topic can see the notification of the new question") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			Notifications.viewBadgeCount(notificationCount = 2);
+		}
+
+		task ("When the other user adds a comment in an answer") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1 test");
+
 			Questions.openToQuestionsTopic(
 				layoutName = "questions-page",
 				siteURLKey = "guest",
@@ -167,70 +148,12 @@ definition {
 				repliedLabel = "true");
 		}
 
-		task ("Then the user that was subscribed on the topic can see the notifications") {
+		task ("Then the user that was subscribed on the topic can see the notification of the new comment") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 
-			Notifications.viewBadgeCount(notificationCount = 1);
-		}
-	}
-
-	@description = "This is a test for LPS-159158. Verify if the user is notified when a followed topic has a new question."
-	@priority = 3
-	test CanBeNotifiedByQuestion {
-		task ("Create a new User with an Admin Role") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "user",
-				userLastName = "user",
-				userScreenName = "useruser");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "user@liferay.com");
-		}
-
-		task ("Subcribe on a Topic") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Questions Test Topic");
-
-			Questions.subscribeTopic();
-		}
-
-		task ("Login with a new User") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user@liferay.com",
-				userLoginFullName = "user user");
-		}
-
-		task ("Enter on the Topic") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Questions Test Topic");
-		}
-
-		task ("Create a Question") {
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Content AddQuestion",
-				titleField = "Question1",
-				topicName = "questions-test-topic");
-		}
-
-		task ("Login with Test test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
-		}
-
-		task ("Validate the notifications") {
-			Notifications.viewBadgeCount(notificationCount = 1);
+			Notifications.viewBadgeCount(notificationCount = 3);
 		}
 	}
 

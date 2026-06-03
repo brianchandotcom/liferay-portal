@@ -34,29 +34,25 @@ public class TestClassHardcodedPortCheck extends BaseCheck {
 			detailAST, true, TokenTypes.NUM_INT, TokenTypes.STRING_LITERAL);
 
 		for (DetailAST childDetailAST : childDetailASTs) {
-			_checkHardcodedPort(childDetailAST);
-		}
-	}
+			String text = childDetailAST.getText();
 
-	private void _checkHardcodedPort(DetailAST detailAST) {
-		String text = detailAST.getText();
+			if (childDetailAST.getType() == TokenTypes.NUM_INT) {
+				if (!text.equals("8080")) {
+					continue;
+				}
 
-		if (detailAST.getType() == TokenTypes.NUM_INT) {
-			if (!text.equals("8080")) {
-				return;
+				_checkHardcodedPortByMethodName(
+					childDetailAST, "endpoint", "setServerPort");
 			}
+			else if (childDetailAST.getType() == TokenTypes.STRING_LITERAL) {
+				text = text.substring(1, text.length() - 1);
 
-			_checkHardcodedPortByMethodName(
-				detailAST, "endpoint", "setServerPort");
-		}
-		else if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
-			text = text.substring(1, text.length() - 1);
+				if (!text.contains(":8080")) {
+					continue;
+				}
 
-			if (!text.contains(":8080")) {
-				return;
+				log(childDetailAST, _MSG_USE_METHOD);
 			}
-
-			log(detailAST, _MSG_USE_METHOD);
 		}
 	}
 

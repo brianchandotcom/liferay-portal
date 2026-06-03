@@ -1563,7 +1563,7 @@ public class BatchEngineBrokerTest {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, groupId,
+				_objectEntryImportCSVFieldNames, groupId,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV", _getURIString("csv", fileInputStream));
 		}

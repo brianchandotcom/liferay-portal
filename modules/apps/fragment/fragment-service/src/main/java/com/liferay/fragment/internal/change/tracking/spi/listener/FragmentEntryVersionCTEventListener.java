@@ -7,7 +7,7 @@ package com.liferay.fragment.internal.change.tracking.spi.listener;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.model.FragmentEntryVersionTable;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
@@ -134,8 +134,9 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			).limit(
 				Math.max(
 					0,
-					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX -
-						fragmentEntryVersionCount),
+					FragmentEntryVersionConstants.
+						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX -
+							fragmentEntryVersionCount),
 				Integer.MAX_VALUE
 			));
 	}

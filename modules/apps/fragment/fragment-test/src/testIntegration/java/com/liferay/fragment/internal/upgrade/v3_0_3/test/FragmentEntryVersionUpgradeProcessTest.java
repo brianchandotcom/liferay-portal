@@ -7,7 +7,7 @@ package com.liferay.fragment.internal.upgrade.v3_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.test.util.FragmentEntryVersionTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -163,18 +163,23 @@ public class FragmentEntryVersionUpgradeProcessTest {
 
 	private void _testUpgradeDeletesFragmentEntryVersions() throws Exception {
 		_testUpgrade(
-			0, 11, 0, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
+			0, 11, 0,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
 		_testUpgrade(
-			0, 20, 0, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
+			0, 20, 0,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
 	}
 
 	private void _testUpgradeDeletesFragmentEntryVersionsPerCtCollection()
 		throws Exception {
 
 		_testUpgrade(
-			11, 1, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX, 1);
+			11, 1,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX, 1);
 		_testUpgrade(
-			20, 10, FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX, 10);
+			20, 10,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			10);
 	}
 
 	private void _testUpgradePreservesFragmentEntryVersions() throws Exception {

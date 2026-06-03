@@ -152,7 +152,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				group.getName(themeDisplay.getLocale()));
 		}
 		else {
-			firstAncestorIndex = _getSharedRootIndex(
+			firstAncestorIndex = _getFirstAncestorIndex(
 				parts, permissionChecker.getUserId());
 		}
 
@@ -366,7 +366,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return true;
 	}
 
-	private int _getSharedRootIndex(String[] parts, long userId) {
+	private int _getFirstAncestorIndex(String[] parts, long userId) {
 		long classNameId = portal.getClassNameId(
 			ObjectEntryFolder.class.getName());
 

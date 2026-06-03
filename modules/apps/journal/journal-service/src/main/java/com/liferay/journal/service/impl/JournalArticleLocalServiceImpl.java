@@ -145,6 +145,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -170,7 +171,10 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -6052,65 +6056,19 @@ public class JournalArticleLocalServiceImpl
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
 				try {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Expiring article " + article.getId());
-					}
-
-					if (isExpireAllArticleVersions(companyId)) {
-						List<JournalArticle> currentArticles =
-							journalArticleLocalService.getArticles(
-								article.getGroupId(), article.getArticleId(),
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-								ArticleVersionComparator.getInstance(true));
-
-						for (JournalArticle currentArticle : currentArticles) {
-							if (currentArticle.getVersion() >=
-									article.getVersion()) {
-
-								continue;
-							}
-
-							currentArticle.setExpirationDate(
-								article.getExpirationDate());
-							currentArticle.setStatus(
-								WorkflowConstants.STATUS_EXPIRED);
-
-							currentArticle = journalArticlePersistence.update(
-								currentArticle);
-
-							notifySubscribers(
-								0, currentArticle, "expired",
-								new ServiceContext());
-						}
-					}
-
-					article.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-					article = journalArticleLocalService.updateJournalArticle(
-						article);
-
-					sendEmail(
-						article, _getArticleURL(article), "expired",
-						new ServiceContext());
-
-					notifySubscribers(
-						0, article, "expired", new ServiceContext());
-
-					updatePreviousApprovedArticle(article);
-
-					if (indexer != null) {
-						return indexer.getDocument(article);
-					}
+					return TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> _expireArticle(article, companyId, indexer));
 				}
-				catch (PortalException portalException) {
+				catch (Throwable throwable) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to expire article " + article.getId(),
-							portalException);
+							throwable);
 					}
-				}
 
-				return null;
+					return null;
+				}
 			});
 
 		indexableActionableDynamicQuery.performActions();
@@ -7899,6 +7857,56 @@ public class JournalArticleLocalServiceImpl
 		return false;
 	}
 
+	private Document _expireArticle(
+			JournalArticle article, long companyId,
+			Indexer<JournalArticle> indexer)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Expiring article " + article.getId());
+		}
+
+		if (isExpireAllArticleVersions(companyId)) {
+			List<JournalArticle> currentArticles =
+				journalArticleLocalService.getArticles(
+					article.getGroupId(), article.getArticleId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					ArticleVersionComparator.getInstance(true));
+
+			for (JournalArticle currentArticle : currentArticles) {
+				if (currentArticle.getVersion() >= article.getVersion()) {
+					continue;
+				}
+
+				currentArticle.setExpirationDate(article.getExpirationDate());
+				currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+				currentArticle = journalArticlePersistence.update(
+					currentArticle);
+
+				notifySubscribers(
+					0, currentArticle, "expired", new ServiceContext());
+			}
+		}
+
+		article.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+		article = journalArticleLocalService.updateJournalArticle(article);
+
+		sendEmail(
+			article, _getArticleURL(article), "expired", new ServiceContext());
+
+		notifySubscribers(0, article, "expired", new ServiceContext());
+
+		updatePreviousApprovedArticle(article);
+
+		if (indexer != null) {
+			return indexer.getDocument(article);
+		}
+
+		return null;
+	}
+
 	private String _getArticleContent(JournalArticle article, Locale locale) {
 		String articleContent = StringPool.BLANK;
 
@@ -8656,6 +8664,11 @@ public class JournalArticleLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalServiceImpl.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW,
+			new Class<?>[] {PortalException.class, SystemException.class});
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

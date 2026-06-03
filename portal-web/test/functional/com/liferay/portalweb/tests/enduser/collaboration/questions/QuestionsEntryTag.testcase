@@ -234,41 +234,10 @@ definition {
 		}
 	}
 
-	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
-	@priority = 3
-	@refactordone
-	test CanViewQuestionViaTag {
-		task ("Given a Question with a tag") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				tagField = "tag1",
-				titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
-		}
-
-		task ("When the user views the tag") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-		}
-
-		task ("Then the tagged Question can be viewed") {
-			Questions.viewQuestionViaTag(
-				questionTitle = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-				tagName = "tag1");
-		}
-	}
-
-	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
+	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field and that the tag redirects to the questions that use this tag."
 	@priority = 4
 	@refactordone
-	test QuestionTagsCanBeSearchedInTagsTab {
+	test QuestionTagsCanBeSearchedAndOpenedInTagsTab {
 		task ("Given a category and Questions") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
@@ -337,6 +306,12 @@ definition {
 			for (var tagName : list "tag1,tag2,tag3") {
 				Questions.viewTags(tagName = ${tagName});
 			}
+		}
+
+		task ("When the user clicks the tag, then he is redirected to the questions that use this tag") {
+			Questions.viewQuestionViaTag(
+				questionTitle = "Question 1",
+				tagName = "tag1");
 		}
 	}
 

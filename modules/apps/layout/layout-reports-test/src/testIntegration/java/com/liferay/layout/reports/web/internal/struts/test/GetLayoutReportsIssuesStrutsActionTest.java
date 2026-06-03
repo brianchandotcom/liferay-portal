@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -67,7 +68,9 @@ public class GetLayoutReportsIssuesStrutsActionTest {
 							ClassUtil.getClassName(
 								_getLayoutReportsIssuesStrutsAction));
 
-					String url = "http://localhost:8080/test";
+					String url =
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) + "/test";
 
 					String key = LocaleUtil.getDefault() + "-" + url;
 
@@ -107,7 +110,10 @@ public class GetLayoutReportsIssuesStrutsActionTest {
 						JSONObject jsonObject = _serveResource(
 							LayoutTestUtil.addTypePortletLayout(
 								TestPropsValues.getGroupId()),
-							true, "http://localhost:8080/test");
+							true,
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false) +
+									"/test");
 
 						JSONObject layoutReportsIssuesJSONObject =
 							jsonObject.getJSONObject("layoutReportsIssues");

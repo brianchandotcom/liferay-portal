@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -116,7 +117,7 @@ public class LayoutAssetRendererTest {
 		_themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
 		_themeDisplay.setRequest(new MockHttpServletRequest());
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());

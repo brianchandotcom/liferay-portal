@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,7 +58,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -84,7 +87,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"response_type", "code"
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				),
 				_getExtraParameters(), false));
 
@@ -106,7 +111,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -143,7 +150,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -178,7 +187,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"response_type", "code"
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				),
 				_getExtraParameters(), false));
 
@@ -217,7 +228,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"response_type", "code"
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				),
 				true),
 			invocationBuilder -> invocationBuilder.cookie(
@@ -244,7 +257,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -277,7 +292,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -321,7 +338,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -356,7 +375,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -398,7 +419,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -434,7 +457,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						webTarget -> webTarget.queryParam(
 							"client_id", applicationClientId
 						).queryParam(
-							"redirect_uri", "http://redirecturi:8080"
+							"redirect_uri",
+							"http://redirecturi:" +
+								PortalUtil.getPortalServerPort(false)
 						).queryParam(
 							"response_type", "code"
 						),
@@ -461,7 +486,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -500,7 +527,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 							"code_challenge",
 							generateCodeChallenge(codeVerifierString)
 						).queryParam(
-							"redirect_uri", "http://redirecturi:8080"
+							"redirect_uri",
+							"http://redirecturi:" +
+								PortalUtil.getPortalServerPort(false)
 						).queryParam(
 							"response_type", "code"
 						),
@@ -521,7 +550,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget1 -> webTarget1.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -552,7 +583,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -586,7 +619,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						webTarget -> webTarget.queryParam(
 							"client_id", applicationClientId
 						).queryParam(
-							"redirect_uri", "http://redirecturi:8080"
+							"redirect_uri",
+							"http://redirecturi:" +
+								PortalUtil.getPortalServerPort(false)
 						).queryParam(
 							"response_type", "code"
 						),
@@ -611,7 +646,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", generateCodeChallenge(codeVerifierString)
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -644,7 +681,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"code_challenge", codeVerifierString
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -684,7 +723,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						).queryParam(
 							"code_challenge", codeVerifierString
 						).queryParam(
-							"redirect_uri", "http://redirecturi:8080"
+							"redirect_uri",
+							"http://redirecturi:" +
+								PortalUtil.getPortalServerPort(false)
 						).queryParam(
 							"response_type", "code"
 						),
@@ -705,7 +746,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"redirect_uri",
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				),
@@ -747,7 +790,9 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						).queryParam(
 							"response_type", "code"
 						).queryParam(
-							"redirect_uri", "http://redirecturi:8080"
+							"redirect_uri",
+							"http://redirecturi:" +
+								PortalUtil.getPortalServerPort(false)
 						),
 						true),
 					invocationBuilder -> invocationBuilder.cookie(
@@ -794,8 +839,10 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			createOAuth2ApplicationWithNone(
 				companyId, _user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("http://redirecturi:8080"), false,
-				Collections.singletonList("everything"), false);
+				Collections.singletonList(
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)),
+				false, Collections.singletonList("everything"), false);
 			createOAuth2Application(
 				companyId, _user, "oauthTestRememberApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), true,
@@ -803,8 +850,10 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			createOAuth2ApplicationWithNone(
 				companyId, _user, "oauthTestRememberApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("http://redirecturi:8080"), true,
-				Collections.singletonList("everything"), false);
+				Collections.singletonList(
+					"http://redirecturi:" +
+						PortalUtil.getPortalServerPort(false)),
+				true, Collections.singletonList("everything"), false);
 		}
 
 	}

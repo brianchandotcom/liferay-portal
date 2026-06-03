@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -398,7 +399,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		).put(
 			"DISPLAY_PAGE_URL",
 			StringBundler.concat(
-				"\"http://localhost:8080/web", _group1.getFriendlyURL(),
+				"\"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/web", _group1.getFriendlyURL(),
 				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
 				journalArticle.getUrlTitle(), "\"")
 		).build();
@@ -1678,7 +1680,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group1.getGroupId());

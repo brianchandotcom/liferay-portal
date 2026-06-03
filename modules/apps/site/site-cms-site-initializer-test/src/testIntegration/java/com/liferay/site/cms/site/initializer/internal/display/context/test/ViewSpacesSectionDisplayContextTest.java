@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -256,7 +257,9 @@ public class ViewSpacesSectionDisplayContextTest
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+		themeDisplay.setURLCurrent(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/currentURL");
 		themeDisplay.setUser(user);
 
 		return themeDisplay;

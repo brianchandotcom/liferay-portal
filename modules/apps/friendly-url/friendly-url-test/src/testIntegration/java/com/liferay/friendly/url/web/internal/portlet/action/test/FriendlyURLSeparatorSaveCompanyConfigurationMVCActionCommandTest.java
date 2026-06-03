@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.Inject;
@@ -373,7 +374,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockLiferayPortletActionRequest.setParameter(
-			"redirect", "http://localhost:8080");
+			"redirect",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		for (Map.Entry<String, String> friendlyURLSeparator :
 				friendlyURLSeparators.entrySet()) {

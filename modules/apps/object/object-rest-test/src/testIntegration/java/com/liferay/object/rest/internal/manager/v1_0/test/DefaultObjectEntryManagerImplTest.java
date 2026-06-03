@@ -197,6 +197,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -11123,12 +11124,16 @@ public class DefaultObjectEntryManagerImplTest
 
 			@Override
 			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/c/");
+				return URI.create(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) + "/o/c/");
 			}
 
 			@Override
 			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri("http://localhost:8080/o/c/");
+				return UriBuilder.fromUri(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) + "/o/c/");
 			}
 
 			@Override

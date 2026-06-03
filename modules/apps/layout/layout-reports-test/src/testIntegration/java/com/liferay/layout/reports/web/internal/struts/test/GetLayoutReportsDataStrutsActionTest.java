@@ -8,6 +8,7 @@ package com.liferay.layout.reports.web.internal.struts.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.reports.web.internal.test.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -236,9 +238,10 @@ public class GetLayoutReportsDataStrutsActionTest {
 		Assert.assertEquals("page-speed-insights", jsonObject.getString("id"));
 		Assert.assertEquals("PageSpeed Insights", jsonObject.getString("name"));
 		Assert.assertEquals(
-			"http://localhost:8080/layout_reports" +
-				"/get_google_page_speed_data?p_l_id=" +
-					String.valueOf(layout.getPlid()),
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/layout_reports/get_google_page_speed_data?p_l_id=",
+				layout.getPlid()),
 			jsonObject.getString("url"));
 	}
 
@@ -248,9 +251,10 @@ public class GetLayoutReportsDataStrutsActionTest {
 		Assert.assertEquals("performance", jsonObject.getString("id"));
 		Assert.assertEquals("Performance", jsonObject.getString("name"));
 		Assert.assertEquals(
-			"http://localhost:8080/layout_reports" +
-				"/get_layout_item_data?p_l_id=" +
-					String.valueOf(layout.getPlid()),
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/layout_reports/get_layout_item_data?p_l_id=",
+				layout.getPlid()),
 			jsonObject.getString("url"));
 	}
 
@@ -299,7 +303,8 @@ public class GetLayoutReportsDataStrutsActionTest {
 		themeDisplay.setLocale(
 			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 

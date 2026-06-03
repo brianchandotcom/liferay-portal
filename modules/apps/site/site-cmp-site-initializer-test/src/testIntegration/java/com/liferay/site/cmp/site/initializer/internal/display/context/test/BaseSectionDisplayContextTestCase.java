@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
@@ -56,7 +57,9 @@ public abstract class BaseSectionDisplayContextTestCase {
 						TestPropsValues.getCompanyId()));
 				setLocale(LocaleUtil.getDefault());
 				setScopeGroupId(group.getGroupId());
-				setURLCurrent("http://localhost:8080/currentURL");
+				setURLCurrent(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) + "/currentURL");
 				setUser(TestPropsValues.getUser());
 			}
 		};

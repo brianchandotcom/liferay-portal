@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -680,8 +681,9 @@ public class JournalArticleStagedModelDataHandlerTest
 				dlFileEntry.getFileEntryId());
 
 		String stagingGroupDLFileEntryFriendlyURL = StringBundler.concat(
-			"http://localhost:8080/documents/d", stagingGroup.getFriendlyURL(),
-			StringPool.SLASH, mainFriendlyURLEntry.getUrlTitle());
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/documents/d", stagingGroup.getFriendlyURL(), StringPool.SLASH,
+			mainFriendlyURLEntry.getUrlTitle());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			stagingGroup.getGroupId(),
@@ -718,8 +720,9 @@ public class JournalArticleStagedModelDataHandlerTest
 			String content = journalArticle.getContent();
 
 			String liveGroupDLFileEntryFriendlyURL = StringBundler.concat(
-				"http://localhost:8080/documents/d", liveGroup.getFriendlyURL(),
-				StringPool.SLASH, mainFriendlyURLEntry.getUrlTitle());
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/documents/d", liveGroup.getFriendlyURL(), StringPool.SLASH,
+				mainFriendlyURLEntry.getUrlTitle());
 
 			Assert.assertEquals(
 				content.replaceAll(

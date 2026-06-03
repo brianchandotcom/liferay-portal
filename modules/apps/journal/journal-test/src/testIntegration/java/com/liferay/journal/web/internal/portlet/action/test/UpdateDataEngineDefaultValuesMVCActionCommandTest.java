@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -172,7 +173,8 @@ public class UpdateDataEngineDefaultValuesMVCActionCommandTest {
 				null, RandomTestUtil.randomString());
 
 		uploadPortletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
+			WebKeys.CURRENT_URL,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		JournalArticle article = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_addOrUpdateArticleDefaultValues",

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -55,7 +56,9 @@ public class UpdateEmailAddressActionTest {
 
 	@Test
 	public void testRenderRefererURL() throws Exception {
-		_testRenderRefererURL("http://localhost:8080", "http://localhost:8080");
+		_testRenderRefererURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false),
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		_testRenderRefererURL(
 			StringPool.BLANK,
 			"http://" + RandomTestUtil.randomString() + ".com");
@@ -79,7 +82,8 @@ public class UpdateEmailAddressActionTest {
 			};
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
+			WebKeys.CURRENT_URL,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -113,7 +117,8 @@ public class UpdateEmailAddressActionTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setPortalURL("http://localhost:8080");
+		serviceContext.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

@@ -373,7 +373,8 @@ public class UserSegmentsCriteriaContributorTest {
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

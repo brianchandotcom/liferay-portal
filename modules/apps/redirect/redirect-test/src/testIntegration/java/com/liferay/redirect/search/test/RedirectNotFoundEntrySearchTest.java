@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,9 +93,13 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 			group.getGroupId());
 
 		searchContext.setAttribute(
-			"groupBaseURL", "http://localhost:8080/web/guest");
+			"groupBaseURL",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest");
 		searchContext.setGroupIds(new long[] {group.getGroupId()});
-		searchContext.setKeywords("http://localhost:8080/web/guest/page");
+		searchContext.setKeywords(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/page");
 
 		List<SearchResult> searchResults = _getSearchResults(searchContext);
 

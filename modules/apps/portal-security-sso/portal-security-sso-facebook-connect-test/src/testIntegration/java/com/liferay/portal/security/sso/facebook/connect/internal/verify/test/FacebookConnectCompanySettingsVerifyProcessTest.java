@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
@@ -73,7 +74,8 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 				FacebookConnectConfigurationKeys.OAUTH_AUTH_URL,
 				StringPool.BLANK));
 		Assert.assertEquals(
-			"http://localhost:8080/c/portal/facebook_connect_oauth",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/c/portal/facebook_connect_oauth",
 			settings.getValue(
 				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
 				StringPool.BLANK));
@@ -116,7 +118,8 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 			"test_oauth_auth_url");
 		unicodeProperties.put(
 			LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-			"http://localhost:8080/c/login/facebook_connect_oauth");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/c/login/facebook_connect_oauth");
 		unicodeProperties.put(
 			LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
 			"test_oauth_token_url");

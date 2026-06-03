@@ -36,7 +36,8 @@ public class FriendlyURLUtilTest {
 			FriendlyURLUtil.parseGroupFriendlyURL(
 				StringBundler.concat(
 					groupURL1, DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT,
-					groupURL2.substring(1), "/file")));
+					groupURL2.substring(1), StringPool.SLASH,
+					RandomTestUtil.randomString())));
 	}
 
 	@Test
@@ -45,7 +46,10 @@ public class FriendlyURLUtilTest {
 
 		Assert.assertEquals(
 			groupURL,
-			FriendlyURLUtil.parseGroupFriendlyURL(groupURL + "/home"));
+			FriendlyURLUtil.parseGroupFriendlyURL(
+				StringBundler.concat(
+					groupURL, StringPool.SLASH,
+					RandomTestUtil.randomString())));
 	}
 
 	@Test

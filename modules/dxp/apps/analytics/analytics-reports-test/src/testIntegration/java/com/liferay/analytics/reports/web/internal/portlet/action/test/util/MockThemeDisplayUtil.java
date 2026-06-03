@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
 
@@ -38,7 +39,7 @@ public class MockThemeDisplayUtil {
 		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 		themeDisplay.setSecure(true);
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
 		return themeDisplay;

@@ -42,10 +42,10 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
+	@description = "Validate if the user can create a question with the maximum of 5 tags and can not exceed the maximum with unexisting tags"
 	@priority = 3
 	@refactordone
-	test CanAddQuestionWithTheMaximumTags {
+	test CannotExceedTheMaximumNumberOfTags {
 		task ("Given a Questions category") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
@@ -65,18 +65,6 @@ definition {
 
 		task ("Then the Question should be created") {
 			Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
-		}
-	}
-
-	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
-	@priority = 2
-	@refactordone
-	test CannotAddQuestionWithMoreThanTheMaximumTags {
-		task ("Given a Questions category") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
 		}
 
 		task ("When a Question is added with more than the maximum of 5 tags") {

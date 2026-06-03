@@ -77,6 +77,37 @@ export default function FeatureIndicatorSamples({learnResourceContext}) {
 					<FeatureIndicator type="deprecated" />
 				</ClayLayout.Col>
 			</ClayLayout.Row>
+
+			<ClayLayout.Row className="p-3">
+				<ClayLayout.Col>
+					<h3>Beta Icon Only Interactive</h3>
+
+					<FeatureIndicator
+						iconOnly
+						interactive
+						learnResourceContext={learnResourceContext}
+						type="beta"
+					/>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Beta Icon Only</h3>
+
+					<FeatureIndicator iconOnly type="beta" />
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Deprecated Icon Only</h3>
+
+					<FeatureIndicator iconOnly type="deprecated" />
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h3>Maintenance Icon Only</h3>
+
+					<FeatureIndicator iconOnly type="maintenance" />
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 		</>
 	);
 }

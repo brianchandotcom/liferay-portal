@@ -47,6 +47,7 @@ type featureIndicatorProps = (
 ) & {
 	className?: string;
 	dark?: boolean;
+	iconOnly?: boolean;
 	tooltipAlign?: (typeof ALIGN_POSITIONS)[number];
 };
 
@@ -56,6 +57,7 @@ const ENTERPRISE_URL =
 export default function FeatureIndicator({
 	className,
 	dark,
+	iconOnly,
 	interactive,
 	learnResourceContext,
 	tooltipAlign = 'top',
@@ -110,8 +112,6 @@ export default function FeatureIndicator({
 		tooltipTitle = Liferay.Language.get('open-maintenance-mode-definition');
 	}
 
-	const showLabel = type !== 'maintenance';
-
 	return (
 		<LearnResourcesContext.Provider value={learnResourceContext}>
 			{interactive ? (
@@ -129,6 +129,7 @@ export default function FeatureIndicator({
 								aria-controls={ariaControlsId}
 								aria-expanded={show}
 								aria-haspopup="dialog"
+								aria-label={iconOnly ? label : undefined}
 								className={className}
 								dark={dark}
 								data-tooltip-align={tooltipAlign}
@@ -138,7 +139,7 @@ export default function FeatureIndicator({
 								title={tooltipTitle}
 								translucent
 							>
-								{showLabel && (
+								{!iconOnly && (
 									<span className="inline-item text-uppercase">
 										{label}
 									</span>
@@ -147,7 +148,7 @@ export default function FeatureIndicator({
 								{symbol && (
 									<span
 										className={classNames('inline-item', {
-											'inline-item-after ml-2': showLabel,
+											'inline-item-after ml-2': !iconOnly,
 										})}
 									>
 										<ClayIcon symbol={symbol} />
@@ -181,10 +182,12 @@ export default function FeatureIndicator({
 				</ClayTooltipProvider>
 			) : (
 				<ClayBadge
+					aria-label={iconOnly ? label : undefined}
 					className={classNames('text-uppercase', className)}
 					dark={dark}
 					displayType={displayType}
-					label={showLabel ? label : undefined}
+					label={iconOnly ? undefined : label}
+					role={iconOnly ? 'img' : undefined}
 					symbol={symbol}
 					translucent
 				/>

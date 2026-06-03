@@ -10,7 +10,7 @@ package com.liferay.ai.hub.cell.constants;
  */
 public class AIHubCellConstants {
 
-	public static final String OAUTH2_APPLICATION_USER_ON_BEHALF_OF_ERC =
-		"AI_HUB_CELL_USER_ON_BEHALF_OF";
+	public static final String OAUTH2_APPLICATION_ERC_AI_HUB_CELL =
+		"AI_HUB_CELL";
 
 }

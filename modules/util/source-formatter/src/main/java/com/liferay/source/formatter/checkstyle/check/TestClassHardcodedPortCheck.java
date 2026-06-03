@@ -91,6 +91,6 @@ public class TestClassHardcodedPortCheck extends BaseCheck {
 		log(detailAST, _MSG_USE_METHOD);
 	}
 
-	private static final String _MSG_USE_METHOD = "mehtod.use";
+	private static final String _MSG_USE_METHOD = "method.use";
 
 }

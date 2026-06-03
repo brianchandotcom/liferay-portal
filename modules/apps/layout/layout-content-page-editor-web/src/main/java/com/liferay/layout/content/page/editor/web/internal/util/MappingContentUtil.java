@@ -101,7 +101,7 @@ public class MappingContentUtil {
 	}
 
 	private static JSONObject _getAttributesJSONObject(
-		InfoField infoField, Locale locale) {
+		InfoField<?> infoField, Locale locale) {
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 

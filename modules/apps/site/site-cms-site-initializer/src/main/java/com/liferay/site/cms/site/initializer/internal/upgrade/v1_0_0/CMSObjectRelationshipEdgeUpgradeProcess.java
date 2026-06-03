@@ -18,7 +18,9 @@ import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.constants.TreeConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -108,8 +110,8 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private List<ObjectRelationship> _getCMSObjectRelationships(
-		long companyId) {
+	private List<ObjectRelationship> _getCMSObjectRelationships(long companyId)
+		throws UpgradeException {
 
 		List<ObjectRelationship> objectRelationships = new ArrayList<>();
 		Set<Long> objectDefinitionIds = new HashSet<>();
@@ -137,22 +139,19 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		return objectRelationships;
+		return _sortObjectRelationships(objectRelationships);
 	}
 
 	private String _getExceptionMessage(
 		List<ObjectDefinition> objectDefinitionPath) {
 
-		List<String> shortNames = new ArrayList<>(objectDefinitionPath.size());
-
-		for (ObjectDefinition objectDefinition : objectDefinitionPath) {
-			shortNames.add(objectDefinition.getShortName());
-		}
-
 		return StringBundler.concat(
 			"This CMS chain exceeds the maximum nesting depth (",
 			TreeConstants.MAX_HEIGHT, "). ",
-			StringUtil.merge(shortNames, " -> "));
+			StringUtil.merge(
+				TransformUtil.transform(
+					objectDefinitionPath, ObjectDefinition::getShortName),
+				" -> "));
 	}
 
 	private void _getObjectRelationships(
@@ -182,6 +181,49 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 				objectRelationship.getObjectDefinitionId2(),
 				objectDefinitionIds, objectRelationships);
 		}
+	}
+
+	private List<ObjectRelationship> _sortObjectRelationships(
+			List<ObjectRelationship> objectRelationships)
+		throws UpgradeException {
+
+		List<ObjectRelationship> sortedObjectRelationships = new ArrayList<>(
+			objectRelationships.size());
+
+		while (!objectRelationships.isEmpty()) {
+			List<ObjectRelationship> rootObjectRelationships =
+				new ArrayList<>();
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				long objectDefinitionId1 =
+					objectRelationship.getObjectDefinitionId1();
+
+				if (!ListUtil.exists(
+						objectRelationships,
+						parentObjectRelationship ->
+							parentObjectRelationship.getObjectDefinitionId2() ==
+								objectDefinitionId1)) {
+
+					rootObjectRelationships.add(objectRelationship);
+				}
+			}
+
+			if (rootObjectRelationships.isEmpty()) {
+				String objectRelationshipNames = StringUtil.merge(
+					TransformUtil.transform(
+						objectRelationships, ObjectRelationship::getName),
+					StringPool.COMMA_AND_SPACE);
+
+				throw new UpgradeException(
+					"These CMS object relationships form a cycle: " +
+						objectRelationshipNames);
+			}
+
+			objectRelationships.removeAll(rootObjectRelationships);
+			sortedObjectRelationships.addAll(rootObjectRelationships);
+		}
+
+		return sortedObjectRelationships;
 	}
 
 	private void _upgradeCompany(long companyId) throws PortalException {
@@ -224,22 +266,19 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			_objectRelationshipLocalService.updateObjectRelationship(
-				currentObjectRelationship.getExternalReferenceCode(),
-				currentObjectRelationship.getObjectRelationshipId(),
-				currentObjectRelationship.getParameterObjectFieldId(),
-				currentObjectRelationship.getDeletionType(), true,
-				currentObjectRelationship.getLabelMap(), null);
+			objectRelationship =
+				_objectRelationshipLocalService.updateObjectRelationship(
+					currentObjectRelationship.getExternalReferenceCode(),
+					currentObjectRelationship.getObjectRelationshipId(),
+					currentObjectRelationship.getParameterObjectFieldId(),
+					currentObjectRelationship.getDeletionType(), true,
+					currentObjectRelationship.getLabelMap(), null);
 
 			if (FeatureFlagManagerUtil.isEnabled(
-					currentObjectRelationship.getCompanyId(), "LPD-34594")) {
+					objectRelationship.getCompanyId(), "LPD-34594")) {
 
 				continue;
 			}
-
-			objectRelationship =
-				_objectRelationshipLocalService.fetchObjectRelationship(
-					currentObjectRelationship.getObjectRelationshipId());
 
 			ObjectDefinitionTreeUtil.bindObjectDefinitions(
 				_objectDefinitionLocalService, _objectDefinitionPersistence,

@@ -71,15 +71,15 @@ export default function ({
 
 	const eventDelegates = [];
 
+	/**
+	 * Refetches the filterable properties using `propertiesURL` upon
+	 * changes to the asset source (type / subtype selectors) and writes
+	 * the result to `propertiesAtom`.
+	 *
+	 * CollectionFilterBuilder and CollectionOrdering React components
+	 * subscribe to that atom via `useTypeProperties`.
+	 */
 	const refreshProperties = () => {
-
-		// Refetches the filterable properties using `propertiesURL` upon
-		// changes to the asset source (type / subtype selectors) and writes
-		// the result to `propertiesAtom`.
-		//
-		// CollectionFilterBuilder and CollectionOrdering React components
-		// subscribe to that atom via `useTypeProperties`.
-
 		if (!propertiesURL) {
 			return;
 		}

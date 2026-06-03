@@ -91,17 +91,14 @@ public class UserIndexerIndexedFieldsTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpExpandoTableSearchFixture();
-
-		setUpIndexedFieldsFixture();
-
-		setUpIndexerFixture();
-
-		setUpUserSearchFixture();
+		_setUpIndexedFieldsFixture();
+		_setUpIndexerFixture();
+		_setUpUserSearchFixture();
 	}
 
 	@Test
 	public void testAddress() throws Exception {
-		User user1 = addUser();
+		User user1 = _addUser();
 
 		_userSearchFixture.addAddress(user1);
 
@@ -130,7 +127,7 @@ public class UserIndexerIndexedFieldsTest {
 			User.class, ExpandoColumnConstants.INDEX_TYPE_KEYWORD,
 			"customField");
 
-		User user = addUser();
+		User user = _addUser();
 
 		ExpandoBridge expandoBridge = user.getExpandoBridge();
 
@@ -153,7 +150,7 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Test
 	public void testJobTitle() throws Exception {
-		User user1 = addUser();
+		User user1 = _addUser();
 
 		user1.setJobTitle(RandomTestUtil.randomString());
 
@@ -180,9 +177,9 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Test
 	public void testOrganizationIds() throws Exception {
-		Organization organization = addOrganization();
+		Organization organization = _addOrganization();
 
-		User user = addUser();
+		User user = _addUser();
 
 		_userLocalService.addOrganizationUser(
 			organization.getOrganizationId(), user.getUserId());
@@ -206,7 +203,7 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Test
 	public void testUserGroupIds() throws Exception {
-		User user = addUser();
+		User user = _addUser();
 
 		UserGroup userGroup = _userGroupSearchFixture.addUserGroup(
 			UserGroupSearchFixture.getTestUserGroupBlueprintBuilder());
@@ -236,7 +233,7 @@ public class UserIndexerIndexedFieldsTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected Organization addOrganization() {
+	private Organization _addOrganization() {
 		OrganizationBlueprintBuilder organizationBlueprintBuilder =
 			OrganizationSearchFixture.getTestOrganizationBlueprintBuilder();
 
@@ -244,46 +241,9 @@ public class UserIndexerIndexedFieldsTest {
 			organizationBlueprintBuilder.build());
 	}
 
-	protected User addUser() throws Exception {
+	private User _addUser() throws Exception {
 		return _userSearchFixture.addUser(
 			RandomTestUtil.randomString(), _group, new String[0]);
-	}
-
-	protected void setUpIndexedFieldsFixture() {
-		_indexedFieldsFixture = new IndexedFieldsFixture(
-			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory);
-	}
-
-	protected void setUpIndexerFixture() {
-		_indexerFixture = new IndexerFixture<>(User.class);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
-
-		_organizationSearchFixture = new OrganizationSearchFixture(
-			_organizationLocalService);
-
-		_userGroupSearchFixture = new UserGroupSearchFixture(
-			_userGroupLocalService);
-
-		_userSearchFixture = new UserSearchFixture(
-			_userLocalService, groupSearchFixture, _organizationSearchFixture,
-			_userGroupSearchFixture);
-
-		_userSearchFixture.setUp();
-
-		_addresses = _userSearchFixture.getAddresses();
-
-		_groups = groupSearchFixture.getGroups();
-
-		_organizations = _organizationSearchFixture.getOrganizations();
-
-		_users = _userSearchFixture.getUsers();
-
-		_userGroups = _userGroupSearchFixture.getUserGroups();
-
-		_group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
 	private String _getEmailAddressDomain(String emailAddress) {
@@ -491,6 +451,43 @@ public class UserIndexerIndexedFieldsTest {
 
 		_expandoColumns = _expandoTableSearchFixture.getExpandoColumns();
 		_expandoTables = _expandoTableSearchFixture.getExpandoTables();
+	}
+
+	private void _setUpIndexedFieldsFixture() {
+		_indexedFieldsFixture = new IndexedFieldsFixture(
+			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory);
+	}
+
+	private void _setUpIndexerFixture() {
+		_indexerFixture = new IndexerFixture<>(User.class);
+	}
+
+	private void _setUpUserSearchFixture() throws Exception {
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
+
+		_organizationSearchFixture = new OrganizationSearchFixture(
+			_organizationLocalService);
+
+		_userGroupSearchFixture = new UserGroupSearchFixture(
+			_userGroupLocalService);
+
+		_userSearchFixture = new UserSearchFixture(
+			_userLocalService, groupSearchFixture, _organizationSearchFixture,
+			_userGroupSearchFixture);
+
+		_userSearchFixture.setUp();
+
+		_addresses = _userSearchFixture.getAddresses();
+
+		_groups = groupSearchFixture.getGroups();
+
+		_organizations = _organizationSearchFixture.getOrganizations();
+
+		_users = _userSearchFixture.getUsers();
+
+		_userGroups = _userGroupSearchFixture.getUserGroups();
+
+		_group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
 	@DeleteAfterTestRun

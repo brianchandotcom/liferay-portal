@@ -4,7 +4,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly CHART_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+CHART_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+
+readonly CHART_DIR
 
 readonly CONFIGS_DIR="${CHART_DIR}/files/structured-logging"
 readonly SETTLE_SECONDS=30

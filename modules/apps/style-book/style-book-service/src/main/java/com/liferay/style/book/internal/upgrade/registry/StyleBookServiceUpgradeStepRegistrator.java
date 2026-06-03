@@ -17,6 +17,7 @@ import com.liferay.style.book.internal.upgrade.v1_1_0.StyleBookEntryUpgradeProce
 import com.liferay.style.book.internal.upgrade.v1_2_0.StyleBookEntryVersionUpgradeProcess;
 import com.liferay.style.book.internal.upgrade.v1_7_0.StyleBookEntryThemeIdUpgradeProcess;
 import com.liferay.style.book.internal.upgrade.v1_8_0.StyleBookEntryVersionThemeIdUpgradeProcess;
+import com.liferay.style.book.internal.upgrade.v1_9_0.util.StyleBookTokenSetTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,6 +95,8 @@ public class StyleBookServiceUpgradeStepRegistrator
 		registry.register(
 			"1.7.0", "1.8.0",
 			new StyleBookEntryVersionThemeIdUpgradeProcess(_groupLocalService));
+
+		registry.register("1.8.0", "1.9.0", StyleBookTokenSetTable.create());
 	}
 
 	@Reference

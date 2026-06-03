@@ -6,7 +6,9 @@
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -93,6 +95,17 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
+	public String getSEOParameterName() {
+		String parameterName = getParameterName();
+
+		if (Validator.isNull(parameterName)) {
+			return getFilterField();
+		}
+
+		return parameterName;
+	}
+
+	@Override
 	public boolean isDisabled() {
 		return getBoolean(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_DISABLED, false);
@@ -108,6 +121,13 @@ public class CustomFilterPortletPreferencesImpl
 	public boolean isInvisible() {
 		return getBoolean(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_INVISIBLE, false);
+	}
+
+	@Override
+	public boolean isWebCrawlerIndexingEnabled() {
+		return getBoolean(
+			SEOPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED,
+			true);
 	}
 
 }

@@ -46,7 +46,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Rachael Koestartyo
@@ -360,7 +359,7 @@ public class AnalyticsCloudClient {
 					performanceAssetConsumption = objectReader.readValue(
 						jsonNode);
 
-					if (Objects.equals(groupBy, "structure")) {
+					if (StringUtil.equalsIgnoreCase(groupBy, "structure")) {
 						_updatePerformanceAssetConsumptionFromObjectDefinition(
 							locale, performanceAssetConsumption);
 					}

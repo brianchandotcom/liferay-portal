@@ -45,6 +45,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -316,31 +317,14 @@ public class ClusterSchedulerTest implements Serializable {
 					}
 				});
 
-			String[] scheduledJob = slaveTomcatNode.syncExecute(
-				() -> {
-					List<SchedulerResponse> schedulerResponses =
-						SchedulerEngineHelperUtil.getScheduledJobs(
-							groupName, StorageType.PERSISTED);
+			SchedulerResponse schedulerResponse = _getSingleScheduledJob(
+				slaveTomcatNode, groupName, StorageType.PERSISTED);
 
-					if (schedulerResponses.size() != 1) {
-						return new String[] {
-							String.valueOf(schedulerResponses.size())
-						};
-					}
-
-					SchedulerResponse schedulerResponse =
-						schedulerResponses.get(0);
-
-					return new String[] {
-						"1", schedulerResponse.getDescription(),
-						schedulerResponse.getDestinationName()
-					};
-				});
-
-			Assert.assertEquals("1", scheduledJob[0]);
-			Assert.assertEquals("Staging Schedule Title", scheduledJob[1]);
 			Assert.assertEquals(
-				DestinationNames.LAYOUTS_LOCAL_PUBLISHER, scheduledJob[2]);
+				"Staging Schedule Title", schedulerResponse.getDescription());
+			Assert.assertEquals(
+				DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
+				schedulerResponse.getDestinationName());
 		}
 		finally {
 			masterTomcatNode.syncExecute(
@@ -351,6 +335,25 @@ public class ClusterSchedulerTest implements Serializable {
 					return null;
 				});
 		}
+	}
+
+	private SchedulerResponse _getSingleScheduledJob(
+			TomcatNode tomcatNode, String groupName, StorageType storageType)
+		throws Exception {
+
+		SchedulerResponse[] schedulerResponses = tomcatNode.syncExecute(
+			() -> {
+				List<SchedulerResponse> schedulerResponseList =
+					SchedulerEngineHelperUtil.getScheduledJobs(
+						groupName, storageType);
+
+				return schedulerResponseList.toArray(new SchedulerResponse[0]);
+			});
+
+		Assert.assertEquals(
+			Arrays.toString(schedulerResponses), 1, schedulerResponses.length);
+
+		return schedulerResponses[0];
 	}
 
 	private void _testValidatePersistentAndMemoryJobs(
@@ -408,30 +411,12 @@ public class ClusterSchedulerTest implements Serializable {
 
 			future.get();
 
-			String[] scheduledJob = observerTomcatNode.syncExecute(
-				() -> {
-					List<SchedulerResponse> schedulerResponses =
-						SchedulerEngineHelperUtil.getScheduledJobs(
-							jobName, storageType);
+			SchedulerResponse schedulerResponse = _getSingleScheduledJob(
+				observerTomcatNode, jobName, storageType);
 
-					if (schedulerResponses.size() != 1) {
-						return new String[] {
-							String.valueOf(schedulerResponses.size())
-						};
-					}
-
-					SchedulerResponse schedulerResponse =
-						schedulerResponses.get(0);
-
-					return new String[] {
-						"1", schedulerResponse.getJobName(),
-						schedulerResponse.getDestinationName()
-					};
-				});
-
-			Assert.assertEquals("1", scheduledJob[0]);
-			Assert.assertEquals(jobName, scheduledJob[1]);
-			Assert.assertEquals(destinationName, scheduledJob[2]);
+			Assert.assertEquals(jobName, schedulerResponse.getJobName());
+			Assert.assertEquals(
+				destinationName, schedulerResponse.getDestinationName());
 		}
 		finally {
 			mutatorTomcatNode.syncExecute(

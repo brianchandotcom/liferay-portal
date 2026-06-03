@@ -51,20 +51,20 @@ public class LayoutActionDropdownItemsProviderTest {
 	@Test
 	@TestInfo("LPD-89086")
 	public void testIsShowMakeACopyAction() throws Exception {
-		_assertIsShowMakeACopyAction(LayoutConstants.TYPE_CONTENT, false, true);
-		_assertIsShowMakeACopyAction(LayoutConstants.TYPE_CONTENT, true, true);
-		_assertIsShowMakeACopyAction(
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_CONTENT, false, true);
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_CONTENT, true, true);
+		_testIsShowMakeACopyAction(
 			LayoutConstants.TYPE_FULL_PAGE_APPLICATION, false, false);
-		_assertIsShowMakeACopyAction(
+		_testIsShowMakeACopyAction(
 			LayoutConstants.TYPE_FULL_PAGE_APPLICATION, true, true);
-		_assertIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, false, false);
-		_assertIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, true, true);
-		_assertIsShowMakeACopyAction(
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, false, false);
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, true, true);
+		_testIsShowMakeACopyAction(
 			LayoutConstants.TYPE_PORTLET, false, false);
-		_assertIsShowMakeACopyAction(LayoutConstants.TYPE_PORTLET, true, true);
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PORTLET, true, true);
 	}
 
-	private void _assertIsShowMakeACopyAction(
+	private void _testIsShowMakeACopyAction(
 			String type, boolean featureFlagEnabled, boolean expected)
 		throws Exception {
 

@@ -84,9 +84,9 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 					"SelectLayoutPageTemplateEntryDisplayContext"),
 			"getTypes", new Class<?>[0]);
 
+		Assert.assertTrue(types.containsAll(Arrays.asList(_TYPES_WITH_FF)));
 		Assert.assertEquals(
 			types.toString(), _TYPES_WITH_FF.length, types.size());
-		Assert.assertTrue(types.containsAll(Arrays.asList(_TYPES_WITH_FF)));
 	}
 
 	private MockLiferayPortletRenderRequest

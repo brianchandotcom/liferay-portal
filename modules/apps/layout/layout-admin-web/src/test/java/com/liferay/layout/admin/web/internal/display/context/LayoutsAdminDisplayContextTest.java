@@ -182,10 +182,12 @@ public class LayoutsAdminDisplayContextTest {
 		);
 
 		long layoutPageTemplateCollectionId1 = RandomTestUtil.randomLong();
-		long layoutPageTemplateCollectionId2 = RandomTestUtil.randomLong();
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
 			_getLayoutPageTemplateCollection(layoutPageTemplateCollectionId1);
+
+		long layoutPageTemplateCollectionId2 = RandomTestUtil.randomLong();
+
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
 			_getLayoutPageTemplateCollection(layoutPageTemplateCollectionId2);
 

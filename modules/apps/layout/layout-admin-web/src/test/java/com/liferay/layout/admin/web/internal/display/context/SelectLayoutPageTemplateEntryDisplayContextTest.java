@@ -51,17 +51,16 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 	@Test
 	@TestInfo("LPD-89086")
 	public void testGetLayoutPageTemplateEntries() {
-		SelectLayoutPageTemplateEntryDisplayContext
-			selectLayoutPageTemplateEntryDisplayContext =
-				new SelectLayoutPageTemplateEntryDisplayContext(
-					_mockHttpServletRequest, null);
-
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			Collections.singletonList(
 				Mockito.mock(LayoutPageTemplateEntry.class));
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntriesByType =
 			Collections.singletonList(
 				Mockito.mock(LayoutPageTemplateEntry.class));
+		SelectLayoutPageTemplateEntryDisplayContext
+			selectLayoutPageTemplateEntryDisplayContext =
+				new SelectLayoutPageTemplateEntryDisplayContext(
+					_mockHttpServletRequest, null);
 
 		try (MockedStatic<LayoutPageTemplateEntryServiceUtil>
 				layoutPageTemplateEntryServiceUtilMockedStatic =
@@ -123,13 +122,12 @@ public class SelectLayoutPageTemplateEntryDisplayContextTest {
 	@Test
 	@TestInfo("LPD-89086")
 	public void testGetLayoutPageTemplateEntriesCount() {
+		int count = RandomTestUtil.randomInt();
+		int countByType = RandomTestUtil.randomInt();
 		SelectLayoutPageTemplateEntryDisplayContext
 			selectLayoutPageTemplateEntryDisplayContext =
 				new SelectLayoutPageTemplateEntryDisplayContext(
 					_mockHttpServletRequest, null);
-
-		int count = RandomTestUtil.randomInt();
-		int countByType = RandomTestUtil.randomInt();
 
 		try (MockedStatic<LayoutPageTemplateEntryServiceUtil>
 				layoutPageTemplateEntryServiceUtilMockedStatic =

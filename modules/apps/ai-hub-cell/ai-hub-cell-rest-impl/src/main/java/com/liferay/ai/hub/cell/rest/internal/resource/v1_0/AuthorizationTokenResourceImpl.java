@@ -14,6 +14,7 @@ import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -45,6 +46,10 @@ public class AuthorizationTokenResourceImpl
 
 		JSONObject jsonObject = AIHubCellAccessTokenWebCacheItem.get(
 			aiHubCellConfiguration, contextCompany.getCompanyId());
+
+		if (jsonObject == null) {
+			throw new PortalException("Unable to get an access token");
+		}
 
 		return new AuthorizationToken() {
 			{

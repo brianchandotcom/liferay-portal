@@ -2784,6 +2784,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 			pageJSONObject.getBoolean("private"),
 			pageJSONObject.getString("friendlyURL"));
 
+		if (Objects.equals(type, LayoutConstants.TYPE_PORTLET) &&
+			((layout == null) ||
+			 !Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET))) {
+
+			if (!FeatureFlagManagerUtil.isEnabled(
+					serviceContext.getCompanyId(), "LPD-76864")) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Skipping page with friendly URL ",
+							pageJSONObject.getString("friendlyURL"),
+							" and any associated child pages because widget ",
+							"pages are deprecated (LPD-76864)"));
+				}
+
+				return Collections.emptyMap();
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Widget page with friendly URL " +
+						pageJSONObject.getString("friendlyURL") +
+							" is deprecated (LPD-76864)");
+			}
+		}
+
 		if ((layout != null) && !Objects.equals(layout.getType(), type)) {
 			_layoutLocalService.deleteLayout(layout);
 

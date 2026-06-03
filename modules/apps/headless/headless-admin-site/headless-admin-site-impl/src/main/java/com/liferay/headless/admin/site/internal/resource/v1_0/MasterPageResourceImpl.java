@@ -307,8 +307,8 @@ public class MasterPageResourceImpl
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
-			groupId, LayoutAdminPortletKeys.GROUP_PAGES, getResourceName(),
-			serviceContext, masterPage.getThumbnailURLReference());
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+			masterPage.getThumbnailURLReference(), contextUser.getUserId());
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -431,8 +431,8 @@ public class MasterPageResourceImpl
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				FileEntryUtil.getPreviewFileEntryId(
 					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
-					getResourceName(), serviceContext,
-					masterPage.getThumbnailURLReference()),
+					masterPage.getThumbnailURLReference(),
+					contextUser.getUserId()),
 				defaultTemplate, 0,
 				_getLayoutPlid(groupId, masterPage, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(

@@ -16,7 +16,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFor
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -53,9 +53,9 @@ public class DDMFormAssetRenderer
 
 	public DDMFormAssetRenderer(
 		DDMFormInstanceRecord ddmFormInstanceRecord,
-		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		ModelResourcePermission<DDMFormInstanceRecord>
 			ddmFormInstanceRecordModelResourcePermission,
+		DDMFormInstanceRecordService ddmFormInstanceRecordService,
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService,
 		DDMFormRenderer ddmFormRenderer,
@@ -63,9 +63,9 @@ public class DDMFormAssetRenderer
 		DDMFormValuesMerger ddmFormValuesMerger, Portal portal) {
 
 		_ddmFormInstanceRecord = ddmFormInstanceRecord;
-		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormInstanceRecordModelResourcePermission =
 			ddmFormInstanceRecordModelResourcePermission;
+		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
 		_ddmFormInstanceRecordVersion = ddmFormInstanceRecordVersion;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
@@ -270,7 +270,7 @@ public class DDMFormAssetRenderer
 			ddmFormViewFormInstanceRecordDisplayContext =
 				new DDMFormViewFormInstanceRecordDisplayContext(
 					httpServletRequest, httpServletResponse,
-					_ddmFormInstanceRecordLocalService,
+					_ddmFormInstanceRecordService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger);
 
@@ -286,10 +286,9 @@ public class DDMFormAssetRenderer
 
 	private final DDMFormInstance _ddmFormInstance;
 	private final DDMFormInstanceRecord _ddmFormInstanceRecord;
-	private final DDMFormInstanceRecordLocalService
-		_ddmFormInstanceRecordLocalService;
 	private final ModelResourcePermission<DDMFormInstanceRecord>
 		_ddmFormInstanceRecordModelResourcePermission;
+	private final DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 	private final DDMFormInstanceRecordVersion _ddmFormInstanceRecordVersion;
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService;

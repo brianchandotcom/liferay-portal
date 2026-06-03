@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -154,6 +155,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypeServicesRegistry,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
+					_ddmFormInstanceRecordService,
 					_ddmFormInstanceRecordWriterRegistry,
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
@@ -176,6 +178,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypeServicesRegistry,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
+					_ddmFormInstanceRecordService,
 					_ddmFormInstanceRecordWriterRegistry,
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
@@ -216,6 +219,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 	@Reference
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
+
+	@Reference
+	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
 	@Reference
 	private DDMFormInstanceRecordWriterRegistry

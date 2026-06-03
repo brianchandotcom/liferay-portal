@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -50,14 +50,14 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	public DDMFormViewFormInstanceRecordDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
+		DDMFormInstanceRecordService ddmFormInstanceRecordService,
 		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger) {
 
 		_httpServletResponse = httpServletResponse;
-		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
+		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -207,7 +207,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			httpServletRequest, "formInstanceRecordId");
 
 		if (formInstanceRecordId > 0) {
-			return _ddmFormInstanceRecordLocalService.fetchFormInstanceRecord(
+			return _ddmFormInstanceRecordService.getFormInstanceRecord(
 				formInstanceRecordId);
 		}
 
@@ -262,8 +262,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	}
 
 	private final DDMFormAdminRequestHelper _ddmFormAdminRequestHelper;
-	private final DDMFormInstanceRecordLocalService
-		_ddmFormInstanceRecordLocalService;
+	private final DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;

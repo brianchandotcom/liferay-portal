@@ -8,6 +8,7 @@ import UAParser from 'ua-parser-js';
 import {getBrowserName} from '../src/main/resources/META-INF/resources/detection/attributes/browser_name';
 import {getBrowserVersion} from '../src/main/resources/META-INF/resources/detection/attributes/browser_version';
 import {getCookies} from '../src/main/resources/META-INF/resources/detection/attributes/cookies';
+import {getCustom} from '../src/main/resources/META-INF/resources/detection/attributes/custom';
 import {getHostname} from '../src/main/resources/META-INF/resources/detection/attributes/hostname';
 import {getLanguage} from '../src/main/resources/META-INF/resources/detection/attributes/language';
 import {getLocalDate} from '../src/main/resources/META-INF/resources/detection/attributes/local_date';
@@ -24,12 +25,16 @@ describe('attributes', () => {
 	afterEach(() => {
 		jest.useRealTimers();
 
+		jest.dontMock('https://example.com/custom-attribute.js');
+
 		jest.restoreAllMocks();
 
 		delete (document as any).cookie;
 		delete (document as any).referrer;
-		delete (navigator as any).userAgent;
+
 		delete (global as any).Analytics;
+
+		delete (navigator as any).userAgent;
 
 		window.history.replaceState({}, '', '/');
 	});
@@ -37,6 +42,16 @@ describe('attributes', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 		jest.setSystemTime(new Date('2009-04-23T10:30:00'));
+
+		jest.doMock(
+			'https://example.com/custom-attribute.js',
+			() => ({
+				__esModule: true,
+				default: () => 'default-value',
+				getCountry: () => 'US',
+			}),
+			{virtual: true}
+		);
 
 		jest.spyOn(
 			Intl.DateTimeFormat.prototype,
@@ -76,109 +91,166 @@ describe('attributes', () => {
 		);
 	});
 
-	it('attribute browser_name works and returns a string', async () => {
-		const value = getBrowserName(new UAParser(navigator.userAgent));
+	describe('attribute browser_name', () => {
+		it('works and returns a string', async () => {
+			const value = getBrowserName(new UAParser(navigator.userAgent));
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('Firefox');
+			expect(typeof value).toBe('string');
+			expect(value).toBe('Firefox');
+		});
 	});
 
-	it('attribute browser_version and returns a string', async () => {
-		const value = getBrowserVersion(new UAParser(navigator.userAgent));
+	describe('attribute browser_version', () => {
+		it('works and returns a string', async () => {
+			const value = getBrowserVersion(new UAParser(navigator.userAgent));
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('151.0');
+			expect(typeof value).toBe('string');
+			expect(value).toBe('151.0');
+		});
 	});
 
-	it('attribute cookies works and returns a Set<string>', async () => {
-		const value = getCookies();
+	describe('attribute cookies', () => {
+		it('works and returns a Set<string>', async () => {
+			const value = getCookies();
 
-		expect(value).toBeInstanceOf(Set);
-		expect(value).toEqual(
-			new Set(['REMEMBER_ME=true', 'JSESSIONID=ba8e4d1c'])
-		);
+			expect(value).toBeInstanceOf(Set);
+			expect(value).toEqual(
+				new Set(['REMEMBER_ME=true', 'JSESSIONID=ba8e4d1c'])
+			);
+		});
 	});
 
-	it('attribute hostname works and returns a string', async () => {
-		const value = getHostname();
+	describe('attribute custom', () => {
+		it('works and returns the default export', async () => {
+			const value = await getCustom(
+				'https://example.com/custom-attribute.js'
+			);
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('localhost');
+			expect(value).toBe('default-value');
+		});
+
+		it('works and returns the function named in the fragment', async () => {
+			const value = await getCustom(
+				'https://example.com/custom-attribute.js#getCountry'
+			);
+
+			expect(value).toBe('US');
+		});
+
+		it('throws when the named function is missing', async () => {
+			await expect(
+				getCustom('https://example.com/custom-attribute.js#missing')
+			).rejects.toThrow(
+				"Module 'https://example.com/custom-attribute.js' does not " +
+					"export any function named 'missing'"
+			);
+		});
 	});
 
-	it('attribute language works and returns a string', async () => {
-		const value = getLanguage();
+	describe('attribute hostname', () => {
+		it('works and returns a string', async () => {
+			const value = getHostname();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('en-US');
+			expect(typeof value).toBe('string');
+			expect(value).toBe('localhost');
+		});
 	});
 
-	it('attribute local_date works and returns a string', async () => {
-		const value = getLocalDate();
+	describe('attribute language', () => {
+		it('works and returns a string', async () => {
+			const value = getLanguage();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('2009-04-23');
+			expect(typeof value).toBe('string');
+			expect(value).toBe('en-US');
+		});
 	});
 
-	it('attribute local_hour works and returns a number', async () => {
-		const value = getLocalHour();
+	describe('attribute local_date', () => {
+		it('works and returns a string', async () => {
+			const value = getLocalDate();
 
-		expect(typeof value).toBe('number');
-		expect(value).toBe(10);
+			expect(typeof value).toBe('string');
+			expect(value).toBe('2009-04-23');
+		});
 	});
 
-	it('attribute pathname works and returns a string', async () => {
-		const value = getPathname();
+	describe('attribute local_hour', () => {
+		it('works and returns a number', async () => {
+			const value = getLocalHour();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('/home');
+			expect(typeof value).toBe('number');
+			expect(value).toBe(10);
+		});
 	});
 
-	it('attribute referrer works and returns a string', async () => {
-		const value = getReferrer();
+	describe('attribute pathname', () => {
+		it('works and returns a string', async () => {
+			const value = getPathname();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('https://www.wikipedia.org/');
+			expect(typeof value).toBe('string');
+			expect(value).toBe('/home');
+		});
 	});
 
-	it('attribute request_parameters works and returns a Set<string>', async () => {
-		const value = getRequestParameters();
+	describe('attribute referrer', () => {
+		it('works and returns a string', async () => {
+			const value = getReferrer();
 
-		expect(value).toBeInstanceOf(Set);
-		expect(value).toEqual(
-			new Set(['utm_source=newsletter', 'language=es'])
-		);
+			expect(typeof value).toBe('string');
+			expect(value).toBe('https://www.wikipedia.org/');
+		});
 	});
 
-	it('attribute segments works and returns a Set<string>', async () => {
-		const value = await getSegments();
+	describe('attribute request_parameters', () => {
+		it('works and returns a Set<string>', async () => {
+			const value = getRequestParameters();
 
-		expect(value).toBeInstanceOf(Set);
-		expect(value).toEqual(new Set(['SEGMENT_BATCH', 'SEGMENT_REAL_TIME']));
+			expect(value).toBeInstanceOf(Set);
+			expect(value).toEqual(
+				new Set(['utm_source=newsletter', 'language=es'])
+			);
+		});
 	});
 
-	it('attribute timezone works and returns a string', async () => {
-		const value = getTimezone();
+	describe('attribute segments', () => {
+		it('works and returns a Set<string>', async () => {
+			const value = await getSegments();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe('America/New_York');
+			expect(value).toBeInstanceOf(Set);
+			expect(value).toEqual(
+				new Set(['SEGMENT_BATCH', 'SEGMENT_REAL_TIME'])
+			);
+		});
 	});
 
-	it('attribute url works and returns a string', async () => {
-		const value = getUrl();
+	describe('attribute timezone', () => {
+		it('works and returns a string', async () => {
+			const value = getTimezone();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe(
-			'http://localhost/home?utm_source=newsletter&language=es'
-		);
+			expect(typeof value).toBe('string');
+			expect(value).toBe('America/New_York');
+		});
 	});
 
-	it('attribute user_agent works and returns a string', async () => {
-		const value = getUserAgent();
+	describe('attribute url', () => {
+		it('works and returns a string', async () => {
+			const value = getUrl();
 
-		expect(typeof value).toBe('string');
-		expect(value).toBe(
-			'Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0'
-		);
+			expect(typeof value).toBe('string');
+			expect(value).toBe(
+				'http://localhost/home?utm_source=newsletter&language=es'
+			);
+		});
+	});
+
+	describe('attribute user_agent', () => {
+		it('works and returns a string', async () => {
+			const value = getUserAgent();
+
+			expect(typeof value).toBe('string');
+			expect(value).toBe(
+				'Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0'
+			);
+		});
 	});
 });

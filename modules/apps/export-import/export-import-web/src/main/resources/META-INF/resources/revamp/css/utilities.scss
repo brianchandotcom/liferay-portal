@@ -1,3 +1,19 @@
+.checkbox-row {
+	align-items: center;
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
+
+.checkbox-row .custom-control {
+	align-items: center;
+	display: flex;
+}
+
+.checkbox-row-content {
+	grid-column: 2;
+	min-width: 0;
+}
+
 .content-section-controls {
 	max-height: 400px;
 }

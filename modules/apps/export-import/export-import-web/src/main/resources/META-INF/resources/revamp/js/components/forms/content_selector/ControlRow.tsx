@@ -4,12 +4,14 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React, {ReactNode} from 'react';
 
+import '../../../../css/utilities.scss';
+
 export default function ControlRow({
 	checkboxId,
+	children,
 	description,
 	disclosure,
 	indeterminate,
@@ -20,6 +22,7 @@ export default function ControlRow({
 	tags,
 }: {
 	checkboxId: string;
+	children?: ReactNode;
 	description?: string;
 	disclosure?: ReactNode;
 	indeterminate: boolean;
@@ -30,69 +33,49 @@ export default function ControlRow({
 	tags?: ReactNode;
 }) {
 	return (
-		<>
-			<ClayLayout.ContentRow className="align-items-center">
-				<ClayLayout.ContentCol className="pr-2" expand={false}>
-					<ClayCheckbox
-						aria-describedby={
-							description
-								? `${checkboxId}-description`
-								: undefined
-						}
-						checked={selected}
-						id={checkboxId}
-						indeterminate={indeterminate}
-						onChange={onToggle}
-					/>
-				</ClayLayout.ContentCol>
+		<div className="checkbox-row">
+			<ClayCheckbox
+				aria-describedby={
+					description ? `${checkboxId}-description` : undefined
+				}
+				checked={selected}
+				id={checkboxId}
+				indeterminate={indeterminate}
+				onChange={onToggle}
+			/>
 
-				<ClayLayout.ContentCol expand>
-					<span className="align-items-center d-inline-flex">
-						<label
-							className={classnames(
-								'cursor-pointer mb-0',
-								labelClassName
-							)}
-							htmlFor={checkboxId}
-						>
-							{label}
-						</label>
-
-						{tags}
-					</span>
-				</ClayLayout.ContentCol>
-
-				{disclosure && (
-					<ClayLayout.ContentCol expand={false}>
-						{disclosure}
-					</ClayLayout.ContentCol>
-				)}
-			</ClayLayout.ContentRow>
-
-			{description && (
-				<ClayLayout.ContentRow>
-					<ClayLayout.ContentCol
-						aria-hidden="true"
-						className="invisible pr-2"
-						expand={false}
+			<div className="align-items-center d-flex justify-content-between ml-2">
+				<span className="align-items-center d-inline-flex">
+					<label
+						className={classnames(
+							'cursor-pointer mb-0',
+							labelClassName
+						)}
+						htmlFor={checkboxId}
 					>
-						<ClayCheckbox
-							checked={false}
-							disabled
-							onChange={() => {}}
-						/>
-					</ClayLayout.ContentCol>
+						{label}
+					</label>
 
-					<ClayLayout.ContentCol expand>
+					{tags}
+				</span>
+
+				{disclosure}
+			</div>
+
+			{(description || children) && (
+				<div className="checkbox-row-content ml-2">
+					{description && (
 						<span
 							className="d-block small text-secondary"
 							id={`${checkboxId}-description`}
 						>
 							{description}
 						</span>
-					</ClayLayout.ContentCol>
-				</ClayLayout.ContentRow>
+					)}
+
+					{children}
+				</div>
 			)}
-		</>
+		</div>
 	);
 }

@@ -2605,17 +2605,6 @@ paths:
                             type: array
                 required: false
             responses:
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -2653,6 +2642,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -2816,27 +2816,6 @@ paths:
                             type: array
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -2860,6 +2839,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2870,6 +2859,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -2900,16 +2900,6 @@ paths:
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/currencyCodeQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -2930,6 +2920,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2983,27 +2983,6 @@ paths:
                             type: array
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -3027,6 +3006,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3037,6 +3026,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3199,27 +3199,6 @@ paths:
                             $ref: "#/components/schemas/WishList"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -3243,6 +3222,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3253,6 +3242,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3357,27 +3357,6 @@ paths:
                             $ref: "#/components/schemas/Account"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -3401,6 +3380,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3411,6 +3400,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3574,16 +3574,6 @@ paths:
                 -   $ref: "#/components/parameters/friendlyUrlPathPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -3604,6 +3594,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3643,16 +3643,6 @@ paths:
                 -   $ref: "#/components/parameters/productIdPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -3673,6 +3663,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4270,17 +4270,6 @@ paths:
                             type: array
                 required: false
             responses:
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -4318,6 +4307,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4549,27 +4549,6 @@ paths:
                             type: array
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -4593,6 +4572,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4603,6 +4592,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4650,27 +4650,6 @@ paths:
                             type: array
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -4694,6 +4673,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4704,6 +4693,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4736,16 +4736,6 @@ paths:
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/currencyCodeQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -4766,6 +4756,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4875,27 +4875,6 @@ paths:
                             $ref: "#/components/schemas/WishList"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -4919,6 +4898,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4929,6 +4918,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4953,22 +4953,12 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/wishListItemIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 204:
                     content:
                         application/json: {}
                         application/xml: {}
                     description:
-                        Deleted
+                        No content
                 401:
                     content:
                         application/json:
@@ -4979,6 +4969,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5005,16 +5005,6 @@ paths:
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/currencyCodeQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -5035,6 +5025,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5068,22 +5068,12 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 204:
                     content:
                         application/json: {}
                         application/xml: {}
                     description:
-                        Deleted
+                        No content
                 401:
                     content:
                         application/json:
@@ -5094,6 +5084,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5116,16 +5116,6 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
                 200:
                     content:
                         application/json:
@@ -5146,6 +5136,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5193,27 +5193,6 @@ paths:
                             $ref: "#/components/schemas/WishList"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 200:
                     content:
                         application/json:
@@ -5237,6 +5216,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5247,6 +5236,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -5348,27 +5348,6 @@ paths:
                             $ref: "#/components/schemas/WishListItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this resource.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
                 201:
                     content:
                         application/json:
@@ -5392,6 +5371,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5402,6 +5391,17 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The request payload references an unknown lookup key, omits a required cross-reference, or
+                        carries an out-of-range value.
                 500:
                     content:
                         application/json:

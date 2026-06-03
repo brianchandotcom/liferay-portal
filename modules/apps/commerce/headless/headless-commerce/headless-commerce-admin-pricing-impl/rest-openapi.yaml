@@ -837,7 +837,7 @@ info:
         /priceLists/by-externalReferenceCode/<externalReferenceCode>/priceEntries) to enumerate the per-SKU entries; (2)
         PATCH /priceEntries/<id> (or /priceEntries/by-externalReferenceCode/<externalReferenceCode>) to adjust price or
         promoPrice; (3) PATCH /tierPrices/<id> or DELETE /tierPrices/<id> to refresh or retire a quantity-break
-        override.. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        override. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.49'."
     license:
         name: Apache 2.0
@@ -936,10 +936,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1227,7 +1227,7 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -1374,10 +1374,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1554,10 +1554,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1645,10 +1645,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1794,10 +1794,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1953,10 +1953,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2102,10 +2102,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2267,7 +2267,7 @@ paths:
                 -   Discount
         patch:
             description:
-                Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields , then
+                Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields, then
                 cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when
                 the ID is unknown.
             operationId: patchDiscount
@@ -2285,10 +2285,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2433,10 +2433,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2592,10 +2592,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2741,10 +2741,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2894,10 +2894,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3072,10 +3072,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3224,10 +3224,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3415,10 +3415,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3569,10 +3569,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3765,10 +3765,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3946,7 +3946,7 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -4034,10 +4034,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4183,10 +4183,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4342,10 +4342,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4536,7 +4536,7 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -4685,10 +4685,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4846,10 +4846,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5035,10 +5035,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5214,10 +5214,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input

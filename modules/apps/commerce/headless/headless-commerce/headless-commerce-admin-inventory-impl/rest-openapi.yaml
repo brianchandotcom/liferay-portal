@@ -1932,10 +1932,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2029,7 +2029,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2124,7 +2124,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2214,8 +2214,7 @@ paths:
                         Successful operation
                 400:
                     description:
-                        "Invalid input. Happens if the search parameters are not passed\nor if the end date is prior to
-                        start date"
+                        Invalid input
                 401:
                     content:
                         application/json:
@@ -2373,10 +2372,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2534,7 +2533,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2705,10 +2704,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2801,7 +2800,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2959,10 +2958,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3122,10 +3121,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3285,10 +3284,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3459,10 +3458,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3623,10 +3622,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3808,10 +3807,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3972,10 +3971,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4138,10 +4137,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4304,10 +4303,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4480,10 +4479,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4644,10 +4643,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4815,7 +4814,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input

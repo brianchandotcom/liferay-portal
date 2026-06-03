@@ -505,7 +505,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -677,10 +677,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Payment"
                     description:
-                        Successfully update the Payment
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -758,10 +758,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Payment"
                     description:
-                        Successfully update the Payment
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -837,7 +837,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1015,10 +1015,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Payment"
                     description:
-                        Successfully update the Payment
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1092,7 +1092,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input

@@ -5,7 +5,6 @@
 
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openToast} from '@liferay/object-js-components-web';
 import {FieldBase} from 'frontend-js-components-web';
@@ -58,18 +57,22 @@ export default function CredentialsPanel({clientId}: {clientId: string}) {
 	return (
 		<>
 			<div className="align-items-center d-flex mb-3">
-				<h2 className="mb-0">
+				<h3 className="mb-0">
 					{Liferay.Language.get('api-credentials')}
-				</h2>
+				</h3>
 
 				<ClayTooltipProvider>
-					<span
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'api-credentials-help'
+						)}
 						className="ml-2 text-secondary"
 						data-tooltip-align="top"
+						displayType="unstyled"
+						size="sm"
+						symbol="question-circle-full"
 						title={Liferay.Language.get('api-credentials-help')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
+					/>
 				</ClayTooltipProvider>
 			</div>
 

@@ -61,7 +61,6 @@ public class DLFileEntryAssetEntryTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_indexerFixture = new IndexerFixture<>(
 			DLFileEntry.class, _searchRequestBuilderFactory);
 	}

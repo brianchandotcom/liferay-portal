@@ -148,8 +148,7 @@ public class ProvisioningRequestResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"accountEntryExternalReferenceCode", "accountEntryName",
-			"liferayDXPURL"
+			"accountEntryExternalReferenceCode", "accountEntryName"
 		};
 	}
 
@@ -160,8 +159,6 @@ public class ProvisioningRequestResourceTest
 		ProvisioningRequest provisioningRequest =
 			super.randomProvisioningRequest();
 
-		provisioningRequest.setLiferayDXPURL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		provisioningRequest.setUserAccounts(userAccounts);
 
 		return provisioningRequest;
@@ -191,9 +188,6 @@ public class ProvisioningRequestResourceTest
 		Assert.assertEquals(
 			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 			oAuth2Application.getAllowedGrantTypesList());
-		Assert.assertEquals(
-			provisioningRequest.getLiferayDXPURL(),
-			oAuth2Application.getHomePageURL());
 		Assert.assertEquals(
 			provisioningRequest.getAccountEntryName(),
 			oAuth2Application.getName());

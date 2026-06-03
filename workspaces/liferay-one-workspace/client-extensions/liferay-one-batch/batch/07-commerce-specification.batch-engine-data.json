@@ -12,7 +12,7 @@
 	"items": [
 		{
 			"description": {
-				"en_US": "Salesforce-sourced product classification (Primary, Regular, Add-on)."
+				"en_US": "Designates the product's classification from Salesforce (Add-on, Primary, Regular)."
 			},
 			"facetable": true,
 			"key": "product-type",

@@ -1,5 +1,6 @@
 locals {
 	account_id=data.aws_caller_identity.current.account_id
+	argocd_external_url=var.argocd_domain_config.hostname == null ? "" : "${local.argocd_tls_enabled ? "https" : "http"}://${var.argocd_domain_config.hostname}"
 	argocd_gateway_class_name="argocd-gateway-class"
 	argocd_gateway_name="argocd-gateway"
 	argocd_source_ranges=distinct(concat([data.aws_vpc.current.cidr_block], var.argocd_additional_allowed_cidr_blocks))
@@ -25,7 +26,7 @@ locals {
 			drop=["ALL"]
 		}
 		privileged=false
-		readOnlyRootFilesystem=	true
+		readOnlyRootFilesystem=true
 	}
 	default_crossplane_pod_security_context={
 		fsGroup=2000

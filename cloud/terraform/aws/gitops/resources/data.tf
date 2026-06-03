@@ -426,11 +426,31 @@ data "aws_iam_policy_document" "provider_aws_s3_policy_document" {
 		resources=["arn:aws:s3:::*/*"]
 	}
 }
+data "aws_iam_role" "alloy_role" {
+	count=var.observability_config.enabled ? 1 : 0
+	name="${var.deployment_name}-alloy"
+}
 data "aws_iam_role" "envoy_proxy_role" {
 	name="${var.deployment_name}-envoy-proxy"
 }
+data "aws_iam_role" "grafana_role" {
+	count=var.observability_config.enabled ? 1 : 0
+	name="${var.deployment_name}-grafana"
+}
 data "aws_iam_role" "liferay_irsa" {
 	name=local.liferay_service_account_role_name
+}
+data "aws_iam_role" "rds_exporter_role" {
+	count=var.observability_config.enabled ? 1 : 0
+	name="${var.deployment_name}-rds-exporter"
+}
+data "aws_prometheus_workspace" "amp" {
+	count=var.observability_config.enabled ? 1 : 0
+	workspace_id=data.aws_prometheus_workspaces.amp[0].workspace_ids[0]
+}
+data "aws_prometheus_workspaces" "amp" {
+	alias_prefix="${var.deployment_name}-amp-workspace"
+	count=var.observability_config.enabled ? 1 : 0
 }
 data "aws_subnet" "private" {
 	for_each=toset(data.aws_subnets.private.ids)

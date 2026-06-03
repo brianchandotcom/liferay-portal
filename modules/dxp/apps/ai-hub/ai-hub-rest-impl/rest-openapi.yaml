@@ -189,15 +189,12 @@ components:
                     type: integer
                 accountEntryName:
                     type: string
-                liferayDXPURL:
-                    type: string
                 userAccounts:
                     items:
                         $ref: "#/components/schemas/UserAccount"
                     type: array
             required:
                 -   accountEntryName
-                -   liferayDXPURL
                 -   userAccounts
             type: object
         Site:

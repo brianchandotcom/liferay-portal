@@ -3,34 +3,43 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDSState, getFDSAtom} from '@liferay/js-api/data-set';
-import {Atom, readAtom, subscribeAtom, writeAtom} from '@liferay/js-api/state';
-import React, {useEffect, useState} from 'react';
+import {SearchSubscription, subscribeSearch} from '@liferay/js-api/data-set';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface AppProps {
 	fdsName: string;
 }
 
 function App({fdsName}: AppProps) {
-	const [atom, setAtom] = useState<Atom<FDSState> | null>(null);
+	const [disabled, setDisabled] = useState<boolean>(true);
 	const [query, setQuery] = useState('');
+	const [setSearch, setSetSearch] = useState<Function>(() => () => {});
 
 	useEffect(() => {
 		let disposed = false;
-		let subscription: {dispose: () => void} | undefined;
+		let searchSubscription : SearchSubscription | null = null;
 
-		getFDSAtom(fdsName)
-			.then((resolvedAtom) => {
+		const handleQueryValue = 	(queryString: string) => {
+			//console.log("Search query handler for", fdsName, ". New query: ", queryString);
+			setQuery(queryString);
+			setDisabled(false);
+		}
+
+		//console.log("Effect running for", fdsName);
+		subscribeSearch(
+			fdsName, handleQueryValue, {timeout: 10000}
+		)
+			.then((subscription: SearchSubscription) => {
+				console.log("Search subscription handler for", fdsName);
 				if (disposed) {
+					console.log("Preexisting Search subscription exists");
+					subscription.dispose()
 					return;
 				}
-
-				setAtom(resolvedAtom);
-				setQuery(readAtom(resolvedAtom).search?.query ?? '');
-
-				subscription = subscribeAtom(resolvedAtom, (next) => {
-					setQuery(next?.search?.query ?? '');
-				});
+				searchSubscription = subscription;
+				setSetSearch(() => subscription.setSearch);
+				handleQueryValue(subscription.getSearch());
+				//console.log("Search subscription is ready for", fdsName, ". I received query", subscription.getSearch());
 			})
 			.catch((error: Error) => {
 				console.warn(
@@ -39,24 +48,26 @@ function App({fdsName}: AppProps) {
 			});
 
 		return () => {
+			//console.log("Effect disposal for", fdsName, "subscription: " + searchSubscription);
 			disposed = true;
-			subscription?.dispose();
+			if (searchSubscription) {
+				searchSubscription.dispose();
+				searchSubscription = null;
+			}
+			setDisabled(true);
 		};
 	}, [fdsName]);
 
 	const handleSearch = () => {
-		if (!atom) {
-			return;
-		}
-
-		writeAtom(atom, {...readAtom(atom), search: {query}});
+		console.log("Search triggered from CX for", fdsName, "with", query);
+		setSearch(query);
 	};
 
 	return (
 		<div style={{display: 'flex', gap: '0.5rem', padding: '1rem'}}>
 			<input
 				className="form-control"
-				disabled={!atom}
+				disabled={disabled}
 				onChange={(event) => setQuery(event.target.value)}
 				onKeyDown={(event) => {
 					if (event.key === 'Enter') {
@@ -64,9 +75,9 @@ function App({fdsName}: AppProps) {
 					}
 				}}
 				placeholder={
-					atom
-						? `Search in ${fdsName}`
-						: `Waiting for FDS "${fdsName}"...`
+					disabled
+						? `Waiting for FDS "${fdsName}"...`
+						: `Search in ${fdsName}`
 				}
 				style={{flex: 1}}
 				type="text"
@@ -75,7 +86,7 @@ function App({fdsName}: AppProps) {
 
 			<button
 				className="btn btn-primary"
-				disabled={!atom}
+				disabled={disabled}
 				onClick={handleSearch}
 				type="button"
 			>

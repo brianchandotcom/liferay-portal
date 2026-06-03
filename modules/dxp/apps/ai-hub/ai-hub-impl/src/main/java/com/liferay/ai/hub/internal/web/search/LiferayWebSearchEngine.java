@@ -74,9 +74,9 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 		Http.Options options = new Http.Options();
 
+		options.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + _userToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader("Liferay-AI-Hub-Cell-On-Behalf-Of", _userToken);
 
 		OAuth2Application oAuth2Application =
 			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(

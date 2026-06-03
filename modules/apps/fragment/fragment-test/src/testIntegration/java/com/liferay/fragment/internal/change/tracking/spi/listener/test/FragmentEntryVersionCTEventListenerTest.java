@@ -10,7 +10,7 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionUtil;
 import com.liferay.fragment.test.util.FragmentEntryVersionTestUtil;
@@ -85,7 +85,7 @@ public class FragmentEntryVersionCTEventListenerTest {
 		FragmentEntryVersionUtil.clearCache();
 
 		Assert.assertEquals(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry1));
 
@@ -96,7 +96,7 @@ public class FragmentEntryVersionCTEventListenerTest {
 			versions.toString(), versions.contains(oldestVersion));
 
 		Assert.assertEquals(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2));
 	}
@@ -106,11 +106,11 @@ public class FragmentEntryVersionCTEventListenerTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		Assert.assertEquals(
-			FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX + 1,
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
 

@@ -5,7 +5,7 @@
 
 package com.liferay.fragment.internal.model.listener;
 
-import com.liferay.fragment.internal.constants.FragmentConstants;
+import com.liferay.fragment.internal.constants.FragmentEntryVersionConstants;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.model.FragmentEntryVersionTable;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
@@ -50,7 +50,8 @@ public class FragmentEntryVersionModelListener
 				));
 
 			if (versionCount <=
-					FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX) {
+					FragmentEntryVersionConstants.
+						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX) {
 
 				return;
 			}
@@ -71,7 +72,8 @@ public class FragmentEntryVersionModelListener
 					).orderBy(
 						FragmentEntryVersionTable.INSTANCE.version.descending()
 					).limit(
-						FragmentConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+						FragmentEntryVersionConstants.
+							FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
 						versionCount
 					));
 

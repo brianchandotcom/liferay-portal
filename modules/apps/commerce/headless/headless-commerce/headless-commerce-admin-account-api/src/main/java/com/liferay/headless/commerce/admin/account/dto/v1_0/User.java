@@ -36,8 +36,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("User")
+@GraphQLName(
+	description = "Portal user record. Returned by the createUser endpoint when a new user is provisioned as part of an account membership invitation; carries the identifiers and profile fields needed to address the user in subsequent calls.",
+	value = "User"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Portal user record. Returned by the createUser endpoint when a new user is provisioned as part of an account membership invitation; carries the identifiers and profile fields needed to address the user in subsequent calls.",
 	requiredProperties = {"email", "firstName", "lastName"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -52,7 +56,10 @@ public class User implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(User.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "joe.1@commerce.com")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary email address of the user. Required on create; used as the login when the portal is configured to log in by email.",
+		example = "joe.1@commerce.com"
+	)
 	public String getEmail() {
 		if (_emailSupplier != null) {
 			email = _emailSupplier.get();
@@ -86,7 +93,9 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary email address of the user. Required on create; used as the login when the portal is configured to log in by email."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String email;
@@ -94,7 +103,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per user within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -128,14 +140,19 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per user within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Given name of the user. Required on create.",
+		example = "John"
+	)
 	public String getFirstName() {
 		if (_firstNameSupplier != null) {
 			firstName = _firstNameSupplier.get();
@@ -169,7 +186,7 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Given name of the user. Required on create.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String firstName;
@@ -178,7 +195,10 @@ public class User implements Serializable {
 	private Supplier<String> _firstNameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal primary key. Read-only; assigned by the system on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -210,14 +230,19 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal primary key. Read-only; assigned by the system on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form job title displayed in the back-office.",
+		example = "Account Manager"
+	)
 	public String getJobTitle() {
 		if (_jobTitleSupplier != null) {
 			jobTitle = _jobTitleSupplier.get();
@@ -251,14 +276,19 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form job title displayed in the back-office."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobTitle;
 
 	@JsonIgnore
 	private Supplier<String> _jobTitleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Family name of the user. Required on create.",
+		example = "Doe"
+	)
 	public String getLastName() {
 		if (_lastNameSupplier != null) {
 			lastName = _lastNameSupplier.get();
@@ -292,7 +322,7 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Family name of the user. Required on create.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String lastName;
@@ -300,7 +330,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lastNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the user is recorded as male in the profile. Legacy field; new integrations should not rely on it.",
+		example = "true"
+	)
 	public Boolean getMale() {
 		if (_maleSupplier != null) {
 			male = _maleSupplier.get();
@@ -332,14 +365,19 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the user is recorded as male in the profile. Legacy field; new integrations should not rely on it."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean male;
 
 	@JsonIgnore
 	private Supplier<Boolean> _maleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Middle name of the user, when supplied.",
+		example = "Robert"
+	)
 	public String getMiddleName() {
 		if (_middleNameSupplier != null) {
 			middleName = _middleNameSupplier.get();
@@ -373,14 +411,17 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Middle name of the user, when supplied.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
 	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Names of the regular portal-scoped roles to assign to the user. Each entry is the stable role name in the role registry.",
+		example = "[User, Power User]"
+	)
 	public String[] getRoles() {
 		if (_rolesSupplier != null) {
 			roles = _rolesSupplier.get();
@@ -414,7 +455,9 @@ public class User implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Names of the regular portal-scoped roles to assign to the user. Each entry is the stable role name in the role registry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roles;
 
@@ -695,4 +738,4 @@ public class User implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:746591440
+// LIFERAY-REST-BUILDER-HASH:-785729531

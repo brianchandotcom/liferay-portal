@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountOrganization")
+@GraphQLName(
+	description = "Link between an account and a Liferay organization. Used to mirror an organizational hierarchy into the commerce domain so that users tied to the organization inherit the account context.",
+	value = "AccountOrganization"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountOrganization")
 public class AccountOrganization implements Serializable {
@@ -50,7 +53,10 @@ public class AccountOrganization implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent account that owns the link (FK identifier). Read-only on this schema.",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -84,14 +90,19 @@ public class AccountOrganization implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the parent account that owns the link (FK identifier). Read-only on this schema."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Organization Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the linked organization. Read-only; mirrored from the organization record.",
+		example = "Organization Name"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -123,14 +134,19 @@ public class AccountOrganization implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the linked organization. Read-only; mirrored from the organization record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the linked organization. Alternative to `organizationId` on POST; resolved against the platform organization directory and rejected when no matching organization exists. Not returned on read.",
+		example = "AB-34098-789-N"
+	)
 	public String getOrganizationExternalReferenceCode() {
 		if (_organizationExternalReferenceCodeSupplier != null) {
 			organizationExternalReferenceCode =
@@ -169,7 +185,9 @@ public class AccountOrganization implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the linked organization. Alternative to `organizationId` on POST; resolved against the platform organization directory and rejected when no matching organization exists. Not returned on read."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String organizationExternalReferenceCode;
 
@@ -177,7 +195,10 @@ public class AccountOrganization implements Serializable {
 	private Supplier<String> _organizationExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30002")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the linked organization (FK identifier). Alternative to `organizationExternalReferenceCode` on POST.",
+		example = "30002"
+	)
 	public Long getOrganizationId() {
 		if (_organizationIdSupplier != null) {
 			organizationId = _organizationIdSupplier.get();
@@ -211,7 +232,9 @@ public class AccountOrganization implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the linked organization (FK identifier). Alternative to `organizationExternalReferenceCode` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long organizationId;
 
@@ -219,6 +242,7 @@ public class AccountOrganization implements Serializable {
 	private Supplier<Long> _organizationIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Slash-delimited path from the root of the organization tree to the linked organization. Read-only; mirrored from the organization record.",
 		example = "/Parent Organization/Organization Name"
 	)
 	public String getTreePath() {
@@ -254,7 +278,9 @@ public class AccountOrganization implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Slash-delimited path from the root of the organization tree to the linked organization. Read-only; mirrored from the organization record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String treePath;
 
@@ -462,4 +488,4 @@ public class AccountOrganization implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:294022183
+// LIFERAY-REST-BUILDER-HASH:1640055176

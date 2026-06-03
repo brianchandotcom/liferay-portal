@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Body")
+@GraphQLName(
+	description = "Multipart upload envelope for an account logo addressed by internal identifier. Contains a single binary file field named `logo` that replaces the current account logo.",
+	value = "Body"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Body")
 public class Body implements Serializable {
@@ -46,7 +49,9 @@ public class Body implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Body.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are accepted; the uploaded bytes replace the existing logo when supplied."
+	)
 	public String getLogo() {
 		if (_logoSupplier != null) {
 			logo = _logoSupplier.get();
@@ -78,7 +83,9 @@ public class Body implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are accepted; the uploaded bytes replace the existing logo when supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logo;
 
@@ -229,4 +236,4 @@ public class Body implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1152182156
+// LIFERAY-REST-BUILDER-HASH:240578499

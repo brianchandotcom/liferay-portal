@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountChannelShippingOption")
+@GraphQLName(
+	description = "Per-account override of a shipping option on a commerce channel. Pairs the owning account, the channel, a shipping method engine key, and a specific fixed option key; an override is unique per account, channel, shipping method, and option key.",
+	value = "AccountChannelShippingOption"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountChannelShippingOption")
 public class AccountChannelShippingOption implements Serializable {
@@ -51,7 +54,10 @@ public class AccountChannelShippingOption implements Serializable {
 			AccountChannelShippingOption.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record.",
+		example = "AB-34098-789-N"
+	)
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -89,7 +95,9 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
@@ -97,7 +105,10 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent account that owns the override (FK identifier).",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -131,14 +142,18 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the parent account that owns the override (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -174,14 +189,19 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the channel on which the shipping option override applies. Alternative to `channelId` on POST.",
+		example = "AB-34098-789-N"
+	)
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -219,14 +239,19 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the channel on which the shipping option override applies. Alternative to `channelId` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the channel on which the shipping option override applies (FK identifier). Alternative to `channelExternalReferenceCode` on POST.",
+		example = "30130"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -260,7 +285,9 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the channel on which the shipping option override applies (FK identifier). Alternative to `channelExternalReferenceCode` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long channelId;
 
@@ -268,7 +295,10 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal primary key. Read-only; assigned by the system on create.",
+		example = "30324"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -300,7 +330,9 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal primary key. Read-only; assigned by the system on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -308,7 +340,10 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the resolved shipping method (FK identifier). Read-only output computed from `shippingMethodKey` against the channel; 0 when the key matches no active method.",
+		example = "30324"
+	)
 	public Long getShippingMethodId() {
 		if (_shippingMethodIdSupplier != null) {
 			shippingMethodId = _shippingMethodIdSupplier.get();
@@ -342,14 +377,19 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the resolved shipping method (FK identifier). Read-only output computed from `shippingMethodKey` against the channel; 0 when the key matches no active method."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingMethodId;
 
 	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Engine key of the shipping method, persisted as supplied. The method must be active and registered on the channel.",
+		example = "fixed"
+	)
 	public String getShippingMethodKey() {
 		if (_shippingMethodKeySupplier != null) {
 			shippingMethodKey = _shippingMethodKeySupplier.get();
@@ -383,7 +423,9 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Engine key of the shipping method, persisted as supplied. The method must be active and registered on the channel."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethodKey;
 
@@ -391,7 +433,10 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<String> _shippingMethodKeySupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the resolved fixed shipping option (FK identifier). Read-only output computed from `shippingOptionKey`; 0 when the key matches no fixed option.",
+		example = "30324"
+	)
 	public Long getShippingOptionId() {
 		if (_shippingOptionIdSupplier != null) {
 			shippingOptionId = _shippingOptionIdSupplier.get();
@@ -425,14 +470,19 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the resolved fixed shipping option (FK identifier). Read-only output computed from `shippingOptionKey`; 0 when the key matches no fixed option."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingOptionId;
 
 	@JsonIgnore
 	private Supplier<Long> _shippingOptionIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Engine key of the fixed shipping option, persisted as supplied. The option must be registered on the resolved shipping method.",
+		example = "expedited"
+	)
 	public String getShippingOptionKey() {
 		if (_shippingOptionKeySupplier != null) {
 			shippingOptionKey = _shippingOptionKeySupplier.get();
@@ -466,7 +516,9 @@ public class AccountChannelShippingOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Engine key of the fixed shipping option, persisted as supplied. The option must be registered on the resolved shipping method."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOptionKey;
 
@@ -739,4 +791,4 @@ public class AccountChannelShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-285661689
+// LIFERAY-REST-BUILDER-HASH:-214040911

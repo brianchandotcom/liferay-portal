@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountChannelEntry")
+@GraphQLName(
+	description = "Deprecated -- per-account override of a channel-level commerce rule (currency, delivery or payment term, discount, payment method, price list, reserved billing or shipping address, or assigned user). The effective override type is derived from the endpoint path rather than from the payload. New integrations should use the per-account shipping option override or the nested account sub-resources.",
+	value = "AccountChannelEntry"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountChannelEntry")
 public class AccountChannelEntry implements Serializable {
@@ -49,7 +52,10 @@ public class AccountChannelEntry implements Serializable {
 			AccountChannelEntry.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record.",
+		example = "AB-34098-789-N"
+	)
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -87,14 +93,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String accountExternalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the parent account that owns the override (FK identifier). Read-only on this schema; mirrored from the parent account record.",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -128,14 +139,18 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the parent account that owns the override (FK identifier). Read-only on this schema; mirrored from the parent account record."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -171,14 +186,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the channel being overridden. Alternative to `channelId` on POST.",
+		example = "AB-34098-789-N"
+	)
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -216,14 +236,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the channel being overridden. Alternative to `channelId` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the channel being overridden (FK identifier). Alternative to `channelExternalReferenceCode` on POST.",
+		example = "30130"
+	)
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -257,14 +282,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the channel being overridden (FK identifier). Alternative to `channelExternalReferenceCode` on POST."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long channelId;
 
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the target entity (currency, term, discount, payment method, price list, address, or user) being attached to the channel-account pair. The interpretation of this code depends on the override type derived from the endpoint path.",
+		example = "AB-34098-789-N"
+	)
 	public String getClassExternalReferenceCode() {
 		if (_classExternalReferenceCodeSupplier != null) {
 			classExternalReferenceCode =
@@ -302,14 +332,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the target entity (currency, term, discount, payment method, price list, address, or user) being attached to the channel-account pair. The interpretation of this code depends on the override type derived from the endpoint path."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String classExternalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _classExternalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal primary key of the target entity being attached (FK identifier). Read in conjunction with the override type derived from the endpoint path.",
+		example = "30130"
+	)
 	public Long getClassPK() {
 		if (_classPKSupplier != null) {
 			classPK = _classPKSupplier.get();
@@ -343,14 +378,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal primary key of the target entity being attached (FK identifier). Read in conjunction with the override type derived from the endpoint path."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classPK;
 
 	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal primary key. Read-only; assigned by the system on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -382,14 +422,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal primary key. Read-only; assigned by the system on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether this override bypasses channel-level eligibility checks. When true the rule is applied to the account regardless of channel-level filters.",
+		example = "true"
+	)
 	public Boolean getOverrideEligibility() {
 		if (_overrideEligibilitySupplier != null) {
 			overrideEligibility = _overrideEligibilitySupplier.get();
@@ -423,14 +468,19 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether this override bypasses channel-level eligibility checks. When true the rule is applied to the account regardless of channel-level filters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean overrideEligibility;
 
 	@JsonIgnore
 	private Supplier<Boolean> _overrideEligibilitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sort priority among overrides of the same type for the same account. Lower values are applied first.",
+		example = "1.0"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -464,7 +514,9 @@ public class AccountChannelEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sort priority among overrides of the same type for the same account. Lower values are applied first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
@@ -731,4 +783,4 @@ public class AccountChannelEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1950225680
+// LIFERAY-REST-BUILDER-HASH:-1322465951

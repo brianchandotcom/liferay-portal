@@ -27,6 +27,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,6 +57,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -686,10 +690,28 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		_layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), friendlyURLB + "-de", "de");
 
-		exportImportLayouts(layoutIds, getImportParameterMap());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
 
-		_assertNewFriendlyURL(layoutA, friendlyURLB);
-		_assertNewFriendlyURL(layoutB, friendlyURLA);
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+			for (LogEntry logEntry : logEntries) {
+				Throwable throwable = logEntry.getThrowable();
+
+				Assert.assertTrue(
+					String.valueOf(throwable),
+					throwable instanceof LayoutFriendlyURLsException);
+			}
+		}
+
+		_assertFriendlyURL(layoutA, friendlyURLA);
+		_assertFriendlyURL(layoutB, friendlyURLB);
 	}
 
 	@FeatureFlag("LPD-34594")
@@ -776,12 +798,16 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 	}
 
-	private void _assertNewFriendlyURL(Layout layout, String friendlyURL)
+	private void _assertFriendlyURL(Layout layout, String friendlyURL)
 		throws Exception {
 
 		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(),
 			layout.isPrivateLayout());
+
+		Assert.assertEquals(
+			friendlyURL,
+			importedLayout.getFriendlyURL(LocaleUtil.getDefault()));
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -790,7 +816,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					importedLayout.isPrivateLayout()),
 				FriendlyURLEntryConstants.
 					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
-				friendlyURL + "-1");
+				friendlyURL);
 
 		Assert.assertEquals(
 			importedLayout.getPlid(), friendlyURLEntry.getClassPK());

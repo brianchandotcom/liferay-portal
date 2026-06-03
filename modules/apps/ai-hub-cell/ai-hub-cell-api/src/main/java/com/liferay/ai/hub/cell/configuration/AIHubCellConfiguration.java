@@ -7,7 +7,6 @@ package com.liferay.ai.hub.cell.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -29,14 +28,6 @@ public interface AIHubCellConfiguration {
 
 	@Meta.AD(name = "client-secret", type = Meta.Type.Password)
 	public String clientSecret();
-
-	@ExtendedAttributeDefinition(
-		visibilityControllerKey = "com.liferay.ai.hub.cell.internal.configuration.admin.display.AIHubCellSecretVisibilityController"
-	)
-	@Meta.AD(
-		deflt = "", name = "secret", required = false, type = Meta.Type.Password
-	)
-	public String secret();
 
 	@Meta.AD(name = "service-url")
 	public String serviceURL();

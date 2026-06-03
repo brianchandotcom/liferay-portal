@@ -93,27 +93,6 @@ public class ProvisioningRequest implements Cloneable, Serializable {
 
 	protected String accountEntryName;
 
-	public String getLiferayDXPURL() {
-		return liferayDXPURL;
-	}
-
-	public void setLiferayDXPURL(String liferayDXPURL) {
-		this.liferayDXPURL = liferayDXPURL;
-	}
-
-	public void setLiferayDXPURL(
-		UnsafeSupplier<String, Exception> liferayDXPURLUnsafeSupplier) {
-
-		try {
-			liferayDXPURL = liferayDXPURLUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String liferayDXPURL;
-
 	public UserAccount[] getUserAccounts() {
 		return userAccounts;
 	}
@@ -167,4 +146,4 @@ public class ProvisioningRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:626501838
+// LIFERAY-REST-BUILDER-HASH:1830339160

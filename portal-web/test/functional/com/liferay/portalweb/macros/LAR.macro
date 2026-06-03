@@ -2,12 +2,14 @@ definition {
 
 	@summary = "Default summary"
 	macro _configureExportSiteOptions(contentDateRange = null, checkContentNameList = null, uncheckContentNameList = null, checkPageName = null, uncheckLogo = null, larFileName = null, uncheckSiteTemplateSettings = null, contentName = null, uncheckSubSubContent = null, uncheckSubContent = null, exportPermissions = null, uncheckSitePagesSettings = null, contentDeletion = null, mainContent = null, subContent = null) {
-		if (isSet(larFileName)) {
-			Type(
-				inputFieldId = "ExportPortlet_name",
-				locator1 = "TextInput#INPUT_ID",
-				value1 = ${larFileName});
+		if (!(isSet(larFileName))) {
+			var larFileName = "Export";
 		}
+
+		Type(
+			inputFieldId = "ExportPortlet_name",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = ${larFileName});
 
 		if (isSet(contentDateRange)) {
 			ContentConfiguration.contentDateRange(contentDateRange = ${contentDateRange});

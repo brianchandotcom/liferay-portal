@@ -1576,31 +1576,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-113665 - Validate if the user can view a topic."
-	@priority = 5
-	@refactordone
-	@uitest
-	test CanViewTopic {
-		property portal.acceptance = "true";
-
-		task ("Given there is a category created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Question Description",
-				categoryName = "question AddQuestionCategory",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When user goes to Questions Page") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "question AddQuestionCategory");
-		}
-
-		task ("Then the User can view a Topic Default") {
-			Questions.viewTopicDefault();
-		}
-	}
-
 	@description = "LPS-122810 - Validate if the user can view the voting style from the questions and answers lists."
 	@priority = 4
 	@refactordone

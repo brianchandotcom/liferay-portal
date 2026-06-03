@@ -1,6 +1,7 @@
 {
 	"options": {
 		"auto_approve": false,
+		"branch": "",
 		"parallelism": 10,
 		"provider": "gcp",
 		"version": "1.0.3"

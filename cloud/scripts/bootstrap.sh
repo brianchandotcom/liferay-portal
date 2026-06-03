@@ -18,6 +18,10 @@ function main {
 
 	config_file=$(_get_config_file "${1:-}")
 
+	local branch
+
+	branch=$(_get_branch "${config_file}")
+
 	local provider
 
 	provider=$(_get_provider "${config_file}")
@@ -28,7 +32,7 @@ function main {
 
 	local extracted_dir
 
-	extracted_dir=$(_download_and_extract_files "${provider}" "${version}")
+	extracted_dir=$(_download_and_extract_files "${branch}" "${provider}" "${version}")
 
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}" "${extracted_dir}/cloud/scripts/versions_${provider}.tfvars"
 }
@@ -66,21 +70,28 @@ function _check_utils {
 }
 
 function _download_and_extract_files {
-	local provider="${1}"
-	local version="${2}"
+	local branch="${1}"
+	local provider="${2}"
+	local version="${3}"
 
 	local bucket_name="liferay-cloud-native-bootstrap"
 
 	local download_base_url="https://cdn.liferay.cloud"
 
-	if [[ "${version}" == *-pr-* ]]
+	local prefix="bootstrap/liferay-${provider}-bootstrap"
+
+	if [ -n "${branch}" ]
 	then
 		bucket_name="liferay-cloud-native-bootstrap-nonprd"
 
 		download_base_url="https://cdn.liferay.sh"
-	fi
 
-	local prefix="bootstrap/liferay-${provider}-bootstrap"
+		local sanitized_branch
+
+		sanitized_branch=$(echo "${branch}" | tr '/' '-')
+
+		prefix="bootstrap/${sanitized_branch}/liferay-${provider}-bootstrap"
+	fi
 
 	local json
 
@@ -112,7 +123,7 @@ function _download_and_extract_files {
 	else
 		output_path=$( \
 			jq \
-				--arg sn "bootstrap/liferay-${provider}-bootstrap/liferay-${provider}-bootstrap-${version}.tar.gz" \
+				--arg sn "${prefix}/liferay-${provider}-bootstrap-${version}.tar.gz" \
 				--raw-output \
 				'.items[]
 				| select(.name == $sn)
@@ -156,6 +167,16 @@ function _download_and_extract_files {
 		--file "${output_file}"
 
 	echo "${output_dir}"
+}
+
+function _get_branch {
+	local config_file="${1}"
+
+	local branch
+
+	branch=$(jq -r ".options.branch // .branch // empty" "${config_file}")
+
+	echo "${branch}"
 }
 
 function _get_config_file {

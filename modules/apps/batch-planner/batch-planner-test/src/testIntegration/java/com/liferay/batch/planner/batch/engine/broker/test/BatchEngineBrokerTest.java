@@ -446,7 +446,9 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testImportExportObjectDefinitionJSON() throws Exception {
-		File file = _createImportFile("json", "object_definition_import.json");
+		File file = _createImportFile(
+			"json", "object_definition_import.json",
+			"A" + RandomTestUtil.randomString());
 
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			_objectDefinition2 = _publishObjectDefinition(
@@ -787,12 +789,17 @@ public class BatchEngineBrokerTest {
 		return file;
 	}
 
-	private File _createImportFile(String extension, String fileName)
+	private File _createImportFile(
+			String extension, String fileName, String objectDefinitionName)
 		throws Exception {
 
 		File file = _file.createTempFile(extension);
 
-		Files.copy(_getInputStream(fileName), file.toPath());
+		_file.write(
+			file,
+			StringUtil.replace(
+				StreamUtil.toString(_getInputStream(fileName)),
+				"[$OBJECT_DEFINITION_NAME$]", objectDefinitionName));
 
 		return file;
 	}

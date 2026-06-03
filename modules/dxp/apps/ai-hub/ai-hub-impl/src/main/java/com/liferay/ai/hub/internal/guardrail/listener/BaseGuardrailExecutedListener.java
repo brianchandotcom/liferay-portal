@@ -59,7 +59,7 @@ public abstract class BaseGuardrailExecutedListener {
 
 			AuditRouterUtil.route(
 				WorkflowInstance.class.getName(),
-				kaleoInstanceToken.getKaleoInstanceId(),
+				kaleoInstanceToken.getKaleoInstanceId(), new Date(),
 				AIHubEventTypes.AI_HUB_GUARDRAIL_VIOLATION,
 				JSONUtil.put(
 					"agentDefinitionExternalReferenceCode",
@@ -86,7 +86,7 @@ public abstract class BaseGuardrailExecutedListener {
 					"workflowInstanceId",
 					kaleoInstanceToken.getKaleoInstanceId()
 				),
-				new Date(), kaleoInstanceToken.getUserId());
+				kaleoInstanceToken.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

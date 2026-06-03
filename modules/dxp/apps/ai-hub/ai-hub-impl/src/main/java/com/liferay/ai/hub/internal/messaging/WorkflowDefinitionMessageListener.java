@@ -7,7 +7,6 @@ package com.liferay.ai.hub.internal.messaging;
 
 import com.liferay.ai.hub.internal.audit.AuditRouterUtil;
 import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -74,6 +73,7 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 		AuditRouterUtil.route(
 			KaleoDefinition.class.getName(),
 			kaleoDefinition.getKaleoDefinitionId(),
+			(Date)message.get("createDate"),
 			_eventTypes.get(message.getString("eventType")),
 			JSONUtil.put(
 				"content", kaleoDefinition.getContentAsXML()
@@ -94,7 +94,7 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 			).put(
 				"version", kaleoDefinition.getVersion()
 			),
-			(Date)message.get("timestamp"), kaleoDefinition.getUserId());
+			kaleoDefinition.getUserId());
 	}
 
 	@Reference

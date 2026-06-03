@@ -1,9 +1,23 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.164.0",
-		"@clayui/label": "^3.164.0",
+		"@clayui/button": "^3.165.0",
+		"@clayui/form": "^3.165.0",
+		"@clayui/icon": "^3.165.0",
+		"@clayui/label": "^3.165.0",
+		"@clayui/list": "^3.165.0",
+		"@clayui/panel": "^3.165.0",
 		"@liferay/frontend-data-set-web": "*",
-		"react": "18.2.0"
+		"classnames": "2.3.1",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
+		],
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/tests/js/**/*.spec.*"
+		]
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/seo-studio-web",

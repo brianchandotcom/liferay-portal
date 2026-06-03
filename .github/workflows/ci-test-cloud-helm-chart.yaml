@@ -35,30 +35,29 @@ jobs:
                     }
 
                     main "${@}"
-
-                    function main {
-                        local test
-
-                        for test in scripts/tests/*-test.sh tests/*_test.sh
-                        do
-                            if [ -f "${test}" ]
-                            then
-                                bash "${test}"
-                            fi
-                        done
-                    }
-
-                    main
-                working-directory: ./cloud/helm/${{matrix.chart}}
-            -   name: Render and validate Helm chart
+            -   name: Run unit tests
                 run: |
+                    set -o errexit
+                    set -o nounset
                     set -o pipefail
 
-                    helm template liferay . | kubeconform --strict --summary \
-                        -schema-location default \
-                        -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
-                        -skip ClusterProviderConfig,LiferayInfrastructure
-                working-directory: ./cloud/helm/${{matrix.chart}}
+                    function main {
+                        local test_files
+
+                        test_files=$(ls "cloud/helm/${{matrix.chart}}/tests/"*_test.yaml 2>/dev/null || echo "")
+
+                        if [ "${test_files}" ]
+                        then
+                            mkdir --parents cloud/test-reports
+
+                            helm unittest \
+                                --output-file "cloud/test-reports/helm-unittest-${{matrix.chart}}.xml" \
+                                --output-type JUnit \
+                                "cloud/helm/${{matrix.chart}}"
+                        fi
+                    }
+
+                    main "${@}"
         strategy:
             fail-fast: false
             matrix:

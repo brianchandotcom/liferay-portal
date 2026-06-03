@@ -3,7 +3,13 @@
 TEST_SMTP_SERVER_DIR="/tmp"
 TEST_SMTP_SERVER_URL="https://repository-cdn.liferay.com/nexus/service/local/repo_groups/public/content/com/liferay/com.mockmock/1.4.0/com.mockmock-1.4.0.jar"
 
-function download_mockmock {
+function mockmock_set_up {
+	_download_mockmock
+
+	_start_mockmock_server
+}
+
+function _download_mockmock {
 	local attempt=1
 	local max_attempts=5
 	local sleep_interval=20
@@ -25,13 +31,7 @@ function download_mockmock {
 	echo "Downloaded MockMock."
 }
 
-function mockmock_set_up {
-	download_mockmock
-
-	start_mockmock_server
-}
-
-function start_mockmock_server {
+function _start_mockmock_server {
 	local sleep_duration=60
 	local sleep_interval=2
 	local total_duration=0

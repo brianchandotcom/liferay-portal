@@ -400,6 +400,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>iconOnly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>interactive</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

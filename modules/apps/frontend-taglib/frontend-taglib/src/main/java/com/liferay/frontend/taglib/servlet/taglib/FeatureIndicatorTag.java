@@ -20,6 +20,10 @@ public class FeatureIndicatorTag extends IncludeTag {
 		return _dark;
 	}
 
+	public boolean getIconOnly() {
+		return _iconOnly;
+	}
+
 	public boolean getInteractive() {
 		return _interactive;
 	}
@@ -34,6 +38,10 @@ public class FeatureIndicatorTag extends IncludeTag {
 
 	public void setDark(boolean dark) {
 		_dark = dark;
+	}
+
+	public void setIconOnly(boolean iconOnly) {
+		_iconOnly = iconOnly;
 	}
 
 	public void setInteractive(boolean interactive) {
@@ -60,6 +68,7 @@ public class FeatureIndicatorTag extends IncludeTag {
 		super.cleanUp();
 
 		_dark = false;
+		_iconOnly = false;
 		_interactive = false;
 		_tooltipAlign = null;
 		_type = null;
@@ -75,6 +84,8 @@ public class FeatureIndicatorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:feature-indicator:dark", _dark);
 		httpServletRequest.setAttribute(
+			"liferay-frontend:feature-indicator:iconOnly", _iconOnly);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:feature-indicator:interactive", _interactive);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:feature-indicator:tooltipAlign", _tooltipAlign);
@@ -85,6 +96,7 @@ public class FeatureIndicatorTag extends IncludeTag {
 	private static final String _PAGE = "/feature_indicator/page.jsp";
 
 	private boolean _dark;
+	private boolean _iconOnly;
 	private boolean _interactive;
 	private String _tooltipAlign;
 	private String _type;

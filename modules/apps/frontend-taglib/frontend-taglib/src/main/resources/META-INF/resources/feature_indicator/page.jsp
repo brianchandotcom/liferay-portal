@@ -9,6 +9,7 @@
 
 <%
 boolean dark = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:feature-indicator:dark"));
+boolean iconOnly = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:feature-indicator:iconOnly"));
 boolean interactive = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:feature-indicator:interactive"));
 String tooltipAlign = (String)request.getAttribute("liferay-frontend:feature-indicator:tooltipAlign");
 String type = (String)request.getAttribute("liferay-frontend:feature-indicator:type");
@@ -20,6 +21,8 @@ String type = (String)request.getAttribute("liferay-frontend:feature-indicator:t
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"dark", dark
+			).put(
+				"iconOnly", iconOnly
 			).put(
 				"interactive", interactive
 			).put(

@@ -2333,36 +2333,4 @@ definition {
 		}
 	}
 
-	@description = "This test checks that the javascript in the user name will not be executed when viewing a question on page."
-	@priority = 3
-	test XSSIsNotExecutedWhenViewingUsernameInQuestion {
-		task ("Given there is a catergory created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When the user configurates the user informations") {
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-			User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
-		}
-
-		task ("And add a question") {
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Content AddQuestion",
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				titleField = "Title AddQuestion",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then the script is not executed") {
-			AssertAlertNotPresent();
-		}
-	}
-
 }

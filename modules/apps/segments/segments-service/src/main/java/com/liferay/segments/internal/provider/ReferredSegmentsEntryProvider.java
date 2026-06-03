@@ -64,12 +64,15 @@ public class ReferredSegmentsEntryProvider
 			className, classPK, context, segmentsEntry, segmentsEntryIds,
 			userAttributes);
 
-		if (ArrayUtil.isEmpty(segmentsEntryIds) ||
-			Validator.isNull(referredFilterString) ||
+		if (Validator.isNull(referredFilterString) ||
 			(member && referredConjunction.equals(Criteria.Conjunction.OR)) ||
 			(!member && referredConjunction.equals(Criteria.Conjunction.AND))) {
 
 			return member;
+		}
+
+		if (ArrayUtil.isEmpty(segmentsEntryIds)) {
+			return false;
 		}
 
 		Map<String, String> segmentsEntryMap = HashMapBuilder.put(

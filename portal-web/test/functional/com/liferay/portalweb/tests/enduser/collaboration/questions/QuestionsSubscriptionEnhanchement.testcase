@@ -324,9 +324,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
+	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe and unsubscribe a topic if they want to."
 	@priority = 5
-	test CanSubscribeATopic {
+	test CanSubscribeAndUnsubscribeATopic {
 		task ("Given there is a Created subtopic") {
 			Questions.openToQuestionsTopic(
 				layoutName = "questions-page",
@@ -343,34 +343,6 @@ definition {
 		}
 
 		task ("Then the can see that he is subscribed in a topic on the subscriptions page") {
-			Questions.gotoTab(questionTabField = "Subscriptions");
-
-			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
-		}
-	}
-
-	@description = "This is a test for LPS-159160. Verify if the user is able to unsubscribe a topic if they want to"
-	@priority = 5
-	test CanUnsubscribeATopic {
-		task ("Given there are a Topic and a subtopic created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.addSubTopic(
-				subTopicDescription = "Topic Description",
-				subTopicName = "Questions Test Topic");
-		}
-
-		task ("And the user is subiscribed on this topic") {
-			Questions.subscribeTopic();
-
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");

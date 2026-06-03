@@ -254,6 +254,15 @@
 		"to": ""
 	},
 	{
+		"from": "ContentUtil.get(ClassLoader paramName, String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-8037",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
 		"classNames": [
 			"LayoutItemSelectorCriterion"
 		],

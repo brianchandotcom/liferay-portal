@@ -74,7 +74,10 @@ export class QuestionsPage {
 		questionTitle: string,
 		tagNames: string[]
 	) {
-		await this.page.getByRole('button', {name: 'Ask Question'}).click();
+		await this.page
+			.getByRole('button', {name: 'Ask Question'})
+			.first()
+			.click();
 		await this.page
 			.getByPlaceholder('What is your question?')
 			.fill(questionTitle);

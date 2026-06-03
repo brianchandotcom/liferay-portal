@@ -9,7 +9,6 @@ dependencies {
 	testIntegrationImplementation group: "org.json", name: "json", version: "20231013"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.5.0"
 	testIntegrationImplementation project(":apps:batch-engine:batch-engine-test-util")
-	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:mcp:mcp-server-rest-api")
 	testIntegrationImplementation project(":apps:mcp:mcp-server-rest-client")
 	testIntegrationImplementation project(":apps:object:object-api")

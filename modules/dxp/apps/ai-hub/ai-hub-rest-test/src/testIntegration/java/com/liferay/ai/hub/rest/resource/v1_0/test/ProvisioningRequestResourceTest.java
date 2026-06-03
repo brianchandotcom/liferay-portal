@@ -16,6 +16,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -130,6 +130,17 @@ public class ProvisioningRequestResourceTest
 				postProvisioningRequest.getAccountEntryId());
 
 		_assertAccountEntry(customerAccountEntry, provisioningRequest);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_CONFIGURATION", TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				customerAccountEntry.getAccountEntryId() +
+					"-ai-hub-configuration",
+				0, objectDefinition.getObjectDefinitionId()));
 
 		AccountEntry aiHubAccountEntry =
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(

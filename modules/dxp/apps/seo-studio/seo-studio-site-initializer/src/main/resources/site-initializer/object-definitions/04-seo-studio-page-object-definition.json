@@ -1,7 +1,7 @@
 {
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountToSEOStudioPages_accountEntryId",
-	"className": "com.liferay.object.model.ObjectDefinition#SP04",
+	"className": "com.liferay.object.model.ObjectDefinition#S4P1",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
 	"externalReferenceCode": "L_SEO_STUDIO_PAGE",

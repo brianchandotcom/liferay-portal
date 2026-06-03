@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -156,8 +155,8 @@ import java.nio.file.Files;
 
 import java.security.Key;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,6 +166,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 
@@ -1620,9 +1620,12 @@ public class BatchEngineBrokerTest {
 	}
 
 	private String _toDateString(Date date) {
-		Instant instant = date.toInstant();
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-		return String.valueOf(instant.truncatedTo(ChronoUnit.SECONDS));
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		return dateFormat.format(date);
 	}
 
 	private List<String> _toList(CSVRecord csvRecord) {
@@ -1728,6 +1731,7 @@ public class BatchEngineBrokerTest {
 			"testLongTextField", "testMultiselectPicklistField",
 			"testPicklistField", "testPrecisionDecimalField",
 			"testRichTextField", "testTextField");
+
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -1743,7 +1747,14 @@ public class BatchEngineBrokerTest {
 							new UnsafeSupplierJsonSerializer());
 					}
 				});
-			setDateFormat(new ISO8601DateFormat());
+
+			DateFormat dateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+			dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+			setDateFormat(dateFormat);
+
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};

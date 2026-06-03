@@ -369,7 +369,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				TransformUtil.transformToList(
 					supportedGrantTypes, GrantType::parse));
 
-			String introspectionEndpoint = _resolveIntrospectionEndpoint(
+			String introspectionEndpoint = _getIntrospectionEndpoint(
 				tokenEndpoint);
 
 			if (introspectionEndpoint != null) {
@@ -451,7 +451,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				TransformUtil.transformToList(
 					supportedGrantTypes, GrantType::parse));
 
-			String introspectionEndpoint = _resolveIntrospectionEndpoint(
+			String introspectionEndpoint = _getIntrospectionEndpoint(
 				tokenEndpoint);
 
 			if (introspectionEndpoint != null) {
@@ -477,6 +477,19 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
+	}
+
+	private String _getIntrospectionEndpoint(String tokenEndpoint) {
+		tokenEndpoint = _removeTrailingSlash(tokenEndpoint);
+
+		if ((tokenEndpoint == null) || !tokenEndpoint.endsWith("/token")) {
+			return null;
+		}
+
+		String basePath = tokenEndpoint.substring(
+			0, tokenEndpoint.length() - "/token".length());
+
+		return basePath + "/introspect";
 	}
 
 	private String _getSubjectTypes(
@@ -527,19 +540,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 
 		return urlString.substring(0, urlString.length() - 1);
-	}
-
-	private String _resolveIntrospectionEndpoint(String tokenEndpoint) {
-		tokenEndpoint = _removeTrailingSlash(tokenEndpoint);
-
-		if ((tokenEndpoint == null) || !tokenEndpoint.endsWith("/token")) {
-			return null;
-		}
-
-		String basePath = tokenEndpoint.substring(
-			0, tokenEndpoint.length() - "/token".length());
-
-		return basePath + "/introspect";
 	}
 
 	private void _validate(

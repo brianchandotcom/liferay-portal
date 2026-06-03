@@ -4,7 +4,6 @@ readonly CONFIGS_DIR="/var/lib/structured-logging/configs"
 readonly LOG4J_LAYOUT_TEMPLATE_JSON_SHA256="3bb8b7442ab67b222968add9ef044fbe3cab800a1be9b9b98504bc6923376eb7"
 readonly LOG4J_LAYOUT_TEMPLATE_JSON_VERSION="2.17.1"
 readonly LOGGING_PROPERTIES="/opt/liferay/structured-logging-runtime/logging.properties"
-readonly SCRIPT_NAME="100-inject-structured-logging.sh"
 readonly SHIELDED_CONTAINER_LIB="/opt/liferay/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib"
 readonly TOMCAT_CONF="/opt/liferay/tomcat/conf"
 readonly WEBAPP_META_INF="/opt/liferay/tomcat/webapps/ROOT/WEB-INF/classes/META-INF"
@@ -99,7 +98,7 @@ function _log {
 
 	printf "{\"message\": \"%s\", \"script\": \"%s\", \"severity\": \"%s\", \"timestamp\": \"%s\"}\n" \
 		"${message}" \
-		"${SCRIPT_NAME}" \
+		"100-inject-structured-logging.sh" \
 		"${level}" \
 		"$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 }

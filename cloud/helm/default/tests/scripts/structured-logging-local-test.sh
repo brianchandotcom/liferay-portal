@@ -70,9 +70,11 @@ function main {
 
 			next
 		}
+
 		skip {
 			next
 		}
+
 		{
 			print
 		}
@@ -96,7 +98,10 @@ function main {
 
 	local json_valid
 
-	json_valid=$(jq --raw-input 'fromjson? | select((.level? or .severity?) and (.time? or .timestamp?))' 2> /dev/null <<< "${jvm_logs}" | jq --slurp 'length')
+	json_valid=$(jq --raw-input '
+		fromjson?
+		| select((.level? or .severity?) and (.time? or .timestamp?))
+	' 2> /dev/null <<< "${jvm_logs}" | jq --slurp 'length')
 
 	local percent=$((json_valid * 100 / non_empty))
 

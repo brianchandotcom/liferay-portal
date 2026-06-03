@@ -35,35 +35,28 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterPublish(long ctCollectionId) {
-		Map<Long, Integer> fragmentEntryVersionCountByFragmentEntryIdMap =
-			_fragmentEntryVersionCountByCtCollectionIdMap.remove(
-				ctCollectionId);
+		Map<Long, Integer> counts = _countsMap.remove(ctCollectionId);
 
-		if (fragmentEntryVersionCountByFragmentEntryIdMap == null) {
+		if (counts == null) {
 			return;
 		}
 
-		for (Map.Entry<Long, Integer> entry :
-				fragmentEntryVersionCountByFragmentEntryIdMap.entrySet()) {
-
+		for (Map.Entry<Long, Integer> entry : counts.entrySet()) {
 			_deleteFragmentEntryVersions(entry.getKey(), entry.getValue());
 		}
 	}
 
 	@Override
 	public void onBeforePublish(long ctCollectionId) {
-		Map<Long, Integer> fragmentEntryVersionCountByFragmentEntryIdMap =
-			_getFragmentEntryVersionCountByFragmentEntryIdMap(ctCollectionId);
+		Map<Long, Integer> counts = _getCounts(ctCollectionId);
 
-		if (MapUtil.isEmpty(fragmentEntryVersionCountByFragmentEntryIdMap)) {
-			_fragmentEntryVersionCountByCtCollectionIdMap.remove(
-				ctCollectionId);
+		if (MapUtil.isEmpty(counts)) {
+			_countsMap.remove(ctCollectionId);
 
 			return;
 		}
 
-		_fragmentEntryVersionCountByCtCollectionIdMap.put(
-			ctCollectionId, fragmentEntryVersionCountByFragmentEntryIdMap);
+		_countsMap.put(ctCollectionId, counts);
 	}
 
 	private void _deleteFragmentEntryVersions(
@@ -88,6 +81,37 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 					exception);
 			}
 		}
+	}
+
+	private Map<Long, Integer> _getCounts(long ctCollectionId) {
+		Map<Long, Integer> counts = new HashMap<>();
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			FragmentEntryVersionTable.INSTANCE.fragmentEntryId,
+			DSLFunctionFactoryUtil.count(
+				FragmentEntryVersionTable.INSTANCE.fragmentEntryVersionId
+			).as(
+				"fragmentEntryVersionCount"
+			)
+		).from(
+			FragmentEntryVersionTable.INSTANCE
+		).where(
+			FragmentEntryVersionTable.INSTANCE.ctCollectionId.eq(ctCollectionId)
+		).groupBy(
+			FragmentEntryVersionTable.INSTANCE.fragmentEntryId
+		);
+
+		for (Object[] array :
+				(List<Object[]>)_fragmentEntryVersionPersistence.dslQuery(
+					dslQuery)) {
+
+			long fragmentEntryId = GetterUtil.getLong(array[0]);
+			int fragmentEntryVersionCount = GetterUtil.getInteger(array[1]);
+
+			counts.put(fragmentEntryId, fragmentEntryVersionCount);
+		}
+
+		return counts;
 	}
 
 	private List<FragmentEntryVersion> _getDeletableFragmentEntryVersions(
@@ -116,47 +140,11 @@ public class FragmentEntryVersionCTEventListener implements CTEventListener {
 			));
 	}
 
-	private Map<Long, Integer>
-		_getFragmentEntryVersionCountByFragmentEntryIdMap(long ctCollectionId) {
-
-		Map<Long, Integer> fragmentEntryVersionCountByFragmentEntryIdMap =
-			new HashMap<>();
-
-		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			FragmentEntryVersionTable.INSTANCE.fragmentEntryId,
-			DSLFunctionFactoryUtil.count(
-				FragmentEntryVersionTable.INSTANCE.fragmentEntryVersionId
-			).as(
-				"fragmentEntryVersionCount"
-			)
-		).from(
-			FragmentEntryVersionTable.INSTANCE
-		).where(
-			FragmentEntryVersionTable.INSTANCE.ctCollectionId.eq(ctCollectionId)
-		).groupBy(
-			FragmentEntryVersionTable.INSTANCE.fragmentEntryId
-		);
-
-		for (Object[] array :
-				(List<Object[]>)_fragmentEntryVersionPersistence.dslQuery(
-					dslQuery)) {
-
-			long fragmentEntryId = GetterUtil.getLong(array[0]);
-			int fragmentEntryVersionCount = GetterUtil.getInteger(array[1]);
-
-			fragmentEntryVersionCountByFragmentEntryIdMap.put(
-				fragmentEntryId, fragmentEntryVersionCount);
-		}
-
-		return fragmentEntryVersionCountByFragmentEntryIdMap;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryVersionCTEventListener.class);
 
-	private final Map<Long, Map<Long, Integer>>
-		_fragmentEntryVersionCountByCtCollectionIdMap =
-			new ConcurrentHashMap<>();
+	private final Map<Long, Map<Long, Integer>> _countsMap =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private FragmentEntryVersionPersistence _fragmentEntryVersionPersistence;

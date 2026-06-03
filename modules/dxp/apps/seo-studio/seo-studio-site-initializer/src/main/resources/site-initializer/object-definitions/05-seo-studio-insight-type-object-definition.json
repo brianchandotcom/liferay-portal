@@ -1,7 +1,7 @@
 {
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountToSEOStudioInsightTypes_accountEntryId",
-	"className": "com.liferay.object.model.ObjectDefinition#SI05",
+	"className": "com.liferay.object.model.ObjectDefinition#S5T1",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
 	"externalReferenceCode": "L_SEO_STUDIO_INSIGHT_TYPE",

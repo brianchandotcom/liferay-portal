@@ -27,7 +27,7 @@
 		</p>
 	</c:if>
 
-	<c:if test="<%= Validator.isNotNull(actionDropdownItems) %>">
+	<c:if test="<%= ListUtil.isNotEmpty(actionDropdownItems) %>">
 		<c:choose>
 			<c:when test="<%= actionDropdownItems.size() > 1 %>">
 				<clay:dropdown-menu

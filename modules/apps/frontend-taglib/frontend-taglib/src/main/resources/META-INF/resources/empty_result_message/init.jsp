@@ -7,7 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %>
 
 <%
 List<DropdownItem> actionDropdownItems = (List<DropdownItem>)request.getAttribute("liferay-frontend:empty-result-message:actionDropdownItems");

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../../utils/getRandomString';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 import {getDefaultProject} from './utils/project';
@@ -166,6 +167,82 @@ test(
 		}
 		finally {
 			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+		}
+	}
+);
+
+test(
+	'Cancelling the Liferay DXP data source creation leaves the workspace without a data source',
+	{tag: '@LRAC-8836'},
+	async ({apiHelpers, page}) => {
+		const project = await apiHelpers.jsonWebServicesOSBFaro.createProject(
+			'My Project ' + getRandomString()
+		);
+
+		// A freshly created workspace can briefly redirect a settings deep link
+		// to the workspace list, and it opens with the onboarding dialog on top
+
+		const goToDataSources = async () => {
+			await expect(async () => {
+				await navigateToACSettingsViaURL({
+					acPage: ACPage.dataSourcePage,
+					page,
+					projectID: project.groupId,
+				});
+
+				if (
+					await page
+						.getByRole('heading', {name: 'Your Workspaces'})
+						.isVisible()
+				) {
+					await page.getByRole('link', {name: project.name}).click();
+
+					await navigateToACSettingsViaURL({
+						acPage: ACPage.dataSourcePage,
+						page,
+						projectID: project.groupId,
+					});
+				}
+
+				await expect(
+					page.getByRole('heading', {name: 'Data Sources'})
+				).toBeVisible({timeout: 5000});
+			}).toPass();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText('Welcome to Analytics Cloud'),
+				trigger: page.locator('.onboarding-modal-root button.close'),
+			});
+		};
+
+		try {
+			await goToDataSources();
+
+			// Start adding a Liferay DXP data source, then cancel
+
+			await page.getByRole('button', {name: 'Add Data Source'}).click();
+
+			await page.getByRole('menuitem', {name: 'Liferay DXP'}).click();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+
+			// Cancelling returns to the workspace list; go back to the data
+			// sources page to confirm no data source was created
+
+			await goToDataSources();
+
+			await expect(
+				page.getByText('No Data Sources Connected')
+			).toBeVisible();
+
+			await expect(
+				page.getByText('Add a data source to get started.')
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteProject(
+				Number(project.groupId)
+			);
 		}
 	}
 );

@@ -103,42 +103,4 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
-	@priority = 3
-	test CancelCreatingDxpDataSource {
-		property test.run.type = "single";
-
-		task ("Create a new workspace") {
-			ACUtils.launchAC(
-				emailList = "acworkspace@liferay.com",
-				workspaceName = "New AC Workspace");
-		}
-
-		task ("Access the data sources, select Liferay DXP and click the cancel button") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDataSources();
-
-			if (IsElementPresent(key_textValue = "Welcome to Analytics Cloud", locator1 = "ACUtils#GENERIC_TEXT")) {
-				ACUtils.closeModal();
-			}
-
-			ACSettings.clickGenericAddOrConfirmationButton();
-
-			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
-
-			ACNavigation.clickCancelButton();
-		}
-
-		task ("Assert the data source list if a new data source has not been created") {
-			ACSettings.goToDataSources();
-
-			if (IsElementPresent(key_textValue = "Welcome to Analytics Cloud", locator1 = "ACUtils#GENERIC_TEXT")) {
-				ACUtils.closeModal();
-			}
-
-			ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Add a data source to get started.,Access our documentation to learn more.");
-		}
-	}
-
 }

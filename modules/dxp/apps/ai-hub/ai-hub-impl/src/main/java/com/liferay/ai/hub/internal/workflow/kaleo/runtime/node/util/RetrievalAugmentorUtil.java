@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
-import com.liferay.ai.hub.internal.rag.content.retriever.ElasticsearchContentRetriever;
-import com.liferay.ai.hub.internal.rag.content.retriever.LiferayWebSearchContentRetriever;
+import com.liferay.ai.hub.internal.langchain4j.rag.content.retriever.ElasticsearchContentRetriever;
+import com.liferay.ai.hub.internal.langchain4j.rag.content.retriever.LiferayWebSearchContentRetriever;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;

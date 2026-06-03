@@ -79,7 +79,7 @@ public class EntityCacheImplTest {
 	}
 
 	@Test
-	public void testNotifyFinderCacheWhenSkipReplicationIsEnabled() {
+	public void testClearCacheWhenSkipReplicationEnabled() {
 		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
 
 		ClusterExecutor clusterExecutor = Mockito.mock(ClusterExecutor.class);

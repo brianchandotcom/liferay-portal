@@ -44,6 +44,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 
 		_accountName = individual.getAccountName();
 		_activitiesCount = individual.getActivitiesCount();
+		_activityStatus = individual.getActivityStatus();
 		_context = individual.getContext();
 		_dataSourceIndividualPKs = individual.getDataSourceIndividualPKs();
 		_dateCreated = individual.getDateCreated();
@@ -123,6 +124,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	private String _accountName;
 	private List<Individual.Account> _accounts;
 	private Long _activitiesCount;
+	private String _activityStatus;
 
 	@JsonProperty("context")
 	private Map<String, String> _context = new HashMap<>();

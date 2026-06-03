@@ -77,7 +77,6 @@ public class BaseBatchEngineTaskServiceTest {
 					atomicReference.compareAndSet(null, throwable);
 				}
 			});
-
 		Future<?> future2 = executorService.submit(
 			() -> {
 				try {

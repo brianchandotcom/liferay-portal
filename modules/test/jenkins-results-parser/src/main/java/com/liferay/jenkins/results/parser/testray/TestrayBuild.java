@@ -439,10 +439,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public URL getTopLevelBuildURL() {
-		String topLevelMasterHostname = null;
-		String topLevelJobName = null;
-		String topLevelBuildNumber = null;
-
 		String description = getDescription();
 
 		Matcher descriptionMatcher = null;
@@ -451,24 +447,28 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			descriptionMatcher = _descriptionPattern.matches(description);
 		}
 
+		String topLevelBuildNumber = null;
+		String topLevelJobName = null;
+		String topLevelMasterHostname = null;
+
 		if (descriptionMatcher != null) {
-			topLevelMasterHostname = descriptionMatcher.group(
-				"topLevelMasterHostname");
-			topLevelJobName = descriptionMatcher.group("topLevelJobName");
 			topLevelBuildNumber = descriptionMatcher.group(
 				"topLevelBuildNumber");
+			topLevelJobName = descriptionMatcher.group("topLevelJobName");
+			topLevelMasterHostname = descriptionMatcher.group(
+				"topLevelMasterHostname");
 		}
 		else {
 			Matcher testrayAttachmentURLMatcher =
 				_getTestrayAttachmentURLMatcher();
 
 			if (testrayAttachmentURLMatcher != null) {
-				topLevelMasterHostname = testrayAttachmentURLMatcher.group(
-					"topLevelMasterHostname");
-				topLevelJobName = testrayAttachmentURLMatcher.group(
-					"topLevelJobName");
 				topLevelBuildNumber = testrayAttachmentURLMatcher.group(
 					"topLevelBuildNumber");
+				topLevelJobName = testrayAttachmentURLMatcher.group(
+					"topLevelJobName");
+				topLevelMasterHostname = testrayAttachmentURLMatcher.group(
+					"topLevelMasterHostname");
 			}
 		}
 

@@ -11,6 +11,7 @@ import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderServer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
+
+import java.io.IOException;
 
 import org.junit.runner.RunWith;
 
@@ -53,16 +56,23 @@ public class OAuthClientExternalReferenceCodeUpgradeProcessTest
 		JSONObject jsonObject = JSONUtil.put(
 			"client_id", RandomTestUtil.randomString());
 
-		return new ExternalReferenceCodeModel[] {
-			_oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(), jsonObject.toString(),
-				"https://accounts.google.com/.well-known/openid-configuration",
-				null, jsonObject.toString(), null,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
-				jsonObject.toString())
-		};
+		try (OpenIdConnectProviderServer openIdConnectProviderServer =
+				new OpenIdConnectProviderServer()) {
+
+			return new ExternalReferenceCodeModel[] {
+				_oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(), jsonObject.toString(),
+					openIdConnectProviderServer.getURL(), null,
+					jsonObject.toString(), null,
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					jsonObject.toString())
+			};
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
 	}
 
 	@Override

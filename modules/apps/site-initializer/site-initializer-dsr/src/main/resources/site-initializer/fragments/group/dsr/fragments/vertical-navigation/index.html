@@ -53,7 +53,9 @@
 				[#assign navItemCSSClass = "${navItemCSSClass} open" /]
 			[/#if]
 
-			[#if navItem.isChildSelected() || navItem.isSelected()]
+			[#assign navLayout = navItem.getLayout()! /]
+
+			[#if navItem.isChildSelected() || navItem.isSelected() || (navLayout.isChildSelected(true, layout))!false]
 				[#assign
 					activeKey = navItem.getLayoutId()
 					navLinkCSSClass = "${navLinkCSSClass} active"

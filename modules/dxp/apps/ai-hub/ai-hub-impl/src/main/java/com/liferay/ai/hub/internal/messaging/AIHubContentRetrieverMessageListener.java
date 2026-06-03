@@ -74,6 +74,7 @@ public class AIHubContentRetrieverMessageListener extends BaseMessageListener {
 		AuditRouterUtil.route(
 			WorkflowInstance.class.getName(),
 			message.getLong("workflowInstanceId"),
+			(Date)message.get("createDate"),
 			AIHubEventTypes.AI_HUB_RAG_CONTENT_RETRIEVE,
 			JSONUtil.put(
 				"contents", jsonArray.toString()
@@ -86,7 +87,7 @@ public class AIHubContentRetrieverMessageListener extends BaseMessageListener {
 			).put(
 				"workflowInstanceId", message.getLong("workflowInstanceId")
 			),
-			(Date)message.get("timestamp"), message.getLong("userId"));
+			message.getLong("userId"));
 	}
 
 	@Reference

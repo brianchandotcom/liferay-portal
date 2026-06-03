@@ -64,6 +64,7 @@ public class KaleoDefinitionModelListener
 				try {
 					Message message = new Message();
 
+					message.put("createDate", new Date());
 					message.put("eventType", eventType);
 					message.put("kaleoDefinition", kaleoDefinition);
 					message.put("name", kaleoDefinition.getName());
@@ -87,7 +88,6 @@ public class KaleoDefinitionModelListener
 
 					message.put("serviceContext", serviceContext);
 
-					message.put("timestamp", new Date());
 					message.put("version", kaleoDefinition.getVersion());
 
 					_messageBus.sendMessage(

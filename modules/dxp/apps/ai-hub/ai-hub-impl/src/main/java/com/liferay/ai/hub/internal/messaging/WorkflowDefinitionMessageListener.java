@@ -73,6 +73,7 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 		AuditRouterUtil.route(
 			KaleoDefinition.class.getName(),
 			kaleoDefinition.getKaleoDefinitionId(),
+			(Date)message.get("createDate"),
 			_eventTypes.get(message.getString("eventType")),
 			JSONUtil.put(
 				"content", kaleoDefinition.getContentAsXML()
@@ -93,7 +94,7 @@ public class WorkflowDefinitionMessageListener extends BaseMessageListener {
 			).put(
 				"version", kaleoDefinition.getVersion()
 			),
-			(Date)message.get("timestamp"), kaleoDefinition.getUserId());
+			kaleoDefinition.getUserId());
 	}
 
 	@Reference

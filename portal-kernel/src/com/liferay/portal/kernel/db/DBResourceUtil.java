@@ -11,6 +11,7 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,29 +58,38 @@ public class DBResourceUtil {
 	public static Set<String> getLiferayTableNames(Connection connection)
 		throws Exception {
 
-		if (_liferayTableNames != null) {
-			return _liferayTableNames;
-		}
-
-		synchronized (DBResourceUtil.class) {
+		if (DBInspector.isSchemaSnapshotEnabled()) {
 			if (_liferayTableNames != null) {
-				return _liferayTableNames;
+				Set<String> tableNames = new TreeSet<>(
+					String.CASE_INSENSITIVE_ORDER);
+
+				tableNames.addAll(_liferayTableNames);
+
+				return tableNames;
 			}
 
-			Set<String> liferayTableNames = new TreeSet<>(
-				String.CASE_INSENSITIVE_ORDER);
+			synchronized (DBResourceUtil.class) {
+				if (_liferayTableNames != null) {
+					Set<String> tableNames = new TreeSet<>(
+						String.CASE_INSENSITIVE_ORDER);
 
-			liferayTableNames.addAll(getModuleTableNames());
-			liferayTableNames.addAll(getPortalTableNames());
-			liferayTableNames.addAll(
-				getServiceComponentModuleTableNames(connection));
-			liferayTableNames.addAll(
-				getServiceComponentPortalTableNames(connection));
+					tableNames.addAll(_liferayTableNames);
 
-			_liferayTableNames = liferayTableNames;
+					return tableNames;
+				}
 
-			return _liferayTableNames;
+				_liferayTableNames = _buildLiferayTableNames(connection);
+
+				Set<String> tableNames = new TreeSet<>(
+					String.CASE_INSENSITIVE_ORDER);
+
+				tableNames.addAll(_liferayTableNames);
+
+				return tableNames;
+			}
 		}
+
+		return _buildLiferayTableNames(connection);
 	}
 
 	public static String getModuleIndexesSQL(Bundle bundle) {
@@ -91,42 +101,38 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getModuleTableNames() {
-		if (_moduleTableNames != null) {
-			return _moduleTableNames;
-		}
-
-		synchronized (DBResourceUtil.class) {
+		if (DBInspector.isSchemaSnapshotEnabled()) {
 			if (_moduleTableNames != null) {
-				return _moduleTableNames;
+				Set<String> tableNames = new TreeSet<>(
+					String.CASE_INSENSITIVE_ORDER);
+
+				tableNames.addAll(_moduleTableNames);
+
+				return tableNames;
 			}
 
-			Set<String> tableNames = new TreeSet<>(
-				String.CASE_INSENSITIVE_ORDER);
+			synchronized (DBResourceUtil.class) {
+				if (_moduleTableNames != null) {
+					Set<String> tableNames = new TreeSet<>(
+						String.CASE_INSENSITIVE_ORDER);
 
-			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+					tableNames.addAll(_moduleTableNames);
 
-			for (Bundle bundle : bundleContext.getBundles()) {
-				String symbolicName = bundle.getSymbolicName();
-
-				if (!symbolicName.startsWith("com.liferay") ||
-					!BundleUtil.isLiferayServiceBundle(bundle)) {
-
-					continue;
+					return tableNames;
 				}
 
-				String tableSQL = getModuleTablesSQL(bundle);
+				_moduleTableNames = _buildModuleTableNames();
 
-				if (tableSQL == null) {
-					continue;
-				}
+				Set<String> tableNames = new TreeSet<>(
+					String.CASE_INSENSITIVE_ORDER);
 
-				tableNames.addAll(parseCreateTableSQL(tableSQL));
+				tableNames.addAll(_moduleTableNames);
+
+				return tableNames;
 			}
-
-			_moduleTableNames = tableNames;
-
-			return _moduleTableNames;
 		}
+
+		return _buildModuleTableNames();
 	}
 
 	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
@@ -187,17 +193,32 @@ public class DBResourceUtil {
 
 	public static Set<String> getPortalTableNames() {
 		if (_portalTableNames != null) {
-			return _portalTableNames;
+			Set<String> tableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			tableNames.addAll(_portalTableNames);
+
+			return tableNames;
 		}
 
 		synchronized (DBResourceUtil.class) {
 			if (_portalTableNames != null) {
-				return _portalTableNames;
+				Set<String> tableNames = new TreeSet<>(
+					String.CASE_INSENSITIVE_ORDER);
+
+				tableNames.addAll(_portalTableNames);
+
+				return tableNames;
 			}
 
 			_portalTableNames = parseCreateTableSQL(getPortalTablesSQL());
 
-			return _portalTableNames;
+			Set<String> tableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			tableNames.addAll(_portalTableNames);
+
+			return tableNames;
 		}
 	}
 
@@ -258,6 +279,48 @@ public class DBResourceUtil {
 
 		while (matcher.find()) {
 			tableNames.add(matcher.group(1));
+		}
+
+		return tableNames;
+	}
+
+	private static Set<String> _buildLiferayTableNames(Connection connection)
+		throws Exception {
+
+		Set<String> liferayTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		liferayTableNames.addAll(getModuleTableNames());
+		liferayTableNames.addAll(getPortalTableNames());
+		liferayTableNames.addAll(
+			getServiceComponentModuleTableNames(connection));
+		liferayTableNames.addAll(
+			getServiceComponentPortalTableNames(connection));
+
+		return liferayTableNames;
+	}
+
+	private static Set<String> _buildModuleTableNames() {
+		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicName = bundle.getSymbolicName();
+
+			if (!symbolicName.startsWith("com.liferay") ||
+				!BundleUtil.isLiferayServiceBundle(bundle)) {
+
+				continue;
+			}
+
+			String tableSQL = getModuleTablesSQL(bundle);
+
+			if (tableSQL == null) {
+				continue;
+			}
+
+			tableNames.addAll(parseCreateTableSQL(tableSQL));
 		}
 
 		return tableNames;

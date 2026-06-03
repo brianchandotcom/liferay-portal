@@ -119,37 +119,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
-	@priority = 3
-	@refactordone
-	test CanAddQuestionWithMultipleTags {
-		task ("Given a Questions category") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "トピック記述",
-				categoryName = "質問トピック",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When the user adds a Question with multiple localized tags") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "質問トピック");
-
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "私の好きな日本料理は寿司とすき焼きです",
-				tagLocatorList = "いち,に,さん,し,ご",
-				titleField = "あなたの好きな日本料理は何ですか",
-				topicName = "質問トピック");
-		}
-
-		task ("Then the question should be created") {
-			AssertTextEquals(
-				key_questionTitle = "あなたの好きな日本料理は何ですか",
-				locator1 = "Questions#QUESTIONS_TITLE",
-				value1 = "あなたの好きな日本料理は何ですか");
-		}
-	}
-
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
 	@priority = 5
 	@refactordone
@@ -324,10 +293,10 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
+	@description = "Validate if the user can view the sorted tags and post a question with multiple tags that contain non-Latin characters."
 	@priority = 4
 	@refactordone
-	test CanViewSortedTags {
+	test CanManageTagsWithNonLatinCharacters {
 		task ("Given a category and questions with multiple tags that have non-Latin characters") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "トピック記述",
@@ -365,6 +334,25 @@ definition {
 				position = 2,
 				tagName = "とうきょう",
 				usedTimes = "Used 1 Times");
+		}
+
+		task ("When the user adds a Question with multiple localized tags") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "私の好きな日本料理は寿司とすき焼きです",
+				tagLocatorList = "いち,に,さん,し,ご",
+				titleField = "あなたの好きな日本料理は何ですか",
+				topicName = "質問トピック");
+		}
+
+		task ("Then the question should be created") {
+			AssertTextEquals(
+				key_questionTitle = "あなたの好きな日本料理は何ですか",
+				locator1 = "Questions#QUESTIONS_TITLE",
+				value1 = "あなたの好きな日本料理は何ですか");
 		}
 	}
 

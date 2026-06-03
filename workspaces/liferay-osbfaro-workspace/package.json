@@ -1,0 +1,16 @@
+{
+	"private": true,
+	"resolutions": {
+		"@types/react": "^18.3.30"
+	},
+	"workspaces": {
+		"nohoist": [
+			"**/osb-faro-web/@clayui/css",
+			"**/osb-faro-web/@clayui/css/**"
+		],
+		"packages": [
+			"modules/osb-faro-theme",
+			"modules/osb-faro-web"
+		]
+	}
+}

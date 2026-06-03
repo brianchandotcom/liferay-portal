@@ -4,6 +4,7 @@
 /poshi/poshi-ext.properties
 /poshi/test-results
 /poshi/tests
+Dockerfile.ext
 bin
 build
 dist

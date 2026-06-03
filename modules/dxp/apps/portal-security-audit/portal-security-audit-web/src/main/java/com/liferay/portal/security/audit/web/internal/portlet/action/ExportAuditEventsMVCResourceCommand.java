@@ -212,7 +212,7 @@ public class ExportAuditEventsMVCResourceCommand
 		return csv;
 	}
 
-	private String _getUserEmailAddress(AuditEvent auditEvent) {
+	private String _getEmailAddress(AuditEvent auditEvent) {
 		if (auditEvent.getUserId() <= 0) {
 			return StringPool.BLANK;
 		}
@@ -226,7 +226,7 @@ public class ExportAuditEventsMVCResourceCommand
 		return user.getEmailAddress();
 	}
 
-	private String _getUserScreenName(AuditEvent auditEvent) {
+	private String _getScreenName(AuditEvent auditEvent) {
 		if (auditEvent.getUserId() <= 0) {
 			return StringPool.BLANK;
 		}
@@ -274,11 +274,11 @@ public class ExportAuditEventsMVCResourceCommand
 				"timestamp",
 				auditEvent -> _formatDate(auditEvent.getCreateDate())
 			).put(
-				"userEmailAddress", this::_getUserEmailAddress
+				"userEmailAddress", this::_getEmailAddress
 			).put(
 				"userId", auditEvent -> String.valueOf(auditEvent.getUserId())
 			).put(
-				"userLogin", this::_getUserScreenName
+				"userLogin", this::_getScreenName
 			).put(
 				"userName", AuditEvent::getUserName
 			).build();

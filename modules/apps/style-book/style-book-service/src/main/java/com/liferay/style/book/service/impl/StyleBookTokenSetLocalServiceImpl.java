@@ -5,13 +5,33 @@
 
 package com.liferay.style.book.service.impl;
 
+import com.liferay.frontend.token.definition.FrontendTokenCategory;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.style.book.exception.DuplicateStyleBookTokenSetNameException;
+import com.liferay.style.book.exception.StyleBookTokenSetFrontendTokenCategoryNameException;
+import com.liferay.style.book.exception.StyleBookTokenSetNameException;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.model.StyleBookTokenSet;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.base.StyleBookTokenSetLocalServiceBaseImpl;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Gabriel Lima
  */
 @Component(
 	property = "model.class.name=com.liferay.style.book.model.StyleBookTokenSet",
@@ -19,4 +39,140 @@ import org.osgi.service.component.annotations.Component;
 )
 public class StyleBookTokenSetLocalServiceImpl
 	extends StyleBookTokenSetLocalServiceBaseImpl {
+
+	@Override
+	public StyleBookTokenSet addStyleBookTokenSet(
+			String externalReferenceCode, long userId, long styleBookEntryId,
+			String description, String frontendTokenCategoryName, String name,
+			String themeId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		_validate(
+			user.getCompanyId(), styleBookEntryId, frontendTokenCategoryName,
+			name, themeId);
+
+		StyleBookTokenSet styleBookTokenSet =
+			styleBookTokenSetPersistence.create(
+				counterLocalService.increment(
+					StyleBookTokenSet.class.getName()));
+
+		styleBookTokenSet.setExternalReferenceCode(externalReferenceCode);
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.getStyleBookEntry(styleBookEntryId);
+
+		styleBookTokenSet.setGroupId(styleBookEntry.getGroupId());
+
+		styleBookTokenSet.setCompanyId(user.getCompanyId());
+		styleBookTokenSet.setUserId(user.getUserId());
+		styleBookTokenSet.setUserName(user.getFullName());
+
+		styleBookTokenSet.setStyleBookEntryId(styleBookEntryId);
+		styleBookTokenSet.setDescription(description);
+		styleBookTokenSet.setFrontendTokenCategoryName(
+			frontendTokenCategoryName);
+		styleBookTokenSet.setName(name);
+		styleBookTokenSet.setThemeId(themeId);
+
+		return styleBookTokenSetPersistence.update(styleBookTokenSet);
+	}
+
+	private FrontendTokenCategory _getFrontendTokenCategory(
+		long companyId, String frontendTokenCategoryName, String themeId) {
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				companyId, themeId);
+
+		if (frontendTokenDefinition == null) {
+			return null;
+		}
+
+		for (FrontendTokenCategory frontendTokenCategory :
+				frontendTokenDefinition.getFrontendTokenCategories()) {
+
+			JSONObject jsonObject = frontendTokenCategory.getJSONObject(
+				LocaleUtil.getSiteDefault());
+
+			if (Objects.equals(
+					frontendTokenCategoryName, jsonObject.getString("name"))) {
+
+				return frontendTokenCategory;
+			}
+		}
+
+		return null;
+	}
+
+	private FrontendTokenSet _getFrontendTokenSet(
+		FrontendTokenCategory frontendTokenCategory, String name) {
+
+		for (FrontendTokenSet frontendTokenSet :
+				frontendTokenCategory.getFrontendTokenSets()) {
+
+			JSONObject jsonObject = frontendTokenSet.getJSONObject(
+				LocaleUtil.getSiteDefault());
+
+			if (Objects.equals(name, jsonObject.getString("name"))) {
+				return frontendTokenSet;
+			}
+		}
+
+		return null;
+	}
+
+	private void _validate(
+			long companyId, long styleBookEntryId,
+			String frontendTokenCategoryName, String name, String themeId)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new StyleBookTokenSetNameException("Name is null");
+		}
+
+		if (name.length() > ModelHintsUtil.getMaxLength(
+				StyleBookTokenSet.class.getName(), "name")) {
+
+			throw new StyleBookTokenSetNameException(
+				"Name exceeds the maximum length");
+		}
+
+		StyleBookTokenSet styleBookTokenSet =
+			styleBookTokenSetPersistence.fetchBySBEI_FTCN_N_T(
+				styleBookEntryId, frontendTokenCategoryName, name, themeId);
+
+		if (styleBookTokenSet != null) {
+			throw new DuplicateStyleBookTokenSetNameException(
+				"Style book token set name \"" + name + "\" already exists");
+		}
+
+		FrontendTokenCategory frontendTokenCategory = _getFrontendTokenCategory(
+			companyId, frontendTokenCategoryName, themeId);
+
+		if (frontendTokenCategory == null) {
+			throw new StyleBookTokenSetFrontendTokenCategoryNameException(
+				"Frontend token category \"" + frontendTokenCategoryName +
+					"\" does not exist");
+		}
+
+		FrontendTokenSet frontendTokenSet = _getFrontendTokenSet(
+			frontendTokenCategory, name);
+
+		if (frontendTokenSet != null) {
+			throw new DuplicateStyleBookTokenSetNameException(
+				"Style book token set name \"" + name + "\" already exists");
+		}
+	}
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

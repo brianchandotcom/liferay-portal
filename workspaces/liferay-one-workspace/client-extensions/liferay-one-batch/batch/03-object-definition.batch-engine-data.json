@@ -1554,7 +1554,7 @@
 					"label": {
 						"en_US": "Active"
 					},
-					"name": "entitlementDefinitionActive",
+					"name": "active",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -1938,6 +1938,28 @@
 					"type": "Boolean"
 				},
 				{
+					"DBType": "Date",
+					"businessType": "DateTime",
+					"externalReferenceCode": "C_LICENSE_KEY_CUSTOM_EXPIRATION_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Expiration Date"
+					},
+					"name": "customExpirationDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Date"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "C_LICENSE_KEY_DESCRIPTION",
@@ -1990,28 +2012,6 @@
 					"state": false,
 					"system": false,
 					"type": "Long"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "C_LICENSE_KEY_EXPIRATION_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Expiration Date"
-					},
-					"name": "customExpirationDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
 				},
 				{
 					"DBType": "String",
@@ -3467,7 +3467,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_NAME",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_PUBLISHER_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3485,7 +3485,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_PROFILE_IMAGE",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_PUBLISHER_PROFILE_IMAGE_URL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -3525,7 +3525,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_ON_HOME",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_ON_HOME_PAGE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -3947,7 +3947,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "C_SUBSCRIPTION_ENTRY_USER_ID",
+					"externalReferenceCode": "C_SUBSCRIPTION_ENTRY_CUSTOM_USER_ID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",

@@ -76,8 +76,8 @@ public class PortletLocalServiceTest {
 					"jakarta.portlet.name", portletName
 				).build()));
 
-		_testFetchPortletById(null, portletName);
 		_testFetchPortletById(RandomTestUtil.randomString(), portletName);
+		_testFetchPortletById(null, portletName);
 	}
 
 	@Test

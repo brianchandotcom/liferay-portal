@@ -8,6 +8,8 @@ package com.liferay.portal.tools.service.builder.test.model;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.sql.Blob;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,8 @@ public class ERCVersionedEntryVersionWrapper
 		attributes.put("ercVersionedEntryId", getErcVersionedEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("eagerBlob", getEagerBlob());
+		attributes.put("lazyBlob", getLazyBlob());
 
 		return attributes;
 	}
@@ -92,6 +96,18 @@ public class ERCVersionedEntryVersionWrapper
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
+
+		Blob eagerBlob = (Blob)attributes.get("eagerBlob");
+
+		if (eagerBlob != null) {
+			setEagerBlob(eagerBlob);
+		}
+
+		Blob lazyBlob = (Blob)attributes.get("lazyBlob");
+
+		if (lazyBlob != null) {
+			setLazyBlob(lazyBlob);
+		}
 	}
 
 	@Override
@@ -107,6 +123,16 @@ public class ERCVersionedEntryVersionWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the eager blob of this erc versioned entry version.
+	 *
+	 * @return the eager blob of this erc versioned entry version
+	 */
+	@Override
+	public Blob getEagerBlob() {
+		return model.getEagerBlob();
 	}
 
 	/**
@@ -150,6 +176,16 @@ public class ERCVersionedEntryVersionWrapper
 	}
 
 	/**
+	 * Returns the lazy blob of this erc versioned entry version.
+	 *
+	 * @return the lazy blob of this erc versioned entry version
+	 */
+	@Override
+	public Blob getLazyBlob() {
+		return model.getLazyBlob();
+	}
+
+	/**
 	 * Returns the primary key of this erc versioned entry version.
 	 *
 	 * @return the primary key of this erc versioned entry version
@@ -190,6 +226,16 @@ public class ERCVersionedEntryVersionWrapper
 	}
 
 	/**
+	 * Sets the eager blob of this erc versioned entry version.
+	 *
+	 * @param eagerBlob the eager blob of this erc versioned entry version
+	 */
+	@Override
+	public void setEagerBlob(Blob eagerBlob) {
+		model.setEagerBlob(eagerBlob);
+	}
+
+	/**
 	 * Sets the erc versioned entry ID of this erc versioned entry version.
 	 *
 	 * @param ercVersionedEntryId the erc versioned entry ID of this erc versioned entry version
@@ -227,6 +273,16 @@ public class ERCVersionedEntryVersionWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the lazy blob of this erc versioned entry version.
+	 *
+	 * @param lazyBlob the lazy blob of this erc versioned entry version
+	 */
+	@Override
+	public void setLazyBlob(Blob lazyBlob) {
+		model.setLazyBlob(lazyBlob);
 	}
 
 	/**
@@ -292,4 +348,4 @@ public class ERCVersionedEntryVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-582979379
+// LIFERAY-SERVICE-BUILDER-HASH:591112427

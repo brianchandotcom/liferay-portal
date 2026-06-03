@@ -516,4 +516,4 @@ public class LVEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-357711599
+// LIFERAY-SERVICE-BUILDER-HASH:-1326860243

@@ -159,6 +159,16 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="eagerBlob" type="org.hibernate.type.BlobType" />
+		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" cascade="save-update" class="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryLazyBlobBlobModel" constrained="false" name="lazyBlobBlobModel" outer-join="false" />
+	</class>
+	<class lazy="true" name="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryLazyBlobBlobModel" table="ERCVersionedEntry">
+		<id column="ercVersionedEntryId" name="ercVersionedEntryId">
+			<generator class="foreign">
+				<param name="property">com.liferay.portal.tools.service.builder.test.model.impl.ERCVersionedEntryImpl</param>
+			</generator>
+		</id>
+		<property column="lazyBlob" name="lazyBlobBlob" type="blob" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.ERCVersionedEntryVersionImpl" table="ERCVersionedEntryVersion">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ercVersionedEntryVersionId" type="long">
@@ -170,6 +180,16 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ercVersionedEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="eagerBlob" type="org.hibernate.type.BlobType" />
+		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" cascade="save-update" class="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersionLazyBlobBlobModel" constrained="false" name="lazyBlobBlobModel" outer-join="false" />
+	</class>
+	<class lazy="true" name="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersionLazyBlobBlobModel" table="ERCVersionedEntryVersion">
+		<id column="ercVersionedEntryVersionId" name="ercVersionedEntryVersionId">
+			<generator class="foreign">
+				<param name="property">com.liferay.portal.tools.service.builder.test.model.impl.ERCVersionedEntryVersionImpl</param>
+			</generator>
+		</id>
+		<property column="lazyBlob" name="lazyBlobBlob" type="blob" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.FinderWhereClauseEntryImpl" table="FinderWhereClauseEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="finderWhereClauseEntryId" type="long">

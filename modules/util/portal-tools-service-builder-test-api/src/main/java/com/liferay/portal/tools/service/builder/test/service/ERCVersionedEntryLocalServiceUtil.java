@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -363,6 +364,13 @@ public class ERCVersionedEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.tools.service.builder.test.model.
+		ERCVersionedEntryLazyBlobBlobModel getLazyBlobBlobModel(
+			Serializable primaryKey) {
+
+		return getService().getLazyBlobBlobModel(primaryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -396,6 +404,12 @@ public class ERCVersionedEntryLocalServiceUtil {
 				ERCVersionedEntry ercVersionedEntry) {
 
 		return getService().getVersions(ercVersionedEntry);
+	}
+
+	public static InputStream openLazyBlobInputStream(
+		long ercVersionedEntryId) {
+
+		return getService().openLazyBlobInputStream(ercVersionedEntryId);
 	}
 
 	public static ERCVersionedEntry publishDraft(
@@ -458,4 +472,4 @@ public class ERCVersionedEntryLocalServiceUtil {
 	private static volatile ERCVersionedEntryLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:991593808
+// LIFERAY-SERVICE-BUILDER-HASH:1558641740

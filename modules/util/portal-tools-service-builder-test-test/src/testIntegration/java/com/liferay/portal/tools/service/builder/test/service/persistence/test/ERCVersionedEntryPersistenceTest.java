@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -30,7 +31,10 @@ import com.liferay.portal.tools.service.builder.test.service.ERCVersionedEntryLo
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCVersionedEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCVersionedEntryUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+
+import java.sql.Blob;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -129,8 +133,32 @@ public class ERCVersionedEntryPersistenceTest {
 		newERCVersionedEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newERCVersionedEntry.setCompanyId(RandomTestUtil.nextLong());
+		String newEagerBlobString = RandomTestUtil.randomString();
+
+		byte[] newEagerBlobBytes = newEagerBlobString.getBytes("UTF-8");
+
+		Blob newEagerBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(newEagerBlobBytes),
+			newEagerBlobBytes.length);
+
+		newERCVersionedEntry.setEagerBlob(newEagerBlobBlob);
+		String newLazyBlobString = RandomTestUtil.randomString();
+
+		byte[] newLazyBlobBytes = newLazyBlobString.getBytes("UTF-8");
+
+		Blob newLazyBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(newLazyBlobBytes),
+			newLazyBlobBytes.length);
+
+		newERCVersionedEntry.setLazyBlob(newLazyBlobBlob);
 
 		_ercVersionedEntries.add(_persistence.update(newERCVersionedEntry));
+
+		Session session = _persistence.openSession();
+
+		session.flush();
+
+		session.clear();
 
 		ERCVersionedEntry existingERCVersionedEntry =
 			_persistence.findByPrimaryKey(newERCVersionedEntry.getPrimaryKey());
@@ -156,6 +184,16 @@ public class ERCVersionedEntryPersistenceTest {
 		Assert.assertEquals(
 			existingERCVersionedEntry.getCompanyId(),
 			newERCVersionedEntry.getCompanyId());
+		Blob existingEagerBlob = existingERCVersionedEntry.getEagerBlob();
+
+		Assert.assertArrayEquals(
+			existingEagerBlob.getBytes(1, (int)existingEagerBlob.length()),
+			newEagerBlobBytes);
+		Blob existingLazyBlob = existingERCVersionedEntry.getLazyBlob();
+
+		Assert.assertArrayEquals(
+			existingLazyBlob.getBytes(1, (int)existingLazyBlob.length()),
+			newLazyBlobBytes);
 	}
 
 	@Test
@@ -174,6 +212,8 @@ public class ERCVersionedEntryPersistenceTest {
 		draftERCVersionedEntry.setHeadId(-ercVersionedEntry.getHeadId());
 		draftERCVersionedEntry.setGroupId(ercVersionedEntry.getGroupId());
 		draftERCVersionedEntry.setCompanyId(ercVersionedEntry.getCompanyId());
+		draftERCVersionedEntry.setEagerBlob(ercVersionedEntry.getEagerBlob());
+		draftERCVersionedEntry.setLazyBlob(ercVersionedEntry.getLazyBlob());
 
 		_ercVersionedEntries.add(_persistence.update(draftERCVersionedEntry));
 
@@ -193,6 +233,18 @@ public class ERCVersionedEntryPersistenceTest {
 		Assert.assertEquals(
 			ercVersionedEntry.getCompanyId(),
 			draftERCVersionedEntry.getCompanyId());
+		Blob EagerBlob = ercVersionedEntry.getEagerBlob();
+		Blob draftEagerBlob = draftERCVersionedEntry.getEagerBlob();
+
+		Assert.assertArrayEquals(
+			EagerBlob.getBytes(1, (int)EagerBlob.length()),
+			draftEagerBlob.getBytes(1, (int)draftEagerBlob.length()));
+		Blob LazyBlob = ercVersionedEntry.getLazyBlob();
+		Blob draftLazyBlob = draftERCVersionedEntry.getLazyBlob();
+
+		Assert.assertArrayEquals(
+			LazyBlob.getBytes(1, (int)LazyBlob.length()),
+			draftLazyBlob.getBytes(1, (int)draftLazyBlob.length()));
 	}
 
 	@Test(
@@ -219,6 +271,22 @@ public class ERCVersionedEntryPersistenceTest {
 		ercVersionedEntry2.setGroupId(ercVersionedEntry1.getGroupId());
 
 		ercVersionedEntry2.setCompanyId(RandomTestUtil.nextLong());
+		String eagerBlobString = RandomTestUtil.randomString();
+
+		byte[] eagerBlobBytes = eagerBlobString.getBytes("UTF-8");
+
+		Blob eagerBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(eagerBlobBytes), eagerBlobBytes.length);
+
+		ercVersionedEntry2.setEagerBlob(eagerBlobBlob);
+		String lazyBlobString = RandomTestUtil.randomString();
+
+		byte[] lazyBlobBytes = lazyBlobString.getBytes("UTF-8");
+
+		Blob lazyBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(lazyBlobBytes), lazyBlobBytes.length);
+
+		ercVersionedEntry2.setLazyBlob(lazyBlobBlob);
 
 		_ercVersionedEntries.add(_persistence.update(ercVersionedEntry2));
 	}
@@ -683,6 +751,22 @@ public class ERCVersionedEntryPersistenceTest {
 		ercVersionedEntry.setGroupId(RandomTestUtil.nextLong());
 
 		ercVersionedEntry.setCompanyId(RandomTestUtil.nextLong());
+		String eagerBlobString = RandomTestUtil.randomString();
+
+		byte[] eagerBlobBytes = eagerBlobString.getBytes("UTF-8");
+
+		Blob eagerBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(eagerBlobBytes), eagerBlobBytes.length);
+
+		ercVersionedEntry.setEagerBlob(eagerBlobBlob);
+		String lazyBlobString = RandomTestUtil.randomString();
+
+		byte[] lazyBlobBytes = lazyBlobString.getBytes("UTF-8");
+
+		Blob lazyBlobBlob = new OutputBlob(
+			new ByteArrayInputStream(lazyBlobBytes), lazyBlobBytes.length);
+
+		ercVersionedEntry.setLazyBlob(lazyBlobBlob);
 
 		_ercVersionedEntries.add(_persistence.update(ercVersionedEntry));
 
@@ -695,4 +779,4 @@ public class ERCVersionedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:696240845
+// LIFERAY-SERVICE-BUILDER-HASH:-1562951270

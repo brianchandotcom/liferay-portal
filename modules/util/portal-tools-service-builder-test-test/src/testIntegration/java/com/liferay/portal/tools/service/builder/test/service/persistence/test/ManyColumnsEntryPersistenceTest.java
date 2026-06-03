@@ -850,4 +850,4 @@ public class ManyColumnsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:446199874
+// LIFERAY-SERVICE-BUILDER-HASH:2029492260

@@ -610,4 +610,4 @@ public class IndexEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103639179
+// LIFERAY-SERVICE-BUILDER-HASH:-1894466731

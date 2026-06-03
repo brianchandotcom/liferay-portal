@@ -484,4 +484,4 @@ public class VersionedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:965493114
+// LIFERAY-SERVICE-BUILDER-HASH:1185813130

@@ -104,7 +104,9 @@ create table ERCVersionedEntry (
 	head BOOLEAN,
 	ercVersionedEntryId LONG not null primary key,
 	groupId LONG,
-	companyId LONG
+	companyId LONG,
+	eagerBlob BLOB,
+	lazyBlob BLOB
 );
 
 create table ERCVersionedEntryVersion (
@@ -114,7 +116,9 @@ create table ERCVersionedEntryVersion (
 	externalReferenceCode VARCHAR(75) null,
 	ercVersionedEntryId LONG,
 	groupId LONG,
-	companyId LONG
+	companyId LONG,
+	eagerBlob BLOB,
+	lazyBlob BLOB
 );
 
 create table EagerBlobEntry (

@@ -36,7 +36,6 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -169,10 +168,8 @@ public class DLContentPersistenceTest {
 			existingDLContent.getVersion(), newDLContent.getVersion());
 		Blob existingData = existingDLContent.getData();
 
-		Assert.assertTrue(
-			Arrays.equals(
-				existingData.getBytes(1, (int)existingData.length()),
-				newDataBytes));
+		Assert.assertArrayEquals(
+			existingData.getBytes(1, (int)existingData.length()), newDataBytes);
 		Assert.assertEquals(
 			existingDLContent.getSize(), newDLContent.getSize());
 	}
@@ -563,4 +560,4 @@ public class DLContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1694078217
+// LIFERAY-SERVICE-BUILDER-HASH:1214941025

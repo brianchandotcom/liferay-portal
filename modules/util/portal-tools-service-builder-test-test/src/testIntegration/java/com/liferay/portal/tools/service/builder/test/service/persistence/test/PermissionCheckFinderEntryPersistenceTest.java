@@ -513,4 +513,4 @@ public class PermissionCheckFinderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2085231377
+// LIFERAY-SERVICE-BUILDER-HASH:-1517591501

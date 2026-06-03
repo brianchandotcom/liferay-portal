@@ -36,7 +36,6 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -169,10 +168,8 @@ public class CTSContentPersistenceTest {
 			existingCTSContent.getVersion(), newCTSContent.getVersion());
 		Blob existingData = existingCTSContent.getData();
 
-		Assert.assertTrue(
-			Arrays.equals(
-				existingData.getBytes(1, (int)existingData.length()),
-				newDataBytes));
+		Assert.assertArrayEquals(
+			existingData.getBytes(1, (int)existingData.length()), newDataBytes);
 		Assert.assertEquals(
 			existingCTSContent.getSize(), newCTSContent.getSize());
 		Assert.assertEquals(
@@ -585,4 +582,4 @@ public class CTSContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:65518857
+// LIFERAY-SERVICE-BUILDER-HASH:257230465

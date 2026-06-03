@@ -396,4 +396,4 @@ public class CacheMissEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:755990661
+// LIFERAY-SERVICE-BUILDER-HASH:-1324351577

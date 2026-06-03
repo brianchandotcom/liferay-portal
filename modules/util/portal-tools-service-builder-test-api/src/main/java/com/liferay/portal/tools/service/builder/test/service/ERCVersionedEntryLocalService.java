@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry;
+import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryLazyBlobBlobModel;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -315,6 +317,10 @@ public interface ERCVersionedEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ERCVersionedEntryLazyBlobBlobModel getLazyBlobBlobModel(
+		Serializable primaryKey);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -340,6 +346,9 @@ public interface ERCVersionedEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ERCVersionedEntryVersion> getVersions(
 		ERCVersionedEntry ercVersionedEntry);
+
+	@Transactional(readOnly = true)
+	public InputStream openLazyBlobInputStream(long ercVersionedEntryId);
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -379,4 +388,4 @@ public interface ERCVersionedEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:725301164
+// LIFERAY-SERVICE-BUILDER-HASH:756516867

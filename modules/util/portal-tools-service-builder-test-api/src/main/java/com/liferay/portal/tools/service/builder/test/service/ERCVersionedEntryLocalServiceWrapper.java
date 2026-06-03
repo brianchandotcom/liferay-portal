@@ -446,6 +446,14 @@ public class ERCVersionedEntryLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.tools.service.builder.test.model.
+		ERCVersionedEntryLazyBlobBlobModel getLazyBlobBlobModel(
+			java.io.Serializable primaryKey) {
+
+		return _ercVersionedEntryLocalService.getLazyBlobBlobModel(primaryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -488,6 +496,14 @@ public class ERCVersionedEntryLocalServiceWrapper
 					ERCVersionedEntry ercVersionedEntry) {
 
 		return _ercVersionedEntryLocalService.getVersions(ercVersionedEntry);
+	}
+
+	@Override
+	public java.io.InputStream openLazyBlobInputStream(
+		long ercVersionedEntryId) {
+
+		return _ercVersionedEntryLocalService.openLazyBlobInputStream(
+			ercVersionedEntryId);
 	}
 
 	@Override
@@ -576,4 +592,4 @@ public class ERCVersionedEntryLocalServiceWrapper
 	private ERCVersionedEntryLocalService _ercVersionedEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2130861323
+// LIFERAY-SERVICE-BUILDER-HASH:1292851257

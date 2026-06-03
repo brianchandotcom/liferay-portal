@@ -5,10 +5,13 @@
 
 package com.liferay.portal.tools.service.builder.test.service.base;
 
+import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,17 +33,21 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.version.VersionService;
 import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry;
+import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryLazyBlobBlobModel;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion;
 import com.liferay.portal.tools.service.builder.test.service.ERCVersionedEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.service.ERCVersionedEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCVersionedEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.ERCVersionedEntryVersionPersistence;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
+import java.sql.Blob;
 import java.sql.Connection;
 
 import java.util.Collections;
@@ -533,7 +541,64 @@ public abstract class ERCVersionedEntryLocalServiceBaseImpl
 			ercVersionedEntryVersionPersistence;
 	}
 
+	@Override
+	public ERCVersionedEntryLazyBlobBlobModel getLazyBlobBlobModel(
+		Serializable primaryKey) {
+
+		Session session = null;
+
+		try {
+			session = ercVersionedEntryPersistence.openSession();
+
+			return (ERCVersionedEntryLazyBlobBlobModel)session.get(
+				ERCVersionedEntryLazyBlobBlobModel.class, primaryKey);
+		}
+		catch (Exception exception) {
+			throw ercVersionedEntryPersistence.processException(exception);
+		}
+		finally {
+			ercVersionedEntryPersistence.closeSession(session);
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public InputStream openLazyBlobInputStream(long ercVersionedEntryId) {
+		try {
+			ERCVersionedEntryLazyBlobBlobModel
+				ERCVersionedEntryLazyBlobBlobModel = getLazyBlobBlobModel(
+					ercVersionedEntryId);
+
+			Blob blob = ERCVersionedEntryLazyBlobBlobModel.getLazyBlobBlob();
+
+			if (blob == null) {
+				return _EMPTY_INPUT_STREAM;
+			}
+
+			InputStream inputStream = blob.getBinaryStream();
+
+			if (_useTempFile) {
+				inputStream = new AutoDeleteFileInputStream(
+					_file.createTempFile(inputStream));
+			}
+
+			return inputStream;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	public void afterPropertiesSet() {
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() != DBType.DB2) &&
+			(db.getDBType() != DBType.MYSQL) &&
+			(db.getDBType() != DBType.MARIADB)) {
+
+			_useTempFile = true;
+		}
+
 		ERCVersionedEntryLocalServiceUtil.setService(
 			ercVersionedEntryLocalService);
 	}
@@ -946,6 +1011,10 @@ public abstract class ERCVersionedEntryLocalServiceBaseImpl
 			publishedERCVersionedEntry.getGroupId());
 		draftERCVersionedEntry.setCompanyId(
 			publishedERCVersionedEntry.getCompanyId());
+		draftERCVersionedEntry.setEagerBlob(
+			publishedERCVersionedEntry.getEagerBlob());
+		draftERCVersionedEntry.setLazyBlob(
+			publishedERCVersionedEntry.getLazyBlob());
 
 		draftERCVersionedEntry.resetOriginalValues();
 
@@ -1026,5 +1095,13 @@ public abstract class ERCVersionedEntryLocalServiceBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ERCVersionedEntryLocalServiceBaseImpl.class);
 
+	@BeanReference(type = File.class)
+	protected File _file;
+
+	private static final InputStream _EMPTY_INPUT_STREAM =
+		new UnsyncByteArrayInputStream(new byte[0]);
+
+	private boolean _useTempFile;
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:712558739
+// LIFERAY-SERVICE-BUILDER-HASH:1022726008

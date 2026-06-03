@@ -433,4 +433,4 @@ public class DynamicQueryEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2001134816
+// LIFERAY-SERVICE-BUILDER-HASH:-9520372

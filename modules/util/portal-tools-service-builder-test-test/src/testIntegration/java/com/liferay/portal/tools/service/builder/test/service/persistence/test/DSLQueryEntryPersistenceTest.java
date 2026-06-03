@@ -386,4 +386,4 @@ public class DSLQueryEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-428995770
+// LIFERAY-SERVICE-BUILDER-HASH:189884054

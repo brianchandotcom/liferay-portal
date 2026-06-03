@@ -94,6 +94,8 @@
 		<field name="ercVersionedEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="eagerBlob" type="Blob" />
+		<field name="lazyBlob" type="Blob" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion">
 		<field name="ercVersionedEntryVersionId" type="long" />
@@ -103,6 +105,8 @@
 		<field name="ercVersionedEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="eagerBlob" type="Blob" />
+		<field name="lazyBlob" type="Blob" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry">
 		<field name="finderWhereClauseEntryId" type="long" />

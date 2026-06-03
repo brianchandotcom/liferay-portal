@@ -15,10 +15,11 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion;
+import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersionLazyBlobBlobModel;
 import com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersionModel;
+import com.liferay.portal.tools.service.builder.test.service.ERCVersionedEntryVersionLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -28,11 +29,9 @@ import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -63,7 +62,8 @@ public class ERCVersionedEntryVersionModelImpl
 		{"version", Types.INTEGER}, {"uuid_", Types.VARCHAR},
 		{"externalReferenceCode", Types.VARCHAR},
 		{"ercVersionedEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"eagerBlob", Types.BLOB},
+		{"lazyBlob", Types.BLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,10 +77,12 @@ public class ERCVersionedEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("ercVersionedEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("eagerBlob", Types.BLOB);
+		TABLE_COLUMNS_MAP.put("lazyBlob", Types.BLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ERCVersionedEntryVersion (ercVersionedEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ercVersionedEntryId LONG,groupId LONG,companyId LONG)";
+		"create table ERCVersionedEntryVersion (ercVersionedEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ercVersionedEntryId LONG,groupId LONG,companyId LONG,eagerBlob BLOB,lazyBlob BLOB)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ERCVersionedEntryVersion";
@@ -103,49 +105,13 @@ public class ERCVersionedEntryVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
+	public static final boolean ENTITY_CACHE_ENABLED = false;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long ERCVERSIONEDENTRYID_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 16L;
+	public static final boolean FINDER_CACHE_ENABLED = false;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -267,6 +233,10 @@ public class ERCVersionedEntryVersionModelImpl
 				"groupId", ERCVersionedEntryVersion::getGroupId);
 			attributeGetterFunctions.put(
 				"companyId", ERCVersionedEntryVersion::getCompanyId);
+			attributeGetterFunctions.put(
+				"eagerBlob", ERCVersionedEntryVersion::getEagerBlob);
+			attributeGetterFunctions.put(
+				"lazyBlob", ERCVersionedEntryVersion::getLazyBlob);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -314,6 +284,14 @@ public class ERCVersionedEntryVersionModelImpl
 				"companyId",
 				(BiConsumer<ERCVersionedEntryVersion, Long>)
 					ERCVersionedEntryVersion::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"eagerBlob",
+				(BiConsumer<ERCVersionedEntryVersion, Blob>)
+					ERCVersionedEntryVersion::setEagerBlob);
+			attributeSetterBiConsumers.put(
+				"lazyBlob",
+				(BiConsumer<ERCVersionedEntryVersion, Blob>)
+					ERCVersionedEntryVersion::setLazyBlob);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -332,6 +310,8 @@ public class ERCVersionedEntryVersionModelImpl
 		ercVersionedEntry.setExternalReferenceCode(getExternalReferenceCode());
 		ercVersionedEntry.setGroupId(getGroupId());
 		ercVersionedEntry.setCompanyId(getCompanyId());
+		ercVersionedEntry.setEagerBlob(getEagerBlob());
+		ercVersionedEntry.setLazyBlob(getLazyBlob());
 	}
 
 	@Override
@@ -507,28 +487,54 @@ public class ERCVersionedEntryVersionModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
-	public long getColumnBitmask() {
-		if (_columnBitmask > 0) {
-			return _columnBitmask;
+	@Override
+	public Blob getEagerBlob() {
+		return _eagerBlob;
+	}
+
+	@Override
+	public void setEagerBlob(Blob eagerBlob) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
-		if ((_columnOriginalValues == null) ||
-			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+		_eagerBlob = eagerBlob;
+	}
 
-			return 0;
-		}
-
-		for (Map.Entry<String, Object> entry :
-				_columnOriginalValues.entrySet()) {
-
-			if (!Objects.equals(
-					entry.getValue(), getColumnValue(entry.getKey()))) {
-
-				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+	@Override
+	public Blob getLazyBlob() {
+		if (_lazyBlobBlobModel == null) {
+			try {
+				_lazyBlobBlobModel =
+					ERCVersionedEntryVersionLocalServiceUtil.
+						getLazyBlobBlobModel(getPrimaryKey());
+			}
+			catch (Exception exception) {
 			}
 		}
 
-		return _columnBitmask;
+		Blob blob = null;
+
+		if (_lazyBlobBlobModel != null) {
+			blob = _lazyBlobBlobModel.getLazyBlobBlob();
+		}
+
+		return blob;
+	}
+
+	@Override
+	public void setLazyBlob(Blob lazyBlob) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		if (_lazyBlobBlobModel == null) {
+			_lazyBlobBlobModel = new ERCVersionedEntryVersionLazyBlobBlobModel(
+				getPrimaryKey(), lazyBlob);
+		}
+		else {
+			_lazyBlobBlobModel.setLazyBlobBlob(lazyBlob);
+		}
 	}
 
 	@Override
@@ -677,7 +683,7 @@ public class ERCVersionedEntryVersionModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
-		_columnBitmask = 0;
+		_lazyBlobBlobModel = null;
 	}
 
 	@Override
@@ -722,50 +728,39 @@ public class ERCVersionedEntryVersionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<ERCVersionedEntryVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		StringBundler sb = new StringBundler(19);
 
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 2);
+		sb.append("{\"ercVersionedEntryVersionId\": ");
 
-		sb.append("{");
+		sb.append(getErcVersionedEntryVersionId());
 
-		for (Map.Entry<String, Function<ERCVersionedEntryVersion, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
+		sb.append(", \"version\": ");
 
-			String attributeName = entry.getKey();
-			Function<ERCVersionedEntryVersion, Object> attributeGetterFunction =
-				entry.getValue();
+		sb.append(getVersion());
 
-			sb.append("\"");
-			sb.append(attributeName);
-			sb.append("\": ");
+		sb.append(", \"uuid\": ");
 
-			Object value = attributeGetterFunction.apply(
-				(ERCVersionedEntryVersion)this);
+		sb.append("\"" + getUuid() + "\"");
 
-			if (value == null) {
-				sb.append("null");
-			}
-			else if (value instanceof Blob || value instanceof Date ||
-					 value instanceof Map || value instanceof String) {
+		sb.append(", \"externalReferenceCode\": ");
 
-				sb.append(
-					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
-						"\"");
-			}
-			else {
-				sb.append(value);
-			}
+		sb.append("\"" + getExternalReferenceCode() + "\"");
 
-			sb.append(", ");
-		}
+		sb.append(", \"ercVersionedEntryId\": ");
 
-		if (sb.index() > 1) {
-			sb.setIndex(sb.index() - 1);
-		}
+		sb.append(getErcVersionedEntryId());
 
-		sb.append("}");
+		sb.append(", \"groupId\": ");
+
+		sb.append(getGroupId());
+
+		sb.append(", \"companyId\": ");
+
+		sb.append(getCompanyId());
+
+		sb.append(", \"eagerBlob\": ");
+
+		sb.append("\"" + getEagerBlob() + "\"");
 
 		return sb.toString();
 	}
@@ -787,6 +782,9 @@ public class ERCVersionedEntryVersionModelImpl
 	private long _ercVersionedEntryId;
 	private long _groupId;
 	private long _companyId;
+	private Blob _eagerBlob;
+	private transient ERCVersionedEntryVersionLazyBlobBlobModel
+		_lazyBlobBlobModel;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -827,6 +825,7 @@ public class ERCVersionedEntryVersionModelImpl
 		_columnOriginalValues.put("ercVersionedEntryId", _ercVersionedEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("eagerBlob", _eagerBlob);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -840,35 +839,7 @@ public class ERCVersionedEntryVersionModelImpl
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new HashMap<>();
-
-		columnBitmasks.put("ercVersionedEntryVersionId", 1L);
-
-		columnBitmasks.put("version", 2L);
-
-		columnBitmasks.put("uuid_", 4L);
-
-		columnBitmasks.put("externalReferenceCode", 8L);
-
-		columnBitmasks.put("ercVersionedEntryId", 16L);
-
-		columnBitmasks.put("groupId", 32L);
-
-		columnBitmasks.put("companyId", 64L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private long _columnBitmask;
 	private ERCVersionedEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1636105583
+// LIFERAY-SERVICE-BUILDER-HASH:909031189

@@ -109,144 +109,340 @@ describe('detection', () => {
 		);
 	});
 
-	it('detects attribute browser_name', async () => {
-		mockAudiencesDefinitionWithAttribute('browser_name', 'eq', 'Firefox');
+	describe('attribute browser_name', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'browser_name',
+				'eq',
+				'Firefox'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'browser_name',
+				'eq',
+				'WebKit'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute browser_version', async () => {
-		mockAudiencesDefinitionWithAttribute('browser_version', 'eq', '151.0');
+	describe('attribute browser_version', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'browser_version',
+				'eq',
+				'151.0'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'browser_version',
+				'eq',
+				'123.0'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute cookies', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'cookies',
-			'includes',
-			'REMEMBER_ME=true'
-		);
+	describe('attribute cookies', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'cookies',
+				'includes',
+				'REMEMBER_ME=true'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'cookies',
+				'includes',
+				'REMEMBER_YOU=false'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute hostname', async () => {
-		mockAudiencesDefinitionWithAttribute('hostname', 'eq', 'localhost');
+	describe('attribute hostname', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute('hostname', 'eq', 'localhost');
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'hostname',
+				'eq',
+				'google.com'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute language', async () => {
-		mockAudiencesDefinitionWithAttribute('language', 'eq', 'en-US');
+	describe('attribute language', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute('language', 'eq', 'en-US');
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute('language', 'eq', 'es-ES');
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute local_date', async () => {
-		mockAudiencesDefinitionWithAttribute('local_date', 'eq', '2009-04-23');
+	describe('attribute local_date', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'local_date',
+				'eq',
+				'2009-04-23'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'local_date',
+				'eq',
+				'1980-01-01'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute local_hour', async () => {
-		mockAudiencesDefinitionWithAttribute('local_hour', 'eq', 10);
+	describe('attribute local_hour', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute('local_hour', 'eq', 10);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute('local_hour', 'eq', 0);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute pathname', async () => {
-		mockAudiencesDefinitionWithAttribute('pathname', 'eq', '/home');
+	describe('attribute local_hour', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute('pathname', 'eq', '/home');
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute('pathname', 'eq', '/work');
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute referrer', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'referrer',
-			'eq',
-			'https://www.wikipedia.org/'
-		);
+	describe('attribute referrer', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'referrer',
+				'eq',
+				'https://www.wikipedia.org/'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'referrer',
+				'eq',
+				'https://www.wikimedia.org/'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute request_parameters', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'request_parameters',
-			'includes',
-			'utm_source=newsletter'
-		);
+	describe('attribute request_parameters', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'request_parameters',
+				'includes',
+				'utm_source=newsletter'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'request_parameters',
+				'includes',
+				'language=en'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute segments', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'segments',
-			'includes',
-			'SEGMENT_REAL_TIME'
-		);
+	describe('attribute segments', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'segments',
+				'includes',
+				'SEGMENT_REAL_TIME'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'segments',
+				'includes',
+				'NON_EXISTENT_SEGMENT'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute timezone', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'timezone',
-			'eq',
-			'America/New_York'
-		);
+	describe('attribute timezone', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'timezone',
+				'eq',
+				'America/New_York'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'timezone',
+				'eq',
+				'Pacific/Midway'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute url', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'url',
-			'eq',
-			'http://localhost/home?utm_source=newsletter&language=es'
-		);
+	describe('attribute url', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'url',
+				'eq',
+				'http://localhost/home?utm_source=newsletter&language=es'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'url',
+				'eq',
+				'http://otherhost/web'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
-	it('detects attribute user_agent', async () => {
-		mockAudiencesDefinitionWithAttribute(
-			'user_agent',
-			'eq',
-			'Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0'
-		);
+	describe('attribute user_agent', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'user_agent',
+				'eq',
+				'Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0'
+			);
 
-		await audiences.runDetection(URL);
+			await audiences.runDetection(URL);
 
-		expect(audiences.get()).toEqual(new Set(['the_audience']));
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'user_agent',
+				'eq',
+				'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko)'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
 	});
 
 	it('matches an AND audience only when every rule matches', async () => {

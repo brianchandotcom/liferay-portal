@@ -140,7 +140,7 @@ resource "aws_iam_policy" "rds_exporter" {
 	})
 }
 resource "aws_prometheus_rule_group_namespace" "liferay" {
-	count=var.observability_config.enabled ? 1 : 0
+	count=var.observability_config.enabled && length(local.aws_recording_rules) > 0 ? 1 : 0
 	data=yamlencode({
 		groups=[
 			{

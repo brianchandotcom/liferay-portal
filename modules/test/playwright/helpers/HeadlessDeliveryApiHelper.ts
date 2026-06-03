@@ -108,6 +108,12 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async deleteMessageBoardSection(messageBoardSectionId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/message-board-sections/${messageBoardSectionId}`
+		);
+	}
+
 	async deleteSiteDocumentsFolderByExternalReferenceCode(
 		externalReferenceCode: string
 	) {
@@ -480,6 +486,24 @@ export class HeadlessDeliveryApiHelper {
 					...(await this.apiHelpers.getCSRFTokenHeader()),
 				},
 				multipart,
+			}
+		);
+	}
+
+	async patchMessageBoardSection({
+		messageBoardSectionId,
+		title,
+	}: {
+		messageBoardSectionId: string;
+		title: string;
+	}): Promise<MessageBoardSection> {
+		return this.apiHelpers.patchRequestOptions(
+			`${this.apiHelpers.baseUrl}${this.basePath}/message-board-sections/${messageBoardSectionId}`,
+			{
+				data: {
+					title,
+				},
+				failOnStatusCode: true,
 			}
 		);
 	}

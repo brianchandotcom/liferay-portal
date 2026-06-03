@@ -1,0 +1,76 @@
+release:
+    name: my-release
+    namespace: my-namespace
+suite: Elasticsearch
+templates:
+    -   templates/elasticsearch.yaml
+tests:
+    -   asserts:
+            -   contains:
+                    any: true
+                    content:
+                        name: ES_SETTING_ONE
+                        value: one
+                    path: spec.nodeSets[0].podTemplate.spec.containers[0].env
+            -   contains:
+                    any: true
+                    content:
+                        name: ES_SETTING_TWO
+                        value: two
+                    path: spec.nodeSets[0].podTemplate.spec.containers[0].env
+        it: should append every custom env entry through the loop
+        set:
+            enabled: true
+            search.elasticsearch.customEnv:
+                x-extra:
+                    -   name: ES_SETTING_ONE
+                        value: one
+                    -   name: ES_SETTING_TWO
+                        value: two
+            search.elasticsearch.enabled: true
+    -   asserts:
+            -   contains:
+                    content:
+                        name: ES_JAVA_OPTS
+                        value: -Xms4g -Xmx4g
+                    path: spec.nodeSets[0].podTemplate.spec.containers[0].env
+        it: should apply the default JVM options when no custom env is configured
+        set:
+            enabled: true
+            search.elasticsearch.enabled: true
+    -   asserts:
+            -   equal:
+                    path: metadata.name
+                    value: custom-es
+        it: should name the Elasticsearch resource after the configured name override
+        set:
+            enabled: true
+            search.elasticsearch.enabled: true
+            search.elasticsearch.name: custom-es
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the Elasticsearch resource when search is disabled by default
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the Elasticsearch resource when the chart is disabled
+        set:
+            enabled: false
+            search.elasticsearch.enabled: true
+    -   asserts:
+            -   isKind:
+                    of: Elasticsearch
+            -   equal:
+                    path: metadata.name
+                    value: my-release-es
+            -   equal:
+                    path: spec.version
+                    value: 8.19.11
+            -   equal:
+                    path: spec.nodeSets[0].count
+                    value: 1
+        it: should render the Elasticsearch resource named after the release when search is enabled
+        set:
+            enabled: true
+            search.elasticsearch.enabled: true

@@ -1,0 +1,94 @@
+suite: gateway
+templates:
+    -   templates/gateway.yaml
+tests:
+    -   asserts:
+            -   lengthEqual:
+                    count: 3
+                    path: spec.listeners
+        documentSelector:
+            path: kind
+            value: Gateway
+        it: should add one listener per endpoint plus the implicit http listener
+        set:
+            enabled: true
+            endpoints:
+                admin:
+                    port: 8443
+                    protocol: HTTPS
+                web:
+                    port: 443
+                    protocol: HTTPS
+            gateway.className: eg
+            gateway.name: liferay-gateway
+    -   asserts:
+            -   equal:
+                    path: metadata.name
+                    value: liferay-gateway
+            -   equal:
+                    path: spec.gatewayClassName
+                    value: eg
+            -   lengthEqual:
+                    count: 1
+                    path: spec.listeners
+        documentSelector:
+            path: kind
+            value: Gateway
+        it: should add the implicit http listener when no endpoints are configured
+        set:
+            enabled: true
+            gateway.className: eg
+            gateway.name: liferay-gateway
+    -   asserts:
+            -   contains:
+                    any: true
+                    content:
+                        kind: Secret
+                        name: web-cert
+                    path: spec.listeners[?(@.name=="web")].tls.certificateRefs
+        documentSelector:
+            path: kind
+            value: Gateway
+        it: should build certificate references from the endpoint external secret names
+        set:
+            enabled: true
+            endpoints:
+                web:
+                    port: 443
+                    protocol: HTTPS
+                    tls:
+                        externalSecretNames:
+                            -   web-cert
+            gateway.className: eg
+            gateway.name: liferay-gateway
+    -   asserts:
+            -   isKind:
+                    of: ClientTrafficPolicy
+            -   equal:
+                    path: metadata.name
+                    value: liferay-gateway-attachment
+            -   equal:
+                    path: spec.targetRefs[0].name
+                    value: liferay-gateway
+        documentSelector:
+            path: kind
+            value: ClientTrafficPolicy
+        it: should name the ClientTrafficPolicy after the gateway with an attachment suffix
+        set:
+            enabled: true
+            gateway.className: eg
+            gateway.name: liferay-gateway
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the gateway resources when no gateway class and name are configured
+        set:
+            enabled: true
+    -   asserts:
+            -   hasDocuments:
+                    count: 2
+        it: should render both a ClientTrafficPolicy and a Gateway when configured
+        set:
+            enabled: true
+            gateway.className: eg
+            gateway.name: liferay-gateway

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"before-filter=Virtual Host Filter", "dispatcher=REQUEST",
 		"servlet-context-name=",
-		"servlet-filter-name=OAuth 2 Authorization Well-Known Server Metadata Filter",
+		"servlet-filter-name=OAuth 2 Well-Known Authorization Server Metadata Filter",
 		"url-pattern=/.well-known/oauth-authorization-server",
 		"url-pattern=/.well-known/oauth-authorization-server/*"
 	},

@@ -93,6 +93,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContentRetrieverResourceImpl.class);
 
+			add(CredentialResourceImpl.class);
+
 			add(MessageResourceImpl.class);
 
 			add(ModelArmorTemplateResourceImpl.class);
@@ -106,4 +108,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-564689957
+// LIFERAY-REST-BUILDER-HASH:-892401120

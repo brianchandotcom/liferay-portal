@@ -62,7 +62,7 @@ export class Detection {
 	}
 
 	async run(): Promise<AudienceMatch[]> {
-		const matches: {[key: string]: AudienceMatch} = {};
+		const matches = [];
 
 		for (const audience of this._audiencesDefinition.audiences) {
 			const {conjunction, id, retentionType, rules} = audience;
@@ -74,14 +74,14 @@ export class Detection {
 			if (matched) {
 				log(`Matched ${retentionType} audience: ${id}`);
 
-				matches[id] = {
+				matches.push({
 					id,
 					retentionType,
-				};
+				});
 			}
 		}
 
-		return Object.values(matches);
+		return matches;
 	}
 
 	private async _getAttribute(attr: Attribute): Promise<AttributeValue> {

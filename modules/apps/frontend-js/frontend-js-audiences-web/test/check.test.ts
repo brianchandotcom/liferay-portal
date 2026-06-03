@@ -74,6 +74,36 @@ describe('check', () => {
 				)
 			).not.toThrow();
 		});
+
+		it('accepts audiences with distinct ids', () => {
+			expect(() =>
+				check(
+					audiencesDefinition({
+						audiences: [
+							audience({id: 'audience-1'}),
+							audience({id: 'audience-2'}),
+						],
+					})
+				)
+			).not.toThrow();
+		});
+	});
+
+	describe('audience id uniqueness', () => {
+		it('rejects audiences with duplicate ids', () => {
+			expect(() =>
+				check(
+					audiencesDefinition({
+						audiences: [
+							audience({id: 'duplicate'}),
+							audience({id: 'duplicate'}),
+						],
+					})
+				)
+			).toThrow(
+				"Audiences definition has more than one audience with id 'duplicate'"
+			);
+		});
 	});
 
 	describe('check', () => {

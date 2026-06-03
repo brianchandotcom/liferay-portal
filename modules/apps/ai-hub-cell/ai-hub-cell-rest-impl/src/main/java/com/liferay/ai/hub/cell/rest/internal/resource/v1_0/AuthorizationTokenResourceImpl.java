@@ -59,7 +59,7 @@ public class AuthorizationTokenResourceImpl
 							_oAuth2ApplicationLocalService.
 								getOAuth2ApplicationByExternalReferenceCode(
 									AIHubCellConstants.
-										OAUTH2_APPLICATION_ERC_AI_HUB_CELL,
+										AI_HUB_CELL_OAUTH2_APPLICATION_ERC,
 									contextCompany.getCompanyId());
 
 						return AIHubCellUserTokenWebCacheItem.get(

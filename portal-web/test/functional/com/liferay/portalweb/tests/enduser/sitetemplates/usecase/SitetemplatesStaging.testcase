@@ -136,7 +136,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Add a new site based on Raylife site template") {
+		task ("Given: Add a new site based on Team Extranet site template") {
 			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
@@ -152,15 +152,7 @@ definition {
 		}
 
 		task ("Then: User can publish the staging site") {
-			Navigator.openSiteURL(siteName = "Test Team Extranet Site");
-
-			var key_tabName = "Staging";
-
-			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
-				Refresh();
-			}
-
-			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+			Navigator.openStagingSiteURL(siteName = "Test Team Extranet Site");
 
 			Staging.gotoPublishToLive();
 

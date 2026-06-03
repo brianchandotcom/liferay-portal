@@ -108,8 +108,12 @@ public class DDMFormFieldOptionsFactoryImplTest {
 
 		_mockDDMDataProviderResponse(
 			ListUtil.fromArray(
-				new KeyValuePair("key1", "value1"),
-				new KeyValuePair("key2", "value2")));
+				new KeyValuePair(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()),
+				new KeyValuePair(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString())));
 
 		_ddmFormFieldOptionsFactoryImpl.create(
 			_ddmFormField, _ddmFormFieldRenderingContext);

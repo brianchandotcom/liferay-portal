@@ -906,7 +906,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-112029 - Validate if the user can search for the questions."
+	@description = "LPS-112029 and LPS-116841 - Validate if the user can view the select filter and search field and search for the questions."
 	@priority = 4
 	@refactordone
 	test CanSearchForQuestions {
@@ -936,6 +936,17 @@ definition {
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
 				titleField = "Questions Title 5");
+		}
+
+		task ("Then he can see the select filter and search field") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+
+			Questions.viewSearchField();
+
+			Questions.viewSelectFilter();
 		}
 
 		task ("When the user search for 'questions title 5'") {
@@ -1392,41 +1403,6 @@ definition {
 				pageName = "Questions Page",
 				portalURL = ${portalURL},
 				title = "question-");
-		}
-	}
-
-	@description = "LPS-116841 - Validate if the user can view the select filter and search field after adding a question."
-	@priority = 4
-	test CanViewFilterAndSearchFieldAfterAddingQuestion {
-		task ("Given there is a category created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("When the user creates a question") {
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestionWithTheTestBody",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then he can see the select filter and search field") {
-			Questions.viewSearchField();
-
-			Questions.viewSelectFilter();
 		}
 	}
 

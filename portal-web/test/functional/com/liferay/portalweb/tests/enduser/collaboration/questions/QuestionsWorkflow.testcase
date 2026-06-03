@@ -40,54 +40,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-130705 - Validate if a user can answer a question that was posted before the workflow was enabled."
-	@priority = 4
-	test CanAddAnswerViaJSONAfterEnablingWorkflow {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that there is a category and a question Created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("When the user add an answer after the Message Board Moderation is enabled") {
-			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
-
-			SystemSettings.configureSystemSetting(
-				enableSetting = "true",
-				settingFieldName = "Enable Message Boards Moderation");
-
-			JSONQuestions.addAnswer(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyBody = "This is my answer",
-				threadSubject = "Title AddQuestion",
-				titleField = "Title AddQuestion");
-
-			JSONQuestions.getAnswerTitle(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyTitle = "Title AddQuestion",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("Then we can se 'This is a approved question' message on the terminal") {
-			JSONQuestions.getApprovedStatus(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-		}
-	}
-
 	@description = "LPS-130115 - Validate if a question can be approved."
 	@priority = 4
 	test CanApproveQuestion {
@@ -162,9 +114,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-131941 - Validate if a user can view a question with history router when enabling MB Moderation."
-	@priority = 3
-	test CanSetHistoryRouterWithWorkflow {
+	@description = "LPS-130705, LPS-130115 and LPS-131941 - Validate if a user can view a question with history router and check the pending and approved statuses when enabling MB Moderation."
+	@priority = 4
+	test CanViewPendingAndApprovedStatusWithWorkflow {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -199,6 +151,13 @@ definition {
 				titleField = "Title AddQuestion");
 		}
 
+		task ("Then the pending status is returned through JSON") {
+			JSONQuestions.getPendingStatus(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
+
 		task ("And he goes to see the question with history router") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
@@ -210,37 +169,24 @@ definition {
 
 			Questions.viewQuestionPage(topicName = "questions-test-category");
 		}
-	}
 
-	@description = "Validate if the pending status can be returned through JSON once Message Boards moderation Workflow is enabled."
-	@priority = 4
-	test PendingStatusCanBeReturnedThroughJSON {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given the user enable Message Boards Moderation") {
-			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
-
-			SystemSettings.configureSystemSetting(
-				enableSetting = "true",
-				settingFieldName = "Enable Message Boards Moderation");
-		}
-
-		task ("When the user creates a category and a question") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
+		task ("When the user add an answer through JSON") {
+			JSONQuestions.addAnswer(
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
+				replyBody = "This is my answer",
+				threadSubject = "Title AddQuestion",
+				titleField = "Title AddQuestion");
+
+			JSONQuestions.getAnswerTitle(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyTitle = "Title AddQuestion",
 				titleField = "Title AddQuestion");
 		}
 
-		task ("Then he can see status pending on the terminalz") {
-			JSONQuestions.getPendingStatus(
+		task ("Then the approved status is returned through JSON") {
+			JSONQuestions.getApprovedStatus(
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
 				titleField = "Title AddQuestion");

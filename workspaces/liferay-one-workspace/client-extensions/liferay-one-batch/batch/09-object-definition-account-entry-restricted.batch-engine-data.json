@@ -1,0 +1,39 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountNote_accountEntryId",
+			"externalReferenceCode": "C_ACCOUNT_NOTE"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountToOAuth2DxpAuthorization_accountEntryId",
+			"externalReferenceCode": "C_OAUTH2_DXP_AUTHORIZATION"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToPublisherAssets_accountEntryId",
+			"externalReferenceCode": "C_PUBLISHER_ASSETS"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToTicketAttachment_accountEntryId",
+			"externalReferenceCode": "C_TICKET_ATTACHMENT"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountToTrialExtensionRequest_accountEntryId",
+			"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST"
+		}
+	]
+}

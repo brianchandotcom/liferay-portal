@@ -6,10 +6,8 @@
 package com.liferay.portal.configuration.persistence.internal.upgrade.v2_0_1;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -29,12 +27,19 @@ import java.util.Dictionary;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
  * @author Thiago Buarque
  */
 public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
-	public ConfigurationUpgradeProcess(GroupLocalService groupLocalService) {
+	public ConfigurationUpgradeProcess(
+		ConfigurationAdmin configurationAdmin,
+		GroupLocalService groupLocalService) {
+
+		_configurationAdmin = configurationAdmin;
 		_groupLocalService = groupLocalService;
 	}
 
@@ -44,18 +49,15 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select configurationId, dictionary from Configuration_ " +
 					"where dictionary like '%groupId=%'");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					"update Configuration_ set dictionary = ? where " +
-						"configurationId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				String configurationId = resultSet.getString("configurationId");
+
 				Dictionary<String, Object> dictionary = _toDictionary(
 					resultSet.getString("dictionary"));
 
@@ -70,14 +72,11 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 						getPropertyKey(),
 					companyId);
 
-				preparedStatement2.setString(1, _toString(dictionary));
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(configurationId, "?");
 
-				preparedStatement2.setString(2, configurationId);
-
-				preparedStatement2.addBatch();
+				configuration.update(dictionary);
 			}
-
-			preparedStatement2.executeBatch();
 		}
 	}
 
@@ -116,21 +115,10 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 		return ConfigurationHandler.read(unsyncByteArrayInputStream);
 	}
 
-	private String _toString(Dictionary<String, Object> dictionary)
-		throws IOException {
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
-
-		return new String(
-			unsyncByteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationUpgradeProcess.class);
 
+	private final ConfigurationAdmin _configurationAdmin;
 	private final GroupLocalService _groupLocalService;
 
 }

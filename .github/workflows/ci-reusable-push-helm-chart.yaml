@@ -1,0 +1,129 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    publish:
+        outputs:
+            chart_version: ${{steps.vars.outputs.chart_version}}
+            image_ref: ${{steps.vars.outputs.image_ref}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 1
+                    filter: blob:none
+                    show-progress: false
+            -   env:
+                    HELM_CHART_REGISTRY_NONPRD: ${{vars.HELM_CHART_REGISTRY_NONPRD}}
+                id: vars
+                name: Set up variables
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        echo "DIST_DIR=${{runner.temp}}/${{inputs.chart_name}}/dist" >> ${GITHUB_ENV}
+
+                        local chart_version
+
+                        chart_version=$(yq .version Chart.yaml)
+
+                        echo "CHART_VERSION=${chart_version}" >> ${GITHUB_ENV}
+                        echo "chart_version=${chart_version}" >> ${GITHUB_OUTPUT}
+
+                        local registry_path="${HELM_CHART_REGISTRY_NONPRD}/$(echo "${GITHUB_REF_NAME}" | tr 'A-Z/' 'a-z-')"
+
+                        local image_ref="${registry_path}/${{inputs.chart_name}}:${chart_version}${{inputs.image_tag_suffix}}"
+
+                        echo "IMAGE_REF=${image_ref}" >> ${GITHUB_ENV}
+                        echo "image_ref=${image_ref}" >> ${GITHUB_OUTPUT}
+                    }
+
+                    main "${@}"
+                working-directory: ${{inputs.working_directory}}
+            -   id: auth
+                name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v3
+                with:
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+            -   name: Install oras
+                uses: oras-project/setup-oras@v1
+            -   name: Log in to GAR
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        echo "${{steps.auth.outputs.auth_token}}" | oras login --password-stdin --username oauth2accesstoken us-central1-docker.pkg.dev
+                    }
+
+                    main "${@}"
+            -   name: Package Helm chart
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        rm --force --recursive "${DIST_DIR}"
+
+                        mkdir --parents "${DIST_DIR}"
+
+                        helm dependency update
+
+                        helm package . --destination "${DIST_DIR}" --version "${CHART_VERSION}"
+                    }
+
+                    main "${@}"
+                working-directory: ${{inputs.working_directory}}
+            -   name: Push to OCI registry
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        cd "${DIST_DIR}"
+
+                        local config_file="helm-oci-config.json"
+
+                        printf \
+                            '{"name":"%s","version":"%s"}' \
+                            "${{inputs.chart_name}}" \
+                            "${CHART_VERSION}" \
+                            > "${config_file}"
+
+                        oras \
+                            push \
+                            "${IMAGE_REF}" \
+                            --config \
+                            "${config_file}:application/vnd.cncf.helm.config.v1+json" \
+                            "${{inputs.chart_name}}-${CHART_VERSION}.tgz:application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+                    }
+
+                    main "${@}"
+on:
+    workflow_call:
+        inputs:
+            chart_name:
+                required: true
+                type: string
+            image_tag_suffix:
+                default: ""
+                required: false
+                type: string
+            working_directory:
+                required: true
+                type: string
+        outputs:
+            chart_version:
+                value: ${{jobs.publish.outputs.chart_version}}
+            image_ref:
+                value: ${{jobs.publish.outputs.image_ref}}
+permissions:
+    contents: read
+    id-token: write

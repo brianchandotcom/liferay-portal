@@ -1,0 +1,77 @@
+release:
+    name: my-release
+    namespace: my-namespace
+suite: PodMonitoring
+templates:
+    -   templates/pod-monitoring.yaml
+tests:
+    -   asserts:
+            -   hasDocuments:
+                    count: 3
+        it: should add a custom instance to the loop alongside the defaults
+        set:
+            podMonitoring.instances:
+                custom:
+                    matchLabels:
+                        app: custom-app
+                    path: /metrics
+                    port: 9999
+    -   asserts:
+            -   isKind:
+                    of: PodMonitoring
+            -   equal:
+                    path: spec.endpoints[0].port
+                    value: 19001
+            -   equal:
+                    path: spec.endpoints[0].interval
+                    value: 1m
+            -   equal:
+                    path: spec.selector.matchLabels["app.kubernetes.io/name"]
+                    value: envoy
+        documentSelector:
+            path: metadata.name
+            value: envoy
+        it: should configure the envoy PodMonitoring endpoint and selector
+    -   asserts:
+            -   equal:
+                    path: spec.endpoints[0].port
+                    value: 12345
+            -   equal:
+                    path: spec.selector.matchLabels.app
+                    value: liferay-default
+        documentSelector:
+            path: metadata.name
+            value: liferay
+        it: should configure the liferay PodMonitoring endpoint and selector
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the PodMonitoring resources when the chart is disabled
+        set:
+            enabled: false
+    -   asserts:
+            -   hasDocuments:
+                    count: 2
+        it: should render one PodMonitoring per configured instance
+    -   asserts:
+            -   equal:
+                    path: spec.endpoints[0].port
+                    value: 9999
+            -   equal:
+                    path: spec.endpoints[0].interval
+                    value: 30s
+            -   equal:
+                    path: spec.selector.matchLabels.app
+                    value: custom-app
+        documentSelector:
+            path: metadata.name
+            value: custom
+        it: should render the custom instance with the configured port and global interval
+        set:
+            podMonitoring.instances:
+                custom:
+                    matchLabels:
+                        app: custom-app
+                    path: /metrics
+                    port: 9999
+            podMonitoring.interval: 30s

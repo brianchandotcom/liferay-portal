@@ -205,12 +205,10 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	};
 
 	useEffect(() => {
-		if (selectedAccount?.taxId) {
-			productPurchaseStore.send({
-				taxId: selectedAccount.taxId,
-				type: 'setAccountTaxId',
-			});
-		}
+		productPurchaseStore.send({
+			taxId: selectedAccount?.taxId || '',
+			type: 'setAccountTaxId',
+		});
 	}, [selectedAccount?.taxId]);
 
 	return (

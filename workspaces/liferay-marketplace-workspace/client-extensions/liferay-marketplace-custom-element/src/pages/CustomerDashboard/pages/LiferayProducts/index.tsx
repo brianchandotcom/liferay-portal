@@ -11,6 +11,7 @@ import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {
 	OrderTypes,
+	OrderWorkflowStatusCode,
 	PaymentStatus,
 	orderTypeDocumentationURL,
 } from '../../../../enums/Order';
@@ -106,15 +107,28 @@ const LiferayProductsListView = () => {
 									),
 							},
 							{
-								hidden: (row: PlacedOrder) =>
-									![OrderTypes.AI_HUB].includes(
-										row.orderTypeExternalReferenceCode as OrderTypes
-									) || row.orderStatusInfo?.code !== 0,
+								hidden: (placedOrder: PlacedOrder) => {
+									const {orderStatusInfo, orderTypeExternalReferenceCode} = placedOrder;
+
+									const isNotAIHub = orderTypeExternalReferenceCode !== OrderTypes.AI_HUB;
+									const isNotActive = orderStatusInfo?.code !== OrderWorkflowStatusCode.COMPLETED;
+
+									return isNotAIHub || isNotActive;
+								},
 								name: i18n.translate('buy-extra-token'),
-								onClick: (row: PlacedOrder) =>
-									Liferay.Util.navigate(
-										`${getSiteURL()}/product-purchase?productId=${row.placedOrderItems[0].productId}&aiHubTokens`
-									),
+								onClick: (placedOrder: PlacedOrder) => {
+									const placedOrderItems = placedOrder.placedOrderItems ?? [];
+									const firstOrderItem = placedOrderItems[0];
+									const productId = firstOrderItem?.productId;
+
+									if (productId) {
+										const siteURL = getSiteURL();
+
+										Liferay.Util.navigate(
+											`${siteURL}/product-purchase?productId=${productId}&aiHubTokens`
+										);
+									}
+								},
 							},
 						],
 						columns: [

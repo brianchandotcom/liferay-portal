@@ -19,11 +19,27 @@ import {productPurchaseStore} from '../../../../store';
 import BillingAddressForm from './BillingAddressForm';
 import getPostalAddressDescription from './getPostalAddressDescription';
 
+const mapPostalAddressToBillingAddress = (
+	postalAddress?: BillingAddress
+): BillingAddress => ({
+	city: postalAddress?.city || '',
+	country: postalAddress?.countryISOCode || '',
+	countryISOCode: postalAddress?.countryISOCode || 'US',
+	name: postalAddress?.name || '',
+	phoneNumber: postalAddress?.phoneNumber || '',
+	regionISOCode: postalAddress?.regionISOCode || '',
+	street1: postalAddress?.street1 || '',
+	street2: postalAddress?.street2 || '',
+	zip: postalAddress?.zip || '',
+});
+
 type BillingAddressProps = {
+	hideNewAddressButton?: boolean;
 	sectionName?: string;
 };
 
 const BillingAddress: React.FC<BillingAddressProps> = ({
+	hideNewAddressButton = false,
 	sectionName = i18n.translate('billing-address'),
 }) => {
 	const {selectedAccount} = useProductPurchaseOutletContext();
@@ -47,6 +63,26 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 
 	const regions = regionsResponse?.items ?? [];
 
+	React.useEffect(() => {
+		if (hideNewAddressButton && addresses.length > 0 && !billingAddress.name) {
+			const firstAddress = addresses[0];
+			const newBillingAddress = mapPostalAddressToBillingAddress(firstAddress);
+
+			setSelectedAddress(firstAddress.name || '');
+
+			productPurchaseStore.send({
+				billingAddress: newBillingAddress,
+				type: 'setBillingAddress',
+			});
+		}
+	}, [addresses, billingAddress.name, hideNewAddressButton]);
+
+	React.useEffect(() => {
+		if (billingAddress.name) {
+			setSelectedAddress(billingAddress.name);
+		}
+	}, [billingAddress.name]);
+
 	const onSelectAddress = async ({
 		address,
 		title,
@@ -60,17 +96,9 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 			(address) => address.name === title
 		);
 
-		const billingAddress = {
-			city: postalAddress?.city,
-			country: postalAddress?.countryISOCode,
-			countryISOCode: postalAddress?.countryISOCode || 'US',
-			name: postalAddress?.name,
-			phoneNumber: postalAddress?.phoneNumber,
-			regionISOCode: postalAddress?.regionISOCode,
-			street1: postalAddress?.street1,
-			street2: postalAddress?.street2,
-			zip: postalAddress?.zip,
-		};
+		const billingAddress = mapPostalAddressToBillingAddress(
+			postalAddress || address
+		);
 
 		productPurchaseStore.send({
 			billingAddress,
@@ -173,18 +201,20 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 				);
 			})}
 
-			<BillingAddressForm
-				saveAddress={saveAddress}
-				setBillingAddress={() =>
-					productPurchaseStore.send({
-						billingAddress,
-						type: 'setBillingAddress',
-					})
-				}
-				setSelectedAddress={setSelectedAddress}
-				setShowNewAddressButton={setShowNewAddressButton}
-				showNewAddressButton={showNewAddressButton}
-			/>
+			{!hideNewAddressButton && (
+				<BillingAddressForm
+					saveAddress={saveAddress}
+					setBillingAddress={() =>
+						productPurchaseStore.send({
+							billingAddress,
+							type: 'setBillingAddress',
+						})
+					}
+					setSelectedAddress={setSelectedAddress}
+					setShowNewAddressButton={setShowNewAddressButton}
+					showNewAddressButton={showNewAddressButton}
+				/>
+			)}
 		</Section>
 	);
 };

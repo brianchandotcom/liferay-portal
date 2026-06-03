@@ -557,6 +557,7 @@ export default {
 	'order-received': 'Order Received',
 	'order-received-awaiting-signature': 'Order Received: Awaiting Signature',
 	'order-status': 'Order Status',
+	'order-summary': 'Order Summary',
 	'orders': 'Orders',
 	'other': 'Other',
 	'overall-experience': 'Overall Experience',

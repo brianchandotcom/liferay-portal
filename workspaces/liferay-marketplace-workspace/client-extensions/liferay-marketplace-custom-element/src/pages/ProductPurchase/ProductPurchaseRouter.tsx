@@ -41,6 +41,7 @@ import LDPAccountSelection from './pages/LiferayProduct/LDP/LDPAccountSelection'
 import LDPProvisioning from './pages/LiferayProduct/LDP/LDPProvisioningForm';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
+import AIHubPaymentMethod from './pages/LiferayProduct/AIHub/AIHubPaymentMethod';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -125,7 +126,7 @@ export const productTypeRoutes = {
 							title: i18n.translate('tokens-amount'),
 						},
 						{
-							element: PaymentMethod,
+							element: AIHubPaymentMethod,
 							path: 'payment-method',
 							title: i18n.translate('payment-method'),
 						},

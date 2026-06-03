@@ -16,14 +16,34 @@ import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 import {PaymentMethodType} from '../../../types';
 
-const PaymentTypeSelector = () => {
-	const {context} = productPurchaseStore.getSnapshot();
+interface PaymentTypeSelectorProps {
+	allowedPaymentMethodTypes?: PaymentMethodType[];
+}
+
+const PaymentTypeSelector = ({
+	allowedPaymentMethodTypes,
+}: PaymentTypeSelectorProps) => {
 	const {myUserAccount} = useMarketplaceContext();
 	const {productPurchaseCart} = useProductPurchaseOutletContext();
 
 	const invoice = useSelector(
 		productPurchaseStore,
-		({context}) => context.payment.invoice
+		(state) => {
+			const {context} = state;
+			const {payment} = context;
+
+			return payment.invoice;
+		}
+	);
+
+	const paymentType = useSelector(
+		productPurchaseStore,
+		(state) => {
+			const {context} = state;
+			const {payment} = context;
+
+			return payment.type;
+		}
 	);
 
 	const paymentModes = [
@@ -122,16 +142,24 @@ const PaymentTypeSelector = () => {
 		},
 	];
 
+	const filteredPaymentModes = paymentModes.filter((paymentMode) => {
+		if (!allowedPaymentMethodTypes) {
+			return true;
+		}
+
+		return allowedPaymentMethodTypes.includes(paymentMode.type);
+	});
+
 	return (
 		<div className="d-flex flex-column justify-content-around">
 			<Section label="Payment Method" required>
-				{paymentModes.map((paymentMode, index) => (
+				{filteredPaymentModes.map((paymentMode, index) => (
 					<RadioCard
 						className="mb-3 w-100"
 						content={paymentMode.cardContent}
 						key={index}
 						onChange={() => paymentMode.action()}
-						selected={context.payment.type === paymentMode.type}
+						selected={paymentType === paymentMode.type}
 						small
 					/>
 				))}

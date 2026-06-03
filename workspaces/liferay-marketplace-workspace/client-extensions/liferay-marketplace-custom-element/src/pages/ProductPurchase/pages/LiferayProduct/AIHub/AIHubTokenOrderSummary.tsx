@@ -120,7 +120,10 @@ const AIHubTokenOrderSummary = () => {
 			title={i18n.translate('summary')}
 		>
 			{selectedSku && (
-				<Section className="ai-hub-summary" label="Tokens">
+				<Section
+					className="ai-hub-summary"
+					label={i18n.translate('tokens')}
+				>
 					<div className="ai-hub-summary-infomation-card">
 						<div className="align-items-center d-flex justify-content-between w-100">
 							<div>
@@ -147,7 +150,10 @@ const AIHubTokenOrderSummary = () => {
 				</Section>
 			)}
 
-			<Section className="ai-hub-summary" label="Billing Address">
+			<Section
+				className="ai-hub-summary"
+				label={i18n.translate('billing-address')}
+			>
 				<div className="ai-hub-summary-infomation-card">
 					<ClayIcon
 						className="mr-3"
@@ -166,7 +172,8 @@ const AIHubTokenOrderSummary = () => {
 				</div>
 			</Section>
 
-			<Section className="ai-hub-summary" label="Payment Method">
+			<Section className="ai-hub-summary" label={i18n.translate('payment-method')}
+			>
 				<div className="ai-hub-alert-card">
 					<ClayIcon
 						className="mr-3"
@@ -201,7 +208,8 @@ const AIHubTokenOrderSummary = () => {
 				</div>
 			</Section>
 
-			<Section className="ai-hub-summary" label="Order Summary">
+			<Section className="ai-hub-summary" label={i18n.translate('order-summary')}
+			>
 				<div className="d-flex mx-5">
 					<div className="col-1 d-flex justify-content-end m-0 p-0 text-nowrap">
 						{i18n.translate('net-price')}:

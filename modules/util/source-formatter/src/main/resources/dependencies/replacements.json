@@ -3541,6 +3541,22 @@
 	},
 	{
 		"classNames": [
+			"MessageBus"
+		],
+		"from": "registerMessageListener(String paramName, MessageListener paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-34692"
+	},
+	{
+		"classNames": [
+			"MessageBus"
+		],
+		"from": "unregisterMessageListener(String paramName, MessageListener paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-34692"
+	},
+	{
+		"classNames": [
 			"MentionsUserFinder"
 		],
 		"classStructurePattern": true,

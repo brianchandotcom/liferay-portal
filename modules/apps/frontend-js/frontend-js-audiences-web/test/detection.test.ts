@@ -55,12 +55,16 @@ describe('detection', () => {
 	afterEach(() => {
 		jest.useRealTimers();
 
+		jest.dontMock('https://example.com/custom.js');
+
 		jest.restoreAllMocks();
 
 		delete (document as any).cookie;
 		delete (document as any).referrer;
-		delete (navigator as any).userAgent;
+
 		delete (global as any).Analytics;
+
+		delete (navigator as any).userAgent;
 
 		window.history.replaceState({}, '', '/');
 
@@ -70,6 +74,15 @@ describe('detection', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 		jest.setSystemTime(new Date('2009-04-23T10:30:00'));
+
+		jest.doMock(
+			'https://example.com/custom.js',
+			() => ({
+				__esModule: true,
+				getCountry: () => 'US',
+			}),
+			{virtual: true}
+		);
 
 		jest.spyOn(
 			Intl.DateTimeFormat.prototype,
@@ -179,6 +192,32 @@ describe('detection', () => {
 				'cookies',
 				'includes',
 				'REMEMBER_YOU=false'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set());
+		});
+	});
+
+	describe('attribute custom', () => {
+		it('positive test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'custom:https://example.com/custom.js#getCountry',
+				'eq',
+				'US'
+			);
+
+			await audiences.runDetection(URL);
+
+			expect(audiences.get()).toEqual(new Set(['the_audience']));
+		});
+
+		it('negative test', async () => {
+			mockAudiencesDefinitionWithAttribute(
+				'custom:https://example.com/custom.js#getCountry',
+				'eq',
+				'ES'
 			);
 
 			await audiences.runDetection(URL);

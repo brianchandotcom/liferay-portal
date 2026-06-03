@@ -56,6 +56,7 @@
 										"downloads",
 										"create-date"
 									],
+									"rootFolderExternalReferenceCode": "DSR_DOCUMENTS",
 									"showActions": "true"
 								},
 								"widgetName": "com_liferay_document_library_web_portlet_DLPortlet"

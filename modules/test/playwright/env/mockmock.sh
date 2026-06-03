@@ -8,7 +8,7 @@ function download_mockmock {
 	local max_attempts=5
 	local sleep_interval=20
 
-	while ! wget --no-check-certificate "${TEST_SMTP_SERVER_URL}" -O "${TEST_SMTP_SERVER_DIR}/MockMock.jar"
+	while ! curl --insecure --location --output "${TEST_SMTP_SERVER_DIR}/MockMock.jar" "${TEST_SMTP_SERVER_URL}"
 	do
 		if [ ${attempt} -ge ${max_attempts} ]
 		then
@@ -38,7 +38,7 @@ function start_mockmock_server {
 
 	java --add-opens java.base/java.lang=ALL-UNNAMED -jar ${TEST_SMTP_SERVER_DIR}/MockMock.jar -p 25000 &
 
-	while ! curl --output /dev/null --silent --head --fail http://localhost:8282
+	while ! curl --fail --head --output /dev/null --silent http://localhost:8282
 	do
 		if [ ${total_duration} -ge ${sleep_duration} ]
 		then

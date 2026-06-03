@@ -9,7 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Access
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.seo.studio.crawler.CrawlHit;
+import com.liferay.seo.studio.model.CrawlHit;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -82,7 +83,7 @@ public class SEOStudioService extends BaseService {
 	public String createScanInsightsBatch(JSONArray jsonArray) {
 		return post(
 			_authorization(), jsonArray.toString(),
-			URI.create("/o/seo-studio/scan-insights/batch"));
+			URI.create(_SCAN_INSIGHTS + "/batch"));
 	}
 
 	public List<CrawlHit> fetchCrawlHits(long seoStudioDomainId) {
@@ -100,6 +101,8 @@ public class SEOStudioService extends BaseService {
 				break;
 			}
 
+			String previousSearchAfter = searchAfter;
+
 			for (Object hitObject : hitsJSONArray) {
 				CrawlHit crawlHit = new CrawlHit((JSONObject)hitObject);
 
@@ -113,20 +116,25 @@ public class SEOStudioService extends BaseService {
 
 				crawlHits.add(crawlHit);
 			}
+
+			if (Objects.equals(previousSearchAfter, searchAfter)) {
+				break;
+			}
 		}
 
 		return crawlHits;
 	}
 
-	public String fetchDomain(long domainId) {
-		return get(_authorization(), URI.create(_DOMAINS + "/" + domainId));
+	public String fetchDomain(long seoStudioDomainId) {
+		return get(
+			_authorization(), URI.create(_DOMAINS + "/" + seoStudioDomainId));
 	}
 
-	public String fetchPages(long scanId, int pageSize, int page) {
+	public String fetchPages(long seoStudioScanId, int pageSize, int page) {
 		String filter = URLEncoder.encode(
 			StringBundler.concat(
-				"r_seoStudioScanToSEOStudioPages_seoStudioScanId eq '", scanId,
-				"'"),
+				"r_seoStudioScanToSEOStudioPages_seoStudioScanId eq '",
+				seoStudioScanId, "'"),
 			StandardCharsets.UTF_8);
 
 		return get(
@@ -147,10 +155,16 @@ public class SEOStudioService extends BaseService {
 				_INSIGHT_TYPES + "/by-external-reference-code/" + encodedERC));
 	}
 
-	public String updateDomain(long domainId, JSONObject jsonObject) {
+	public String updateDomain(long seoStudioDomainId, JSONObject jsonObject) {
 		return patch(
 			_authorization(), jsonObject.toString(),
-			URI.create(_DOMAINS + "/" + domainId));
+			URI.create(_DOMAINS + "/" + seoStudioDomainId));
+	}
+
+	public String updateScan(long seoStudioScanId, JSONObject jsonObject) {
+		return patch(
+			_authorization(), jsonObject.toString(),
+			URI.create(_SCANS + "/" + seoStudioScanId));
 	}
 
 	private String _authorization() {
@@ -179,6 +193,10 @@ public class SEOStudioService extends BaseService {
 	private static final String _INSIGHT_TYPES = "/o/seo-studio/insight-types";
 
 	private static final String _PAGES = "/o/seo-studio/pages";
+
+	private static final String _SCAN_INSIGHTS = "/o/seo-studio/scan-insights";
+
+	private static final String _SCANS = "/o/seo-studio/scans";
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

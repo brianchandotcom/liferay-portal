@@ -657,7 +657,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		JenkinsResultsParserUtil.combine(
 			".*<a href=\".+/testray-results/\\d{4}-\\d{2}/",
 			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
-			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>[^/]+)/.+"));
+			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/",
+			"[^\"]+\">Jenkins Report</a>.*"));
 	private static final Pattern _portalBranchPattern = Pattern.compile(
 		"Portal Branch: (?<portalBranch>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(

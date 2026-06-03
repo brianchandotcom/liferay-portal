@@ -148,8 +148,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 				actionRequest, "executeLayoutSetPrototypeSyncInfoMessage",
 				LanguageUtil.format(
 					themeDisplay.getLocale(),
-					"site-template-sync-started-for-x-you-will-receive-a-" +
-						"notification-when-the-process-is-complete",
+					"the-sync-of-the-site-template-x-started-you-will-" +
+						"receive-a-notification-when-the-process-is-complete",
 					layoutSetPrototypeName));
 		}
 		catch (Exception exception) {
@@ -164,8 +164,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 				actionRequest, "executeLayoutSetPrototypeSyncErrorMessage",
 				LanguageUtil.get(
 					themeDisplay.getLocale(),
-					"an-error-has-occurred-and-site-template-sync-could-not-" +
-						"be-performed"));
+					"an-error-has-occurred-and-the-site-template-sync-could-" +
+						"not-be-performed"));
 		}
 	}
 

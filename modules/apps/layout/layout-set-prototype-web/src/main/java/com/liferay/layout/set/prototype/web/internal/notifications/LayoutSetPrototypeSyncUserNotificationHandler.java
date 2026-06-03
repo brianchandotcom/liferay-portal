@@ -74,18 +74,19 @@ public class LayoutSetPrototypeSyncUserNotificationHandler
 				result,
 				LayoutSetPrototypeConstants.STATUS_COMPLETED_WITH_ERRORS)) {
 
-			key = "sync-of-x-site-template-finished-with-errors";
+			key = "the-sync-of-the-site-template-x-finished-with-errors";
 		}
 		else if (Objects.equals(
 					result, LayoutSetPrototypeConstants.STATUS_FAILED)) {
 
 			key =
-				"sync-of-x-site-template-failed-and-the-process-did-not-finish";
+				"the-sync-of-the-site-template-x-failed-and-the-process-did-" +
+					"not-finish";
 		}
 		else if (Objects.equals(
 					result, LayoutSetPrototypeConstants.STATUS_SUCCESSFUL)) {
 
-			key = "sync-of-x-site-template-finished-successfully";
+			key = "the-sync-of-the-site-template-x-finished-successfully";
 		}
 
 		return key;

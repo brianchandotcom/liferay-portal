@@ -81,6 +81,9 @@ public class AssetEntryInfoItemFieldValuesProvider
 				AssetEntryInfoItemFields.modifiedDateInfoField,
 				assetEntry.getModifiedDate()),
 			new InfoFieldValue<>(
+				AssetEntryInfoItemFields.publishDateInfoField,
+				assetEntry.getPublishDate()),
+			new InfoFieldValue<>(
 				AssetEntryInfoItemFields.expirationDateInfoField,
 				assetEntry.getExpirationDate()),
 			new InfoFieldValue<>(

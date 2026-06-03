@@ -62,6 +62,15 @@ public class AssetEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetEntryInfoItemFields.class, "modified-date")
 		).build();
+	public static final InfoField<DateInfoFieldType> publishDateInfoField =
+		BuilderHolder._builder.infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"publishDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "publish-date")
+		).build();
 	public static final InfoField<TextInfoFieldType> summaryInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE

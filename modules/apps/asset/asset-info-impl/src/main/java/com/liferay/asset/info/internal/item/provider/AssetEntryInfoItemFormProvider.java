@@ -43,6 +43,8 @@ public class AssetEntryInfoItemFormProvider
 			).infoFieldSetEntry(
 				AssetEntryInfoItemFields.modifiedDateInfoField
 			).infoFieldSetEntry(
+				AssetEntryInfoItemFields.publishDateInfoField
+			).infoFieldSetEntry(
 				AssetEntryInfoItemFields.expirationDateInfoField
 			).infoFieldSetEntry(
 				AssetEntryInfoItemFields.viewCountInfoField

@@ -1,0 +1,112 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {EngineKey, HealthScanConfig} from './types';
+
+interface EngineDescriptor {
+	key: EngineKey;
+	label: string;
+}
+
+interface SelectOption {
+	label: string;
+	value: string;
+}
+
+export const ENGINE_DESCRIPTORS: EngineDescriptor[] = [
+	{
+		key: 'crawler',
+		label: Liferay.Language.get('crawler-insights'),
+	},
+	{
+		key: 'aiGenerated',
+		label: Liferay.Language.get('ai-generated-insights'),
+	},
+	{
+		key: 'pageSpeed',
+		label: Liferay.Language.get('google-pagespeed'),
+	},
+	{
+		key: 'gsc',
+		label: Liferay.Language.get('google-search-console-insights'),
+	},
+];
+
+export const FREQUENCY_OPTIONS: SelectOption[] = [
+	{label: Liferay.Language.get('daily'), value: 'daily'},
+	{label: Liferay.Language.get('weekly'), value: 'weekly'},
+	{label: Liferay.Language.get('monthly'), value: 'monthly'},
+];
+
+export const DAY_OF_WEEK_OPTIONS: SelectOption[] = [
+	{label: Liferay.Language.get('weekday.MO'), value: 'MO'},
+	{label: Liferay.Language.get('weekday.TU'), value: 'TU'},
+	{label: Liferay.Language.get('weekday.WE'), value: 'WE'},
+	{label: Liferay.Language.get('weekday.TH'), value: 'TH'},
+	{label: Liferay.Language.get('weekday.FR'), value: 'FR'},
+	{label: Liferay.Language.get('weekday.SA'), value: 'SA'},
+	{label: Liferay.Language.get('weekday.SU'), value: 'SU'},
+];
+
+export const DAY_OF_MONTH_OPTIONS: number[] = Array.from(
+	{length: 31},
+	(_, index) => index + 1
+);
+
+export const SCOPE_OPTIONS: SelectOption[] = [
+	{
+		label: Liferay.Language.get('all-published-pages'),
+		value: 'allPublishedPages',
+	},
+	{
+		label: Liferay.Language.get('public-sitemap-pages'),
+		value: 'sitemapOnly',
+	},
+	{
+		label: Liferay.Language.get('included-path-only'),
+		value: 'includedPathsOnly',
+	},
+	{
+		label: Liferay.Language.get('excluded-path-only'),
+		value: 'excludedPathsOnly',
+	},
+];
+
+export const RANKING_METHOD_OPTIONS: SelectOption[] = [
+	{label: Liferay.Language.get('top-by-page-visit'), value: 'topByPageVisit'},
+	{
+		label: Liferay.Language.get('most-recent-by-creation-date'),
+		value: 'mostRecentByCreation',
+	},
+];
+
+export const MAX_PAGES_OPTIONS: number[] = [100, 500, 1000];
+
+export function getDefaultConfig(defaultTimeZoneId: string): HealthScanConfig {
+	const engines = {} as HealthScanConfig['engines'];
+
+	for (const {key} of ENGINE_DESCRIPTORS) {
+		engines[key] = {
+			enabled: true,
+			excludedPaths: '',
+			includedPaths: '',
+			maxPagesPerScan: 100,
+			rankingMethod: 'topByPageVisit',
+			scope: 'allPublishedPages',
+		};
+	}
+
+	return {
+		engines,
+		schedule: {
+			autoScanEnabled: true,
+			scanDayOfMonth: 1,
+			scanDayOfWeek: 'MO',
+			scanFrequency: 'daily',
+			scanTime: '00:00',
+			scanTimeZone: defaultTimeZoneId,
+		},
+	};
+}

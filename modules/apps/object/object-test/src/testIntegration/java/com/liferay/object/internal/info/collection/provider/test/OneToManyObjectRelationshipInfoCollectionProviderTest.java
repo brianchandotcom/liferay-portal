@@ -214,7 +214,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		ObjectEntry parentObjectEntry = _addObjectEntry(parentObjectDefinition);
 
 		ObjectEntry childObjectEntry1 = _addObjectEntry(

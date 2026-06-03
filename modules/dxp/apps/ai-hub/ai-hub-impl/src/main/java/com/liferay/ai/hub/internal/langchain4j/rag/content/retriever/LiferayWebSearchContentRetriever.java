@@ -78,9 +78,9 @@ public class LiferayWebSearchContentRetriever extends BaseContentRetriever {
 	private List<Content> _search(Query query) throws Exception {
 		Http.Options options = new Http.Options();
 
+		options.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + _userToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader("Liferay-AI-Hub-Cell-On-Behalf-Of", _userToken);
 
 		URL urlObject = new URL(_homePageURL);
 

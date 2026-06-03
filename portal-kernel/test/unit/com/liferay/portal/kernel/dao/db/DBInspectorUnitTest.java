@@ -57,6 +57,57 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
+	public void testBeginSchemaSnapshot() throws Exception {
+		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.when(
+			_connection.getCatalog()
+		).thenReturn(
+			_CATALOG_NAME
+		);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		DBInspector.beginSchemaSnapshot();
+
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.verify(
+			_databaseMetaData, Mockito.times(1)
+		).getColumns(
+			Mockito.nullable(String.class), Mockito.nullable(String.class),
+			Mockito.anyString(), Mockito.anyString()
+		);
+	}
+
+	@Test
+	public void testClearSchemaSnapshot() throws Exception {
+		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.when(
+			_connection.getCatalog()
+		).thenReturn(
+			_CATALOG_NAME
+		);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		DBInspector.beginSchemaSnapshot();
+		DBInspector.clearSchemaSnapshot();
+
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		Mockito.verify(
+			_databaseMetaData, Mockito.times(2)
+		).getColumns(
+			Mockito.nullable(String.class), Mockito.nullable(String.class),
+			Mockito.anyString(), Mockito.anyString()
+		);
+	}
+
+	@Test
 	public void testHasColumnIsCaseInsensitive() throws Exception {
 		_mockTableWithColumn(_TABLE_NAME, StringUtil.toLowerCase(_COLUMN_NAME));
 
@@ -156,7 +207,7 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
-	public void testHasTableUsesSnapshotCache() throws Exception {
+	public void testHasTable() throws Exception {
 		Mockito.when(
 			_connection.getCatalog()
 		).thenReturn(
@@ -247,57 +298,6 @@ public class DBInspectorUnitTest {
 		Assert.assertTrue(
 			dbInspector.isObjectTable(companyIds, "l_1_tableName"));
 		Assert.assertTrue(dbInspector.isObjectTable(companyIds, "r_tableName"));
-	}
-
-	@Test
-	public void testSchemaSnapshotBeginEnablesCache() throws Exception {
-		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
-
-		Mockito.when(
-			_connection.getCatalog()
-		).thenReturn(
-			_CATALOG_NAME
-		);
-
-		DBInspector dbInspector = new DBInspector(_connection);
-
-		DBInspector.beginSchemaSnapshot();
-
-		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
-		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
-
-		Mockito.verify(
-			_databaseMetaData, Mockito.times(1)
-		).getColumns(
-			Mockito.nullable(String.class), Mockito.nullable(String.class),
-			Mockito.anyString(), Mockito.anyString()
-		);
-	}
-
-	@Test
-	public void testSchemaSnapshotClearDisablesCache() throws Exception {
-		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
-
-		Mockito.when(
-			_connection.getCatalog()
-		).thenReturn(
-			_CATALOG_NAME
-		);
-
-		DBInspector dbInspector = new DBInspector(_connection);
-
-		DBInspector.beginSchemaSnapshot();
-		DBInspector.clearSchemaSnapshot();
-
-		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
-		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
-
-		Mockito.verify(
-			_databaseMetaData, Mockito.times(2)
-		).getColumns(
-			Mockito.nullable(String.class), Mockito.nullable(String.class),
-			Mockito.anyString(), Mockito.anyString()
-		);
 	}
 
 	private void _mockTableWithColumn(String tableName, String columnName)

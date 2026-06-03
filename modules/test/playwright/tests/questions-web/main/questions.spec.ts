@@ -5,28 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {questionsPagesTest} from './fixtures/questionsPagesTest';
+import {questionsTest} from './fixtures/questionsTest';
 
-export const baseTest = mergeTests(
-	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-82301': {enabled: true},
-	}),
-	isolatedLayoutTest({publish: false, type: 'portlet'}),
-	isolatedSiteTest,
-	loginTest(),
-	questionsPagesTest,
-	pageViewModePagesTest
-);
-
-const allQuestionsAcrossTopics = mergeTests(baseTest);
+const allQuestionsAcrossTopics = mergeTests(questionsTest);
 
 allQuestionsAcrossTopics(
 	'This is a test for LPS-153187. The user can create a new topic and access all questions from the breadcrumb dropdown.',
@@ -113,7 +95,7 @@ allQuestionsAcrossTopics(
 	}
 );
 
-const tagWithSpaces = mergeTests(baseTest);
+const tagWithSpaces = mergeTests(questionsTest);
 
 tagWithSpaces(
 	'This is a test for LPD-26663. Questions are not returned when a space is used in a tag.',

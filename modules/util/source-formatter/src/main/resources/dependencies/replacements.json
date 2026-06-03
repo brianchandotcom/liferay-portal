@@ -3667,6 +3667,22 @@
 	},
 	{
 		"classNames": [
+			"SoyDataFactory"
+		],
+		"from": "createSoyHTMLData(String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-35240"
+	},
+	{
+		"classNames": [
+			"SoyDataFactory"
+		],
+		"from": "createSoyRawData(String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-35240"
+	},
+	{
+		"classNames": [
 			"UpgradeProcess"
 		],
 		"classStructurePattern": true,

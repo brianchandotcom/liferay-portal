@@ -16,6 +16,7 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,10 +46,10 @@ public class ItemSelectorTest {
 			"eventName",
 			_itemSelector.getItemSelectedEventName(
 				StringBundler.concat(
-					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file/eventName",
-					"?_com_liferay_item_selector_web_portlet",
-					"_ItemSelectorPortlet_0_json=",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/group/guest/~/control_panel/manage/-/select/file",
+					"/eventName?_com_liferay_item_selector_web_portlet_Item",
+					"SelectorPortlet_0_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
@@ -61,10 +62,10 @@ public class ItemSelectorTest {
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
-					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file/eventName",
-					"?_com_liferay_item_selector_web_portlet",
-					"_ItemSelectorPortlet_0_json=",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/group/guest/~/control_panel/manage/-/select/file",
+					"/eventName?_com_liferay_item_selector_web_portlet_Item",
+					"SelectorPortlet_0_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
@@ -96,10 +97,10 @@ public class ItemSelectorTest {
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
-					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file%2Caudio/eventName",
-					"?_com_liferay_item_selector_web_portlet",
-					"_ItemSelectorPortlet_0_json=",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/group/guest/~/control_panel/manage/-/select/file%2Caudio",
+					"/eventName?_com_liferay_item_selector_web_portlet_Item",
+					"SelectorPortlet_0_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
@@ -154,10 +155,10 @@ public class ItemSelectorTest {
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelector.getItemSelectorCriteria(
 				StringBundler.concat(
-					"http://localhost:8080/group/guest/~/control_panel/manage",
-					"/-/select/file,audio/eventName",
-					"?_com_liferay_item_selector_web_portlet",
-					"_ItemSelectorPortlet_0_json=",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/group/guest/~/control_panel/manage/-/select/file,audio",
+					"/eventName?_com_liferay_item_selector_web_portlet_Item",
+					"SelectorPortlet_0_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",

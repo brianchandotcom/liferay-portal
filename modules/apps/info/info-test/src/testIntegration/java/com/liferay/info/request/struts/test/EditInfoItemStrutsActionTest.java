@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -482,9 +483,11 @@ public class EditInfoItemStrutsActionTest {
 	@Test
 	public void testAddInfoItemWithEmbeddedSuccessMessage() throws Exception {
 		_testAddInfoItem(
-			null, "http://localhost:8080/home", null, null, null, null, null,
-			null, "123456", "123456", null, null, null, null,
-			WorkflowConstants.STATUS_APPROVED);
+			null,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/home",
+			null, null, null, null, null, null, "123456", "123456", null, null,
+			null, null, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test
@@ -524,8 +527,10 @@ public class EditInfoItemStrutsActionTest {
 	public void testAddInfoItemWithPageSuccessMessage() throws Exception {
 		_testAddInfoItem(
 			null, null, null, null, null, null, null, null, "123456", "123456",
-			null, null, "http://localhost:8080/home", null,
-			WorkflowConstants.STATUS_APPROVED);
+			null, null,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/home",
+			null, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -657,7 +662,9 @@ public class EditInfoItemStrutsActionTest {
 			new MockMultipartHttpServletRequest();
 
 		mockMultipartHttpServletRequest.addHeader(
-			HttpHeaders.REFERER, "http://localhost:8080/error");
+			HttpHeaders.REFERER,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/error");
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
@@ -1148,7 +1155,9 @@ public class EditInfoItemStrutsActionTest {
 			new MockMultipartHttpServletRequest();
 
 		mockMultipartHttpServletRequest.addHeader(
-			HttpHeaders.REFERER, "http://localhost:8080/error");
+			HttpHeaders.REFERER,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/error");
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
@@ -1253,7 +1262,9 @@ public class EditInfoItemStrutsActionTest {
 		}
 
 		mockMultipartHttpServletRequest.addHeader(
-			HttpHeaders.REFERER, "http://localhost:8080/error");
+			HttpHeaders.REFERER,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/error");
 
 		return UploadTestUtil.createUploadPortletRequest(
 			UploadTestUtil.createUploadServletRequest(

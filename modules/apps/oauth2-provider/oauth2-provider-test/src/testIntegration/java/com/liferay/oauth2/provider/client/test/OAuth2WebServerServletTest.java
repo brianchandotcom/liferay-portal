@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -103,7 +104,8 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		return client.target(
 			uriBuilder.uri(
 				StringBundler.concat(
-					"http://", company.getVirtualHostname(), ":8080", path)));
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), path)));
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";

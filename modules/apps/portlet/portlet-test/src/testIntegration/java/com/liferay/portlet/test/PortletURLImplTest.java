@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -73,7 +74,8 @@ public class PortletURLImplTest {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPlid(layout.getPlid());
 
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
@@ -133,7 +135,8 @@ public class PortletURLImplTest {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPlid(layout.getPlid());
 
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
@@ -155,10 +158,10 @@ public class PortletURLImplTest {
 		liferayPortletURL.setCopyCurrentRenderParameters(true);
 
 		String expectedToString = StringBundler.concat(
-			"http://localhost:8080/web", _group.getFriendlyURL(),
-			layout.getFriendlyURL(), "?p_p_id=", PortletKeys.LOGIN,
-			"&p_p_lifecycle=0&_", PortletKeys.LOGIN, "_name=value1&_",
-			PortletKeys.LOGIN, "_name=value2");
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			_group.getFriendlyURL(), layout.getFriendlyURL(), "?p_p_id=",
+			PortletKeys.LOGIN, "&p_p_lifecycle=0&_", PortletKeys.LOGIN,
+			"_name=value1&_", PortletKeys.LOGIN, "_name=value2");
 
 		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 

@@ -118,7 +118,8 @@ public class DepotEntryUserNotificationTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/path-friendly-url-public/cms/e/space/",
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/path-friendly-url-public/cms/e/space/",
 				PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH,
 				_depotEntry1.getDepotEntryId()),
 			userNotificationFeedEntry.getLink());
@@ -126,7 +127,8 @@ public class DepotEntryUserNotificationTest {
 		userNotificationFeedEntry = _getUserNotificationFeedEntry(_depotEntry2);
 
 		Assert.assertEquals(
-			"http://localhost:8080/path-friendly-url-public/cms/projects",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/path-friendly-url-public/cms/projects",
 			userNotificationFeedEntry.getLink());
 	}
 
@@ -245,7 +247,8 @@ public class DepotEntryUserNotificationTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setLanguageId("en_US");
-		serviceContext.setPortalURL("http://localhost:8080");
+		serviceContext.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 

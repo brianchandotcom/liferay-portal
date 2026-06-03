@@ -176,7 +176,10 @@ public class UserAccountResourcePerformanceTest {
 				"client_secret_post", user.getUserId(),
 				RandomTestUtil.randomString(), 0, RandomTestUtil.randomString(),
 				"", Collections.emptyList(), "", 0, "", "rest_token", "",
-				Arrays.asList("http://localhost:8080"), false,
+				Arrays.asList(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false)),
+				false,
 				Arrays.asList(
 					"Liferay.Headless.Admin.User.everything",
 					"Liferay.Headless.Admin.User.everything.read",

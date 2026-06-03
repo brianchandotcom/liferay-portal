@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -286,7 +287,9 @@ public abstract class BaseSectionDisplayContextTestCase
 			"parentObjectEntryFolderExternalReferenceCode",
 			getRootObjectEntryFolderExternalReferenceCode()
 		).put(
-			"redirect", "http://localhost:8080/currentURL"
+			"redirect",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/currentURL"
 		).build();
 	}
 
@@ -802,15 +805,18 @@ public abstract class BaseSectionDisplayContextTestCase
 		ObjectDefinition objectDefinition,
 		String objectEntryFolderExternalReferenceCode) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("http://localhost:8080");
+		sb.append("http://localhost:");
+		sb.append(PortalUtil.getPortalServerPort(false));
 		sb.append(portal.getPathMain());
 		sb.append("/cms/add_structured_content_item?objectDefinitionId=");
 		sb.append(objectDefinition.getObjectDefinitionId());
 		sb.append("&objectEntryFolderExternalReferenceCode=");
 		sb.append(objectEntryFolderExternalReferenceCode);
-		sb.append("&plid=0&redirect=http://localhost:8080/currentURL");
+		sb.append("&plid=0&redirect=http://localhost:");
+		sb.append(PortalUtil.getPortalServerPort(false));
+		sb.append("/currentURL");
 
 		return sb.toString();
 	}

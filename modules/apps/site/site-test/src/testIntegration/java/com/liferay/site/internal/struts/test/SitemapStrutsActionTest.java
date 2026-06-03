@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -153,7 +154,9 @@ public class SitemapStrutsActionTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockHttpServletRequest.setParameter(
-			"currentURL", "http://localhost:8080/sitemap.xml");
+			"currentURL",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/sitemap.xml");
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -374,7 +377,7 @@ public class SitemapStrutsActionTest {
 		_themeDisplay.setPortalDomain(_company.getVirtualHostname());
 		_themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));
 		_themeDisplay.setServerName(_company.getVirtualHostname());
-		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 	}
 
 	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =

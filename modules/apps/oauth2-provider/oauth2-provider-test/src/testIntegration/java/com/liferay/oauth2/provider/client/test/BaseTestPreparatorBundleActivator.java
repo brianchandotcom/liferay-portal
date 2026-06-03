@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
@@ -208,7 +209,8 @@ public abstract class BaseTestPreparatorBundleActivator
 		return createOAuth2Application(
 			companyId, user, clientId, "oauthTestApplicationSecret",
 			allowedGrantTypesList,
-			Collections.singletonList("http://redirecturi:8080"),
+			Collections.singletonList(
+				"http://redirecturi:" + PortalUtil.getPortalServerPort(false)),
 			rememberDevice, scopeAliasesList, trustedApplication);
 	}
 
@@ -221,7 +223,8 @@ public abstract class BaseTestPreparatorBundleActivator
 		return createOAuth2Application(
 			companyId, user, clientId, "oauthTestApplicationSecret",
 			allowedGrantTypesList,
-			Collections.singletonList("http://redirecturi:8080"),
+			Collections.singletonList(
+				"http://redirecturi:" + PortalUtil.getPortalServerPort(false)),
 			scopeAliasesList);
 	}
 
@@ -286,9 +289,11 @@ public abstract class BaseTestPreparatorBundleActivator
 				user.getUserId(), clientId, 0, clientSecret,
 				"test oauth application",
 				Collections.singletonList("token.introspection"),
-				"http://localhost:8080", 0, jwks, "test application",
-				"http://localhost:8080", redirectURIsList, rememberDevice,
-				scopeAliasesList, trustedApplication, new ServiceContext());
+				"http://localhost:" + PortalUtil.getPortalServerPort(false), 0,
+				jwks, "test application",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false),
+				redirectURIsList, rememberDevice, scopeAliasesList,
+				trustedApplication, new ServiceContext());
 
 		autoCloseables.add(
 			() -> {

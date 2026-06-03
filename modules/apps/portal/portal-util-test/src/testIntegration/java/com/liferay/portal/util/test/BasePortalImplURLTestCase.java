@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Before;
@@ -69,7 +70,7 @@ public abstract class BasePortalImplURLTestCase {
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setSecure(false);
 		themeDisplay.setServerName(serverName);
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setWidget(false);

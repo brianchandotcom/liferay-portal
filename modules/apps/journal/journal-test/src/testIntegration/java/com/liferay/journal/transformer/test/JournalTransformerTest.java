@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -507,7 +508,9 @@ public class JournalTransformerTest {
 				WebKeys.THEME_DISPLAY, themeDisplay);
 			mockHttpServletRequest.setMethod(HttpMethods.GET);
 			mockHttpServletRequest.setParameter(
-				"currentURL", "http://localhost:8080/currentURL");
+				"currentURL",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/currentURL");
 
 			themeDisplay.setRequest(mockHttpServletRequest);
 

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -334,7 +335,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			_group, _layout);
 
-		_themeDisplay.setPortalURL("http://localhost:8080");
+		_themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -352,7 +354,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		_themeDisplay.setServerName("localhost");
-		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 	}
 
 	@Inject

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -211,7 +212,8 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 		_mockHttpServletRequest.setRemoteHost(hostname);
 		_mockHttpServletRequest.setServerName(hostname);
-		_mockHttpServletRequest.setServerPort(8080);
+		_mockHttpServletRequest.setServerPort(
+			PortalUtil.getPortalServerPort(false));
 		_mockHttpServletRequest.setRequestURI("/web/guest");
 	}
 

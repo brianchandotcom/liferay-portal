@@ -8,6 +8,7 @@ package com.liferay.layout.seo.canonical.url.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -100,7 +102,9 @@ public class LayoutSEOCanonicalURLProviderTest {
 				LocaleUtil.GERMAN);
 
 			Assert.assertEquals(
-				"http://localhost:8080/web" + _group.getFriendlyURL(),
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/web", _group.getFriendlyURL()),
 				_layoutSEOCanonicalURLProvider.getCanonicalURL(
 					_layout, LocaleUtil.US,
 					_portal.getCanonicalURL(
@@ -116,7 +120,7 @@ public class LayoutSEOCanonicalURLProviderTest {
 		_themeDisplay.setCompany(
 			CompanyLocalServiceUtil.fetchCompany(_group.getCompanyId()));
 		_themeDisplay.setLayoutSet(_layout.getLayoutSet());
-		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 	}
 

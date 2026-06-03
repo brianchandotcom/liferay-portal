@@ -58,19 +58,19 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false, "::1");
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.GET, false,
-			"http://127.0.0.1:8080");
+			"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.GET, false,
-			"http://localhost:8080");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, false);
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true,
-			"http://127.0.0.1:8080");
+			"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true,
-			"http://localhost:8080");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 	}
 
 	@Test
@@ -84,20 +84,20 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 				"/user/get-current-user", HttpMethod.GET, true, "::1");
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.GET, true,
-				"http://127.0.0.1:8080");
+				"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.GET, true,
-				"http://localhost:8080");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, false);
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true,
-				"http://127.0.0.1:8080");
+				"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true,
-				"http://localhost:8080");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		}
 	}
 

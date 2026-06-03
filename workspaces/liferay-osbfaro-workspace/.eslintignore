@@ -7,3 +7,9 @@ tmp/**
 types/**/*.d.ts
 yarn-*.js
 zippableResources/**
+
+#
+# LRAC-12941 Temporarily ignore SF on FARO files.
+#
+modules/osb-faro-web/
+modules/osb-faro-theme/

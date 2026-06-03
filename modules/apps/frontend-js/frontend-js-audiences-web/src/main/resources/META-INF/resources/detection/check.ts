@@ -67,8 +67,20 @@ export function check(audiencesDefinition: AudiencesDefinition) {
 	checkKeys(audiencesDefinition, ['audiences'], what);
 	checkArray(audiencesDefinition.audiences, `${what} field 'audiences'`);
 
+	const ids = new Set<string>();
+
 	for (let i = 0; i < audiencesDefinition.audiences.length; i++) {
-		checkAudience(audiencesDefinition.audiences[i], i);
+		const audience = audiencesDefinition.audiences[i];
+
+		checkAudience(audience, i);
+
+		if (ids.has(audience.id)) {
+			throw new Error(
+				`${what} has more than one audience with id '${audience.id}'`
+			);
+		}
+
+		ids.add(audience.id);
 	}
 }
 

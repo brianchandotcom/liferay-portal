@@ -34,11 +34,12 @@ jest.mock('@liferay/object-js-components-web', () => ({
 			))}
 		</select>
 	),
-	Toggle: ({label, onToggle, toggled}: any) => (
-		<label>
+	Toggle: ({disabled, label, onToggle, toggled, tooltip}: any) => (
+		<label title={tooltip}>
 			<input
 				aria-label={label}
 				checked={toggled}
+				disabled={disabled}
 				onChange={(event) => onToggle(event.target.checked)}
 				type="checkbox"
 			/>
@@ -59,14 +60,16 @@ jest.mock('../../utils/fieldSettings', () => ({
 }));
 
 const renderComponent = ({
+	disabled = false,
 	hasDepotEntry = true,
 	objectFieldSettings = [],
 	objectDefinitionName = 'MyObject',
 	setValues = jest.fn(),
 	onSubmit = jest.fn(),
 }: any = {}) => {
-	render(
+	return render(
 		<AttachmentFormBase
+			disabled={disabled}
 			hasDepotEntry={hasDepotEntry}
 			objectDefinitionName={objectDefinitionName}
 			objectFieldSettings={objectFieldSettings}
@@ -219,5 +222,56 @@ describe('The AttachmentFormBase component', () => {
 				{name: 'storageDLFolderPath', value: '/MyObject'},
 			],
 		});
+	});
+
+	it('shows the library toggle off by default when uploading directly from the user computer', () => {
+		renderComponent({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		).not.toBeChecked();
+	});
+
+	it('shows a tooltip on the library toggle when uploading directly from the user computer', () => {
+		renderComponent({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByTitle(
+				'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('keeps the library toggle editable before the object is published and disables it otherwise', () => {
+		const {unmount} = renderComponent({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		).toBeEnabled();
+
+		unmount();
+
+		renderComponent({
+			disabled: true,
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		).toBeDisabled();
 	});
 });

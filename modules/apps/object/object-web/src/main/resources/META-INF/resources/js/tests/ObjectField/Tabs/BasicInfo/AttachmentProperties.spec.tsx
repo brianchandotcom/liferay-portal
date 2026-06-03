@@ -80,4 +80,45 @@ describe('AttachmentProperties', () => {
 
 		expect(screen.getByLabelText(/cms-storage-folder/)).toBeInTheDocument();
 	});
+
+	it('renders the help text for the storage folder field', () => {
+		renderComponent([
+			{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			{name: 'showFilesInLibrary', value: true},
+		]);
+
+		expect(
+			screen.getByText(
+				/input-the-path-of-the-chosen-folder-in-documents-and-media/
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders the error when the required storage folder field is empty', () => {
+		render(
+			<AttachmentProperties
+				{...defaultProps}
+				errors={{storageDLFolderPath: 'this-field-is-required'}}
+				objectFieldSettings={[
+					{
+						name: 'fileSource',
+						value: 'userComputerToDocumentsAndMedia',
+					},
+					{name: 'showFilesInLibrary', value: true},
+				]}
+			/>
+		);
+
+		expect(screen.getByText('this-field-is-required')).toBeInTheDocument();
+	});
+
+	it('renders the accepted file extensions and maximum file size options on the side panel', () => {
+		renderComponent([{name: 'fileSource', value: 'documentsAndMedia'}]);
+
+		expect(
+			screen.getByText('accepted-file-extensions')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('maximum-file-size')).toBeInTheDocument();
+	});
 });

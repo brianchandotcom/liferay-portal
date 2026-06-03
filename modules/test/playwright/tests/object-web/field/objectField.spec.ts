@@ -1697,9 +1697,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				type: 'objectDefinition',
 			});
 
-			const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
-				ObjectRelationshipAPI
-			);
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
 			const relationshipLabel = 'Relationship' + getRandomInt();
 
@@ -1734,7 +1733,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 			await objectFieldsPage.editFieldSaveButton.click();
 
-			await waitForAlert(page, 'The object field was updated successfully');
+			await waitForAlert(
+				page,
+				'The object field was updated successfully'
+			);
 
 			await page.reload();
 

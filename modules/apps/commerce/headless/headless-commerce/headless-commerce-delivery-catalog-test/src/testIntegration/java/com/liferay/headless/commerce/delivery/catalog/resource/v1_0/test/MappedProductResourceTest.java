@@ -159,14 +159,14 @@ public class MappedProductResourceTest
 		testGetChannelProductMappedProductsPage_addMappedProduct(
 			channelId, productId, randomMappedProduct());
 
-		Page<MappedProduct> page =
+		Page<MappedProduct> mappedProductsPage =
 			mappedProductResource.getChannelProductMappedProductsPage(
 				channelId, productId, null, null, null, Pagination.of(1, 10),
 				null);
 
-		Assert.assertTrue(page.getTotalCount() > 0);
+		Assert.assertTrue(mappedProductsPage.getTotalCount() > 0);
 
-		for (MappedProduct mappedProduct : page.getItems()) {
+		for (MappedProduct mappedProduct : mappedProductsPage.getItems()) {
 			SkuUnitOfMeasure[] skuUnitOfMeasures =
 				mappedProduct.getSkuUnitOfMeasures();
 

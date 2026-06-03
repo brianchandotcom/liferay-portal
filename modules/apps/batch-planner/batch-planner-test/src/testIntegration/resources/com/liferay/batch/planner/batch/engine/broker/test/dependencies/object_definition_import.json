@@ -33,7 +33,7 @@
 			"en_US": "TestObject"
 		},
 		"modifiable": true,
-		"name": "TestObject",
+		"name": "[$OBJECT_DEFINITION_NAME$]",
 		"objectActions": [
 			{
 				"active": true,

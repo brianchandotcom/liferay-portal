@@ -11,46 +11,77 @@ import '@testing-library/jest-dom';
 import {FeatureIndicator} from '../../src/main/resources/META-INF/resources';
 
 describe('FeatureIndicator', () => {
-	describe('Type: Maintenance', () => {
-		it('does NOT render the text label when type is maintenance', () => {
+	describe('Icon only', () => {
+		it('does NOT render the text label when iconOnly', () => {
 			render(
 				<FeatureIndicator
+					iconOnly
 					interactive={true}
 					learnResourceContext="https://learn.liferay.com/test-url"
-					type="maintenance"
+					type="beta"
 				/>
 			);
 
-			const label = screen.queryByText('maintenance');
-			expect(label).not.toBeInTheDocument();
+			expect(screen.queryByText('beta')).not.toBeInTheDocument();
 		});
 
-		it('renders the info icon when type is maintenance', () => {
+		it('still renders the icon when iconOnly', () => {
 			const {container} = render(
-				<FeatureIndicator
-					interactive={true}
-					learnResourceContext="https://learn.liferay.com/test-url"
-					type="maintenance"
-				/>
+				<FeatureIndicator iconOnly type="beta" />
 			);
 
-			const icon = container.querySelector(
-				'svg.lexicon-icon-info-circle-open'
-			);
-			expect(icon).toBeInTheDocument();
+			expect(
+				container.querySelector('svg.lexicon-icon-info-circle-open')
+			).toBeInTheDocument();
 		});
 
-		it('does NOT have "inline-item-after" class on the icon span when maintenance', () => {
+		it('does NOT have "inline-item-after" class on the icon span when iconOnly', () => {
 			const {container} = render(
 				<FeatureIndicator
+					iconOnly
 					interactive={true}
 					learnResourceContext="https://learn.liferay.com/test-url"
-					type="maintenance"
+					type="beta"
 				/>
 			);
 
-			const iconSpan = container.querySelector('.inline-item');
-			expect(iconSpan).not.toHaveClass('inline-item-after');
+			expect(container.querySelector('.inline-item')).not.toHaveClass(
+				'inline-item-after'
+			);
+		});
+
+		it('exposes an accessible name on the non-interactive icon-only badge', () => {
+			const {container} = render(
+				<FeatureIndicator iconOnly type="beta" />
+			);
+
+			const badge = container.querySelector('.badge[role="img"]');
+
+			expect(badge).toBeInTheDocument();
+			expect(badge).toHaveAttribute('aria-label', 'beta');
+		});
+
+		it('exposes an accessible name on the interactive icon-only button', () => {
+			render(
+				<FeatureIndicator
+					iconOnly
+					interactive={true}
+					learnResourceContext="https://learn.liferay.com/test-url"
+					type="beta"
+				/>
+			);
+
+			expect(
+				screen.getByRole('button', {name: 'beta'})
+			).toBeInTheDocument();
+		});
+	});
+
+	describe('Type: Maintenance', () => {
+		it('renders the text label when not iconOnly', () => {
+			render(<FeatureIndicator type="maintenance" />);
+
+			expect(screen.getByText('maintenance')).toBeInTheDocument();
 		});
 	});
 
@@ -65,6 +96,7 @@ describe('FeatureIndicator', () => {
 			);
 
 			const label = screen.getByText('beta');
+
 			expect(label).toBeInTheDocument();
 			expect(label).toHaveClass('inline-item');
 		});
@@ -78,8 +110,23 @@ describe('FeatureIndicator', () => {
 				/>
 			);
 
-			const iconSpan = container.querySelector('span.inline-item-after');
-			expect(iconSpan).toBeInTheDocument();
+			expect(
+				container.querySelector('span.inline-item-after')
+			).toBeInTheDocument();
+		});
+
+		it('does NOT set a redundant aria-label when the label is visible', () => {
+			render(
+				<FeatureIndicator
+					interactive={true}
+					learnResourceContext="https://learn.liferay.com/test-url"
+					type="beta"
+				/>
+			);
+
+			expect(screen.getByRole('button')).not.toHaveAttribute(
+				'aria-label'
+			);
 		});
 	});
 
@@ -89,21 +136,19 @@ describe('FeatureIndicator', () => {
 				<FeatureIndicator
 					interactive={true}
 					learnResourceContext="https://learn.liferay.com/test-url"
-					type="maintenance"
+					type="beta"
 				/>
 			);
 
-			const button = screen.getByRole('button');
-			expect(button).toBeInTheDocument();
+			expect(screen.getByRole('button')).toBeInTheDocument();
 		});
 
 		it('renders a badge when interactive is false', () => {
 			const {container} = render(
-				<FeatureIndicator interactive={false} type="maintenance" />
+				<FeatureIndicator interactive={false} type="beta" />
 			);
 
-			const badge = container.querySelector('.badge');
-			expect(badge).toBeInTheDocument();
+			expect(container.querySelector('.badge')).toBeInTheDocument();
 		});
 	});
 });

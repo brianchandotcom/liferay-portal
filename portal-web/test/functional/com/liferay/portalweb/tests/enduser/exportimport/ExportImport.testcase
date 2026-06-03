@@ -156,6 +156,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			LAR.configureExportOptions();
+
 			LAR.exportWithAssertionOnSuccess();
 		}
 

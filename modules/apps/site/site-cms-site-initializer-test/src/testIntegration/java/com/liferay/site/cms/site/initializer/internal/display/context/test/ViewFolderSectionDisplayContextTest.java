@@ -155,6 +155,30 @@ public class ViewFolderSectionDisplayContextTest
 			sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 			childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
 
+		User memberUser = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(
+			depotEntry.getGroupId(), memberUser.getUserId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				memberUser)) {
+
+			breadcrumbProps = _getBreadcrumbProps(
+				getMockHttpServletRequest(childObjectEntryFolder, memberUser));
+
+			Assert.assertEquals(
+				breadcrumbProps.toString(), Boolean.FALSE,
+				breadcrumbProps.get("hideSpace"));
+
+			_assertBreadcrumbLabels(
+				breadcrumbProps,
+				depotEntryGroup.getName(LocaleUtil.getDefault()),
+				rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+		}
+
 		User user = UserTestUtil.addUser();
 
 		_sharingEntryService.addSharingEntry(
@@ -190,6 +214,31 @@ public class ViewFolderSectionDisplayContextTest
 			_assertBreadcrumbLabels(
 				breadcrumbProps,
 				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
+		}
+
+		_sharingEntryService.addSharingEntry(
+			null, 0, 0, user.getUserId(),
+			portal.getClassNameId(ObjectEntryFolder.class.getName()),
+			parentObjectEntryFolder.getObjectEntryFolderId(),
+			depotEntry.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			breadcrumbProps = _getBreadcrumbProps(
+				getMockHttpServletRequest(childObjectEntryFolder, user));
+
+			Assert.assertEquals(
+				breadcrumbProps.toString(), Boolean.TRUE,
+				breadcrumbProps.get("hideSpace"));
+
+			_assertBreadcrumbLabels(
+				breadcrumbProps,
+				parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
+				childObjectEntryFolder.getLabel(LocaleUtil.getDefault()));
 		}
 
 		User cmsAdministratorUser = UserTestUtil.addCompanyUser(

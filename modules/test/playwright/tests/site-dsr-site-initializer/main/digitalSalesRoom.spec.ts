@@ -925,3 +925,59 @@ test(
 		await performUserSwitch(page, 'test');
 	}
 );
+
+test(
+	'An image uploaded from a page fragment is not listed in the Documents widget',
+	{tag: '@LPD-92365'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const filePath = path.join(__dirname, 'dependencies', 'liferay.png');
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await page.goto(`/web/${roomName}/onboarding?p_l_mode=edit`);
+
+		await editDigitalSalesRoomPage.uploadFragmentImage(filePath);
+
+		await page.goto(`/web/${roomName}`);
+
+		await editDigitalSalesRoomPage.documentsMenuItem.click();
+
+		await expect(editDigitalSalesRoomPage.noDocumentsMessage).toBeVisible();
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await editDigitalSalesRoomPage.newButton.click();
+		await editDigitalSalesRoomPage.fileUploadButton.click();
+		await editDigitalSalesRoomPage.selectFileButton.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(filePath);
+
+		await editDigitalSalesRoomPage.publishButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			editDigitalSalesRoomPage.noDocumentsMessage
+		).not.toBeVisible();
+	}
+);

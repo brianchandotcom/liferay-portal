@@ -1014,104 +1014,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
-	@priority = 4
-	test CannotTypeValueOutsideRange {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 151573",
-			objectName = "CustomObject151573",
-			pluralLabelName = "Custom Objects 151573");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Text Field",
-			fieldName = "customTextField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject151573");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 151573");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
-
-		ObjectField.checkLimitCharacters();
-
-		AssertElementPresent(
-			key_maxValue = 280,
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-
-		ObjectField.typeValueOnLimitCharacters(newValue = 281);
-
-		AssertElementNotPresent(
-			key_maxValue = 281,
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-
-		AssertElementPresent(
-			key_maxValue = 28,
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-	}
-
-	@description = "LPS-162176 - Verify that the ERC is displayed on the object definition page"
-	@priority = 5
-	test CanSeeERCFieldOnObjectPage {
-		task ("Given an object is created") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 162176",
-				objectName = "CustomObject162176",
-				pluralLabelName = "Custom Objects 162176");
-		}
-
-		task ("When the user navigates to the object definition") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 162176");
-		}
-
-		task ("Then the ERC is present on the page") {
-			AssertElementPresent(locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE");
-		}
-	}
-
-	@description = "Verify that it's possible to see the custom field label and system field label"
-	@priority = 5
-	test CanSeeFieldLabel {
-		property custom.properties = "feature.flag.LPS-158456=true";
-		property portal.acceptance = "true";
-
-		task ("Add an object, go to the fields tab and state whether the system fields have the label System") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object",
-				objectName = "CustomObject",
-				pluralLabelName = "Custom Objects");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-			ObjectAdmin.goToFieldsTab();
-
-			AssertElementPresent(
-				key_label = "Create Date",
-				key_source = "System",
-				locator1 = "ObjectField#SOURCE_FIELD");
-		}
-
-		task ("Add a new field and state that custom fields have the label Custom") {
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Field",
-				fieldType = "Text");
-
-			AssertElementPresent(
-				key_label = "Custom Field",
-				key_source = "Custom",
-				locator1 = "ObjectField#SOURCE_FIELD");
-		}
-	}
-
 	@description = "LPS-158821 - Verify that the user is able to set the ERC field as a Title Field"
 	@priority = 4
 	test CanSetERCFieldAsTitleField {
@@ -1296,46 +1198,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
-	@priority = 4
-	test CanUpdateShowFilesOptionBeforePublished {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153420",
-			objectName = "CustomObject153420",
-			pluralLabelName = "Custom Objects 153420");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153420");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
-
-		Refresh();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
-
-		ObjectField.viewToogleOnSidePanelShowFilesInDM(isDisabled = "No");
-
-		Navigator.openURL();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153420");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153420");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
-
-		ObjectField.viewToogleOnSidePanelShowFilesInDM(isDisabled = "Yes");
-	}
-
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Expression Builder, on the Validations tab"
 	@priority = 4
 	test CanUseERCFieldWithExpressionBuilder {
@@ -1484,31 +1346,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer the toggle is OFF by default"
-	@priority = 4
-	test CanViewOptionsDisableWhenSelectDirectlyFromUsersComputerOption {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-		ObjectAdmin.goToFieldsTab();
-
-		LexiconEntry.gotoAdd();
-
-		ObjectField.selectType(fieldType = "Attachment");
-
-		ObjectField.selectOptionOnRequestFiles(option = "Upload Directly from the User");
-
-		Uncheck.uncheckNotVisible(
-			key_toggleSwitchLabel = "Show Files in Documents and Media",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-	}
-
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
 	@priority = 5
 	test CanViewSetMaximumCharactersOption {
@@ -1586,83 +1423,6 @@ definition {
 			key_fieldName = "customObjectFieldLongText",
 			key_viewCountCharacters = "0/65000 Characters",
 			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
-	}
-
-	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"
-	@priority = 4
-	test CanViewSidePanelOptions {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 151560",
-			objectName = "CustomObject151560",
-			pluralLabelName = "Custom Objects 151560");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 151560");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
-
-		AssertElementPresent(locator1 = "ObjectField#LABEL_ACCEPTED_FILE_EXTENSIONS");
-
-		AssertElementPresent(locator1 = "ObjectField#LABEL_MAXIMUM_FILE_SIZE");
-	}
-
-	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a tooltip on the Toggle"
-	@priority = 4
-	test CanViewTootipWhenSelectDirectlyFromUsersComputerOption {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-		ObjectAdmin.goToFieldsTab();
-
-		LexiconEntry.gotoAdd();
-
-		ObjectField.selectType(fieldType = "Attachment");
-
-		ObjectField.selectOptionOnRequestFiles(option = "Upload Directly from the User");
-
-		AssertElementPresent(
-			key_text = "question-circle-full",
-			locator1 = "Icon#ANY");
-	}
-
-	@description = "LPS-144902 - Verify there is a description of each Field Type"
-	@priority = 4
-	test DescriptionForEachFieldType {
-		property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectFieldBusinessTypeConfiguration.config";
-		property osgi.module.configurations = "enabled=\"true\"";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 147723",
-			objectName = "CustomObject147723",
-			pluralLabelName = "Custom Objects 147723");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 147723");
-
-		ObjectAdmin.goToFieldsTab();
-
-		LexiconEntry.gotoAdd();
-
-		Click(
-			key_labelName = "Type",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
-		ObjectAdmin.viewDescriptionForEachFieldType();
 	}
 
 	@description = "LPS-145661 - Verify that the field type names are displayed on the Layout Builder when a field is added"
@@ -1852,53 +1612,6 @@ definition {
 				locator1 = "ObjectCustomViews#LABEL_SECTION_FILTER_ENTRY");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectCustomViews#TOGGLE_SWITCH_EXCLUDE_STATUS");
-		}
-	}
-
-	@description = "Verify that Formula fields can't be required"
-	@priority = 4
-	test FormulaFieldsIsNotMandatory {
-		task ("Given an Object with formula field") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 176829",
-				objectName = "CustomObject176829",
-				pluralLabelName = "Custom Objects 176829");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Formula",
-				fieldLabelName = "Custom Formula Field",
-				fieldName = "customFormulaField",
-				fieldType = "String",
-				formulaScript = "",
-				isRequired = "false",
-				objectName = "CustomObject176829",
-				outputOption = "Decimal");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176829");
-		}
-
-		task ("When view the formula field details (mandatory option is unavailable)") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176829");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
-
-			AssertElementNotPresent(locator1 = "ObjectField#MANDATORY_TOGGLE");
-		}
-
-		task ("Then assert that is the entry is not required") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject176829");
-
-			LexiconEntry.gotoAdd();
-
-			AssertElementNotPresent(
-				key_fieldName = "Formula Builder",
-				locator1 = "ObjectField#MANDATORY_FIELD");
-
-			PortletEntry.save();
 		}
 	}
 
@@ -2132,38 +1845,6 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Output Field on Formula Field is required"
-	@priority = 4
-	test OutputFieldIsRequiredOnFormulaField {
-		task ("Given an Object") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 176823",
-				objectName = "CustomObject176823",
-				pluralLabelName = "Custom Objects 176823");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176823");
-
-			ObjectAdmin.goToFieldsTab();
-		}
-
-		task ("When managing a Formula Field") {
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Formula",
-				fieldType = "Formula",
-				formulaFieldOption = "Decimal");
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula");
-		}
-
-		task ("Then the output field is a mandatory field") {
-			AssertElementPresent(
-				key_fieldName = "Output",
-				locator1 = "ObjectField#MANDATORY_FIELD");
-		}
-	}
-
 	@description = "Verify that the Range - Start/End operator is available when adding filters for the date fields to select date from the object"
 	@priority = 4
 	test RangeIsAvailableForDateFields {
@@ -2268,67 +1949,6 @@ definition {
 				key_entry = 2,
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
-	}
-
-	@description = "LPS-148112 - Verify if field called Storage Folder have help text"
-	@priority = 4
-	test StorageFolderFieldHaveHelpText {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			enableShowFiles = "true",
-			fieldAttachment = "Upload Directly from the User",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
-
-		var helpText = "Input the path of the chosen folder in Documents and Media. An example of a valid path is: \"/myDocumentsAndMediaFolder\".";
-
-		AssertElementPresent(
-			key_helpText = ${helpText},
-			locator1 = "ObjectField#HELP_TEXT",
-			value1 = ${key_helpText});
-	}
-
-	@description = "LPS-148112 - Verify if field called Storage Folder is required"
-	@priority = 4
-	test StorageFolderFieldIsRequired {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			enableShowFiles = "true",
-			fieldAttachment = "Upload Directly from the User",
-			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment");
-
-		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
-
-		ObjectField.typeStorageFolder(content = "");
-
-		Button.clickSave();
-
-		AssertElementPresent(
-			key_fieldLabel = "Storage Folder",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 }

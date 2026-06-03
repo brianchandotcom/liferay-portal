@@ -17,6 +17,7 @@ import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderNoteLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderNote;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
@@ -24,12 +25,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -109,6 +112,14 @@ public class OrderNoteResourceTest extends BaseOrderNoteResourceTestCase {
 	@Test
 	public void testDeleteOrderNoteByExternalReferenceCode() throws Exception {
 		super.testDeleteOrderNoteByExternalReferenceCode();
+	}
+
+	@Override
+	@Test
+	public void testGetOrderNote() throws Exception {
+		super.testGetOrderNote();
+
+		_testGetOrderNote();
 	}
 
 	@Ignore
@@ -245,6 +256,20 @@ public class OrderNoteResourceTest extends BaseOrderNoteResourceTestCase {
 			_commerceOrder.getCommerceOrderId(), orderNote);
 	}
 
+	private void _testGetOrderNote() throws Exception {
+		OrderNote postOrderNote = testGetOrderNote_addOrderNote();
+
+		OrderNote getOrderNote = orderNoteResource.getOrderNote(
+			postOrderNote.getId());
+
+		Assert.assertEquals(
+			Long.valueOf(TestPropsValues.getUserId()),
+			getOrderNote.getAuthorId());
+		Assert.assertNotNull(getOrderNote.getModifiedDate());
+		assertEquals(postOrderNote, getOrderNote);
+		assertValid(getOrderNote);
+	}
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -258,6 +283,9 @@ public class OrderNoteResourceTest extends BaseOrderNoteResourceTestCase {
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommerceOrderNoteLocalService _commerceOrderNoteLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;

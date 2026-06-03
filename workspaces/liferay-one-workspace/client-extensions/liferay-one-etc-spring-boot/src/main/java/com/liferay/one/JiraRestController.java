@@ -209,11 +209,12 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.UPDATE);
 
-			JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
+			JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(
+				jwt);
 
 			BusinessEvent businessEvent = new BusinessEvent(
-				externalReferenceCode, userJSONObject.getString("emailAddress"),
-				json);
+				externalReferenceCode,
+				myUserAccountJSONObject.getString("emailAddress"), json);
 
 			List<BusinessEvent> businessEvents =
 				_jiraService.createBusinessEvent(businessEvent);
@@ -254,11 +255,12 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.UPDATE);
 
-			JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
+			JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(
+				jwt);
 
 			BusinessEvent businessEvent = new BusinessEvent(
-				externalReferenceCode, userJSONObject.getString("emailAddress"),
-				json);
+				externalReferenceCode,
+				myUserAccountJSONObject.getString("emailAddress"), json);
 
 			businessEvent = _jiraService.updateBusinessEvent(id, businessEvent);
 

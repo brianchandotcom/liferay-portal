@@ -96,6 +96,8 @@ public class AssetEntryInfoItemFieldValuesProviderTest {
 			"expirationDate");
 		_assertDateFieldValue(
 			assetEntry.getModifiedDate(), infoItemFieldValues, "modifiedDate");
+		_assertDateFieldValue(
+			assetEntry.getPublishDate(), infoItemFieldValues, "publishDate");
 	}
 
 	@Test

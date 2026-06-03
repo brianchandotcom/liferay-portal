@@ -960,10 +960,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-113166 - Validate if the user can subscribe and unsubscribe from the question."
+	@description = "LPS-113166 - Validate if the user can subscribe and unsubscribe from the question and the topic."
 	@priority = 5
 	@refactordone
-	test CanSubscribeAndUnsubscribeFromQuestion {
+	test CanSubscribeAndUnsubscribeFromQuestionAndTopic {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given there is a user, a category and a question created") {
@@ -1062,35 +1062,6 @@ definition {
 				key_answerBodyContent = "This is my answer",
 				locator1 = "Questions#ANSWER_BODY");
 		}
-	}
-
-	@description = "LPS-113166 - Validate if the user can subscribe and unsubscribe from the topic."
-	@priority = 5
-	@refactordone
-	test CanSubscribeAndUnsubscribeFromTopic {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Given there is a created user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea@liferay.com");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
 
 		task ("And the user test is not subscribed on topic") {
 			Questions.openToQuestionsTopic(
@@ -1134,7 +1105,7 @@ definition {
 				contentField = "Content AddQuestion",
 				layoutName = "questions-page",
 				siteURLKey = "guest",
-				titleField = "Title AddQuestion",
+				titleField = "Title AddQuestion2",
 				topicName = "questions-test-category");
 		}
 
@@ -1145,9 +1116,9 @@ definition {
 
 			Notifications.gotoNotifications();
 
-			Notifications.navigateToContent(contentBody = "Title AddQuestion");
+			Notifications.navigateToContent(contentBody = "Title AddQuestion2");
 
-			Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
+			Questions.viewDetailsTitle(questionTitle = "Title AddQuestion2");
 		}
 	}
 

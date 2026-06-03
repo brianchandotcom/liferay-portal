@@ -123,8 +123,7 @@ public class ViewFolderSectionDisplayContextTest
 			null, DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
 
-		Group depotEntryGroup = _groupLocalService.getGroup(
-			depotEntry.getGroupId());
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
 		ObjectEntryFolder rootObjectEntryFolder =
 			_objectEntryFolderLocalService.
@@ -149,7 +148,7 @@ public class ViewFolderSectionDisplayContextTest
 			breadcrumbProps.get("hideSpace"));
 
 		_assertBreadcrumbLabels(
-			breadcrumbProps, depotEntryGroup.getName(LocaleUtil.getDefault()),
+			breadcrumbProps, group.getName(LocaleUtil.getDefault()),
 			rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 			parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 			sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
@@ -171,8 +170,7 @@ public class ViewFolderSectionDisplayContextTest
 				breadcrumbProps.get("hideSpace"));
 
 			_assertBreadcrumbLabels(
-				breadcrumbProps,
-				depotEntryGroup.getName(LocaleUtil.getDefault()),
+				breadcrumbProps, group.getName(LocaleUtil.getDefault()),
 				rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 				parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
@@ -257,8 +255,7 @@ public class ViewFolderSectionDisplayContextTest
 				breadcrumbProps.get("hideSpace"));
 
 			_assertBreadcrumbLabels(
-				breadcrumbProps,
-				depotEntryGroup.getName(LocaleUtil.getDefault()),
+				breadcrumbProps, group.getName(LocaleUtil.getDefault()),
 				rootObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 				parentObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
 				sharedObjectEntryFolder.getLabel(LocaleUtil.getDefault()),
@@ -340,16 +337,15 @@ public class ViewFolderSectionDisplayContextTest
 	private void _setTrashEnabled(DepotEntry depotEntry, boolean trashEnabled)
 		throws Exception {
 
-		Group depotEntryGroup = depotEntry.getGroup();
+		Group group = depotEntry.getGroup();
 
-		UnicodeProperties unicodeProperties =
-			depotEntryGroup.getTypeSettingsProperties();
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
 		unicodeProperties.setProperty(
 			"trashEnabled", String.valueOf(trashEnabled));
 
 		_groupLocalService.updateGroup(
-			depotEntryGroup.getGroupId(), unicodeProperties.toString());
+			group.getGroupId(), unicodeProperties.toString());
 	}
 
 	@Inject

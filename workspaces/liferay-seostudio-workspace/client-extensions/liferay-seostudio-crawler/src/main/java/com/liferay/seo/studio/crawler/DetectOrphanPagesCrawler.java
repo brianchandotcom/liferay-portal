@@ -7,6 +7,7 @@ package com.liferay.seo.studio.crawler;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.seo.studio.model.CrawlHit;
 import com.liferay.seo.studio.service.SEOStudioService;
 
 import java.net.URI;
@@ -38,14 +39,9 @@ import org.springframework.stereotype.Component;
 public class DetectOrphanPagesCrawler {
 
 	public void detect(
-			long scanId, long accountEntryId, URI hostname, String insightType,
-			List<CrawlHit> crawlHits)
+			long seoStudioScanId, long accountEntryId, URI hostname,
+			String insightType, List<CrawlHit> crawlHits)
 		throws Exception {
-
-		String seedURL = SEOStudioService.toDomainURL(hostname);
-
-		long insightTypeId = _findOrCreateInsightTypeId(
-			scanId, accountEntryId, insightType);
 
 		Set<String> canonicalURLs = new LinkedHashSet<>();
 		Set<String> linkedCanonicalURLs = new HashSet<>();
@@ -70,6 +66,8 @@ public class DetectOrphanPagesCrawler {
 
 		List<String> orphans = new ArrayList<>();
 
+		String seedURL = SEOStudioService.toDomainURL(hostname);
+
 		for (String canonicalURL : canonicalURLs) {
 			if (canonicalURL.equals(seedURL) ||
 				linkedCanonicalURLs.contains(canonicalURL)) {
@@ -82,30 +80,37 @@ public class DetectOrphanPagesCrawler {
 
 		if (ListUtil.isEmpty(orphans)) {
 			if (_log.isInfoEnabled()) {
-				_log.info("No orphan pages were detected for scan " + scanId);
+				_log.info(
+					"No orphan pages were detected for scan " +
+						seoStudioScanId);
 			}
 
 			return;
 		}
 
-		_createPagesBatch(scanId, accountEntryId, orphans);
+		long seoStudioInsightTypeId = _findOrCreateInsightTypeId(
+			seoStudioScanId, accountEntryId, insightType);
 
-		Map<String, Long> pageIdsByURL = _fetchPageIdsByURL(scanId, orphans);
+		_createPagesBatch(seoStudioScanId, accountEntryId, orphans);
+
+		Map<String, Long> pageIdsByURL = _fetchPageIdsByURL(
+			seoStudioScanId, orphans);
 
 		_createScanInsightsBatch(
-			scanId, accountEntryId, insightTypeId, orphans, pageIdsByURL);
+			seoStudioScanId, accountEntryId, seoStudioInsightTypeId, orphans,
+			pageIdsByURL);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
 					"Wrote ", orphans.size(),
 					" orphan page scan insights for insight type ",
-					insightTypeId));
+					seoStudioInsightTypeId));
 		}
 	}
 
 	private void _createPagesBatch(
-			long scanId, long accountEntryId, List<String> orphans)
+			long seoStudioScanId, long accountEntryId, List<String> orphans)
 		throws Exception {
 
 		for (int i = 0; i < orphans.size(); i += _BATCH_SIZE) {
@@ -116,7 +121,7 @@ public class DetectOrphanPagesCrawler {
 
 			for (String orphan : chunk) {
 				pagesJSONArray.put(
-					_toPageJSONObject(accountEntryId, orphan, scanId));
+					_toPageJSONObject(accountEntryId, orphan, seoStudioScanId));
 			}
 
 			_seoStudioService.createPagesBatch(pagesJSONArray);
@@ -124,8 +129,9 @@ public class DetectOrphanPagesCrawler {
 	}
 
 	private void _createScanInsightsBatch(
-			long scanId, long accountEntryId, long insightTypeId,
-			List<String> orphans, Map<String, Long> pageIdsByURL)
+			long seoStudioScanId, long accountEntryId,
+			long seoStudioInsightTypeId, List<String> orphans,
+			Map<String, Long> pageIdsByURL)
 		throws Exception {
 
 		String detectedDate = Instant.now(
@@ -140,9 +146,9 @@ public class DetectOrphanPagesCrawler {
 			JSONArray scanInsightsJSONArray = new JSONArray();
 
 			for (String orphan : chunk) {
-				Long pageId = pageIdsByURL.get(orphan);
+				Long seoStudioPageId = pageIdsByURL.get(orphan);
 
-				if (pageId == null) {
+				if (seoStudioPageId == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"No page was found for orphan URL " + orphan +
@@ -154,8 +160,8 @@ public class DetectOrphanPagesCrawler {
 
 				scanInsightsJSONArray.put(
 					_toScanInsightJSONObject(
-						accountEntryId, detectedDate, insightTypeId, pageId,
-						scanId));
+						accountEntryId, detectedDate, seoStudioInsightTypeId,
+						seoStudioPageId, seoStudioScanId));
 			}
 
 			if (scanInsightsJSONArray.length() == 0) {
@@ -167,12 +173,12 @@ public class DetectOrphanPagesCrawler {
 	}
 
 	private Map<String, Long> _fetchPageIdsByURL(
-			long scanId, List<String> orphans)
+			long seoStudioScanId, List<String> orphans)
 		throws Exception {
 
 		long time = System.currentTimeMillis() + 60000;
 
-		Map<String, Long> pageIdsByURL = _readPages(scanId);
+		Map<String, Long> pageIdsByURL = _readPages(seoStudioScanId);
 
 		while (pageIdsByURL.size() < orphans.size()) {
 			if (System.currentTimeMillis() > time) {
@@ -180,7 +186,7 @@ public class DetectOrphanPagesCrawler {
 					_log.warn(
 						StringBundler.concat(
 							"Timed out waiting for ", orphans.size(),
-							" pages to be readable for scan ", scanId,
+							" pages to be readable for scan ", seoStudioScanId,
 							"; found ", pageIdsByURL.size()));
 				}
 
@@ -189,27 +195,25 @@ public class DetectOrphanPagesCrawler {
 
 			Thread.sleep(1000);
 
-			pageIdsByURL = _readPages(scanId);
+			pageIdsByURL = _readPages(seoStudioScanId);
 		}
 
 		return pageIdsByURL;
 	}
 
 	private long _findOrCreateInsightTypeId(
-		long scanId, long accountEntryId, String insightType) {
+		long seoStudioScanId, long accountEntryId, String insightType) {
 
-		String externalReferenceCode = insightType + ":" + scanId;
+		String externalReferenceCode = insightType + ":" + seoStudioScanId;
 
 		try {
 			String body = _seoStudioService.findInsightTypeByERC(
 				externalReferenceCode);
 
-			JSONObject bodyJSONObject = new JSONObject(body);
+			JSONObject insightTypeJSONObject = new JSONObject(body);
 
-			long id = bodyJSONObject.optLong("id", -1);
-
-			if (id > 0) {
-				return id;
+			if (insightTypeJSONObject.has("id")) {
+				return insightTypeJSONObject.getLong("id");
 			}
 		}
 		catch (Exception exception) {
@@ -232,7 +236,8 @@ public class DetectOrphanPagesCrawler {
 		).put(
 			"r_accountToSEOStudioInsightTypes_accountEntryId", accountEntryId
 		).put(
-			"r_seoStudioScanToSEOStudioInsightTypes_seoStudioScanId", scanId
+			"r_seoStudioScanToSEOStudioInsightTypes_seoStudioScanId",
+			seoStudioScanId
 		).put(
 			"severity", "high"
 		);
@@ -243,14 +248,14 @@ public class DetectOrphanPagesCrawler {
 		return responseJSONObject.getLong("id");
 	}
 
-	private Map<String, Long> _readPages(long scanId) {
+	private Map<String, Long> _readPages(long seoStudioScanId) {
 		Map<String, Long> pageIdsByURL = new HashMap<>();
 
 		int page = 1;
 
 		while (true) {
 			JSONObject pagesJSONObject = new JSONObject(
-				_seoStudioService.fetchPages(scanId, 2000, page));
+				_seoStudioService.fetchPages(seoStudioScanId, 2000, page));
 
 			JSONArray itemsJSONArray = pagesJSONObject.optJSONArray("items");
 
@@ -275,7 +280,7 @@ public class DetectOrphanPagesCrawler {
 	}
 
 	private JSONObject _toPageJSONObject(
-		long accountEntryId, String pageURL, long scanId) {
+		long accountEntryId, String pageURL, long seoStudioScanId) {
 
 		JSONObject pageJSONObject = new JSONObject();
 
@@ -284,15 +289,15 @@ public class DetectOrphanPagesCrawler {
 		).put(
 			"r_accountToSEOStudioPages_accountEntryId", accountEntryId
 		).put(
-			"r_seoStudioScanToSEOStudioPages_seoStudioScanId", scanId
+			"r_seoStudioScanToSEOStudioPages_seoStudioScanId", seoStudioScanId
 		);
 
 		return pageJSONObject;
 	}
 
 	private JSONObject _toScanInsightJSONObject(
-		long accountEntryId, String detectedDate, long insightTypeId,
-		long pageId, long scanId) {
+		long accountEntryId, String detectedDate, long seoStudioInsightTypeId,
+		long seoStudioPageId, long seoStudioScanId) {
 
 		JSONObject scanInsightJSONObject = new JSONObject();
 
@@ -304,11 +309,13 @@ public class DetectOrphanPagesCrawler {
 			"r_accountToSEOStudioScanInsights_accountEntryId", accountEntryId
 		).put(
 			"r_seoStudioInsightTypeToScanInsights_seoStudioInsightTypeId",
-			insightTypeId
+			seoStudioInsightTypeId
 		).put(
-			"r_seoStudioPageToSEOStudioScanInsights_seoStudioPageId", pageId
+			"r_seoStudioPageToSEOStudioScanInsights_seoStudioPageId",
+			seoStudioPageId
 		).put(
-			"r_seoStudioScanToSEOStudioScanInsights_seoStudioScanId", scanId
+			"r_seoStudioScanToSEOStudioScanInsights_seoStudioScanId",
+			seoStudioScanId
 		);
 
 		return scanInsightJSONObject;

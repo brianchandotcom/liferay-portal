@@ -30,12 +30,6 @@ public class TestClassHardcodedPortCheck extends BaseCheck {
 			return;
 		}
 
-		String name = getName(detailAST);
-
-		if (!name.contains("Test")) {
-			return;
-		}
-
 		List<DetailAST> childDetailASTs = getAllChildTokens(
 			detailAST, true, TokenTypes.NUM_INT, TokenTypes.STRING_LITERAL);
 

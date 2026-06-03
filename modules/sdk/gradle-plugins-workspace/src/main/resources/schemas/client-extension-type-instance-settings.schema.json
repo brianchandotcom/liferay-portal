@@ -151,11 +151,6 @@
 					"const": "com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
 					"title": "AI Hub Configuration"
 				},
-				"secret": {
-					"default": "",
-					"title": "Secret",
-					"type": "string"
-				},
 				"serviceURL": {
 					"title": "Service URL",
 					"type": "string"

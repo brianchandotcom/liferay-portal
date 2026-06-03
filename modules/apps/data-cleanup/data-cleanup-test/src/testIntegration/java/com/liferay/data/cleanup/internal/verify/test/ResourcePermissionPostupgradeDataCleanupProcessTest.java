@@ -227,11 +227,12 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 	}
 
 	private void _assertResourcePermissionNotDeleted(
-		LogCapture logCapture, String name) {
+		LogCapture logCapture, String portletName) {
 
 		for (String message : logCapture.getMessages()) {
 			Assert.assertFalse(
-				message, message.contains("\"" + name + "\" was not found"));
+				message,
+				message.contains("\"" + portletName + "\" was not found"));
 		}
 	}
 

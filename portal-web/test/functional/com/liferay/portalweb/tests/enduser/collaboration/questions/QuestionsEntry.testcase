@@ -279,10 +279,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-116845 - Validate if the user can setup the landing page topic navigation for the widget."
+	@description = "LPS-116844 and LPS-116845 - Validate if the user can setup the landing page topic navigation and the root topic for the widget."
 	@priority = 4
 	@refactordone
-	test CanConfigureLandingPageTopicNavigation {
+	test CanConfigureWidgetTopicNavigation {
 		property portal.release = "quarantine";
 
 		task ("Given there is a caregory created") {
@@ -352,60 +352,35 @@ definition {
 				parentTopicName = "Questions Test Category2",
 				subTopicName = "Questions Test SubCategory2");
 		}
-	}
-
-	@description = "LPS-116844 - Validate if the user can setup the root topic for the widget."
-	@priority = 4
-	@refactordone
-	test CanConfigureRootTopic {
-		property portal.release = "quarantine";
-
-		task ("Given there is a created categoies") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test Category",
-				groupName = "Guest");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "Subcategory Description",
-				categoryName = "Questions Test SubCategory",
-				groupName = "Guest",
-				parentCategoryId = ${parentCategoryId},
-				userEmailAddress = "test@liferay.com");
-		}
 
 		task ("When the user configure the root topic") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
-			Questions.configureRootTopic(categoryName = "Questions Test Category");
+			Questions.configureRootTopic(categoryName = "Questions Test Category2");
 		}
 
 		task ("Then he can not see the categories anymore") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
 			AssertElementNotPresent(
-				key_card = "Questions Test Category",
+				key_card = "Questions Test Category2",
 				locator1 = "Card#CARD_TITLE");
 
 			AssertElementPresent(
-				key_card = "Questions Test SubCategory",
+				key_card = "Questions Test SubCategory2",
 				locator1 = "Card#CARD_TITLE");
 		}
 
 		task ("When the user configure again") {
 			Questions.configureRootTopic(
-				parentCategoryName = "Questions Test Category",
-				subCategoryName = "Questions Test SubCategory");
+				parentCategoryName = "Questions Test Category2",
+				subCategoryName = "Questions Test SubCategory2");
 		}
 
 		task ("Then he can not see the categories") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
-			for (var topicName : list "Questions Test Category,Questions Test SubCategory") {
+			for (var topicName : list "Questions Test Category2,Questions Test SubCategory2") {
 				AssertElementNotPresent(
 					key_card = ${topicName},
 					locator1 = "Card#CARD_TITLE");
@@ -414,7 +389,7 @@ definition {
 
 		task ("When the user creates a category again") {
 			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test SubCategory",
+				categoryName = "Questions Test SubCategory2",
 				groupName = "Guest");
 
 			JSONMBMessage.addCategory(
@@ -434,14 +409,14 @@ definition {
 		task ("Then he can navigate through the subcatergories,") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
-			Questions.gotoCategory(categoryName = "Questions Test Category");
+			Questions.gotoCategory(categoryName = "Questions Test Category2");
 
 			Questions.changeTopic(
-				parentTopicName = "Questions Test Category",
-				subTopicName = "Questions Test SubCategory");
+				parentTopicName = "Questions Test Category2",
+				subTopicName = "Questions Test SubCategory2");
 
 			Questions.changeTopic(
-				parentTopicName = "Questions Test SubCategory",
+				parentTopicName = "Questions Test SubCategory2",
 				subTopicName = "New Questions Test SubCategory");
 		}
 	}

@@ -83,7 +83,6 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilterTest {
 
 		String issuer =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
-
 		String supported = RandomTestUtil.randomString();
 
 		String tokenEndpoint = issuer + "/o/oauth2/token";

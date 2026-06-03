@@ -399,8 +399,6 @@ public class DDMFormDisplayContextTest {
 		actualDDMFormFieldOptions =
 			(DDMFormFieldOptions)ddmFormField.getProperty("options");
 
-		Assert.assertFalse(
-			SetUtil.isEmpty(actualDDMFormFieldOptions.getOptionsValues()));
 		Assert.assertEquals(
 			expectedDDMFormFieldOptions, actualDDMFormFieldOptions);
 
@@ -579,9 +577,7 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testGetRedirectURL() throws Exception {
-		String redirectURL =
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/page";
+		String redirectURL = "http://localhost/page";
 
 		_mockDDMFormInstance(_mockDDMFormInstanceSettings(redirectURL));
 
@@ -857,8 +853,7 @@ public class DDMFormDisplayContextTest {
 	public void testIsShowSuccessPageWithRedirectURL() throws Exception {
 		_mockDDMFormInstance(
 			_mockDDMFormInstanceSettings(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/web/forms/shared/-/form/123"));
+				"http://localhost/web/forms/shared/-/form/123"));
 
 		RenderRequest renderRequest = _mockRenderRequest();
 

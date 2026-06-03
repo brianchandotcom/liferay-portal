@@ -1988,7 +1988,8 @@
 		{
 			"properties": {
 				"enableLog": {
-					"description": "If checked, the Audiences framework will print diagnostic messages to the browser console.",
+					"default": false,
+					"description": "If this is checked, the Audiences framework will print diagnostic messages to the browser console.",
 					"title": "Enable Log",
 					"type": "boolean"
 				},

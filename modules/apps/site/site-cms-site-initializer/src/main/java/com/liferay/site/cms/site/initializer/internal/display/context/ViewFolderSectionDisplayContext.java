@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -368,7 +367,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	private int _getSharedRootIndex(String[] parts, long userId) {
-		long classNameId = PortalUtil.getClassNameId(
+		long classNameId = portal.getClassNameId(
 			ObjectEntryFolder.class.getName());
 
 		for (int i = 1; i < (parts.length - 1); i++) {

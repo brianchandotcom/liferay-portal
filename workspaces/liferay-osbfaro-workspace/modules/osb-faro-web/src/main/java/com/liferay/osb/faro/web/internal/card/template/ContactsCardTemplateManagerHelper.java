@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matthew Kong
  */
-@Component(service = ContactsCardTemplateManagerHelper.class)
+@Component(service = {})
 public class ContactsCardTemplateManagerHelper {
 
 	public ContactsCardTemplateDisplay getContactsCardTemplateDisplay(

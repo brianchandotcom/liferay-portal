@@ -47,15 +47,6 @@ public class AuthorizationTokenResourceImpl
 		JSONObject accessTokenJSONObject = AIHubCellAccessTokenWebCacheItem.get(
 			aiHubCellConfiguration, contextCompany.getCompanyId());
 
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.
-				getOAuth2ApplicationByExternalReferenceCode(
-					AIHubCellConstants.OAUTH2_APPLICATION_USER_ON_BEHALF_OF_ERC,
-					contextCompany.getCompanyId());
-
-		JSONObject userTokenJSONObject = AIHubCellUserTokenWebCacheItem.get(
-			_localOAuthClient, oAuth2Application, contextUser.getUserId());
-
 		return new AuthorizationToken() {
 			{
 				setAccessToken(
@@ -63,7 +54,18 @@ public class AuthorizationTokenResourceImpl
 				setScope(() -> accessTokenJSONObject.getString("scope"));
 				setServiceURL(aiHubCellConfiguration::serviceURL);
 				setUserToken(
-					() -> userTokenJSONObject.getString("access_token"));
+					() -> {
+						OAuth2Application oAuth2Application =
+							_oAuth2ApplicationLocalService.
+								getOAuth2ApplicationByExternalReferenceCode(
+									AIHubCellConstants.
+										OAUTH2_APPLICATION_ERC_AI_HUB_CELL,
+									contextCompany.getCompanyId());
+
+						return AIHubCellUserTokenWebCacheItem.get(
+							_localOAuthClient, oAuth2Application,
+							contextUser.getUserId());
+					});
 			}
 		};
 	}

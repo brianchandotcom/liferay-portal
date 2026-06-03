@@ -39,8 +39,7 @@ public class AIHubCellOAuth2ApplicationPortalInstanceLifecycleListener
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.
 					fetchOAuth2ApplicationByExternalReferenceCode(
-						AIHubCellConstants.
-							OAUTH2_APPLICATION_USER_ON_BEHALF_OF_ERC,
+						AIHubCellConstants.OAUTH2_APPLICATION_ERC_AI_HUB_CELL,
 						company.getCompanyId());
 
 			if (oAuth2Application != null) {
@@ -55,15 +54,15 @@ public class AIHubCellOAuth2ApplicationPortalInstanceLifecycleListener
 			}
 
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
-				AIHubCellConstants.OAUTH2_APPLICATION_USER_ON_BEHALF_OF_ERC,
+				AIHubCellConstants.OAUTH2_APPLICATION_ERC_AI_HUB_CELL,
 				user.getUserId(), user.getScreenName(),
 				Arrays.asList(GrantType.CLIENT_CREDENTIALS),
 				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.HEADLESS_SERVER.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
-				company.getPortalURL(0), 0, null,
-				"AI Hub Cell User On Behalf Of", null, Arrays.asList(), false,
+				company.getPortalURL(0), 0, null, "AI Hub Cell", null,
+				Arrays.asList(), false,
 				Arrays.asList("Liferay.Portal.Search.REST.everything"), false,
 				new ServiceContext());
 		}

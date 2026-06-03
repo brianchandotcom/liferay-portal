@@ -1,0 +1,3 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "2026.q1.5"
+}

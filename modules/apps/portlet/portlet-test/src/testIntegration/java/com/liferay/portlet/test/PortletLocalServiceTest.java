@@ -159,12 +159,11 @@ public class PortletLocalServiceTest {
 	private void _testFetchPortletById(String instanceId, String portletName)
 		throws Exception {
 
-		long companyId = TestPropsValues.getCompanyId();
-
 		String portletId = PortletIdCodec.encode(portletName, instanceId);
 
 		com.liferay.portal.kernel.model.Portlet portlet =
-			_portletLocalService.fetchPortletById(companyId, portletId);
+			_portletLocalService.fetchPortletById(
+				TestPropsValues.getCompanyId(), portletId);
 
 		Assert.assertEquals(instanceId, portlet.getInstanceId());
 		Assert.assertEquals(portletId, portlet.getPortletId());
@@ -179,7 +178,8 @@ public class PortletLocalServiceTest {
 		Assert.assertTrue(portlet.isStatic());
 		Assert.assertTrue(portlet.isStaticStart());
 
-		portlet = _portletLocalService.fetchPortletById(companyId, portletId);
+		portlet = _portletLocalService.fetchPortletById(
+			TestPropsValues.getCompanyId(), portletId);
 
 		Assert.assertFalse(portlet.isStatic());
 		Assert.assertFalse(portlet.isStaticStart());

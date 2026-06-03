@@ -140,6 +140,14 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async getSiteMessageBoardSectionsPage(
+		siteId: string
+	): Promise<{items: MessageBoardSection[]}> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/message-board-sections`
+		);
+	}
+
 	async getSitePages(siteId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`
@@ -190,6 +198,27 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async postMessageBoardSectionMessageBoardThread({
+		articleBody,
+		headline,
+		messageBoardSectionId,
+	}: {
+		articleBody: string;
+		headline: string;
+		messageBoardSectionId: string;
+	}): Promise<MessageBoardThread> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/message-board-sections/${messageBoardSectionId}/message-board-threads`,
+			{
+				data: {
+					articleBody,
+					headline,
+				},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
 	async postMessageBoardThread({
 		articleBody,
 		headline,
@@ -223,6 +252,24 @@ export class HeadlessDeliveryApiHelper {
 			{
 				data: {
 					articleBody,
+				},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postSiteMessageBoardSection({
+		siteId,
+		title,
+	}: {
+		siteId: string;
+		title: string;
+	}): Promise<MessageBoardSection> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/message-board-sections`,
+			{
+				data: {
+					title,
 				},
 				failOnStatusCode: true,
 			}

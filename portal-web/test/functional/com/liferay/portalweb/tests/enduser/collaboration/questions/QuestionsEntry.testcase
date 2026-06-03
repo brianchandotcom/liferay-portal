@@ -279,48 +279,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-125783 - Validate if the user can cancel the deletions."
-	@priority = 4
-	@refactordone
-	test CanCancelDeletions {
-		task ("Given there is a question with answers and comments created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.answerQuestion(contentField = "This is my answer");
-
-			Questions.replyToComment(commentReply = "This is my reply");
-		}
-
-		task ("When the user goes to delete then he can see that is possible cancel the deletions") {
-			Questions.deleteComment(
-				cancel = "true",
-				commentReply = "This is my reply");
-
-			Questions.deleteAnswer(
-				cancel = "true",
-				contentField = "This is my answer");
-
-			Questions.deleteQuestion(
-				cancel = "true",
-				questionTitle = "Title AddQuestion");
-		}
-	}
-
 	@description = "LPS-116845 - Validate if the user can setup the landing page topic navigation for the widget."
 	@priority = 4
 	@refactordone
@@ -488,43 +446,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-125783 - Validate if the user can delete an answer to a question."
-	@priority = 4
-	@refactordone
-	test CanDeleteAnswer {
-		task ("Given that there is a question with a answer created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			JSONQuestions.addAnswer(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyBody = "This is my answer",
-				threadSubject = "Title AddQuestion",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("When the user goes to question page") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then he can delete an answer") {
-			Questions.deleteAnswer(contentField = "This is my answer");
-		}
-	}
-
 	@description = "LPS-122830 - Validate if the user can delete a comment to an answer."
 	@priority = 4
 	@refactordone
@@ -566,43 +487,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-125783 - Validate if the user can delete a question with an answer."
-	@priority = 4
-	@refactordone
-	test CanDeleteQuestionWithAnAnswer {
-		task ("Given that there is a question with a answer created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-
-			JSONQuestions.addAnswer(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyBody = "This is my answer",
-				threadSubject = "Title AddQuestion",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("When the user goes to question page") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then he can delete an answer") {
-			Questions.deleteQuestion(questionTitle = "Title AddQuestion");
-		}
-	}
-
 	@description = "LPS-137639 - Validate if the user can delete a thread through Activity, it also covers LPS-137639."
 	@priority = 4
 	test CanDeleteThreadThroughMyActivity {
@@ -625,62 +509,6 @@ definition {
 			Questions.deleteQuestion(
 				deleteInActivity = "true",
 				questionTitle = "MB Thread Message Subject");
-		}
-	}
-
-	@description = "LPS-128698 - Validate if the user can delete a topic, it also covers LPS-128699."
-	@priority = 5
-	@refactordone
-	test CanDeleteTopic {
-		task ("Given there is a category created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When the user deletes a category") {
-			JSONMBMessage.deleteCategory(
-				categoryName = "Questions Test Category",
-				groupName = "Guest");
-		}
-
-		task ("Then he can see that the category was deleted") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.viewDefault();
-		}
-	}
-
-	@description = "LPS-128698 - Validate if the user can edit an answer to a question."
-	@priority = 5
-	@refactordone
-	test CanEditAnswer {
-		task ("Given that there are a question created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("And the user create an answer") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-
-			Questions.answerQuestion(contentField = "This is my answer");
-		}
-
-		task ("When the user try to edit an answer then he can see that his answer was edited") {
-			Questions.editAnswer(contentField = "This is my edited answer");
 		}
 	}
 
@@ -788,10 +616,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-122830 - Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
-	@priority = 4
+	@description = "LPS-112174, LPS-122830, LPS-125783, LPS-125810, LPS-128698, LPS-128699 and LPS-152316 - Validate if the user can manage answers and comments: add, edit, cancel deletions and delete them, including the question and the topic. It also covers that the published dates for responses can be shown."
+	@priority = 5
 	@refactordone
-	test CanReplyToAnAnswer {
+	test CanManageAnswersAndComments {
 		task ("Given that there are a question created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
@@ -821,6 +649,65 @@ definition {
 			Questions.replyToComment(
 				commentReply = "This is my reply text.",
 				repliedLabel = "true");
+		}
+
+		task ("When the user edits a comment") {
+			Questions.editComment(contentField = "This is my edited comment");
+		}
+
+		task ("Then he can view that the comment was edited") {
+			AssertElementPresent(
+				key_commentBodyContent = "This is my edited comment",
+				locator1 = "Questions#COMMENT_BODY");
+		}
+
+		task ("When the user try to edit an answer then he can see that his answer was edited") {
+			Questions.editAnswer(contentField = "This is my edited answer");
+		}
+
+		task ("Then the user can creates a second answer") {
+			Questions.answerQuestion(contentField = "This is my second answer");
+		}
+
+		task ("And he can see statistics in details") {
+			Questions.viewStatistics(
+				headerName = "Youngling",
+				itemNameList = "Posts,Join Date,Last Post Date",
+				userName = "Test Test");
+		}
+
+		task ("When the user goes to delete then he can see that is possible cancel the deletions") {
+			Questions.deleteComment(
+				cancel = "true",
+				commentReply = "This is my edited comment");
+
+			Questions.deleteAnswer(
+				cancel = "true",
+				contentField = "This is my edited answer");
+
+			Questions.deleteQuestion(
+				cancel = "true",
+				questionTitle = "Title AddQuestion");
+		}
+
+		task ("Then he can delete an answer") {
+			Questions.deleteAnswer(contentField = "This is my edited answer");
+		}
+
+		task ("And he can delete the question") {
+			Questions.deleteQuestion(questionTitle = "Title AddQuestion");
+		}
+
+		task ("When the user deletes the category") {
+			JSONMBMessage.deleteCategory(
+				categoryName = "Questions Test Category",
+				groupName = "Guest");
+		}
+
+		task ("Then he can see that the category was deleted") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.viewDefault();
 		}
 	}
 
@@ -1899,43 +1786,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-125810 - Validate if the user can create the second answer to a question, it also covers LPS-125810."
-	@priority = 3
-	@refactordone
-	test CanViewSecondAnswer {
-		task ("Given that there are a question and a add created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Questions AddQuestion");
-
-			JSONQuestions.addAnswer(
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				replyBody = "This is my answer",
-				threadSubject = "Questions AddQuestion",
-				titleField = "Questions AddQuestion");
-		}
-
-		task ("When the user goes to question details page") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "questions-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category22");
-		}
-
-		task ("Then the user can creates a second answer") {
-			Questions.answerQuestion(contentField = "This is my second answer");
-		}
-	}
-
 	@description = "LPS-113665 - Validate if the user can view a topic."
 	@priority = 5
 	@refactordone
@@ -2149,39 +1999,6 @@ definition {
 			Questions.viewVotedResult(
 				votedCaret = "top",
 				votedCount = 0);
-		}
-	}
-
-	@description = "LPS-112174 - Validate if the user can view the statistics."
-	@priority = 3
-	@refactordone
-	test CreatorStatisticsCanBeViewedInDetails {
-		task ("Givem there is a category and question created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question Title");
-		}
-
-		task ("When the user goes to details") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "question-title",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
-		}
-
-		task ("Then He can see statistics in details") {
-			Questions.viewStatistics(
-				headerName = "Youngling",
-				itemNameList = "Posts,Join Date,Last Post Date",
-				userName = "Test Test");
 		}
 	}
 

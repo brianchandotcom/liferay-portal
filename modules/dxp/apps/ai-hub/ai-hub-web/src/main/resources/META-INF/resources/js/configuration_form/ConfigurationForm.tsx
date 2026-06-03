@@ -4,13 +4,13 @@
  */
 
 import Button from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
-import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
 
+import AccountConfigurationPanel from './AccountConfigurationPanel';
 import CredentialsPanel from './CredentialsPanel';
 import {useConfigurationForm} from './hooks/useConfigurationForm';
 
@@ -39,45 +39,10 @@ export default function ConfigurationForm({
 			<ClayForm id={FORM_ID} onSubmit={handleSubmit}>
 				<ClayPanel collapsable={false}>
 					<ClayPanel.Body>
-						<h2 className="mb-4">
-							{Liferay.Language.get('account-configuration')}
-						</h2>
-
-						<FieldBase
-							id="environmentURLs"
-							label={Liferay.Language.get('environment-url')}
-						>
-							<ClayInput
-								id="environmentURLs"
-								name="environmentURLs"
-								onChange={(event) =>
-									setField(
-										'environmentURLs',
-										event.target.value
-									)
-								}
-								type="text"
-								value={values.environmentURLs}
-							/>
-						</FieldBase>
-
-						<FieldBase
-							id="recipientEmailAddress"
-							label={Liferay.Language.get('notification-email')}
-						>
-							<ClayInput
-								id="recipientEmailAddress"
-								name="recipientEmailAddress"
-								onChange={(event) =>
-									setField(
-										'recipientEmailAddress',
-										event.target.value
-									)
-								}
-								type="email"
-								value={values.recipientEmailAddress}
-							/>
-						</FieldBase>
+						<AccountConfigurationPanel
+							setField={setField}
+							values={values}
+						/>
 
 						{clientId && (
 							<>

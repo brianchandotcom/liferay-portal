@@ -130,6 +130,26 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 	}
 
 	@Test
+	public void testExpireMultipleArticlesWhenOneFails() throws Exception {
+		JournalArticle article1 = _addExpiringArticle();
+		JournalArticle article2 = _addExpiringArticle();
+		JournalArticle article3 = _addExpiringArticle();
+
+		_assetEntryLocalService.deleteEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		_journalArticleLocalService.checkArticles(_group.getCompanyId());
+
+		article1 = _journalArticleLocalService.getArticle(article1.getId());
+		article2 = _journalArticleLocalService.getArticle(article2.getId());
+		article3 = _journalArticleLocalService.getArticle(article3.getId());
+
+		Assert.assertTrue(article1.isExpired());
+		Assert.assertFalse(article2.isExpired());
+		Assert.assertTrue(article3.isExpired());
+	}
+
+	@Test
 	public void testExpireScheduledJournalArticleDisplayDateAndExpirationDateWithinTheSameInterval()
 		throws Exception {
 
@@ -366,6 +386,17 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		}
 
 		return article;
+	}
+
+	private JournalArticle _addExpiringArticle() throws Exception {
+		JournalArticle article = addArticle(
+			_group.getGroupId(), false, true, false);
+
+		Calendar calendar = getExpirationCalendar(Time.HOUR, -2);
+
+		article.setExpirationDate(calendar.getTime());
+
+		return _journalArticleLocalService.updateJournalArticle(article);
 	}
 
 	private void _assertCheckArticles(

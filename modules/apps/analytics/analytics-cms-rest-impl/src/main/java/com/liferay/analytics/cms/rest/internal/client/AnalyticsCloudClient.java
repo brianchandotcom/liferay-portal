@@ -46,7 +46,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Rachael Koestartyo
@@ -318,7 +317,7 @@ public class AnalyticsCloudClient {
 
 	public PerformanceAssetConsumption getPerformanceAssetConsumption(
 			AnalyticsConfiguration analyticsConfiguration, Long categoryId,
-			String groupBy, List<Long> groupIds, Locale locale,
+			GroupBy groupBy, List<Long> groupIds, Locale locale,
 			String metricType, String objectType, int page, Integer rangeKey,
 			int size, Long tagId, Long vocabularyId)
 		throws PortalException {
@@ -360,7 +359,7 @@ public class AnalyticsCloudClient {
 					performanceAssetConsumption = objectReader.readValue(
 						jsonNode);
 
-					if (Objects.equals(groupBy, "structure")) {
+					if (groupBy == GroupBy.STRUCTURE) {
 						_updatePerformanceAssetConsumptionFromObjectDefinition(
 							locale, performanceAssetConsumption);
 					}
@@ -488,7 +487,7 @@ public class AnalyticsCloudClient {
 
 	private String _getUrl(
 		Long categoryId, String dataSourceId, String externalReferenceCode,
-		String groupBy, List<Long> groupIds,
+		GroupBy groupBy, List<Long> groupIds,
 		String liferayAnalyticsFaroBackendURL, String metricType,
 		String objectType, Integer page, String path, Integer rangeKey,
 		String[] selectedMetrics, Integer size, Long tagId, Long vocabularyId) {
@@ -512,8 +511,9 @@ public class AnalyticsCloudClient {
 				url, "externalReferenceCode", externalReferenceCode);
 		}
 
-		if (Validator.isNotNull(groupBy)) {
-			url = HttpComponentsUtil.addParameter(url, "groupBy", groupBy);
+		if (groupBy != null) {
+			url = HttpComponentsUtil.addParameter(
+				url, "groupBy", groupBy.getValue());
 		}
 
 		if (!groupIds.isEmpty()) {

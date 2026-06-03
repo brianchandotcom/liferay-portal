@@ -56,8 +56,6 @@ public class TierPriceDTOConverter
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		Locale locale = dtoConverterContext.getLocale();
-
 		CommercePriceEntry commercePriceEntry =
 			commerceTierPriceEntry.getCommercePriceEntry();
 
@@ -65,16 +63,17 @@ public class TierPriceDTOConverter
 			commerceCurrency, _commerceCurrencyLocalService,
 			commercePriceEntry.getCommercePriceList(),
 			commerceTierPriceEntry.getPrice());
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			(CPInstanceUnitOfMeasure)dtoConverterContext.getAttribute(
-				"cpInstanceUnitOfMeasure");
-
 		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
 			PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
 				commerceCurrency, _commerceCurrencyLocalService,
 				_commerceMoneyFactory, commercePriceEntry,
 				commerceTierPriceEntry.getPrice());
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			(CPInstanceUnitOfMeasure)dtoConverterContext.getAttribute(
+				"cpInstanceUnitOfMeasure");
+
+		Locale locale = dtoConverterContext.getLocale();
 
 		return new TierPrice() {
 			{

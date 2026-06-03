@@ -66,12 +66,12 @@ public class SkuUnitOfMeasureDTOConverter
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		Locale locale = dtoConverterContext.getLocale();
-
 		CommercePriceEntry commercePriceEntry =
 			_commerceProductPriceCalculation.getUnitCommercePriceEntry(
 				commerceContext, cpInstanceUnitOfMeasure.getCPInstanceId(),
 				cpInstanceUnitOfMeasure.getKey());
+
+		Locale locale = dtoConverterContext.getLocale();
 
 		return new SkuUnitOfMeasure() {
 			{
@@ -102,7 +102,6 @@ public class SkuUnitOfMeasureDTOConverter
 							commerceCurrency, _commerceCurrencyLocalService,
 							commercePriceEntry.getCommercePriceList(),
 							commercePriceEntry.getPrice());
-
 						CommerceMoney pricingQuantityUnitPriceCommerceMoney =
 							PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
 								commerceCurrency, _commerceCurrencyLocalService,

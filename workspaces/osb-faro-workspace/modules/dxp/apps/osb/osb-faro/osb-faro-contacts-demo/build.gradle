@@ -1,0 +1,14 @@
+dependencies {
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.6"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.6"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.6"
+	compileInclude group: "com.github.javafaker", name: "javafaker", version: "1.0.2"
+	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
+	compileInclude group: "user-agent-utils", name: "user-agent-utils", version: "1.2.3"
+	compileOnly ext: "zip", group: "com.liferay.osb.faro", name: "elasticsearch-snapshot", version: "1.3.0"
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "2026.q1.5"
+	compileOnly project(":modules:dxp:apps:osb:osb-faro:osb-faro-api")
+	compileOnly project(":modules:dxp:apps:osb:osb-faro:osb-faro-contacts-api")
+	compileOnly project(":modules:dxp:apps:osb:osb-faro:osb-faro-engine-client")
+	compileOnly project(":modules:dxp:apps:osb:osb-faro:osb-faro-provisioning-client")
+}

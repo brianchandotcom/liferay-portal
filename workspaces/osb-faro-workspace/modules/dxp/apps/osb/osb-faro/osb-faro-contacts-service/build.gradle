@@ -1,0 +1,8 @@
+buildService {
+	apiDir = "../osb-faro-contacts-api/src/main/java"
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "2026.q1.5"
+	compileOnly project(":modules:dxp:apps:osb:osb-faro:osb-faro-contacts-api")
+}

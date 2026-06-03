@@ -8,6 +8,42 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 source _common.sh
 
+function main {
+	_create_worktree
+
+	[[ ${LIFERAY_PROVISION:-} == none ]] && { echo "${WORKTREE_DIR}"; return 0; }
+
+	_set_bundle_path
+
+	if [[ ${LIFERAY_PROVISION:-} == fresh ]]
+	then
+		(cd "${WORKTREE_DIR}" && ANT_OPTS="-Xmx2560m" ant all >&2) || _die "\"ant all\" failed under ${WORKTREE_DIR}."
+	else
+		_reuse_worktree
+	fi
+
+	_set_port_offset
+
+	_set_arquillian_port
+	_set_data_guard_port
+	_set_database
+	_set_debug_port
+	_set_elasticsearch_ports
+	_set_glowroot_port
+	_set_gogo_shell_port
+	_set_gradle_paths
+	_set_playwright_port
+	_set_portal_home
+	_set_portal_http_address
+	_set_poshi_url
+	_set_test_integration_port
+	_set_tomcat_ports
+
+	[[ -z ${LIFERAY_PROVISION_SKIP_TOMCAT:-} ]] && "$(_find_tomcat_dir "${BUNDLES_DIR}")/bin/catalina.sh" jpda start >&2
+
+	echo "${WORKTREE_DIR}"
+}
+
 function _all_ports_free_for_offset {
 	local offset="${1}"
 
@@ -64,8 +100,8 @@ function _create_worktree {
 
 	input="$(cat)"
 
-	cwd="$(jq --exit-status --raw-output .cwd <<< "${input}")" || _die "The cwd field is missing from the hook input ${input}."
-	name="$(jq --exit-status --raw-output .name <<< "${input}")" || _die "The name field is missing from the hook input ${input}."
+	cwd="$(jq --exit-status --raw-output .cwd <<< "${input}")" || _die "The \"cwd\" field is missing from the hook input ${input}."
+	name="$(jq --exit-status --raw-output .name <<< "${input}")" || _die "The \"name\" field is missing from the hook input ${input}."
 
 	local main_worktree target_path
 
@@ -120,11 +156,11 @@ function _reuse_worktree {
 
 	if ! _bundle_exists "${BUNDLES_DIR}"
 	then
-		[[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != ${WORKTREE_DIR} ]] || _die "Unable to locate the main worktree to copy the bundle from."
+		[[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != ${WORKTREE_DIR} ]] || _die "The main worktree is missing, so the bundle cannot be copied."
 
 		local main_bundles
 
-		main_bundles="$(_find_app_server_parent_dir "${MAIN_WORKTREE_DIR}")" || _die "Unable to resolve app.server.parent.dir for ${MAIN_WORKTREE_DIR}."
+		main_bundles="$(_find_app_server_parent_dir "${MAIN_WORKTREE_DIR}")" || _die "The \"app.server.parent.dir\" property is undefined for ${MAIN_WORKTREE_DIR}."
 
 		[[ -d ${main_bundles} ]] || _die "Main bundle directory ${main_bundles} does not exist."
 
@@ -132,7 +168,7 @@ function _reuse_worktree {
 
 		cp --archive "${main_bundles}/." "${BUNDLES_DIR}"
 
-		_bundle_exists "${BUNDLES_DIR}" || _die "Bundle copy finished but no tomcat-* directory exists under ${BUNDLES_DIR}."
+		_bundle_exists "${BUNDLES_DIR}" || _die "Bundle copy finished but no \"tomcat-*\" directory exists under ${BUNDLES_DIR}."
 	fi
 }
 
@@ -305,7 +341,7 @@ function _set_gradle_paths {
 
 	main_bundles_literal="$(_get_property "${file}" "liferay\.home")"
 
-	[[ -n ${main_bundles_literal} ]] || _die "Unable to read liferay.home from ${file}."
+	[[ -n ${main_bundles_literal} ]] || _die "The \"liferay.home\" property is missing from ${file}."
 
 	_sed_inplace \
 		--expression "s|${main_bundles_literal}/|${BUNDLES_DIR}/|g" \
@@ -358,9 +394,9 @@ function _set_port_offset {
 		do
 			sleep 1
 
-			waited=$((waited + 1))
+			((++waited))
 
-			[[ ${waited} -lt 120 ]] || _die "Unable to acquire the port offset lock at ${lock_dir}."
+			[[ ${waited} -lt 120 ]] || _die "The port offset lock at ${lock_dir} could not be acquired."
 		done
 	fi
 
@@ -390,7 +426,7 @@ function _set_port_offset {
 		rmdir "${lock_dir}" 2>/dev/null || true
 	fi
 
-	[[ -f ${offset_file} ]] || _die "Unable to find a free port offset between 1 and 99."
+	[[ -f ${offset_file} ]] || _die "No free port offset is available between 1 and 99."
 }
 
 function _set_portal_home {
@@ -494,42 +530,6 @@ function _set_worktree_paths {
 		--expression "s|${main_bundles}/|${BUNDLES_DIR}/|g" \
 		--expression "s|${main_worktree}/|${WORKTREE_DIR}/|g" \
 		"${file}"
-}
-
-function main {
-	_create_worktree
-
-	[[ ${LIFERAY_PROVISION:-} == none ]] && { echo "${WORKTREE_DIR}"; return 0; }
-
-	_set_bundle_path
-
-	if [[ ${LIFERAY_PROVISION:-} == fresh ]]
-	then
-		(cd "${WORKTREE_DIR}" && ANT_OPTS="-Xmx2560m" ant all >&2) || _die "ant all failed under ${WORKTREE_DIR}."
-	else
-		_reuse_worktree
-	fi
-
-	_set_port_offset
-
-	_set_arquillian_port
-	_set_data_guard_port
-	_set_database
-	_set_debug_port
-	_set_elasticsearch_ports
-	_set_glowroot_port
-	_set_gogo_shell_port
-	_set_gradle_paths
-	_set_playwright_port
-	_set_portal_home
-	_set_portal_http_address
-	_set_poshi_url
-	_set_test_integration_port
-	_set_tomcat_ports
-
-	[[ -z ${LIFERAY_PROVISION_SKIP_TOMCAT:-} ]] && "$(_find_tomcat_dir "${BUNDLES_DIR}")/bin/catalina.sh" jpda start >&2
-
-	echo "${WORKTREE_DIR}"
 }
 
 main "${@}"

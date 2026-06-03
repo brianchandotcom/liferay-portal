@@ -17,7 +17,7 @@ function main {
 
 	local worktree_path
 
-	worktree_path="$(jq --exit-status --raw-output .worktree_path <<< "${input}")" || _die "The worktree_path field is missing from the hook input ${input}."
+	worktree_path="$(jq --exit-status --raw-output .worktree_path <<< "${input}")" || _die "The \"worktree_path\" field is missing from the hook input ${input}."
 
 	if [[ -d ${worktree_path} ]]
 	then

@@ -17,14 +17,16 @@ import CredentialsPanel from '../../../src/main/resources/META-INF/resources/js/
 
 const SECRET_PLACEHOLDER = '••••••••••••••••••••••••';
 
-const mockGetCredential = jest.fn();
+const mockHideClientSecret = jest.fn();
 const mockOpenToast = jest.fn();
+const mockRevealClientSecret = jest.fn();
+const mockUseCredential = jest.fn();
 const mockWriteText = jest.fn();
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/configuration_form/services/ConfigurationService',
+	'../../../src/main/resources/META-INF/resources/js/configuration_form/hooks/useCredential',
 	() => ({
-		getCredential: (...args: any[]) => mockGetCredential(...args),
+		useCredential: () => mockUseCredential(),
 	})
 );
 
@@ -36,12 +38,13 @@ jest.mock('frontend-js-components-web', () => {
 	const React = require('react');
 
 	return {
-		FieldBase: ({children, id, label}: any) =>
+		FieldBase: ({children, helpMessage, id, label}: any) =>
 			React.createElement(
 				'div',
 				null,
 				label && React.createElement('label', {htmlFor: id}, label),
-				children
+				children,
+				helpMessage && React.createElement('small', null, helpMessage)
 			),
 	};
 });
@@ -55,16 +58,46 @@ jest.mock('frontend-js-components-web', () => {
 
 describe('CredentialsPanel', () => {
 	beforeEach(() => {
-		mockGetCredential.mockReset();
+		mockHideClientSecret.mockReset();
 		mockOpenToast.mockReset();
+		mockRevealClientSecret.mockReset();
 		mockWriteText.mockReset();
 		mockWriteText.mockResolvedValue(undefined);
+		mockUseCredential.mockReturnValue({
+			clientSecret: null,
+			hideClientSecret: mockHideClientSecret,
+			revealClientSecret: mockRevealClientSecret,
+			revealing: false,
+		});
 
 		Object.assign(navigator, {clipboard: {writeText: mockWriteText}});
 	});
 
 	afterEach(() => {
 		cleanup();
+	});
+
+	it('calls hideClientSecret when Hide is clicked', () => {
+		mockUseCredential.mockReturnValue({
+			clientSecret: 'SECRET_X',
+			hideClientSecret: mockHideClientSecret,
+			revealClientSecret: mockRevealClientSecret,
+			revealing: false,
+		});
+
+		render(<CredentialsPanel clientId="CLIENT_X" />);
+
+		fireEvent.click(screen.getByRole('button', {name: 'hide'}));
+
+		expect(mockHideClientSecret).toHaveBeenCalledTimes(1);
+	});
+
+	it('calls revealClientSecret when Reveal is clicked', () => {
+		render(<CredentialsPanel clientId="CLIENT_X" />);
+
+		fireEvent.click(screen.getByRole('button', {name: 'reveal'}));
+
+		expect(mockRevealClientSecret).toHaveBeenCalledTimes(1);
 	});
 
 	it('copies the client ID to the clipboard', async () => {
@@ -94,28 +127,7 @@ describe('CredentialsPanel', () => {
 		).toBeInTheDocument();
 	});
 
-	it('hides the secret again after it is revealed', async () => {
-		mockGetCredential.mockResolvedValueOnce({clientSecret: 'SECRET_X'});
-
-		render(<CredentialsPanel clientId="CLIENT_X" />);
-
-		fireEvent.click(screen.getByRole('button', {name: 'reveal'}));
-
-		await waitFor(() => {
-			expect(screen.getByDisplayValue('SECRET_X')).toBeInTheDocument();
-		});
-
-		fireEvent.click(screen.getByRole('button', {name: 'hide'}));
-
-		expect(
-			screen.getByDisplayValue(SECRET_PLACEHOLDER)
-		).toBeInTheDocument();
-		expect(
-			screen.getByRole('button', {name: 'reveal'})
-		).toBeInTheDocument();
-	});
-
-	it('masks the client secret until it is revealed', () => {
+	it('masks the client secret when it is hidden', () => {
 		render(<CredentialsPanel clientId="CLIENT_X" />);
 
 		expect(screen.getByDisplayValue('CLIENT_X')).toBeInTheDocument();
@@ -125,42 +137,19 @@ describe('CredentialsPanel', () => {
 		expect(
 			screen.getByRole('button', {name: 'reveal'})
 		).toBeInTheDocument();
-		expect(mockGetCredential).not.toHaveBeenCalled();
 	});
 
-	it('reveals the client secret when Reveal is clicked', async () => {
-		mockGetCredential.mockResolvedValueOnce({clientSecret: 'SECRET_X'});
+	it('shows the client secret when it is revealed', () => {
+		mockUseCredential.mockReturnValue({
+			clientSecret: 'SECRET_X',
+			hideClientSecret: mockHideClientSecret,
+			revealClientSecret: mockRevealClientSecret,
+			revealing: false,
+		});
 
 		render(<CredentialsPanel clientId="CLIENT_X" />);
 
-		fireEvent.click(screen.getByRole('button', {name: 'reveal'}));
-
-		await waitFor(() => {
-			expect(screen.getByDisplayValue('SECRET_X')).toBeInTheDocument();
-		});
-
-		expect(mockGetCredential).toHaveBeenCalledTimes(1);
+		expect(screen.getByDisplayValue('SECRET_X')).toBeInTheDocument();
 		expect(screen.getByRole('button', {name: 'hide'})).toBeInTheDocument();
-	});
-
-	it('shows an error toast when revealing fails', async () => {
-		mockGetCredential.mockRejectedValueOnce(new Error('Boom'));
-
-		render(<CredentialsPanel clientId="CLIENT_X" />);
-
-		fireEvent.click(screen.getByRole('button', {name: 'reveal'}));
-
-		await waitFor(() => {
-			expect(mockOpenToast).toHaveBeenCalledWith(
-				expect.objectContaining({
-					message: 'failed-to-load-credentials',
-					type: 'danger',
-				})
-			);
-		});
-
-		expect(
-			screen.getByDisplayValue(SECRET_PLACEHOLDER)
-		).toBeInTheDocument();
 	});
 });

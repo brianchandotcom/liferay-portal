@@ -8,9 +8,9 @@ import {ClayInput} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openToast} from '@liferay/object-js-components-web';
 import {FieldBase} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React from 'react';
 
-import {getCredential} from './services/ConfigurationService';
+import {useCredential} from './hooks/useCredential';
 
 const SECRET_PLACEHOLDER = '••••••••••••••••••••••••';
 
@@ -32,27 +32,8 @@ async function copyToClipboard(value: string) {
 }
 
 export default function CredentialsPanel({clientId}: {clientId: string}) {
-	const [clientSecret, setClientSecret] = useState<string | null>(null);
-	const [revealing, setRevealing] = useState(false);
-
-	const revealClientSecret = async () => {
-		setRevealing(true);
-
-		try {
-			const credential = await getCredential();
-
-			setClientSecret(credential.clientSecret ?? '');
-		}
-		catch (error) {
-			openToast({
-				message: Liferay.Language.get('failed-to-load-credentials'),
-				type: 'danger',
-			});
-		}
-		finally {
-			setRevealing(false);
-		}
-	};
+	const {clientSecret, hideClientSecret, revealClientSecret, revealing} =
+		useCredential();
 
 	return (
 		<>
@@ -153,7 +134,7 @@ export default function CredentialsPanel({clientId}: {clientId: string}) {
 							<ClayInput.GroupItem shrink>
 								<Button
 									displayType="secondary"
-									onClick={() => setClientSecret(null)}
+									onClick={hideClientSecret}
 								>
 									{Liferay.Language.get('hide')}
 								</Button>

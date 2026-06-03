@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
@@ -45,6 +46,10 @@ public class DBInspector {
 		_columnNumericCache.clear();
 		_tableNamesCache.clear();
 		_schemaSnapshotEnabled = false;
+	}
+
+	public static boolean isSchemaSnapshotEnabled() {
+		return _schemaSnapshotEnabled;
 	}
 
 	public DBInspector(Connection connection) {
@@ -289,8 +294,15 @@ public class DBInspector {
 
 	public boolean hasTable(String tableName) throws Exception {
 		if (_schemaSnapshotEnabled) {
-			Set<String> tableNames = _tableNamesCache.get(
-				StringUtil.defaultString(getCatalog()));
+			String catalog = StringUtil.defaultString(getCatalog());
+
+			Set<String> tableNames = _tableNamesCache.get(catalog);
+
+			if (tableNames == null) {
+				getTableNames(null);
+
+				tableNames = _tableNamesCache.get(catalog);
+			}
 
 			if (tableNames != null) {
 				return tableNames.contains(normalizeName(tableName));
@@ -592,10 +604,10 @@ public class DBInspector {
 
 	private static final Pattern _columnDefaultClausePattern = Pattern.compile(
 		".*DEFAULT ((?:'[^']+')|(?:\\S+)) NOT NULL", Pattern.CASE_INSENSITIVE);
-	private static final ConcurrentHashMap<String, Boolean> _columnExistsCache =
+	private static final Map<String, Boolean> _columnExistsCache =
 		new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, Boolean>
-		_columnNumericCache = new ConcurrentHashMap<>();
+	private static final Map<String, Boolean> _columnNumericCache =
+		new ConcurrentHashMap<>();
 	private static final Pattern _columnSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _columnTypePattern = Pattern.compile(
@@ -606,8 +618,8 @@ public class DBInspector {
 	private static final Set<String> _partitionedControlTableNames =
 		new HashSet<>(Arrays.asList("classname_", "counter", "resourceaction"));
 	private static volatile boolean _schemaSnapshotEnabled;
-	private static final ConcurrentHashMap<String, Set<String>>
-		_tableNamesCache = new ConcurrentHashMap<>();
+	private static final Map<String, Set<String>> _tableNamesCache =
+		new ConcurrentHashMap<>();
 
 	private final Connection _connection;
 

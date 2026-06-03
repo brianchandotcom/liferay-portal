@@ -15,8 +15,7 @@ public interface QuotaManager {
 	public void addQuotas(long accountEntryId, long companyId, long userId)
 		throws PortalException;
 
-	public void checkUsage(long companyId, String text, long userId)
-		throws PortalException;
+	public void checkUsage(long companyId, long userId) throws PortalException;
 
 	public void updateUsage(long companyId, Usage usage, long userId)
 		throws PortalException;

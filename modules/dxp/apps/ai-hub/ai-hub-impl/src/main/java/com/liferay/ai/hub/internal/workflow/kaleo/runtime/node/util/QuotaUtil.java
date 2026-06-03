@@ -29,7 +29,7 @@ public class QuotaUtil {
 		throws PortalException {
 
 		try {
-			quotaManager.checkUsage(companyId, text, userId);
+			quotaManager.checkUsage(companyId, userId);
 
 			return false;
 		}

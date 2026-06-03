@@ -23,7 +23,7 @@ public class DummyQuotaManagerImpl implements QuotaManager {
 	}
 
 	@Override
-	public void checkUsage(long companyId, String text, long userId) {
+	public void checkUsage(long companyId, long userId) {
 	}
 
 	@Override

@@ -227,7 +227,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		String message = MapUtil.getString(agentContext.getInput(), "message");
 
 		_quotaManager.checkUsage(
-			agentContext.getCompanyId(), message, agentContext.getUserId());
+			agentContext.getCompanyId(), agentContext.getUserId());
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
 			AgenticServices.supervisorBuilder(

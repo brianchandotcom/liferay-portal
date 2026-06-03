@@ -26,7 +26,6 @@ public class FinderColumnTest {
 
 		Assert.assertEquals(
 			"t.active = ?", finderColumn.getSqlFragment(true, false));
-
 		Assert.assertEquals(
 			"t.active_ = ?", finderColumn.getSqlFragment(true, true));
 	}

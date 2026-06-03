@@ -230,7 +230,7 @@ public class SegmentsEntryProviderRegistryTest {
 		).when(
 			segmentsEntryProvider
 		).getSegmentsEntryClassPKsCount(
-			segmentsEntryId
+			segmentsEntryId, true
 		);
 
 		return segmentsEntryProvider;
@@ -248,7 +248,7 @@ public class SegmentsEntryProviderRegistryTest {
 		).when(
 			segmentsEntryProvider
 		).getSegmentsEntryClassPKs(
-			segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS
+			segmentsEntryId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS
 		);
 
 		return segmentsEntryProvider;

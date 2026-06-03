@@ -1,0 +1,72 @@
+release:
+    name: my-release
+    namespace: my-namespace
+suite: Elasticsearch
+templates:
+    -   templates/elasticsearch.yaml
+tests:
+    -   asserts:
+            -   contains:
+                    any: true
+                    content:
+                        name: ES_SETTING_ONE
+                        value: one
+                    path: spec.nodeSets[0].podTemplate.spec.containers[0].env
+        documentSelector:
+            path: kind
+            value: Elasticsearch
+        it: should append every custom env entry through the loop
+        set:
+            search.elasticsearch.customEnv:
+                x-extra:
+                    -   name: ES_SETTING_ONE
+                        value: one
+    -   asserts:
+            -   equal:
+                    path: metadata.name
+                    value: custom-es
+        documentSelector:
+            path: kind
+            value: Elasticsearch
+        it: should name the Elasticsearch resource after the configured name override
+        set:
+            search.elasticsearch.name: custom-es
+    -   asserts:
+            -   isKind:
+                    of: Elasticsearch
+            -   equal:
+                    path: metadata.name
+                    value: my-release-es
+            -   equal:
+                    path: metadata.namespace
+                    value: my-namespace-elasticsearch
+            -   equal:
+                    path: spec.version
+                    value: 8.19.11
+            -   equal:
+                    path: spec.nodeSets[0].count
+                    value: 1
+        documentSelector:
+            path: kind
+            value: Elasticsearch
+        it: should name the Elasticsearch resource after the release and dedicated namespace
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: should omit the Elasticsearch resources when search is disabled
+        set:
+            search.elasticsearch.enabled: false
+    -   asserts:
+            -   isKind:
+                    of: Namespace
+            -   equal:
+                    path: metadata.name
+                    value: my-namespace-elasticsearch
+        documentSelector:
+            path: kind
+            value: Namespace
+        it: should provision the dedicated Elasticsearch namespace
+    -   asserts:
+            -   hasDocuments:
+                    count: 2
+        it: should render both the Elasticsearch resource and its namespace by default

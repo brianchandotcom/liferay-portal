@@ -467,7 +467,6 @@ public class UserIndexerIndexedFieldsTest {
 
 		_organizationSearchFixture = new OrganizationSearchFixture(
 			_organizationLocalService);
-
 		_userGroupSearchFixture = new UserGroupSearchFixture(
 			_userGroupLocalService);
 
@@ -480,13 +479,9 @@ public class UserIndexerIndexedFieldsTest {
 		_addresses = _userSearchFixture.getAddresses();
 
 		_groups = groupSearchFixture.getGroups();
-
 		_organizations = _organizationSearchFixture.getOrganizations();
-
 		_users = _userSearchFixture.getUsers();
-
 		_userGroups = _userGroupSearchFixture.getUserGroups();
-
 		_group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 

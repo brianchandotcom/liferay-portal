@@ -254,15 +254,15 @@ public class ObjectEntryExtensionProviderTest {
 		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
 			TestPropsValues.getCompanyId());
 
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
 		ObjectDefinition cpDefinitionObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
 
 		String customFieldName = "x" + RandomTestUtil.randomString();
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			true);
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

@@ -220,6 +220,10 @@ public class ObjectRelationshipExtensionProviderTest {
 		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
 			TestPropsValues.getCompanyId());
 
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
 		ObjectDefinition cpDefinitionObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
@@ -229,10 +233,6 @@ public class ObjectRelationshipExtensionProviderTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			true);
 
 		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			0, TestPropsValues.getUserId(),

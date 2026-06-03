@@ -856,56 +856,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-131941 - Validate if a user can view question details after restoring history router to default setting."
-	@priority = 3
-	test CanRestoreHistoryRouterToDefaultSetting {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that the router configuration is set") {
-			Questions.openToConfigInSystemSettings(portlet = "Questions");
-
-			SystemSettings.editTextAreaSetting(
-				settingName = "Set Base Path for History Router",
-				settingValue = "/questions-page");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("When the user restore the configuration") {
-			SystemSettings.editTextAreaSetting(
-				settingName = "Set Base Path for History Router",
-				settingValue = " ");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("And creates a category and a question") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-
-			JSONQuestions.addQuestion(
-				bodyField = "Body AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
-		}
-
-		task ("Then he can see question details") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "Questions Test Category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Title AddQuestion");
-
-			Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
-		}
-	}
-
 	@description = "LPS-112029 and LPS-116841 - Validate if the user can view the select filter and search field and search for the questions."
 	@priority = 4
 	@refactordone
@@ -1843,9 +1793,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-131941 - Validate if a user can view question details when using history router."
+	@description = "LPS-131941 - Validate if a user can view question details when using history router and after restoring it to the default setting."
 	@priority = 4
-	test DetailsCanbeViewedWithHistoryRouter {
+	test DetailsCanBeViewedWithHistoryRouter {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1884,6 +1834,28 @@ definition {
 
 		task ("Then he can see the details URL") {
 			AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
+		}
+
+		task ("When the user restore the configuration") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = " ");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then he can see question details") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestion");
+
+			Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
 		}
 	}
 

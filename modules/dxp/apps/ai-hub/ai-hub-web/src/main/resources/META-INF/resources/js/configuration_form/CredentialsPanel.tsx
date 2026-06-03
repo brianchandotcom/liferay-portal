@@ -6,8 +6,7 @@
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {openToast} from '@liferay/object-js-components-web';
-import {FieldBase} from 'frontend-js-components-web';
+import {FieldBase, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {useCredential} from './hooks/useCredential';

@@ -17,7 +17,7 @@ jest.mock(
 	})
 );
 
-jest.mock('@liferay/object-js-components-web', () => ({
+jest.mock('frontend-js-components-web', () => ({
 	openToast: (...args: any[]) => mockOpenToast(...args),
 }));
 

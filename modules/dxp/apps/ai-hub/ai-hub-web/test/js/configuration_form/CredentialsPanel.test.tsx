@@ -30,10 +30,6 @@ jest.mock(
 	})
 );
 
-jest.mock('@liferay/object-js-components-web', () => ({
-	openToast: (...args: any[]) => mockOpenToast(...args),
-}));
-
 jest.mock('frontend-js-components-web', () => {
 	const React = require('react');
 
@@ -46,6 +42,7 @@ jest.mock('frontend-js-components-web', () => {
 				children,
 				helpMessage && React.createElement('small', null, helpMessage)
 			),
+		openToast: (...args: any[]) => mockOpenToast(...args),
 	};
 });
 

@@ -3407,3 +3407,73 @@ test.describe('Manage object fields default value properties', () => {
 		}
 	);
 });
+
+test.describe('View object field type descriptions', () => {
+	test(
+		'can view a description for each field type',
+		{tag: '@LPD-93353'},
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await objectFieldsPage.goto(objectDefinition.label.en_US);
+
+			await objectFieldsPage.addObjectFieldButton.click();
+
+			await objectFieldsPage.objectFieldLabelInput.waitFor();
+
+			await objectFieldsPage.objectFieldOptionsDropdown.click();
+
+			const fieldTypeDescriptions = [
+				{
+					description: 'Select between true or false.',
+					fieldType: 'Boolean',
+				},
+				{description: 'Add a date.', fieldType: 'Date'},
+				{
+					description:
+						'Add a decimal number that supports fractional portions.',
+					fieldType: 'Decimal',
+				},
+				{
+					description: 'Add an integer up to nine digits.',
+					fieldType: 'Integer',
+				},
+				{
+					description: 'Add a long integer up to 16 digits.',
+					fieldType: 'Long Integer',
+				},
+				{
+					description: 'Add text up to 65,000 characters.',
+					fieldType: 'Long Text',
+				},
+				{
+					description: 'Choose from a picklist.',
+					fieldType: 'Picklist',
+				},
+				{
+					description:
+						'Add a high precision decimal number without rounding.',
+					fieldType: 'Precision Decimal',
+				},
+				{
+					description: 'Add text up to 280 characters.',
+					fieldType: 'Text',
+				},
+			];
+
+			for (const {description, fieldType} of fieldTypeDescriptions) {
+				await expect(
+					page.getByRole('option', {exact: true, name: fieldType})
+				).toContainText(description);
+			}
+		}
+	);
+});

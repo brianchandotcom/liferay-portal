@@ -10,7 +10,10 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -41,6 +44,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.constants.DSRFolderConstants;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.ByteArrayInputStream;
@@ -104,25 +108,12 @@ public class DLFileEntryModelListenerTest {
 				_objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		DLFolder dlFolder =
+			_dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
+				group.getGroupId());
 
-		serviceContext.setAddGroupPermissions(false);
-		serviceContext.setAddGuestPermissions(false);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			group.getGroupId(), 0, RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			null, null,
-			new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
-			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
-			serviceContext);
-
-		ServiceContextThreadLocal.popServiceContext();
+		DLFileEntry dlFileEntry = _addFileEntry(dlFolder.getFolderId(), group);
 
 		String[] actionIds = TransformUtil.transformToArray(
 			_resourceActionLocalService.getResourceActions(
@@ -166,6 +157,48 @@ public class DLFileEntryModelListenerTest {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
 				ActionKeys.SUBSCRIBE, ActionKeys.UPDATE, ActionKeys.VIEW),
 			role.getRoleId());
+
+		dlFileEntry = _addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, group);
+
+		_assertHasResourcePermissions(
+			actionIds, dlFileEntry.getFileEntryId(), Arrays.asList(),
+			role.getRoleId());
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		_assertHasResourcePermissions(
+			actionIds, dlFileEntry.getFileEntryId(), Arrays.asList(),
+			role.getRoleId());
+	}
+
+	private DLFileEntry _addFileEntry(long folderId, Group group)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			return _dlFileEntryLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folderId, RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null,
+				new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+				TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+				serviceContext);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private void _assertHasResourcePermissions(
@@ -203,6 +236,9 @@ public class DLFileEntryModelListenerTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 	private Group _group;
 

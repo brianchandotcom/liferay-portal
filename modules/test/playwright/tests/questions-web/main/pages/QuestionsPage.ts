@@ -69,6 +69,32 @@ export class QuestionsPage {
 		await this.page.getByRole('button', {name: 'Post Answer'}).click();
 	}
 
+	async askQuestion(
+		questionBody: string,
+		questionTitle: string,
+		tagNames: string[]
+	) {
+		await this.page.getByRole('button', {name: 'Ask Question'}).click();
+		await this.page
+			.getByPlaceholder('What is your question?')
+			.fill(questionTitle);
+		await this.page.getByLabel('Source').click();
+		await this.page
+			.getByLabel(/Rich Text Editor/)
+			.getByRole('textbox')
+			.fill(questionBody);
+		await this.page.getByLabel('Source').click();
+
+		const tagsInput = this.page.getByLabel('Tags', {exact: true});
+
+		for (const tagName of tagNames) {
+			await tagsInput.fill(tagName);
+			await tagsInput.press('Enter');
+		}
+
+		await this.page.getByLabel('Post Your Question').click();
+	}
+
 	async clickOnTag(tagName: string) {
 		await this.page.getByRole('link', {name: tagName}).click();
 	}

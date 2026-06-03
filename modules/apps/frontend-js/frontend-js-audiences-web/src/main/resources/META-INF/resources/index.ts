@@ -45,7 +45,8 @@ export interface RuleGroup {
 export type Attribute =
 	| 'browser_name'
 	| 'browser_version'
-	| `cookies`
+	| 'cookies'
+	| `custom:${string}`
 	| 'hostname'
 	| 'language'
 	| 'local_date'
@@ -68,6 +69,11 @@ export type Operator =
 	| 'not_includes';
 
 // JavaScript API
+
+export interface CustomAttribute<T> {
+	name: string | undefined;
+	(): Promise<T> | T;
+}
 
 export interface Handler {
 	name: string | undefined;

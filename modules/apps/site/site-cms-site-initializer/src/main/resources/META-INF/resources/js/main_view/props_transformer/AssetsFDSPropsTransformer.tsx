@@ -130,6 +130,7 @@ const additionalAPIURLParametersTransformer = (
 export interface IBreadcrumbProps {
 	breadcrumbItems: IBreadcrumbItem[];
 	displayType: string;
+	hideSpace?: boolean;
 	size: string;
 }
 

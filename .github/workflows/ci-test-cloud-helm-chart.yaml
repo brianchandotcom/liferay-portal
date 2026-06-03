@@ -4,6 +4,9 @@ defaults:
 jobs:
     test-cloud-helm-chart:
         if: ${{github.repository == 'cloudnative-team/liferay-portal'}}
+        permissions:
+            checks: write
+            contents: read
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -58,6 +61,19 @@ jobs:
                     }
 
                     main "${@}"
+            -   name: Upload test reports
+                if: ${{!cancelled() && hashFiles(format('cloud/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                uses: actions/upload-artifact@v4
+                with:
+                    name: helm-test-reports-${{matrix.chart}}
+                    path: cloud/test-reports/helm-unittest-${{matrix.chart}}.xml
+            -   name: Publish test report
+                if: ${{!cancelled() && hashFiles(format('cloud/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                uses: dorny/test-reporter@v2
+                with:
+                    name: Helm unit tests (${{matrix.chart}})
+                    path: cloud/test-reports/helm-unittest-${{matrix.chart}}.xml
+                    reporter: java-junit
         strategy:
             fail-fast: false
             matrix:

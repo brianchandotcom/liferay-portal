@@ -5,6 +5,7 @@
 
 import {Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
 
 export class QuestionsPage {
@@ -42,6 +43,21 @@ export class QuestionsPage {
 
 	async clickOnTag(tagName: string) {
 		await this.page.getByRole('link', {name: tagName}).click();
+	}
+
+	async goToTopicFromBreadcrumb(
+		currentTopicName: string,
+		targetTopicName: string
+	) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.locator('div.dropdown-menu a', {
+				hasText: targetTopicName,
+			}),
+			trigger: this.page.locator('div.dropdown > span', {
+				hasText: currentTopicName,
+			}),
+		});
 	}
 
 	async clickOnTagWithinTags(tagName: string) {

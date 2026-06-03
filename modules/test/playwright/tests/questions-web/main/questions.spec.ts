@@ -26,6 +26,93 @@ export const baseTest = mergeTests(
 	pageViewModePagesTest
 );
 
+const allQuestionsAcrossTopics = mergeTests(baseTest);
+
+allQuestionsAcrossTopics(
+	'This is a test for LPS-153187. The user can create a new topic and access all questions from the breadcrumb dropdown.',
+	{tag: '@LPS-153187'},
+	async ({
+		apiHelpers,
+		page,
+		questionsPage,
+		questionsTopicsPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+		await page.goto('/web' + site.friendlyUrlPath + layout.friendlyURL);
+		await widgetPagePage.addPortlet('Questions');
+
+		// Create the first topic through the UI. Topic names cannot contain
+		// hyphens, so the random UUIDs are stripped.
+
+		const firstTopicName = getRandomString().replace(/-/g, '');
+
+		await questionsTopicsPage.addNewTopic(firstTopicName);
+
+		await expect(
+			page.getByRole('link', {name: firstTopicName})
+		).toBeVisible();
+
+		// Seed a second topic and one question per topic through the API
+
+		const {items: messageBoardSections} =
+			await apiHelpers.headlessDelivery.getSiteMessageBoardSectionsPage(
+				site.id
+			);
+
+		const [firstMessageBoardSection] = messageBoardSections.filter(
+			(messageBoardSection) =>
+				messageBoardSection.title === firstTopicName
+		);
+
+		const secondMessageBoardSection =
+			await apiHelpers.headlessDelivery.postSiteMessageBoardSection({
+				siteId: site.id,
+				title: getRandomString().replace(/-/g, ''),
+			});
+
+		const firstQuestionHeadline = getRandomString();
+		const secondQuestionHeadline = getRandomString();
+
+		await apiHelpers.headlessDelivery.postMessageBoardSectionMessageBoardThread(
+			{
+				articleBody: getRandomString(),
+				headline: firstQuestionHeadline,
+				messageBoardSectionId: firstMessageBoardSection.id,
+			}
+		);
+		await apiHelpers.headlessDelivery.postMessageBoardSectionMessageBoardThread(
+			{
+				articleBody: getRandomString(),
+				headline: secondQuestionHeadline,
+				messageBoardSectionId: secondMessageBoardSection.id,
+			}
+		);
+
+		// Switch to All Questions from the breadcrumb dropdown
+
+		await questionsTopicsPage.goToTopic(firstTopicName);
+
+		await questionsPage.goToTopicFromBreadcrumb(
+			firstTopicName,
+			'All Questions'
+		);
+
+		// All questions from both topics are listed
+
+		await expect(
+			page.getByRole('link', {name: firstQuestionHeadline})
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: secondQuestionHeadline})
+		).toBeVisible();
+	}
+);
+
 const tagWithSpaces = mergeTests(baseTest);
 
 tagWithSpaces(

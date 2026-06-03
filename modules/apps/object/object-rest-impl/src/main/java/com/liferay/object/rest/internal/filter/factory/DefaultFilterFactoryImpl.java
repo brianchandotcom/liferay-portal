@@ -39,6 +39,17 @@ public class DefaultFilterFactoryImpl
 
 	@Override
 	public ExpressionVisitor<Object> getExpressionVisitor(
+		EntityModel entityModel, Long[] groupIds,
+		ObjectDefinition objectDefinition) {
+
+		return new PredicateExpressionVisitorImpl(
+			entityModel, entityModelProvider, groupIds, objectDefinition,
+			_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
+			_objectRelatedModelsPredicateProviderRegistry, _serviceTrackerMap);
+	}
+
+	@Override
+	public ExpressionVisitor<Object> getExpressionVisitor(
 		EntityModel entityModel, ObjectDefinition objectDefinition) {
 
 		return new PredicateExpressionVisitorImpl(

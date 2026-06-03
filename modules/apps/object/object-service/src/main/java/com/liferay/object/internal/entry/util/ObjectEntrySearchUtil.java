@@ -6,6 +6,7 @@
 package com.liferay.object.internal.entry.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -120,6 +122,35 @@ public class ObjectEntrySearchUtil {
 			).eq(
 				(languageId == null) ? getLanguageId() : languageId
 			)
+		);
+	}
+
+	public static Predicate getObjectEntryIndexPredicate(
+		Long[] groupIds, ObjectDefinition objectDefinition,
+		Predicate predicate) {
+
+		return ObjectEntryTable.INSTANCE.companyId.eq(
+			objectDefinition.getCompanyId()
+		).and(
+			() -> {
+				if (StringUtil.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+					return ObjectEntryTable.INSTANCE.groupId.eq(0L);
+				}
+
+				if (ArrayUtil.isEmpty(groupIds)) {
+					return null;
+				}
+
+				return ObjectEntryTable.INSTANCE.groupId.in(groupIds);
+			}
+		).and(
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinition.getObjectDefinitionId())
+		).and(
+			predicate
 		);
 	}
 
